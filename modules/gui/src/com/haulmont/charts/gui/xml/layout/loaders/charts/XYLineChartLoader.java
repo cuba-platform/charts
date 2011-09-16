@@ -1,9 +1,12 @@
-package com.haulmont.cuba.gui.xml.layout.loaders.charts;
+/*
+ * Copyright (c) 2011 Haulmont Technology Ltd. All Rights Reserved.
+ * Haulmont Technology proprietary and confidential.
+ * Use is subject to license terms.
+ */
+
+package com.haulmont.charts.gui.xml.layout.loaders.charts;
 
 import com.haulmont.cuba.gui.components.Component;
-import com.haulmont.cuba.gui.components.charts.CategoryChart;
-import com.haulmont.cuba.gui.components.charts.LineChart;
-import com.haulmont.cuba.gui.components.charts.XYChart;
 import com.haulmont.cuba.gui.components.charts.XYLineChart;
 import com.haulmont.cuba.gui.xml.layout.ComponentsFactory;
 import org.dom4j.Element;

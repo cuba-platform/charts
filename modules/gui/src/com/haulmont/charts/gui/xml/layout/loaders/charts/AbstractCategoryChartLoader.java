@@ -1,11 +1,15 @@
-package com.haulmont.cuba.gui.xml.layout.loaders.charts;
+/*
+ * Copyright (c) 2011 Haulmont Technology Ltd. All Rights Reserved.
+ * Haulmont Technology proprietary and confidential.
+ * Use is subject to license terms.
+ */
+
+package com.haulmont.charts.gui.xml.layout.loaders.charts;
 
 import com.haulmont.chile.core.model.MetaProperty;
-import com.haulmont.chile.core.model.MetaPropertyPath;
 import com.haulmont.cuba.core.global.MessageUtils;
 import com.haulmont.cuba.gui.components.Component;
 import com.haulmont.cuba.gui.components.charts.CategoryChart;
-import com.haulmont.cuba.gui.components.charts.Chart;
 import com.haulmont.cuba.gui.data.CategoryChartDatasource;
 import com.haulmont.cuba.gui.data.CollectionDatasource;
 import com.haulmont.cuba.gui.xml.layout.ComponentsFactory;

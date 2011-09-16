@@ -1,21 +1,14 @@
 /*
- * Copyright (c) 2008 Haulmont Technology Ltd. All Rights Reserved.
+ * Copyright (c) 2011 Haulmont Technology Ltd. All Rights Reserved.
  * Haulmont Technology proprietary and confidential.
  * Use is subject to license terms.
-
- * Author: Nikolay Gorodnov
- * Created: 08.09.2010 10:35:22
- *
- * $Id$
  */
-package com.haulmont.cuba.gui.xml.layout.loaders.charts;
+package com.haulmont.charts.gui.xml.layout.loaders.charts;
 
 import com.haulmont.chile.core.model.MetaProperty;
-import com.haulmont.chile.core.model.MetaPropertyPath;
-import com.haulmont.cuba.gui.components.charts.CategoryChart;
-import com.haulmont.cuba.gui.components.charts.Chart;
-import com.haulmont.cuba.gui.components.charts.PieChart;
 import com.haulmont.cuba.gui.components.Component;
+import com.haulmont.cuba.gui.components.charts.CategoryChart;
+import com.haulmont.cuba.gui.components.charts.PieChart;
 import com.haulmont.cuba.gui.data.CollectionDatasource;
 import com.haulmont.cuba.gui.xml.layout.ComponentsFactory;
 import org.apache.commons.lang.StringUtils;

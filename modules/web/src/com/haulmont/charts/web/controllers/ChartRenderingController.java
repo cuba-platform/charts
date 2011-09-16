@@ -27,7 +27,7 @@ public class ChartRenderingController {
 
     private static Log log = LogFactory.getLog(ChartRenderingController.class);
 
-    @RequestMapping(value = "/render", method = RequestMethod.GET)
+    @RequestMapping(value = "/chart", method = RequestMethod.GET)
     public ModelAndView render(
             HttpServletRequest request,
             HttpServletResponse response
