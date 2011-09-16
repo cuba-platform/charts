@@ -6,9 +6,8 @@
 
 package com.haulmont.charts.web.toolkit.ui.charts.jfree;
 
-import com.haulmont.cuba.toolkit.gwt.client.charts.jfree.JFreeChartRenderer;
-import com.haulmont.cuba.web.toolkit.ui.charts.XYChartComponent;
-import com.vaadin.data.Container;
+import com.haulmont.charts.toolkit.gwt.client.charts.jfree.JFreeChartRenderer;
+import com.haulmont.charts.web.toolkit.ui.charts.XYChartComponent;
 import com.vaadin.ui.ClientWidget;
 
 /**

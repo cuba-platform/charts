@@ -5,11 +5,7 @@
  */
 package com.haulmont.charts.web.toolkit.ui.charts.jfree;
 
-import com.haulmont.cuba.toolkit.gwt.client.charts.jfree.JFreeChartRenderer;
-import com.haulmont.cuba.web.toolkit.ui.charts.Chart;
-import com.haulmont.cuba.web.toolkit.ui.charts.PieChart;
-import com.vaadin.data.Container;
-import com.vaadin.ui.ClientWidget;
+import com.haulmont.charts.web.toolkit.ui.charts.PieChart;
 
 public class JFreePieChart extends JFreeCategoryChart implements PieChart {
     private static final long serialVersionUID = 1881367032236295730L;

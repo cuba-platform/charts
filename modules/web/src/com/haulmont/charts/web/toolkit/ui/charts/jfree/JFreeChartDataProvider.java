@@ -5,7 +5,7 @@
  */
 package com.haulmont.charts.web.toolkit.ui.charts.jfree;
 
-import com.haulmont.cuba.web.toolkit.ui.charts.*;
+import com.haulmont.charts.web.toolkit.ui.charts.*;
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
 import org.jfree.chart.ChartFactory;

@@ -1,4 +1,10 @@
-package com.haulmont.cuba.web.toolkit.ui.charts;
+/*
+ * Copyright (c) 2011 Haulmont Technology Ltd. All Rights Reserved.
+ * Haulmont Technology proprietary and confidential.
+ * Use is subject to license terms.
+ */
+
+package com.haulmont.charts.web.toolkit.ui.charts;
 
 import com.vaadin.data.Container;
 import com.vaadin.data.Item;

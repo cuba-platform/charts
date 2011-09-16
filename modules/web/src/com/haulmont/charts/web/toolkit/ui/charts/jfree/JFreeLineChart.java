@@ -5,7 +5,7 @@
  */
 package com.haulmont.charts.web.toolkit.ui.charts.jfree;
 
-import com.haulmont.cuba.web.toolkit.ui.charts.LineChart;
+import com.haulmont.charts.web.toolkit.ui.charts.LineChart;
 
 public class JFreeLineChart extends JFreeCategoryChart implements LineChart {
     private static final long serialVersionUID = 7118566359236292560L;

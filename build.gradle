@@ -30,6 +30,7 @@ apply(plugin: 'idea')
 apply(plugin: 'cuba')
 
 def chartsGlobalModule = project(':charts-global')
+def chartsGuiModule = project(':charts-gui')
 def chartsWebModule = project(':charts-web')
 def chartsWebToolkitModule = project(':charts-web-toolkit')
 
@@ -44,9 +45,10 @@ def gwtServlets = [group: 'com.google.gwt', name: 'gwt-servlet', version: '2.3.0
 def validationApi = [group: 'javax.validation', name: 'validation-api', version: '1.0.0.GA']
 
 def cubaWeb = [group: 'com.haulmont.cuba', name: 'cuba-web', version: platformVersion]
+def cubaGui = [group: 'com.haulmont.cuba', name: 'cuba-gui', version: platformVersion]
 def cubaWebToolkit = [group: 'com.haulmont.cuba', name: 'cuba-web-toolkit', version: platformVersion]
 
-configure([chartsGlobalModule, chartsWebModule, chartsWebToolkitModule]) {
+configure([chartsGlobalModule, chartsGuiModule, chartsWebModule, chartsWebToolkitModule]) {
     apply(plugin: 'java')
     apply(plugin: 'idea')
     apply(plugin: 'maven')
@@ -57,6 +59,9 @@ configure([chartsGlobalModule, chartsWebModule, chartsWebToolkitModule]) {
         compile(group: 'com.haulmont.chile', name: 'chile-core', version: platformVersion)
         compile(group: 'com.haulmont.chile', name: 'chile-jpa', version: platformVersion)
         compile(group: 'com.haulmont.cuba', name: 'cuba-global', version: platformVersion)
+
+        compile(group: 'jfree', name: 'jfreechart', version: '1.0.13')
+
         testCompile(group: 'junit', name: 'junit', version: '4.5')
     }
 
@@ -71,11 +76,18 @@ configure([chartsGlobalModule, chartsWebModule, chartsWebToolkitModule]) {
 }
 
 configure(chartsGlobalModule) {
-    // task enhance(dependsOn: [compileJava, processResources], type: CubaEnhancing) {
-        // persistenceXml = "$chartsGlobalModule.projectDir/src/charts-persistence.xml"
-        // metadataXml = "$chartsGlobalModule.projectDir/src/charts-metadata.xml"
-    // }
-    // classes.dependsOn compileJava, processResources
+//    task enhance(dependsOn: [compileJava, processResources], type: CubaEnhancing) {
+//        persistenceXml = "$chartsGlobalModule.projectDir/src/charts-persistence.xml"
+//        metadataXml = "$chartsGlobalModule.projectDir/src/charts-metadata.xml"
+//    }
+//    classes.dependsOn compileJava, processResources
+}
+
+configure(chartsGuiModule) {
+    dependencies {
+        compile(chartsGlobalModule)
+        compile(cubaGui)
+    }
 }
 
 configure(chartsWebToolkitModule) {
@@ -102,8 +114,10 @@ configure(chartsWebModule) {
 
     dependencies {        
         compile(chartsGlobalModule)
+        compile(chartsGuiModule)
         compile(cubaWeb)
-        
+
+        provided(chartsGuiModule)
         provided(chartsWebToolkitModule)
         provided(cubaWebToolkit)
         provided(gwtUser)
@@ -128,23 +142,23 @@ configure(chartsWebModule) {
         }
     }
 
-    task enhanceTheme(dependsOn: compileJava) << {
-        File outDir = new File("$buildDir/web")
-        def webcontentArtefacts = configurations.webcontent.resolvedConfiguration.getResolvedArtifacts()
-        File cubaWebJar = webcontentArtefacts.find { it.name == 'cuba-web' }.file
-        copy {
-            from zipTree(cubaWebJar)
-            from file('web')
-            into outDir
-            include '**/themes/peyto/**/*'
-            includeEmptyDirs = false
-            overwrite = true
-        }
-
-        ant.taskdef(name: 'enhanceTheme', classname: 'com.haulmont.thesis.ant.EnhanceThemeTask', 
-                    classpath: configurations.compile.asPath + File.pathSeparator + configurations.provided.asPath)
-        ant.enhanceTheme(themeDir: new File(outDir, '/VAADIN/themes/peyto'))
-    }
+//    task enhanceTheme(dependsOn: compileJava) << {
+//        File outDir = new File("$buildDir/web")
+//        def webcontentArtefacts = configurations.webcontent.resolvedConfiguration.getResolvedArtifacts()
+//        File cubaWebJar = webcontentArtefacts.find { it.name == 'cuba-web' }.file
+//        copy {
+//            from zipTree(cubaWebJar)
+//            from file('web')
+//            into outDir
+//            include '**/themes/peyto/**/*'
+//            includeEmptyDirs = false
+//            overwrite = true
+//        }
+//
+//        ant.taskdef(name: 'enhanceTheme', classname: 'com.haulmont.thesis.ant.EnhanceThemeTask',
+//                    classpath: configurations.compile.asPath + File.pathSeparator + configurations.provided.asPath)
+//        ant.enhanceTheme(themeDir: new File(outDir, '/VAADIN/themes/peyto'))
+//    }
 
     File webOutDir = new File("$buildDir/web")
 

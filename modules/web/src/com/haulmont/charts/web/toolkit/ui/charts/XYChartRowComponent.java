@@ -4,7 +4,7 @@
  * Use is subject to license terms.
  */
 
-package com.haulmont.cuba.web.toolkit.ui.charts;
+package com.haulmont.charts.web.toolkit.ui.charts;
 
 import com.vaadin.data.Container;
 import com.vaadin.data.Item;

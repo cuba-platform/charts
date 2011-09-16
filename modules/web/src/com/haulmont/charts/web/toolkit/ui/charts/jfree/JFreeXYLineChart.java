@@ -6,8 +6,8 @@
 
 package com.haulmont.charts.web.toolkit.ui.charts.jfree;
 
-import com.haulmont.cuba.web.toolkit.ui.charts.Chart;
-import com.haulmont.cuba.web.toolkit.ui.charts.XYLineChart;
+import com.haulmont.charts.web.toolkit.ui.charts.Chart;
+import com.haulmont.charts.web.toolkit.ui.charts.XYLineChart;
 
 /**
  * <p>$Id$</p>

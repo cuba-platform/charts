@@ -1,4 +1,10 @@
-package com.haulmont.cuba.web.toolkit.ui.charts;
+/*
+ * Copyright (c) 2011 Haulmont Technology Ltd. All Rights Reserved.
+ * Haulmont Technology proprietary and confidential.
+ * Use is subject to license terms.
+ */
+
+package com.haulmont.charts.web.toolkit.ui.charts;
 
 import com.vaadin.data.Container;
 
@@ -21,19 +27,13 @@ public interface CategoryChart extends Chart, Container.Viewer,
     Object getRowCaptionPropertyId();
     void setRowCaptionPropertyId(Object propertyId);
 
-
-
     Collection<?> getPropertyIds();
     void addProperty(Object id);
-
-
 
     Collection<?> getCategoryPropertyIds();
     void addCategory(Object propertyId, String caption);
 
     String getCategoryCaption(Object propertyId);
-
-
 
     Object getValue(Object rowId, Object propertyId);
     void setValue(Object rowId, Object propertyId, Object value);

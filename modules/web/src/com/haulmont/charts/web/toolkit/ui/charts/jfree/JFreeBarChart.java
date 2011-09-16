@@ -5,7 +5,7 @@
  */
 package com.haulmont.charts.web.toolkit.ui.charts.jfree;
 
-import com.haulmont.cuba.web.toolkit.ui.charts.BarChart;
+import com.haulmont.charts.web.toolkit.ui.charts.BarChart;
 
 public class JFreeBarChart extends JFreeCategoryChart implements BarChart {
     private static final long serialVersionUID = 2496407681381514463L;
