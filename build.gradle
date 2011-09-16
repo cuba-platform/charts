@@ -29,12 +29,24 @@ buildscript {
 apply(plugin: 'idea')
 apply(plugin: 'cuba')
 
-def globalModule = project(':charts-global')
-def webModule = project(':charts-web')
+def chartsGlobalModule = project(':charts-global')
+def chartsWebModule = project(':charts-web')
+def chartsWebToolkitModule = project(':charts-web-toolkit')
 
 def platformVersion = '3.0-SNAPSHOT'
 
-configure([globalModule, webModule]) {
+def servletApi = [group: 'org.apache.tomcat', name: 'servlet-api', version: '6.0.20']
+
+def vaadin = [group: 'com.haulmont.thirdparty', name: 'vaadin', version: '6.6.1.91']
+def gwtUser = [group: 'com.google.gwt', name: 'gwt-user', version: '2.3.0']
+def gwtDev = [group: 'com.google.gwt', name: 'gwt-dev', version: '2.3.0']
+def gwtServlets = [group: 'com.google.gwt', name: 'gwt-servlet', version: '2.3.0']
+def validationApi = [group: 'javax.validation', name: 'validation-api', version: '1.0.0.GA']
+
+def cubaWeb = [group: 'com.haulmont.cuba', name: 'cuba-web', version: platformVersion]
+def cubaWebToolkit = [group: 'com.haulmont.cuba', name: 'cuba-web-toolkit', version: platformVersion]
+
+configure([chartsGlobalModule, chartsWebModule, chartsWebToolkitModule]) {
     apply(plugin: 'java')
     apply(plugin: 'idea')
     apply(plugin: 'maven')
@@ -58,40 +70,141 @@ configure([globalModule, webModule]) {
     }
 }
 
-configure(globalModule) {
-    task enhance(dependsOn: [compileJava, processResources], type: CubaEnhancing) {
-        persistenceXml = "$globalModule.projectDir/src/charts-persistence.xml"
-        metadataXml = "$globalModule.projectDir/src/charts-metadata.xml"
-    }
-    classes.dependsOn enhance
+configure(chartsGlobalModule) {
+    // task enhance(dependsOn: [compileJava, processResources], type: CubaEnhancing) {
+        // persistenceXml = "$chartsGlobalModule.projectDir/src/charts-persistence.xml"
+        // metadataXml = "$chartsGlobalModule.projectDir/src/charts-metadata.xml"
+    // }
+    // classes.dependsOn compileJava, processResources
 }
 
-configure(webModule) {
-    configurations {
-        webcontent
-    }
-
+configure(chartsWebToolkitModule) {
     dependencies {
-        compile(globalModule)
-        compile(guiModule)
-        compile(group: 'com.haulmont.cuba', name: 'cuba-web', version: platformVersion)
-        webcontent(group: 'com.haulmont.cuba', name: 'cuba-web', version: platformVersion, classifier: 'web', ext: 'zip')
+        compile(cubaWebToolkit)
+        compile(vaadin)
+
+        provided(gwtUser)
+        provided(gwtDev)
     }
 
-    task deploy(dependsOn: assemble, type: CubaDeployment) {
-        appName = 'app'
-        appJars('bali', 'chile-core', 'chile-jpa',
-                'cuba-global', 'cuba-client', 'cuba-gui', 'cuba-web',
-                'charts-global', 'charts-web')
-    }
-}
-
-task restart(dependsOn: ['stop', ':charts-web:deploy'],
-        description: 'Redeploys applications and restarts local Tomcat') << {
-    ant.waitfor(maxwait: 6, maxwaitunit: 'second', checkevery: 2, checkeveryunit: 'second') {
-        not {
-            socket(server: 'localhost', port: '8787')
+    jar {
+        manifest {
+            attributes("Vaadin-Widgetsets": "com.haulmont.charts.toolkit.gwt.ChartsWidgetSet")
         }
     }
-    start.execute()
+}
+
+configure(chartsWebModule) {
+    configurations {
+        webcontent
+        gwtBuilding
+    }
+
+    dependencies {        
+        compile(chartsGlobalModule)
+        compile(cubaWeb)
+        
+        provided(chartsWebToolkitModule)
+        provided(cubaWebToolkit)
+        provided(gwtUser)
+        provided(gwtDev)
+        provided(gwtServlets)
+        provided(validationApi)
+        provided(servletApi)
+        provided(cubaWeb)
+
+        gwtBuilding(gwtUser)        
+        gwtBuilding(gwtDev)
+        gwtBuilding(gwtServlets)
+        gwtBuilding(validationApi + [classifier: 'sources'])
+        gwtBuilding(cubaWebToolkit + [classifier: 'sources'])
+        
+        webcontent(group: 'com.haulmont.cuba', name: 'cuba-web', version: platformVersion, classifier: 'web', ext: 'zip')        
+    }
+    
+    jar {
+        manifest {
+            attributes("Vaadin-Widgetsets": "com.haulmont.charts.toolkit.gwt.ChartsWidgetSet")
+        }
+    }
+
+    task enhanceTheme(dependsOn: compileJava) << {
+        File outDir = new File("$buildDir/web")
+        def webcontentArtefacts = configurations.webcontent.resolvedConfiguration.getResolvedArtifacts()
+        File cubaWebJar = webcontentArtefacts.find { it.name == 'cuba-web' }.file
+        copy {
+            from zipTree(cubaWebJar)
+            from file('web')
+            into outDir
+            include '**/themes/peyto/**/*'
+            includeEmptyDirs = false
+            overwrite = true
+        }
+
+        ant.taskdef(name: 'enhanceTheme', classname: 'com.haulmont.thesis.ant.EnhanceThemeTask', 
+                    classpath: configurations.compile.asPath + File.pathSeparator + configurations.provided.asPath)
+        ant.enhanceTheme(themeDir: new File(outDir, '/VAADIN/themes/peyto'))
+    }
+
+    File webOutDir = new File("$buildDir/web")
+
+    // task buildGwt(dependsOn: enhanceTheme) << {
+    task buildGwt(dependsOn: compileJava) << {
+        File widgetsetsDir = new File(webOutDir, "VAADIN/widgetsets")
+
+        if (!widgetsetsDir.exists()) {
+            File webToolkitSrcDir = new File(chartsWebToolkitModule.projectDir, 'src')
+
+            def gwtBuildingArtifacts = configurations.gwtBuilding.resolvedConfiguration.getResolvedArtifacts()
+            File validationSrcJar = gwtBuildingArtifacts.find { it.name == 'validation-api' }.file
+            File cubaWebToolkitSrcJar = gwtBuildingArtifacts.find { it.name == 'cuba-web-toolkit' }.file
+
+            def providedArtefacts = configurations.provided.resolvedConfiguration.getResolvedArtifacts()
+            File cubaWebToolkitJar = providedArtefacts.find { it.name == 'cuba-web-toolkit' }.file
+            File cubaWebToolkitClassesDir = new File("$buildDir/tmp/cuba-web-toolkit-classes")
+            copy {
+                from zipTree(cubaWebToolkitJar)
+                into cubaWebToolkitClassesDir
+            }
+
+            def mainClasspath = sourceSets.main.compileClasspath.findAll { !it.name.contains('jdtcore') }
+            mainClasspath.add(0, cubaWebToolkitClassesDir)
+
+            File cubaWebJar = providedArtefacts.find { it.name == 'cuba-web' }.file
+            File cubaWebClassesDir = new File("$buildDir/tmp/cuba-web-classes")
+            copy {
+              from zipTree(cubaWebJar)
+              into cubaWebClassesDir
+            }
+
+            mainClasspath.add(0, cubaWebClassesDir)
+
+            javaexec {
+                main = 'com.google.gwt.dev.Compiler'
+                classpath(validationSrcJar, cubaWebToolkitSrcJar, webToolkitSrcDir,
+                          chartsWebToolkitModule.sourceSets.main.classesDir, sourceSets.main.classesDir, mainClasspath)
+                args('-war', widgetsetsDir.absolutePath, 
+                     '-style', 'OBF', 
+                     '-localWorkers', '2',
+                     //'-logLevel', 'DEBUG', 
+                     'com.haulmont.charts.toolkit.gwt.ChartsWidgetSet')
+                jvmArgs('-Xmx512m', '-Xss8m', '-XX:MaxPermSize=256m', '-Djava.awt.headless=true', /*'-Xdebug', '-Xrunjdwp:transport=dt_socket,server=y,suspend=y,address=8000'*/)
+            }
+            ant.delete(dir: new File(widgetsetsDir, 'WEB-INF'))
+        } else {
+            println "Widgetsets dir exists, skip build GWT"
+        }
+    }
+    assemble.dependsOn buildGwt
+    
+    task webArchive(dependsOn: buildGwt, type: Zip) {
+        from file('web')
+        from webOutDir
+        exclude '**/web.xml', '**/app.properties'
+        classifier = 'web'
+    }
+
+    artifacts {
+        archives webArchive
+    }
 }

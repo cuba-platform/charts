@@ -6,7 +6,8 @@
 
 rootProject.name = 'cuba-charts'
 
-include(':charts-global', ':charts-core', ':charts-gui', ':charts-web')
+include(':charts-global', ':charts-web', ':charts-web-toolkit')
 
 project(':charts-global').projectDir = new File(settingsDir, 'modules/global')
 project(':charts-web').projectDir = new File(settingsDir, 'modules/web')
+project(':charts-web-toolkit').projectDir = new File(settingsDir, 'modules/web-toolkit')
