@@ -46,7 +46,6 @@ def validationApi = [group: 'javax.validation', name: 'validation-api', version:
 
 def cubaWeb = [group: 'com.haulmont.cuba', name: 'cuba-web', version: platformVersion]
 def cubaGui = [group: 'com.haulmont.cuba', name: 'cuba-gui', version: platformVersion]
-def cubaWebToolkit = [group: 'com.haulmont.cuba', name: 'cuba-web-toolkit', version: platformVersion]
 
 configure([chartsGlobalModule, chartsGuiModule, chartsWebModule, chartsWebToolkitModule]) {
     apply(plugin: 'java')
@@ -92,7 +91,6 @@ configure(chartsGuiModule) {
 
 configure(chartsWebToolkitModule) {
     dependencies {
-        compile(cubaWebToolkit)
         compile(vaadin)
 
         provided(gwtUser)
@@ -119,7 +117,6 @@ configure(chartsWebModule) {
 
         provided(chartsGuiModule)
         provided(chartsWebToolkitModule)
-        provided(cubaWebToolkit)
         provided(gwtUser)
         provided(gwtDev)
         provided(gwtServlets)
@@ -131,7 +128,6 @@ configure(chartsWebModule) {
         gwtBuilding(gwtDev)
         gwtBuilding(gwtServlets)
         gwtBuilding(validationApi + [classifier: 'sources'])
-        gwtBuilding(cubaWebToolkit + [classifier: 'sources'])
         
         webcontent(group: 'com.haulmont.cuba', name: 'cuba-web', version: platformVersion, classifier: 'web', ext: 'zip')        
     }
@@ -141,24 +137,6 @@ configure(chartsWebModule) {
             attributes("Vaadin-Widgetsets": "com.haulmont.charts.toolkit.gwt.ChartsWidgetSet")
         }
     }
-
-//    task enhanceTheme(dependsOn: compileJava) << {
-//        File outDir = new File("$buildDir/web")
-//        def webcontentArtefacts = configurations.webcontent.resolvedConfiguration.getResolvedArtifacts()
-//        File cubaWebJar = webcontentArtefacts.find { it.name == 'cuba-web' }.file
-//        copy {
-//            from zipTree(cubaWebJar)
-//            from file('web')
-//            into outDir
-//            include '**/themes/peyto/**/*'
-//            includeEmptyDirs = false
-//            overwrite = true
-//        }
-//
-//        ant.taskdef(name: 'enhanceTheme', classname: 'com.haulmont.thesis.ant.EnhanceThemeTask',
-//                    classpath: configurations.compile.asPath + File.pathSeparator + configurations.provided.asPath)
-//        ant.enhanceTheme(themeDir: new File(outDir, '/VAADIN/themes/peyto'))
-//    }
 
     File webOutDir = new File("$buildDir/web")
 
@@ -171,38 +149,26 @@ configure(chartsWebModule) {
 
             def gwtBuildingArtifacts = configurations.gwtBuilding.resolvedConfiguration.getResolvedArtifacts()
             File validationSrcJar = gwtBuildingArtifacts.find { it.name == 'validation-api' }.file
-            File cubaWebToolkitSrcJar = gwtBuildingArtifacts.find { it.name == 'cuba-web-toolkit' }.file
 
-            def providedArtefacts = configurations.provided.resolvedConfiguration.getResolvedArtifacts()
-            File cubaWebToolkitJar = providedArtefacts.find { it.name == 'cuba-web-toolkit' }.file
-            File cubaWebToolkitClassesDir = new File("$buildDir/tmp/cuba-web-toolkit-classes")
-            copy {
-                from zipTree(cubaWebToolkitJar)
-                into cubaWebToolkitClassesDir
+            def mainClasspath = sourceSets.main.compileClasspath.findAll {
+                !it.name.contains('jdtcore') && !it.name.contains('popupbutton')
             }
-
-            def mainClasspath = sourceSets.main.compileClasspath.findAll { !it.name.contains('jdtcore') }
-            mainClasspath.add(0, cubaWebToolkitClassesDir)
-
-            File cubaWebJar = providedArtefacts.find { it.name == 'cuba-web' }.file
-            File cubaWebClassesDir = new File("$buildDir/tmp/cuba-web-classes")
-            copy {
-              from zipTree(cubaWebJar)
-              into cubaWebClassesDir
-            }
-
-            mainClasspath.add(0, cubaWebClassesDir)
 
             javaexec {
                 main = 'com.google.gwt.dev.Compiler'
-                classpath(validationSrcJar, cubaWebToolkitSrcJar, webToolkitSrcDir,
-                          chartsWebToolkitModule.sourceSets.main.classesDir, sourceSets.main.classesDir, mainClasspath)
+                classpath(
+                        mainClasspath,
+                        validationSrcJar,
+                        webToolkitSrcDir,
+                        sourceSets.main.classesDir,
+                        chartsWebToolkitModule.sourceSets.main.classesDir)
                 args('-war', widgetsetsDir.absolutePath, 
                      '-style', 'OBF', 
                      '-localWorkers', '2',
                      //'-logLevel', 'DEBUG', 
                      'com.haulmont.charts.toolkit.gwt.ChartsWidgetSet')
-                jvmArgs('-Xmx512m', '-Xss8m', '-XX:MaxPermSize=256m', '-Djava.awt.headless=true', /*'-Xdebug', '-Xrunjdwp:transport=dt_socket,server=y,suspend=y,address=8000'*/)
+                jvmArgs('-Xmx512m', '-Xss8m', '-XX:MaxPermSize=256m', '-Djava.awt.headless=true',
+                /*'-Xdebug', '-Xrunjdwp:transport=dt_socket,server=y,suspend=y,address=8000'*/)
             }
             ant.delete(dir: new File(widgetsetsDir, 'WEB-INF'))
         } else {
