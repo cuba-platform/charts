@@ -1,27 +1,19 @@
 /*
- * Copyright (c) 2008 Haulmont Technology Ltd. All Rights Reserved.
+ * Copyright (c) 2011 Haulmont Technology Ltd. All Rights Reserved.
  * Haulmont Technology proprietary and confidential.
  * Use is subject to license terms.
-
- * Author: Nikolay Gorodnov
- * Created: 02.09.2010 10:06:44
- *
- * $Id$
  */
-package com.haulmont.cuba.web.toolkit.ui.charts.jfree;
+package com.haulmont.charts.web.toolkit.ui.charts.jfree;
 
-import com.haulmont.cuba.web.App;
-import com.haulmont.cuba.web.toolkit.ui.charts.*;
-import com.haulmont.cuba.web.toolkit.ui.charts.BarChart;
-import com.haulmont.cuba.web.toolkit.ui.charts.Chart;
-import com.haulmont.cuba.web.toolkit.ui.charts.LineChart;
-import com.haulmont.cuba.web.toolkit.ui.charts.PieChart;
-import com.haulmont.cuba.web.toolkit.ui.charts.XYChartRow;
-import com.haulmont.cuba.web.toolkit.ui.charts.XYLineChart;
+import com.haulmont.charts.web.toolkit.ui.charts.*;
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
-import org.jfree.chart.*;
-import org.jfree.chart.axis.*;
+import org.jfree.chart.ChartFactory;
+import org.jfree.chart.ChartUtilities;
+import org.jfree.chart.axis.DateAxis;
+import org.jfree.chart.axis.NumberAxis;
+import org.jfree.chart.axis.NumberAxis3D;
+import org.jfree.chart.axis.ValueAxis;
 import org.jfree.chart.plot.PiePlot;
 import org.jfree.chart.plot.PlotOrientation;
 import org.jfree.chart.title.TextTitle;
@@ -35,11 +27,7 @@ import javax.servlet.http.HttpServletResponse;
 import java.awt.*;
 import java.io.IOException;
 import java.io.OutputStream;
-import java.text.DateFormat;
-import java.text.ParseException;
-import java.text.SimpleDateFormat;
 import java.util.Date;
-import java.util.Iterator;
 
 public class JFreeChartDataProvider implements ChartDataProvider<JFreeChart> {
     private static final long serialVersionUID = -8688971084440222503L;

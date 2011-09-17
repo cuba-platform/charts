@@ -6,6 +6,17 @@
 
 package com.haulmont.charts.web.controllers;
 
+import com.haulmont.cuba.core.sys.AppContext;
+import com.haulmont.cuba.core.sys.SecurityContext;
+import com.haulmont.cuba.security.global.UserSession;
+import com.haulmont.cuba.web.controllers.ControllerUtils;
+import com.haulmont.cuba.web.sys.CubaApplicationContext;
+import com.haulmont.cuba.web.sys.CubaCommunicationManager;
+import com.haulmont.cuba.web.toolkit.ui.charts.Chart;
+import com.haulmont.cuba.web.toolkit.ui.charts.ChartDataProvider;
+import com.haulmont.cuba.web.toolkit.ui.charts.ChartDataProviderFactory;
+import com.haulmont.cuba.web.toolkit.ui.charts.ChartException;
+import com.vaadin.Application;
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
 import org.springframework.stereotype.Controller;
@@ -16,6 +27,9 @@ import org.springframework.web.servlet.ModelAndView;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
+import java.net.MalformedURLException;
+import java.net.URL;
+import java.util.Collection;
 
 /**
  * <p>$Id$</p>
@@ -27,7 +41,9 @@ public class ChartRenderingController {
 
     private static Log log = LogFactory.getLog(ChartRenderingController.class);
 
-    @RequestMapping(value = "/chart", method = RequestMethod.GET)
+    public final static String RENDERING_URL = "chart";
+
+    @RequestMapping(value = "/" + RENDERING_URL, method = RequestMethod.GET)
     public ModelAndView render(
             HttpServletRequest request,
             HttpServletResponse response
@@ -35,6 +51,135 @@ public class ChartRenderingController {
 
         // Handle chart requests
 
+        if (request.getSession() == null) {
+            accessDenied(response);
+            return null;
+        }
+
+        String chartId = request.getParameter("id");
+        if (chartId == null) {
+            badRequest(response);
+            return null;
+        }
+
+        UserSession userSession = ControllerUtils.getUserSession(request);
+        if (userSession == null) {
+            badRequest(response);
+            return null;
+        }
+
+        CubaApplicationContext context = CubaApplicationContext.getApplicationContext(request.getSession());
+        Application application = findApplication(request, context);
+        if (application == null) {
+            badRequest(response);
+            return null;
+        }
+        CubaCommunicationManager communicationManager = (CubaCommunicationManager) context.getCommunicationManager(application);
+
+        Chart chart = (Chart) communicationManager.getVariableComponent(chartId);
+        if (chart == null) {
+            log.warn(String.format("Non-existent chart component, VAR_PID=%s", chartId));
+            internalError(response);
+            return null;
+        }
+
+        AppContext.setSecurityContext(new SecurityContext(userSession));
+
+        String vendor = chart.getVendor();
+        ChartDataProvider dataProvider = ChartDataProviderFactory.getDataProvider(vendor);
+
+        try {
+            dataProvider.handleDataRequest(request, response, chart);
+            response.setStatus(HttpServletResponse.SC_OK);
+        } catch (ChartException e) {
+            internalError(response);
+            return null;
+        }
+
+        AppContext.setSecurityContext(null);
+
         return null;
+    }
+
+    private URL getApplicationUrl(HttpServletRequest request)
+            throws MalformedURLException {
+        final URL reqURL = new URL(
+                (request.isSecure() ? "https://" : "http://")
+                        + request.getServerName()
+                        + ((request.isSecure() && request.getServerPort() == 443)
+                        || (!request.isSecure() && request
+                        .getServerPort() == 80) ? "" : ":"
+                        + request.getServerPort())
+                        + request.getRequestURI());
+        String servletPath;
+        if (request.getAttribute("javax.servlet.include.servlet_path") != null) {
+            // this is an include request
+            servletPath = request.getAttribute(
+                    "javax.servlet.include.context_path").toString()
+                    + request
+                    .getAttribute("javax.servlet.include.servlet_path");
+
+        } else {
+            servletPath = request.getContextPath() + request.getServletPath();
+        }
+
+        if (servletPath.length() == 0
+                || servletPath.charAt(servletPath.length() - 1) != '/') {
+            servletPath = servletPath + "/";
+        }
+        return new URL(reqURL, servletPath);
+    }
+
+    private Application findApplication(HttpServletRequest request, CubaApplicationContext context) {
+        // Gets application list for the session.
+        final Collection<Application> applications = context.getApplications();
+
+        // Search for the application (using the application URI) from the list
+        for (final Application sessionApplication : applications) {
+            final String sessionApplicationPath = sessionApplication.getURL().getPath();
+
+            String requestApplicationPath;
+            try {
+                requestApplicationPath = getApplicationUrl(request).getPath();
+            } catch (MalformedURLException e) {
+                return null;
+            }
+
+            if (requestApplicationPath.equals(sessionApplicationPath)) {
+                // Found a running application
+                if (sessionApplication.isRunning()) {
+                    return sessionApplication;
+                }
+                break;
+            }
+        }
+        return null;
+    }
+
+    /**
+     * Set response status to SC_UNAUTHORIZED
+     *
+     * @param response Response
+     */
+    public void accessDenied(HttpServletResponse response) {
+        response.setStatus(HttpServletResponse.SC_UNAUTHORIZED);
+    }
+
+    /**
+     * Set response status to SC_INTERNAL_SERVER_ERROR
+     *
+     * @param response Response
+     */
+    public void internalError(HttpServletResponse response) {
+        response.setStatus(HttpServletResponse.SC_INTERNAL_SERVER_ERROR);
+    }
+
+    /**
+     * Set response status to SC_BAD_REQUEST
+     *
+     * @param response Response
+     */
+    public void badRequest(HttpServletResponse response) {
+        response.setStatus(HttpServletResponse.SC_BAD_REQUEST);
     }
 }

@@ -5,16 +5,11 @@
  */
 package com.haulmont.charts.web.toolkit.ui.charts;
 
-import com.vaadin.data.Container;
-import com.vaadin.data.Item;
-import com.vaadin.data.Property;
-import com.vaadin.data.util.IndexedContainer;
+import com.haulmont.charts.web.controllers.ChartRenderingController;
+import com.haulmont.cuba.web.controllers.ControllerUtils;
 import com.vaadin.terminal.PaintException;
 import com.vaadin.terminal.PaintTarget;
 import com.vaadin.ui.AbstractComponent;
-
-import java.io.Serializable;
-import java.util.*;
 
 public abstract class ChartComponent extends AbstractComponent implements Chart {
     private static final long serialVersionUID = 8749174467182489471L;
@@ -61,6 +56,8 @@ public abstract class ChartComponent extends AbstractComponent implements Chart 
         super.paintContent(target);
         if (hasLegend) {
             target.addAttribute("legend", true);
+            String controllerUrl = ControllerUtils.getControllerURL(ChartRenderingController.RENDERING_URL);
+            target.addAttribute("renderUrl", controllerUrl);
         }
         target.addAttribute("cwidth", chartWidth);
         target.addAttribute("cheight", chartHeight);

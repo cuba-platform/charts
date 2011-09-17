@@ -24,7 +24,7 @@ public class JFreeChartRenderer extends SimplePanel implements Paintable {
 
     private Image image = new Image();
 
-    private int reloadState;
+    private int retryCounter;
 
     public JFreeChartRenderer() {
         buildHtmlSnippet();
@@ -37,25 +37,25 @@ public class JFreeChartRenderer extends SimplePanel implements Paintable {
 
     public void updateFromUIDL(UIDL uidl, ApplicationConnection client) {
         String chartId = uidl.getId();
+        String renderUrl = uidl.getStringAttribute("renderUrl");
+        renderUrl += renderUrl.endsWith("/") ? "" : "/";
 
         if (client.updateComponent(this, uidl, false)) {
             return;
         }
 
-        reloadState = 5;
-
-        final String uri = client.getAppUri() + (client.getAppUri().endsWith("/") ? "" : "/")
-                + "chart/?id=" + chartId
-                + "&t=" + System.currentTimeMillis();
+        final String uri = renderUrl + "?id=" + chartId + "&t=" + System.currentTimeMillis();
 
         image.setUrl(uri);
+
+        retryCounter = 5;
 
         final Timer t = new Timer() {
             @Override
             public void run() {
-                if (image.getOffsetHeight() == 0 && image.getOffsetWidth() == 0 && reloadState > 0) {
+                if (image.getOffsetHeight() == 0 && image.getOffsetWidth() == 0 && retryCounter > 0) {
                     image.setUrl(uri);
-                    --reloadState;
+                    --retryCounter;
                 } else {
                     this.cancel();
                 }

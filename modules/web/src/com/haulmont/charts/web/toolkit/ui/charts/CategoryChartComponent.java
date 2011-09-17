@@ -108,8 +108,7 @@ public abstract class CategoryChartComponent extends ChartComponent implements C
             return null;
         }
 
-        Object o = p.getValue();
-        return o;
+        return p.getValue();
     }
 
     public void setValue(Object rowId, Object propertyId, Object value) {
