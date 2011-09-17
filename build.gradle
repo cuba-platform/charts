@@ -157,11 +157,11 @@ configure(chartsWebModule) {
             javaexec {
                 main = 'com.google.gwt.dev.Compiler'
                 classpath(
-                        mainClasspath,
                         validationSrcJar,
                         webToolkitSrcDir,
+                        chartsWebToolkitModule.sourceSets.main.classesDir,
                         sourceSets.main.classesDir,
-                        chartsWebToolkitModule.sourceSets.main.classesDir)
+                        mainClasspath)
                 args('-war', widgetsetsDir.absolutePath, 
                      '-style', 'OBF', 
                      '-localWorkers', '2',
