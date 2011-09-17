@@ -1,18 +1,11 @@
 /*
- * Copyright (c) 2008 Haulmont Technology Ltd. All Rights Reserved.
+ * Copyright (c) 2011 Haulmont Technology Ltd. All Rights Reserved.
  * Haulmont Technology proprietary and confidential.
  * Use is subject to license terms.
-
- * Author: Nikolay Gorodnov
- * Created: 07.09.2010 15:28:07
- *
- * $Id$
  */
-package com.haulmont.cuba.gui.components.charts;
+package com.haulmont.charts.gui.components.charts;
 
-import com.haulmont.chile.core.model.MetaPropertyPath;
 import com.haulmont.cuba.gui.components.Component;
-import com.haulmont.cuba.gui.data.CollectionDatasource;
 
 /** Root chart component */
 public interface Chart extends Component, Component.Wrapper, Component.BelongToFrame,
