@@ -6,8 +6,8 @@
 
 package com.haulmont.charts.gui.xml.layout.loaders.charts;
 
+import com.haulmont.charts.gui.components.charts.XYLineChart;
 import com.haulmont.cuba.gui.components.Component;
-import com.haulmont.cuba.gui.components.charts.XYLineChart;
 import com.haulmont.cuba.gui.xml.layout.ComponentsFactory;
 import org.dom4j.Element;
 

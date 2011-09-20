@@ -1,19 +1,13 @@
 /*
- * Copyright (c) 2008 Haulmont Technology Ltd. All Rights Reserved.
+ * Copyright (c) 2011 Haulmont Technology Ltd. All Rights Reserved.
  * Haulmont Technology proprietary and confidential.
  * Use is subject to license terms.
-
- * Author: Nikolay Gorodnov
- * Created: 07.09.2010 16:53:23
- *
- * $Id$
  */
-package com.haulmont.cuba.web.gui.components.charts;
+package com.haulmont.charts.web.gui.components.charts;
 
-import com.haulmont.cuba.gui.components.charts.Chart;
+import com.haulmont.charts.gui.components.charts.Chart;
+import com.haulmont.charts.web.toolkit.ui.charts.ChartComponent;
 import com.haulmont.cuba.web.gui.components.WebAbstractComponent;
-import com.haulmont.cuba.web.gui.components.WebComponentsHelper;
-import com.haulmont.cuba.web.toolkit.ui.charts.ChartComponent;
 
 public abstract class WebAbstractChart<T extends ChartComponent>
         extends WebAbstractComponent<T>

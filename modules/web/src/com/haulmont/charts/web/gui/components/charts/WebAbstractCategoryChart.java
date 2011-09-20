@@ -4,25 +4,17 @@
  * Use is subject to license terms.
  */
 
-package com.haulmont.cuba.web.gui.components.charts;
+package com.haulmont.charts.web.gui.components.charts;
 
-import com.haulmont.chile.core.model.MetaProperty;
-import com.haulmont.chile.core.model.MetaPropertyPath;
-import com.haulmont.cuba.gui.components.charts.CategoryChart;
-import com.haulmont.cuba.gui.components.charts.Chart;
-import com.haulmont.cuba.gui.data.CategoryChartDatasource;
+import com.haulmont.charts.gui.components.charts.CategoryChart;
+import com.haulmont.charts.gui.data.CategoryChartDatasource;
+import com.haulmont.charts.web.toolkit.ui.charts.CategoryChartComponent;
 import com.haulmont.cuba.gui.data.CollectionDatasource;
-import com.haulmont.cuba.web.gui.components.WebAbstractComponent;
 import com.haulmont.cuba.web.gui.data.CollectionDsWrapper;
 import com.haulmont.cuba.web.gui.data.DsManager;
-import com.haulmont.cuba.web.toolkit.ui.charts.CategoryChartComponent;
-import com.haulmont.cuba.web.toolkit.ui.charts.ChartComponent;
 import com.vaadin.data.util.IndexedContainer;
 
 import java.util.Collection;
-import java.util.LinkedHashMap;
-import java.util.LinkedHashSet;
-import java.util.Map;
 
 /**
  * <p>$Id$</p>

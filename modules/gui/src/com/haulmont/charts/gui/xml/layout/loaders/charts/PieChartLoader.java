@@ -5,10 +5,10 @@
  */
 package com.haulmont.charts.gui.xml.layout.loaders.charts;
 
+import com.haulmont.charts.gui.components.charts.CategoryChart;
+import com.haulmont.charts.gui.components.charts.PieChart;
 import com.haulmont.chile.core.model.MetaProperty;
 import com.haulmont.cuba.gui.components.Component;
-import com.haulmont.cuba.gui.components.charts.CategoryChart;
-import com.haulmont.cuba.gui.components.charts.PieChart;
 import com.haulmont.cuba.gui.data.CollectionDatasource;
 import com.haulmont.cuba.gui.xml.layout.ComponentsFactory;
 import org.apache.commons.lang.StringUtils;

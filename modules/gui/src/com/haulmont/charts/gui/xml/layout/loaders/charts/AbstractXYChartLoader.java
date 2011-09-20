@@ -6,15 +6,14 @@
 
 package com.haulmont.charts.gui.xml.layout.loaders.charts;
 
+import com.haulmont.charts.gui.components.charts.Chart;
+import com.haulmont.charts.gui.components.charts.XYChart;
+import com.haulmont.charts.gui.components.charts.XYChartRow;
+import com.haulmont.charts.gui.data.XYChartRowDatasource;
 import com.haulmont.chile.core.model.MetaProperty;
 import com.haulmont.cuba.gui.components.Component;
-import com.haulmont.cuba.gui.components.charts.Chart;
-import com.haulmont.cuba.gui.components.charts.XYChart;
-import com.haulmont.cuba.gui.components.charts.XYChartRow;
 import com.haulmont.cuba.gui.data.CollectionDatasource;
-import com.haulmont.cuba.gui.data.XYChartRowDatasource;
 import com.haulmont.cuba.gui.xml.layout.ComponentsFactory;
-
 import org.apache.commons.lang.StringUtils;
 import org.dom4j.Element;
 

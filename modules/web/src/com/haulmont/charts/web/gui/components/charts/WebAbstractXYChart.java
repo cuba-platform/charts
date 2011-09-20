@@ -1,12 +1,16 @@
-package com.haulmont.cuba.web.gui.components.charts;
+/*
+ * Copyright (c) 2011 Haulmont Technology Ltd. All Rights Reserved.
+ * Haulmont Technology proprietary and confidential.
+ * Use is subject to license terms.
+ */
 
-import com.haulmont.cuba.gui.components.charts.CategoryChart;
-import com.haulmont.cuba.gui.components.charts.XYChart;
-import com.haulmont.cuba.gui.components.charts.XYChartRow;
-import com.haulmont.cuba.web.gui.components.WebComponentsHelper;
-import com.haulmont.cuba.web.toolkit.ui.charts.CategoryChartComponent;
-import com.haulmont.cuba.web.toolkit.ui.charts.XYChartComponent;
-import com.haulmont.cuba.web.toolkit.ui.charts.XYChartRowComponent;
+package com.haulmont.charts.web.gui.components.charts;
+
+import com.haulmont.charts.gui.components.charts.XYChart;
+import com.haulmont.charts.gui.components.charts.XYChartRow;
+import com.haulmont.charts.web.gui.components.WebChartsHelper;
+import com.haulmont.charts.web.toolkit.ui.charts.XYChartComponent;
+import com.haulmont.charts.web.toolkit.ui.charts.XYChartRowComponent;
 
 import java.util.ArrayList;
 import java.util.Collection;
@@ -34,18 +38,18 @@ public abstract class WebAbstractXYChart<T extends XYChartComponent>
     }
 
     public AxisType getArgumentAxisType() {
-        return WebComponentsHelper.convertChartAxisType(component.getArgumentAxisType());
+        return WebChartsHelper.convertChartAxisType(component.getArgumentAxisType());
     }
 
     public void setArgumentAxisType(AxisType axisType) {
-        component.setArgumentAxisType(WebComponentsHelper.convertChartAxisType(axisType));
+        component.setArgumentAxisType(WebChartsHelper.convertChartAxisType(axisType));
     }
 
     public AxisType getValueAxisType() {
-        return WebComponentsHelper.convertChartAxisType(component.getValueAxisType());
+        return WebChartsHelper.convertChartAxisType(component.getValueAxisType());
     }
 
     public void setValueAxisType(AxisType axisType) {
-        component.setValueAxisType(WebComponentsHelper.convertChartAxisType(axisType));
+        component.setValueAxisType(WebChartsHelper.convertChartAxisType(axisType));
     }
 }

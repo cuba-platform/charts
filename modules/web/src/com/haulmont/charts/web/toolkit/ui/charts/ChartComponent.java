@@ -56,8 +56,6 @@ public abstract class ChartComponent extends AbstractComponent implements VChart
         super.paintContent(target);
         if (hasLegend) {
             target.addAttribute("legend", true);
-            String controllerUrl = ControllerUtils.getControllerURL(ChartRenderingController.RENDERING_URL);
-            target.addAttribute("renderUrl", controllerUrl);
         }
         target.addAttribute("cwidth", chartWidth);
         target.addAttribute("cheight", chartHeight);

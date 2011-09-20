@@ -1,21 +1,14 @@
 /*
- * Copyright (c) 2008 Haulmont Technology Ltd. All Rights Reserved.
+ * Copyright (c) 2011 Haulmont Technology Ltd. All Rights Reserved.
  * Haulmont Technology proprietary and confidential.
  * Use is subject to license terms.
-
- * Author: Nikolay Gorodnov
- * Created: 07.09.2010 17:08:45
- *
- * $Id$
  */
-package com.haulmont.cuba.web.gui.components.charts.jfree;
+package com.haulmont.charts.web.gui.components.charts.jfree;
 
-import com.haulmont.cuba.gui.components.charts.BarChart;
-import com.haulmont.cuba.gui.components.charts.Chart;
-import com.haulmont.cuba.web.gui.components.WebComponentsHelper;
-import com.haulmont.cuba.web.gui.components.charts.WebAbstractCategoryChart;
-import com.haulmont.cuba.web.gui.components.charts.WebAbstractChart;
-import com.haulmont.cuba.web.toolkit.ui.charts.jfree.JFreeBarChart;
+import com.haulmont.charts.gui.components.charts.BarChart;
+import com.haulmont.charts.web.gui.components.WebChartsHelper;
+import com.haulmont.charts.web.gui.components.charts.WebAbstractCategoryChart;
+import com.haulmont.charts.web.toolkit.ui.charts.jfree.JFreeBarChart;
 
 public class WebJFreeBarChart extends WebAbstractCategoryChart<JFreeBarChart> implements BarChart {
     private static final long serialVersionUID = -1225096992495156855L;
@@ -33,11 +26,11 @@ public class WebJFreeBarChart extends WebAbstractCategoryChart<JFreeBarChart> im
     }
 
     public Orientation getOrientation() {
-        return WebComponentsHelper.convertChartOrientation(component.getOrientation());
+        return WebChartsHelper.convertChartOrientation(component.getOrientation());
     }
 
     public void setOrientation(Orientation orientation) {
-        component.setOrientation(WebComponentsHelper.convertChartOrientation(orientation));
+        component.setOrientation(WebChartsHelper.convertChartOrientation(orientation));
     }
 
     public String getArgumentAxisLabel() {
@@ -57,10 +50,10 @@ public class WebJFreeBarChart extends WebAbstractCategoryChart<JFreeBarChart> im
     }
 
     public AxisType getValueAxisType() {
-        return WebComponentsHelper.convertChartAxisType(component.getValueAxisType());
+        return WebChartsHelper.convertChartAxisType(component.getValueAxisType());
     }
 
     public void setValueAxisType(AxisType axisType) {
-        component.setValueAxisType(WebComponentsHelper.convertChartAxisType(axisType));
+        component.setValueAxisType(WebChartsHelper.convertChartAxisType(axisType));
     }
 }

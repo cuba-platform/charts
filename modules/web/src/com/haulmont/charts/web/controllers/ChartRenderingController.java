@@ -12,10 +12,10 @@ import com.haulmont.cuba.security.global.UserSession;
 import com.haulmont.cuba.web.controllers.ControllerUtils;
 import com.haulmont.cuba.web.sys.CubaApplicationContext;
 import com.haulmont.cuba.web.sys.CubaCommunicationManager;
-import com.haulmont.cuba.web.toolkit.ui.charts.Chart;
-import com.haulmont.cuba.web.toolkit.ui.charts.ChartDataProvider;
-import com.haulmont.cuba.web.toolkit.ui.charts.ChartDataProviderFactory;
-import com.haulmont.cuba.web.toolkit.ui.charts.ChartException;
+import com.haulmont.charts.web.toolkit.ui.charts.VChart;
+import com.haulmont.charts.web.toolkit.ui.charts.VChartDataProvider;
+import com.haulmont.charts.web.toolkit.ui.charts.ChartDataProviderFactory;
+import com.haulmont.charts.web.toolkit.ui.charts.ChartException;
 import com.vaadin.Application;
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
@@ -76,7 +76,7 @@ public class ChartRenderingController {
         }
         CubaCommunicationManager communicationManager = (CubaCommunicationManager) context.getCommunicationManager(application);
 
-        Chart chart = (Chart) communicationManager.getVariableComponent(chartId);
+        VChart chart = (VChart) communicationManager.getVariableComponent(chartId);
         if (chart == null) {
             log.warn(String.format("Non-existent chart component, VAR_PID=%s", chartId));
             internalError(response);
@@ -86,7 +86,7 @@ public class ChartRenderingController {
         AppContext.setSecurityContext(new SecurityContext(userSession));
 
         String vendor = chart.getVendor();
-        ChartDataProvider dataProvider = ChartDataProviderFactory.getDataProvider(vendor);
+        VChartDataProvider dataProvider = ChartDataProviderFactory.getDataProvider(vendor);
 
         try {
             dataProvider.handleDataRequest(request, response, chart);
@@ -145,7 +145,7 @@ public class ChartRenderingController {
                 return null;
             }
 
-            if (requestApplicationPath.equals(sessionApplicationPath)) {
+            if (requestApplicationPath.startsWith(sessionApplicationPath)) {
                 // Found a running application
                 if (sessionApplication.isRunning()) {
                     return sessionApplication;

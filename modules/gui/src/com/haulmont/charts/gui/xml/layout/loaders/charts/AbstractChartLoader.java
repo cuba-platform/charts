@@ -5,8 +5,8 @@
  */
 package com.haulmont.charts.gui.xml.layout.loaders.charts;
 
+import com.haulmont.charts.gui.components.charts.Chart;
 import com.haulmont.cuba.gui.components.Component;
-import com.haulmont.cuba.gui.components.charts.Chart;
 import com.haulmont.cuba.gui.xml.layout.ComponentsFactory;
 import com.haulmont.cuba.gui.xml.layout.loaders.ComponentLoader;
 import org.apache.commons.lang.StringUtils;
@@ -21,7 +21,7 @@ public abstract class AbstractChartLoader extends ComponentLoader {
             throws InstantiationException, IllegalAccessException {
 
         String vendor = element.attributeValue("vendor");
-        Chart component = factory.createChart(vendor, element.getName());
+        Chart component = factory.createComponent(element.getName() + "@" + vendor);
 
         assignXmlDescriptor(component, element);
         loadId(component, element);

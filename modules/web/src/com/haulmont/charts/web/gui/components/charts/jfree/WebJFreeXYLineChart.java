@@ -4,14 +4,12 @@
  * Use is subject to license terms.
  */
 
-package com.haulmont.cuba.web.gui.components.charts.jfree;
+package com.haulmont.charts.web.gui.components.charts.jfree;
 
-import com.haulmont.cuba.gui.components.charts.Chart;
-import com.haulmont.cuba.gui.components.charts.XYLineChart;
-import com.haulmont.cuba.web.gui.components.WebComponentsHelper;
-import com.haulmont.cuba.web.gui.components.charts.WebAbstractXYChart;
-import com.haulmont.cuba.web.toolkit.ui.charts.jfree.JFreeLineChart;
-import com.haulmont.cuba.web.toolkit.ui.charts.jfree.JFreeXYLineChart;
+import com.haulmont.charts.gui.components.charts.XYLineChart;
+import com.haulmont.charts.web.gui.components.WebChartsHelper;
+import com.haulmont.charts.web.gui.components.charts.WebAbstractXYChart;
+import com.haulmont.charts.web.toolkit.ui.charts.jfree.JFreeXYLineChart;
 
 /**
  * <p>$Id$</p>
@@ -26,11 +24,11 @@ public class WebJFreeXYLineChart extends WebAbstractXYChart<JFreeXYLineChart> im
     }
 
     public Orientation getOrientation() {
-        return WebComponentsHelper.convertChartOrientation(component.getOrientation());
+        return WebChartsHelper.convertChartOrientation(component.getOrientation());
     }
 
     public void setOrientation(Orientation orientation) {
-        component.setOrientation(WebComponentsHelper.convertChartOrientation(orientation));
+        component.setOrientation(WebChartsHelper.convertChartOrientation(orientation));
     }
 
     public String getArgumentAxisLabel() {

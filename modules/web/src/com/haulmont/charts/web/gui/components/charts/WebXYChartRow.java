@@ -1,19 +1,18 @@
-package com.haulmont.cuba.web.gui.components.charts;
+/*
+ * Copyright (c) 2011 Haulmont Technology Ltd. All Rights Reserved.
+ * Haulmont Technology proprietary and confidential.
+ * Use is subject to license terms.
+ */
 
-import com.haulmont.chile.core.model.MetaProperty;
-import com.haulmont.chile.core.model.MetaPropertyPath;
-import com.haulmont.cuba.gui.components.charts.Chart;
-import com.haulmont.cuba.gui.components.charts.XYChart;
-import com.haulmont.cuba.gui.components.charts.XYChartRow;
-import com.haulmont.cuba.gui.data.CategoryChartDatasource;
+package com.haulmont.charts.web.gui.components.charts;
+
+import com.haulmont.charts.gui.components.charts.XYChartRow;
+import com.haulmont.charts.gui.data.XYChartRowDatasource;
+import com.haulmont.charts.web.toolkit.ui.charts.XYChartRowComponent;
 import com.haulmont.cuba.gui.data.CollectionDatasource;
-import com.haulmont.cuba.gui.data.XYChartRowDatasource;
 import com.haulmont.cuba.web.gui.components.WebAbstractComponent;
 import com.haulmont.cuba.web.gui.data.CollectionDsWrapper;
 import com.haulmont.cuba.web.gui.data.DsManager;
-import com.haulmont.cuba.web.toolkit.ui.charts.XYChartComponent;
-import com.haulmont.cuba.web.toolkit.ui.charts.XYChartRowComponent;
-import com.haulmont.cuba.web.toolkit.ui.charts.jfree.JFreeXYLineChart;
 import com.vaadin.data.util.IndexedContainer;
 
 /**
