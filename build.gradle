@@ -6,7 +6,7 @@
 
 allprojects {
     artifactGroup = 'com.haulmont.charts'
-    artifactVersion = '3.0'
+    artifactVersion = '3.1'
     isSnapshot = true
 }
 
@@ -34,7 +34,7 @@ def chartsGuiModule = project(':charts-gui')
 def chartsWebModule = project(':charts-web')
 def chartsWebToolkitModule = project(':charts-web-toolkit')
 
-def platformVersion = '3.0-SNAPSHOT'
+def platformVersion = '3.1-SNAPSHOT'
 
 def servletApi = [group: 'org.apache.tomcat', name: 'servlet-api', version: '6.0.20']
 
@@ -75,17 +75,13 @@ configure([chartsGlobalModule, chartsGuiModule, chartsWebModule, chartsWebToolki
 }
 
 configure(chartsGlobalModule) {
-//    task enhance(dependsOn: [compileJava, processResources], type: CubaEnhancing) {
-//        persistenceXml = "$chartsGlobalModule.projectDir/src/charts-persistence.xml"
-//        metadataXml = "$chartsGlobalModule.projectDir/src/charts-metadata.xml"
-//    }
-//    classes.dependsOn compileJava, processResources
+
 }
 
 configure(chartsGuiModule) {
     dependencies {
-        compile(chartsGlobalModule)
         compile(cubaGui)
+        compile(chartsGlobalModule)
     }
 }
 
@@ -167,7 +163,7 @@ configure(chartsWebModule) {
                      '-localWorkers', '2',
                      //'-logLevel', 'DEBUG', 
                      'com.haulmont.charts.toolkit.gwt.ChartsWidgetSet')
-                jvmArgs('-Xmx512m', '-Xss8m', '-XX:MaxPermSize=256m', '-Djava.awt.headless=true',
+                jvmArgs('-Xmx512m', '-Xss8m', '-XX:MaxPermSize=256m', '-Djava.awt.headless=true'
                 /*'-Xdebug', '-Xrunjdwp:transport=dt_socket,server=y,suspend=y,address=8000'*/)
             }
             ant.delete(dir: new File(widgetsetsDir, 'WEB-INF'))
