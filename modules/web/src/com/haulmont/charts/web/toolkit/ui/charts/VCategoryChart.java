@@ -15,7 +15,7 @@ import java.util.Collection;
  *
  * @author zagumennikov
  */
-public interface CategoryChart extends Chart, Container.Viewer,
+public interface VCategoryChart extends VChart, Container.Viewer,
         Container, Container.ItemSetChangeNotifier, Container.ItemSetChangeListener,
         Container.PropertySetChangeNotifier, Container.PropertySetChangeListener {
 

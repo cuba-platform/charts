@@ -5,10 +5,11 @@
  */
 package com.haulmont.charts.web.toolkit.ui.charts;
 
-public interface LineChart
+public interface VBarChart
         extends
-        CategoryChart,
-        Chart.HasAxisLabels,
-        Chart.HasValueAxisType,
-        Chart.HasOrientation {
+        VCategoryChart,
+        VChart.HasAxisLabels,
+        VChart.HasValueAxisType,
+        VChart.ViewIn3D,
+        VChart.HasOrientation {
 }

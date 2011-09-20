@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="utf-8"?>
+<xsd:schema
+        targetNamespace="http://www.haulmont.com/schema/charts/gui/components.xsd"
+        xmlns="http://www.haulmont.com/schema/charts/gui/components.xsd"
+        xmlns:xsd="http://www.w3.org/2001/XMLSchema"
+        xmlns:cuba="http://www.haulmont.com/schema/cuba/gui/window.xsd"
+        elementFormDefault="qualified"
+        attributeFormDefault="unqualified">
+
+
+</xsd:schema>

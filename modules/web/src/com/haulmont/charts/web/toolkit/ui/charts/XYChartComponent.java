@@ -7,13 +7,7 @@
 package com.haulmont.charts.web.toolkit.ui.charts;
 
 import com.vaadin.data.Container;
-import com.vaadin.data.Item;
-import com.vaadin.data.Property;
-import com.vaadin.data.util.IndexedContainer;
-import com.vaadin.terminal.PaintTarget;
-import com.vaadin.terminal.Paintable;
 
-import java.io.Serializable;
 import java.util.*;
 
 /**
@@ -21,20 +15,20 @@ import java.util.*;
  *
  * @author zagumennikov
  */
-public abstract class XYChartComponent extends ChartComponent implements XYChart {
+public abstract class XYChartComponent extends ChartComponent implements VXYChart {
 
     private static final long serialVersionUID = -7433062042194011796L;
 
-    protected Collection<XYChartRow> rows = new ArrayList<XYChartRow>();
+    protected Collection<VXYChartRow> rows = new ArrayList<VXYChartRow>();
 
     protected AxisType argumentAxisType = AxisType.NUMBER;
     protected AxisType valueAxisType = AxisType.NUMBER;
 
-    public Collection<XYChartRow> getRows() {
+    public Collection<VXYChartRow> getRows() {
         return rows;
     }
 
-    public void addRow(XYChartRow row) {
+    public void addRow(VXYChartRow row) {
         rows.add(row);
         row.addListener((Container.ItemSetChangeListener)this);
         row.addListener((Container.PropertySetChangeListener)this);

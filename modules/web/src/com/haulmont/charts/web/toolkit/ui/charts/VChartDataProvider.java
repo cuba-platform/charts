@@ -9,7 +9,7 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.io.Serializable;
 
-public interface ChartDataProvider<T extends Chart> extends Serializable {
+public interface VChartDataProvider<T extends VChart> extends Serializable {
 
     void handleDataRequest(
             HttpServletRequest request,

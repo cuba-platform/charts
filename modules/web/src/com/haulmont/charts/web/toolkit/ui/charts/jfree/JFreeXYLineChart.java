@@ -6,15 +6,15 @@
 
 package com.haulmont.charts.web.toolkit.ui.charts.jfree;
 
-import com.haulmont.charts.web.toolkit.ui.charts.Chart;
-import com.haulmont.charts.web.toolkit.ui.charts.XYLineChart;
+import com.haulmont.charts.web.toolkit.ui.charts.VChart;
+import com.haulmont.charts.web.toolkit.ui.charts.VXYLineChart;
 
 /**
  * <p>$Id$</p>
  *
  * @author zagumennikov
  */
-public class JFreeXYLineChart extends JFreeXYChart implements XYLineChart {
+public class JFreeXYLineChart extends JFreeXYChart implements VXYLineChart {
     private static final long serialVersionUID = 8197598406862479049L;
 
     private String argumentAxisLabel;
@@ -29,7 +29,7 @@ public class JFreeXYLineChart extends JFreeXYChart implements XYLineChart {
         this.argumentAxisLabel = argumentAxisLabel;
     }
 
-    public Chart.Orientation getOrientation() {
+    public VChart.Orientation getOrientation() {
         return orientation;
     }
 

@@ -5,9 +5,9 @@
  */
 package com.haulmont.charts.web.toolkit.ui.charts.jfree;
 
-import com.haulmont.charts.web.toolkit.ui.charts.BarChart;
+import com.haulmont.charts.web.toolkit.ui.charts.VBarChart;
 
-public class JFreeBarChart extends JFreeCategoryChart implements BarChart {
+public class JFreeBarChart extends JFreeCategoryChart implements VBarChart {
     private static final long serialVersionUID = 2496407681381514463L;
 
     private String argumentAxisLabel;

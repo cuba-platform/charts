@@ -5,8 +5,8 @@
  */
 package com.haulmont.charts.web.toolkit.ui.charts.jfree;
 
-import com.haulmont.charts.web.toolkit.ui.charts.Chart;
+import com.haulmont.charts.web.toolkit.ui.charts.VChart;
 
-public interface JFreeChart extends Chart {
+public interface JFreeChart extends VChart {
     public static final String VENDOR = "jfree";
 }

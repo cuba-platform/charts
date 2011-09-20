@@ -3,13 +3,17 @@
  * Haulmont Technology proprietary and confidential.
  * Use is subject to license terms.
  */
+
 package com.haulmont.charts.web.toolkit.ui.charts;
 
-public interface BarChart
+/**
+ * <p>$Id$</p>
+ *
+ * @author zagumennikov
+ */
+public interface VXYLineChart
         extends
-        CategoryChart,
-        Chart.HasAxisLabels,
-        Chart.HasValueAxisType,
-        Chart.ViewIn3D,
-        Chart.HasOrientation {
+        VXYChart,
+        VChart.HasAxisLabels,
+        VChart.HasOrientation {
 }

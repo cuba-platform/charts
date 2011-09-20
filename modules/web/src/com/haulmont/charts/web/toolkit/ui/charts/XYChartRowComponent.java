@@ -9,12 +9,9 @@ package com.haulmont.charts.web.toolkit.ui.charts;
 import com.vaadin.data.Container;
 import com.vaadin.data.Item;
 import com.vaadin.data.Property;
-import com.vaadin.data.util.IndexedContainer;
 import com.vaadin.ui.AbstractComponent;
 
-import java.io.Serializable;
 import java.util.Collection;
-import java.util.Date;
 import java.util.LinkedHashSet;
 import java.util.Set;
 
@@ -23,7 +20,7 @@ import java.util.Set;
  *
  * @author zagumennikov
  */
-public class XYChartRowComponent  extends AbstractComponent implements XYChartRow {
+public class XYChartRowComponent extends AbstractComponent implements VXYChartRow {
 
     private static final long serialVersionUID = 1527647312094602957L;
 

@@ -5,9 +5,9 @@
  */
 package com.haulmont.charts.web.toolkit.ui.charts.jfree;
 
-import com.haulmont.charts.web.toolkit.ui.charts.LineChart;
+import com.haulmont.charts.web.toolkit.ui.charts.VLineChart;
 
-public class JFreeLineChart extends JFreeCategoryChart implements LineChart {
+public class JFreeLineChart extends JFreeCategoryChart implements VLineChart {
     private static final long serialVersionUID = 7118566359236292560L;
 
     private String argumentAxisLabel;

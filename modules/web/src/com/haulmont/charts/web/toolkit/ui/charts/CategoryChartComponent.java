@@ -19,7 +19,7 @@ import java.util.*;
  *
  * @author zagumennikov
  */
-public abstract class CategoryChartComponent extends ChartComponent implements CategoryChart {
+public abstract class CategoryChartComponent extends ChartComponent implements VCategoryChart {
 
     private static final long serialVersionUID = -2096187829656779886L;
 

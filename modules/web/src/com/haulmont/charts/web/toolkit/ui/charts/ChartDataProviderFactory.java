@@ -13,17 +13,17 @@ import java.util.Map;
 
 public abstract class ChartDataProviderFactory {
 
-    private static Map<String, ChartDataProvider> providers = new HashMap<String, ChartDataProvider>();
+    private static Map<String, VChartDataProvider> providers = new HashMap<String, VChartDataProvider>();
 
     static {
         providers.put(JFreeChart.VENDOR, new JFreeChartDataProvider());
     }
 
-    public static void register(String chartVendor, ChartDataProvider dataProvider) {
+    public static void register(String chartVendor, VChartDataProvider dataProvider) {
         providers.put(chartVendor, dataProvider);
     }
 
-    public static ChartDataProvider getDataProvider(String chartVendor) {
+    public static VChartDataProvider getDataProvider(String chartVendor) {
         return providers.get(chartVendor);
     }
 }

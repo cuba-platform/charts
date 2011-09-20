@@ -11,7 +11,7 @@ import com.vaadin.terminal.PaintException;
 import com.vaadin.terminal.PaintTarget;
 import com.vaadin.ui.AbstractComponent;
 
-public abstract class ChartComponent extends AbstractComponent implements Chart {
+public abstract class ChartComponent extends AbstractComponent implements VChart {
     private static final long serialVersionUID = 8749174467182489471L;
 
     protected boolean hasLegend = false;

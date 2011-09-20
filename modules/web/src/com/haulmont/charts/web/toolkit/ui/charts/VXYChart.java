@@ -15,9 +15,9 @@ import java.util.Collection;
  *
  * @author zagumennikov
  */
-public interface XYChart extends Chart, Chart.HasValueAxisType, Chart.HasArgumentAxisType,
+public interface VXYChart extends VChart, VChart.HasValueAxisType, VChart.HasArgumentAxisType,
         Container.ItemSetChangeListener, Container.PropertySetChangeListener {
 
-    Collection<XYChartRow> getRows();
-    void addRow(XYChartRow row);
+    Collection<VXYChartRow> getRows();
+    void addRow(VXYChartRow row);
 }
