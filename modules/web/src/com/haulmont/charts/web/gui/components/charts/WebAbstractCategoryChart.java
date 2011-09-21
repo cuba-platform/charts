@@ -29,10 +29,12 @@ public abstract class WebAbstractCategoryChart<T extends CategoryChartComponent>
 
     protected CollectionDatasource datasource;
 
+    @Override
     public CollectionDatasource getCollectionDatasource() {
         return datasource;
     }
 
+    @Override
     public void setCollectionDatasource(CollectionDatasource datasource) {
         this.datasource = datasource;
 
@@ -67,30 +69,42 @@ public abstract class WebAbstractCategoryChart<T extends CategoryChartComponent>
         }
     }
 
-
-
+    @Override
     public String getRowCaption(Object id) {
         return component.getRowCaption(id);
     }
 
+    @Override
     public Object getRowCaptionProperty() {
         return component.getRowCaptionPropertyId();
     }
 
+    @Override
     public void setRowCaptionProperty(Object property) {
         component.setRowCaptionPropertyId(property);
     }
 
+    @Override
+    public boolean getHasLegend() {
+        return component.getHasLegend();
+    }
 
+    @Override
+    public void setHasLegend(boolean needLegend) {
+        component.setHasLegend(needLegend);
+    }
 
+    @Override
     public Collection<?> getCategoryProperties() {
         return component.getCategoryPropertyIds();
     }
 
+    @Override
     public void addCategory(Object property, String caption) {
         component.addCategory(property, caption);
     }
 
+    @Override
     public String getCategoryCaption(Object property) {
         return component.getCategoryCaption(property);
     }

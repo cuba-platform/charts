@@ -15,14 +15,6 @@ public abstract class WebAbstractChart<T extends ChartComponent>
 
     private static final long serialVersionUID = 7222268861924207093L;
 
-    public boolean getHasLegend() {
-        return component.getHasLegend();
-    }
-
-    public void setHasLegend(boolean needLegend) {
-        component.setHasLegend(needLegend);
-    }
-
     public String getCaption() {
         return component.getCaption();
     }

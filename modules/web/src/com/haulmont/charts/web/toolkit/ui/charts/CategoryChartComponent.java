@@ -10,6 +10,8 @@ import com.vaadin.data.Container;
 import com.vaadin.data.Item;
 import com.vaadin.data.Property;
 import com.vaadin.data.util.IndexedContainer;
+import com.vaadin.terminal.PaintException;
+import com.vaadin.terminal.PaintTarget;
 
 import java.io.Serializable;
 import java.util.*;
@@ -25,6 +27,8 @@ public abstract class CategoryChartComponent extends ChartComponent implements V
 
     protected Container items;
     protected Object rowCaptionPropertyId;
+
+    protected boolean hasLegend = false;
 
     protected Map<Object, String> categories = new HashMap<Object, String>();
 
@@ -47,6 +51,24 @@ public abstract class CategoryChartComponent extends ChartComponent implements V
             if (p != null) {
                 p.setValue(caption);
             }
+        }
+    }
+
+    public boolean getHasLegend() {
+        return hasLegend;
+    }
+
+    public void setHasLegend(boolean hasLegend) {
+        this.hasLegend = hasLegend;
+        requestRepaint();
+    }
+
+    @Override
+    public void paintContent(PaintTarget target) throws PaintException {
+        super.paintContent(target);
+
+        if (hasLegend) {
+            target.addAttribute("legend", true);
         }
     }
 

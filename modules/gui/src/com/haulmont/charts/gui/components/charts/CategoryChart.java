@@ -15,7 +15,7 @@ import java.util.Collection;
  *
  * @author zagumennikov
  */
-public interface CategoryChart extends Chart {
+public interface CategoryChart extends Chart, Chart.HasLegend {
 
     CollectionDatasource getCollectionDatasource();
     void setCollectionDatasource(CollectionDatasource datasource);

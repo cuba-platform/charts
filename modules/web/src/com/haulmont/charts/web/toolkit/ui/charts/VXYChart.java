@@ -15,7 +15,7 @@ import java.util.Collection;
  *
  * @author zagumennikov
  */
-public interface VXYChart extends VChart, VChart.HasValueAxisType, VChart.HasArgumentAxisType,
+public interface VXYChart extends VChart, VChart.HasLegend, VChart.HasValueAxisType, VChart.HasArgumentAxisType,
         Container.ItemSetChangeListener, Container.PropertySetChangeListener {
 
     Collection<VXYChartRow> getRows();

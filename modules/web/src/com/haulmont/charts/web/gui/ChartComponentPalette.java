@@ -7,16 +7,15 @@
 package com.haulmont.charts.web.gui;
 
 import com.haulmont.charts.gui.components.charts.*;
-import com.haulmont.charts.gui.xml.layout.loaders.charts.BarChartLoader;
-import com.haulmont.charts.gui.xml.layout.loaders.charts.LineChartLoader;
-import com.haulmont.charts.gui.xml.layout.loaders.charts.PieChartLoader;
-import com.haulmont.charts.gui.xml.layout.loaders.charts.XYLineChartLoader;
+import com.haulmont.charts.gui.xml.layout.loaders.charts.*;
 import com.haulmont.charts.web.gui.components.charts.WebXYChartRow;
 import com.haulmont.charts.web.gui.components.charts.jfree.WebJFreeBarChart;
 import com.haulmont.charts.web.gui.components.charts.jfree.WebJFreeLineChart;
 import com.haulmont.charts.web.gui.components.charts.jfree.WebJFreePieChart;
 import com.haulmont.charts.web.gui.components.charts.jfree.WebJFreeXYLineChart;
+import com.haulmont.charts.web.gui.components.charts.jsgantt.WebJSGanttChart;
 import com.haulmont.charts.web.toolkit.ui.charts.jfree.JFreeChart;
+import com.haulmont.charts.web.toolkit.ui.charts.jsgantt.JSGanttChart;
 import com.haulmont.cuba.gui.ComponentPalette;
 import com.haulmont.cuba.gui.components.Component;
 import com.haulmont.cuba.gui.xml.layout.ComponentLoader;
@@ -36,6 +35,8 @@ public class ChartComponentPalette implements ComponentPalette {
 
         Map<String, Class<? extends ComponentLoader>> loaders = new HashMap<String, Class<? extends ComponentLoader>>();
 
+        loaders.put("ganttChart", GanttChartLoader.class);
+
         loaders.put("pieChart", PieChartLoader.class);
         loaders.put("barChart", BarChartLoader.class);
         loaders.put("lineChart", LineChartLoader.class);
@@ -48,6 +49,8 @@ public class ChartComponentPalette implements ComponentPalette {
     public Map<String, Class<? extends Component>> getComponents() {
 
         Map<String, Class<? extends Component>> components = new HashMap<String, Class<? extends Component>>();
+
+        components.put(GanttChart.NAME + "@" + JSGanttChart.VENDOR, WebJSGanttChart.class);
 
         components.put(PieChart.NAME + "@" + JFreeChart.VENDOR, WebJFreePieChart.class);
         components.put(BarChart.NAME + "@" + JFreeChart.VENDOR, WebJFreeBarChart.class);

@@ -16,42 +16,52 @@ public class JFreeBarChart extends JFreeCategoryChart implements VBarChart {
     private Orientation orientation = Orientation.VERTICAL;
     private boolean is3D = false;
 
+    @Override
     public String getArgumentAxisLabel() {
         return argumentAxisLabel;
     }
 
+    @Override
     public void setArgumentAxisLabel(String columnAxisLabel) {
         this.argumentAxisLabel = columnAxisLabel;
     }
 
+    @Override
     public String getValueAxisLabel() {
         return valueAxisLabel;
     }
 
+    @Override
     public void setValueAxisLabel(String valueAxisLabel) {
         this.valueAxisLabel = valueAxisLabel;
     }
 
+    @Override
     public AxisType getValueAxisType() {
         return valueAxisType;
     }
 
+    @Override
     public void setValueAxisType(AxisType valueAxisType) {
         this.valueAxisType = valueAxisType;
     }
 
+    @Override
     public boolean is3D() {
         return is3D;
     }
 
+    @Override
     public void set3D(boolean is3D) {
         this.is3D = is3D;
     }
 
+    @Override
     public Orientation getOrientation() {
         return orientation;
     }
 
+    @Override
     public void setOrientation(Orientation orientation) {
         this.orientation = orientation;
     }

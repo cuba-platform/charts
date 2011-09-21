@@ -13,7 +13,7 @@ import java.util.Collection;
  *
  * @author zagumennikov
  */
-public interface XYChart extends Chart, Chart.HasValueAxisType, Chart.HasArgumentAxisType {
+public interface XYChart extends Chart, Chart.HasLegend, Chart.HasValueAxisType, Chart.HasArgumentAxisType {
 
     Collection<XYChartRow> getRows();
     void addRow(XYChartRow row);

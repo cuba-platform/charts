@@ -11,9 +11,6 @@ import com.haulmont.cuba.gui.components.Component;
 public interface Chart extends Component, Component.Wrapper, Component.BelongToFrame,
         Component.HasXmlDescriptor, Component.Expandable, Component.HasCaption {
 
-    boolean getHasLegend();
-    void setHasLegend(boolean hasLegend);
-
     enum AxisType {
         NUMBER,
         DATE
@@ -22,6 +19,12 @@ public interface Chart extends Component, Component.Wrapper, Component.BelongToF
     enum Orientation {
         VERTICAL,
         HORIZONTAL
+    }
+
+    interface HasLegend {
+
+        boolean getHasLegend();
+        void setHasLegend(boolean hasLegend);
     }
 
     interface HasAxisLabels {

@@ -11,9 +11,6 @@ public interface VChart extends Component {
 
     String getVendor();
 
-    boolean getHasLegend();
-    void setHasLegend(boolean hasLegend);
-
     int getChartWidth();
     void setChartWidth(int chartWidth);
 
@@ -28,6 +25,11 @@ public interface VChart extends Component {
     enum Orientation {
         VERTICAL,
         HORIZONTAL
+    }
+
+    interface HasLegend {
+        boolean getHasLegend();
+        void setHasLegend(boolean hasLegend);
     }
 
     interface HasAxisLabels {

@@ -34,6 +34,7 @@ public class JFreeChartDataProvider implements VChartDataProvider<JFreeChart> {
 
     private Log log = LogFactory.getLog(JFreeChartDataProvider.class);
 
+    @Override
     public synchronized void handleDataRequest(
             HttpServletRequest request,
             HttpServletResponse response,

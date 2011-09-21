@@ -30,34 +30,42 @@ public class XYChartRowComponent extends AbstractComponent implements VXYChartRo
     protected Set<ItemSetChangeListener> itemSetChangeListeners = new LinkedHashSet<ItemSetChangeListener>();
     protected Set<PropertySetChangeListener> propertySetChangeListeners = new LinkedHashSet<PropertySetChangeListener>();
 
+    @Override
     public Item getItem(Object itemId) {
         return items.getItem(itemId);
     }
 
+    @Override
     public Collection<?> getContainerPropertyIds() {
         return items.getContainerPropertyIds();
     }
 
+    @Override
     public Collection<?> getItemIds() {
         return items.getItemIds();
     }
 
+    @Override
     public Property getContainerProperty(Object itemId, Object propertyId) {
         return items.getContainerProperty(itemId, propertyId);
     }
 
+    @Override
     public Class<?> getType(Object propertyId) {
         return items.getType(propertyId);
     }
 
+    @Override
     public int size() {
         return items.size();
     }
 
+    @Override
     public boolean containsId(Object itemId) {
         return items.containsId(itemId);
     }
 
+    @Override
     public Item addItem(Object itemId) throws UnsupportedOperationException {
         final Item retval = items.addItem(itemId);
         if (retval != null && !(items instanceof ItemSetChangeNotifier)) {
@@ -66,6 +74,7 @@ public class XYChartRowComponent extends AbstractComponent implements VXYChartRo
         return retval;
     }
 
+    @Override
     public Object addItem() throws UnsupportedOperationException {
         final Object retval = items.addItem();
         if (retval != null && !(items instanceof ItemSetChangeNotifier)) {
@@ -74,6 +83,7 @@ public class XYChartRowComponent extends AbstractComponent implements VXYChartRo
         return retval;
     }
 
+    @Override
     public boolean removeItem(Object itemId) throws UnsupportedOperationException {
         final boolean retval = items.removeItem(itemId);
         if (retval && !(items instanceof ItemSetChangeNotifier)) {
@@ -82,6 +92,7 @@ public class XYChartRowComponent extends AbstractComponent implements VXYChartRo
         return retval;
     }
 
+    @Override
     public boolean addContainerProperty(Object propertyId, Class<?> type, Object defaultValue) throws UnsupportedOperationException {
         final boolean retval = items.addContainerProperty(propertyId, type, defaultValue);
         if (retval && !(items instanceof PropertySetChangeNotifier)) {
@@ -90,6 +101,7 @@ public class XYChartRowComponent extends AbstractComponent implements VXYChartRo
         return retval;
     }
 
+    @Override
     public boolean removeContainerProperty(Object propertyId) throws UnsupportedOperationException {
         final boolean retval = items.removeContainerProperty(propertyId);
         if (retval && !(items instanceof PropertySetChangeNotifier)) {
@@ -98,6 +110,7 @@ public class XYChartRowComponent extends AbstractComponent implements VXYChartRo
         return retval;
     }
 
+    @Override
     public boolean removeAllItems() throws UnsupportedOperationException {
         final boolean retval = items.removeAllItems();
         if (retval && !(items instanceof ItemSetChangeNotifier)) {
@@ -106,38 +119,47 @@ public class XYChartRowComponent extends AbstractComponent implements VXYChartRo
         return retval;
     }
 
+    @Override
     public Collection<?> getPointIds() {
         return items.getItemIds();
     }
 
+    @Override
     public void addPoint(Object id) {
         addItem(id);
     }
 
+    @Override
     public Collection<?> getPropertyIds() {
         return getContainerPropertyIds();
     }
 
+    @Override
     public void addProperty(Object id) {
         addContainerProperty(id, Object.class, null);
     }
 
+    @Override
     public Object getXPropertyId() {
         return xPropertyId;
     }
 
+    @Override
     public void setXPropertyId(Object propertyId) {
         xPropertyId = propertyId;
     }
 
+    @Override
     public Object getYPropertyId() {
         return yPropertyId;
     }
 
+    @Override
     public void setYPropertyId(Object propertyId) {
         yPropertyId = propertyId;
     }
 
+    @Override
     public Object getXValue(Object pointId) {
         Property p = getContainerProperty(pointId, xPropertyId);
         if (p == null) {
@@ -148,6 +170,7 @@ public class XYChartRowComponent extends AbstractComponent implements VXYChartRo
         return o;
     }
 
+    @Override
     public void setXValue(Object pointId, Object value) {
         Property p = getContainerProperty(pointId, xPropertyId);
         if (p != null) {
@@ -155,6 +178,7 @@ public class XYChartRowComponent extends AbstractComponent implements VXYChartRo
         }
     }
 
+    @Override
     public Object getYValue(Object pointId) {
         Property p = getContainerProperty(pointId, yPropertyId);
         if (p == null) {
@@ -165,6 +189,7 @@ public class XYChartRowComponent extends AbstractComponent implements VXYChartRo
         return o;
     }
 
+    @Override
     public void setYValue(Object pointId, Object value) {
         Property p = getContainerProperty(pointId, yPropertyId);
         if (p != null) {
@@ -172,10 +197,12 @@ public class XYChartRowComponent extends AbstractComponent implements VXYChartRo
         }
     }
 
+    @Override
     public void containerItemSetChange(Container.ItemSetChangeEvent event) {
         fireItemSetChange();
     }
 
+    @Override
     public void addListener(ItemSetChangeListener listener) {
         if (itemSetChangeListeners == null) {
             itemSetChangeListeners = new LinkedHashSet<ItemSetChangeListener>();
@@ -183,24 +210,29 @@ public class XYChartRowComponent extends AbstractComponent implements VXYChartRo
         itemSetChangeListeners.add(listener);
     }
 
+    @Override
     public void removeListener(ItemSetChangeListener listener) {
         if (itemSetChangeListeners != null) {
             itemSetChangeListeners.remove(listener);
         }
     }
 
+    @Override
     public void containerPropertySetChange(Container.PropertySetChangeEvent event) {
         firePropertySetChange();
     }
 
+    @Override
     public void addListener(PropertySetChangeListener listener) {
         propertySetChangeListeners.add(listener);
     }
 
+    @Override
     public void removeListener(PropertySetChangeListener listener) {
         propertySetChangeListeners.remove(listener);
     }
 
+    @Override
     public void setContainerDataSource(Container datasource) {
         if (items != datasource) {
             if (items != null) {
@@ -230,6 +262,7 @@ public class XYChartRowComponent extends AbstractComponent implements VXYChartRo
         }
     }
 
+    @Override
     public Container getContainerDataSource() {
         return items;
     }

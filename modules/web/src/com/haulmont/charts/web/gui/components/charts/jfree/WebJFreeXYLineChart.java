@@ -23,27 +23,43 @@ public class WebJFreeXYLineChart extends WebAbstractXYChart<JFreeXYLineChart> im
         component = new JFreeXYLineChart();
     }
 
+    @Override
     public Orientation getOrientation() {
         return WebChartsHelper.convertChartOrientation(component.getOrientation());
     }
 
+    @Override
     public void setOrientation(Orientation orientation) {
         component.setOrientation(WebChartsHelper.convertChartOrientation(orientation));
     }
 
+    @Override
     public String getArgumentAxisLabel() {
         return component.getArgumentAxisLabel();
     }
 
+    @Override
     public void setArgumentAxisLabel(String label) {
         component.setArgumentAxisLabel(label);
     }
 
+    @Override
     public String getValueAxisLabel() {
         return component.getValueAxisLabel();
     }
 
+    @Override
     public void setValueAxisLabel(String label) {
         component.setValueAxisLabel(label);
+    }
+
+    @Override
+    public boolean getHasLegend() {
+        return component.getHasLegend();
+    }
+
+    @Override
+    public void setHasLegend(boolean hasLegend) {
+        component.setHasLegend(hasLegend);
     }
 }

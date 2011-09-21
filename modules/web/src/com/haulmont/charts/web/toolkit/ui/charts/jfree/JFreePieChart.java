@@ -15,28 +15,34 @@ public class JFreePieChart extends JFreeCategoryChart implements VPieChart {
     private boolean ignoreZeroValues = false;
     private boolean ignoreNullValues = false;
 
+    @Override
     public boolean isIgnoreNullValues() {
         return ignoreNullValues;
     }
 
+    @Override
     public void setIgnoreNullValues(boolean ignoreNullValues) {
         this.ignoreNullValues = ignoreNullValues;
         requestRepaint();
     }
 
+    @Override
     public boolean isIgnoreZeroValues() {
         return ignoreZeroValues;
     }
 
+    @Override
     public void setIgnoreZeroValues(boolean ignoreZeroValues) {
         this.ignoreZeroValues = ignoreZeroValues;
         requestRepaint();
     }
 
+    @Override
     public boolean is3D() {
         return is3D;
     }
 
+    @Override
     public void set3D(boolean is3D) {
         this.is3D = is3D;
     }

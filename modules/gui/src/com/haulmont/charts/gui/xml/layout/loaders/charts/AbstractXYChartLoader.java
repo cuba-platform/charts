@@ -29,6 +29,7 @@ public abstract class AbstractXYChartLoader extends AbstractChartLoader {
         super(context);
     }
 
+    @Override
     public XYChart loadComponent(ComponentsFactory factory, Element element, Component parent)
             throws InstantiationException, IllegalAccessException {
 

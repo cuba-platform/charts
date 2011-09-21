@@ -23,6 +23,7 @@ import com.vaadin.ui.ClientWidget;
 public abstract class JFreeXYChart extends XYChartComponent implements JFreeChart {
     private static final long serialVersionUID = -8367704232221959253L;
 
+    @Override
     public String getVendor() {
         return VENDOR;
     }

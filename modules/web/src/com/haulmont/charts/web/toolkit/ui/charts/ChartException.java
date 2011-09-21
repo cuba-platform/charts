@@ -5,7 +5,6 @@
  */
 package com.haulmont.charts.web.toolkit.ui.charts;
 
-@SuppressWarnings("serial")
 public class ChartException extends Exception {
     public ChartException() {
     }

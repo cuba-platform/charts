@@ -17,42 +17,52 @@ public class WebJFreeBarChart extends WebAbstractCategoryChart<JFreeBarChart> im
         component = new JFreeBarChart();
     }
 
+    @Override
     public boolean is3D() {
         return component.is3D();
     }
 
+    @Override
     public void set3D(boolean b) {
         component.set3D(b);
     }
 
+    @Override
     public Orientation getOrientation() {
         return WebChartsHelper.convertChartOrientation(component.getOrientation());
     }
 
+    @Override
     public void setOrientation(Orientation orientation) {
         component.setOrientation(WebChartsHelper.convertChartOrientation(orientation));
     }
 
+    @Override
     public String getArgumentAxisLabel() {
         return component.getArgumentAxisLabel();
     }
 
+    @Override
     public void setArgumentAxisLabel(String label) {
         component.setArgumentAxisLabel(label);
     }
 
+    @Override
     public String getValueAxisLabel() {
         return component.getValueAxisLabel();
     }
 
+    @Override
     public void setValueAxisLabel(String label) {
         component.setValueAxisLabel(label);
     }
 
+    @Override
     public AxisType getValueAxisType() {
         return WebChartsHelper.convertChartAxisType(component.getValueAxisType());
     }
 
+    @Override
     public void setValueAxisType(AxisType axisType) {
         component.setValueAxisType(WebChartsHelper.convertChartAxisType(axisType));
     }

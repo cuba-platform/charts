@@ -21,26 +21,32 @@ public class JFreeXYLineChart extends JFreeXYChart implements VXYLineChart {
     private String valueAxisLabel;
     private Orientation orientation = Orientation.VERTICAL;
 
+    @Override
     public String getArgumentAxisLabel() {
         return argumentAxisLabel;
     }
 
+    @Override
     public void setArgumentAxisLabel(String argumentAxisLabel) {
         this.argumentAxisLabel = argumentAxisLabel;
     }
 
+    @Override
     public VChart.Orientation getOrientation() {
         return orientation;
     }
 
+    @Override
     public void setOrientation(Orientation orientation) {
         this.orientation = orientation;
     }
 
+    @Override
     public String getValueAxisLabel() {
         return valueAxisLabel;
     }
 
+    @Override
     public void setValueAxisLabel(String valueAxisLabel) {
         this.valueAxisLabel = valueAxisLabel;
     }

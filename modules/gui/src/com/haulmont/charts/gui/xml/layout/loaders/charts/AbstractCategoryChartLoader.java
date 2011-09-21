@@ -28,6 +28,7 @@ public abstract class AbstractCategoryChartLoader extends AbstractChartLoader {
         super(context);
     }
 
+    @Override
     public CategoryChart loadComponent(ComponentsFactory factory, Element element, Component parent)
             throws InstantiationException, IllegalAccessException{
 

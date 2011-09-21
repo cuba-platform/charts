@@ -23,6 +23,7 @@ import com.vaadin.ui.ClientWidget;
 public abstract class JFreeCategoryChart extends CategoryChartComponent implements JFreeChart {
     private static final long serialVersionUID = -7073713483941791212L;
 
+    @Override
     public String getVendor() {
         return VENDOR;
     }

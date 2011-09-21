@@ -28,27 +28,33 @@ public abstract class WebAbstractXYChart<T extends XYChartComponent>
 
     protected Collection<XYChartRow> rows = new ArrayList<XYChartRow>();
 
+    @Override
     public Collection<XYChartRow> getRows() {
         return rows;
     }
 
+    @Override
     public void addRow(XYChartRow row) {
         component.addRow((XYChartRowComponent)row.getComponent());
         rows.add(row);
     }
 
+    @Override
     public AxisType getArgumentAxisType() {
         return WebChartsHelper.convertChartAxisType(component.getArgumentAxisType());
     }
 
+    @Override
     public void setArgumentAxisType(AxisType axisType) {
         component.setArgumentAxisType(WebChartsHelper.convertChartAxisType(axisType));
     }
 
+    @Override
     public AxisType getValueAxisType() {
         return WebChartsHelper.convertChartAxisType(component.getValueAxisType());
     }
 
+    @Override
     public void setValueAxisType(AxisType axisType) {
         component.setValueAxisType(WebChartsHelper.convertChartAxisType(axisType));
     }

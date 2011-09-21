@@ -15,34 +15,42 @@ public class JFreeLineChart extends JFreeCategoryChart implements VLineChart {
     private AxisType valueAxisType = AxisType.NUMBER;
     private Orientation orientation = Orientation.VERTICAL;
 
+    @Override
     public String getArgumentAxisLabel() {
         return argumentAxisLabel;
     }
 
+    @Override
     public void setArgumentAxisLabel(String argumentAxisLabel) {
         this.argumentAxisLabel = argumentAxisLabel;
     }
 
+    @Override
     public String getValueAxisLabel() {
         return valueAxisLabel;
     }
 
+    @Override
     public void setValueAxisLabel(String valueAxisLabel) {
         this.valueAxisLabel = valueAxisLabel;
     }
 
+    @Override
     public AxisType getValueAxisType() {
         return valueAxisType;
     }
 
+    @Override
     public void setValueAxisType(AxisType valueAxisType) {
         this.valueAxisType = valueAxisType;
     }
 
+    @Override
     public Orientation getOrientation() {
         return orientation;
     }
 
+    @Override
     public void setOrientation(Orientation orientation) {
         this.orientation = orientation;
     }

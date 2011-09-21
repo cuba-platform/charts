@@ -29,10 +29,12 @@ public class WebXYChartRow extends WebAbstractComponent<XYChartRowComponent> imp
         component = new XYChartRowComponent();
     }
 
+    @Override
     public CollectionDatasource getCollectionDatasource() {
         return datasource;
     }
 
+    @Override
     public void setCollectionDatasource(CollectionDatasource datasource) {
         this.datasource = datasource;
 
@@ -63,34 +65,42 @@ public class WebXYChartRow extends WebAbstractComponent<XYChartRowComponent> imp
         }
     }
 
+    @Override
     public String getCaption() {
         return component.getCaption();
     }
 
+    @Override
     public void setCaption(String caption) {
         component.setCaption(caption);
     }
 
+    @Override
     public Object getXProperty() {
         return component.getXPropertyId();
     }
 
+    @Override
     public void setXProperty(Object property) {
         component.setXPropertyId(property);
     }
 
+    @Override
     public Object getYProperty() {
         return component.getYPropertyId();
     }
 
+    @Override
     public void setYProperty(Object property) {
         component.setYPropertyId(property);
     }
 
+    @Override
     public String getDescription() {
         return null;
     }
 
+    @Override
     public void setDescription(String description) {
     }
 }

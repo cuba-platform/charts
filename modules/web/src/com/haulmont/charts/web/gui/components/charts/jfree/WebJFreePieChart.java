@@ -16,10 +16,12 @@ public class WebJFreePieChart extends WebAbstractCategoryChart<JFreePieChart> im
         component = new JFreePieChart();
     }
 
+    @Override
     public boolean is3D() {
         return component.is3D();
     }
 
+    @Override
     public void set3D(boolean b) {
         component.set3D(b);
     }

@@ -17,6 +17,7 @@ public abstract class AbstractChartLoader extends ComponentLoader {
         super(context);
     }
 
+    @Override
     public Chart loadComponent(ComponentsFactory factory, Element element, Component parent)
             throws InstantiationException, IllegalAccessException {
 
@@ -33,7 +34,8 @@ public abstract class AbstractChartLoader extends ComponentLoader {
         loadHeight(component, element);
         loadWidth(component, element);
 
-        loadLegend(component, element);
+        if (component instanceof Chart.HasLegend)
+            loadLegend((Chart.HasLegend) component, element);
 
         assignFrame(component);
 
@@ -64,7 +66,7 @@ public abstract class AbstractChartLoader extends ComponentLoader {
         }
     }
 
-    protected void loadLegend(Chart component, Element element) {
+    protected void loadLegend(Chart.HasLegend component, Element element) {
         String legend = element.attributeValue("legend");
         if (!StringUtils.isEmpty(legend) && isBoolean(legend)) {
             component.setHasLegend(Boolean.valueOf(legend));

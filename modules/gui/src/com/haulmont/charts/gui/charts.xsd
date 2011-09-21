@@ -3,7 +3,6 @@
         targetNamespace="http://www.haulmont.com/schema/charts/gui/charts.xsd"
         xmlns="http://www.haulmont.com/schema/charts/gui/charts.xsd"
         xmlns:xs="http://www.w3.org/2001/XMLSchema"
-        xmlns:cuba="http://www.haulmont.com/schema/cuba/gui/window.xsd"
         elementFormDefault="qualified"
         attributeFormDefault="unqualified">
 
@@ -51,6 +50,18 @@
                 <xs:element name="row" type="rowType"/>
             </xs:sequence>
             <xs:attributeGroup ref="xyChart"/>
+        </xs:complexType>
+    </xs:element>
+
+    <xs:element name="ganttChart">
+        <xs:complexType xml:base="abstractChart">
+            <xs:attribute name="id" type="xs:string" use="optional"/>
+            <xs:attribute name="caption" type="xs:string" use="optional" default="msg://"/>
+            <xs:attribute name="vendor" type="vendorType" default="jsgantt" use="required"/>
+            <xs:attribute name="width" type="xs:string" use="optional"/>
+            <xs:attribute name="height" type="xs:string" use="optional"/>
+            <xs:attribute name="visible" type="xs:string" use="optional"/>
+            <xs:attribute name="datasource" type="xs:string" use="required"/>
         </xs:complexType>
     </xs:element>
 
