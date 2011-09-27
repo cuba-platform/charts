@@ -1,0 +1,178 @@
+/*
+ * Copyright (c) 2011 Haulmont Technology Ltd. All Rights Reserved.
+ * Haulmont Technology proprietary and confidential.
+ * Use is subject to license terms.
+ */
+
+/* These are the class/styles used by various objects in GanttChart.
+ *  However, Firefox has problems deciphering class style when DIVs are embedded in other DIVs.
+ */
+
+/* GanttChart makes heavy use of embedded DIVS, thus the style are often embedded directly in the objects html.
+ * If this could be resolved with Firefox, it would
+ */
+
+/*
+ * Make alot of the code look simpleer
+ * cleaner without all the embedded styles
+ */
+
+.gantt {
+    font-family: tahoma, arial, verdana, serif;
+    font-size: 10px;
+}
+
+.gdatehead {
+    border-top: #efefef 1px solid;
+    font-size: 12px;
+    border-left: #efefef 1px solid;
+    height: 18px
+}
+
+.ghead {
+    border-top: #efefef 1px solid;
+    font-size: 12px;
+    border-left: #efefef 1px solid;
+    width: 24px;
+    height: 20px
+}
+
+.gname {
+    border-top: #efefef 1px solid;
+    font-size: 12px;
+    width: 18px;
+    height: 18px
+}
+
+.ghead A {
+    font-size: 10px;
+    color: #000000;
+    text-decoration: none
+}
+
+.gheadwkend A {
+    font-size: 10px;
+    color: #000000;
+    text-decoration: none
+}
+
+.gheadwkend {
+    border-top: #efefef 1px solid;
+    font-size: 12px;
+    border-left: #efefef 1px solid;
+    width: 24px;
+    height: 20px;
+    background-color: #cfcfcf
+}
+
+.gfiller {
+    border-top: #efefef 1px solid;
+    border-left: #efefef 1px solid;
+    width: 18px;
+    height: 18px
+}
+
+.gfillerwkend {
+    border-left: #efefef 1px solid;
+    width: 18px;
+    height: 18px;
+    background-color: #cfcfcf
+}
+
+.gitem {
+    border-top: #cccccc 1px solid;
+    width: 18px;
+    height: 18px
+}
+
+.gitemwkend {
+    border-top: #cccccc 1px solid;
+    border-left: #cccccc 1px solid;
+    width: 18px;
+    height: 18px
+}
+
+.gmilestone {
+    border-top: #efefef 1px solid;
+    font-size: 14px;
+    overflow: hidden;
+    border-left: #efefef 1px solid;
+    width: 18px;
+    height: 18px
+}
+
+.gmilestonewkend {
+    border-top: #efefef 1px solid;
+    border-left: #cccccc 1px solid;
+    width: 18px;
+    height: 18px
+}
+
+.btn {
+    border-color: #ffffff;
+    font-weight: bold;
+    font-size: 10px;
+    width: 12px;
+    color: #cccccc;
+    background-color: #ffffff
+}
+
+.hrcomplete {
+    border: 2px solid #000000;
+    padding: 0 0 0;
+    width: 20px;
+    color: #000000;
+    height: 4px
+}
+
+.hrhalfcomplete {
+    border: 2px solid #000000;
+    width: 9px;
+    color: #000000;
+    height: 4px
+}
+
+.gweekend {
+    font-family: tahoma, arial, verdana, serif;
+    font-size: 11px;
+    background-color: #EEEEEE;
+    text-align: center;
+}
+
+.gtask {
+    font-family: tahoma, arial, verdana, serif;
+    font-size: 11px;
+    background-color: #00FF00;
+    text-align: center;
+}
+
+.gday {
+    font-family: tahoma, arial, verdana, serif;
+    font-size: 11px;
+    text-align: center;
+}
+
+.gcomplete {
+    background-color: black;
+    height: 5px;
+    overflow: auto;
+    margin-top: 4px;
+}
+
+div .scroll {
+    border: 1px solid #efefef;
+    padding: 0;
+    overflow: hidden;
+    width: 420px;
+    background-color: #ffffff
+}
+
+div .scroll2 {
+    position: relative;
+    padding: 0;
+    overflow: auto;
+    overflow-x: scroll;
+    overflow-y: hidden;
+    width: 482px;
+    background-color: #ffffff
+}

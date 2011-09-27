@@ -11,6 +11,13 @@ package com.haulmont.charts.web.toolkit.ui.charts;
  *
  * @author artamonov
  */
-public abstract class GanttChartComponent extends ChartComponent implements VGanttChart {
+public abstract class GanttChartComponent extends ChartComponent implements WGanttChart {
 
+    protected GanttChartComponent() {
+        chartWidth = -1;
+        chartHeight = -1;
+
+        setWidth("-1px");
+        setHeight("-1px");
+    }
 }

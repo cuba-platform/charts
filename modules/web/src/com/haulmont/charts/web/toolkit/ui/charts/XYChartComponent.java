@@ -17,40 +17,46 @@ import java.util.*;
  *
  * @author zagumennikov
  */
-public abstract class XYChartComponent extends ChartComponent implements VXYChart {
+public abstract class XYChartComponent extends ChartComponent implements WXYChart {
 
     private static final long serialVersionUID = -7433062042194011796L;
 
-    protected Collection<VXYChartRow> rows = new ArrayList<VXYChartRow>();
+    protected Collection<WXYChartRow> rows = new ArrayList<WXYChartRow>();
 
     protected AxisType argumentAxisType = AxisType.NUMBER;
     protected AxisType valueAxisType = AxisType.NUMBER;
 
     protected boolean hasLegend = false;
 
-    public Collection<VXYChartRow> getRows() {
+    @Override
+    public Collection<WXYChartRow> getRows() {
         return rows;
     }
 
-    public void addRow(VXYChartRow row) {
+    @Override
+    public void addRow(WXYChartRow row) {
         rows.add(row);
         row.addListener((Container.ItemSetChangeListener)this);
         row.addListener((Container.PropertySetChangeListener)this);
         requestRepaint();
     }
 
+    @Override
     public AxisType getArgumentAxisType() {
         return argumentAxisType;
     }
 
+    @Override
     public void setArgumentAxisType(AxisType axisType) {
         this.argumentAxisType = axisType;
     }
 
+    @Override
     public AxisType getValueAxisType() {
         return valueAxisType;
     }
 
+    @Override
     public void setValueAxisType(AxisType valueAxisType) {
         this.valueAxisType = valueAxisType;
     }

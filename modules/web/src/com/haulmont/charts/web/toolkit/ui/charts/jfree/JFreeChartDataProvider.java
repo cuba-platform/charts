@@ -42,13 +42,13 @@ public class JFreeChartDataProvider implements VChartDataProvider<JFreeChart> {
     ) throws ChartException {
         org.jfree.chart.JFreeChart jFreeChart;
 
-        if (chart instanceof VPieChart) {
+        if (chart instanceof WPieChart) {
             jFreeChart = createPieChart((JFreePieChart) chart);
-        } else if (chart instanceof VBarChart) {
+        } else if (chart instanceof WBarChart) {
             jFreeChart = createBarChart((JFreeBarChart) chart);
-        } else if (chart instanceof VLineChart) {
+        } else if (chart instanceof WLineChart) {
             jFreeChart = createLineChart((JFreeLineChart) chart);
-        } else if (chart instanceof VXYLineChart) {
+        } else if (chart instanceof WXYLineChart) {
             jFreeChart = createXYLineChart((JFreeXYLineChart) chart);
         } else {
             log.warn(String.format("This data provider doesn't support a chart type for class: %s",
@@ -206,7 +206,7 @@ public class JFreeChartDataProvider implements VChartDataProvider<JFreeChart> {
     private org.jfree.chart.JFreeChart createXYLineChart(JFreeXYLineChart chart) {
         final XYSeriesCollection dataset = new XYSeriesCollection();
 
-        for (final VXYChartRow row : chart.getRows()) {
+        for (final WXYChartRow row : chart.getRows()) {
             XYSeries series = new XYSeries(getRowCaption(row));
 
             for (Object pointItemId : row.getPointIds()) {
@@ -245,7 +245,7 @@ public class JFreeChartDataProvider implements VChartDataProvider<JFreeChart> {
         return result;
     }
 
-    private ValueAxis getValueAxis(VChart.AxisType axisType, boolean is3D) {
+    private ValueAxis getValueAxis(WChart.AxisType axisType, boolean is3D) {
         switch (axisType) {
             case NUMBER:
                 if (is3D) {
@@ -272,7 +272,7 @@ public class JFreeChartDataProvider implements VChartDataProvider<JFreeChart> {
         }
     }
 
-    private String getRowCaption(VXYChartRow row) {
+    private String getRowCaption(WXYChartRow row) {
         return row.getCaption() == null ? "" : row.getCaption();
     }
 
@@ -280,8 +280,8 @@ public class JFreeChartDataProvider implements VChartDataProvider<JFreeChart> {
         return chart.getCaption() == null ? "" : chart.getCaption();
     }
 
-    private static PlotOrientation convertChartOrientation(VChart.Orientation orientation) {
-        return orientation == VChart.Orientation.VERTICAL
+    private static PlotOrientation convertChartOrientation(WChart.Orientation orientation) {
+        return orientation == WChart.Orientation.VERTICAL
                 ? PlotOrientation.VERTICAL : PlotOrientation.HORIZONTAL;
     }
 }

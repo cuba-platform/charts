@@ -3,17 +3,12 @@
  * Haulmont Technology proprietary and confidential.
  * Use is subject to license terms.
  */
-
 package com.haulmont.charts.web.toolkit.ui.charts;
 
-/**
- * <p>$Id$</p>
- *
- * @author zagumennikov
- */
-public interface VXYLineChart
+public interface WLineChart
         extends
-        VXYChart,
-        VChart.HasAxisLabels,
-        VChart.HasOrientation {
+        WCategoryChart,
+        WChart.HasAxisLabels,
+        WChart.HasValueAxisType,
+        WChart.HasOrientation {
 }

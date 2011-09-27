@@ -5,9 +5,9 @@
  */
 package com.haulmont.charts.web.toolkit.ui.charts.jfree;
 
-import com.haulmont.charts.web.toolkit.ui.charts.VPieChart;
+import com.haulmont.charts.web.toolkit.ui.charts.WPieChart;
 
-public class JFreePieChart extends JFreeCategoryChart implements VPieChart {
+public class JFreePieChart extends JFreeCategoryChart implements WPieChart {
     private static final long serialVersionUID = 1881367032236295730L;
 
     private boolean is3D = false;

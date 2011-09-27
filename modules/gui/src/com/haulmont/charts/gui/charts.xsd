@@ -103,6 +103,7 @@
     <xs:simpleType name="vendorType">
         <xs:restriction base="xs:string">
             <xs:enumeration value="jfree"/>
+            <xs:enumeration value="jsgantt"/>
         </xs:restriction>
     </xs:simpleType>
 

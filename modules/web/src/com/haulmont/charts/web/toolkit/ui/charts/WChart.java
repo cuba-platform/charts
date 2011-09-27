@@ -7,7 +7,7 @@ package com.haulmont.charts.web.toolkit.ui.charts;
 
 import com.vaadin.ui.Component;
 
-public interface VChart extends Component {
+public interface WChart extends Component {
 
     String getVendor();
 

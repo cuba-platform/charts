@@ -15,7 +15,7 @@ import java.util.Collection;
  *
  * @author zagumennikov
  */
-public interface VCategoryChart extends VChart, VChart.HasLegend, Container.Viewer,
+public interface WCategoryChart extends WChart, WChart.HasLegend, Container.Viewer,
         Container, Container.ItemSetChangeNotifier, Container.ItemSetChangeListener,
         Container.PropertySetChangeNotifier, Container.PropertySetChangeListener {
 

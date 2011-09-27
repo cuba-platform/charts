@@ -17,8 +17,10 @@ import com.vaadin.terminal.gwt.client.ApplicationConnection;
 import com.vaadin.terminal.gwt.client.Paintable;
 import com.vaadin.terminal.gwt.client.UIDL;
 
-@SuppressWarnings({"unused"})
-public class JFreeChartRenderer extends SimplePanel implements Paintable {
+/**
+ *
+ */
+public class VChartRenderer extends SimplePanel implements Paintable {
 
     public static final String CLASSNAME = "chart";
 
@@ -26,7 +28,7 @@ public class JFreeChartRenderer extends SimplePanel implements Paintable {
 
     private int retryCounter;
 
-    public JFreeChartRenderer() {
+    public VChartRenderer() {
         buildHtmlSnippet();
     }
 

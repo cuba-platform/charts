@@ -20,7 +20,7 @@ import java.util.Set;
  *
  * @author zagumennikov
  */
-public class XYChartRowComponent extends AbstractComponent implements VXYChartRow {
+public class XYChartRowComponent extends AbstractComponent implements WXYChartRow {
 
     private static final long serialVersionUID = 1527647312094602957L;
 

@@ -17,4 +17,6 @@ public interface GanttChart extends Chart, Component.Wrapper, Component.BelongTo
         Component.HasXmlDescriptor, Component.Expandable, Component.HasCaption {
 
     String NAME = "ganttChart";
+
+    void refresh();
 }

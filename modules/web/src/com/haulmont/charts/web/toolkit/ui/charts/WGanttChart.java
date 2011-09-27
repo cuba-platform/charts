@@ -11,6 +11,6 @@ package com.haulmont.charts.web.toolkit.ui.charts;
  *
  * @author artamonov
  */
-public interface VGanttChart extends VChart {
-
+public interface WGanttChart extends WChart {
+     void refresh();
 }

@@ -15,4 +15,13 @@ import com.haulmont.charts.web.toolkit.ui.charts.jsgantt.JSGanttChart;
  * @author artamonov
  */
 public class WebJSGanttChart extends WebAbstractGanttChart<JSGanttChart> {
+
+    public WebJSGanttChart() {
+        component = new JSGanttChart();
+    }
+
+    @Override
+    public void refresh() {
+        component.refresh();
+    }
 }

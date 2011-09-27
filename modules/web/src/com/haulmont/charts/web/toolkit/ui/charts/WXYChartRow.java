@@ -19,7 +19,7 @@ import java.util.Collection;
  *
  * @author zagumennikov
  */
-public interface VXYChartRow extends Component, Container, Container.Viewer,
+public interface WXYChartRow extends Component, Container, Container.Viewer,
         Container.ItemSetChangeNotifier, Container.ItemSetChangeListener,
         Container.PropertySetChangeNotifier, Container.PropertySetChangeListener {
 

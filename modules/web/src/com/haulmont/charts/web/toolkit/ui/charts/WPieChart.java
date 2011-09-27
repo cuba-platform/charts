@@ -5,10 +5,10 @@
  */
 package com.haulmont.charts.web.toolkit.ui.charts;
 
-public interface VPieChart
+public interface WPieChart
         extends
-        VCategoryChart,
-        VChart.ViewIn3D {
+        WCategoryChart,
+        WChart.ViewIn3D {
 
     boolean isIgnoreZeroValues();
     void setIgnoreZeroValues(boolean ignoreZeroValues);

@@ -12,7 +12,7 @@ import com.haulmont.cuba.security.global.UserSession;
 import com.haulmont.cuba.web.controllers.ControllerUtils;
 import com.haulmont.cuba.web.sys.CubaApplicationContext;
 import com.haulmont.cuba.web.sys.CubaCommunicationManager;
-import com.haulmont.charts.web.toolkit.ui.charts.VChart;
+import com.haulmont.charts.web.toolkit.ui.charts.WChart;
 import com.haulmont.charts.web.toolkit.ui.charts.VChartDataProvider;
 import com.haulmont.charts.web.toolkit.ui.charts.ChartDataProviderFactory;
 import com.haulmont.charts.web.toolkit.ui.charts.ChartException;
@@ -76,7 +76,7 @@ public class ChartRenderingController {
         }
         CubaCommunicationManager communicationManager = (CubaCommunicationManager) context.getCommunicationManager(application);
 
-        VChart chart = (VChart) communicationManager.getVariableComponent(chartId);
+        WChart chart = (WChart) communicationManager.getVariableComponent(chartId);
         if (chart == null) {
             log.warn(String.format("Non-existent chart component, VAR_PID=%s", chartId));
             internalError(response);

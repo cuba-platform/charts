@@ -15,18 +15,22 @@ public abstract class WebAbstractChart<T extends ChartComponent>
 
     private static final long serialVersionUID = 7222268861924207093L;
 
+    @Override
     public String getCaption() {
         return component.getCaption();
     }
 
+    @Override
     public void setCaption(String caption) {
         component.setCaption(caption);
     }
 
+    @Override
     public String getDescription() {
         return null;
     }
 
+    @Override
     public void setDescription(String description) {
     }
 

@@ -13,6 +13,7 @@ import com.vaadin.data.util.IndexedContainer;
 import com.vaadin.terminal.PaintException;
 import com.vaadin.terminal.PaintTarget;
 
+import javax.annotation.Nullable;
 import java.io.Serializable;
 import java.util.*;
 
@@ -21,7 +22,7 @@ import java.util.*;
  *
  * @author zagumennikov
  */
-public abstract class CategoryChartComponent extends ChartComponent implements VCategoryChart {
+public abstract class CategoryChartComponent extends ChartComponent implements WCategoryChart {
 
     private static final long serialVersionUID = -2096187829656779886L;
 
@@ -192,7 +193,9 @@ public abstract class CategoryChartComponent extends ChartComponent implements V
         return retval;
     }
 
-    public boolean addContainerProperty(Object propertyId, Class<?> type, Object defaultValue) throws UnsupportedOperationException {
+    public boolean addContainerProperty(Object propertyId, Class<?> type, @Nullable Object defaultValue)
+            throws UnsupportedOperationException {
+
         final boolean retval = items.addContainerProperty(propertyId, type, defaultValue);
         if (retval && !(items instanceof PropertySetChangeNotifier)) {
             firePropertySetChange();
