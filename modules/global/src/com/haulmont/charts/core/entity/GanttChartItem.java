@@ -9,7 +9,12 @@ package com.haulmont.charts.core.entity;
 import com.haulmont.chile.core.annotations.MetaClass;
 import com.haulmont.chile.core.annotations.MetaProperty;
 import com.haulmont.cuba.core.entity.AbstractNotPersistentEntity;
+import org.apache.commons.lang.StringUtils;
 
+import java.text.DateFormat;
+import java.text.SimpleDateFormat;
+import java.util.Date;
+import java.util.LinkedList;
 import java.util.List;
 
 /**
@@ -20,34 +25,44 @@ import java.util.List;
 @MetaClass(name = "charts$GanttTaskItem")
 public abstract class GanttChartItem extends AbstractNotPersistentEntity {
 
-    private Long itemId;
+    protected Integer itemId;
 
-    private String name;
+    protected String name = "";
 
-    private String caption;
+    protected String captionType = "";
 
-    private String color;
+    protected String color = "000000";
 
-    private String resourceName;
+    protected String resourceName = "";
 
-    private String link;
+    protected GanttChartItem parent;
 
-    private GanttChartItem parent;
+    protected List<GanttChartItem> dependencies;
 
-    private List<GanttChartItem> dependencies;
+    protected Boolean isMilestone = false;
 
-    private Boolean isMilestone;
+    protected Boolean open = false;
 
-    private Boolean isOpen;
+    protected Object relatedEntity;
+
+    protected DateFormat dateFormat = new SimpleDateFormat("dd/MM/yyyy");
 
     @MetaProperty
-    public Long getItemId() {
+    public Integer getItemId() {
         return itemId;
     }
 
     @MetaProperty
-    public void setItemId(Long itemId) {
+    public void setItemId(Integer itemId) {
         this.itemId = itemId;
+    }
+
+    public Object getRelatedEntity() {
+        return relatedEntity;
+    }
+
+    public void setRelatedEntity(Object relatedEntity) {
+        this.relatedEntity = relatedEntity;
     }
 
     @MetaProperty
@@ -61,13 +76,13 @@ public abstract class GanttChartItem extends AbstractNotPersistentEntity {
     }
 
     @MetaProperty
-    public String getCaption() {
-        return caption;
+    public String getCaptionType() {
+        return captionType;
     }
 
     @MetaProperty
-    public void setCaption(String caption) {
-        this.caption = caption;
+    public void setCaptionType(String captionType) {
+        this.captionType = captionType;
     }
 
     @MetaProperty
@@ -96,28 +111,52 @@ public abstract class GanttChartItem extends AbstractNotPersistentEntity {
     }
 
     @MetaProperty
+    public Integer getParentId() {
+        if (parent != null)
+            return parent.getItemId();
+        else
+            return 0;
+    }
+
+    @MetaProperty
+    public Boolean getGroup() {
+        return this instanceof GanttChartGroup;
+    }
+
+    @MetaProperty
     public void setParent(GanttChartItem parent) {
         this.parent = parent;
     }
 
-    @MetaProperty
     public List<GanttChartItem> getDependencies() {
         return dependencies;
     }
 
-    @MetaProperty
     public void setDependencies(List<GanttChartItem> dependencies) {
         this.dependencies = dependencies;
     }
 
     @MetaProperty
-    public String getLink() {
-        return link;
+    public String getDependsOn() {
+        if (dependencies == null)
+            return "";
+
+        List<Integer> dependsList = new LinkedList<Integer>();
+        for (Object dependencyItem : dependencies) {
+            GanttChartItem dependencyChartItem = (GanttChartItem) dependencyItem;
+            dependsList.add(dependencyChartItem.getItemId());
+        }
+
+        return StringUtils.join(dependsList, ',');
     }
 
     @MetaProperty
-    public void setLink(String link) {
-        this.link = link;
+    public Integer getCompletePercent() {
+        return 0;
+    }
+
+    @MetaProperty
+    public void setCompletePercent(Integer percent) {
     }
 
     @MetaProperty
@@ -132,11 +171,39 @@ public abstract class GanttChartItem extends AbstractNotPersistentEntity {
 
     @MetaProperty
     public Boolean getOpen() {
-        return isOpen;
+        return open;
     }
 
     @MetaProperty
     public void setOpen(Boolean open) {
-        isOpen = open;
+        this.open = open;
+    }
+
+    @MetaProperty
+    public Date getStartTs() {
+        return null;
+    }
+
+    @MetaProperty
+    public Date getEndTs() {
+        return null;
+    }
+
+    @MetaProperty
+    public String getStartDate() {
+        Date start = getStartTs();
+        if (start != null)
+            return dateFormat.format(start);
+        else
+            return "";
+    }
+
+    @MetaProperty
+    public String getEndDate() {
+        Date end = getEndTs();
+        if (end != null)
+            return dateFormat.format(end);
+        else
+            return "";
     }
 }

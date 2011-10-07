@@ -19,11 +19,21 @@ import java.util.Date;
 @MetaClass(name = "charts$GanttTaskItem")
 public class GanttChartTask extends GanttChartItem {
 
-    private Date startTs;
+    protected Date startTs;
 
-    private Date endTs;
+    protected Date endTs;
+
+    protected Integer completePercent = 0;
+
+    public GanttChartTask() {
+    }
+
+    public GanttChartTask(GanttChartGroup parent) {
+        this.parent = parent;
+    }
 
     @MetaProperty
+    @Override
     public Date getStartTs() {
         return startTs;
     }
@@ -34,6 +44,7 @@ public class GanttChartTask extends GanttChartItem {
     }
 
     @MetaProperty
+    @Override
     public Date getEndTs() {
         return endTs;
     }
@@ -41,5 +52,17 @@ public class GanttChartTask extends GanttChartItem {
     @MetaProperty
     public void setEndTs(Date endTs) {
         this.endTs = endTs;
+    }
+
+    @MetaProperty
+    @Override
+    public Integer getCompletePercent() {
+        return completePercent;
+    }
+
+    @MetaProperty
+    @Override
+    public void setCompletePercent(Integer completePercent) {
+        this.completePercent = completePercent;
     }
 }

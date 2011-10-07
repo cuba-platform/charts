@@ -7,8 +7,8 @@
 package com.haulmont.charts.core.entity;
 
 import com.haulmont.chile.core.annotations.MetaClass;
-import com.haulmont.chile.core.annotations.MetaProperty;
 
+import java.util.Date;
 import java.util.List;
 
 /**
@@ -21,13 +21,45 @@ public class GanttChartGroup extends GanttChartItem {
 
     private List<GanttChartItem> childItems;
 
-    @MetaProperty
     public List<GanttChartItem> getChildItems() {
         return childItems;
     }
 
-    @MetaProperty
     public void setChildItems(List<GanttChartItem> childItems) {
         this.childItems = childItems;
+    }
+
+    @Override
+    public Date getStartTs() {
+        if (childItems != null) {
+            Date minDate = null;
+            for (GanttChartItem chartItem : childItems) {
+                Date date = chartItem.getStartTs();
+                if (minDate == null)
+                    minDate = date;
+                if ((date != null) && (date.compareTo(minDate) == -1)) {
+                    minDate = date;
+                }
+            }
+            return minDate;
+        } else
+            return super.getStartTs();
+    }
+
+    @Override
+    public Date getEndTs() {
+        if (childItems != null) {
+            Date maxDate = null;
+            for (GanttChartItem chartItem : childItems) {
+                Date date = chartItem.getEndTs();
+                if (maxDate == null)
+                    maxDate = date;
+                if ((date != null) && (date.compareTo(maxDate) == 1)) {
+                    maxDate = date;
+                }
+            }
+            return maxDate;
+        } else
+            return super.getEndTs();
     }
 }

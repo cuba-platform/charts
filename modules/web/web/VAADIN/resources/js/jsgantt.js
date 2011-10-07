@@ -1,5 +1,4 @@
-/*
- Copyright (c) 2009, Shlomy Gantz BlueBrick Inc. All rights reserved.
+/* Copyright (c) 2009, Shlomy Gantz BlueBrick Inc. All rights reserved.
  *
  * Redistribution and use in source and binary forms, with or without
  * modification, are permitted provided that the following conditions are met:
@@ -33,16 +32,10 @@
 var JSGantt;
 if (!JSGantt) JSGantt = {};
 
-//var vTimeout = 0;
 var vBenchTime = new Date().getTime();
 
-var ganttChartHelper = {
-    create : function() {
-    }
-};
-
+/** Active chart instances */
 JSGantt.instances = {
-
 };
 
 /**
@@ -57,7 +50,6 @@ JSGantt.instances = {
  * @param pStart {Date} Task start date/time (not required for pGroup=1 )
  * @param pEnd {Date} Task end date/time, you can set the end time to 12:00 to indicate half-day (not required for pGroup=1 )
  * @param pColor {String} Task bar RGB value
- * @param pLink {String} Task URL, clicking on the task will redirect to this url. Leave empty if you do not with the Task also serve as a link
  * @param pMile {Boolean} Determines whether task is a milestone (1=Yes,0=No)
  * @param pRes {String} Resource to perform the task
  * @param pComp {Number} Percent complete (Number between 0 and 100)
@@ -69,7 +61,7 @@ JSGantt.instances = {
  * note : you should use setCaption("Caption") in order to display the caption
  * @return void
  */
-JSGantt.TaskItem = function(pID, pName, pStart, pEnd, pColor, pLink, pMile, pRes, pComp, pGroup, pParent, pOpen, pDepend, pCaption) {
+JSGantt.TaskItem = function(pChart, pID, pName, pStart, pEnd, pColor, pMile, pRes, pComp, pGroup, pParent, pOpen, pDepend, pCaption) {
 
     /**
      * The name of the attribute.
@@ -111,14 +103,6 @@ JSGantt.TaskItem = function(pID, pName, pStart, pEnd, pColor, pLink, pMile, pRes
      * @private
      */
     var vColor = pColor;
-
-    /**
-     * @property vLink
-     * @type String
-     * @default pLink
-     * @private
-     */
-    var vLink = pLink;
 
     /**
      * @property vMile
@@ -217,11 +201,9 @@ JSGantt.TaskItem = function(pID, pName, pStart, pEnd, pColor, pLink, pMile, pRes
     var vVisible = 1;
     var x1, y1, x2, y2;
 
-
-    // todo Global variable usage
     if (vGroup != 1) {
-        vStart = JSGantt.parseDateStr(pStart, g.getDateInputFormat());
-        vEnd = JSGantt.parseDateStr(pEnd, g.getDateInputFormat());
+        vStart = JSGantt.parseDateStr(pStart, pChart.getDateInputFormat());
+        vEnd = JSGantt.parseDateStr(pEnd, pChart.getDateInputFormat());
     }
 
     /**
@@ -267,15 +249,6 @@ JSGantt.TaskItem = function(pID, pName, pStart, pEnd, pColor, pLink, pMile, pRes
      */
     this.getColor = function() {
         return vColor;
-    };
-
-    /**
-     * Returns task URL (i.e. http://www.jsgantt.com)
-     * @method getLink
-     * @return {String}
-     */
-    this.getLink = function() {
-        return vLink;
     };
 
     /**
@@ -352,39 +325,18 @@ JSGantt.TaskItem = function(pID, pName, pStart, pEnd, pColor, pLink, pMile, pRes
                 vDuration = '1 Hour';
             else
                 vDuration = tmpPer + ' Hours';
-        }
-
-        else if (vFormat == 'minute') {
+        } else if (vFormat == 'minute') {
             tmpPer = Math.ceil((this.getEnd() - this.getStart()) / ( 60 * 1000));
             if (tmpPer == 1)
                 vDuration = '1 Minute';
             else
                 vDuration = tmpPer + ' Minutes';
-        }
-
-        else { //if(vFormat == 'day') {
+        } else {
             tmpPer = Math.ceil((this.getEnd() - this.getStart()) / (24 * 60 * 60 * 1000) + 1);
             if (tmpPer == 1)  vDuration = '1 Day';
             else             vDuration = tmpPer + ' Days';
         }
 
-        //else if(vFormat == 'week') {
-        //   tmpPer =  ((this.getEnd() - this.getStart()) /  (24 * 60 * 60 * 1000) + 1)/7;
-        //   if(tmpPer == 1)  vDuration = '1 Week';
-        //   else             vDuration = tmpPer + ' Weeks'; 
-        //}
-
-        //else if(vFormat == 'month') {
-        //   tmpPer =  ((this.getEnd() - this.getStart()) /  (24 * 60 * 60 * 1000) + 1)/30;
-        //   if(tmpPer == 1) vDuration = '1 Month';
-        //   else            vDuration = tmpPer + ' Months'; 
-        //}
-
-        //else if(vFormat == 'quater') {
-        //   tmpPer =  ((this.getEnd() - this.getStart()) /  (24 * 60 * 60 * 1000) + 1)/120;
-        //   if(tmpPer == 1) vDuration = '1 Qtr';
-        //   else            vDuration = tmpPer + ' Qtrs'; 
-        //}
         return ( vDuration );
     };
 
@@ -601,22 +553,20 @@ JSGantt.TaskItem = function(pID, pName, pStart, pEnd, pColor, pLink, pMile, pRes
 
 /**
  * Creates the gant chart. for example:
-
- <p>var g = new JSGantt.GanttChart('g',document.getElementById('GanttChartDIV'), 'day');</p>
-
- var g = new JSGantt.GanttChart( - assign the gantt chart to a javascript variable called 'g'
- 'g' - the name of the variable that was just assigned (will be used later so that gantt object can reference itself)
- document.getElementById('GanttChartDIV') - reference to the DIV that will hold the gantt chart
- 'day' - default format will be by day
-
+ *
+ * <b>var g = new JSGantt.GanttChart(document.getElementById('GanttChartDIV'), 'day');</b>
+ *
+ * var g = new JSGantt.GanttChart( - assign the gantt chart to a javascript variable called 'g'
+ * document.getElementById('GanttChartDIV') - reference to the DIV that will hold the gantt chart
+ * 'day' - default format will be by day
  *
  * @class GanttChart
- * @param pGanttVar {String} the name of the gantt chart variable
  * @param pDiv {String} reference to the DIV that will hold the gantt chart
  * @param pFormat {String} default format (minute,hour,day,week,month,quarter)
+ * @param pClickHandler {Function} Click handler
  * @return void
  */
-JSGantt.GanttChart = function(pGanttVar, pDiv, pFormat, pClickHandler) {
+JSGantt.GanttChart = function(pDiv, pFormat, pClickHandler) {
 
     var timestamp = Number(new Date());
 
@@ -624,16 +574,46 @@ JSGantt.GanttChart = function(pGanttVar, pDiv, pFormat, pClickHandler) {
 
     JSGantt.instances[instanceName] = this;
 
-    var vClickHandler = pClickHandler;
+    /* Locale strings */
+    var localeMessages = {
+        // View format
+        "format" : "Format",
+        "day" : "Day",
+        "month" : "Month",
+        "week" : "Week",
+        "quarter" : "Quarter",
+        // Table columns
+        "resource" : "Resource",
+        "duration" : "Duration",
+        "complete" : "% Complete",
+        "startDate" : "Start Date",
+        "endDate" : "End Date",
+        "qtr" : "Qtr. "
+    };
+
+    var localeMonths = [
+        "January",
+        "February",
+        "March",
+        "April",
+        "May",
+        "June",
+        "July",
+        "August",
+        "September",
+        "October",
+        "November",
+        "December"
+    ];
 
     /**
-     * The name of the gantt chart variable
-     * @property vGanttVar
-     * @type String
-     * @default pGanttVar
+     * The function for handle click on tasks
+     * @property vClickHandler
+     * @type Function
+     * @default pClickHandler
      * @private
      */
-    var vGanttVar = pGanttVar;
+    var vClickHandler = pClickHandler;
 
     /**
      * The name of the gantt chart DIV
@@ -705,7 +685,7 @@ JSGantt.GanttChart = function(pGanttVar, pDiv, pFormat, pClickHandler) {
      * @default "mm/dd/yyyy"
      * @private
      */
-    var vDateInputFormat = "mm/dd/yyyy";
+    var vDateInputFormat = "dd/mm/yyyy";
 
     /**
      * Date display format
@@ -714,33 +694,96 @@ JSGantt.GanttChart = function(pGanttVar, pDiv, pFormat, pClickHandler) {
      * @default "mm/dd/yy"
      * @private
      */
-    var vDateDisplayFormat = "mm/dd/yy";
+    var vDateDisplayFormat = "dd/mm/yy";
 
     var vNumUnits = 0;
     var vCaptionType;
     var vDepId = 1;
     var vTaskList = new Array();
-    var vFormatArr = new Array("day", "week", "month", "quarter");
 
+    var vFormatArr = new Array("day", "week", "month", "quarter");
     var vQuarterArr = new Array(1, 1, 1, 2, 2, 2, 3, 3, 3, 4, 4, 4);
     var vMonthDaysArr = new Array(31, 28, 31, 30, 31, 30, 31, 31, 30, 31, 30, 31);
 
-    var vMonthArr = new Array(
-        "January",
-        "February",
-        "March",
-        "April",
-        "May",
-        "June",
-        "July",
-        "August",
-        "September",
-        "October",
-        "November",
-        "December");
+    /**
+     * Get Instance Key
+     * @method getInstanceName
+     * @return {String}
+     */
+    this.getInstanceName = function() {
+        return instanceName;
+    };
 
-    this.clickOnTask = function() {
-        alert('Click!');
+    this.clearTasks = function() {
+        vTaskList = new Array();
+    };
+
+    /**
+     * Click on selected task
+     * @param  taskObject {TaskItem} Task
+     * @method clickOnTask
+     * @return {void}
+     */
+    this.clickOnTask = function(taskObject) {
+        if (vClickHandler)
+            vClickHandler(taskObject);
+    };
+
+    /**
+     * Set function for clicks handle
+     * @param  pClickHandler {function}
+     * @method getClickHandler
+     * @return {void}
+     */
+    this.setClickHandler = function(pClickHandler) {
+        vClickHandler = pClickHandler;
+    };
+
+    /**
+     * Get function for clicks handle
+     * @method getClickHandler
+     * @return {function}
+     */
+    this.getClickHandler = function() {
+        return vClickHandler;
+    };
+
+    /**
+     * Get locale strings for Months
+     * @method getLocaleMonths
+     * @return {Array}
+     */
+    this.getLocaleMonths = function() {
+        return localeMonths;
+    };
+
+    /**
+     * Set locale strings for Months
+     * @method setLocaleMonths
+     * @param pMonths {Array} Months locale names
+     * @return {void}
+     */
+    this.setLocaleMonths = function(pMonths) {
+        localeMonths = pMonths;
+    };
+
+    /**
+     * Get locale messages for tasks table
+     * @method getLocaleMessages
+     * @return {Object}
+     */
+    this.getLocaleMessages = function() {
+        return localeMessages;
+    };
+
+    /**
+     * Set locale messages for tasks table
+     * @method setLocaleMessages
+     * @param pMessages {Object} Messages dictionary
+     * @return {void}
+     */
+    this.setLocaleMessages = function(pMessages) {
+        localeMessages = pMessages;
     };
 
     /**
@@ -994,6 +1037,7 @@ JSGantt.GanttChart = function(pGanttVar, pDiv, pFormat, pClickHandler) {
         }
         vDepId = 1;
     };
+
     /**
      * Draw a straight line (colored one-pixel wide DIV), need to parameterize doc item
      * @method sLine
@@ -1240,11 +1284,11 @@ JSGantt.GanttChart = function(pGanttVar, pDiv, pFormat, pClickHandler) {
                     '  <td style="border-top: #efefef 1px solid; width: 15px; height: 20px"></td>' +
                     '  <td style="border-top: #efefef 1px solid; width: ' + vNameWidth + 'px; height: 20px"><nobr></nobr></td>';
 
-            if (vShowRes == 1) vLeftTable += '  <td style="border-top: #efefef 1px solid; font-size: 12px; border-left: #efefef 1px solid; width: 60px; height: 20px" align=center nowrap>Resource</td>';
-            if (vShowDur == 1) vLeftTable += '  <td style="border-top: #efefef 1px solid; font-size: 12px; border-left: #efefef 1px solid; width: 60px; height: 20px" align=center nowrap>Duration</td>';
-            if (vShowComp == 1) vLeftTable += '  <td style="border-top: #efefef 1px solid; font-size: 12px; border-left: #efefef 1px solid; width: 60px; height: 20px" align=center nowrap>% Comp.</td>';
-            if (vShowStartDate == 1) vLeftTable += '  <td style="border-top: #efefef 1px solid; font-size: 12px; border-left: #efefef 1px solid; width: 60px; height: 20px" align=center nowrap>Start Date</td>';
-            if (vShowEndDate == 1) vLeftTable += '  <td style="border-top: #efefef 1px solid; font-size: 12px; border-left: #efefef 1px solid; width: 60px; height: 20px" align=center nowrap>End Date</td>';
+            if (vShowRes == 1) vLeftTable += '  <td style="border-top: #efefef 1px solid; font-size: 12px; border-left: #efefef 1px solid; width: 60px; height: 20px" align=center nowrap>' + localeMessages['resource'] +'</td>';
+            if (vShowDur == 1) vLeftTable += '  <td style="border-top: #efefef 1px solid; font-size: 12px; border-left: #efefef 1px solid; width: 60px; height: 20px" align=center nowrap>' + localeMessages['duration'] +'</td>';
+            if (vShowComp == 1) vLeftTable += '  <td style="border-top: #efefef 1px solid; font-size: 12px; border-left: #efefef 1px solid; width: 60px; height: 20px" align=center nowrap>' + localeMessages['complete'] +'</td>';
+            if (vShowStartDate == 1) vLeftTable += '  <td style="border-top: #efefef 1px solid; font-size: 12px; border-left: #efefef 1px solid; width: 60px; height: 20px" align=center nowrap>' + localeMessages['startDate'] +'</td>';
+            if (vShowEndDate == 1) vLeftTable += '  <td style="border-top: #efefef 1px solid; font-size: 12px; border-left: #efefef 1px solid; width: 60px; height: 20px" align=center nowrap>' + localeMessages['endDate'] +'</td>';
 
             vLeftTable += '</tr>';
 
@@ -1261,15 +1305,13 @@ JSGantt.GanttChart = function(pGanttVar, pDiv, pFormat, pClickHandler) {
                 vID = vTaskList[i].getID();
 
                 if (vTaskList[i].getVisible() == 0)
-                // todo Global variable usage
                     vLeftTable += '<tr id=child_' + vID + ' bgcolor=#' + vBGColor + ' style="display:none" ' +
-                        'onMouseover=g.mouseOver(this,' + vID + ',"left","' + vRowType + '") ' +
-                        'onMouseout=g.mouseOut(this,' + vID + ',"left","' + vRowType + '")>';
+                        'onMouseover=JSGantt.mouseOver("' + instanceName +'",this,' + vID + ',"left","' + vRowType + '") ' +
+                        'onMouseout=JSGantt.mouseOut("' + instanceName +'",this,' + vID + ',"left","' + vRowType + '")>';
                 else
-                // todo Global variable usage
                     vLeftTable += '<tr id=child_' + vID + ' bgcolor=#' + vBGColor +
-                        ' onMouseover=g.mouseOver(this,' + vID + ',"left","' + vRowType + '") ' +
-                        'onMouseout=g.mouseOut(this,' + vID + ',"left","' + vRowType + '")>';
+                        ' onMouseover=JSGantt.mouseOver("' + instanceName +'",this,' + vID + ',"left","' + vRowType + '") ' +
+                        'onMouseout=JSGantt.mouseOut("' + instanceName +'",this,' + vID + ',"left","' + vRowType + '")>';
 
                 vLeftTable +=
                     '  <td class="gdatehead" style="width: 15px; height: 20px; border-top: #efefef 1px solid; font-size: 12px; border-left: #efefef 1px solid;">&nbsp;</td>' +
@@ -1284,9 +1326,9 @@ JSGantt.GanttChart = function(pGanttVar, pDiv, pFormat, pClickHandler) {
 
                 if (vTaskList[i].getGroup()) {
                     if (vTaskList[i].getOpen() == 1)
-                        vLeftTable += '<span id="group_' + vID + '" style="color:#000000; cursor:pointer; font-weight:bold; font-size: 12px;" onclick="JSGantt.folder(' + vID + ',' + vGanttVar + ');' + vGanttVar + '.DrawDependencies();">&ndash;</span><span style="color:#000000">&nbsp</SPAN>';
+                        vLeftTable += '<span id="group_' + vID + '" style="color:#000000; cursor:pointer; font-weight:bold; font-size: 12px;" onclick="JSGantt.folder(' + vID + ',\'' + instanceName + '\');JSGantt.DrawDependencies(\'' + instanceName +'\');">&ndash;</span><span style="color:#000000">&nbsp</SPAN>';
                     else
-                        vLeftTable += '<span id="group_' + vID + '" style="color:#000000; cursor:pointer; font-weight:bold; font-size: 12px;" onclick="JSGantt.folder(' + vID + ',' + vGanttVar + ');' + vGanttVar + '.DrawDependencies();">+</span><span style="color:#000000">&nbsp</SPAN>';
+                        vLeftTable += '<span id="group_' + vID + '" style="color:#000000; cursor:pointer; font-weight:bold; font-size: 12px;" onclick="JSGantt.folder(' + vID + ',\'' + instanceName + '\');JSGantt.DrawDependencies(\'' + instanceName +'\');">+</span><span style="color:#000000">&nbsp</SPAN>';
 
                 } else {
 
@@ -1294,52 +1336,59 @@ JSGantt.GanttChart = function(pGanttVar, pDiv, pFormat, pClickHandler) {
                 }
 
                 vLeftTable +=
-                    '<span onclick=JSGantt.taskLink("' + vTaskList[i].getLink() + '",300,200); style="cursor:pointer"> ' + vTaskList[i].getName() + '</span></NOBR></td>';
+                    '<span onclick=JSGantt.onClick("' + instanceName  +'",' + vID + '); style="cursor:pointer"> ' + vTaskList[i].getName() + '</span></NOBR></td>';
 
-                if (vShowRes == 1) vLeftTable += '  <td class=gname style="width: 60px; height: 20px; text-align: center; border-top: #efefef 1px solid; font-size: 12px; border-left: #efefef 1px solid;" align=center><NOBR>' + vTaskList[i].getResource() + '</NOBR></td>';
-                if (vShowDur == 1) vLeftTable += '  <td class=gname style="width: 60px; height: 20px; text-align: center; border-top: #efefef 1px solid; font-size: 12px; border-left: #efefef 1px solid;" align=center><NOBR>' + vTaskList[i].getDuration(vFormat) + '</NOBR></td>';
-                if (vShowComp == 1) vLeftTable += '  <td class=gname style="width: 60px; height: 20px; text-align: center; border-top: #efefef 1px solid; font-size: 12px; border-left: #efefef 1px solid;" align=center><NOBR>' + vTaskList[i].getCompStr() + '</NOBR></td>';
-                if (vShowStartDate == 1) vLeftTable += '  <td class=gname style="width: 60px; height: 20px; text-align: center; border-top: #efefef 1px solid; font-size: 12px; border-left: #efefef 1px solid;" align=center><NOBR>' + JSGantt.formatDateStr(vTaskList[i].getStart(), vDateDisplayFormat) + '</NOBR></td>';
-                if (vShowEndDate == 1) vLeftTable += '  <td class=gname style="width: 60px; height: 20px; text-align: center; border-top: #efefef 1px solid; font-size: 12px; border-left: #efefef 1px solid;" align=center><NOBR>' + JSGantt.formatDateStr(vTaskList[i].getEnd(), vDateDisplayFormat) + '</NOBR></td>';
+                if (vShowRes == 1) vLeftTable += '  <td class=gname style="width: 60px; height: 20px; text-align: center; border-top: #efefef 1px solid; font-size: 12px; border-left: #efefef 1px solid;" align=center><nobr>' + vTaskList[i].getResource() + '</nobr></td>';
+                if (vShowDur == 1) vLeftTable += '  <td class=gname style="width: 60px; height: 20px; text-align: center; border-top: #efefef 1px solid; font-size: 12px; border-left: #efefef 1px solid;" align=center><nobr>' + vTaskList[i].getDuration(vFormat) + '</nobr></td>';
+                if (vShowComp == 1) vLeftTable += '  <td class=gname style="width: 60px; height: 20px; text-align: center; border-top: #efefef 1px solid; font-size: 12px; border-left: #efefef 1px solid;" align=center><nobr>' + vTaskList[i].getCompStr() + '</nobr></td>';
+                if (vShowStartDate == 1) vLeftTable += '  <td class=gname style="width: 60px; height: 20px; text-align: center; border-top: #efefef 1px solid; font-size: 12px; border-left: #efefef 1px solid;" align=center><nobr>' + JSGantt.formatDateStr(vTaskList[i].getStart(), vDateDisplayFormat) + '</NOBR></td>';
+                if (vShowEndDate == 1) vLeftTable += '  <td class=gname style="width: 60px; height: 20px; text-align: center; border-top: #efefef 1px solid; font-size: 12px; border-left: #efefef 1px solid;" align=center><nobr>' + JSGantt.formatDateStr(vTaskList[i].getEnd(), vDateDisplayFormat) + '</NOBR></td>';
 
                 vLeftTable += '</tr>';
             }
 
             // DRAW the date format selector at bottom left.  Another potential GanttChart parameter to hide/show this selector
             vLeftTable += '</td></tr>' +
-                '<tr><td border="1" colspan="5" align="left" style="border-top: #efefef 1px solid; font-size: 11px; border-left: #efefef 1px solid; height=18px">&nbsp;&nbsp;Powered by <a href=http://www.jsgantt.com>jsGantt</a>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Format:';
+                '<tr><td border="1" colspan="5" align="left" style="border-top: #efefef 1px solid; font-size: 11px; border-left: #efefef 1px solid; height=18px">' + localeMessages['format'] + ':';
 
             if (vFormatArr.join().indexOf("minute") != -1) {
-                if (vFormat == 'minute') vLeftTable += '<input type="radio" name="radFormat" VALUE="minute" checked>Minute';
-                else                vLeftTable += '<input type="radio" name="radFormat" onclick=JSGantt.changeFormat("minute",' + vGanttVar + '); VALUE="minute">Minute';
+                if (vFormat == 'minute') vLeftTable += '<input type="radio" name="radFormat" value="minute" checked>' + localeMessages['minute'];
+                else
+                    vLeftTable += '<input type="radio" name="radFormat" onclick=JSGantt.changeFormat("minute","' + instanceName + '"); value="minute">Minute';
             }
 
             if (vFormatArr.join().indexOf("hour") != -1) {
                 if (vFormat == 'hour') vLeftTable += '<input type="radio" name="radFormat" value="hour" checked>Hour';
-                else                vLeftTable += '<input type="radio" name="radFormat" onclick=JSGantt.changeFormat("hour",' + vGanttVar + '); VALUE="hour">Hour';
+                else
+                    vLeftTable += '<input type="radio" name="radFormat" onclick=JSGantt.changeFormat("hour","' + instanceName + '"); value="hour">Hour';
             }
 
             if (vFormatArr.join().indexOf("day") != -1) {
-                if (vFormat == 'day') vLeftTable += '<input type="radio" name="radFormat" VALUE="day" checked>Day';
-                else                vLeftTable += '<input type="radio" name="radFormat" onclick=JSGantt.changeFormat("day",' + vGanttVar + '); VALUE="day">Day';
+                if (vFormat == 'day') vLeftTable += '<input type="radio" name="radFormat" value="day" checked>' + localeMessages['day'];
+                else
+                    vLeftTable += '<input type="radio" name="radFormat" onclick=JSGantt.changeFormat("day","' + instanceName + '"); value="day">' + localeMessages['day'];
             }
 
             if (vFormatArr.join().indexOf("week") != -1) {
-                if (vFormat == 'week') vLeftTable += '<input type="radio" name="radFormat" value="week" checked>Week';
-                else                vLeftTable += '<input type="radio" name="radFormat" onclick=JSGantt.changeFormat("week",' + vGanttVar + ') VALUE="week">Week';
+                if (vFormat == 'week')
+                    vLeftTable += '<input type="radio" name="radFormat" value="week" checked>' + localeMessages['week'];
+                else
+                    vLeftTable += '<input type="radio" name="radFormat" onclick=JSGantt.changeFormat("week","' + instanceName + '") value="week">' + localeMessages['week'];
             }
 
             if (vFormatArr.join().indexOf("month") != -1) {
-                if (vFormat == 'month') vLeftTable += '<input type="radio" name="radFormat" value="month" checked>Month';
-                else                vLeftTable += '<input type="radio" name="radFormat" onclick=JSGantt.changeFormat("month",' + vGanttVar + ') VALUE="month">Month';
+                if (vFormat == 'month')
+                    vLeftTable += '<input type="radio" name="radFormat" value="month" checked>' + localeMessages['month'];
+                else
+                    vLeftTable += '<input type="radio" name="radFormat" onclick=JSGantt.changeFormat("month","' + instanceName + '") value="month">' + localeMessages['month'];
             }
 
             if (vFormatArr.join().indexOf("quarter") != -1) {
-                if (vFormat == 'quarter') vLeftTable += '<input type="radio" name="radFormat" value="quarter" checked>Quarter';
-                else                vLeftTable += '<input type="radio" name="radFormat" onclick=JSGantt.changeFormat("quarter",' + vGanttVar + ') VALUE="quarter">Quarter';
+                if (vFormat == 'quarter')
+                    vLeftTable += '<input type="radio" name="radFormat" value="quarter" checked>' + localeMessages['quarter'];
+                else
+                    vLeftTable += '<input type="radio" name="radFormat" onclick=JSGantt.changeFormat("quarter","' + instanceName + '") value="quarter">' + localeMessages['quarter'];
             }
-
-//            vLeftTable += '<input type="radio" name="other" VALUE="other" style="display:none"> .';
 
             vLeftTable += '</td></tr></tbody></table></td>';
 
@@ -1499,13 +1548,13 @@ JSGantt.GanttChart = function(pGanttVar, pDiv, pFormat, pClickHandler) {
                         vWeekdayColor = "ffffff";
 
                     if (vNxtDate <= vMaxDate) {
-                        vDateRowStr += '<td class="ghead" style="border-top: #efefef 1px solid; font-size: 12px; height: 19px; border-left: #efefef 1px solid;" bgcolor=#' + vWeekdayColor + ' align=center width:' + vColWidth + 'px><div style="width: ' + vColWidth + 'px">' + vMonthArr[vTmpDate.getMonth()].substr(0, 3) + '</div></td>';
+                        vDateRowStr += '<td class="ghead" style="border-top: #efefef 1px solid; font-size: 12px; height: 19px; border-left: #efefef 1px solid;" bgcolor=#' + vWeekdayColor + ' align=center width:' + vColWidth + 'px><div style="width: ' + vColWidth + 'px">' + localeMonths[vTmpDate.getMonth()].substr(0, 3) + '</div></td>';
                         if (vCurrDate >= vTmpDate && vCurrDate < vNxtDate)
                             vItemRowStr += '<td class="ghead" style="border-top: #efefef 1px solid; font-size: 12px; border-left: #efefef 1px solid;" bgcolor=#' + vWeekdayColor + ' align=center><div style="width: ' + vColWidth + 'px">&nbsp&nbsp</div></td>';
                         else
                             vItemRowStr += '<td class="ghead" style="border-top: #efefef 1px solid; font-size: 12px; border-left: #efefef 1px solid;" align=center><div style="width: ' + vColWidth + 'px">&nbsp&nbsp</div></td>';
                     } else {
-                        vDateRowStr += '<td class="ghead" style="border-top: #efefef 1px solid; font-size: 12px; height: 19px; border-left: #efefef 1px solid; border-right: #efefef 1px solid;" bgcolor=#' + vWeekdayColor + ' align=center width:' + vColWidth + 'px><div style="width: ' + vColWidth + 'px">' + vMonthArr[vTmpDate.getMonth()].substr(0, 3) + '</div></td>';
+                        vDateRowStr += '<td class="ghead" style="border-top: #efefef 1px solid; font-size: 12px; height: 19px; border-left: #efefef 1px solid; border-right: #efefef 1px solid;" bgcolor=#' + vWeekdayColor + ' align=center width:' + vColWidth + 'px><div style="width: ' + vColWidth + 'px">' + localeMonths[vTmpDate.getMonth()].substr(0, 3) + '</div></td>';
                         if (vCurrDate >= vTmpDate && vCurrDate < vNxtDate)
                             vItemRowStr += '<td class="ghead" style="border-top: #efefef 1px solid; font-size: 12px; border-left: #efefef 1px solid; border-right: #efefef 1px solid;" bgcolor=#' + vWeekdayColor + ' align=center><div style="width: ' + vColWidth + 'px">&nbsp&nbsp</div></td>';
                         else
@@ -1537,7 +1586,7 @@ JSGantt.GanttChart = function(pGanttVar, pDiv, pFormat, pClickHandler) {
                         vWeekdayColor = "ffffff";
 
                     if (vNxtDate <= vMaxDate) {
-                        vDateRowStr += '<td class="ghead" style="border-top: #efefef 1px solid; font-size: 12px; height: 19px; border-left: #efefef 1px solid;" bgcolor=#' + vWeekdayColor + ' align=center width:' + vColWidth + 'px><div style="width: ' + vColWidth + 'px">Qtr. ' + vQuarterArr[vTmpDate.getMonth()] + '</div></td>';
+                        vDateRowStr += '<td class="ghead" style="border-top: #efefef 1px solid; font-size: 12px; height: 19px; border-left: #efefef 1px solid;" bgcolor=#' + vWeekdayColor + ' align=center width:' + vColWidth + 'px><div style="width: ' + vColWidth + 'px">' + localeMessages['qtr'] + vQuarterArr[vTmpDate.getMonth()] + '</div></td>';
                         if (vCurrDate >= vTmpDate && vCurrDate < vNxtDate)
                             vItemRowStr += '<td class="ghead" style="border-top: #efefef 1px solid; font-size: 12px; border-left: #efefef 1px solid;" bgcolor=#' + vWeekdayColor + ' align=center><div style="width: ' + vColWidth + 'px">&nbsp&nbsp</div></td>';
                         else
@@ -1589,11 +1638,9 @@ JSGantt.GanttChart = function(pGanttVar, pDiv, pFormat, pClickHandler) {
                 if (vTaskList[i].getMile()) {
 
                     vRightTable += '<div><table style="position:relative; top: 0; width: ' + vChartWidth + 'px;" cellSpacing=0 cellPadding=0 border=0>' +
-
-                        // todo Global variable usage
-                        '<tr id=childrow_' + vID + ' class=yesdisplay style="height: 20px" ' +
-                        'onMouseover=g.mouseOver(this,' + vID + ',"right","mile") ' +
-                        'onMouseout=g.mouseOut(this,' + vID + ',"right","mile")>' + vItemRowStr + '</tr></table></div>';
+                        '<tr id=childrow_' + vID + ' class="yesdisplay" style="height: 20px" ' +
+                        'onMouseover=JSGantt.mouseOver("' + instanceName +'",this,' + vID + ',"right","mile") ' +
+                        'onMouseout=JSGantt.mouseOut("' + instanceName +'",this,' + vID + ',"right","mile")>' + vItemRowStr + '</tr></table></div>';
 
                     // Build date string for Title
                     vDateRowStr = JSGantt.formatDateStr(vTaskStart, vDateDisplayFormat);
@@ -1603,7 +1650,8 @@ JSGantt.GanttChart = function(pGanttVar, pDiv, pFormat, pClickHandler) {
 
                     vRightTable +=
                         '<div id=bardiv_' + vID + ' style="position:absolute; top:0px; left:' + Math.ceil((vTaskLeft * (vDayWidth) + 1)) + 'px; height: 18px; width:160px; overflow:hidden;">' +
-                            '  <div id=taskbar_' + vID + ' title="' + vTaskList[i].getName() + ': ' + vDateRowStr + '" style="height: 16px; width:12px; overflow:hidden; cursor: pointer;" onclick=JSGantt.taskLink("' + vTaskList[i].getLink() + '",300,200);>';
+                            '  <div id=taskbar_' + vID + ' title="' + vTaskList[i].getName() + ': ' + vDateRowStr + '" style="height: 16px; width:12px; overflow:hidden; cursor: pointer;" ' +
+                            'onclick=JSGantt.onClick("' + instanceName  +'",' + vID + ')>';
 
                     if (vTaskList[i].getCompVal() < 100) {
                         vRightTable += '&loz;</div>';
@@ -1612,12 +1660,8 @@ JSGantt.GanttChart = function(pGanttVar, pDiv, pFormat, pClickHandler) {
                         vRightTable += '&diams;</div>';
                     }
 
-//                    alert('G!');
-
-                    // todo Global variable usage
                     if (this.getCaptionType()) {
                         vCaptionStr = '';
-                        // todo Global variable usage
                         switch (this.getCaptionType()) {
                             case 'Caption':
                                 vCaptionStr = vTaskList[i].getCaption();
@@ -1662,7 +1706,9 @@ JSGantt.GanttChart = function(pGanttVar, pDiv, pFormat, pClickHandler) {
                     // Draw Group Bar  which has outer div with inner group div and several small divs to left and right to create angled-end indicators
                     if (vTaskList[i].getGroup()) {
                         vRightTable += '<div><table style="position:relative; top:0; width: ' + vChartWidth + 'px;" cellSpacing=0 cellPadding=0 border=0>' +
-                            '<tr id=childrow_' + vID + ' class=yesdisplay style="height: 20px" bgColor=#f3f3f3 onMouseover=g.mouseOver(this,' + vID + ',"right","group") onMouseout=g.mouseOut(this,' + vID + ',"right","group")>' + vItemRowStr + '</tr></TABLE></DIV>';
+                            '<tr id=childrow_' + vID + ' class=yesdisplay style="height: 20px" bgColor=#f3f3f3 ' +
+                            'onMouseover=JSGantt.mouseOver("' + instanceName +'",this,' + vID + ',"right","group") ' +
+                            'onMouseout=JSGantt.mouseOut("' + instanceName +'",this,' + vID + ',"right","group") >' + vItemRowStr + '</tr></table></div>';
                         vRightTable +=
                             '<div id=bardiv_' + vID + ' style="position:absolute; top:5px; left:' + Math.ceil(vTaskLeft * (vDayWidth) + 1) + 'px; height: 7px; width:' + Math.ceil((vTaskRight) * (vDayWidth) - 1) + 'px">' +
                                 '<div id=taskbar_' + vID + ' title="' + vTaskList[i].getName() + ': ' + vDateRowStr +
@@ -1670,7 +1716,7 @@ JSGantt.GanttChart = function(pGanttVar, pDiv, pFormat, pClickHandler) {
                                 Math.ceil((vTaskRight) * (vDayWidth) - 1) + 'px;  cursor: pointer;opacity:0.9;">' +
                                 '<div style="z-index: -4; float:left; background-color:#666666; height:3px; overflow: hidden; margin-top:1px; ' +
                                 'margin-left:1px; margin-right:1px; filter: alpha(opacity=80); opacity:0.8; width:' + vTaskList[i].getCompStr() + '; ' +
-                                'cursor: pointer;" onclick=JSGantt.taskLink("' + vTaskList[i].getLink() + '",300,200);>' +
+                                'cursor: pointer;" onclick=JSGantt.onClick("' + instanceName  +'",' + vID + ')>' +
                                 '</div>' +
                                 '</div>' +
                                 '<div style="z-index: -4; float:left; background-color:#000000; height:4px; overflow: hidden; width:1px;"></div>' +
@@ -1682,11 +1728,9 @@ JSGantt.GanttChart = function(pGanttVar, pDiv, pFormat, pClickHandler) {
                                 '<div style="z-index: -4; float:left; background-color:#000000; height:1px; overflow: hidden; width:1px;"></div>' +
                                 '<div style="z-index: -4; float:right; background-color:#000000; height:1px; overflow: hidden; width:1px;"></div>';
 
-                        // todo Global variable usage
-                        if (g.getCaptionType()) {
+                        if (this.getCaptionType()) {
                             vCaptionStr = '';
-                            // todo Global variable usage
-                            switch (g.getCaptionType()) {
+                            switch (this.getCaptionType()) {
                                 case 'Caption':
                                     vCaptionStr = vTaskList[i].getCaption();
                                     break;
@@ -1709,30 +1753,24 @@ JSGantt.GanttChart = function(pGanttVar, pDiv, pFormat, pClickHandler) {
 
                     } else {
 
-                        // todo Global variable usage
                         var vDivStr = '<div><table style="position:relative; top:0; width: ' + vChartWidth +
                             'px;" cellSpacing=0 cellPadding=0 border=0>' +
                             '<tr id=childrow_' + vID + ' class=yesdisplay style="height: 20px" bgColor=#ffffff ' +
-                            'onMouseover=g.mouseOver(this,' + vID + ',"right","row") ' +
-                            'onMouseout=g.mouseOut(this,' + vID + ',"right","row")>' + vItemRowStr + '</tr></table></div>';
+                            'onMouseover=JSGantt.mouseOver("' + instanceName +'",this,' + vID + ',"right","row") ' +
+                            'onMouseout=JSGantt.mouseOut("' + instanceName +'",this,' + vID + ',"right","row")>' + vItemRowStr + '</tr></table></div>';
                         vRightTable += vDivStr;
 
                         // Draw Task Bar  which has outer DIV with enclosed colored bar div, and opaque completion div
                         vRightTable +=
                             '<div id=bardiv_' + vID + ' style="position:absolute; top:4px; left:' + Math.ceil(vTaskLeft * (vDayWidth) + 1) + 'px; height:18px; width:' + Math.ceil((vTaskRight) * (vDayWidth) - 1) + 'px">' +
                                 '<div id=taskbar_' + vID + ' title="' + vTaskList[i].getName() + ': ' + vDateRowStr + '" class=gtask style="background-color:#' + vTaskList[i].getColor() + '; height: 13px; width:' + Math.ceil((vTaskRight) * (vDayWidth) - 1) + 'px; cursor: pointer;opacity:0.9;" ' +
-//                                'onclick=JSGantt.taskLink("' + vTaskList[i].getLink() + '",300,200); >' +
-                                'onclick=JSGantt.onClick("' + instanceName  +'")>' +
+                                'onclick=JSGantt.onClick("' + instanceName  +'",' + vID + ')>' +
                                 '<div class=gcomplete style="z-index: -4; float:left; background-color:black; height:5px; overflow: auto; margin-top:4px; filter: alpha(opacity=40); opacity:0.4; width:' + vTaskList[i].getCompStr() + '; overflow:hidden">' +
                                 '</div>' +
                                 '</div>';
 
-//                        alert('G!');
-
-                        // todo Global variable usage
                         if (this.getCaptionType()) {
                             var vCaptionStr = '';
-                            // todo Global variable usage
                             switch (this.getCaptionType()) {
                                 case 'Caption':
                                     vCaptionStr = vTaskList[i].getCaption();
@@ -2019,6 +2057,7 @@ JSGantt.getMaxDate = function (pList, pFormat) {
     return(vDate);
 };
 
+// todo Multiple charts on page
 /**
  * Returns an object from the current DOM
  *
@@ -2064,10 +2103,11 @@ JSGantt.findObj = function (theObj, theDoc) {
  *
  * @method changeFormat
  * @param pFormat {String} - Current format (minute,hour,day...)
- * @param ganttObj {GanttChart} - The gantt object
+ * @param instanceName {String} - Instance key
  * @return {void}
  */
-JSGantt.changeFormat = function(pFormat, ganttObj) {
+JSGantt.changeFormat = function(pFormat, instanceName) {
+    var ganttObj = JSGantt.instances[instanceName];
     if (ganttObj) {
         ganttObj.setFormat(pFormat);
         ganttObj.DrawDependencies();
@@ -2078,15 +2118,59 @@ JSGantt.changeFormat = function(pFormat, ganttObj) {
 };
 
 /**
+ * Mouse over handler for instance
+ *
+ * @method mouseOver
+ * @param instanceKey Key of GanttChart instance
+ * @param pObj DOM object
+ * @param pID Object id
+ * @param pPos Postion
+ * @param pType Type
+ * @return {void}
+ */
+JSGantt.mouseOver = function(instanceKey, pObj, pID, pPos, pType) {
+    var instance = JSGantt.instances[instanceKey];
+    instance.mouseOver(pObj, pID, pPos, pType);
+};
+
+/**
+ * Mouse out handler for instance
+ *
+ * @method mouseOut
+ * @param instanceKey Key of GanttChart instance
+ * @param pObj DOM object
+ * @param pID Object id
+ * @param pPos Postion
+ * @param pType Type
+ * @return {void}
+ */
+JSGantt.mouseOut = function(instanceKey, pObj, pID, pPos, pType) {
+    var instance = JSGantt.instances[instanceKey];
+    instance.mouseOut(pObj, pID, pPos, pType);
+};
+
+/**
+ * DrawDependencies for instance
+ *
+ * @method DrawDependencies
+ * @param instanceName {String} - Instance key
+ * @return {void}
+ */
+JSGantt.DrawDependencies = function (instanceName) {
+    var ganttObj = JSGantt.instances[instanceName];
+    ganttObj.DrawDependencies();
+};
+
+/**
  * Open/Close and hide/show children of specified task
  *
  * @method folder
  * @param pID {Number} - Task ID
- * @param ganttObj {GanttChart} - The gantt object
+ * @param instanceName {String} - Instance key
  * @return {void}
  */
-JSGantt.folder = function (pID, ganttObj) {
-
+JSGantt.folder = function (pID, instanceName) {
+    var ganttObj = JSGantt.instances[instanceName];
     var vList = ganttObj.getList();
 
     var i;
@@ -2201,37 +2285,16 @@ JSGantt.show = function (pID, pTop, ganttObj) {
     }
 };
 
-/**
- * Handles click events on task name, currently opens a new window
- *
- * @method taskLink
- * @param pRef {String} - URL for window
- * @param pWidth {Number} - Width of window
- * @param pHeight {Number} - Height of window
- * @return {void}
- */
-JSGantt.taskLink = function(pRef, pWidth, pHeight) {
-
-    var vWidth, vHeight;
-    if (pWidth) {
-        vWidth = pWidth;
-    } else {
-        vWidth = 400;
-    }
-    if (pHeight) {
-        vHeight = pHeight;
-    } else {
-        vHeight = 400;
-    }
-
-    // todo replace it with a custom handler
-    // var OpenWindow = window.open(pRef, "newwin", "height=" + vHeight + ",width=" + vWidth);
-};
-
-JSGantt.onClick = function(pInstanceName) {
+JSGantt.onClick = function(pInstanceName, pID) {
     var instance = JSGantt.instances[pInstanceName];
     if (instance) {
-        instance.clickOnTask();
+        var vList = instance.getList();
+        var i;
+        for (i = 0; i < vList.length; i++) {
+            if (vList[i].getID() == pID) {
+                instance.clickOnTask(vList[i]);
+            }
+        }
     }
 };
 
@@ -2308,14 +2371,15 @@ JSGantt.formatDateStr = function(pDate, pFormatStr) {
  *
  * @method parseXML
  * @param ThisFile {String} - URL to XML file
- * @param pGanttVar {Gantt} - Gantt object
+ * @param instanceName {String} - Instance key
  * @return {void}
  */
-JSGantt.parseXML = function(ThisFile, pGanttVar) {
+JSGantt.parseXML = function(ThisFile, instanceName) {
+    var pGanttVar = JSGantt.instances[instanceName];
     var is_chrome = navigator.userAgent.toLowerCase().indexOf('chrome') > -1;   // Is this Chrome 
 
     var xmlDoc;
-    try { //Internet Explorer  
+    try { //Internet Explorer
         xmlDoc = new ActiveXObject("Microsoft.XMLDOM");
     }
     catch(e) {
@@ -2406,13 +2470,6 @@ JSGantt.AddXMLTask = function(pGanttVar) {
                 pEnd = "";
             }
 
-            var pLink;
-            try {
-                pLink = Task[i].getElementsByTagName("pLink")[0].childNodes[0].nodeValue;
-            } catch (error) {
-                pLink = "";
-            }
-
             var pMile;
             try {
                 pMile = Task[i].getElementsByTagName("pMile")[0].childNodes[0].nodeValue;
@@ -2471,7 +2528,7 @@ JSGantt.AddXMLTask = function(pGanttVar) {
             }
 
             // Finally add the task
-            pGanttVar.AddTaskItem(new JSGantt.TaskItem(pID, pName, pStart, pEnd, pColor, pLink, pMile, pRes, pComp, pGroup, pParent, pOpen, pDepend, pCaption));
+            pGanttVar.AddTaskItem(new JSGantt.TaskItem(pID, pName, pStart, pEnd, pColor, "", pMile, pRes, pComp, pGroup, pParent, pOpen, pDepend, pCaption));
         }
     }
 };
@@ -2551,14 +2608,6 @@ JSGantt.ChromeXMLParse = function (pGanttVar) {
                 pColor = '0000ff';
             }
 
-            te = Task.split(/<pLink>/i);
-            var pLink;
-            if (te.length > 2) {
-                pLink = te[1];
-            } else {
-                pLink = "";
-            }
-
             te = Task.split(/<pMile>/i);
             var pMile;
             if (te.length > 2) {
@@ -2633,7 +2682,7 @@ JSGantt.ChromeXMLParse = function (pGanttVar) {
             }
 
             // Finally add the task
-            pGanttVar.AddTaskItem(new JSGantt.TaskItem(pID, pName, pStart, pEnd, pColor, pLink, pMile, pRes, pComp, pGroup, pParent, pOpen, pDepend, pCaption));
+            pGanttVar.AddTaskItem(new JSGantt.TaskItem(pID, pName, pStart, pEnd, pColor, "", pMile, pRes, pComp, pGroup, pParent, pOpen, pDepend, pCaption));
         }
     }
 };

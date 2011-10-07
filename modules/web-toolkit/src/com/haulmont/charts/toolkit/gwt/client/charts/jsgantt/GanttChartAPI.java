@@ -15,23 +15,18 @@ import com.vaadin.terminal.gwt.client.VConsole;
  */
 public class GanttChartAPI {
 
-    private String containerId;
-
     private String chartKey;
+    private ClickHandler clickHandler;
 
-    public GanttChartAPI(String id, String containerId) {
-        this.chartKey = id + "_api";
-        this.containerId = containerId;
-    }
-
-    public void createChartControl() {
-        newInstance(chartKey, containerId);
+    public GanttChartAPI(String containerId, ClickHandler clickHandler) {
+        this.chartKey = newInstance(containerId);
+        this.clickHandler = clickHandler;
     }
 
     public static native void onReady(Runnable r) /*-{
-        if (!$wnd.ganttChartHelper) {
+        if (!$wnd.JSGantt) {
             var id = $wnd.setInterval(function () {
-                if ($wnd.ganttChartHelper) {
+                if ($wnd.JSGantt) {
                     $wnd.clearInterval(id);
                     @com.haulmont.charts.toolkit.gwt.client.charts.jsgantt.GanttChartAPI::execRunnable(Ljava/lang/Runnable;)(r);
                 }
@@ -41,6 +36,16 @@ public class GanttChartAPI {
         }
     }-*/;
 
+    public interface ClickHandler {
+        void onClick(int itemId);
+    }
+
+    public void handleClick(int itemId) {
+        if (clickHandler != null)
+            clickHandler.onClick(itemId);
+    }
+
+    @SuppressWarnings("unused")
     private static void execRunnable(Runnable r) {
         if (r != null) {
             try {
@@ -51,51 +56,151 @@ public class GanttChartAPI {
         }
     }
 
-    private static native void newInstance(String chartKey, String containerId)/*-{
+    public void setMonthNames(String[] monthNames) {
+        setMonthNames(chartKey, monthNames);
+    }
 
-        $wnd.jQuery(document).ready(function() {
-            alert('Insert!');
+    private static native void setMonthNames(String instanceKey, String[] monthNames)/*-{
+        var JSGantt = $wnd.JSGantt;
+        var ganttChart = JSGantt.instances[instanceKey];
+        ganttChart.setLocaleMonths(monthNames);
+    }-*/;
 
-            // Use JSGantt as package name
-            var JSGantt = $wnd.JSGantt;
+    public void setLocale(GanttMessagePack messagePack) {
+        setLocale(chartKey, messagePack);
+    }
 
-            var containerDiv = $wnd.jQuery('#' + containerId);
+    private static native void setLocale(String instanceKey, GanttMessagePack messagePack)/*-{
+        var JSGantt = $wnd.JSGantt;
+        var ganttChart = JSGantt.instances[instanceKey];
+        ganttChart.setLocaleMessages(messagePack);
+    }-*/;
 
-            // todo fix Global variable usage
-            $wnd['g'] = new JSGantt.GanttChart('g', containerDiv, 'day');
-            var g = $wnd['g'];
+    public void setShowCompete(boolean showCompete) {
+        setShowComplete(chartKey, showCompete);
+    }
 
-            if (g) {
-                g.setShowRes(1); // Show/Hide Responsible (0/1)
-                g.setShowDur(1); // Show/Hide Duration (0/1)
-                g.setShowComp(1); // Show/Hide % Complete(0/1)
-                g.setCaptionType('Resource');  // Set to Show Caption
+    private static native void setShowComplete(String instanceKey, boolean showComplete) /*-{
+        var JSGantt = $wnd.JSGantt;
+        var ganttChart = JSGantt.instances[instanceKey];
+        ganttChart.setShowComp(showComplete);
+    }-*/;
 
-                g.AddTaskItem(new JSGantt.TaskItem(1, 'Define Chart API', '', '', 'ff0000', 'http://help.com', 0, 'Brian', 0, 1, 0, 1));
-                g.AddTaskItem(new JSGantt.TaskItem(11, 'Chart Object', '2/20/2008', '2/20/2008', 'ff00ff', 'http://www.yahoo.com', 1, 'Shlomy', 100, 0, 1, 1));
-                g.AddTaskItem(new JSGantt.TaskItem(12, 'Task Objects', '', '', '00ff00', '', 0, 'Shlomy', 40, 1, 1, 1));
-                g.AddTaskItem(new JSGantt.TaskItem(121, 'Constructor Proc', '2/21/2008', '3/9/2008', '00ffff', 'http://www.yahoo.com', 0, 'Brian T.', 60, 0, 12, 1));
-                g.AddTaskItem(new JSGantt.TaskItem(122, 'Task Variables', '3/6/2008', '3/11/2008', 'ff0000', 'http://help.com', 0, '', 60, 0, 12, 1, 121));
-                g.AddTaskItem(new JSGantt.TaskItem(123, 'Task Functions', '3/9/2008', '3/29/2008', 'ff0000', 'http://help.com', 0, 'Anyone', 60, 0, 12, 1, 0, 'This is another caption'));
-                g.AddTaskItem(new JSGantt.TaskItem(2, 'Create HTML Shell', '3/24/2008', '3/25/2008', 'ffff00', 'http://help.com', 0, 'Brian', 20, 0, 0, 1, 122));
-                g.AddTaskItem(new JSGantt.TaskItem(3, 'Code Javascript', '', '', 'ff0000', 'http://help.com', 0, 'Brian', 0, 1, 0, 1));
-                g.AddTaskItem(new JSGantt.TaskItem(31, 'Define Variables', '2/25/2008', '3/17/2008', 'ff00ff', 'http://help.com', 0, 'Brian', 30, 0, 3, 1, 'Caption 1'));
-                g.AddTaskItem(new JSGantt.TaskItem(32, 'Calculate Chart Size', '3/15/2008', '3/24/2008', '00ff00', 'http://help.com', 0, 'Shlomy', 40, 0, 3, 1));
-                g.AddTaskItem(new JSGantt.TaskItem(33, 'Draw Taks Items', '', '', '00ff00', 'http://help.com', 0, 'Someone', 40, 1, 3, 1));
-                g.AddTaskItem(new JSGantt.TaskItem(332, 'Task Label Table', '3/6/2008', '3/11/2008', '0000ff', 'http://help.com', 0, 'Brian', 60, 0, 33, 1));
-                g.AddTaskItem(new JSGantt.TaskItem(333, 'Task Scrolling Grid', '3/9/2008', '3/20/2008', '0000ff', 'http://help.com', 0, 'Brian', 60, 0, 33, 1));
-                g.AddTaskItem(new JSGantt.TaskItem(34, 'Draw Task Bars', '', '', '990000', 'http://help.com', 0, 'Anybody', 60, 1, 3, 1));
-                g.AddTaskItem(new JSGantt.TaskItem(341, 'Loop each Task', '3/26/2008', '4/11/2008', 'ff0000', 'http://help.com', 0, 'Brian', 60, 0, 34, 1, "332,333"));
-                g.AddTaskItem(new JSGantt.TaskItem(342, 'Calculate Start/Stop', '4/12/2008', '5/18/2008', 'ff6666', 'http://help.com', 0, 'Brian', 60, 0, 34, 1));
-                g.AddTaskItem(new JSGantt.TaskItem(343, 'Draw Task Div', '5/13/2008', '5/17/2008', 'ff0000', 'http://help.com', 0, 'Brian', 60, 0, 34, 1));
-                g.AddTaskItem(new JSGantt.TaskItem(344, 'Draw Completion Div', '5/17/2008', '6/04/2008', 'ff0000', 'http://help.com', 0, 'Brian', 60, 0, 34, 1));
-                g.AddTaskItem(new JSGantt.TaskItem(35, 'Make Updates', '10/17/2008', '12/04/2008', 'f600f6', 'http://help.com', 0, 'Brian', 30, 0, 3, 1));
+    public void setShowDuration(boolean showDuration) {
+        setShowComplete(chartKey, showDuration);
+    }
 
-                g.Draw();
-                g.DrawDependencies();
-            } else {
-                alert("Chart object is not defined !");
-            }
-        });
+    private static native void setShowDuration(String instanceKey, boolean showDuration) /*-{
+        var JSGantt = $wnd.JSGantt;
+        var ganttChart = JSGantt.instances[instanceKey];
+        ganttChart.setShowDur(showDuration);
+    }-*/;
+
+    public void setFormat(String format) {
+        setFormat(chartKey, format);
+    }
+
+    private static native void setFormat(String instanceKey, String format) /*-{
+        var JSGantt = $wnd.JSGantt;
+        var ganttChart = JSGantt.instances[instanceKey];
+        ganttChart.setFormat(format);
+    }-*/;
+
+    public void setShowResource(boolean showResponsible) {
+        setShowComplete(chartKey, showResponsible);
+    }
+
+    private static native void setShowResponsible(String instanceKey, boolean showResponsible) /*-{
+        var JSGantt = $wnd.JSGantt;
+        var ganttChart = JSGantt.instances[instanceKey];
+        ganttChart.setShowRes(showResponsible);
+    }-*/;
+
+    public void repaint() {
+        repaint(chartKey);
+    }
+
+    private static native void repaint(String instanceKey) /*-{
+        var JSGantt = $wnd.JSGantt;
+        var ganttChart = JSGantt.instances[instanceKey];
+        ganttChart.Draw();
+        ganttChart.DrawDependencies();
+    }-*/;
+
+    /**
+     * Add new Task object to chart
+     *
+     * @param id              New Id
+     * @param parentId        Parent Id
+     * @param title           Title
+     * @param resource        Resource
+     * @param completePercent Complete percentage
+     * @param startTs         Start timestamp
+     * @param endTs           End timestamp
+     * @param color           Color
+     * @param dependsOn       Dependencies
+     * @param captionType     Caption mode
+     * @param isMilestone     If milestone
+     * @param isOpen          If open
+     * @param isGroup         If group
+     */
+    public void addTask(int id, int parentId,
+                        String title, String resource, int completePercent,
+                        String startTs, String endTs, String color,
+                        String dependsOn, String captionType,
+                        boolean isMilestone, boolean isOpen, boolean isGroup) {
+        addTask(chartKey, id, parentId,
+                title, resource, completePercent,
+                startTs, endTs, color,
+                dependsOn, captionType, isMilestone, isOpen, isGroup);
+    }
+
+    private static native void addTask(String instanceKey, int id, int parentId,
+                                       String title, String resource, int completePercent,
+                                       String startTs, String endTs, String color,
+                                       String dependsOn, String captionType,
+                                       boolean isMilestone, boolean isOpen, boolean isGroup) /*-{
+        var JSGantt = $wnd.JSGantt;
+        var ganttChart = JSGantt.instances[instanceKey];
+        ganttChart.AddTaskItem(new JSGantt.TaskItem(ganttChart, id, title, startTs, endTs, color,
+                isMilestone, resource, completePercent, isGroup, parentId, isOpen, dependsOn, captionType));
+    }-*/;
+
+    public void clearTaskPane() {
+        clearTaskPane(chartKey);
+    }
+
+    public static native void clearTaskPane(String instanceKey) /*-{
+        var JSGantt = $wnd.JSGantt;
+        var ganttChart = JSGantt.instances[instanceKey];
+        ganttChart.clearTasks();
+    }-*/;
+
+    private native String newInstance(String containerId)/*-{
+        var chartApi = this;
+
+        // Use JSGantt as package name
+        var JSGantt = $wnd.JSGantt;
+
+        var containerDiv = $wnd.jQuery('#' + containerId);
+
+        var g = new JSGantt.GanttChart(containerDiv, 'day',
+                function(task) {
+                    var taskId = Number(task.getID());
+                    chartApi.@com.haulmont.charts.toolkit.gwt.client.charts.jsgantt.GanttChartAPI::handleClick(I)(taskId);
+                });
+
+        if (g) {
+            g.setShowRes(0); // Show/Hide Responsible (0/1)
+            g.setShowDur(0); // Show/Hide Duration (0/1)
+            g.setShowComp(0); // Show/Hide % Complete(0/1)
+            g.setCaptionType('Resource');  // Set to Show Caption
+
+            return g.getInstanceName();
+        } else {
+            alert("Chart object is not defined !");
+        }
+
+        return "";
     }-*/;
 }

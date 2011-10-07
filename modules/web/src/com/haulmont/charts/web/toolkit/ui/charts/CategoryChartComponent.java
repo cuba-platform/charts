@@ -40,10 +40,12 @@ public abstract class CategoryChartComponent extends ChartComponent implements W
         setContainerDataSource(new IndexedContainer());
     }
 
+    @Override
     public Collection<?> getRowIds() {
         return getItemIds();
     }
 
+    @Override
     public void addRow(Object id, String caption) {
         addItem(id);
 
@@ -55,10 +57,12 @@ public abstract class CategoryChartComponent extends ChartComponent implements W
         }
     }
 
+    @Override
     public boolean getHasLegend() {
         return hasLegend;
     }
 
+    @Override
     public void setHasLegend(boolean hasLegend) {
         this.hasLegend = hasLegend;
         requestRepaint();
@@ -73,6 +77,7 @@ public abstract class CategoryChartComponent extends ChartComponent implements W
         }
     }
 
+    @Override
     public String getRowCaption(Object id) {
         String caption = null;
 
@@ -91,32 +96,39 @@ public abstract class CategoryChartComponent extends ChartComponent implements W
         return caption == null ? "" : caption;
     }
 
+    @Override
     public Object getRowCaptionPropertyId() {
         return rowCaptionPropertyId;
     }
 
+    @Override
     public void setRowCaptionPropertyId(Object propertyId) {
         rowCaptionPropertyId = propertyId;
         requestRepaint();
     }
 
+    @Override
     public Collection<?> getPropertyIds() {
         return getContainerPropertyIds();
     }
 
+    @Override
     public void addProperty(Object id) {
         addContainerProperty(id, Object.class, null);
     }
 
+    @Override
     public Collection<?> getCategoryPropertyIds() {
         return categories.keySet();
     }
 
+    @Override
     public void addCategory(Object propertyId, String caption) {
         categories.put(propertyId, caption);
         requestRepaint();
     }
 
+    @Override
     public String getCategoryCaption(Object propertyId) {
         String caption = categories.get(propertyId);
         if (caption == null) {
@@ -125,6 +137,7 @@ public abstract class CategoryChartComponent extends ChartComponent implements W
         return caption == null ? "" : caption;
     }
 
+    @Override
     public Object getValue(Object rowId, Object propertyId) {
         Property p = getContainerProperty(rowId, propertyId);
         if (p == null) {
@@ -134,6 +147,7 @@ public abstract class CategoryChartComponent extends ChartComponent implements W
         return p.getValue();
     }
 
+    @Override
     public void setValue(Object rowId, Object propertyId, Object value) {
         Property p = getContainerProperty(rowId, propertyId);
         if (p != null) {
@@ -141,34 +155,42 @@ public abstract class CategoryChartComponent extends ChartComponent implements W
         }
     }
 
+    @Override
     public Item getItem(Object itemId) {
         return items.getItem(itemId);
     }
 
+    @Override
     public Collection<?> getContainerPropertyIds() {
         return items.getContainerPropertyIds();
     }
 
+    @Override
     public Collection<?> getItemIds() {
         return items.getItemIds();
     }
 
+    @Override
     public Property getContainerProperty(Object itemId, Object propertyId) {
         return items.getContainerProperty(itemId, propertyId);
     }
 
+    @Override
     public Class<?> getType(Object propertyId) {
         return items.getType(propertyId);
     }
 
+    @Override
     public int size() {
         return items.size();
     }
 
+    @Override
     public boolean containsId(Object itemId) {
         return items.containsId(itemId);
     }
 
+    @Override
     public Item addItem(Object itemId) throws UnsupportedOperationException {
         final Item retval = items.addItem(itemId);
         if (retval != null && !(items instanceof ItemSetChangeNotifier)) {
@@ -177,6 +199,7 @@ public abstract class CategoryChartComponent extends ChartComponent implements W
         return retval;
     }
 
+    @Override
     public Object addItem() throws UnsupportedOperationException {
         final Object retval = items.addItem();
         if (retval != null && !(items instanceof ItemSetChangeNotifier)) {
@@ -185,6 +208,7 @@ public abstract class CategoryChartComponent extends ChartComponent implements W
         return retval;
     }
 
+    @Override
     public boolean removeItem(Object itemId) throws UnsupportedOperationException {
         final boolean retval = items.removeItem(itemId);
         if (retval && !(items instanceof ItemSetChangeNotifier)) {
@@ -193,6 +217,7 @@ public abstract class CategoryChartComponent extends ChartComponent implements W
         return retval;
     }
 
+    @Override
     public boolean addContainerProperty(Object propertyId, Class<?> type, @Nullable Object defaultValue)
             throws UnsupportedOperationException {
 
@@ -203,6 +228,7 @@ public abstract class CategoryChartComponent extends ChartComponent implements W
         return retval;
     }
 
+    @Override
     public boolean removeContainerProperty(Object propertyId) throws UnsupportedOperationException {
         final boolean retval = items.removeContainerProperty(propertyId);
         if (retval && !(items instanceof PropertySetChangeNotifier)) {
@@ -211,6 +237,7 @@ public abstract class CategoryChartComponent extends ChartComponent implements W
         return retval;
     }
 
+    @Override
     public boolean removeAllItems() throws UnsupportedOperationException {
         final boolean retval = items.removeAllItems();
         if (retval && !(items instanceof ItemSetChangeNotifier)) {
@@ -219,10 +246,12 @@ public abstract class CategoryChartComponent extends ChartComponent implements W
         return retval;
     }
 
+    @Override
     public void containerItemSetChange(Container.ItemSetChangeEvent event) {
         fireItemSetChange();
     }
 
+    @Override
     public void addListener(ItemSetChangeListener listener) {
         if (itemSetChangeListeners == null) {
             itemSetChangeListeners = new LinkedHashSet<ItemSetChangeListener>();
@@ -230,24 +259,29 @@ public abstract class CategoryChartComponent extends ChartComponent implements W
         itemSetChangeListeners.add(listener);
     }
 
+    @Override
     public void removeListener(ItemSetChangeListener listener) {
         itemSetChangeListeners.remove(listener);
     }
 
+    @Override
     public void containerPropertySetChange(Container.PropertySetChangeEvent event) {
         firePropertySetChange();
     }
 
+    @Override
     public void addListener(PropertySetChangeListener listener) {
         propertySetChangeListeners.add(listener);
     }
 
+    @Override
     public void removeListener(PropertySetChangeListener listener) {
         if (propertySetChangeListeners != null) {
             propertySetChangeListeners.remove(listener);
         }
     }
 
+    @Override
     public void setContainerDataSource(Container datasource) {
         if (items != datasource) {
             if (items != null) {
@@ -261,11 +295,6 @@ public abstract class CategoryChartComponent extends ChartComponent implements W
 
             items = datasource;
 
-            //final Collection<?> propertyIds = items.getContainerPropertyIds();
-            //for (final Object id : propertyIds) {
-            //    addContainerProperty(id, Object.class, null);
-            //}
-
             if (items instanceof ItemSetChangeNotifier) {
                 ((ItemSetChangeNotifier) items).addListener(this);
             }
@@ -277,6 +306,7 @@ public abstract class CategoryChartComponent extends ChartComponent implements W
         }
     }
 
+    @Override
     public Container getContainerDataSource() {
         return items;
     }
@@ -298,6 +328,7 @@ public abstract class CategoryChartComponent extends ChartComponent implements W
     private class ItemSetChangeEvent implements Serializable, Container.ItemSetChangeEvent {
         private static final long serialVersionUID = -3105286428491462551L;
 
+        @Override
         public Container getContainer() {
             return CategoryChartComponent.this;
         }
@@ -306,6 +337,7 @@ public abstract class CategoryChartComponent extends ChartComponent implements W
     private class PropertySetChangeEvent implements Serializable, Container.PropertySetChangeEvent {
         private static final long serialVersionUID = -1597899704080413194L;
 
+        @Override
         public Container getContainer() {
             return CategoryChartComponent.this;
         }
