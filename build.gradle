@@ -19,10 +19,10 @@ buildscript {
     )
     repositories {
         mavenLocal()
-        mavenRepo(urls: "http://repository.haulmont.com:8587/nexus/content/groups/work")
+        mavenRepo(url: "http://repository.haulmont.com:8587/nexus/content/groups/work")
     }
     dependencies {
-        classpath group: 'com.haulmont.gradle', name: 'cuba-plugin', version: '1.0-SNAPSHOT'
+        classpath group: 'com.haulmont.gradle', name: 'cuba-plugin', version: '1.1-SNAPSHOT'
     }
 }
 
@@ -159,8 +159,8 @@ configure(chartsWebModule) {
                 classpath(
                         validationSrcJar,
                         webToolkitSrcDir,
-                        chartsWebToolkitModule.sourceSets.main.classesDir,
-                        sourceSets.main.classesDir,
+                        chartsWebToolkitModule.sourceSets.main.output.classesDir,
+                        sourceSets.main.output.classesDir,
                         mainClasspath)
                 args('-war', widgetsetsDir.absolutePath, 
                      '-style', 'OBF', 
