@@ -75,11 +75,13 @@ configure([chartsGlobalModule, chartsGuiModule, chartsWebModule, chartsWebToolki
 }
 
 configure(chartsGlobalModule) {
-    task enhance(dependsOn: [compileJava, processResources], type: CubaEnhancing) {
+    task enhance(type: CubaEnhancing) {
         persistenceXml = "$chartsGlobalModule.projectDir/src/charts-persistence.xml"
         metadataXml = "$chartsGlobalModule.projectDir/src/charts-metadata.xml"
     }
-    classes.dependsOn enhance
+    compileJava << {
+        enhance.execute()
+    }
 }
 
 configure(chartsGuiModule) {
