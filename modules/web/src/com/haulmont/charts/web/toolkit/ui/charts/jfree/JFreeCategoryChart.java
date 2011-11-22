@@ -32,7 +32,7 @@ public abstract class JFreeCategoryChart extends CategoryChartComponent implemen
     public void paintContent(PaintTarget target) throws PaintException {
         super.paintContent(target);
 
-        String controllerUrl = ControllerUtils.getControllerURL(ChartRenderingController.RENDERING_URL);
+        String controllerUrl = ControllerUtils.getWebControllerURL(ChartRenderingController.RENDERING_URL);
         target.addAttribute("renderUrl", controllerUrl);
     }
 }
