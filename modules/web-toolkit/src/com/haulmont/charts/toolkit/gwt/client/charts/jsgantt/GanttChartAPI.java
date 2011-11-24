@@ -201,6 +201,6 @@ public class GanttChartAPI {
             alert("Chart object is not defined !");
         }
 
-        return "";
+        return g.getInstanceName();
     }-*/;
 }
