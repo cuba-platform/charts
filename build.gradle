@@ -1,4 +1,4 @@
-/*
+﻿/*
  * Copyright (c) 2011 Haulmont Technology Ltd. All Rights Reserved.
  * Haulmont Technology proprietary and confidential.
  * Use is subject to license terms.
@@ -6,7 +6,7 @@
 
 allprojects {
     artifactGroup = 'com.haulmont.charts'
-    artifactVersion = '3.1'
+    artifactVersion = '3.1.1'
     isSnapshot = true
 }
 
@@ -34,8 +34,6 @@ def chartsGuiModule = project(':charts-gui')
 def chartsWebModule = project(':charts-web')
 def chartsWebToolkitModule = project(':charts-web-toolkit')
 
-def platformVersion = '3.1-SNAPSHOT'
-
 def servletApi = [group: 'org.apache.tomcat', name: 'servlet-api', version: '6.0.20']
 
 def vaadin = [group: 'com.haulmont.thirdparty', name: 'vaadin', version: '6.6.1.91']
@@ -44,8 +42,10 @@ def gwtDev = [group: 'com.google.gwt', name: 'gwt-dev', version: '2.3.0']
 def gwtServlets = [group: 'com.google.gwt', name: 'gwt-servlet', version: '2.3.0']
 def validationApi = [group: 'javax.validation', name: 'validation-api', version: '1.0.0.GA']
 
-def cubaWeb = [group: 'com.haulmont.cuba', name: 'cuba-web', version: platformVersion]
-def cubaGui = [group: 'com.haulmont.cuba', name: 'cuba-gui', version: platformVersion]
+def cubaWeb = [group: 'com.haulmont.cuba', name: 'cuba-web', version: baseVersion]
+def cubaGui = [group: 'com.haulmont.cuba', name: 'cuba-gui', version: baseVersion]
+
+def baseVersion = artifactVersion + (isSnapshot ? '-SNAPSHOT' : '')
 
 configure([chartsGlobalModule, chartsGuiModule, chartsWebModule, chartsWebToolkitModule]) {
     apply(plugin: 'java')
@@ -54,10 +54,10 @@ configure([chartsGlobalModule, chartsGuiModule, chartsWebModule, chartsWebToolki
     apply(plugin: 'cuba')
 
     dependencies {
-        compile(group: 'com.haulmont.bali', name: 'bali', version: platformVersion)
-        compile(group: 'com.haulmont.chile', name: 'chile-core', version: platformVersion)
-        compile(group: 'com.haulmont.chile', name: 'chile-jpa', version: platformVersion)
-        compile(group: 'com.haulmont.cuba', name: 'cuba-global', version: platformVersion)
+        compile(group: 'com.haulmont.bali', name: 'bali', version: baseVersion)
+        compile(group: 'com.haulmont.chile', name: 'chile-core', version: baseVersion)
+        compile(group: 'com.haulmont.chile', name: 'chile-jpa', version: baseVersion)
+        compile(group: 'com.haulmont.cuba', name: 'cuba-global', version: baseVersion)
 
         compile(group: 'jfree', name: 'jfreechart', version: '1.0.13')
 
@@ -131,7 +131,7 @@ configure(chartsWebModule) {
         gwtBuilding(gwtServlets)
         gwtBuilding(validationApi + [classifier: 'sources'])
         
-        webcontent(group: 'com.haulmont.cuba', name: 'cuba-web', version: platformVersion, classifier: 'web', ext: 'zip')        
+        webcontent(group: 'com.haulmont.cuba', name: 'cuba-web', version: baseVersion, classifier: 'web', ext: 'zip')        
     }
     
     jar {
