@@ -34,6 +34,8 @@ def chartsGuiModule = project(':charts-gui')
 def chartsWebModule = project(':charts-web')
 def chartsWebToolkitModule = project(':charts-web-toolkit')
 
+def baseVersion = artifactVersion + (isSnapshot ? '-SNAPSHOT' : '')
+
 def servletApi = [group: 'org.apache.tomcat', name: 'servlet-api', version: '6.0.20']
 
 def vaadin = [group: 'com.haulmont.thirdparty', name: 'vaadin', version: '6.6.1.91']
@@ -44,8 +46,6 @@ def validationApi = [group: 'javax.validation', name: 'validation-api', version:
 
 def cubaWeb = [group: 'com.haulmont.cuba', name: 'cuba-web', version: baseVersion]
 def cubaGui = [group: 'com.haulmont.cuba', name: 'cuba-gui', version: baseVersion]
-
-def baseVersion = artifactVersion + (isSnapshot ? '-SNAPSHOT' : '')
 
 configure([chartsGlobalModule, chartsGuiModule, chartsWebModule, chartsWebToolkitModule]) {
     apply(plugin: 'java')
