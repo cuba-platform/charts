@@ -24,6 +24,13 @@ public interface GanttChart extends Chart, Component.Wrapper, Component.BelongTo
 
     void setCollectionDatasource(CollectionDatasource datasource);
 
+    void setShowStartDate(boolean showStartDate);
+    boolean getShowStartDate();
+
+    void setShowEndDate(boolean showEndDate);
+    boolean getShowEndDate();
+
+
     void setShowDuration(boolean showDuration);
     boolean getShowDuration();
 
@@ -32,6 +39,10 @@ public interface GanttChart extends Chart, Component.Wrapper, Component.BelongTo
 
     void setShowComplete(boolean showComplete);
     boolean getShowComplete();
+
+    void setDateFormat(String dateTimeFormat);
+    String getDateFormat();
+
 
     void setTaskClickListener(TaskClickListener taskClickListener);
     TaskClickListener getTaskClickListener();

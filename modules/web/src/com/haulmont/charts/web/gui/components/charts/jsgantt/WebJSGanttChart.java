@@ -62,6 +62,26 @@ public class WebJSGanttChart extends WebAbstractGanttChart<JSGanttChart> {
     }
 
     @Override
+    public void setShowStartDate(boolean showStartDate) {
+        component.setShowStartDate(showStartDate);
+    }
+
+    @Override
+    public boolean getShowStartDate() {
+        return component.getShowStartDate();
+    }
+
+    @Override
+    public void setShowEndDate(boolean showEndDate) {
+        component.setShowEndDate(showEndDate);
+    }
+
+    @Override
+    public boolean getShowEndDate() {
+        return component.getShowEndDate();
+    }
+
+    @Override
     public void setShowDuration(boolean showDuration) {
         component.setShowDuration(showDuration);
     }
@@ -89,6 +109,16 @@ public class WebJSGanttChart extends WebAbstractGanttChart<JSGanttChart> {
     @Override
     public boolean getShowComplete() {
         return component.getShowComplete();
+    }
+
+    @Override
+    public void setDateFormat(String dateTimeFormat) {
+        component.setDateFormat(dateTimeFormat);
+    }
+
+    @Override
+    public String getDateFormat() {
+        return component.getDateFormat();
     }
 
     @Override
@@ -123,10 +153,11 @@ public class WebJSGanttChart extends WebAbstractGanttChart<JSGanttChart> {
             metaPropertyMap.put("itemId", metaClass.getProperty("itemId"));
             metaPropertyMap.put("parentId", metaClass.getProperty("parentId"));
             metaPropertyMap.put("title", metaClass.getProperty("name"));
-            metaPropertyMap.put("color", metaClass.getProperty("color"));
+            metaPropertyMap.put("styleClass", metaClass.getProperty("styleClass"));
             metaPropertyMap.put("completePercent", metaClass.getProperty("completePercent"));
             metaPropertyMap.put("resourceName", metaClass.getProperty("resourceName"));
             metaPropertyMap.put("captionType", metaClass.getProperty("captionType"));
+            metaPropertyMap.put("tooltip", metaClass.getProperty("tooltip"));
             metaPropertyMap.put("dependsOn", metaClass.getProperty("dependsOn"));
 
             metaPropertyMap.put("isGroup", metaClass.getProperty("group"));

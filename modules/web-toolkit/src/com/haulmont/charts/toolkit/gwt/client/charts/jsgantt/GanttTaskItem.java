@@ -22,6 +22,8 @@ class GanttTaskItem {
 
     private String caption;
 
+    private String tooltip;
+
     private Date startTs;
 
     private Date endTs;
@@ -66,6 +68,14 @@ class GanttTaskItem {
 
     public void setCaption(String caption) {
         this.caption = caption;
+    }
+
+    public String getTooltip() {
+        return tooltip;
+    }
+
+    public void setTooltip(String tooltip) {
+        this.tooltip = tooltip;
     }
 
     public Date getStartTs() {

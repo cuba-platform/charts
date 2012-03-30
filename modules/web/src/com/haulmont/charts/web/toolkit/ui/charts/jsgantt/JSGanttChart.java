@@ -26,6 +26,8 @@ public class JSGanttChart extends GanttChartComponent {
 
     public static final String VENDOR = "jsgantt";
 
+    private boolean showStartDate = true;
+    private boolean showEndDate = true;
     protected boolean showDuration = false;
     private boolean showComplete = false;
     private boolean showResource = false;
@@ -44,6 +46,7 @@ public class JSGanttChart extends GanttChartComponent {
                     "gantt.label.month",
                     "gantt.label.quarter",
 
+                    "gantt.label.name",
                     "gantt.label.resource",
                     "gantt.label.duration",
                     "gantt.label.complete",
@@ -63,6 +66,9 @@ public class JSGanttChart extends GanttChartComponent {
                     "gantt.month.October",
                     "gantt.month.November",
                     "gantt.month.December"));
+    private String dateTimeFormat;
+
+
 
     public JSGanttChart() {
         addListener(new ItemSetChangeListener() {
@@ -77,6 +83,7 @@ public class JSGanttChart extends GanttChartComponent {
                 itemsChanged = true;
             }
         });
+        setWidth(100, UNITS_PERCENTAGE);
     }
 
     @Override
@@ -92,41 +99,47 @@ public class JSGanttChart extends GanttChartComponent {
     public void paintContent(PaintTarget target) throws PaintException {
         super.paintContent(target);
 
+        // Configure localization
+        if (localeDict != null)
+            target.addAttribute(VGanttChartRenderer.LOCALE_SECTION, localeDict);
+
         if (localeChanged) {
-            if (localeDict != null) {
-                // Configure localization
-                target.addAttribute(VGanttChartRenderer.LOCALE_SECTION, localeDict);
-            }
+            target.addAttribute("localeChanged", "true");
             localeChanged = false;
         }
 
+        Map<String, Object> prefs = new HashMap<String, Object>();
+        prefs.put("showStartDate", showStartDate);
+        prefs.put("showEndDate", showEndDate);
+        prefs.put("showDuration", showDuration);
+        prefs.put("showComplete", showComplete);
+        prefs.put("showResource", showResource);
+        prefs.put("dateFormat", dateTimeFormat);
+        target.addAttribute(VGanttChartRenderer.CONFIG_SECTION, prefs);
+
         if (settingsChanged) {
-            Map<String, Object> prefs = new HashMap<String, Object>();
-            prefs.put("showDuration", showDuration);
-            prefs.put("showComplete", showComplete);
-            prefs.put("showResource", showResource);
-            target.addAttribute(VGanttChartRenderer.CONFIG_SECTION, prefs);
+            target.addAttribute("settingsChanged", "true");
             settingsChanged = false;
         }
 
-        if (itemsChanged) {
-            Container containerDataSource = getContainerDataSource();
-            List<Integer> tasks_ids = new LinkedList<Integer>();
+        Container containerDataSource = getContainerDataSource();
+        List<Integer> tasks_ids = new LinkedList<Integer>();
+        if (propertiesProvider != null) {
+            propertiesProvider.assignTaskIds();
 
-            if (propertiesProvider != null) {
-                propertiesProvider.assignTaskIds();
+            for (Object key : containerDataSource.getItemIds()) {
+                Item item = containerDataSource.getItem(key);
+                Map<String, Object> taskParams = propertiesProvider.getTaskProperties(item);
+                Integer itemId = (Integer) taskParams.get("itemId");
 
-                for (Object key : containerDataSource.getItemIds()) {
-                    Item item = containerDataSource.getItem(key);
-                    Map<String, Object> taskParams = propertiesProvider.getTaskProperties(item);
-                    Integer itemId = (Integer) taskParams.get("itemId");
-
-                    tasks_ids.add(itemId);
-                    target.addAttribute("task_" + Integer.toString(itemId), taskParams);
-                }
+                tasks_ids.add(itemId);
+                target.addAttribute("task_" + Integer.toString(itemId), taskParams);
             }
+        }
+        target.addAttribute(VGanttChartRenderer.TASKS_SECTION, tasks_ids.toArray());
 
-            target.addAttribute(VGanttChartRenderer.TASKS_SECTION, tasks_ids.toArray());
+        if (itemsChanged) {
+            target.addAttribute("taskChanged", "true");
             itemsChanged = false;
         }
     }
@@ -146,11 +159,30 @@ public class JSGanttChart extends GanttChartComponent {
         return VENDOR;
     }
 
+    public void setShowStartDate(boolean showStartDate) {
+        this.showStartDate = showStartDate;
+        fireSettingsChange();
+    }
+
+    public boolean getShowStartDate() {
+        return showStartDate;
+    }
+
+    public void setShowEndDate(boolean showEndDate)
+    {
+        this.showEndDate = showEndDate;
+        fireSettingsChange();
+    }
+
+    public boolean getShowEndDate()
+    {
+        return showEndDate;
+    }
+
     @Override
     public void setShowDuration(boolean showDuration) {
         this.showDuration = showDuration;
-        this.settingsChanged = true;
-        requestRepaint();
+        fireSettingsChange();
     }
 
     @Override
@@ -161,8 +193,7 @@ public class JSGanttChart extends GanttChartComponent {
     @Override
     public void setShowResource(boolean showResource) {
         this.showResource = showResource;
-        this.settingsChanged = true;
-        requestRepaint();
+        fireSettingsChange();
     }
 
     @Override
@@ -173,8 +204,7 @@ public class JSGanttChart extends GanttChartComponent {
     @Override
     public void setShowComplete(boolean showComplete) {
         this.showComplete = showComplete;
-        this.settingsChanged = true;
-        requestRepaint();
+        fireSettingsChange();
     }
 
     @Override
@@ -182,7 +212,23 @@ public class JSGanttChart extends GanttChartComponent {
         return showComplete;
     }
 
+    public void setDateFormat(String dateTimeFormat) {
+        this.dateTimeFormat = dateTimeFormat;
+        fireSettingsChange();
+    }
+
+    public String getDateFormat() {
+        return dateTimeFormat;
+    }
+
     public List<String> getMessageKeys() {
         return MESSAGE_KEYS;
     }
+
+    protected void fireSettingsChange() {
+        this.settingsChanged = true;
+        requestRepaint();
+    }
+
+
 }

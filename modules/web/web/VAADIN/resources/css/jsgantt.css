@@ -17,31 +17,60 @@
  * cleaner without all the embedded styles
  */
 
-.gantt {
-    font-family: tahoma, arial, verdana, serif;
-    font-size: 10px;
+.v-ganttchart {
 }
 
-.gdatehead {
-    border-top: #efefef 1px solid;
+.gmajorhead {
+    height: 30px;
+    background-color: #F6F6F6;
+    border-bottom: 1px solid #DFDFDF;
+    padding-left: 5px;
     font-size: 12px;
-    border-left: #efefef 1px solid;
-    height: 18px
+}
+
+.gminorhead {
+    height: 20px;
+    background-color: #D9DADD;
+    width: 23px;
+    font-size: 12px;
+}
+
+.goddcolumn {
+    background-color: #EAEAEA;
+}
+
+.gevencolumn {
+    border-right: 1px solid #DFDFDF;
+    border-left: 1px solid #DFDFDF;
 }
 
 .ghead {
-    border-top: #efefef 1px solid;
-    font-size: 12px;
-    border-left: #efefef 1px solid;
-    width: 24px;
-    height: 20px
+    border-top: #f1f1f1 1px solid;
+    /*font-size: 12px;*/
+    border-left: #f1f1f1 1px solid;
+    width: 23px;
+    height: 23px;
 }
 
 .gname {
-    border-top: #efefef 1px solid;
-    font-size: 12px;
     width: 18px;
-    height: 18px
+    height: 23px;
+    font-size: 12px;
+    border-left: #f1f1f1 1px solid;
+    border-top: #f1f1f1 1px solid;
+}
+
+.gadditionalparams {
+    width: 100px;
+    text-align: center;
+}
+
+.gevenline {
+    background-color: #F9F9F9;
+}
+
+.goddline {
+    background-color: #FFFFFF;
 }
 
 .ghead A {
@@ -59,37 +88,26 @@
 .gheadwkend {
     border-top: #efefef 1px solid;
     font-size: 12px;
+    text-align: center;
+    width: 24px;
+    height: 20px;
+    background-color: #F8F8F8
+}
+
+.gheaddayend {
+    border-top: #efefef 1px solid;
+    border-right: #DFDFDF 1px solid;
+    font-size: 12px;
+    text-align: center;
     border-left: #efefef 1px solid;
     width: 24px;
     height: 20px;
-    background-color: #cfcfcf
+    background-color: #F8F8F8
 }
 
-.gfiller {
-    border-top: #efefef 1px solid;
-    border-left: #efefef 1px solid;
-    width: 18px;
-    height: 18px
-}
-
-.gfillerwkend {
-    border-left: #efefef 1px solid;
-    width: 18px;
-    height: 18px;
-    background-color: #cfcfcf
-}
-
-.gitem {
-    border-top: #cccccc 1px solid;
-    width: 18px;
-    height: 18px
-}
-
-.gitemwkend {
-    border-top: #cccccc 1px solid;
-    border-left: #cccccc 1px solid;
-    width: 18px;
-    height: 18px
+.gheadcurrentdate {
+    border-top: 0px;
+    background-color: #E4F9BD;
 }
 
 .gmilestone {
@@ -106,23 +124,6 @@
     border-left: #cccccc 1px solid;
     width: 18px;
     height: 18px
-}
-
-.btn {
-    border-color: #ffffff;
-    font-weight: bold;
-    font-size: 10px;
-    width: 12px;
-    color: #cccccc;
-    background-color: #ffffff
-}
-
-.hrcomplete {
-    border: 2px solid #000000;
-    padding: 0 0 0;
-    width: 20px;
-    color: #000000;
-    height: 4px
 }
 
 .hrhalfcomplete {
@@ -142,8 +143,13 @@
 .gtask {
     font-family: tahoma, arial, verdana, serif;
     font-size: 11px;
-    background-color: #00FF00;
+    background: url('../img/in_progress_task.png') repeat-x;
+    border-radius: 1px 1px 1px 1px;
     text-align: center;
+    border: 1px solid #2F96C7;
+    height: 7px;
+    cursor: pointer;
+    opacity: 0.9;
 }
 
 .gday {
@@ -153,26 +159,32 @@
 }
 
 .gcomplete {
-    background-color: black;
-    height: 5px;
+    background: url('../img/progress_bar.png') repeat-x;
+    z-index: -4;
+    float: left;
+    height: 4px;
     overflow: auto;
-    margin-top: 4px;
+    margin-top: 2px;
+    filter: alpha(opacity = 40);
+    overflow: hidden;
 }
 
-div .scroll {
-    border: 1px solid #efefef;
+div .gganttdescription {
+    /*border: 1px solid #efefef;*/
     padding: 0;
     overflow: hidden;
-    width: 420px;
-    background-color: #ffffff
+    background-color: #ffffff;
+    border: 1px solid #DFDFDF;
 }
 
-div .scroll2 {
+div .ggantttasks {
     position: relative;
     padding: 0;
-    overflow: auto;
-    overflow-x: scroll;
+    overflow-x: auto;
     overflow-y: hidden;
-    width: 482px;
-    background-color: #ffffff
+    width: auto;
+    background-color: #ffffff;
+    border-top: 1px solid #DFDFDF;
+    border-right: 1px solid #DFDFDF;
+    border-bottom: 1px solid #DFDFDF;
 }

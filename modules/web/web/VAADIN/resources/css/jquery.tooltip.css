@@ -1,0 +1,19 @@
+/*
+ * Copyright (c) 2012 Haulmont Technology Ltd. All Rights Reserved.
+ * Haulmont Technology proprietary and confidential.
+ * Use is subject to license terms.
+ */
+
+#tooltip {
+	position: absolute;
+	z-index: 3000;
+	border: 1px solid #DFDFDF;
+	background-color: #F9F9F9;
+	padding: 5px;
+	opacity: 0.95;
+    color: #000000;
+    font-size: 9px;
+    font-weight: normal;
+    font-family: Verdana, tahoma, sans-serif;
+}
+#tooltip h3, #tooltip div { margin: 0; font-weight: normal;}

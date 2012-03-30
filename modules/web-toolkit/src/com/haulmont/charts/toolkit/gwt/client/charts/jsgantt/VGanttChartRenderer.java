@@ -7,15 +7,11 @@
 package com.haulmont.charts.toolkit.gwt.client.charts.jsgantt;
 
 import com.google.gwt.core.client.GWT;
-import com.google.gwt.dom.client.Style;
 import com.google.gwt.user.client.DOM;
 import com.google.gwt.user.client.Element;
 import com.google.gwt.user.client.ui.SimplePanel;
-import com.haulmont.charts.toolkit.gwt.client.charts.ChartsResourcesLoader;
-import com.vaadin.terminal.gwt.client.ApplicationConnection;
-import com.vaadin.terminal.gwt.client.Paintable;
-import com.vaadin.terminal.gwt.client.UIDL;
-import com.vaadin.terminal.gwt.client.ValueMap;
+import com.google.gwt.user.client.ui.Widget;
+import com.vaadin.terminal.gwt.client.*;
 
 import java.util.Arrays;
 import java.util.Collections;
@@ -51,6 +47,7 @@ public class VGanttChartRenderer extends SimplePanel implements Paintable {
                     "gantt.label.month",
                     "gantt.label.quarter",
 
+                    "gantt.label.name",
                     "gantt.label.resource",
                     "gantt.label.duration",
                     "gantt.label.complete",
@@ -76,7 +73,7 @@ public class VGanttChartRenderer extends SimplePanel implements Paintable {
         DOM.appendChild(getElement(), chartPane);
         chartPane.getStyle().setProperty("height", "auto");
         chartPane.setId("chartPane");
-        chartPane.getStyle().setPosition(Style.Position.RELATIVE);
+
     }
 
     @Override
@@ -91,24 +88,51 @@ public class VGanttChartRenderer extends SimplePanel implements Paintable {
         }
 
         if (!initialized) {
-            ChartsResourcesLoader.injectCss(client.getAppUri(), "/css/jsgantt.css");
-            ChartsResourcesLoader.injectJs(client.getAppUri(), "/js/jsgantt.js");
 
             GanttChartAPI.onReady(new Runnable() {
                 @Override
                 public void run() {
                     if (chartAPI == null)
                         chartAPI = new GanttChartAPI(chartPane.getId(), new ChartClickHandler());
-
-                    renderContent(uidl);
+                    renderContent(uidl, initialized);
+                    Widget parentContainer = getParentContainer();
+                    chartAPI.setSize(parentContainer.getOffsetWidth(), parentContainer.getOffsetHeight());
                 }
             });
-
             initialized = true;
+        } else if (chartAPI != null) {
+            renderContent(uidl, initialized);
+            Widget parentContainer = getParentContainer();
+            chartAPI.setSize(parentContainer.getOffsetWidth(), parentContainer.getOffsetHeight());
         }
+    }
 
-        if (chartAPI != null)
-            renderContent(uidl);
+    public Widget getParentContainer() {
+        Widget parent = getParent();
+        while (parent != null && !(parent instanceof Container)) {
+            parent = parent.getParent();
+        }
+        if (parent != null) {
+            return parent;
+        }
+        return null;
+    }
+
+
+    public void setWidth(String width) {
+        super.setWidth(width);
+        if (chartAPI != null) {
+            Widget parentContainer = getParentContainer();
+            chartAPI.setSize(parentContainer.getOffsetWidth(), parentContainer.getOffsetHeight());
+        }
+    }
+
+    public void setHeight(String height) {
+        super.setHeight(height);
+        if (chartAPI != null) {
+            Widget parentContainer = getParentContainer();
+            chartAPI.setSize(parentContainer.getOffsetWidth(), parentContainer.getOffsetHeight());
+        }
     }
 
     private class ChartClickHandler implements GanttChartAPI.ClickHandler {
@@ -119,10 +143,10 @@ public class VGanttChartRenderer extends SimplePanel implements Paintable {
         }
     }
 
-    private void renderContent(UIDL uidl) {
+    private void renderContent(UIDL uidl, boolean bInitialized) {
         boolean hasChanges = false;
 
-        if (uidl.hasAttribute(LOCALE_SECTION)) {
+        if (!bInitialized || uidl.hasAttribute("localeChanged")) {
             chartAPI.clearTaskPane();
             // load locale
             ValueMap messages = uidl.getMapAttribute(LOCALE_SECTION);
@@ -144,22 +168,29 @@ public class VGanttChartRenderer extends SimplePanel implements Paintable {
             hasChanges = true;
         }
 
-        if (uidl.hasAttribute(CONFIG_SECTION)) {
+        if (!bInitialized || uidl.hasAttribute("settingsChanged")) {
             chartAPI.clearTaskPane();
             // init configuration
             ValueMap prefs = uidl.getMapAttribute(CONFIG_SECTION);
+            if (prefs.containsKey("showStartDate"))
+                chartAPI.setShowStartDate(prefs.getBoolean("showStartDate"));
+            if (prefs.containsKey("showEndDate"))
+                chartAPI.setShowEndDate(prefs.getBoolean("showEndDate"));
+            if (prefs.containsKey("showDuration"))
+                chartAPI.setShowDuration(prefs.getBoolean("showDuration"));
             if (prefs.containsKey("showDuration"))
                 chartAPI.setShowDuration(prefs.getBoolean("showDuration"));
             if (prefs.containsKey("showResource"))
                 chartAPI.setShowResource(prefs.getBoolean("showResource"));
             if (prefs.containsKey("showComplete"))
                 chartAPI.setShowCompete(prefs.getBoolean("showComplete"));
+            if (prefs.containsKey("dateFormat"))
+                chartAPI.setDateFormat(prefs.getString("dateFormat"));
             // read config keys and set property values in chartApi
-
             hasChanges = true;
         }
 
-        if (uidl.hasAttribute(TASKS_SECTION)) {
+        if (!bInitialized || uidl.hasAttribute("taskChanged")) {
             chartAPI.clearTaskPane();
             // get tasks ids
             String[] tasks_ids = uidl.getStringArrayAttribute(TASKS_SECTION);
@@ -174,7 +205,8 @@ public class VGanttChartRenderer extends SimplePanel implements Paintable {
         }
 
         if (hasChanges) {
-            setSize("-1px", "-1px");
+            if (bInitialized)
+                setSize("-1px", "-1px");
             chartAPI.repaint();
         }
     }
@@ -205,15 +237,16 @@ public class VGanttChartRenderer extends SimplePanel implements Paintable {
 
         int parentId = getInt(taskProps, "parentId", 0);
         String title = getString(taskProps, "title", "");
-        String resource = getString(taskProps, "resource", "");
+        String resource = getString(taskProps, "resourceName", "");
         int completePercent = getInt(taskProps, "completePercent", 0);
 
         String startTs = getString(taskProps, "startDate", "");
         String endTs = getString(taskProps, "endDate", "");
 
-        String color = getString(taskProps, "color", "00ff00");
+        String styleClass = getString(taskProps, "styleClass", "");
         String dependsOn = getString(taskProps, "dependsOn", "");
         String captionType = getString(taskProps, "captionType", "Resource");
+        String tooltip = getString(taskProps, "tooltip", "");
 
         boolean isMileStone = getBoolean(taskProps, "isMileStone", false);
         boolean isOpen = getBoolean(taskProps, "isOpen", false);
@@ -221,7 +254,7 @@ public class VGanttChartRenderer extends SimplePanel implements Paintable {
 
         chartAPI.addTask(id, parentId, title, resource,
                 completePercent, startTs, endTs,
-                color, dependsOn, captionType,
+                styleClass, dependsOn, captionType, tooltip,
                 isMileStone, isOpen, isGroup);
     }
 }

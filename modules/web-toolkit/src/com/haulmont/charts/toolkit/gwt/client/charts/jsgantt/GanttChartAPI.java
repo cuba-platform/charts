@@ -6,7 +6,10 @@
 
 package com.haulmont.charts.toolkit.gwt.client.charts.jsgantt;
 
+import com.google.gwt.i18n.client.DateTimeFormat;
 import com.vaadin.terminal.gwt.client.VConsole;
+
+import java.util.Date;
 
 /**
  * <p>$Id$</p>
@@ -23,6 +26,10 @@ public class GanttChartAPI {
         this.clickHandler = clickHandler;
     }
 
+    public interface ClickHandler {
+        void onClick(int itemId);
+    }
+
     public static native void onReady(Runnable r) /*-{
         if (!$wnd.JSGantt) {
             var id = $wnd.setInterval(function () {
@@ -36,9 +43,6 @@ public class GanttChartAPI {
         }
     }-*/;
 
-    public interface ClickHandler {
-        void onClick(int itemId);
-    }
 
     public void handleClick(int itemId) {
         if (clickHandler != null)
@@ -60,6 +64,13 @@ public class GanttChartAPI {
         setMonthNames(chartKey, monthNames);
     }
 
+    public String formatDate(double date, String format) {
+        if (Double.isNaN(date))
+            return "";
+        else
+            return DateTimeFormat.getFormat(format).format(new Date((long) date));
+    }
+
     private static native void setMonthNames(String instanceKey, String[] monthNames)/*-{
         var JSGantt = $wnd.JSGantt;
         var ganttChart = JSGantt.instances[instanceKey];
@@ -74,6 +85,27 @@ public class GanttChartAPI {
         var JSGantt = $wnd.JSGantt;
         var ganttChart = JSGantt.instances[instanceKey];
         ganttChart.setLocaleMessages(messagePack);
+    }-*/;
+
+    public void setShowStartDate(boolean showStartDate) {
+        setShowStartDate(chartKey, showStartDate);
+    }
+
+    private static native void setShowStartDate(String instanceKey, boolean showStartDate) /*-{
+        var JSGantt = $wnd.JSGantt;
+        var ganttChart = JSGantt.instances[instanceKey];
+        ganttChart.setShowStartDate(showStartDate);
+    }-*/;
+
+
+    public void setShowEndDate(boolean showEndDate) {
+        setShowEndDate(chartKey, showEndDate);
+    }
+
+     private static native void setShowEndDate(String instanceKey, boolean showEndDate) /*-{
+        var JSGantt = $wnd.JSGantt;
+        var ganttChart = JSGantt.instances[instanceKey];
+        ganttChart.setShowEndDate(showEndDate);
     }-*/;
 
     public void setShowCompete(boolean showCompete) {
@@ -100,20 +132,42 @@ public class GanttChartAPI {
         setFormat(chartKey, format);
     }
 
+    public void setSize(int width, int height)
+    {
+        setSize(chartKey, width, height);
+    }
+
     private static native void setFormat(String instanceKey, String format) /*-{
         var JSGantt = $wnd.JSGantt;
         var ganttChart = JSGantt.instances[instanceKey];
         ganttChart.setFormat(format);
     }-*/;
 
-    public void setShowResource(boolean showResponsible) {
-        setShowComplete(chartKey, showResponsible);
+    public void setDateFormat(String dateFormat) {
+        setDateFormat(chartKey, dateFormat);
     }
 
-    private static native void setShowResponsible(String instanceKey, boolean showResponsible) /*-{
+    private static native void setDateFormat(String instanceKey, String dateFormat) /*-{
         var JSGantt = $wnd.JSGantt;
         var ganttChart = JSGantt.instances[instanceKey];
-        ganttChart.setShowRes(showResponsible);
+        ganttChart.setDateDisplayFormat(dateFormat);
+    }-*/;
+
+    private static native void setSize(String instanceKey, int width, int height) /*-{
+        var JSGantt = $wnd.JSGantt;
+        var ganttChart = JSGantt.instances[instanceKey];
+        ganttChart.setSize(width, height);
+    }-*/;
+
+
+    public void setShowResource(boolean showResource) {
+        setShowResource(chartKey, showResource);
+    }
+
+    private static native void setShowResource(String instanceKey, boolean showResource) /*-{
+        var JSGantt = $wnd.JSGantt;
+        var ganttChart = JSGantt.instances[instanceKey];
+        ganttChart.setShowRes(showResource);
     }-*/;
 
     public void repaint() {
@@ -137,7 +191,7 @@ public class GanttChartAPI {
      * @param completePercent Complete percentage
      * @param startTs         Start timestamp
      * @param endTs           End timestamp
-     * @param color           Color
+     * @param styleClass      Style class
      * @param dependsOn       Dependencies
      * @param captionType     Caption mode
      * @param isMilestone     If milestone
@@ -146,24 +200,24 @@ public class GanttChartAPI {
      */
     public void addTask(int id, int parentId,
                         String title, String resource, int completePercent,
-                        String startTs, String endTs, String color,
-                        String dependsOn, String captionType,
+                        String startTs, String endTs, String styleClass,
+                        String dependsOn, String captionType, String tooltip,
                         boolean isMilestone, boolean isOpen, boolean isGroup) {
         addTask(chartKey, id, parentId,
                 title, resource, completePercent,
-                startTs, endTs, color,
-                dependsOn, captionType, isMilestone, isOpen, isGroup);
+                startTs, endTs, styleClass,
+                dependsOn, captionType, tooltip, isMilestone, isOpen, isGroup);
     }
 
     private static native void addTask(String instanceKey, int id, int parentId,
                                        String title, String resource, int completePercent,
-                                       String startTs, String endTs, String color,
-                                       String dependsOn, String captionType,
+                                       String startTs, String endTs, String styleClass,
+                                       String dependsOn, String captionType, String tooltip,
                                        boolean isMilestone, boolean isOpen, boolean isGroup) /*-{
         var JSGantt = $wnd.JSGantt;
         var ganttChart = JSGantt.instances[instanceKey];
-        ganttChart.AddTaskItem(new JSGantt.TaskItem(ganttChart, id, title, startTs, endTs, color,
-                isMilestone, resource, completePercent, isGroup, parentId, isOpen, dependsOn, captionType));
+        ganttChart.AddTaskItem(new JSGantt.TaskItem(ganttChart, id, title, startTs, endTs, styleClass,
+                isMilestone, resource, completePercent, isGroup, parentId, isOpen, dependsOn, captionType, tooltip));
     }-*/;
 
     public void clearTaskPane() {
@@ -191,10 +245,16 @@ public class GanttChartAPI {
                 });
 
         if (g) {
+            g.setShowStartDate(1); //Show Start Date
+            g.setShowEndDate(1); //Show End Date
             g.setShowRes(0); // Show/Hide Responsible (0/1)
             g.setShowDur(0); // Show/Hide Duration (0/1)
             g.setShowComp(0); // Show/Hide % Complete(0/1)
             g.setCaptionType('Resource');  // Set to Show Caption
+            //Set format date function
+            g.setDateFormatConverter(function(pDate, pFormatStr) {
+                return chartApi.@com.haulmont.charts.toolkit.gwt.client.charts.jsgantt.GanttChartAPI::formatDate(DLjava/lang/String;)(pDate.getTime(), pFormatStr)
+            });
 
             return g.getInstanceName();
         } else {

@@ -31,6 +31,8 @@ public abstract class GanttChartItem extends AbstractNotPersistentEntity {
 
     protected String captionType = "";
 
+    protected String tooltip = "";
+
     protected String color = "000000";
 
     protected String resourceName = "";
@@ -46,6 +48,8 @@ public abstract class GanttChartItem extends AbstractNotPersistentEntity {
     protected Object relatedEntity;
 
     protected DateFormat dateFormat = new SimpleDateFormat("dd/MM/yyyy");
+
+    private String styleClass = "";
 
     @MetaProperty
     public Integer getItemId() {
@@ -76,6 +80,16 @@ public abstract class GanttChartItem extends AbstractNotPersistentEntity {
     }
 
     @MetaProperty
+    public String getTooltip() {
+        return tooltip;
+    }
+
+    @MetaProperty
+    public void setTooltip(String tooltip) {
+        this.tooltip = tooltip;
+    }
+
+    @MetaProperty
     public String getCaptionType() {
         return captionType;
     }
@@ -86,13 +100,13 @@ public abstract class GanttChartItem extends AbstractNotPersistentEntity {
     }
 
     @MetaProperty
-    public String getColor() {
-        return color;
+    public void setStyleClass(String styleClass) {
+        this.styleClass = styleClass;
     }
 
     @MetaProperty
-    public void setColor(String color) {
-        this.color = color;
+    public String getStyleClass() {
+        return styleClass;
     }
 
     @MetaProperty
