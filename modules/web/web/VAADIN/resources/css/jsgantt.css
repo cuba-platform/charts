@@ -180,10 +180,9 @@ div .gganttdescription {
 div .ggantttasks {
     position: relative;
     padding: 0;
-    overflow-x: auto;
-    overflow-y: hidden;
+    overflow: hidden;
     width: auto;
-    background-color: #ffffff;
+    background-color: #D9DADD;
     border-top: 1px solid #DFDFDF;
     border-right: 1px solid #DFDFDF;
     border-bottom: 1px solid #DFDFDF;

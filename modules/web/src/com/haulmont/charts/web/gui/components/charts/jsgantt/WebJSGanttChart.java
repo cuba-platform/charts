@@ -101,6 +101,14 @@ public class WebJSGanttChart extends WebAbstractGanttChart<JSGanttChart> {
         return component.getShowResource();
     }
 
+    public void setShowInitiator(boolean showInitiator) {
+        component.setShowInitiator(showInitiator);
+    }
+
+    public boolean getShowInitiator() {
+        return component.getShowInitiator();
+    }
+
     @Override
     public void setShowComplete(boolean showComplete) {
         component.setShowComplete(showComplete);
@@ -156,6 +164,7 @@ public class WebJSGanttChart extends WebAbstractGanttChart<JSGanttChart> {
             metaPropertyMap.put("styleClass", metaClass.getProperty("styleClass"));
             metaPropertyMap.put("completePercent", metaClass.getProperty("completePercent"));
             metaPropertyMap.put("resourceName", metaClass.getProperty("resourceName"));
+            metaPropertyMap.put("initiatorName", metaClass.getProperty("initiatorName"));
             metaPropertyMap.put("captionType", metaClass.getProperty("captionType"));
             metaPropertyMap.put("tooltip", metaClass.getProperty("tooltip"));
             metaPropertyMap.put("dependsOn", metaClass.getProperty("dependsOn"));

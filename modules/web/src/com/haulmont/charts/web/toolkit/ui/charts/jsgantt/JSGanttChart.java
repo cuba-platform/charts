@@ -31,6 +31,7 @@ public class JSGanttChart extends GanttChartComponent {
     protected boolean showDuration = false;
     private boolean showComplete = false;
     private boolean showResource = false;
+    private boolean showInitiator = false;
 
     private boolean settingsChanged = false;
     private boolean itemsChanged = false;
@@ -47,6 +48,7 @@ public class JSGanttChart extends GanttChartComponent {
                     "gantt.label.quarter",
 
                     "gantt.label.name",
+                    "gantt.label.initiator",
                     "gantt.label.resource",
                     "gantt.label.duration",
                     "gantt.label.complete",
@@ -114,6 +116,7 @@ public class JSGanttChart extends GanttChartComponent {
         prefs.put("showDuration", showDuration);
         prefs.put("showComplete", showComplete);
         prefs.put("showResource", showResource);
+        prefs.put("showInitiator", showInitiator);
         prefs.put("dateFormat", dateTimeFormat);
         target.addAttribute(VGanttChartRenderer.CONFIG_SECTION, prefs);
 
@@ -200,6 +203,18 @@ public class JSGanttChart extends GanttChartComponent {
     public boolean getShowResource() {
         return showResource;
     }
+
+    @Override
+    public void setShowInitiator(boolean showInitiator) {
+        this.showInitiator = showInitiator;
+        fireSettingsChange();
+    }
+
+    @Override
+    public boolean getShowInitiator() {
+        return showInitiator;
+    }
+
 
     @Override
     public void setShowComplete(boolean showComplete) {

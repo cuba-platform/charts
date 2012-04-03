@@ -37,6 +37,9 @@ public interface GanttChart extends Chart, Component.Wrapper, Component.BelongTo
     void setShowResource(boolean showResource);
     boolean getShowResource();
 
+    void setShowInitiator(boolean showInitiator);
+    boolean getShowInitiator();
+
     void setShowComplete(boolean showComplete);
     boolean getShowComplete();
 

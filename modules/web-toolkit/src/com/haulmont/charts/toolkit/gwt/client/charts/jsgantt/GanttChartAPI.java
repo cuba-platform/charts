@@ -102,7 +102,7 @@ public class GanttChartAPI {
         setShowEndDate(chartKey, showEndDate);
     }
 
-     private static native void setShowEndDate(String instanceKey, boolean showEndDate) /*-{
+    private static native void setShowEndDate(String instanceKey, boolean showEndDate) /*-{
         var JSGantt = $wnd.JSGantt;
         var ganttChart = JSGantt.instances[instanceKey];
         ganttChart.setShowEndDate(showEndDate);
@@ -132,8 +132,7 @@ public class GanttChartAPI {
         setFormat(chartKey, format);
     }
 
-    public void setSize(int width, int height)
-    {
+    public void setSize(int width, int height) {
         setSize(chartKey, width, height);
     }
 
@@ -170,6 +169,17 @@ public class GanttChartAPI {
         ganttChart.setShowRes(showResource);
     }-*/;
 
+
+    public void setShowInitiator(boolean showInitiator) {
+        setShowInitiator(chartKey, showInitiator);
+    }
+
+    private static native void setShowInitiator(String instanceKey, boolean showInitiator) /*-{
+        var JSGantt = $wnd.JSGantt;
+        var ganttChart = JSGantt.instances[instanceKey];
+        ganttChart.setShowInitiator(showInitiator);
+    }-*/;
+
     public void repaint() {
         repaint(chartKey);
     }
@@ -199,25 +209,25 @@ public class GanttChartAPI {
      * @param isGroup         If group
      */
     public void addTask(int id, int parentId,
-                        String title, String resource, int completePercent,
+                        String title, String resource, String initiator, int completePercent,
                         String startTs, String endTs, String styleClass,
                         String dependsOn, String captionType, String tooltip,
                         boolean isMilestone, boolean isOpen, boolean isGroup) {
         addTask(chartKey, id, parentId,
-                title, resource, completePercent,
+                title, resource, initiator, completePercent,
                 startTs, endTs, styleClass,
                 dependsOn, captionType, tooltip, isMilestone, isOpen, isGroup);
     }
 
     private static native void addTask(String instanceKey, int id, int parentId,
-                                       String title, String resource, int completePercent,
+                                       String title, String resource, String initiator, int completePercent,
                                        String startTs, String endTs, String styleClass,
                                        String dependsOn, String captionType, String tooltip,
                                        boolean isMilestone, boolean isOpen, boolean isGroup) /*-{
         var JSGantt = $wnd.JSGantt;
         var ganttChart = JSGantt.instances[instanceKey];
         ganttChart.AddTaskItem(new JSGantt.TaskItem(ganttChart, id, title, startTs, endTs, styleClass,
-                isMilestone, resource, completePercent, isGroup, parentId, isOpen, dependsOn, captionType, tooltip));
+                isMilestone, resource, initiator, completePercent, isGroup, parentId, isOpen, dependsOn, captionType, tooltip));
     }-*/;
 
     public void clearTaskPane() {
@@ -248,6 +258,7 @@ public class GanttChartAPI {
             g.setShowStartDate(1); //Show Start Date
             g.setShowEndDate(1); //Show End Date
             g.setShowRes(0); // Show/Hide Responsible (0/1)
+            g.setShowInitiator(0); // // Show/Hide Initiator (0/1)
             g.setShowDur(0); // Show/Hide Duration (0/1)
             g.setShowComp(0); // Show/Hide % Complete(0/1)
             g.setCaptionType('Resource');  // Set to Show Caption

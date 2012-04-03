@@ -48,6 +48,7 @@ public class VGanttChartRenderer extends SimplePanel implements Paintable {
                     "gantt.label.quarter",
 
                     "gantt.label.name",
+                    "gantt.label.initiator",
                     "gantt.label.resource",
                     "gantt.label.duration",
                     "gantt.label.complete",
@@ -182,6 +183,8 @@ public class VGanttChartRenderer extends SimplePanel implements Paintable {
                 chartAPI.setShowDuration(prefs.getBoolean("showDuration"));
             if (prefs.containsKey("showResource"))
                 chartAPI.setShowResource(prefs.getBoolean("showResource"));
+            if (prefs.containsKey("showInitiator"))
+                chartAPI.setShowInitiator(prefs.getBoolean("showInitiator"));
             if (prefs.containsKey("showComplete"))
                 chartAPI.setShowCompete(prefs.getBoolean("showComplete"));
             if (prefs.containsKey("dateFormat"))
@@ -238,6 +241,7 @@ public class VGanttChartRenderer extends SimplePanel implements Paintable {
         int parentId = getInt(taskProps, "parentId", 0);
         String title = getString(taskProps, "title", "");
         String resource = getString(taskProps, "resourceName", "");
+        String initiator = getString(taskProps, "initiatorName", "");
         int completePercent = getInt(taskProps, "completePercent", 0);
 
         String startTs = getString(taskProps, "startDate", "");
@@ -252,7 +256,7 @@ public class VGanttChartRenderer extends SimplePanel implements Paintable {
         boolean isOpen = getBoolean(taskProps, "isOpen", false);
         boolean isGroup = getBoolean(taskProps, "isGroup", false);
 
-        chartAPI.addTask(id, parentId, title, resource,
+        chartAPI.addTask(id, parentId, title, resource, initiator,
                 completePercent, startTs, endTs,
                 styleClass, dependsOn, captionType, tooltip,
                 isMileStone, isOpen, isGroup);

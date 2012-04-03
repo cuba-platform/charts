@@ -37,6 +37,8 @@ public abstract class GanttChartItem extends AbstractNotPersistentEntity {
 
     protected String resourceName = "";
 
+    private String initiatorName = "";
+
     protected GanttChartItem parent;
 
     protected List<GanttChartItem> dependencies;
@@ -50,6 +52,7 @@ public abstract class GanttChartItem extends AbstractNotPersistentEntity {
     protected DateFormat dateFormat = new SimpleDateFormat("dd/MM/yyyy");
 
     private String styleClass = "";
+
 
     @MetaProperty
     public Integer getItemId() {
@@ -117,6 +120,16 @@ public abstract class GanttChartItem extends AbstractNotPersistentEntity {
     @MetaProperty
     public void setResourceName(String resourceName) {
         this.resourceName = resourceName;
+    }
+
+    @MetaProperty
+    public String getInitiatorName() {
+        return initiatorName;
+    }
+
+    @MetaProperty
+    public void setInitiatorName(String initiatorName) {
+        this.initiatorName = initiatorName;
     }
 
     @MetaProperty
