@@ -422,8 +422,8 @@ JSGantt.GanttChart = function (pDiv, pFormat, pClickHandler) {
         "week":"Week",
         "quarter":"Quarter",
         // Table columns
-        "name" : "Name",
-        "initiator" : "Initiator",
+        "name":"Name",
+        "initiator":"Initiator",
         "resource":"Resource",
         "duration":"Duration",
         "complete":"% Complete",
@@ -615,8 +615,8 @@ JSGantt.GanttChart = function (pDiv, pFormat, pClickHandler) {
         var tasksHeader = jQuery(vDiv).find("#tasksHeader");
         var taskDescriptions = jQuery(vDiv).find("#taskDescriptions");
 
-        var shiftWidth = 3;
-        var shiftHeight = 3 + tasksHeader.height();
+        var shiftWidth = 10;
+        var shiftHeight = 10 + tasksHeader.height();
         var oldHeight = taskList.height();
 
         if (pHeight != 0) {
@@ -1198,7 +1198,7 @@ JSGantt.GanttChart = function (pDiv, pFormat, pClickHandler) {
         var vNumDays = 0;
         var vDayWidth = 0;
         var vNameWidth = 220;
-        var vStatusWidth = 170;
+        var vStatusWidth = 210;
 
         if (vTaskList.length > 0) {
 
@@ -1299,11 +1299,11 @@ JSGantt.GanttChart = function (pDiv, pFormat, pClickHandler) {
                 }
 
                 vLeftTable +=
-                    '<span onclick=JSGantt.onClick("' + instanceName + '",' + vID + '); style="cursor:pointer;">' + JSGantt.subStr(vTaskList[i].getName()) + '</span></nobr></td>';
+                    '<span onclick=JSGantt.onClick("' + instanceName + '",' + vID + '); style="cursor:pointer;">' + JSGantt.subStr(vTaskList[i].getName(), 60) + '</span></nobr></td>';
 
 
-                if (vShowInitiator == 1) vLeftTable += '  <td class="gname gadditionalparams" style="width:' + vStatusWidth + 'px;"><nobr>' + vTaskList[i].getInitiator() + '</nobr></td>';
-                if (vShowRes == 1) vLeftTable += '  <td class="gname gadditionalparams" style="width:' + vStatusWidth + 'px;"><nobr>' + vTaskList[i].getResource() + '</nobr></td>';
+                if (vShowInitiator == 1) vLeftTable += '  <td class="gname gadditionalparams" style="width:' + vStatusWidth + 'px;"><nobr>' + JSGantt.subStr(vTaskList[i].getInitiator(), 23) + '</nobr></td>';
+                if (vShowRes == 1) vLeftTable += '  <td class="gname gadditionalparams" style="width:' + vStatusWidth + 'px;"><nobr>' + JSGantt.subStr(vTaskList[i].getResource(), 23) + '</nobr></td>';
                 if (vShowStartDate == 1) vLeftTable += '  <td class="gname gadditionalparams" style="width:' + vStatusWidth + 'px"><nobr>' + this.formatDate(vTaskList[i].getStart(), vDateDisplayFormat) + '</nobr></td>';
                 if (vShowEndDate == 1) vLeftTable += '  <td class="gname gadditionalparams" style="width:' + vStatusWidth + 'px"><nobr>' + this.formatDate(vTaskList[i].getEnd(), vDateDisplayFormat) + '</nobr></td>';
                 if (vShowDur == 1) vLeftTable += '  <td class="gname gadditionalparams" style="width:' + vStatusWidth + 'px"><nobr>' + vTaskList[i].getDuration(vFormat) + '</nobr></td>';
@@ -1320,7 +1320,7 @@ JSGantt.GanttChart = function (pDiv, pFormat, pClickHandler) {
             vRightTable =
                 '<td style="width: ' + vChartWidth + 'px;" vAlign="top" bgColor="#ffffff">' +
                     '<div class="ggantttasks" id="rightside">' +
-                    '<div id="tasksHeader" style="overflow: hidden";><table style="width: ' + vChartWidth + 'px;" cellSpacing="0" cellPadding="0" border="0">' +
+                    '<div id="tasksHeader" style="overflow: hidden; border-right: 1px solid #DFDFDF; border-top: 1px solid #DFDFDF;"><table style="width: ' + vChartWidth + 'px;" cellSpacing="0" cellPadding="0" border="0">' +
                     '<tbody><tr>';
 
             vRightTable = this.DrawMajorDataHeader(vRightTable, vMinDate, vMaxDate);
@@ -1463,7 +1463,7 @@ JSGantt.GanttChart = function (pDiv, pFormat, pClickHandler) {
 
             vRightTable += vDateRowStr + '</tr>';
             vRightTable += '</tbody></table></div>';
-            vRightTable += '<div id="taskList" style="overflow-y: scroll; overflow-x: scroll; width:' + vChartWidth + 'px">';
+            vRightTable += '<div id="taskList" style="border-right: 1px solid #DFDFDF; border-bottom: 1px solid #DFDFDF; overflow-y: scroll; overflow-x: scroll; width:' + vChartWidth + 'px">';
 
             // Draw each row
             var i;
@@ -1663,10 +1663,10 @@ JSGantt.GanttChart = function (pDiv, pFormat, pClickHandler) {
 
             this.buildTooltip();
             var scrollLeftPosition = jQuery(vDiv).find('.gheadcurrentdate:first').position().left;
-            jQuery(vDiv).find('#taskList').animate({'scrollLeft': scrollLeftPosition});
+            jQuery(vDiv).find('#taskList').animate({'scrollLeft':scrollLeftPosition});
 
 
-            jQuery('#taskList').scroll(function() {
+            jQuery('#taskList').scroll(function () {
                 jQuery(vDiv).find('#taskDescriptions').scrollTop(jQuery(vDiv).find('#taskList').scrollTop());
                 jQuery(vDiv).find('#tasksHeader').scrollLeft(jQuery(vDiv).find('#taskList').scrollLeft());
             })
@@ -1894,6 +1894,7 @@ JSGantt.getMaxDate = function (pList, pFormat, pMinDate) {
         if (diff < 8 * 7 * 24 * 60 * 60 * 1000) {
             vDate.setMonth(vDate.getMonth() + Math.round((8 - diff / 1000 / 60 / 60 / 24 / 7) / 4));
         }
+        vDate.setDate(vDate.getDate() + 3);
         if (vDate.getDay() % 6 == 0)
             vDate.setDate(vDate.getDate() + 2);
 
@@ -2236,15 +2237,15 @@ JSGantt.parseDate = function (pDateStr) {
 };
 
 
-JSGantt.subStr = function (pStr) {
-    if (pStr && pStr.length > 60)
-        return pStr.substring(0, 60) + '...';
+JSGantt.subStr = function (pStr, length) {
+    if (pStr && pStr.length > length)
+        return pStr.substring(0, length) + '...';
     else if (pStr)
         return pStr;
     return '';
 }
 
-JSGantt.getScrollWidth = function() {
+JSGantt.getScrollWidth = function () {
     var parent, child, width;
     if (JSGantt.scrollWidth === undefined) {
         parent = jQuery('<div style="width:50px;height:50px;overflow:auto"><div/></div>').appendTo('body');
