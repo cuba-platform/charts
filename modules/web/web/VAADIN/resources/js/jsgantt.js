@@ -615,19 +615,22 @@ JSGantt.GanttChart = function (pDiv, pFormat, pClickHandler) {
         var tasksHeader = jQuery(vDiv).find("#tasksHeader");
         var taskDescriptions = jQuery(vDiv).find("#taskDescriptions");
 
-        var shiftWidth = 10;
-        var shiftHeight = 10 + tasksHeader.height();
+        var shiftWidth = 20;
+        var shiftHeight = 20 + tasksHeader.height();
         var oldHeight = taskList.height();
 
         if (pHeight != 0) {
             taskList.css("width", pWidth - eDescription.width() - shiftWidth);
             tasksHeader.css("width", pWidth - eDescription.width() - JSGantt.getScrollWidth() - shiftWidth);
 
-            taskList.css("height", pHeight - shiftHeight);
-            taskDescriptions.css("height", pHeight - JSGantt.getScrollWidth() - shiftHeight);
-            if (taskList.attr("clientHeight") >= taskList.attr("scrollHeight")) {
-                taskList.css("height", oldHeight);
-                taskDescriptions.css("height", oldHeight - JSGantt.getScrollWidth());
+            if (tasksHeader.height() != 0) {
+
+                taskList.css("height", pHeight - shiftHeight);
+                taskDescriptions.css("height", pHeight - JSGantt.getScrollWidth() - shiftHeight);
+                if (taskList.attr("clientHeight") != 0 && taskList.attr("clientHeight") >= taskList.attr("scrollHeight")) {
+                    taskList.css("height", oldHeight);
+                    taskDescriptions.css("height", oldHeight - JSGantt.getScrollWidth());
+                }
             }
         }
     }
@@ -1714,7 +1717,8 @@ JSGantt.GanttChart = function (pDiv, pFormat, pClickHandler) {
         }
     };
 
-}; //GanttChart
+}
+; //GanttChart
 
 /**
  *
