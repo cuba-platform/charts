@@ -24,6 +24,10 @@ buildscript {
     dependencies {
         classpath group: 'com.haulmont.gradle', name: 'cuba-plugin', version: '1.2.0'
     }
+    configurations.all {
+        resolutionStrategy.cacheDynamicVersionsFor 1, 'minutes'
+        resolutionStrategy.cacheChangingModulesFor 1, 'minutes'
+    }
 }
 
 apply(plugin: 'idea')
@@ -75,6 +79,9 @@ configure([chartsGlobalModule, chartsGuiModule, chartsWebModule, chartsWebToolki
 }
 
 configure(chartsGlobalModule) {
+    dependencies {
+        provided(group: 'com.haulmont.gradle', name: 'cuba-plugin', version: '1.2.0')
+    }
     task enhance(type: CubaEnhancing) {
         persistenceXml = "$chartsGlobalModule.projectDir/src/charts-persistence.xml"
         metadataXml = "$chartsGlobalModule.projectDir/src/charts-metadata.xml"
