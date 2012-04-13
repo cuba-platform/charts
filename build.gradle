@@ -58,9 +58,6 @@ configure([chartsGlobalModule, chartsGuiModule, chartsWebModule, chartsWebToolki
     apply(plugin: 'cuba')
 
     dependencies {
-        compile(group: 'com.haulmont.bali', name: 'bali', version: '3.1.2')
-        compile(group: 'com.haulmont.chile', name: 'chile-core', version: '3.1.2')
-        compile(group: 'com.haulmont.chile', name: 'chile-jpa', version: '3.1.2')
         compile(group: 'com.haulmont.cuba', name: 'cuba-global', version: baseVersion)
 
         compile(group: 'jfree', name: 'jfreechart', version: '1.0.13')
