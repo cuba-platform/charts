@@ -1302,7 +1302,7 @@ JSGantt.GanttChart = function (pDiv, pFormat, pClickHandler) {
                 }
 
                 vLeftTable +=
-                    '<span onclick=JSGantt.onClick("' + instanceName + '",' + vID + '); style="cursor:pointer;">' + JSGantt.subStr(vTaskList[i].getName(), 60) + '</span></nobr></td>';
+                    '<span onclick=JSGantt.onClick("' + instanceName + '",' + vID + '); style="cursor:pointer;">' + JSGantt.subStr(vTaskList[i].getName(), 36) + '</span></nobr></td>';
 
 
                 if (vShowInitiator == 1) vLeftTable += '  <td class="gname gadditionalparams" style="width:' + vStatusWidth + 'px;"><nobr>' + JSGantt.subStr(vTaskList[i].getInitiator(), 23) + '</nobr></td>';
