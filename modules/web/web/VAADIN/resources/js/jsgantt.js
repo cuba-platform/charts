@@ -1202,6 +1202,7 @@ JSGantt.GanttChart = function (pDiv, pFormat, pClickHandler) {
         var vDayWidth = 0;
         var vNameWidth = 220;
         var vStatusWidth = 210;
+        var vDateWidth = 110;
 
         if (vTaskList.length > 0) {
 
@@ -1232,13 +1233,13 @@ JSGantt.GanttChart = function (pDiv, pFormat, pClickHandler) {
             if (vShowRes == 1) allWidth += vStatusWidth;
             if (vShowDur == 1) allWidth += vStatusWidth;
             if (vShowComp == 1) allWidth += vStatusWidth;
-            if (vShowStartDate == 1) allWidth += vStatusWidth;
-            if (vShowEndDate == 1) allWidth += vStatusWidth;
+            if (vShowStartDate == 1) allWidth += vDateWidth;
+            if (vShowEndDate == 1) allWidth += vDateWidth;
 
             vLeftTable = '<div class="gganttdescription" id="leftside" style="width:' + allWidth + 'px"> ';
 
             // DRAW the date format selector at bottom left.  Another potential GanttChart parameter to hide/show this selector
-            vLeftTable += '<div><table cellSpacing=0 cellPadding=0 border=0 width="' + allWidth + 'px"><tbody><tr><td class="gmajorhead" colspan="5">';
+            vLeftTable += '<div><table cellSpacing=0 cellPadding=0 border=0 width="' + allWidth + 'px"><tbody><tr><td class="gmajorhead" colspan="6">';
 
             for (var i1 = 0; i1 < vFormatArr.length; i1++) {
                 var currentFormat = vFormatArr[i1];
@@ -1257,8 +1258,8 @@ JSGantt.GanttChart = function (pDiv, pFormat, pClickHandler) {
 
             if (vShowInitiator == 1) vLeftTable += '  <td class="gminorhead gadditionalparams" style="width:' + vStatusWidth + 'px">' + localeMessages['initiator'] + '</td>';
             if (vShowRes == 1) vLeftTable += '  <td class="gminorhead gadditionalparams" style="width:' + vStatusWidth + 'px">' + localeMessages['resource'] + '</td>';
-            if (vShowStartDate == 1) vLeftTable += '  <td class="gminorhead gadditionalparams" style="width:' + vStatusWidth + 'px">' + localeMessages['startDate'] + '</td>';
-            if (vShowEndDate == 1) vLeftTable += '  <td class="gminorhead gadditionalparams" style="width:' + vStatusWidth + 'px">' + localeMessages['endDate'] + '</td>';
+            if (vShowStartDate == 1) vLeftTable += '  <td class="gminorhead gadditionalparams" style="width:' + vDateWidth + 'px">' + localeMessages['startDate'] + '</td>';
+            if (vShowEndDate == 1) vLeftTable += '  <td class="gminorhead gadditionalparams" style="width:' + vDateWidth + 'px">' + localeMessages['endDate'] + '</td>';
             if (vShowDur == 1) vLeftTable += '  <td class="gminorhead gadditionalparams" style="width:' + vStatusWidth + 'px">' + localeMessages['duration'] + '</td>';
             if (vShowComp == 1) vLeftTable += '  <td class="gminorhead gadditionalparams" style="width:' + vStatusWidth + 'px">' + localeMessages['complete'] + '</td>';
 
@@ -1307,8 +1308,8 @@ JSGantt.GanttChart = function (pDiv, pFormat, pClickHandler) {
 
                 if (vShowInitiator == 1) vLeftTable += '  <td class="gname gadditionalparams" style="width:' + vStatusWidth + 'px;"><nobr>' + JSGantt.subStr(vTaskList[i].getInitiator(), 23) + '</nobr></td>';
                 if (vShowRes == 1) vLeftTable += '  <td class="gname gadditionalparams" style="width:' + vStatusWidth + 'px;"><nobr>' + JSGantt.subStr(vTaskList[i].getResource(), 23) + '</nobr></td>';
-                if (vShowStartDate == 1) vLeftTable += '  <td class="gname gadditionalparams" style="width:' + vStatusWidth + 'px"><nobr>' + this.formatDate(vTaskList[i].getStart(), vDateDisplayFormat) + '</nobr></td>';
-                if (vShowEndDate == 1) vLeftTable += '  <td class="gname gadditionalparams" style="width:' + vStatusWidth + 'px"><nobr>' + this.formatDate(vTaskList[i].getEnd(), vDateDisplayFormat) + '</nobr></td>';
+                if (vShowStartDate == 1) vLeftTable += '  <td class="gname gadditionalparams" style="width:' + vDateWidth + 'px"><nobr>' + this.formatDate(vTaskList[i].getStart(), vDateDisplayFormat) + '</nobr></td>';
+                if (vShowEndDate == 1) vLeftTable += '  <td class="gname gadditionalparams" style="width:' + vDateWidth + 'px"><nobr>' + this.formatDate(vTaskList[i].getEnd(), vDateDisplayFormat) + '</nobr></td>';
                 if (vShowDur == 1) vLeftTable += '  <td class="gname gadditionalparams" style="width:' + vStatusWidth + 'px"><nobr>' + vTaskList[i].getDuration(vFormat) + '</nobr></td>';
                 if (vShowComp == 1) vLeftTable += '  <td class="gname gadditionalparams" style="width:' + vStatusWidth + 'px"><nobr>' + vTaskList[i].getCompStr() + '</nobr></td>';
 
