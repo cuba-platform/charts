@@ -1670,7 +1670,7 @@ JSGantt.GanttChart = function (pDiv, pFormat, pClickHandler) {
             jQuery(vDiv).find('#taskList').animate({'scrollLeft':scrollLeftPosition});
 
 
-            jQuery('#taskList').scroll(function () {
+            jQuery(vDiv).find('#taskList').scroll(function () {
                 jQuery(vDiv).find('#taskDescriptions').scrollTop(jQuery(vDiv).find('#taskList').scrollTop());
                 jQuery(vDiv).find('#tasksHeader').scrollLeft(jQuery(vDiv).find('#taskList').scrollLeft());
             })
