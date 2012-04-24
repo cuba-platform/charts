@@ -13,6 +13,7 @@ import com.vaadin.data.Item;
 import com.vaadin.terminal.PaintException;
 import com.vaadin.terminal.PaintTarget;
 import com.vaadin.ui.ClientWidget;
+import org.apache.commons.lang.StringUtils;
 
 import java.util.*;
 
@@ -68,8 +69,7 @@ public class JSGanttChart extends GanttChartComponent {
                     "gantt.month.October",
                     "gantt.month.November",
                     "gantt.month.December"));
-    private String dateTimeFormat;
-
+    private String dateTimeFormat = "";
 
 
     public JSGanttChart() {
@@ -117,7 +117,7 @@ public class JSGanttChart extends GanttChartComponent {
         prefs.put("showComplete", showComplete);
         prefs.put("showResource", showResource);
         prefs.put("showInitiator", showInitiator);
-        prefs.put("dateFormat", dateTimeFormat);
+        prefs.put("dateFormat", StringUtils.defaultString(dateTimeFormat, "dd/MM/yyyy"));
         target.addAttribute(VGanttChartRenderer.CONFIG_SECTION, prefs);
 
         if (settingsChanged) {
@@ -171,14 +171,12 @@ public class JSGanttChart extends GanttChartComponent {
         return showStartDate;
     }
 
-    public void setShowEndDate(boolean showEndDate)
-    {
+    public void setShowEndDate(boolean showEndDate) {
         this.showEndDate = showEndDate;
         fireSettingsChange();
     }
 
-    public boolean getShowEndDate()
-    {
+    public boolean getShowEndDate() {
         return showEndDate;
     }
 
