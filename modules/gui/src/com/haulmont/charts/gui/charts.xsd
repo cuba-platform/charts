@@ -1,10 +1,11 @@
 <?xml version="1.0" encoding="utf-8"?>
 <xs:schema
-        targetNamespace="http://www.haulmont.com/schema/charts/gui/charts.xsd"
-        xmlns="http://www.haulmont.com/schema/charts/gui/charts.xsd"
+        targetNamespace="http://schemas.haulmont.com/charts/4.0/charts.xsd"
         xmlns:xs="http://www.w3.org/2001/XMLSchema"
+        xmlns="http://schemas.haulmont.com/charts/4.0/charts.xsd"
         elementFormDefault="qualified"
-        attributeFormDefault="unqualified">
+        attributeFormDefault="unqualified"
+        >
 
     <xs:complexType name="abstractChart" abstract="true">
     </xs:complexType>

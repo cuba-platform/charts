@@ -1,4 +1,4 @@
-<metadata>
+<metadata xmlns="http://schemas.haulmont.com/cuba/4.0/metadata.xsd">
     <metadata-model>
         <class>com.haulmont.charts.core.entity.GanttChartItem</class>
         <class>com.haulmont.charts.core.entity.GanttChartGroup</class>
