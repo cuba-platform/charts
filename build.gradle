@@ -6,7 +6,7 @@
 
 allprojects {
     artifactGroup = 'com.haulmont.charts'
-    artifactVersion = '3.4.0'
+    artifactVersion = '4.0.0'
     isSnapshot = true
 }
 
