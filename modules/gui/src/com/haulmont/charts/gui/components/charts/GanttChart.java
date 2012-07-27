@@ -16,7 +16,7 @@ import com.haulmont.cuba.gui.data.CollectionDatasource;
  * @author artamonov
  */
 public interface GanttChart extends Chart, Component.Wrapper, Component.BelongToFrame,
-        Component.HasXmlDescriptor, Component.Expandable, Component.HasCaption {
+        Component.HasXmlDescriptor, Component.HasCaption {
 
     String NAME = "ganttChart";
 
