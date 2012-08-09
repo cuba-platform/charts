@@ -11,7 +11,6 @@ import com.haulmont.charts.gui.data.CategoryChartDatasource;
 import com.haulmont.charts.web.toolkit.ui.charts.CategoryChartComponent;
 import com.haulmont.cuba.gui.data.CollectionDatasource;
 import com.haulmont.cuba.web.gui.data.CollectionDsWrapper;
-import com.haulmont.cuba.web.gui.data.DsManager;
 import com.vaadin.data.util.IndexedContainer;
 
 import java.util.Collection;
@@ -61,9 +60,7 @@ public abstract class WebAbstractCategoryChart<T extends CategoryChartComponent>
             }
 
         } else {
-            DsManager dsManager = new DsManager(datasource, this);
-
-            CollectionDsWrapper dsWrapper = new CollectionDsWrapper(datasource, true, dsManager);
+            CollectionDsWrapper dsWrapper = new CollectionDsWrapper(datasource, true);
 
             component.setContainerDataSource(dsWrapper);
         }

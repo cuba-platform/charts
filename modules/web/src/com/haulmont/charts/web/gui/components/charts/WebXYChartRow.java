@@ -12,7 +12,6 @@ import com.haulmont.charts.web.toolkit.ui.charts.XYChartRowComponent;
 import com.haulmont.cuba.gui.data.CollectionDatasource;
 import com.haulmont.cuba.web.gui.components.WebAbstractComponent;
 import com.haulmont.cuba.web.gui.data.CollectionDsWrapper;
-import com.haulmont.cuba.web.gui.data.DsManager;
 import com.vaadin.data.util.IndexedContainer;
 
 /**
@@ -57,9 +56,7 @@ public class WebXYChartRow extends WebAbstractComponent<XYChartRowComponent> imp
                 component.setYValue(pointId, xyChartRowDatasource.getYValue(pointId));
             }
         } else {
-            DsManager dsManager = new DsManager(datasource, this);
-
-            CollectionDsWrapper dsWrapper = new CollectionDsWrapper(datasource, true, dsManager);
+            CollectionDsWrapper dsWrapper = new CollectionDsWrapper(datasource, true);
 
             component.setContainerDataSource(dsWrapper);
         }
