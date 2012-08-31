@@ -9,7 +9,8 @@ package com.haulmont.charts.gui.xml.layout.loaders.charts;
 import com.haulmont.charts.gui.components.charts.CategoryChart;
 import com.haulmont.charts.gui.data.CategoryChartDatasource;
 import com.haulmont.chile.core.model.MetaProperty;
-import com.haulmont.cuba.core.global.MessageUtils;
+import com.haulmont.cuba.core.global.AppBeans;
+import com.haulmont.cuba.core.global.MessageTools;
 import com.haulmont.cuba.gui.components.Component;
 import com.haulmont.cuba.gui.data.CollectionDatasource;
 import com.haulmont.cuba.gui.xml.layout.ComponentsFactory;
@@ -84,7 +85,7 @@ public abstract class AbstractCategoryChartLoader extends AbstractChartLoader {
         if (!StringUtils.isEmpty(caption)) {
             caption = loadResourceString(caption);
         } else {
-            caption = MessageUtils.getPropertyCaption(property);
+            caption = AppBeans.get(MessageTools.class).getPropertyCaption(property);
         }
 
         component.addCategory(property, caption);
