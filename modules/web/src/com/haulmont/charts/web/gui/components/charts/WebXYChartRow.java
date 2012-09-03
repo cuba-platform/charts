@@ -20,7 +20,6 @@ import com.vaadin.data.util.IndexedContainer;
  * @author zagumennikov
  */
 public class WebXYChartRow extends WebAbstractComponent<XYChartRowComponent> implements XYChartRow {
-    private static final long serialVersionUID = -4577453731402343518L;
 
     protected CollectionDatasource datasource;
 

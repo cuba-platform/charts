@@ -24,8 +24,6 @@ public abstract class WebAbstractXYChart<T extends XYChartComponent>
         extends WebAbstractChart<T>
         implements XYChart {
 
-    private static final long serialVersionUID = -6675638557113699291L;
-
     protected Collection<XYChartRow> rows = new ArrayList<XYChartRow>();
 
     @Override

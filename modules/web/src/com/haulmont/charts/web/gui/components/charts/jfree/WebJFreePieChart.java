@@ -10,7 +10,6 @@ import com.haulmont.charts.web.gui.components.charts.WebAbstractCategoryChart;
 import com.haulmont.charts.web.toolkit.ui.charts.jfree.JFreePieChart;
 
 public class WebJFreePieChart extends WebAbstractCategoryChart<JFreePieChart> implements PieChart {
-    private static final long serialVersionUID = 2148678991758077072L;
 
     public WebJFreePieChart() {
         component = new JFreePieChart();

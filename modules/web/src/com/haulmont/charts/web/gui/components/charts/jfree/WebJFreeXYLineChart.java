@@ -17,7 +17,6 @@ import com.haulmont.charts.web.toolkit.ui.charts.jfree.JFreeXYLineChart;
  * @author zagumennikov
  */
 public class WebJFreeXYLineChart extends WebAbstractXYChart<JFreeXYLineChart> implements XYLineChart {
-    private static final long serialVersionUID = -3460128438079322004L;
 
     public WebJFreeXYLineChart() {
         component = new JFreeXYLineChart();

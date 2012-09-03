@@ -24,8 +24,6 @@ public abstract class WebAbstractCategoryChart<T extends CategoryChartComponent>
         extends WebAbstractChart<T>
         implements CategoryChart {
 
-    private static final long serialVersionUID = 8120229914290249619L;
-
     protected CollectionDatasource datasource;
 
     @Override
