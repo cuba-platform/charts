@@ -22,7 +22,7 @@ import java.util.List;
  *
  * @author artamonov
  */
-@MetaClass(name = "charts$GanttTaskItem")
+@MetaClass(name = "charts$GanttChartItem")
 public abstract class GanttChartItem extends AbstractNotPersistentEntity {
 
     protected Integer itemId;

@@ -16,7 +16,7 @@ import java.util.Date;
  *
  * @author artamonov
  */
-@MetaClass(name = "charts$GanttTaskItem")
+@MetaClass(name = "charts$GanttChartTask")
 public class GanttChartTask extends GanttChartItem {
 
     protected Date startTs;
