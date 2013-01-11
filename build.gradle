@@ -4,10 +4,16 @@
  * Use is subject to license terms.
  */
 
+def defaultVersion = '0.1.DEV'
+
+def BUILD_VERSION = 'buildVersion'
+def BUILD_RELEASE = 'buildRelease'
+def BUILD_VCS_NUMBER = 'buildVcsNumber'
+
 allprojects {
     artifactGroup = 'com.haulmont.charts'
-    artifactVersion = '4.0.0'
-    isSnapshot = true
+    artifactVersion = rootProject.hasProperty(BUILD_VERSION) ? rootProject[BUILD_VERSION] : defaultVersion
+    isSnapshot = !rootProject.hasProperty(BUILD_RELEASE)
 }
 
 buildscript {
