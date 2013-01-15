@@ -13,7 +13,7 @@ def BUILD_VCS_NUMBER = 'buildVcsNumber'
 allprojects {
     artifactGroup = 'com.haulmont.charts'
     artifactVersion = rootProject.hasProperty(BUILD_VERSION) ? rootProject[BUILD_VERSION] : defaultVersion
-    isSnapshot = !rootProject.hasProperty(BUILD_RELEASE)
+    isSnapshot = !(rootProject.hasProperty(BUILD_RELEASE) && Boolean.valueOf(rootProject[BUILD_RELEASE]))
 }
 
 buildscript {
