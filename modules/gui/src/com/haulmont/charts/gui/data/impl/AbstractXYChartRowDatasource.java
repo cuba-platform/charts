@@ -7,37 +7,16 @@
 package com.haulmont.charts.gui.data.impl;
 
 import com.haulmont.charts.gui.data.XYChartRowDatasource;
-import com.haulmont.chile.core.model.MetaClass;
 import com.haulmont.cuba.core.entity.Entity;
-import com.haulmont.cuba.core.global.View;
-import com.haulmont.cuba.gui.data.DataService;
-import com.haulmont.cuba.gui.data.DsContext;
 import com.haulmont.cuba.gui.data.impl.CollectionDatasourceImpl;
 
 /**
- * <p>$Id$</p>
- *
  * @author zagumennikov
+ * @version $Id$
  */
 public abstract class AbstractXYChartRowDatasource<T extends Entity<K>, K>
         extends CollectionDatasourceImpl<T, K>
         implements XYChartRowDatasource<T, K> {
-
-    public AbstractXYChartRowDatasource(DsContext context, DataService dataservice, String id, MetaClass metaClass, View view) {
-        super(context, dataservice, id, metaClass, view);
-    }
-
-    public AbstractXYChartRowDatasource(DsContext context, DataService dataservice, String id, MetaClass metaClass, View view, boolean softDeletion) {
-        super(context, dataservice, id, metaClass, view, softDeletion);
-    }
-
-    public AbstractXYChartRowDatasource(DsContext context, DataService dataservice, String id, MetaClass metaClass, String viewName) {
-        super(context, dataservice, id, metaClass, viewName);
-    }
-
-    public AbstractXYChartRowDatasource(DsContext context, DataService dataservice, String id, MetaClass metaClass, String viewName, boolean softDeletion) {
-        super(context, dataservice, id, metaClass, viewName, softDeletion);
-    }
 
     public void refreshIfNotValid() {
         if (!State.VALID.equals(state)) {

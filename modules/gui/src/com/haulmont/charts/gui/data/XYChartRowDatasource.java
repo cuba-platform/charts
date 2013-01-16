@@ -12,9 +12,8 @@ import com.haulmont.cuba.gui.data.CollectionDatasource;
 import java.util.Collection;
 
 /**
- * <p>$Id$</p>
- *
  * @author zagumennikov
+ * @version $Id$
  */
 public interface XYChartRowDatasource<T extends Entity<K>, K> extends CollectionDatasource<T, K> {
 
