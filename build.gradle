@@ -17,6 +17,8 @@ allprojects {
 }
 
 buildscript {
+	ext.cubaPlugin = [group: 'com.haulmont.gradle', name: 'cuba-plugin', version: '1.5.1-SNAPSHOT']
+	
     repositories {
         mavenLocal()
         maven {
@@ -28,7 +30,7 @@ buildscript {
         }
     }
     dependencies {
-        classpath group: 'com.haulmont.gradle', name: 'cuba-plugin', version: '1.5.1-SNAPSHOT' // see also cuba-plugin in global module dependencies
+        classpath cubaPlugin
     }
     configurations.all {
         resolutionStrategy.cacheDynamicVersionsFor 1, 'minutes'
@@ -83,7 +85,7 @@ configure([chartsGlobalModule, chartsGuiModule, chartsWebModule, chartsWebToolki
 
 configure(chartsGlobalModule) {
     dependencies {
-        provided(group: 'com.haulmont.gradle', name: 'cuba-plugin', version: '1.5.1-SNAPSHOT')
+        provided(cubaPlugin)
     }
     task enhance(type: CubaEnhancing) {
         persistenceXml = "$chartsGlobalModule.projectDir/src/charts-persistence.xml"
