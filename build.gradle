@@ -17,7 +17,12 @@ allprojects {
 }
 
 buildscript {
-	ext.cubaPlugin = [group: 'com.haulmont.gradle', name: 'cuba-plugin', version: '1.5.1-SNAPSHOT']
+	def cubaPluginVersion = '1.5.1-SNAPSHOT'	
+	def CUBA_PLUGIN_VERSION = 'cubaPluginVersion'
+
+	cubaPluginVersion = rootProject.hasProperty(CUBA_PLUGIN_VERSION) ? rootProject[CUBA_PLUGIN_VERSION] : cubaPluginVersion
+	
+	ext.cubaPlugin = [group: 'com.haulmont.gradle', name: 'cuba-plugin', version: cubaPluginVersion]
 	
     repositories {
         mavenLocal()
