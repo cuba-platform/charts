@@ -9,6 +9,7 @@ package com.haulmont.charts.core.entity;
 import com.haulmont.chile.core.annotations.MetaClass;
 import com.haulmont.chile.core.annotations.MetaProperty;
 import com.haulmont.cuba.core.entity.AbstractNotPersistentEntity;
+import com.haulmont.cuba.core.entity.annotation.SystemLevel;
 import org.apache.commons.lang.StringUtils;
 
 import java.text.DateFormat;
@@ -23,6 +24,7 @@ import java.util.List;
  * @author artamonov
  */
 @MetaClass(name = "charts$GanttChartItem")
+@SystemLevel
 public abstract class GanttChartItem extends AbstractNotPersistentEntity {
 
     protected Integer itemId;

@@ -8,6 +8,7 @@ package com.haulmont.charts.core.entity;
 
 import com.haulmont.chile.core.annotations.MetaClass;
 import com.haulmont.chile.core.annotations.MetaProperty;
+import com.haulmont.cuba.core.entity.annotation.SystemLevel;
 
 import java.util.Date;
 
@@ -17,6 +18,7 @@ import java.util.Date;
  * @author artamonov
  */
 @MetaClass(name = "charts$GanttChartTask")
+@SystemLevel
 public class GanttChartTask extends GanttChartItem {
 
     protected Date startTs;

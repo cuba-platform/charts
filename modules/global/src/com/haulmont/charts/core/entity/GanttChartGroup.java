@@ -7,6 +7,7 @@
 package com.haulmont.charts.core.entity;
 
 import com.haulmont.chile.core.annotations.MetaClass;
+import com.haulmont.cuba.core.entity.annotation.SystemLevel;
 
 import java.util.Date;
 import java.util.List;
@@ -17,6 +18,7 @@ import java.util.List;
  * @author artamonov
  */
 @MetaClass(name = "charts$GanttChartGroup")
+@SystemLevel
 public class GanttChartGroup extends GanttChartItem {
 
     private List<GanttChartItem> childItems;
