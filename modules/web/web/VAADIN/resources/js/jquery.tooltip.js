@@ -1,9 +1,18 @@
 /*
- * Copyright (c) 2012 Haulmont Technology Ltd. All Rights Reserved.
- * Haulmont Technology proprietary and confidential.
- * Use is subject to license terms.
+ * jQuery Tooltip plugin 1.2
+ *
+ * http://bassistance.de/jquery-plugins/jquery-plugin-tooltip/
+ * http://docs.jquery.com/Plugins/Tooltip
+ *
+ * Copyright (c) 2006 - 2008 JУЖrn Zaefferer
+ *
+ * $Id: jquery.tooltip.js 4569 2008-01-31 19:36:35Z joern.zaefferer $
+ *
+ * Dual licensed under the MIT and GPL licenses:
+ *   http://www.opensource.org/licenses/mit-license.php
+ *   http://www.gnu.org/licenses/gpl.html
  */
- 
+
 ;(function($) {
 	
 		// the tooltip element
