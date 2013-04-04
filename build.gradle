@@ -4,20 +4,20 @@
  * Use is subject to license terms.
  */
 
-def defaultVersion = '4.0'
+def defaultVersion = '4.1'
 
 def BUILD_VERSION = 'buildVersion'
-def BUILD_RELEASE = 'buildRelease'
 def BUILD_VCS_NUMBER = 'buildVcsNumber'
 
 allprojects {
     artifactGroup = 'com.haulmont.charts'
-    artifactVersion = rootProject.hasProperty(BUILD_VERSION) ? rootProject[BUILD_VERSION] : defaultVersion
-    isSnapshot = !(rootProject.hasProperty(BUILD_RELEASE) && Boolean.valueOf(rootProject[BUILD_RELEASE]))
+    ext.artifactVersion = rootProject.hasProperty(BUILD_VERSION) ? 
+                                    rootProject[BUILD_VERSION].replace('-SNAPSHOT', '') : defaultVersion
+    ext.isSnapshot = rootProject.hasProperty(BUILD_VERSION) && rootProject[BUILD_VERSION].endsWith('-SNAPSHOT')
 }
 
 buildscript {
-	def cubaPluginVersion = '1.5-SNAPSHOT'	
+	def cubaPluginVersion = '4.1-SNAPSHOT'	
 	def CUBA_PLUGIN_VERSION = 'cubaPluginVersion'
 
 	cubaPluginVersion = rootProject.hasProperty(CUBA_PLUGIN_VERSION) ? rootProject[CUBA_PLUGIN_VERSION] : cubaPluginVersion
