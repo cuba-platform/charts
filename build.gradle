@@ -92,13 +92,10 @@ configure(chartsGlobalModule) {
     dependencies {
         provided(cubaPlugin)
     }
-    task enhance(type: CubaEnhancing) {
+    task enhance(type: CubaEnhancing, dependsOn: compileJava) {
         persistenceXml = "$chartsGlobalModule.projectDir/src/charts-persistence.xml"
-        metadataXml = "$chartsGlobalModule.projectDir/src/charts-metadata.xml"
     }
-    compileJava << {
-        enhance.execute()
-    }
+    classes.dependsOn += [enhance]
 }
 
 configure(chartsGuiModule) {
