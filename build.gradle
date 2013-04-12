@@ -10,7 +10,7 @@ def BUILD_VERSION = 'buildVersion'
 def BUILD_VCS_NUMBER = 'buildVcsNumber'
 
 allprojects {
-    artifactGroup = 'com.haulmont.charts'
+    ext.artifactGroup = 'com.haulmont.charts'
     ext.artifactVersion = rootProject.hasProperty(BUILD_VERSION) ? 
                                     rootProject[BUILD_VERSION].replace('-SNAPSHOT', '') : defaultVersion
     ext.isSnapshot = !rootProject.hasProperty(BUILD_VERSION) || rootProject[BUILD_VERSION].endsWith('-SNAPSHOT')
@@ -96,7 +96,6 @@ configure(chartsGlobalModule) {
     task enhance(type: CubaEnhancing, dependsOn: compileJava) {
         persistenceXml = "$chartsGlobalModule.projectDir/src/charts-persistence.xml"
     }
-    classes.dependsOn += [enhance]
 }
 
 configure(chartsGuiModule) {
@@ -156,7 +155,7 @@ configure(chartsWebModule) {
     }
 
     File webOutDir = new File("$buildDir/web")
-    task buildWidgetSet(dependsOn: compileJava, type: CubaWidgetSetBuilding) {
+    task buildWidgetSet(type: CubaWidgetSetBuilding) {
         widgetSetsDir = "$webOutDir/VAADIN/widgetsets"
         widgetSetModules = [chartsWebToolkitModule]
         widgetSetClass = 'com.haulmont.charts.toolkit.gwt.ChartsWidgetSet'
