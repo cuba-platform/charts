@@ -7,7 +7,7 @@
 package com.haulmont.charts.toolkit.gwt.client.charts.jsgantt;
 
 import com.google.gwt.i18n.client.DateTimeFormat;
-import com.vaadin.terminal.gwt.client.VConsole;
+import com.vaadin.client.VConsole;
 
 import java.util.Date;
 

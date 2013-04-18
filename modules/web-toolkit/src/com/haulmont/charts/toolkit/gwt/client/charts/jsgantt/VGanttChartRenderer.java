@@ -6,25 +6,16 @@
 
 package com.haulmont.charts.toolkit.gwt.client.charts.jsgantt;
 
-import com.google.gwt.core.client.GWT;
-import com.google.gwt.user.client.DOM;
-import com.google.gwt.user.client.Element;
 import com.google.gwt.user.client.ui.SimplePanel;
-import com.google.gwt.user.client.ui.Widget;
-import com.vaadin.terminal.gwt.client.*;
-
-import java.util.Arrays;
-import java.util.Collections;
-import java.util.LinkedList;
-import java.util.List;
 
 /**
  * <p>$Id$</p>
  *
  * @author artamonov
  */
-public class VGanttChartRenderer extends SimplePanel implements Paintable {
-
+public class VGanttChartRenderer extends SimplePanel {
+    // vaadin7
+/*
     public static final String CLASSNAME = "v-ganttchart";
 
     public static final String TASKS_SECTION = "tasks";
@@ -260,5 +251,5 @@ public class VGanttChartRenderer extends SimplePanel implements Paintable {
                 completePercent, startTs, endTs,
                 styleClass, dependsOn, captionType, tooltip,
                 isMileStone, isOpen, isGroup);
-    }
+    }*/
 }

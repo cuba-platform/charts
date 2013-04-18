@@ -5,8 +5,6 @@
  */
 package com.haulmont.charts.web.toolkit.ui.charts;
 
-import com.vaadin.terminal.PaintException;
-import com.vaadin.terminal.PaintTarget;
 import com.vaadin.ui.AbstractComponent;
 
 public abstract class ChartComponent extends AbstractComponent implements WChart {
@@ -41,11 +39,11 @@ public abstract class ChartComponent extends AbstractComponent implements WChart
         this.chartHeight = chartHeight;
         setHeight(chartHeight + "px");
     }
-
+/*  vaadin7
     @Override
     public void paintContent(PaintTarget target) throws PaintException {
         super.paintContent(target);
         target.addAttribute("cwidth", chartWidth);
         target.addAttribute("cheight", chartHeight);
-    }
+    }*/
 }

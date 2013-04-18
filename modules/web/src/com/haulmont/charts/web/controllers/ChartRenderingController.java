@@ -6,17 +6,7 @@
 
 package com.haulmont.charts.web.controllers;
 
-import com.haulmont.cuba.core.sys.AppContext;
-import com.haulmont.cuba.core.sys.SecurityContext;
-import com.haulmont.cuba.security.global.UserSession;
-import com.haulmont.cuba.web.controllers.ControllerUtils;
 import com.haulmont.cuba.web.sys.CubaApplicationContext;
-import com.haulmont.cuba.web.sys.CubaCommunicationManager;
-import com.haulmont.charts.web.toolkit.ui.charts.WChart;
-import com.haulmont.charts.web.toolkit.ui.charts.VChartDataProvider;
-import com.haulmont.charts.web.toolkit.ui.charts.ChartDataProviderFactory;
-import com.haulmont.charts.web.toolkit.ui.charts.ChartException;
-import com.vaadin.Application;
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
 import org.springframework.stereotype.Controller;
@@ -29,7 +19,6 @@ import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
 import java.net.MalformedURLException;
 import java.net.URL;
-import java.util.Collection;
 
 /**
  * <p>$Id$</p>
@@ -50,53 +39,53 @@ public class ChartRenderingController {
     ) throws IOException {
 
         // Handle chart requests
-
-        if (request.getSession() == null) {
-            accessDenied(response);
-            return null;
-        }
-
-        String chartId = request.getParameter("id");
-        if (chartId == null) {
-            badRequest(response);
-            return null;
-        }
-
-        UserSession userSession = ControllerUtils.getUserSession(request);
-        if (userSession == null) {
-            badRequest(response);
-            return null;
-        }
-
-        CubaApplicationContext context = CubaApplicationContext.getApplicationContext(request.getSession());
-        Application application = findApplication(request, context);
-        if (application == null) {
-            badRequest(response);
-            return null;
-        }
-        CubaCommunicationManager communicationManager = (CubaCommunicationManager) context.getCommunicationManager(application);
-
-        WChart chart = (WChart) communicationManager.getVariableComponent(chartId);
-        if (chart == null) {
-            log.warn(String.format("Non-existent chart component, VAR_PID=%s", chartId));
-            internalError(response);
-            return null;
-        }
-
-        AppContext.setSecurityContext(new SecurityContext(userSession));
-
-        String vendor = chart.getVendor();
-        VChartDataProvider dataProvider = ChartDataProviderFactory.getDataProvider(vendor);
-
-        try {
-            dataProvider.handleDataRequest(request, response, chart);
-            response.setStatus(HttpServletResponse.SC_OK);
-        } catch (ChartException e) {
-            internalError(response);
-            return null;
-        }
-
-        AppContext.setSecurityContext(null);
+//        vaadin7
+//        if (request.getSession() == null) {
+//            accessDenied(response);
+//            return null;
+//        }
+//
+//        String chartId = request.getParameter("id");
+//        if (chartId == null) {
+//            badRequest(response);
+//            return null;
+//        }
+//
+//        UserSession userSession = ControllerUtils.getUserSession(request);
+//        if (userSession == null) {
+//            badRequest(response);
+//            return null;
+//        }
+//
+//        CubaApplicationContext context = CubaApplicationContext.getApplicationContext(request.getSession());
+//        Application application = findApplication(request, context);
+//        if (application == null) {
+//            badRequest(response);
+//            return null;
+//        }
+//        CubaCommunicationManager communicationManager = (CubaCommunicationManager) context.getCommunicationManager(application);
+//
+//        WChart chart = (WChart) communicationManager.getVariableComponent(chartId);
+//        if (chart == null) {
+//            log.warn(String.format("Non-existent chart component, VAR_PID=%s", chartId));
+//            internalError(response);
+//            return null;
+//        }
+//
+//        AppContext.setSecurityContext(new SecurityContext(userSession));
+//
+//        String vendor = chart.getVendor();
+//        VChartDataProvider dataProvider = ChartDataProviderFactory.getDataProvider(vendor);
+//
+//        try {
+//            dataProvider.handleDataRequest(request, response, chart);
+//            response.setStatus(HttpServletResponse.SC_OK);
+//        } catch (ChartException e) {
+//            internalError(response);
+//            return null;
+//        }
+//
+//        AppContext.setSecurityContext(null);
 
         return null;
     }
@@ -130,29 +119,30 @@ public class ChartRenderingController {
         return new URL(reqURL, servletPath);
     }
 
-    private Application findApplication(HttpServletRequest request, CubaApplicationContext context) {
+    private Object findApplication(HttpServletRequest request, CubaApplicationContext context) {
         // Gets application list for the session.
-        final Collection<Application> applications = context.getApplications();
-
-        // Search for the application (using the application URI) from the list
-        for (final Application sessionApplication : applications) {
-            final String sessionApplicationPath = sessionApplication.getURL().getPath();
-
-            String requestApplicationPath;
-            try {
-                requestApplicationPath = getApplicationUrl(request).getPath();
-            } catch (MalformedURLException e) {
-                return null;
-            }
-
-            if (requestApplicationPath.startsWith(sessionApplicationPath)) {
-                // Found a running application
-                if (sessionApplication.isRunning()) {
-                    return sessionApplication;
-                }
-                break;
-            }
-        }
+//        vaadin7
+//        final Collection<Application> applications = context.getApplications();
+//
+//        // Search for the application (using the application URI) from the list
+//        for (final Application sessionApplication : applications) {
+//            final String sessionApplicationPath = sessionApplication.getURL().getPath();
+//
+//            String requestApplicationPath;
+//            try {
+//                requestApplicationPath = getApplicationUrl(request).getPath();
+//            } catch (MalformedURLException e) {
+//                return null;
+//            }
+//
+//            if (requestApplicationPath.startsWith(sessionApplicationPath)) {
+//                // Found a running application
+//                if (sessionApplication.isRunning()) {
+//                    return sessionApplication;
+//                }
+//                break;
+//            }
+//        }
         return null;
     }
 

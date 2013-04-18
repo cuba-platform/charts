@@ -9,6 +9,8 @@ def defaultVersion = '4.1'
 def BUILD_VERSION = 'buildVersion'
 def BUILD_VCS_NUMBER = 'buildVcsNumber'
 
+def vaadinVersion = '7.0.4.h.M3'
+
 allprojects {
     ext.artifactGroup = 'com.haulmont.charts'
     ext.artifactVersion = rootProject.hasProperty(BUILD_VERSION) ? 
@@ -107,23 +109,40 @@ configure(chartsGuiModule) {
 
 configure(chartsWebToolkitModule) {
     dependencies {
-        compile(vaadin)
+        compile(chartsWebModule)
 
-        provided(gwtUser)
-        provided(gwtDev)
+        compile(group: 'com.vaadin', name: 'vaadin-client-compiled', version: vaadinVersion)
+        compile(group: 'com.vaadin', name: 'vaadin-client', version: vaadinVersion)
+
+        compile(group: 'com.vaadin', name: 'vaadin-client-compiler', version: vaadinVersion)
     }
 
-    jar {
-        manifest {
-            attributes("Vaadin-Widgetsets": "com.haulmont.charts.toolkit.gwt.ChartsWidgetSet")
-        }
+    File webOutDir = new File("$buildDir/web")
+    task buildWidgetSet(type: CubaWidgetSetBuilding) {
+        widgetSetsDir = "$webOutDir/VAADIN/widgetsets"
+        widgetSetModules = [chartsWebToolkitModule]
+        dependencyModules = [chartsWebModule]
+        widgetSetClass = 'com.haulmont.charts.toolkit.gwt.ChartsWidgetSet'
+        excludeJars('popupbutton')
+//        jvmArgs('-Xdebug', '-Xrunjdwp:transport=dt_socket,server=y,suspend=y,address=8000')
+//        compilerArgs = ['-style' : 'PRETTY', '-localWorkers' : '2']
+    }
+
+    task webArchive(dependsOn: buildWidgetSet, type: Zip) {
+        from file('web')
+        from webOutDir
+        exclude '**/web.xml', '**/app.properties'
+        classifier = 'web'
+    }
+
+    artifacts {
+        archives webArchive
     }
 }
 
 configure(chartsWebModule) {
     configurations {
         webcontent
-        gwtBuilding
     }
 
     dependencies {        
@@ -132,39 +151,15 @@ configure(chartsWebModule) {
         compile(cubaWeb)
 
         provided(chartsGuiModule)
-        provided(chartsWebToolkitModule)
-        provided(gwtUser)
-        provided(gwtDev)
-        provided(gwtServlets)
-        provided(validationApi)
         provided(servletApi)
         provided(cubaWeb)
-
-        gwtBuilding(gwtUser)        
-        gwtBuilding(gwtDev)
-        gwtBuilding(gwtServlets)
-        gwtBuilding(validationApi + [classifier: 'sources'])
         
         webcontent(group: 'com.haulmont.cuba', name: 'cuba-web', version: baseVersion, classifier: 'web', ext: 'zip')        
     }
-    
-    jar {
-        manifest {
-            attributes("Vaadin-Widgetsets": "com.haulmont.charts.toolkit.gwt.ChartsWidgetSet")
-        }
-    }
 
-    File webOutDir = new File("$buildDir/web")
-    task buildWidgetSet(type: CubaWidgetSetBuilding) {
-        widgetSetsDir = "$webOutDir/VAADIN/widgetsets"
-        widgetSetModules = [chartsWebToolkitModule]
-        widgetSetClass = 'com.haulmont.charts.toolkit.gwt.ChartsWidgetSet'
-        excludeJars('popupbutton')
-//        jvmArgs('-Xdebug', '-Xrunjdwp:transport=dt_socket,server=y,suspend=y,address=8000')
-//        compilerArgs = ['-style' : 'PRETTY', '-localWorkers' : '2']
-    }
-    
-    task webArchive(dependsOn: buildWidgetSet, type: Zip) {
+    def webOutDir = file("$buildDir/web")
+
+    task webArchive(type: Zip) {
         from file('web')
         from webOutDir
         exclude '**/web.xml', '**/app.properties'

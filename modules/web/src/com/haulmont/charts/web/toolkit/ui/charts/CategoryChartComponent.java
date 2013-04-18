@@ -10,8 +10,6 @@ import com.vaadin.data.Container;
 import com.vaadin.data.Item;
 import com.vaadin.data.Property;
 import com.vaadin.data.util.IndexedContainer;
-import com.vaadin.terminal.PaintException;
-import com.vaadin.terminal.PaintTarget;
 
 import javax.annotation.Nullable;
 import java.io.Serializable;
@@ -67,7 +65,7 @@ public abstract class CategoryChartComponent extends ChartComponent implements W
         this.hasLegend = hasLegend;
         requestRepaint();
     }
-
+/*  vaadin7
     @Override
     public void paintContent(PaintTarget target) throws PaintException {
         super.paintContent(target);
@@ -75,7 +73,7 @@ public abstract class CategoryChartComponent extends ChartComponent implements W
         if (hasLegend) {
             target.addAttribute("legend", true);
         }
-    }
+    }*/
 
     @Override
     public String getRowCaption(Object id) {
@@ -309,6 +307,22 @@ public abstract class CategoryChartComponent extends ChartComponent implements W
     @Override
     public Container getContainerDataSource() {
         return items;
+    }
+
+    @Override
+    public void addItemSetChangeListener(ItemSetChangeListener listener) {
+    }
+
+    @Override
+    public void removeItemSetChangeListener(ItemSetChangeListener listener) {
+    }
+
+    @Override
+    public void addPropertySetChangeListener(PropertySetChangeListener listener) {
+    }
+
+    @Override
+    public void removePropertySetChangeListener(PropertySetChangeListener listener) {
     }
 
     private void fireItemSetChange() {

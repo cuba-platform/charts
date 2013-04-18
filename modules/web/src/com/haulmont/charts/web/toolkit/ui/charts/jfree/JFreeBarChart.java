@@ -6,6 +6,7 @@
 package com.haulmont.charts.web.toolkit.ui.charts.jfree;
 
 import com.haulmont.charts.web.toolkit.ui.charts.WBarChart;
+import com.vaadin.data.Container;
 
 public class JFreeBarChart extends JFreeCategoryChart implements WBarChart {
     private static final long serialVersionUID = 2496407681381514463L;

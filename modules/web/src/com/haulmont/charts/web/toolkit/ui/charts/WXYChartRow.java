@@ -7,10 +7,7 @@
 package com.haulmont.charts.web.toolkit.ui.charts;
 
 import com.vaadin.data.Container;
-import com.vaadin.terminal.Paintable;
 import com.vaadin.ui.Component;
-import org.apache.openjpa.lib.conf.ObjectValue;
-import org.jfree.util.ObjectTable;
 
 import java.util.Collection;
 

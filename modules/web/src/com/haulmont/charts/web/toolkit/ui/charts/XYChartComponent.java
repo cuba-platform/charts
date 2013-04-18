@@ -7,10 +7,9 @@
 package com.haulmont.charts.web.toolkit.ui.charts;
 
 import com.vaadin.data.Container;
-import com.vaadin.terminal.PaintException;
-import com.vaadin.terminal.PaintTarget;
 
-import java.util.*;
+import java.util.ArrayList;
+import java.util.Collection;
 
 /**
  * <p>$Id$</p>
@@ -21,7 +20,7 @@ public abstract class XYChartComponent extends ChartComponent implements WXYChar
 
     private static final long serialVersionUID = -7433062042194011796L;
 
-    protected Collection<WXYChartRow> rows = new ArrayList<WXYChartRow>();
+    protected Collection<WXYChartRow> rows = new ArrayList<>();
 
     protected AxisType argumentAxisType = AxisType.NUMBER;
     protected AxisType valueAxisType = AxisType.NUMBER;
@@ -80,12 +79,12 @@ public abstract class XYChartComponent extends ChartComponent implements WXYChar
     public void setHasLegend(boolean hasLegend) {
         this.hasLegend = hasLegend;
     }
-
+/*  vaadin7
     @Override
     public void paintContent(PaintTarget target) throws PaintException {
         super.paintContent(target);
         if (hasLegend) {
             target.addAttribute("legend", true);
         }
-    }
+    }*/
 }

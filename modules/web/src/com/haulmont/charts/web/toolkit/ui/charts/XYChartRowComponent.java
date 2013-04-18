@@ -203,11 +203,19 @@ public class XYChartRowComponent extends AbstractComponent implements WXYChartRo
     }
 
     @Override
+    public void addItemSetChangeListener(ItemSetChangeListener listener) {
+    }
+
+    @Override
     public void addListener(ItemSetChangeListener listener) {
         if (itemSetChangeListeners == null) {
             itemSetChangeListeners = new LinkedHashSet<ItemSetChangeListener>();
         }
         itemSetChangeListeners.add(listener);
+    }
+
+    @Override
+    public void removeItemSetChangeListener(ItemSetChangeListener listener) {
     }
 
     @Override
@@ -223,8 +231,16 @@ public class XYChartRowComponent extends AbstractComponent implements WXYChartRo
     }
 
     @Override
+    public void addPropertySetChangeListener(PropertySetChangeListener listener) {
+    }
+
+    @Override
     public void addListener(PropertySetChangeListener listener) {
         propertySetChangeListeners.add(listener);
+    }
+
+    @Override
+    public void removePropertySetChangeListener(PropertySetChangeListener listener) {
     }
 
     @Override

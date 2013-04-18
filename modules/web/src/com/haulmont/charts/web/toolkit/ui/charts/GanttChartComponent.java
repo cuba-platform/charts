@@ -216,6 +216,22 @@ public abstract class GanttChartComponent extends ChartComponent implements WGan
         return itemClickListener;
     }
 
+    @Override
+    public void addItemSetChangeListener(ItemSetChangeListener listener) {
+    }
+
+    @Override
+    public void removeItemSetChangeListener(ItemSetChangeListener listener) {
+    }
+
+    @Override
+    public void addPropertySetChangeListener(PropertySetChangeListener listener) {
+    }
+
+    @Override
+    public void removePropertySetChangeListener(PropertySetChangeListener listener) {
+    }
+
     private void fireItemSetChange() {
         for (final ItemSetChangeListener listener : itemSetChangeListeners) {
             listener.containerItemSetChange(new ItemSetChangeEvent());

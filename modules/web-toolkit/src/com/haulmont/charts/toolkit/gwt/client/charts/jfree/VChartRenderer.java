@@ -10,18 +10,14 @@
  */
 package com.haulmont.charts.toolkit.gwt.client.charts.jfree;
 
-import com.google.gwt.user.client.Timer;
-import com.google.gwt.user.client.ui.Image;
 import com.google.gwt.user.client.ui.SimplePanel;
-import com.vaadin.terminal.gwt.client.ApplicationConnection;
-import com.vaadin.terminal.gwt.client.Paintable;
-import com.vaadin.terminal.gwt.client.UIDL;
 
 /**
  *
  */
-public class VChartRenderer extends SimplePanel implements Paintable {
-
+public class VChartRenderer extends SimplePanel {
+    // vaadin7
+/*
     public static final String CLASSNAME = "chart";
 
     private Image image = new Image();
@@ -64,5 +60,5 @@ public class VChartRenderer extends SimplePanel implements Paintable {
             }
         };
         t.scheduleRepeating(300);
-    }
+    }*/
 }

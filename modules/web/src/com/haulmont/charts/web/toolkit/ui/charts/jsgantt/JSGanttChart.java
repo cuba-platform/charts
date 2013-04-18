@@ -6,23 +6,20 @@
 
 package com.haulmont.charts.web.toolkit.ui.charts.jsgantt;
 
-import com.haulmont.charts.toolkit.gwt.client.charts.jsgantt.VGanttChartRenderer;
 import com.haulmont.charts.web.toolkit.ui.charts.GanttChartComponent;
 import com.vaadin.data.Container;
-import com.vaadin.data.Item;
-import com.vaadin.terminal.PaintException;
-import com.vaadin.terminal.PaintTarget;
-import com.vaadin.ui.ClientWidget;
-import org.apache.commons.lang.StringUtils;
 
-import java.util.*;
+import java.util.Arrays;
+import java.util.Collections;
+import java.util.List;
+import java.util.Map;
 
 /**
  * <p>$Id$</p>
  *
  * @author artamonov
  */
-@ClientWidget(VGanttChartRenderer.class)
+//@ClientWidget(VGanttChartRenderer.class)
 public class JSGanttChart extends GanttChartComponent {
 
     public static final String VENDOR = "jsgantt";
@@ -87,7 +84,7 @@ public class JSGanttChart extends GanttChartComponent {
         });
         setWidth(100, UNITS_PERCENTAGE);
     }
-
+/*  vaadin7
     @Override
     public void changeVariables(Object source, Map<String, Object> variables) {
         super.changeVariables(source, variables);
@@ -145,7 +142,7 @@ public class JSGanttChart extends GanttChartComponent {
             target.addAttribute("taskChanged", "true");
             itemsChanged = false;
         }
-    }
+    }*/
 
     public Map<String, String> getLocaleDict() {
         return localeDict;
@@ -242,6 +239,4 @@ public class JSGanttChart extends GanttChartComponent {
         this.settingsChanged = true;
         requestRepaint();
     }
-
-
 }
