@@ -120,9 +120,7 @@ configure(chartsWebToolkitModule) {
     File webOutDir = new File("$buildDir/web")
     task buildWidgetSet(type: CubaWidgetSetBuilding) {
         widgetSetsDir = "$webOutDir/VAADIN/widgetsets"
-        widgetSetModules = [chartsWebToolkitModule]
-        dependencyModules = [chartsWebModule]
-        widgetSetClass = 'com.haulmont.charts.toolkit.gwt.ChartsWidgetSet'
+        widgetSetClass = 'com.haulmont.charts.web.toolkit.ui.ChartsWidgetSet'
         excludeJars('popupbutton')
 //        jvmArgs('-Xdebug', '-Xrunjdwp:transport=dt_socket,server=y,suspend=y,address=8000')
 //        compilerArgs = ['-style' : 'PRETTY', '-localWorkers' : '2']
