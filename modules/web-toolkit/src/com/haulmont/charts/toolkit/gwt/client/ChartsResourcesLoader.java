@@ -3,7 +3,7 @@
  * Haulmont Technology proprietary and confidential.
  * Use is subject to license terms.
  */
-package com.haulmont.charts.toolkit.gwt.client.charts;
+package com.haulmont.charts.toolkit.gwt.client;
 
 import com.google.gwt.dom.client.Document;
 import com.google.gwt.dom.client.HeadElement;
