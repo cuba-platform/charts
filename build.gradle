@@ -8,8 +8,6 @@ def defaultVersion = '4.1'
 
 def BUILD_VERSION = 'buildVersion'
 
-def vaadinVersion = '7.0.4.h.M3'
-
 allprojects {
     ext.artifactGroup = 'com.haulmont.charts'
     ext.artifactVersion = rootProject.hasProperty(BUILD_VERSION) ? 
@@ -57,6 +55,7 @@ def servletApi = [group: 'org.apache.tomcat', name: 'servlet-api', version: '6.0
 
 def cubaWeb = [group: 'com.haulmont.cuba', name: 'cuba-web', version: baseVersion]
 def cubaGui = [group: 'com.haulmont.cuba', name: 'cuba-gui', version: baseVersion]
+def cubaWebToolkit = [group: 'com.haulmont.cuba', name: 'cuba-web-toolkit', version: baseVersion]
 
 configure([chartsGlobalModule, chartsGuiModule, chartsWebModule, chartsWebToolkitModule]) {
     apply(plugin: 'java')
@@ -98,11 +97,7 @@ configure(chartsGuiModule) {
 configure(chartsWebToolkitModule) {
     dependencies {
         compile(chartsWebModule)
-
-        compile(group: 'com.vaadin', name: 'vaadin-client-compiled', version: vaadinVersion)
-        compile(group: 'com.vaadin', name: 'vaadin-client', version: vaadinVersion)
-
-        compile(group: 'com.vaadin', name: 'vaadin-client-compiler', version: vaadinVersion)
+        compile(cubaWebToolkit)
     }
 
     File webOutDir = new File("$buildDir/web")
