@@ -6,7 +6,6 @@
 
 package com.haulmont.charts.web.controllers;
 
-import com.haulmont.cuba.web.sys.CubaApplicationContext;
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
 import org.springframework.stereotype.Controller;
@@ -119,7 +118,7 @@ public class ChartRenderingController {
         return new URL(reqURL, servletPath);
     }
 
-    private Object findApplication(HttpServletRequest request, CubaApplicationContext context) {
+//    private Object findApplication(HttpServletRequest request, CubaApplicationContext context) {
         // Gets application list for the session.
 //        vaadin7
 //        final Collection<Application> applications = context.getApplications();
@@ -143,8 +142,8 @@ public class ChartRenderingController {
 //                break;
 //            }
 //        }
-        return null;
-    }
+//        return null;
+//    }
 
     /**
      * Set response status to SC_UNAUTHORIZED
