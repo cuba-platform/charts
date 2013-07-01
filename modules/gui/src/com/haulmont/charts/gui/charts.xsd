@@ -1,8 +1,8 @@
 <?xml version="1.0" encoding="utf-8"?>
 <xs:schema
-        targetNamespace="http://schemas.haulmont.com/charts/4.0/charts.xsd"
+        targetNamespace="http://schemas.haulmont.com/charts/4.1/charts.xsd"
         xmlns:xs="http://www.w3.org/2001/XMLSchema"
-        xmlns="http://schemas.haulmont.com/charts/4.0/charts.xsd"
+        xmlns="http://schemas.haulmont.com/charts/4.1/charts.xsd"
         elementFormDefault="qualified"
         attributeFormDefault="unqualified"
         >
