@@ -18,8 +18,7 @@ public abstract class AbstractChartLoader extends ComponentLoader {
     }
 
     @Override
-    public Chart loadComponent(ComponentsFactory factory, Element element, Component parent)
-            throws InstantiationException, IllegalAccessException {
+    public Chart loadComponent(ComponentsFactory factory, Element element, Component parent) {
 
         String vendor = element.attributeValue("vendor");
         Chart component = factory.createComponent(element.getName() + "@" + vendor);

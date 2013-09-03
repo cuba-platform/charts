@@ -30,9 +30,7 @@ public abstract class AbstractXYChartLoader extends AbstractChartLoader {
     }
 
     @Override
-    public XYChart loadComponent(ComponentsFactory factory, Element element, Component parent)
-            throws InstantiationException, IllegalAccessException {
-
+    public XYChart loadComponent(ComponentsFactory factory, Element element, Component parent) {
         XYChart component = (XYChart)super.loadComponent(factory, element, parent);
 
         loadRows(factory, component, element);
@@ -43,8 +41,7 @@ public abstract class AbstractXYChartLoader extends AbstractChartLoader {
         return component;
     }
 
-    protected void loadRows(ComponentsFactory factory, XYChart component, Element element)
-            throws InstantiationException, IllegalAccessException {
+    protected void loadRows(ComponentsFactory factory, XYChart component, Element element) {
 
         List<Element> rowElements = element.elements("row");
         for (final Element rowElement : rowElements) {
@@ -52,10 +49,9 @@ public abstract class AbstractXYChartLoader extends AbstractChartLoader {
         }
     }
 
-    protected void loadRow(ComponentsFactory factory, XYChart component, Element element)
-            throws InstantiationException, IllegalAccessException {
+    protected void loadRow(ComponentsFactory factory, XYChart component, Element element) {
 
-        XYChartRow row = (XYChartRow)factory.createComponent(XYChartRow.NAME);
+        XYChartRow row = factory.createComponent(XYChartRow.NAME);
 
         loadId(row, element);
         loadCaption(row, element);

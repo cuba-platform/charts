@@ -12,21 +12,17 @@ import com.haulmont.cuba.gui.xml.layout.ComponentsFactory;
 import org.dom4j.Element;
 
 /**
- * <p>$Id$</p>
- *
  * @author zagumennikov
+ * @version $Id$
  */
 public class XYLineChartLoader extends AbstractXYChartLoader {
-    private static final long serialVersionUID = 4627013865864788735L;
 
     public XYLineChartLoader(Context context) {
         super(context);
     }
 
     @Override
-    public XYLineChart loadComponent(ComponentsFactory factory, Element element, Component parent)
-            throws InstantiationException, IllegalAccessException {
-
+    public XYLineChart loadComponent(ComponentsFactory factory, Element element, Component parent) {
         XYLineChart component = (XYLineChart) super.loadComponent(factory, element, parent);
 
         loadOrientation(component, element);

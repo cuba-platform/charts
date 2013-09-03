@@ -15,16 +15,13 @@ import org.apache.commons.lang.StringUtils;
 import org.dom4j.Element;
 
 public class PieChartLoader extends AbstractCategoryChartLoader {
-    private static final long serialVersionUID = -8559322020967118466L;
 
     public PieChartLoader(Context context) {
         super(context);
     }
 
     @Override
-    public PieChart loadComponent(ComponentsFactory factory, Element element, Component parent)
-            throws InstantiationException, IllegalAccessException {
-
+    public PieChart loadComponent(ComponentsFactory factory, Element element, Component parent) {
         PieChart component = (PieChart) super.loadComponent(factory, element, parent);
 
         load3D(component, element);

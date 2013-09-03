@@ -30,10 +30,9 @@ public abstract class AbstractCategoryChartLoader extends AbstractChartLoader {
     }
 
     @Override
-    public CategoryChart loadComponent(ComponentsFactory factory, Element element, Component parent)
-            throws InstantiationException, IllegalAccessException{
+    public CategoryChart loadComponent(ComponentsFactory factory, Element element, Component parent) {
 
-        CategoryChart component = (CategoryChart)super.loadComponent(factory, element, parent);
+        CategoryChart component = (CategoryChart) super.loadComponent(factory, element, parent);
 
         loadDatasource(component, element);
 

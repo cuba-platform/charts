@@ -25,8 +25,7 @@ public class GanttChartLoader extends AbstractChartLoader {
     }
 
     @Override
-    public Chart loadComponent(ComponentsFactory factory, Element element, Component parent)
-            throws InstantiationException, IllegalAccessException {
+    public Chart loadComponent(ComponentsFactory factory, Element element, Component parent) {
         GanttChart chart = (GanttChart) super.loadComponent(factory, element, parent);
 
         loadDatasource(chart, element);

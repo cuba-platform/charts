@@ -18,9 +18,7 @@ public class BarChartLoader extends AbstractCategoryChartLoader {
     }
 
     @Override
-    public BarChart loadComponent(ComponentsFactory factory, Element element, Component parent)
-            throws InstantiationException, IllegalAccessException {
-
+    public BarChart loadComponent(ComponentsFactory factory, Element element, Component parent) {
         BarChart component = (BarChart) super.loadComponent(factory, element, parent);
 
         load3D(component, element);

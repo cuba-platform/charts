@@ -11,16 +11,13 @@ import com.haulmont.cuba.gui.xml.layout.ComponentsFactory;
 import org.dom4j.Element;
 
 public class LineChartLoader extends AbstractCategoryChartLoader {
-    private static final long serialVersionUID = -8656847955537637060L;
 
     public LineChartLoader(Context context) {
         super(context);
     }
 
     @Override
-    public LineChart loadComponent(ComponentsFactory factory, Element element, Component parent)
-            throws InstantiationException, IllegalAccessException {
-
+    public LineChart loadComponent(ComponentsFactory factory, Element element, Component parent) {
         LineChart component = (LineChart) super.loadComponent(factory, element, parent);
 
         loadOrientation(component, element);
