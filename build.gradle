@@ -95,9 +95,15 @@ configure(chartsGuiModule) {
 }
 
 configure(chartsWebToolkitModule) {
+    configurations {
+        widgetSetBuilding
+    }
+
     dependencies {
         compile(chartsWebModule)
         compile(cubaWebToolkit)
+
+        widgetSetBuilding(chartsWebModule)
     }
 
     File webOutDir = new File("$buildDir/web")

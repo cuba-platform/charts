@@ -4,11 +4,9 @@
  * Use is subject to license terms.
  */
 
-package com.haulmont.charts.toolkit.gwt.client.charts.jsgantt;
+package com.haulmont.charts.web.toolkit.ui.client.jsgantt;
 
 import com.google.gwt.core.client.JavaScriptObject;
-
-import java.util.Map;
 
 /**
  * <p>$Id$</p>

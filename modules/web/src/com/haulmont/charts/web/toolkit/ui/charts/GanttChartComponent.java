@@ -149,23 +149,21 @@ public abstract class GanttChartComponent extends ChartComponent implements WGan
         if (items != datasource) {
             if (items != null) {
                 if (items instanceof ItemSetChangeNotifier) {
-                    ((ItemSetChangeNotifier) items).removeListener(this);
+                    ((ItemSetChangeNotifier) items).removeItemSetChangeListener(this);
                 }
                 if (items instanceof PropertySetChangeNotifier) {
-                    ((PropertySetChangeNotifier) items).removeListener(this);
+                    ((PropertySetChangeNotifier) items).removePropertySetChangeListener(this);
                 }
             }
 
             items = datasource;
 
             if (items instanceof ItemSetChangeNotifier) {
-                ((ItemSetChangeNotifier) items).addListener(this);
+                ((ItemSetChangeNotifier) items).addItemSetChangeListener(this);
             }
             if (items instanceof PropertySetChangeNotifier) {
-                ((PropertySetChangeNotifier) items).addListener(this);
+                ((PropertySetChangeNotifier) items).addPropertySetChangeListener(this);
             }
-
-            requestRepaint();
         }
     }
 
@@ -236,14 +234,12 @@ public abstract class GanttChartComponent extends ChartComponent implements WGan
         for (final ItemSetChangeListener listener : itemSetChangeListeners) {
             listener.containerItemSetChange(new ItemSetChangeEvent());
         }
-        requestRepaint();
     }
 
     private void firePropertySetChange() {
         for (final PropertySetChangeListener listener : propertySetChangeListeners) {
             listener.containerPropertySetChange(new PropertySetChangeEvent());
         }
-        requestRepaint();
     }
 
     private class ItemSetChangeEvent implements Serializable, Container.ItemSetChangeEvent {

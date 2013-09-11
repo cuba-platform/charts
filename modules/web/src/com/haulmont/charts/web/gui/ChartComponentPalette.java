@@ -15,7 +15,7 @@ import com.haulmont.charts.web.gui.components.charts.jfree.WebJFreePieChart;
 import com.haulmont.charts.web.gui.components.charts.jfree.WebJFreeXYLineChart;
 import com.haulmont.charts.web.gui.components.charts.jsgantt.WebJSGanttChart;
 import com.haulmont.charts.web.toolkit.ui.charts.jfree.JFreeChart;
-import com.haulmont.charts.web.toolkit.ui.charts.jsgantt.JSGanttChart;
+import com.haulmont.charts.web.toolkit.ui.JSGanttChart;
 import com.haulmont.cuba.gui.ComponentPalette;
 import com.haulmont.cuba.gui.components.Component;
 import com.haulmont.cuba.gui.xml.layout.ComponentLoader;

@@ -27,5 +27,5 @@ public interface TaskPropertiesProvider {
      * @param taskItem Task item
      * @return Properties map
      */
-    Map<String, Object> getTaskProperties(Item taskItem);
+    Map<String, String> getTaskProperties(Item taskItem);
 }

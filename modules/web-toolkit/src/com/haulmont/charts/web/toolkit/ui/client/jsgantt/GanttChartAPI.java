@@ -4,12 +4,13 @@
  * Use is subject to license terms.
  */
 
-package com.haulmont.charts.toolkit.gwt.client.charts.jsgantt;
+package com.haulmont.charts.web.toolkit.ui.client.jsgantt;
 
 import com.google.gwt.i18n.client.DateTimeFormat;
 import com.vaadin.client.VConsole;
 
 import java.util.Date;
+import java.util.logging.Level;
 
 /**
  * <p>$Id$</p>
@@ -35,11 +36,11 @@ public class GanttChartAPI {
             var id = $wnd.setInterval(function () {
                 if ($wnd.JSGantt) {
                     $wnd.clearInterval(id);
-                    @com.haulmont.charts.toolkit.gwt.client.charts.jsgantt.GanttChartAPI::execRunnable(Ljava/lang/Runnable;)(r);
+                    @com.haulmont.charts.web.toolkit.ui.client.jsgantt.GanttChartAPI::execRunnable(Ljava/lang/Runnable;)(r);
                 }
             }, 100);
         } else {
-            @com.haulmont.charts.toolkit.gwt.client.charts.jsgantt.GanttChartAPI::execRunnable(Ljava/lang/Runnable;)(r);
+            @com.haulmont.charts.web.toolkit.ui.client.jsgantt.GanttChartAPI::execRunnable(Ljava/lang/Runnable;)(r);
         }
     }-*/;
 
@@ -251,7 +252,7 @@ public class GanttChartAPI {
         var g = new JSGantt.GanttChart(containerDiv, 'day',
                 function(task) {
                     var taskId = Number(task.getID());
-                    chartApi.@com.haulmont.charts.toolkit.gwt.client.charts.jsgantt.GanttChartAPI::handleClick(I)(taskId);
+                    chartApi.@com.haulmont.charts.web.toolkit.ui.client.jsgantt.GanttChartAPI::handleClick(I)(taskId);
                 });
 
         if (g) {
@@ -264,7 +265,7 @@ public class GanttChartAPI {
             g.setCaptionType('Resource');  // Set to Show Caption
             //Set format date function
             g.setDateFormatConverter(function(pDate, pFormatStr) {
-                return chartApi.@com.haulmont.charts.toolkit.gwt.client.charts.jsgantt.GanttChartAPI::formatDate(DLjava/lang/String;)(pDate.getTime(), pFormatStr)
+                return chartApi.@com.haulmont.charts.web.toolkit.ui.client.jsgantt.GanttChartAPI::formatDate(DLjava/lang/String;)(pDate.getTime(), pFormatStr)
             });
 
             return g.getInstanceName();

@@ -8,9 +8,9 @@ package com.haulmont.charts.web.gui.components.charts.jsgantt;
 
 import com.haulmont.charts.core.entity.GanttChartItem;
 import com.haulmont.charts.web.gui.components.charts.WebAbstractGanttChart;
+import com.haulmont.charts.web.toolkit.ui.JSGanttChart;
 import com.haulmont.charts.web.toolkit.ui.charts.TaskPropertiesProvider;
 import com.haulmont.charts.web.toolkit.ui.charts.WGanttChart;
-import com.haulmont.charts.web.toolkit.ui.charts.jsgantt.JSGanttChart;
 import com.haulmont.chile.core.model.MetaClass;
 import com.haulmont.chile.core.model.MetaProperty;
 import com.haulmont.cuba.core.global.MessageProvider;
@@ -200,12 +200,12 @@ public class WebJSGanttChart extends WebAbstractGanttChart<JSGanttChart> {
         }
 
         @Override
-        public Map<String, Object> getTaskProperties(Item taskItem) {
-            Map<String, Object> propertyMap = new HashMap<String, Object>();
+        public Map<String, String> getTaskProperties(Item taskItem) {
+            Map<String, String> propertyMap = new HashMap();
             for (Map.Entry<String, MetaProperty> metaPropertyEntry : metaPropertyMap.entrySet()) {
                 MetaProperty metaProperty = metaPropertyEntry.getValue();
                 Property itemProperty = taskItem.getItemProperty(metaProperty);
-                propertyMap.put(metaPropertyEntry.getKey(), itemProperty.getValue());
+                propertyMap.put(metaPropertyEntry.getKey(), itemProperty.getValue().toString());
             }
 
             return propertyMap;
