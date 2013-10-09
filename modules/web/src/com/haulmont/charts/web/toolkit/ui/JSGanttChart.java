@@ -9,6 +9,7 @@ import com.haulmont.charts.web.toolkit.ui.charts.GanttChartComponent;
 import com.haulmont.charts.web.toolkit.ui.client.jsgantt.JSGanttChartServerRPC;
 import com.haulmont.charts.web.toolkit.ui.client.jsgantt.JSGanttChartState;
 import com.vaadin.annotations.JavaScript;
+import com.vaadin.annotations.StyleSheet;
 import com.vaadin.data.Container;
 import com.vaadin.data.Item;
 
@@ -25,6 +26,8 @@ import java.util.*;
         "resources/js/jquery.delegate.js",
         "resources/js/jquery.tooltip.js",
         "resources/js/jsgantt.js"})
+@StyleSheet({"resources/css/jquery.tooltip.css",
+        "resources/css/jsgantt.css",})
 
 public class JSGanttChart extends GanttChartComponent {
 
