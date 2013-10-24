@@ -53,7 +53,7 @@ def cubaWeb = [group: 'com.haulmont.cuba', name: 'cuba-web', version: baseVersio
 def cubaGui = [group: 'com.haulmont.cuba', name: 'cuba-gui', version: baseVersion]
 def cubaWebToolkit = [group: 'com.haulmont.cuba', name: 'cuba-web-toolkit', version: baseVersion]
 
-configure([chartsGlobalModule, chartsGuiModule, chartsWebModule, chartsWebToolkitModule]) {
+configure([chartsGlobalModule, chartsGuiModule, chartsWebModule]) {
     apply(plugin: 'java')
     apply(plugin: 'idea')
     apply(plugin: 'maven')
@@ -66,6 +66,22 @@ configure([chartsGlobalModule, chartsGuiModule, chartsWebModule, chartsWebToolki
 
         testCompile(group: 'junit', name: 'junit', version: '4.5')
     }
+
+    task sourceJar(type: Jar) {
+        from file('src')
+        classifier = 'sources'
+    }
+
+    artifacts {
+        archives sourceJar
+    }
+}
+
+configure(chartsWebToolkitModule) {
+    apply(plugin: 'java')
+    apply(plugin: 'idea')
+    apply(plugin: 'maven')
+    apply(plugin: 'cuba')
 
     task sourceJar(type: Jar) {
         from file('src')
