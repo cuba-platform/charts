@@ -5,6 +5,7 @@
 
 package com.haulmont.charts.web.toolkit.ui.client.jsgantt;
 
+import com.google.gwt.dom.client.Element;
 import com.google.gwt.i18n.client.DateTimeFormat;
 import com.vaadin.client.VConsole;
 
@@ -21,8 +22,8 @@ public class GanttChartAPI {
     private String chartKey;
     private ClickHandler clickHandler;
 
-    public GanttChartAPI(String containerId, ClickHandler clickHandler) {
-        this.chartKey = newInstance(containerId);
+    public GanttChartAPI(Element chartPane, ClickHandler clickHandler) {
+        this.chartKey = newInstance(chartPane);
         this.clickHandler = clickHandler;
     }
 
@@ -240,13 +241,13 @@ public class GanttChartAPI {
         ganttChart.clearTasks();
     }-*/;
 
-    private native String newInstance(String containerId)/*-{
+    private native String newInstance(Element chartPane)/*-{
         var chartApi = this;
 
         // Use JSGantt as package name
         var JSGantt = $wnd.JSGantt;
 
-        var containerDiv = $wnd.jQuery('#' + containerId);
+        var containerDiv = $wnd.jQuery(chartPane);
 
         var g = new JSGantt.GanttChart(containerDiv, 'day',
                 function(task) {

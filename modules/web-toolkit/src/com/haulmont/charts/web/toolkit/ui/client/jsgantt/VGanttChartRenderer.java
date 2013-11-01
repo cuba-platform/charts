@@ -69,7 +69,7 @@ public class VGanttChartRenderer extends SimplePanel {
     public void setPaintableId(String paintableId) {
         if (chartAPI == null) {
             chartPane.setId(paintableId + "_chartPane");
-            chartAPI = new GanttChartAPI(chartPane.getId(), new ChartClickHandler());
+            chartAPI = new GanttChartAPI(chartPane, new ChartClickHandler());
         }
         this.paintableId = paintableId;
 
@@ -168,7 +168,7 @@ public class VGanttChartRenderer extends SimplePanel {
         setDateFormat(jsGanttChartState.dateTimeFormat);
         chartAPI.clearTaskPane();
         setTasks(jsGanttChartState.tasks);
-        setSize("-1px", "-1px");
+//        setSize("-1px", "-1px");
         chartAPI.repaint();
     }
 
