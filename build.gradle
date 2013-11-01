@@ -55,11 +55,8 @@ def cubaWeb = [group: 'com.haulmont.cuba', name: 'cuba-web', version: baseVersio
 def cubaWebLegacy = [group: 'com.haulmont.cuba', name: 'cuba-web6', version: baseVersion]
 def cubaGui = [group: 'com.haulmont.cuba', name: 'cuba-gui', version: baseVersion]
 def cubaWebToolkit = [group: 'com.haulmont.cuba', name: 'cuba-web-toolkit', version: baseVersion]
+def cubaWebLegacyToolkit = [group: 'com.haulmont.cuba', name: 'cuba-web6-toolkit', version: baseVersion]
 
-/* Legacy dependencies */
-def vaadinLegacyVersion = "6.6.1.108"
-
-def vaadinLegacy = [group: 'com.haulmont.thirdparty', name: 'vaadin', version: vaadinLegacyVersion]
 def gwtUser = [group: 'com.google.gwt', name: 'gwt-user', version: '2.3.0']
 def gwtDev = [group: 'com.google.gwt', name: 'gwt-dev', version: '2.3.0']
 def gwtServlets = [group: 'com.google.gwt', name: 'gwt-servlet', version: '2.3.0']
@@ -128,13 +125,13 @@ configure(chartsWebToolkitModule) {
         compile(cubaWebToolkit)
 
         widgetSetBuilding(chartsWebModule)
+        widgetSetBuilding(cubaWebToolkit)
     }
 
     File webOutDir = new File("$buildDir/web")
     task buildWidgetSet(type: CubaWidgetSetBuilding) {
         widgetSetsDir = "$webOutDir/VAADIN/widgetsets"
         widgetSetClass = 'com.haulmont.charts.web.toolkit.ui.ChartsWidgetSet'
-        excludeJars('popupbutton')
 //        jvmArgs('-Xdebug', '-Xrunjdwp:transport=dt_socket,server=y,suspend=y,address=8000')
 //        compilerArgs = ['-style' : 'PRETTY', '-localWorkers' : '2']
     }
@@ -192,24 +189,25 @@ configure(chartsWebLegacyModule) {
         compile(chartsGuiModule)
         compile(cubaWebLegacy)
 
-        compile(vaadinLegacy)
-
         provided(chartsWebToolkitLegacyModule)
+        provided(cubaWebLegacyToolkit)
         provided(gwtUser)
         provided(gwtDev)
         provided(gwtServlets)
         provided(validationApi)
         provided(servletApi)
+        provided(cubaWebLegacy)
 
         gwtBuilding(validationApi + [classifier: 'sources'])
+        gwtBuilding(cubaWebLegacyToolkit + [classifier: 'sources'])
     }
 
     File webOutDir = new File("$buildDir/web")
     task buildWidgetSet(dependsOn: compileJava, type: CubaVaadinLegacyBuilding) {
         widgetSetsDir = "$webOutDir/VAADIN/widgetsets"
+        inheritedArtifacts = ['cuba-web6-toolkit']
         widgetSetModules = [chartsWebToolkitLegacyModule]
         widgetSetClass = 'com.haulmont.charts.toolkit.gwt.ChartsWidgetSet'
-        excludeJars('popupbutton')
 //        jvmArgs('-Xdebug', '-Xrunjdwp:transport=dt_socket,server=y,suspend=y,address=8000')
         //        compilerArgs = ['-style' : 'PRETTY', '-localWorkers' : '2']
     }
@@ -234,7 +232,7 @@ configure(chartsWebLegacyModule) {
 
 configure(chartsWebToolkitLegacyModule) {
     dependencies {
-        compile(vaadinLegacy)
+        compile(cubaWebLegacyToolkit)
 
         provided(gwtUser)
         provided(gwtDev)
