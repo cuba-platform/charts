@@ -57,11 +57,6 @@ def cubaGui = [group: 'com.haulmont.cuba', name: 'cuba-gui', version: baseVersio
 def cubaWebToolkit = [group: 'com.haulmont.cuba', name: 'cuba-web-toolkit', version: baseVersion]
 def cubaWebLegacyToolkit = [group: 'com.haulmont.cuba', name: 'cuba-web6-toolkit', version: baseVersion]
 
-def gwtUser = [group: 'com.google.gwt', name: 'gwt-user', version: '2.3.0']
-def gwtDev = [group: 'com.google.gwt', name: 'gwt-dev', version: '2.3.0']
-def gwtServlets = [group: 'com.google.gwt', name: 'gwt-servlet', version: '2.3.0']
-def validationApi = [group: 'javax.validation', name: 'validation-api', version: '1.0.0.GA']
-
 configure([chartsGlobalModule, chartsGuiModule, chartsWebModule, chartsWebLegacyModule]) {
     apply(plugin: 'java')
     apply(plugin: 'idea')
@@ -191,15 +186,11 @@ configure(chartsWebLegacyModule) {
 
         provided(chartsWebToolkitLegacyModule)
         provided(cubaWebLegacyToolkit)
-        provided(gwtUser)
-        provided(gwtDev)
-        provided(gwtServlets)
-        provided(validationApi)
+
         provided(servletApi)
         provided(cubaWebLegacy)
 
-        gwtBuilding(validationApi + [classifier: 'sources'])
-        gwtBuilding(cubaWebLegacyToolkit + [classifier: 'sources'])
+        gwtBuilding(cubaWebLegacyToolkit + ['classifier':'sources'])
     }
 
     File webOutDir = new File("$buildDir/web")
@@ -233,11 +224,6 @@ configure(chartsWebLegacyModule) {
 configure(chartsWebToolkitLegacyModule) {
     dependencies {
         compile(cubaWebLegacyToolkit)
-
-        provided(gwtUser)
-        provided(gwtDev)
-        provided(gwtServlets)
-        provided(validationApi)
     }
 
     jar {
