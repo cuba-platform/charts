@@ -7,7 +7,7 @@ package com.haulmont.charts.gui.components.charts;
 import com.haulmont.cuba.gui.components.Component;
 
 /** Root chart component */
-public interface Chart extends Component, Component.Wrapper, Component.BelongToFrame,
+public interface Chart extends Component, Component.BelongToFrame,
         Component.HasXmlDescriptor, Component.HasCaption {
 
     enum AxisType {

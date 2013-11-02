@@ -10,11 +10,10 @@ import com.haulmont.cuba.gui.components.Component;
 import com.haulmont.cuba.gui.data.CollectionDatasource;
 
 /**
- * <p>$Id$</p>
- *
  * @author artamonov
+ * @version $Id$
  */
-public interface GanttChart extends Chart, Component.Wrapper, Component.BelongToFrame,
+public interface GanttChart extends Chart, Component.BelongToFrame,
         Component.HasXmlDescriptor, Component.HasCaption {
 
     String NAME = "ganttChart";
