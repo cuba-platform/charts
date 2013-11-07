@@ -9,9 +9,12 @@ import com.haulmont.charts.gui.components.charts.Chart;
 import com.haulmont.charts.web.toolkit.ui.charts.ChartComponent;
 import com.haulmont.cuba.web.gui.components.WebAbstractComponent;
 
-public abstract class WebAbstractChart<T extends ChartComponent>
-        extends WebAbstractComponent<T>
-        implements Chart {
+/**
+ * @param <T>
+ * @author gorodnov
+ * @version $Id$
+ */
+public abstract class WebAbstractChart<T extends ChartComponent> extends WebAbstractComponent<T> implements Chart {
 
     @Override
     public String getCaption() {
