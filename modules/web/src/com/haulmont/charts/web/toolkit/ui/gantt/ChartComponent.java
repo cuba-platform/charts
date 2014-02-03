@@ -2,11 +2,16 @@
  * Copyright (c) 2008-2013 Haulmont. All rights reserved.
  * Use is subject to license terms, see http://www.cuba-platform.com/license for details.
  */
-package com.haulmont.charts.web.toolkit.ui.charts;
+package com.haulmont.charts.web.toolkit.ui.gantt;
 
 import com.vaadin.ui.AbstractComponent;
 
-public abstract class ChartComponent extends AbstractComponent implements WChart {
+/**
+ * @author gorodnov
+ * @version $Id$
+ */
+public abstract class ChartComponent extends AbstractComponent implements
+                                                               com.haulmont.charts.web.toolkit.ui.gantt.WChart {
     private static final long serialVersionUID = 8749174467182489471L;
 
     protected int chartWidth = 400;

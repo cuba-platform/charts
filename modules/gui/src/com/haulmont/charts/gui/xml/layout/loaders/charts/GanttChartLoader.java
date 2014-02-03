@@ -5,7 +5,6 @@
 
 package com.haulmont.charts.gui.xml.layout.loaders.charts;
 
-import com.haulmont.charts.gui.components.charts.Chart;
 import com.haulmont.charts.gui.components.charts.GanttChart;
 import com.haulmont.cuba.gui.components.Component;
 import com.haulmont.cuba.gui.data.CollectionDatasource;
@@ -14,17 +13,16 @@ import org.apache.commons.lang.StringUtils;
 import org.dom4j.Element;
 
 /**
- * <p>$Id$</p>
- *
  * @author artamonov
+ * @version $Id$
  */
-public class GanttChartLoader extends AbstractChartLoader {
+public class GanttChartLoader extends AbstractGanttChartLoader {
     public GanttChartLoader(Context context) {
         super(context);
     }
 
     @Override
-    public Chart loadComponent(ComponentsFactory factory, Element element, Component parent) {
+    public GanttChart loadComponent(ComponentsFactory factory, Element element, Component parent) {
         GanttChart chart = (GanttChart) super.loadComponent(factory, element, parent);
 
         loadDatasource(chart, element);

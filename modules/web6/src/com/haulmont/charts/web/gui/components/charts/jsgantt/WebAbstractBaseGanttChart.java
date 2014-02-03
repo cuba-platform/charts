@@ -1,17 +1,21 @@
 /*
- * Copyright (c) 2008-2013 Haulmont. All rights reserved.
- * Use is subject to license terms, see http://www.cuba-platform.com/license for details.
+ * Copyright (c) 2011 Haulmont Technology Ltd. All Rights Reserved.
+ * Haulmont Technology proprietary and confidential.
+ * Use is subject to license terms.
  */
-package com.haulmont.charts.web.gui.components.charts;
+package com.haulmont.charts.web.gui.components.charts.jsgantt;
 
-import com.haulmont.charts.gui.components.charts.Chart;
+import com.haulmont.charts.gui.components.charts.BaseGanttChart;
 import com.haulmont.charts.web.toolkit.ui.charts.ChartComponent;
 import com.haulmont.cuba.web.gui.components.WebAbstractComponent;
 
-public abstract class WebAbstractChart<T extends ChartComponent>
-        extends WebAbstractComponent<T>
-        implements Chart {
-
+/**
+ * @param <T>
+ * @author gorodnov
+ * @version $Id$
+ */
+public abstract class WebAbstractBaseGanttChart<T extends ChartComponent> extends WebAbstractComponent<T> implements
+                                                                                                          BaseGanttChart {
     @Override
     public String getCaption() {
         return component.getCaption();

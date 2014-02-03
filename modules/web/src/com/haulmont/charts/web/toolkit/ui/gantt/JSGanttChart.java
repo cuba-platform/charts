@@ -3,9 +3,8 @@
  * Use is subject to license terms, see http://www.cuba-platform.com/license for details.
  */
 
-package com.haulmont.charts.web.toolkit.ui;
+package com.haulmont.charts.web.toolkit.ui.gantt;
 
-import com.haulmont.charts.web.toolkit.ui.charts.GanttChartComponent;
 import com.haulmont.charts.web.toolkit.ui.client.jsgantt.JSGanttChartServerRPC;
 import com.haulmont.charts.web.toolkit.ui.client.jsgantt.JSGanttChartState;
 import com.vaadin.annotations.JavaScript;
@@ -16,9 +15,8 @@ import com.vaadin.data.Item;
 import java.util.*;
 
 /**
- * <p>$Id$</p>
- *
  * @author artamonov
+ * @version $Id$
  */
 @JavaScript({"resources/js/jquery.mb.browser.min.js",
         "resources/js/jquery.bgiframe.js",
@@ -28,7 +26,6 @@ import java.util.*;
         "resources/js/jsgantt.js"})
 @StyleSheet({"resources/css/jquery.tooltip.css",
         "resources/css/jsgantt.css",})
-
 public class JSGanttChart extends GanttChartComponent {
 
     public static final String VENDOR = "jsgantt";
@@ -102,16 +99,17 @@ public class JSGanttChart extends GanttChartComponent {
         getState().tasks = tasks;
     }
 
-
     @Override
     protected JSGanttChartState getState() {
         return (JSGanttChartState) super.getState();
     }
 
+    @Override
     public Map<String, String> getLocaleDict() {
         return getState().localeDict;
     }
 
+    @Override
     public void setLocaleDict(Map<String, String> localeDict) {
         getState().localeDict = localeDict;
     }
@@ -166,7 +164,6 @@ public class JSGanttChart extends GanttChartComponent {
     public boolean getShowInitiator() {
         return getState().showInitiator;
     }
-
 
     @Override
     public void setShowComplete(boolean showComplete) {

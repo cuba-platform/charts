@@ -4,7 +4,7 @@
  * Use is subject to license terms.
  */
 
-package com.haulmont.charts.web.gui.components.charts;
+package com.haulmont.charts.web.gui.components.charts.jsgantt;
 
 import com.haulmont.charts.gui.components.charts.GanttChart;
 import com.haulmont.charts.web.toolkit.ui.charts.GanttChartComponent;
@@ -12,12 +12,11 @@ import com.haulmont.cuba.gui.data.CollectionDatasource;
 import com.haulmont.cuba.web.gui.data.CollectionDsWrapper;
 
 /**
- * <p>$Id$</p>
- *
  * @author artamonov
+ * @version $Id$
  */
 public abstract class WebAbstractGanttChart<T extends GanttChartComponent>
-        extends WebAbstractChart<T>
+        extends WebAbstractBaseGanttChart<T>
         implements GanttChart {
 
     protected CollectionDatasource datasource;

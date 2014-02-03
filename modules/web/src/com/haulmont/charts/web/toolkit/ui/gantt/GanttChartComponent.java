@@ -3,7 +3,7 @@
  * Use is subject to license terms, see http://www.cuba-platform.com/license for details.
  */
 
-package com.haulmont.charts.web.toolkit.ui.charts;
+package com.haulmont.charts.web.toolkit.ui.gantt;
 
 import com.vaadin.data.Container;
 import com.vaadin.data.Item;
@@ -16,11 +16,11 @@ import java.util.LinkedHashSet;
 import java.util.Set;
 
 /**
- * <p>$Id$</p>
- *
  * @author artamonov
+ * @version $Id$
  */
-public abstract class GanttChartComponent extends ChartComponent implements WGanttChart {
+public abstract class GanttChartComponent extends com.haulmont.charts.web.toolkit.ui.gantt.ChartComponent
+        implements WGanttChart {
 
     protected GanttChartComponent() {
         chartWidth = -1;
@@ -34,12 +34,12 @@ public abstract class GanttChartComponent extends ChartComponent implements WGan
 
     protected Container items;
 
-    protected TaskPropertiesProvider propertiesProvider;
+    protected com.haulmont.charts.web.toolkit.ui.gantt.TaskPropertiesProvider propertiesProvider;
 
     protected TaskItemClickListener itemClickListener;
 
-    protected Set<ItemSetChangeListener> itemSetChangeListeners = new LinkedHashSet<ItemSetChangeListener>();
-    protected Set<PropertySetChangeListener> propertySetChangeListeners = new LinkedHashSet<PropertySetChangeListener>();
+    protected Set<ItemSetChangeListener> itemSetChangeListeners = new LinkedHashSet<>();
+    protected Set<PropertySetChangeListener> propertySetChangeListeners = new LinkedHashSet<>();
 
     @Override
     public Item getItem(Object itemId) {
@@ -172,12 +172,12 @@ public abstract class GanttChartComponent extends ChartComponent implements WGan
     }
 
     @Override
-    public TaskPropertiesProvider getPropertiesProvider() {
+    public com.haulmont.charts.web.toolkit.ui.gantt.TaskPropertiesProvider getPropertiesProvider() {
         return propertiesProvider;
     }
 
     @Override
-    public void setPropertiesProvider(TaskPropertiesProvider propertiesProvider) {
+    public void setPropertiesProvider(com.haulmont.charts.web.toolkit.ui.gantt.TaskPropertiesProvider propertiesProvider) {
         this.propertiesProvider = propertiesProvider;
     }
 
@@ -229,29 +229,31 @@ public abstract class GanttChartComponent extends ChartComponent implements WGan
     public void removePropertySetChangeListener(PropertySetChangeListener listener) {
     }
 
-    private void fireItemSetChange() {
+    protected void fireItemSetChange() {
         for (final ItemSetChangeListener listener : itemSetChangeListeners) {
             listener.containerItemSetChange(new ItemSetChangeEvent());
         }
     }
 
-    private void firePropertySetChange() {
+    protected void firePropertySetChange() {
         for (final PropertySetChangeListener listener : propertySetChangeListeners) {
             listener.containerPropertySetChange(new PropertySetChangeEvent());
         }
     }
 
-    private class ItemSetChangeEvent implements Serializable, Container.ItemSetChangeEvent {
+    protected class ItemSetChangeEvent implements Serializable, Container.ItemSetChangeEvent {
         private static final long serialVersionUID = -3105286428491462551L;
 
+        @Override
         public Container getContainer() {
             return GanttChartComponent.this;
         }
     }
 
-    private class PropertySetChangeEvent implements Serializable, Container.PropertySetChangeEvent {
+    protected class PropertySetChangeEvent implements Serializable, Container.PropertySetChangeEvent {
         private static final long serialVersionUID = -1597899704080413194L;
 
+        @Override
         public Container getContainer() {
             return GanttChartComponent.this;
         }

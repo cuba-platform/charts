@@ -12,9 +12,8 @@ import java.util.Date;
 import java.util.List;
 
 /**
- * <p>$Id$</p>
- *
  * @author artamonov
+ * @version $Id$
  */
 @MetaClass(name = "charts$GanttChartGroup")
 @SystemLevel

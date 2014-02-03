@@ -9,9 +9,9 @@ import java.util.Date;
 
 /**
  * Task object for JSGanttChart
- * <p>$Id$</p>
  *
  * @author artamonov
+ * @version $Id$
  */
 class GanttTaskItem {
 

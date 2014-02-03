@@ -6,10 +6,9 @@
 package com.haulmont.charts.web.gui.components.charts.jsgantt;
 
 import com.haulmont.charts.core.entity.GanttChartItem;
-import com.haulmont.charts.web.gui.components.charts.WebAbstractGanttChart;
-import com.haulmont.charts.web.toolkit.ui.JSGanttChart;
-import com.haulmont.charts.web.toolkit.ui.charts.TaskPropertiesProvider;
-import com.haulmont.charts.web.toolkit.ui.charts.WGanttChart;
+import com.haulmont.charts.web.toolkit.ui.gantt.JSGanttChart;
+import com.haulmont.charts.web.toolkit.ui.gantt.TaskPropertiesProvider;
+import com.haulmont.charts.web.toolkit.ui.gantt.WGanttChart;
 import com.haulmont.chile.core.model.MetaClass;
 import com.haulmont.chile.core.model.MetaProperty;
 import com.haulmont.cuba.core.global.MessageProvider;
@@ -25,9 +24,8 @@ import java.util.Iterator;
 import java.util.Map;
 
 /**
- * <p>$Id$</p>
- *
  * @author artamonov
+ * @version $Id$
  */
 public class WebJSGanttChart extends WebAbstractGanttChart<JSGanttChart> {
 
@@ -100,10 +98,12 @@ public class WebJSGanttChart extends WebAbstractGanttChart<JSGanttChart> {
         return component.getShowResource();
     }
 
+    @Override
     public void setShowInitiator(boolean showInitiator) {
         component.setShowInitiator(showInitiator);
     }
 
+    @Override
     public boolean getShowInitiator() {
         return component.getShowInitiator();
     }
@@ -140,7 +140,7 @@ public class WebJSGanttChart extends WebAbstractGanttChart<JSGanttChart> {
     }
 
     private Map<String, String> compileMessages(String messagePack) {
-        Map<String, String> messages = new HashMap<String, String>();
+        Map<String, String> messages = new HashMap<>();
         for (String key : component.getMessageKeys()) {
             messages.put(key, MessageProvider.getMessage(messagePack, key));
         }
@@ -152,10 +152,10 @@ public class WebJSGanttChart extends WebAbstractGanttChart<JSGanttChart> {
      */
     private class GanttTaskPropertiesProvider implements TaskPropertiesProvider {
 
-        private Map<String, MetaProperty> metaPropertyMap = new HashMap<String, MetaProperty>();
+        private Map<String, MetaProperty> metaPropertyMap = new HashMap<>();
 
         private GanttTaskPropertiesProvider() {
-            MetaClass metaClass = MetadataProvider.getSession().getClass(GanttChartItem.class);
+            MetaClass metaClass = MetadataProvider.getSession().getClassNN(GanttChartItem.class);
 
             metaPropertyMap.put("itemId", metaClass.getProperty("itemId"));
             metaPropertyMap.put("parentId", metaClass.getProperty("parentId"));
@@ -200,7 +200,7 @@ public class WebJSGanttChart extends WebAbstractGanttChart<JSGanttChart> {
 
         @Override
         public Map<String, String> getTaskProperties(Item taskItem) {
-            Map<String, String> propertyMap = new HashMap();
+            Map<String, String> propertyMap = new HashMap<>();
             for (Map.Entry<String, MetaProperty> metaPropertyEntry : metaPropertyMap.entrySet()) {
                 MetaProperty metaProperty = metaPropertyEntry.getValue();
                 Property itemProperty = taskItem.getItemProperty(metaProperty);

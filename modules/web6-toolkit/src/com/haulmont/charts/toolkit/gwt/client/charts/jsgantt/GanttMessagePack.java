@@ -8,8 +8,6 @@ package com.haulmont.charts.toolkit.gwt.client.charts.jsgantt;
 
 import com.google.gwt.core.client.JavaScriptObject;
 
-import java.util.Map;
-
 /**
  * <p>$Id$</p>
  *

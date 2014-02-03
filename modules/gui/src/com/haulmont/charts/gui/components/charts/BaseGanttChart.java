@@ -2,19 +2,16 @@
  * Copyright (c) 2008-2013 Haulmont. All rights reserved.
  * Use is subject to license terms, see http://www.cuba-platform.com/license for details.
  */
-package com.haulmont.charts.web.toolkit.ui.charts;
+package com.haulmont.charts.gui.components.charts;
 
-import com.vaadin.ui.Component;
+import com.haulmont.cuba.gui.components.Component;
 
-public interface WChart extends Component {
-
-    String getVendor();
-
-    int getChartWidth();
-    void setChartWidth(int chartWidth);
-
-    int getChartHeight();
-    void setChartHeight(int chartHeight);
+/**
+ * @author gorodnov
+ * @version $Id$
+ */
+public interface BaseGanttChart extends Component, Component.BelongToFrame,
+        Component.HasXmlDescriptor, Component.HasCaption {
 
     enum AxisType {
         NUMBER,
@@ -27,6 +24,7 @@ public interface WChart extends Component {
     }
 
     interface HasLegend {
+
         boolean getHasLegend();
         void setHasLegend(boolean hasLegend);
     }
@@ -56,6 +54,6 @@ public interface WChart extends Component {
 
     interface ViewIn3D {
         boolean is3D();
-        void set3D(boolean is3D);
+        void set3D(boolean b);
     }
 }

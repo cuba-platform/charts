@@ -10,12 +10,10 @@ import com.google.gwt.i18n.client.DateTimeFormat;
 import com.vaadin.client.VConsole;
 
 import java.util.Date;
-import java.util.logging.Level;
 
 /**
- * <p>$Id$</p>
- *
  * @author artamonov
+ * @version $Id$
  */
 public class GanttChartAPI {
 

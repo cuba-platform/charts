@@ -8,9 +8,8 @@ package com.haulmont.charts.web.toolkit.ui.client.jsgantt;
 import com.google.gwt.core.client.JavaScriptObject;
 
 /**
- * <p>$Id$</p>
- *
  * @author artamonov
+ * @version $Id$
  */
 public class GanttMessagePack extends JavaScriptObject {
 

@@ -7,7 +7,6 @@
 package com.haulmont.charts.web.gui.components.charts.jsgantt;
 
 import com.haulmont.charts.core.entity.GanttChartItem;
-import com.haulmont.charts.web.gui.components.charts.WebAbstractGanttChart;
 import com.haulmont.charts.web.toolkit.ui.charts.TaskPropertiesProvider;
 import com.haulmont.charts.web.toolkit.ui.charts.WGanttChart;
 import com.haulmont.charts.web.toolkit.ui.charts.jsgantt.JSGanttChart;
@@ -26,9 +25,8 @@ import java.util.Iterator;
 import java.util.Map;
 
 /**
- * <p>$Id$</p>
- *
  * @author artamonov
+ * @version $Id$
  */
 public class WebJSGanttChart extends WebAbstractGanttChart<JSGanttChart> {
 
@@ -101,10 +99,12 @@ public class WebJSGanttChart extends WebAbstractGanttChart<JSGanttChart> {
         return component.getShowResource();
     }
 
+    @Override
     public void setShowInitiator(boolean showInitiator) {
         component.setShowInitiator(showInitiator);
     }
 
+    @Override
     public boolean getShowInitiator() {
         return component.getShowInitiator();
     }

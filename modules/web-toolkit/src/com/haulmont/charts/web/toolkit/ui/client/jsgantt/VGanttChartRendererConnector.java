@@ -7,7 +7,7 @@ package com.haulmont.charts.web.toolkit.ui.client.jsgantt;
 
 import com.google.gwt.core.client.GWT;
 import com.google.gwt.user.client.ui.Widget;
-import com.haulmont.charts.web.toolkit.ui.JSGanttChart;
+import com.haulmont.charts.web.toolkit.ui.gantt.JSGanttChart;
 import com.vaadin.client.communication.RpcProxy;
 import com.vaadin.client.communication.StateChangeEvent;
 import com.vaadin.client.ui.AbstractComponentConnector;

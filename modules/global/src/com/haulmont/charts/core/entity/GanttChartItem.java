@@ -18,9 +18,8 @@ import java.util.LinkedList;
 import java.util.List;
 
 /**
- * <p>$Id$</p>
- *
  * @author artamonov
+ * @version $Id$
  */
 @MetaClass(name = "charts$GanttChartItem")
 @SystemLevel

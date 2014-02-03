@@ -16,9 +16,8 @@ import com.vaadin.client.ApplicationConnection;
 import java.util.*;
 
 /**
- * <p>$Id$</p>
- *
  * @author artamonov
+ * @version $Id$
  */
 public class VGanttChartRenderer extends SimplePanel {
 

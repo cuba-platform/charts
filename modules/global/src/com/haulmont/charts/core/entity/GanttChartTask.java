@@ -12,9 +12,8 @@ import com.haulmont.cuba.core.entity.annotation.SystemLevel;
 import java.util.Date;
 
 /**
- * <p>$Id$</p>
- *
  * @author artamonov
+ * @version $Id$
  */
 @MetaClass(name = "charts$GanttChartTask")
 @SystemLevel
