@@ -43,11 +43,4 @@ public abstract class ChartComponent extends AbstractComponent implements
         this.chartHeight = chartHeight;
         setHeight(chartHeight + "px");
     }
-/*  vaadin7
-    @Override
-    public void paintContent(PaintTarget target) throws PaintException {
-        super.paintContent(target);
-        target.addAttribute("cwidth", chartWidth);
-        target.addAttribute("cheight", chartHeight);
-    }*/
 }

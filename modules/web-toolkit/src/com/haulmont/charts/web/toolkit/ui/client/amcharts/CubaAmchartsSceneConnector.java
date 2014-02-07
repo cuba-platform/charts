@@ -36,9 +36,13 @@ public class CubaAmchartsSceneConnector extends AbstractComponentConnector {
     public void onStateChanged(StateChangeEvent stateChangeEvent) {
         super.onStateChanged(stateChangeEvent);
 
+        final AmchartsConfig config = AmchartsConfig.fromServerConfig(getState().configuration);
+
         Scheduler.get().scheduleDeferred(new Scheduler.ScheduledCommand() {
             @Override
             public void execute() {
+                getWidget().init(config);
+
                 // Add resize listener lazily here. If done in init like in
                 // examples it will be called
                 // way too early, like before the wiget is not even rendered yet
@@ -55,9 +59,5 @@ public class CubaAmchartsSceneConnector extends AbstractComponentConnector {
                 }
             }
         });
-
-        if (stateChangeEvent.hasPropertyChanged("json")) {
-            getWidget().update(getState().json);
-        }
     }
 }

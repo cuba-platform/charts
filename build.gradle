@@ -124,6 +124,8 @@ configure(chartsGuiModule) {
     dependencies {
         compile(cubaGui)
         compile(chartsGlobalModule)
+
+        compile(group: 'com.google.code.gson', name: 'gson', version: '2.2.4')
     }
 }
 
@@ -173,7 +175,7 @@ configure(chartsWebModule) {
         provided(chartsGuiModule)
         provided(servletApi)
         provided(cubaWeb)
-        
+
         webcontent(group: 'com.haulmont.cuba', name: 'cuba-web', version: baseVersion, classifier: 'web', ext: 'zip')        
     }
 

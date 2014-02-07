@@ -46,4 +46,12 @@ public class CubaAmchartsJsOverlay {
     private static native void updateSize(JavaScriptObject chart) /*-{
         chart.invalidateSize();
     }-*/;
+
+    public void destroy() {
+        destroy(chart);
+    }
+
+    private static native void destroy(JavaScriptObject chart) /*-{
+        chart.clear();
+    }-*/;
 }

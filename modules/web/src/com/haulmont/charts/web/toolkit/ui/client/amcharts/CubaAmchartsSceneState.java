@@ -13,5 +13,9 @@ import com.vaadin.shared.AbstractComponentState;
  */
 public class CubaAmchartsSceneState extends AbstractComponentState {
 
-    public String json = "";
+    public String json;
+    public String configuration;
+
+    // Force state change on client
+    public int version = 0;
 }

@@ -5,7 +5,6 @@
 
 package com.haulmont.charts.web.toolkit.ui.client.amcharts;
 
-import com.google.gwt.core.client.JsonUtils;
 import com.google.gwt.core.client.Scheduler;
 import com.google.gwt.dom.client.Document;
 import com.google.gwt.user.client.ui.Widget;
@@ -22,19 +21,24 @@ public class CubaAmchartsSceneWidget extends Widget {
         setElement(Document.get().createDivElement());
     }
 
-    public void update(String json) {
-        jsOverlay = CubaAmchartsJsOverlay.makeChart(getElement(), JsonUtils.safeEval(json));
+    public void updateSize() {
+        if (jsOverlay != null) {
+            jsOverlay.updateSize();
+        }
+    }
+
+    public void init(AmchartsConfig config) {
+        if (jsOverlay != null) {
+            jsOverlay.destroy();
+        }
+
+        jsOverlay = CubaAmchartsJsOverlay.makeChart(getElement(), config);
+
         Scheduler.get().scheduleDeferred(new Scheduler.ScheduledCommand() {
             @Override
             public void execute() {
                 updateSize();
             }
         });
-    }
-
-    public void updateSize() {
-        if (jsOverlay != null) {
-            jsOverlay.updateSize();
-        }
     }
 }
