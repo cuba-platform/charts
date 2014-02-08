@@ -11,6 +11,8 @@ package com.haulmont.charts.gui.amcharts.model;
  */
 public class NumberFormatter extends AbstractConfigurationObject {
 
+    private static final long serialVersionUID = -6672745908840387292L;
+
     private Integer precision;
 
     private String decimalSeparator;

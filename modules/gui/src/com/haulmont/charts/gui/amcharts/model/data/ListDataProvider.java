@@ -16,6 +16,8 @@ import java.util.List;
  */
 public class ListDataProvider implements DataProvider {
 
+    private static final long serialVersionUID = -8893186272622531844L;
+
     private List<DataItem> items = new ArrayList<>();
 
     public ListDataProvider() {

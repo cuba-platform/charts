@@ -9,6 +9,8 @@ import java.io.Serializable;
 import java.util.Collection;
 
 /**
+ * Chart data item.
+ *
  * @author artamonov
  * @version $Id$
  */

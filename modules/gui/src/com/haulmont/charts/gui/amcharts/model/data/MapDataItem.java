@@ -15,6 +15,8 @@ import java.util.Map;
  */
 public class MapDataItem implements DataItem {
 
+    private static final long serialVersionUID = -6115531750392377539L;
+
     private Map<String, Object> properties = new HashMap<>();
 
     @Override

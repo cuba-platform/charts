@@ -6,6 +6,8 @@
 package com.haulmont.charts.gui.amcharts.model;
 
 /**
+ * Marker interface for enums supporting JSON serialization.
+ *
  * @author artamonov
  * @version $Id$
  */
