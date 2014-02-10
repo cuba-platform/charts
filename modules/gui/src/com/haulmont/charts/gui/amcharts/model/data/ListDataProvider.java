@@ -61,4 +61,9 @@ public class ListDataProvider implements DataProvider {
     public void removeItem(DataItem item) {
         items.remove(item);
     }
+
+    @Override
+    public String getDateFormat() {
+        return DEFAULT_DATE_FORMAT;
+    }
 }

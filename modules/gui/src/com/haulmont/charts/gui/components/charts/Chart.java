@@ -4,13 +4,17 @@
  */
 package com.haulmont.charts.gui.components.charts;
 
+import com.haulmont.charts.gui.amcharts.model.charts.AbstractChart;
 import com.haulmont.cuba.gui.components.Component;
 
 /**
  * @author artamonov
  * @version $Id$
  */
-public interface Chart extends Component, Component.BelongToFrame,
-        Component.HasXmlDescriptor, Component.HasCaption {
+public interface Chart extends Component, Component.BelongToFrame, Component.HasXmlDescriptor {
 
+    String NAME = "chart";
+
+    AbstractChart getConfiguration();
+    void setConfiguration(AbstractChart chart);
 }

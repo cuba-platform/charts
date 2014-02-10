@@ -12,17 +12,21 @@ package com.haulmont.charts.gui.amcharts.model;
 public enum DatePeriod implements ChartEnum {
     MILLISECONDS("fff"),
     SECONDS("ss"),
-    MINUTES("minutes"),
-    HOURS("hours"),
-    DAYS("days"),
-    MONTHS("months"),
-    WEEKS("weeks"),
-    YEARS("years");
+    MINUTES("mm"),
+    HOURS("hh"),
+    DAYS("DD"),
+    MONTHS("MM"),
+    WEEKS("WW"),
+    YEARS("YYYY");
 
     private String id;
 
     private DatePeriod(String id) {
         this.id = id;
+    }
+
+    public String getId() {
+        return id;
     }
 
     @Override

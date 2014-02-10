@@ -10,6 +10,8 @@ import com.haulmont.charts.gui.amcharts.model.data.DataItem;
 import com.haulmont.charts.gui.amcharts.model.data.DataProvider;
 
 import java.lang.reflect.Type;
+import java.text.SimpleDateFormat;
+import java.util.Date;
 
 /**
  * @author artamonov
@@ -19,10 +21,14 @@ public class DataProviderSerializer implements JsonSerializer<DataProvider> {
     @Override
     public JsonElement serialize(DataProvider src, Type typeOfSrc, JsonSerializationContext context) {
         JsonArray dataProviderElement = new JsonArray();
+        SimpleDateFormat dateFormat = new SimpleDateFormat(src.getDateFormat());
         for (DataItem item : src.getItems()) {
             JsonObject itemElement = new JsonObject();
             for (String property: item.getProperties()) {
                 Object value = item.getValue(property);
+                if (value instanceof Date) {
+                    value = dateFormat.format((Date) value);
+                }
 
                 itemElement.add(property, context.serialize(value));
             }

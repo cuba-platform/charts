@@ -7,7 +7,6 @@ package com.haulmont.charts.web.toolkit.ui.amcharts;
 
 import com.haulmont.charts.gui.amcharts.model.charts.*;
 import com.haulmont.charts.web.toolkit.ui.client.amcharts.CubaAmchartsSceneState;
-import com.vaadin.annotations.JavaScript;
 import com.vaadin.ui.AbstractComponent;
 import org.apache.commons.lang.StringUtils;
 
@@ -15,14 +14,16 @@ import org.apache.commons.lang.StringUtils;
  * @author artamonov
  * @version $Id$
  */
-@JavaScript({"resources/amcharts/amcharts-all.min.js",
-        "resources/amcharts/themes.min.js",
-        "resources/amcharts/exporting.min.js"})
 public class CubaAmchartsScene extends AbstractComponent {
 
     private boolean dirty = false;
 
     private AbstractChart chart;
+
+    public CubaAmchartsScene() {
+        // enable amcharts integration
+        CubaAmchartsIntegration.get();
+    }
 
     @Override
     protected CubaAmchartsSceneState getState() {
@@ -32,6 +33,10 @@ public class CubaAmchartsScene extends AbstractComponent {
     @Override
     protected CubaAmchartsSceneState getState(boolean markAsDirty) {
         return (CubaAmchartsSceneState) super.getState(markAsDirty);
+    }
+
+    public AbstractChart getChart() {
+        return chart;
     }
 
     public void setJson(String json) {
@@ -89,11 +94,16 @@ public class CubaAmchartsScene extends AbstractComponent {
         return xyChart;
     }
 
+    protected void setupDefaults(AbstractChart chart) {
+    }
+
     @Override
     public void beforeClientResponse(boolean initial) {
         super.beforeClientResponse(initial);
         if (initial || dirty) {
             if (chart != null) {
+                setupDefaults(chart);
+
                 getState().configuration = chart.toString();
             }
             dirty = false;
@@ -101,6 +111,7 @@ public class CubaAmchartsScene extends AbstractComponent {
     }
 
     private void forceStateChange() {
+        this.dirty = true;
         getState().version++;
     }
 }

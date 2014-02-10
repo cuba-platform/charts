@@ -17,6 +17,8 @@ import java.util.List;
  */
 public interface DataProvider extends Serializable {
 
+    String DEFAULT_DATE_FORMAT = "yyyy-MM-dd HH:mm:ss:S";
+
     List<DataItem> getItems();
 
     void addItem(DataItem item);
@@ -28,4 +30,6 @@ public interface DataProvider extends Serializable {
     void updateItem(DataItem item);
 
     void removeItem(DataItem item);
+
+    String getDateFormat();
 }
