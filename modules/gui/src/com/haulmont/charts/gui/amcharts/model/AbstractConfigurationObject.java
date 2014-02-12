@@ -11,6 +11,7 @@ import com.haulmont.charts.gui.amcharts.model.data.DataProvider;
 import com.haulmont.charts.gui.amcharts.model.gson.ChartEnumSerializer;
 import com.haulmont.charts.gui.amcharts.model.gson.ColorSerializer;
 import com.haulmont.charts.gui.amcharts.model.gson.DataProviderSerializer;
+import com.haulmont.charts.gui.amcharts.model.gson.JsFunctionSerializer;
 
 import java.io.Serializable;
 
@@ -35,9 +36,10 @@ public abstract class AbstractConfigurationObject implements Serializable {
     public static GsonBuilder createGsonBuilder() {
         GsonBuilder builder = new GsonBuilder();
         // uncomment if you wish to debug generated json
-        builder.setPrettyPrinting();
+        // builder.setPrettyPrinting();
         builder.registerTypeHierarchyAdapter(ChartEnum.class, new ChartEnumSerializer());
         builder.registerTypeHierarchyAdapter(Color.class, new ColorSerializer());
+        builder.registerTypeHierarchyAdapter(JsFunction.class, new JsFunctionSerializer());
         builder.registerTypeHierarchyAdapter(DataProvider.class, new DataProviderSerializer());
         return builder;
     }

@@ -8,6 +8,9 @@ package com.haulmont.charts.gui.amcharts.model;
 import java.io.Serializable;
 
 /**
+ * JavaScript function definition. <br/>
+ * Code example: <code>new JsFunction("function (event) { alert(event); }");</code>
+ *
  * @author artamonov
  * @version $Id$
  */

@@ -44,14 +44,7 @@ public class WebChart extends WebAbstractComponent<CubaAmchartsScene> implements
     public WebChart() {
         initLocale();
 
-        component = new CubaAmchartsScene() {
-            @Override
-            protected void setupDefaults(AbstractChart chart) {
-                super.setupDefaults(chart);
-
-                setupChartDefaults(chart);
-            }
-        };
+        component = new CubaAmchartsSceneExt();
     }
 
     protected void initLocale() {
@@ -86,84 +79,6 @@ public class WebChart extends WebAbstractComponent<CubaAmchartsScene> implements
         }
     }
 
-    protected void setupChartDefaults(AbstractChart chart) {
-        setupChartLocale(chart);
-
-        if (chart instanceof RectangularChart) {
-            setupRectangularChartDefaults((RectangularChart) chart);
-        }
-        if (chart instanceof SerialChart) {
-            setupSerialChartDefaults((SerialChart) chart);
-        }
-    }
-
-    protected void setupChartLocale(AbstractChart chart) {
-        // number formatting
-        FormatStrings formatStrings = Datatypes.getFormatStrings(userSessionSource.getLocale());
-        if (formatStrings != null) {
-            DecimalFormatSymbols formatSymbols = formatStrings.getFormatSymbols();
-
-            if (chart.getNumberFormatter() == null) {
-                chart.setNumberFormatter(new NumberFormatter()
-                        .setPrecision(-1)
-                        .setDecimalSeparator(Character.toString(formatSymbols.getDecimalSeparator()))
-                        .setThousandsSeparator(Character.toString(formatSymbols.getGroupingSeparator())));
-            }
-            if (chart.getPercentFormatter() == null) {
-                chart.setPercentFormatter(new NumberFormatter()
-                        .setPrecision(2)
-                        .setDecimalSeparator(Character.toString(formatSymbols.getDecimalSeparator()))
-                        .setThousandsSeparator(Character.toString(formatSymbols.getGroupingSeparator())));
-            }
-        }
-
-        // number prefixes
-        if (BooleanUtils.isTrue(chart.getUsePrefixes())) {
-            if (chart.getPrefixesOfBigNumbers() == null) {
-                List<BigNumberPrefix> prefixes = new LinkedList<>();
-                for (BigNumberPower power : BigNumberPower.values()) {
-                    prefixes.add(new BigNumberPrefix(power,
-                            messages.getMessage(AMCHARTS_MESSAGE_PACK, "amcharts.bigNumberPower." + power.name())));
-                }
-                chart.setPrefixesOfBigNumbers(prefixes);
-            }
-            if (chart.getPrefixesOfSmallNumbers() == null) {
-                List<SmallNumberPrefix> prefixes = new LinkedList<>();
-                for (SmallNumberPower power : SmallNumberPower.values()) {
-                    prefixes.add(new SmallNumberPrefix(power,
-                            messages.getMessage(AMCHARTS_MESSAGE_PACK, "amcharts.smallNumberPower." + power.name())));
-                }
-                chart.setPrefixesOfSmallNumbers(prefixes);
-            }
-        }
-    }
-
-    protected void setupRectangularChartDefaults(RectangularChart chart) {
-        if (chart.getZoomOutText() == null) {
-            chart.setZoomOutText(messages.getMessage(AMCHARTS_MESSAGE_PACK, "amcharts.zoomOutText"));
-        }
-    }
-
-    protected void setupSerialChartDefaults(SerialChart chart) {
-        if (byDate) {
-            if (chart.getCategoryAxis() == null) {
-                chart.setCategoryAxis(new CategoryAxis());
-            }
-            CategoryAxis categoryAxis = chart.getCategoryAxis();
-
-            String firstDayOfWeek = messages.getMessage(AMCHARTS_MESSAGE_PACK, "amcharts.firstDayOfWeek");
-            if (categoryAxis.getFirstDayOfWeek() == null) {
-                categoryAxis.setFirstDayOfWeek(DayOfWeek.valueOf(firstDayOfWeek));
-            }
-
-            chart.getCategoryAxis().setParseDates(true);
-
-            if (chart.getDataDateFormat() == null) {
-                chart.setDataDateFormat(DEFAULT_JS_DATE_FORMAT);
-            }
-        }
-    }
-
     public boolean isByDate() {
         return byDate;
     }
@@ -180,5 +95,92 @@ public class WebChart extends WebAbstractComponent<CubaAmchartsScene> implements
     @Override
     public void setConfiguration(AbstractChart chart) {
         component.drawChart(chart);
+    }
+
+    protected class CubaAmchartsSceneExt extends CubaAmchartsScene {
+
+        @Override
+        protected void setupDefaults(AbstractChart chart) {
+            super.setupDefaults(chart);
+
+            setupChartLocale(chart);
+
+            if (chart instanceof RectangularChart) {
+                setupRectangularChartDefaults((RectangularChart) chart);
+            }
+            if (chart instanceof SerialChart) {
+                setupSerialChartDefaults((SerialChart) chart);
+            }
+        }
+
+        protected void setupChartLocale(AbstractChart chart) {
+            // number formatting
+            FormatStrings formatStrings = Datatypes.getFormatStrings(userSessionSource.getLocale());
+            if (formatStrings != null) {
+                DecimalFormatSymbols formatSymbols = formatStrings.getFormatSymbols();
+
+                if (chart.getNumberFormatter() == null) {
+                    chart.setNumberFormatter(new NumberFormatter()
+                            .setPrecision(-1)
+                            .setDecimalSeparator(Character.toString(formatSymbols.getDecimalSeparator()))
+                            .setThousandsSeparator(Character.toString(formatSymbols.getGroupingSeparator())));
+                }
+                if (chart.getPercentFormatter() == null) {
+                    chart.setPercentFormatter(new NumberFormatter()
+                            .setPrecision(2)
+                            .setDecimalSeparator(Character.toString(formatSymbols.getDecimalSeparator()))
+                            .setThousandsSeparator(Character.toString(formatSymbols.getGroupingSeparator())));
+                }
+            }
+
+            // number prefixes
+            if (BooleanUtils.isTrue(chart.getUsePrefixes())) {
+                if (chart.getPrefixesOfBigNumbers() == null) {
+                    List<BigNumberPrefix> prefixes = new LinkedList<>();
+                    for (BigNumberPower power : BigNumberPower.values()) {
+                        prefixes.add(new BigNumberPrefix(power,
+                                messages.getMessage(AMCHARTS_MESSAGE_PACK, "amcharts.bigNumberPower." + power.name())));
+                    }
+                    chart.setPrefixesOfBigNumbers(prefixes);
+                }
+                if (chart.getPrefixesOfSmallNumbers() == null) {
+                    List<SmallNumberPrefix> prefixes = new LinkedList<>();
+                    for (SmallNumberPower power : SmallNumberPower.values()) {
+                        prefixes.add(new SmallNumberPrefix(power,
+                                messages.getMessage(AMCHARTS_MESSAGE_PACK, "amcharts.smallNumberPower." + power.name())));
+                    }
+                    chart.setPrefixesOfSmallNumbers(prefixes);
+                }
+            }
+        }
+
+        protected void setupRectangularChartDefaults(RectangularChart chart) {
+            if (chart.getZoomOutText() == null) {
+                chart.setZoomOutText(messages.getMessage(AMCHARTS_MESSAGE_PACK, "amcharts.zoomOutText"));
+            }
+        }
+
+        protected void setupSerialChartDefaults(SerialChart chart) {
+            if (byDate) {
+                CategoryAxis categoryAxis = chart.getCategoryAxis();
+                if (categoryAxis == null) {
+                    categoryAxis = new CategoryAxis();
+                    chart.setCategoryAxis(categoryAxis);
+                }
+
+                String firstDayOfWeek = messages.getMessage(AMCHARTS_MESSAGE_PACK, "amcharts.firstDayOfWeek");
+                if (categoryAxis.getFirstDayOfWeek() == null) {
+                    categoryAxis.setFirstDayOfWeek(DayOfWeek.valueOf(firstDayOfWeek));
+                }
+
+                if (chart.getCategoryAxis().getParseDates() == null) {
+                    chart.getCategoryAxis().setParseDates(true);
+                }
+
+                if (chart.getDataDateFormat() == null) {
+                    chart.setDataDateFormat(DEFAULT_JS_DATE_FORMAT);
+                }
+            }
+        }
     }
 }
