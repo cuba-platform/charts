@@ -7,6 +7,7 @@ package com.haulmont.charts.web.toolkit.ui.client.amcharts;
 
 import com.google.gwt.core.client.JavaScriptObject;
 import com.google.gwt.json.client.JSONParser;
+import com.vaadin.client.BrowserInfo;
 
 /**
  * @author artamonov
@@ -21,8 +22,15 @@ public class AmchartsConfig extends JavaScriptObject {
         AmchartsConfig configObject = (AmchartsConfig) JSONParser.parseLenient(config).isObject().getJavaScriptObject();
         applyCustomJson(configObject, json);
         activateFunctions(configObject);
+        if (BrowserInfo.get().isIE() && BrowserInfo.get().getIEVersion() < 10) {
+            disableExportFeatures(configObject);
+        }
         return configObject;
     }
+
+    private static native void disableExportFeatures(JavaScriptObject config) /*-{
+        config.exportConfig = undefined;
+    }-*/;
 
     private static native void applyCustomJson(JavaScriptObject config, String manualOptions) /*-{
         var merge = function (dst, src) {
