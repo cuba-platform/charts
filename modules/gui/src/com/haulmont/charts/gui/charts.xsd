@@ -4,23 +4,967 @@
   ~ Use is subject to license terms, see http://www.cuba-platform.com/license for details.
   -->
 
-<xs:schema targetNamespace="http://schemas.haulmont.com/charts/5.0/charts.xsd"
-        xmlns:xs="http://www.w3.org/2001/XMLSchema"
-        xmlns="http://schemas.haulmont.com/charts/5.0/charts.xsd"
-        elementFormDefault="qualified"
-        attributeFormDefault="unqualified">
+<xs:schema targetNamespace="http://schemas.haulmont.com/charts/5.2/charts.xsd"
+           xmlns:xs="http://www.w3.org/2001/XMLSchema"
+           xmlns="http://schemas.haulmont.com/charts/5.2/charts.xsd"
+           elementFormDefault="qualified"
+           attributeFormDefault="unqualified">
 
-    <xs:element name="ganttChart">
-        <xs:complexType>
-            <xs:attribute name="id" type="xs:string" use="optional"/>
-            <xs:attribute name="caption" type="xs:string" use="optional" default="msg://"/>
-            <xs:attribute name="vendor" type="vendorType" default="jsgantt" use="required"/>
-            <xs:attribute name="width" type="xs:string" use="optional"/>
-            <xs:attribute name="height" type="xs:string" use="optional"/>
-            <xs:attribute name="visible" type="xs:string" use="optional"/>
-            <xs:attribute name="datasource" type="xs:string" use="required"/>
-        </xs:complexType>
-    </xs:element>
+    <!-- Enums -->
+
+    <xs:simpleType name="color">
+        <xs:union>
+            <xs:simpleType>
+                <xs:restriction base="xs:string"/>
+            </xs:simpleType>
+            <xs:simpleType>
+                <xs:restriction base="xs:string">
+                    <xs:enumeration value="ALICEBLUE"/>
+                    <xs:enumeration value="ANTIQUEWHITE"/>
+                    <xs:enumeration value="AQUA"/>
+                    <xs:enumeration value="AQUAMARINE"/>
+                    <xs:enumeration value="AZURE"/>
+                    <xs:enumeration value="BEIGE"/>
+                    <xs:enumeration value="BISQUE"/>
+                    <xs:enumeration value="BLACK"/>
+                    <xs:enumeration value="BLANCHEDALMOND"/>
+                    <xs:enumeration value="BLUE"/>
+                    <xs:enumeration value="BLUEVIOLET"/>
+                    <xs:enumeration value="BROWN"/>
+                    <xs:enumeration value="BURLYWOOD"/>
+                    <xs:enumeration value="CADETBLUE"/>
+                    <xs:enumeration value="CHARTREUSE"/>
+                    <xs:enumeration value="CHOCOLATE"/>
+                    <xs:enumeration value="CORAL"/>
+                    <xs:enumeration value="CORNFLOWERBLUE"/>
+                    <xs:enumeration value="CORNSILK"/>
+                    <xs:enumeration value="CRIMSON"/>
+                    <xs:enumeration value="CYAN"/>
+                    <xs:enumeration value="DARKBLUE"/>
+                    <xs:enumeration value="DARKCYAN"/>
+                    <xs:enumeration value="DARKGOLDENROD"/>
+                    <xs:enumeration value="DARKGRAY"/>
+                    <xs:enumeration value="DARKGREY"/>
+                    <xs:enumeration value="DARKGREEN"/>
+                    <xs:enumeration value="DARKKHAKI"/>
+                    <xs:enumeration value="DARKMAGENTA"/>
+                    <xs:enumeration value="DARKOLIVEGREEN"/>
+                    <xs:enumeration value="DARKORANGE"/>
+                    <xs:enumeration value="DARKORCHID"/>
+                    <xs:enumeration value="DARKRED"/>
+                    <xs:enumeration value="DARKSALMON"/>
+                    <xs:enumeration value="DARKSEAGREEN"/>
+                    <xs:enumeration value="DARKSLATEBLUE"/>
+                    <xs:enumeration value="DARKSLATEGRAY"/>
+                    <xs:enumeration value="DARKSLATEGREY"/>
+                    <xs:enumeration value="DARKTURQUOISE"/>
+                    <xs:enumeration value="DARKVIOLET"/>
+                    <xs:enumeration value="DEEPPINK"/>
+                    <xs:enumeration value="DEEPSKYBLUE"/>
+                    <xs:enumeration value="DIMGRAY"/>
+                    <xs:enumeration value="DIMGREY"/>
+                    <xs:enumeration value="DODGERBLUE"/>
+                    <xs:enumeration value="FIREBRICK"/>
+                    <xs:enumeration value="FLORALWHITE"/>
+                    <xs:enumeration value="FORESTGREEN"/>
+                    <xs:enumeration value="FUCHSIA"/>
+                    <xs:enumeration value="GAINSBORO"/>
+                    <xs:enumeration value="GHOSTWHITE"/>
+                    <xs:enumeration value="GOLD"/>
+                    <xs:enumeration value="GOLDENROD"/>
+                    <xs:enumeration value="GRAY"/>
+                    <xs:enumeration value="GREY"/>
+                    <xs:enumeration value="GREEN"/>
+                    <xs:enumeration value="GREENYELLOW"/>
+                    <xs:enumeration value="HONEYDEW"/>
+                    <xs:enumeration value="HOTPINK"/>
+                    <xs:enumeration value="INDIANRED"/>
+                    <xs:enumeration value="INDIGO"/>
+                    <xs:enumeration value="IVORY"/>
+                    <xs:enumeration value="KHAKI"/>
+                    <xs:enumeration value="LAVENDER"/>
+                    <xs:enumeration value="LAVENDERBLUSH"/>
+                    <xs:enumeration value="LAWNGREEN"/>
+                    <xs:enumeration value="LEMONCHIFFON"/>
+                    <xs:enumeration value="LIGHTBLUE"/>
+                    <xs:enumeration value="LIGHTCORAL"/>
+                    <xs:enumeration value="LIGHTCYAN"/>
+                    <xs:enumeration value="LIGHTGOLDENRODYELLOW"/>
+                    <xs:enumeration value="LIGHTGRAY"/>
+                    <xs:enumeration value="LIGHTGREY"/>
+                    <xs:enumeration value="LIGHTGREEN"/>
+                    <xs:enumeration value="LIGHTPINK"/>
+                    <xs:enumeration value="LIGHTSALMON"/>
+                    <xs:enumeration value="LIGHTSEAGREEN"/>
+                    <xs:enumeration value="LIGHTSKYBLUE"/>
+                    <xs:enumeration value="LIGHTSLATEGRAY"/>
+                    <xs:enumeration value="LIGHTSLATEGREY"/>
+                    <xs:enumeration value="LIGHTSTEELBLUE"/>
+                    <xs:enumeration value="LIGHTYELLOW"/>
+                    <xs:enumeration value="LIME"/>
+                    <xs:enumeration value="LIMEGREEN"/>
+                    <xs:enumeration value="LINEN"/>
+                    <xs:enumeration value="MAGENTA"/>
+                    <xs:enumeration value="MAROON"/>
+                    <xs:enumeration value="MEDIUMAQUAMARINE"/>
+                    <xs:enumeration value="MEDIUMBLUE"/>
+                    <xs:enumeration value="MEDIUMORCHID"/>
+                    <xs:enumeration value="MEDIUMPURPLE"/>
+                    <xs:enumeration value="MEDIUMSEAGREEN"/>
+                    <xs:enumeration value="MEDIUMSLATEBLUE"/>
+                    <xs:enumeration value="MEDIUMSPRINGGREEN"/>
+                    <xs:enumeration value="MEDIUMTURQUOISE"/>
+                    <xs:enumeration value="MEDIUMVIOLETRED"/>
+                    <xs:enumeration value="MIDNIGHTBLUE"/>
+                    <xs:enumeration value="MINTCREAM"/>
+                    <xs:enumeration value="MISTYROSE"/>
+                    <xs:enumeration value="MOCCASIN"/>
+                    <xs:enumeration value="NAVAJOWHITE"/>
+                    <xs:enumeration value="NAVY"/>
+                    <xs:enumeration value="OLDLACE"/>
+                    <xs:enumeration value="OLIVE"/>
+                    <xs:enumeration value="OLIVEDRAB"/>
+                    <xs:enumeration value="ORANGE"/>
+                    <xs:enumeration value="ORANGERED"/>
+                    <xs:enumeration value="ORCHID"/>
+                    <xs:enumeration value="PALEGOLDENROD"/>
+                    <xs:enumeration value="PALEGREEN"/>
+                    <xs:enumeration value="PALETURQUOISE"/>
+                    <xs:enumeration value="PALEVIOLETRED"/>
+                    <xs:enumeration value="PAPAYAWHIP"/>
+                    <xs:enumeration value="PEACHPUFF"/>
+                    <xs:enumeration value="PERU"/>
+                    <xs:enumeration value="PINK"/>
+                    <xs:enumeration value="PLUM"/>
+                    <xs:enumeration value="POWDERBLUE"/>
+                    <xs:enumeration value="PURPLE"/>
+                    <xs:enumeration value="RED"/>
+                    <xs:enumeration value="ROSYBROWN"/>
+                    <xs:enumeration value="ROYALBLUE"/>
+                    <xs:enumeration value="SADDLEBROWN"/>
+                    <xs:enumeration value="SALMON"/>
+                    <xs:enumeration value="SANDYBROWN"/>
+                    <xs:enumeration value="SEAGREEN"/>
+                    <xs:enumeration value="SEASHELL"/>
+                    <xs:enumeration value="SIENNA"/>
+                    <xs:enumeration value="SILVER"/>
+                    <xs:enumeration value="SKYBLUE"/>
+                    <xs:enumeration value="SLATEBLUE"/>
+                    <xs:enumeration value="SLATEGRAY"/>
+                    <xs:enumeration value="SLATEGREY"/>
+                    <xs:enumeration value="SNOW"/>
+                    <xs:enumeration value="SPRINGGREEN"/>
+                    <xs:enumeration value="STEELBLUE"/>
+                    <xs:enumeration value="TAN"/>
+                    <xs:enumeration value="TEAL"/>
+                    <xs:enumeration value="THISTLE"/>
+                    <xs:enumeration value="TOMATO"/>
+                    <xs:enumeration value="TURQUOISE"/>
+                    <xs:enumeration value="VIOLET"/>
+                    <xs:enumeration value="WHEAT"/>
+                    <xs:enumeration value="WHITE"/>
+                    <xs:enumeration value="WHITESMOKE"/>
+                    <xs:enumeration value="YELLOW"/>
+                    <xs:enumeration value="YELLOWGREEN"/>
+                </xs:restriction>
+            </xs:simpleType>
+        </xs:union>
+    </xs:simpleType>
+
+    <xs:simpleType name="align">
+        <xs:restriction base="xs:string">
+            <xs:enumeration value="LEFT"/>
+            <xs:enumeration value="RIGHT"/>
+            <xs:enumeration value="CENTER"/>
+        </xs:restriction>
+    </xs:simpleType>
+
+    <xs:simpleType name="animationEffect">
+        <xs:restriction base="xs:string">
+            <xs:enumeration value="EASE_OUT_SINE"/>
+            <xs:enumeration value="EASE_IN_SINE"/>
+            <xs:enumeration value="ELASTIC"/>
+            <xs:enumeration value="BOUNCE"/>
+        </xs:restriction>
+    </xs:simpleType>
+
+    <xs:simpleType name="balloonShowPosition">
+        <xs:restriction base="xs:string">
+            <xs:enumeration value="OPEN"/>
+            <xs:enumeration value="CLOSE"/>
+            <xs:enumeration value="HIGH"/>
+            <xs:enumeration value="LOW"/>
+        </xs:restriction>
+    </xs:simpleType>
+
+    <xs:simpleType name="bulletType">
+        <xs:restriction base="xs:string">
+            <xs:enumeration value="NONE"/>
+            <xs:enumeration value="ROUND"/>
+            <xs:enumeration value="SQUARE"/>
+            <xs:enumeration value="TRIANGLE_UP"/>
+            <xs:enumeration value="TRIANGLE_DOWN"/>
+            <xs:enumeration value="TRIANGLE_LEFT"/>
+            <xs:enumeration value="TRIANGLE_RIGHT"/>
+            <xs:enumeration value="BUBBLE"/>
+            <xs:enumeration value="DIAMOND"/>
+            <xs:enumeration value="X_ERROR"/>
+            <xs:enumeration value="Y_ERROR"/>
+            <xs:enumeration value="CUSTOM"/>
+        </xs:restriction>
+    </xs:simpleType>
+
+    <xs:simpleType name="chartTheme">
+        <xs:restriction base="xs:string">
+            <xs:enumeration value="NONE"/>
+            <xs:enumeration value="CHALK"/>
+            <xs:enumeration value="DARK"/>
+            <xs:enumeration value="LIGHT"/>
+            <xs:enumeration value="PATTERNS"/>
+        </xs:restriction>
+    </xs:simpleType>
+
+    <xs:simpleType name="cursorPosition">
+        <xs:restriction base="xs:string">
+            <xs:enumeration value="START"/>
+            <xs:enumeration value="MIDDLE"/>
+            <xs:enumeration value="MOUSE"/>
+        </xs:restriction>
+    </xs:simpleType>
+
+    <xs:simpleType name="datePeriod">
+        <xs:restriction base="xs:string">
+            <xs:enumeration value="MILLISECONDS"/>
+            <xs:enumeration value="SECONDS"/>
+            <xs:enumeration value="MINUTES"/>
+            <xs:enumeration value="HOURS"/>
+            <xs:enumeration value="DAYS"/>
+            <xs:enumeration value="MONTHS"/>
+            <xs:enumeration value="WEEKS"/>
+            <xs:enumeration value="YEARS"/>
+        </xs:restriction>
+    </xs:simpleType>
+
+    <xs:simpleType name="duration">
+        <xs:restriction base="xs:string">
+            <xs:enumeration value="SECONDS"/>
+            <xs:enumeration value="MINUTES"/>
+            <xs:enumeration value="HOURS"/>
+            <xs:enumeration value="DAYS"/>
+        </xs:restriction>
+    </xs:simpleType>
+
+    <xs:simpleType name="chartGraphType">
+        <xs:restriction base="xs:string">
+            <xs:enumeration value="line"/>
+            <xs:enumeration value="column"/>
+            <xs:enumeration value="step"/>
+            <xs:enumeration value="smoothedLine"/>
+            <xs:enumeration value="candlestick"/>
+            <xs:enumeration value="ohlc"/>
+        </xs:restriction>
+    </xs:simpleType>
+
+    <xs:simpleType name="exportFormat">
+        <xs:restriction base="xs:string">
+            <xs:enumeration value="JPG"/>
+            <xs:enumeration value="PNG"/>
+            <xs:enumeration value="SVG"/>
+            <xs:enumeration value="PDF"/>
+        </xs:restriction>
+    </xs:simpleType>
+
+    <xs:simpleType name="gradientOrientation">
+        <xs:restriction base="xs:string">
+            <xs:enumeration value="JPG"/>
+            <xs:enumeration value="PNG"/>
+            <xs:enumeration value="SVG"/>
+            <xs:enumeration value="PDF"/>
+        </xs:restriction>
+    </xs:simpleType>
+
+    <xs:simpleType name="graphType">
+        <xs:restriction base="xs:string">
+            <xs:enumeration value="LINE"/>
+            <xs:enumeration value="COLUMN"/>
+            <xs:enumeration value="STEP"/>
+            <xs:enumeration value="SMOOTHED_LINE"/>
+            <xs:enumeration value="CANDLESTICK"/>
+            <xs:enumeration value="OHLC"/>
+        </xs:restriction>
+    </xs:simpleType>
+
+    <xs:simpleType name="gridPosition">
+        <xs:restriction base="xs:string">
+            <xs:enumeration value="START"/>
+            <xs:enumeration value="MIDDLE"/>
+        </xs:restriction>
+    </xs:simpleType>
+
+    <xs:simpleType name="gridType">
+        <xs:restriction base="xs:string">
+            <xs:enumeration value="POLYGONS"/>
+            <xs:enumeration value="CIRCLES"/>
+        </xs:restriction>
+    </xs:simpleType>
+
+    <xs:simpleType name="labelPosition">
+        <xs:restriction base="xs:string">
+            <xs:enumeration value="LEFT"/>
+            <xs:enumeration value="CENTER"/>
+            <xs:enumeration value="RIGHT"/>
+        </xs:restriction>
+    </xs:simpleType>
+
+    <xs:simpleType name="legendPosition">
+        <xs:restriction base="xs:string">
+            <xs:enumeration value="TOP"/>
+            <xs:enumeration value="BOTTOM"/>
+            <xs:enumeration value="LEFT"/>
+            <xs:enumeration value="RIGHT"/>
+            <xs:enumeration value="ABSOLUTE"/>
+        </xs:restriction>
+    </xs:simpleType>
+
+    <xs:simpleType name="legendSwitch">
+        <xs:restriction base="xs:string">
+            <xs:enumeration value="X"/>
+            <xs:enumeration value="V"/>
+        </xs:restriction>
+    </xs:simpleType>
+
+    <xs:simpleType name="markerType">
+        <xs:restriction base="xs:string">
+            <xs:enumeration value="NONE"/>
+            <xs:enumeration value="CIRCLE"/>
+            <xs:enumeration value="SQUARE"/>
+            <xs:enumeration value="TRIANGLE_UP"/>
+            <xs:enumeration value="TRIANGLE_DOWN"/>
+            <xs:enumeration value="TRIANGLE_LEFT"/>
+            <xs:enumeration value="TRIANGLE_RIGHT"/>
+            <xs:enumeration value="BUBBLE"/>
+            <xs:enumeration value="DIAMOND"/>
+        </xs:restriction>
+    </xs:simpleType>
+
+    <xs:simpleType name="pointPosition">
+        <xs:restriction base="xs:string">
+            <xs:enumeration value="START"/>
+            <xs:enumeration value="MIDDLE"/>
+            <xs:enumeration value="END"/>
+        </xs:restriction>
+    </xs:simpleType>
+
+    <xs:simpleType name="position">
+        <xs:restriction base="xs:string">
+            <xs:enumeration value="TOP"/>
+            <xs:enumeration value="BOTTOM"/>
+            <xs:enumeration value="LEFT"/>
+            <xs:enumeration value="RIGHT"/>
+        </xs:restriction>
+    </xs:simpleType>
+
+    <xs:simpleType name="stackType">
+        <xs:restriction base="xs:string">
+            <xs:enumeration value="NONE"/>
+            <xs:enumeration value="REGULAR"/>
+            <xs:enumeration value="FILL"/>
+            <xs:enumeration value="BOX_3D"/>
+        </xs:restriction>
+    </xs:simpleType>
+
+    <xs:simpleType name="stepDirection">
+        <xs:restriction base="xs:string">
+            <xs:enumeration value="LEFT"/>
+            <xs:enumeration value="RIGHT"/>
+        </xs:restriction>
+    </xs:simpleType>
+
+    <xs:simpleType name="unitPosition">
+        <xs:restriction base="xs:string">
+            <xs:enumeration value="LEFT"/>
+            <xs:enumeration value="RIGHT"/>
+        </xs:restriction>
+    </xs:simpleType>
+
+    <xs:simpleType name="valueAlign">
+        <xs:restriction base="xs:string">
+            <xs:enumeration value="LEFT"/>
+            <xs:enumeration value="RIGHT"/>
+        </xs:restriction>
+    </xs:simpleType>
+
+    <xs:simpleType name="valueLabelPosition">
+        <xs:restriction base="xs:string">
+            <xs:enumeration value="BOTTOM"/>
+            <xs:enumeration value="TOP"/>
+            <xs:enumeration value="RIGHT"/>
+            <xs:enumeration value="LEFT"/>
+            <xs:enumeration value="INSIDE"/>
+            <xs:enumeration value="MIDDLE"/>
+        </xs:restriction>
+    </xs:simpleType>
+
+    <xs:simpleType name="funnelValueRepresentation">
+        <xs:restriction base="xs:string">
+            <xs:enumeration value="HEIGHT"/>
+            <xs:enumeration value="AREA"/>
+        </xs:restriction>
+    </xs:simpleType>
+
+    <!-- Shared attributes -->
+
+    <xs:attributeGroup name="hasMargins">
+        <xs:attribute name="marginBottom" type="xs:integer"/>
+        <xs:attribute name="marginLeft" type="xs:integer"/>
+        <xs:attribute name="marginRight" type="xs:integer"/>
+        <xs:attribute name="marginTop" type="xs:integer"/>
+    </xs:attributeGroup>
+
+    <!-- Chart controls -->
+
+    <xs:complexType name="balloon">
+        <xs:attribute name="adjustBorderColor" type="xs:boolean"/>
+        <xs:attribute name="animationDuration" type="xs:double"/>
+        <xs:attribute name="borderAlpha" type="xs:double"/>
+        <xs:attribute name="borderColor" type="color"/>
+        <xs:attribute name="borderThickness" type="xs:integer"/>
+        <xs:attribute name="color" type="color"/>
+        <xs:attribute name="cornerRadius" type="xs:integer"/>
+        <xs:attribute name="fadeOutDuration" type="xs:double"/>
+        <xs:attribute name="fillAlpha" type="xs:double"/>
+        <xs:attribute name="fillColor" type="color"/>
+        <xs:attribute name="fixedPosition" type="xs:double"/>
+        <xs:attribute name="fontSize" type="xs:integer"/>
+        <xs:attribute name="horizontalPadding" type="xs:integer"/>
+        <xs:attribute name="offsetX" type="xs:integer"/>
+        <xs:attribute name="offsetY" type="xs:integer"/>
+        <xs:attribute name="pointerWidth" type="xs:integer"/>
+        <xs:attribute name="shadowAlpha" type="xs:double"/>
+        <xs:attribute name="shadowColor" type="color"/>
+        <xs:attribute name="showBullet" type="xs:boolean"/>
+        <xs:attribute name="textAlign" type="align"/>
+        <xs:attribute name="verticalPadding" type="xs:integer"/>
+    </xs:complexType>
+
+    <xs:complexType name="exportMenuItem">
+        <xs:attribute name="title" type="xs:string"/>
+        <xs:attribute name="format" type="exportFormat"/>
+    </xs:complexType>
+
+    <xs:complexType name="exportMenu">
+        <xs:all>
+            <xs:element name="onClick" minOccurs="0" maxOccurs="1"/>
+            <xs:element name="items" minOccurs="1" maxOccurs="1">
+                <xs:complexType>
+                    <xs:sequence>
+                        <xs:element name="item" type="exportMenuItem" minOccurs="0" maxOccurs="unbounded"/>
+                    </xs:sequence>
+                </xs:complexType>
+            </xs:element>
+        </xs:all>
+
+        <xs:attribute name="textAlign" type="align"/>
+        <xs:attribute name="icon" type="xs:string"/>
+        <xs:attribute name="iconTitle" type="xs:string"/>
+        <xs:attribute name="format" type="exportFormat"/>
+    </xs:complexType>
+
+    <xs:complexType name="menuItemStyle">
+        <xs:attribute name="backgroundColor" type="color"/>
+        <xs:attribute name="rollOverBackgroundColor" type="color"/>
+        <xs:attribute name="color" type="color"/>
+        <xs:attribute name="rollOverColor" type="color"/>
+
+        <xs:attribute name="paddingTop" type="xs:string"/>
+        <xs:attribute name="paddingRight" type="xs:string"/>
+        <xs:attribute name="paddingBottom" type="xs:string"/>
+        <xs:attribute name="paddingLeft" type="xs:string"/>
+
+        <xs:attribute name="marginTop" type="xs:string"/>
+        <xs:attribute name="marginRight" type="xs:string"/>
+        <xs:attribute name="marginBottom" type="xs:string"/>
+        <xs:attribute name="marginLeft" type="xs:string"/>
+
+        <xs:attribute name="textAlign" type="align"/>
+        <xs:attribute name="textDecoration" type="xs:string"/>
+    </xs:complexType>
+
+    <xs:complexType name="exportConfig">
+        <xs:all>
+            <xs:element name="menuItems" minOccurs="1" maxOccurs="1">
+                <xs:complexType>
+                    <xs:sequence>
+                        <xs:element name="menu" type="exportMenu" minOccurs="0" maxOccurs="unbounded"/>
+                    </xs:sequence>
+                </xs:complexType>
+            </xs:element>
+            <xs:element name="menuItemStyle" minOccurs="0" maxOccurs="1" type="menuItemStyle"/>
+        </xs:all>
+
+        <xs:attribute name="menuTop" type="xs:string"/>
+        <xs:attribute name="menuLeft" type="xs:string"/>
+        <xs:attribute name="menuRight" type="xs:string"/>
+        <xs:attribute name="menuBottom" type="xs:string"/>
+    </xs:complexType>
+
+    <xs:complexType name="gaugeAxis">
+        <xs:all>
+            <xs:element name="bands" minOccurs="1" maxOccurs="1">
+                <xs:complexType>
+                    <xs:sequence>
+                        <xs:element name="band" type="gaugeBand" minOccurs="0" maxOccurs="unbounded"/>
+                    </xs:sequence>
+                </xs:complexType>
+            </xs:element>
+        </xs:all>
+
+        <xs:attribute name="axisAlpha" type="xs:double"/>
+        <xs:attribute name="axisColor" type="color"/>
+        <xs:attribute name="axisThickness" type="xs:integer"/>
+        <xs:attribute name="bandAlpha" type="xs:double"/>
+        <xs:attribute name="bandOutlineAlpha" type="xs:double"/>
+        <xs:attribute name="bandOutlineColor" type="color"/>
+        <xs:attribute name="bandOutlineThickness" type="xs:integer"/>
+        <xs:attribute name="bottomText" type="xs:string"/>
+        <xs:attribute name="bottomTextBold" type="xs:boolean"/>
+        <xs:attribute name="bottomTextColor" type="color"/>
+        <xs:attribute name="bottomTextFontSize" type="xs:integer"/>
+        <xs:attribute name="bottomTextYOffset" type="xs:integer"/>
+        <xs:attribute name="centerX" type="xs:string"/>
+        <xs:attribute name="centerY" type="xs:string"/>
+        <xs:attribute name="endAngle" type="xs:integer"/>
+        <xs:attribute name="endValue" type="xs:double"/>
+        <xs:attribute name="gridInside" type="xs:boolean"/>
+        <xs:attribute name="inside" type="xs:boolean"/>
+        <xs:attribute name="labelFrequency" type="xs:double"/>
+        <xs:attribute name="labelOffset" type="xs:integer"/>
+        <xs:attribute name="minorTickInterval" type="xs:integer"/>
+        <xs:attribute name="minorTickLength" type="xs:integer"/>
+        <xs:attribute name="radius" type="xs:string"/>
+        <xs:attribute name="showFirstLabel" type="xs:string"/>
+        <xs:attribute name="showLastLabel" type="xs:string"/>
+        <xs:attribute name="startAngle" type="xs:integer"/>
+        <xs:attribute name="startValue" type="xs:double"/>
+        <xs:attribute name="tickAlpha" type="xs:double"/>
+        <xs:attribute name="tickColor" type="color"/>
+        <xs:attribute name="tickLength" type="xs:integer"/>
+        <xs:attribute name="tickThickness" type="xs:integer"/>
+        <xs:attribute name="topText" type="xs:string"/>
+        <xs:attribute name="topTextBold" type="xs:boolean"/>
+        <xs:attribute name="topTextColor" type="color"/>
+        <xs:attribute name="topTextFontSize" type="xs:integer"/>
+        <xs:attribute name="topTextYOffset" type="xs:integer"/>
+        <xs:attribute name="unit" type="xs:string"/>
+        <xs:attribute name="unitPosition" type="unitPosition"/>
+        <xs:attribute name="valueInterval" type="xs:integer"/>
+    </xs:complexType>
+
+    <xs:complexType name="gaugeBand">
+        <xs:attribute name="alpha" type="xs:double"/>
+        <xs:attribute name="color" type="color"/>
+        <xs:attribute name="endValue" type="xs:double"/>
+        <xs:attribute name="innerRadius" type="xs:string"/>
+        <xs:attribute name="radius" type="xs:string"/>
+        <xs:attribute name="startValue" type="xs:date"/>
+    </xs:complexType>
+
+    <xs:complexType name="gaugeArrow">
+        <xs:attribute name="alpha" type="xs:double"/>
+        <xs:attribute name="axis" type="xs:string"/>
+        <xs:attribute name="borderAlpha" type="xs:double"/>
+        <xs:attribute name="clockWiseOnly" type="xs:boolean"/>
+        <xs:attribute name="color" type="color"/>
+        <xs:attribute name="innerRadius" type="xs:string"/>
+        <xs:attribute name="nailAlpha" type="xs:double"/>
+        <xs:attribute name="nailBorderAlpha" type="xs:double"/>
+        <xs:attribute name="nailBorderThickness" type="xs:double"/>
+        <xs:attribute name="nailRadius" type="xs:integer"/>
+        <xs:attribute name="radius" type="xs:string"/>
+        <xs:attribute name="startWidth" type="xs:integer"/>
+    </xs:complexType>
+
+    <xs:complexType name="guide">
+        <xs:attribute name="above" type="xs:boolean"/>
+        <xs:attribute name="angle" type="xs:integer"/>
+        <xs:attribute name="balloonColor" type="color"/>
+        <xs:attribute name="balloonText" type="xs:string"/>
+        <xs:attribute name="category" type="xs:string"/>
+        <xs:attribute name="dashLength" type="xs:integer"/>
+        <xs:attribute name="date" type="xs:date"/>
+        <xs:attribute name="fillAlpha" type="xs:double"/>
+        <xs:attribute name="fillColor" type="color"/>
+        <xs:attribute name="fontSize" type="xs:integer"/>
+        <xs:attribute name="inside" type="xs:boolean"/>
+        <xs:attribute name="label" type="xs:string"/>
+        <xs:attribute name="labelRotation" type="xs:integer"/>
+        <xs:attribute name="lineAlpha" type="xs:double"/>
+        <xs:attribute name="lineColor" type="color"/>
+        <xs:attribute name="lineThickness" type="xs:integer"/>
+        <xs:attribute name="position" type="position"/>
+        <xs:attribute name="tickLength" type="xs:integer"/>
+        <xs:attribute name="toAngle" type="xs:integer"/>
+        <xs:attribute name="toCategory" type="xs:string"/>
+        <xs:attribute name="toDate" type="xs:date"/>
+        <xs:attribute name="toValue" type="xs:double"/>
+        <xs:attribute name="value" type="xs:double"/>
+    </xs:complexType>
+
+    <xs:complexType name="abstractAxis" abstract="true">
+        <xs:all>
+            <xs:element name="guides" minOccurs="0" maxOccurs="1">
+                <xs:complexType>
+                    <xs:sequence minOccurs="0" maxOccurs="1">
+                        <xs:element name="guide" minOccurs="0" maxOccurs="unbounded" type="guide"/>
+                    </xs:sequence>
+                </xs:complexType>
+            </xs:element>
+            <xs:element name="labelFunction" minOccurs="0" maxOccurs="1"/>
+        </xs:all>
+
+        <xs:attribute name="autoGridCount" type="xs:boolean"/>
+        <xs:attribute name="axisAlpha" type="xs:double"/>
+        <xs:attribute name="axisColor" type="color"/>
+        <xs:attribute name="axisThickness" type="xs:integer"/>
+        <xs:attribute name="color" type="color"/>
+        <xs:attribute name="dashLength" type="xs:integer"/>
+        <xs:attribute name="fillAlpha" type="xs:double"/>
+        <xs:attribute name="fillColor" type="color"/>
+        <xs:attribute name="fontSize" type="xs:integer"/>
+        <xs:attribute name="gridAlpha" type="xs:double"/>
+        <xs:attribute name="gridColor" type="color"/>
+        <xs:attribute name="gridCount" type="xs:integer"/>
+        <xs:attribute name="gridThickness" type="xs:integer"/>
+        <xs:attribute name="ignoreAxisWidth" type="xs:boolean"/>
+        <xs:attribute name="inside" type="xs:boolean"/>
+        <xs:attribute name="labelFrequency" type="xs:double"/>
+        <xs:attribute name="labelRotation" type="xs:integer"/>
+        <xs:attribute name="labelsEnabled" type="xs:integer"/>
+        <xs:attribute name="minHorizontalGap" type="xs:integer"/>
+        <xs:attribute name="minorGridAlpha" type="xs:double"/>
+        <xs:attribute name="minorGridEnabled" type="xs:boolean"/>
+        <xs:attribute name="minVerticalGap" type="xs:integer"/>
+        <xs:attribute name="offset" type="xs:integer"/>
+        <xs:attribute name="position" type="position"/>
+        <xs:attribute name="showFirstLabel" type="xs:boolean"/>
+        <xs:attribute name="showLastLabel" type="xs:boolean"/>
+        <xs:attribute name="tickLength" type="xs:integer"/>
+        <xs:attribute name="title" type="xs:string"/>
+        <xs:attribute name="titleBold" type="xs:boolean"/>
+        <xs:attribute name="titleColor" type="color"/>
+        <xs:attribute name="titleFontSize" type="xs:integer"/>
+    </xs:complexType>
+
+    <xs:complexType name="categoryAxis">
+        <xs:complexContent>
+            <xs:extension base="abstractAxis">
+                <xs:all>
+                    <xs:element name="categoryFunction" minOccurs="0" maxOccurs="1"/>
+                </xs:all>
+
+                <xs:attribute name="autoWrap" type="xs:boolean"/>
+                <xs:attribute name="boldPeriodBeginning" type="xs:boolean"/>
+                <xs:attribute name="centerLabelOnFullPeriod" type="xs:boolean"/>
+                <xs:attribute name="equalSpacing" type="xs:boolean"/>
+                <xs:attribute name="forceShowField" type="xs:string"/>
+                <xs:attribute name="gridPosition" type="gridPosition"/>
+                <xs:attribute name="markPeriodChange" type="xs:boolean"/>
+                <xs:attribute name="minPeriod" type="datePeriod"/>
+                <xs:attribute name="startOnAxis" type="xs:boolean"/>
+            </xs:extension>
+        </xs:complexContent>
+    </xs:complexType>
+
+    <xs:complexType name="legendItem">
+        <xs:attribute name="title" type="xs:string"/>
+        <xs:attribute name="color" type="color"/>
+        <xs:attribute name="markerType" type="markerType"/>
+    </xs:complexType>
+
+    <xs:complexType name="legend">
+        <xs:all>
+            <xs:element name="data" minOccurs="0" maxOccurs="1">
+                <xs:complexType>
+                    <xs:sequence minOccurs="0" maxOccurs="1">
+                        <xs:element name="item" minOccurs="0" maxOccurs="unbounded" type="legendItem"/>
+                    </xs:sequence>
+                </xs:complexType>
+            </xs:element>
+        </xs:all>
+
+        <xs:attribute name="align" type="align"/>
+        <xs:attribute name="autoMargins" type="xs:boolean"/>
+        <xs:attribute name="backgroundAlpha" type="xs:double"/>
+        <xs:attribute name="backgroundColor" type="color"/>
+        <xs:attribute name="borderAlpha" type="xs:double"/>
+        <xs:attribute name="borderColor" type="color"/>
+        <xs:attribute name="bottom" type="xs:integer"/>
+        <xs:attribute name="color" type="color"/>
+        <xs:attribute name="equalWidths" type="xs:boolean"/>
+        <xs:attribute name="fontSize" type="xs:integer"/>
+        <xs:attribute name="horizontalGap" type="xs:integer"/>
+        <xs:attribute name="labelText" type="xs:string"/>
+        <xs:attribute name="left" type="xs:integer"/>
+
+        <xs:attributeGroup ref="hasMargins"/>
+
+        <xs:attribute name="markerBorderAlpha" type="xs:double"/>
+        <xs:attribute name="markerBorderColor" type="color"/>
+        <xs:attribute name="markerBorderThickness" type="xs:integer"/>
+        <xs:attribute name="markerDisabledColor" type="color"/>
+        <xs:attribute name="markerLabelGap" type="xs:integer"/>
+        <xs:attribute name="markerSize" type="xs:integer"/>
+        <xs:attribute name="markerType" type="markerType"/>
+        <xs:attribute name="maxColumns" type="xs:integer"/>
+        <xs:attribute name="periodValueText" type="xs:string"/>
+        <xs:attribute name="position" type="legendPosition"/>
+        <xs:attribute name="reversedOrder" type="xs:boolean"/>
+        <xs:attribute name="right" type="xs:integer"/>
+        <xs:attribute name="rollOverColor" type="color"/>
+        <xs:attribute name="rollOverGraphAlpha" type="xs:double"/>
+        <xs:attribute name="showEntries" type="xs:boolean"/>
+        <xs:attribute name="spacing" type="xs:integer"/>
+        <xs:attribute name="switchable" type="xs:boolean"/>
+        <xs:attribute name="switchColor" type="color"/>
+        <xs:attribute name="switchType" type="legendSwitch"/>
+        <xs:attribute name="textClickEnabled" type="xs:boolean"/>
+        <xs:attribute name="top" type="xs:integer"/>
+        <xs:attribute name="useGraphSettings" type="xs:boolean"/>
+        <xs:attribute name="useMarkerColorForLabels" type="xs:boolean"/>
+        <xs:attribute name="useMarkerColorForValues" type="xs:boolean"/>
+        <xs:attribute name="valueAlign" type="valueAlign"/>
+        <xs:attribute name="valueText" type="xs:string"/>
+        <xs:attribute name="valueWidth" type="xs:integer"/>
+        <xs:attribute name="verticalGap" type="xs:integer"/>
+    </xs:complexType>
+
+    <xs:complexType name="label">
+        <xs:attribute name="x" type="xs:integer"/>
+        <xs:attribute name="y" type="xs:integer"/>
+        <xs:attribute name="text" type="xs:string"/>
+        <xs:attribute name="align" type="align"/>
+        <xs:attribute name="size" type="xs:integer"/>
+        <xs:attribute name="color" type="color"/>
+        <xs:attribute name="alpha" type="xs:double"/>
+        <xs:attribute name="rotation" type="xs:integer"/>
+        <xs:attribute name="bold" type="xs:boolean"/>
+        <xs:attribute name="url" type="xs:string"/>
+    </xs:complexType>
+
+    <xs:complexType name="title">
+        <xs:attribute name="title" type="xs:string"/>
+        <xs:attribute name="size" type="xs:integer"/>
+        <xs:attribute name="color" type="color"/>
+        <xs:attribute name="alpha" type="xs:double"/>
+        <xs:attribute name="bold" type="xs:boolean"/>
+    </xs:complexType>
+
+    <xs:complexType name="pattern">
+        <xs:attribute name="url" type="xs:string"/>
+        <xs:attribute name="width" type="xs:string"/>
+        <xs:attribute name="height" type="xs:string"/>
+    </xs:complexType>
+
+    <xs:complexType name="valueAxis">
+        <xs:complexContent>
+            <xs:extension base="abstractAxis">
+                <xs:attribute name="id" type="xs:string"/>
+
+                <xs:attribute name="axisTitleOffset" type="xs:integer"/>
+                <xs:attribute name="baseValue" type="xs:double"/>
+                <xs:attribute name="duration" type="duration"/>
+                <xs:attribute name="gridType" type="gridType"/>
+                <xs:attribute name="includeGuidesInMinMax" type="xs:boolean"/>
+                <xs:attribute name="includeHidden" type="xs:boolean"/>
+                <xs:attribute name="integersOnly" type="xs:boolean"/>
+                <xs:attribute name="logarithmic" type="xs:boolean"/>
+                <xs:attribute name="maximum" type="xs:double"/>
+                <xs:attribute name="minimum" type="xs:double"/>
+                <xs:attribute name="minMaxMultiplier" type="xs:double"/>
+                <xs:attribute name="precision" type="xs:integer"/>
+                <xs:attribute name="radarCategoriesEnabled" type="xs:boolean"/>
+                <xs:attribute name="recalculateToPercents" type="xs:boolean"/>
+                <xs:attribute name="reversed" type="xs:boolean"/>
+                <xs:attribute name="stackType" type="stackType"/>
+                <xs:attribute name="synchronizationMultiplier" type="xs:double"/>
+                <xs:attribute name="synchronizeWith" type="xs:string"/>
+                <xs:attribute name="totalText" type="xs:string"/>
+                <xs:attribute name="totalTextColor" type="color"/>
+                <xs:attribute name="unit" type="xs:string"/>
+                <xs:attribute name="unitPosition" type="unitPosition"/>
+                <xs:attribute name="usePrefixes" type="xs:boolean"/>
+                <xs:attribute name="useScientificNotation" type="xs:boolean"/>
+            </xs:extension>
+        </xs:complexContent>
+    </xs:complexType>
+
+    <xs:complexType name="chartCursor">
+        <xs:all>
+            <xs:element name="categoryBalloonFunction" minOccurs="0" maxOccurs="1"/>
+        </xs:all>
+
+        <xs:attribute name="animationDuration" type="xs:double"/>
+        <xs:attribute name="bulletsEnabled" type="xs:boolean"/>
+        <xs:attribute name="bulletSize" type="xs:integer"/>
+        <xs:attribute name="categoryBalloonAlpha" type="xs:double"/>
+        <xs:attribute name="categoryBalloonColor" type="color"/>
+        <xs:attribute name="categoryBalloonDateFormat" type="xs:string"/>
+        <xs:attribute name="categoryBalloonEnabled" type="xs:boolean"/>
+        <xs:attribute name="color" type="color"/>
+        <xs:attribute name="cursorAlpha" type="xs:double"/>
+        <xs:attribute name="cursorColor" type="color"/>
+        <xs:attribute name="cursorPosition" type="cursorPosition"/>
+        <xs:attribute name="enabled" type="xs:boolean"/>
+        <xs:attribute name="graphBulletSize" type="xs:double"/>
+        <xs:attribute name="oneBalloonOnly" type="xs:boolean"/>
+        <xs:attribute name="pan" type="xs:boolean"/>
+        <xs:attribute name="selectionAlpha" type="xs:double"/>
+        <xs:attribute name="selectWithoutZooming" type="xs:boolean"/>
+        <xs:attribute name="showNextAvailable" type="xs:boolean"/>
+        <xs:attribute name="valueBalloonsEnabled" type="xs:boolean"/>
+        <xs:attribute name="zoomable" type="xs:boolean"/>
+    </xs:complexType>
+
+    <xs:complexType name="trendLine">
+        <xs:attribute name="dashLength" type="xs:integer"/>
+        <xs:attribute name="finalCategory" type="xs:string"/>
+        <xs:attribute name="finalDate" type="xs:date"/>
+        <xs:attribute name="finalValue" type="xs:double"/>
+        <xs:attribute name="finalXValue" type="xs:double"/>
+        <xs:attribute name="initialCategory" type="xs:string"/>
+        <xs:attribute name="initialDate" type="xs:date"/>
+        <xs:attribute name="initialValue" type="xs:double"/>
+        <xs:attribute name="initialXValue" type="xs:double"/>
+        <xs:attribute name="isProtected" type="xs:boolean"/>
+        <xs:attribute name="lineAlpha" type="xs:double"/>
+        <xs:attribute name="lineColor" type="color"/>
+        <xs:attribute name="lineThickness" type="xs:integer"/>
+        <xs:attribute name="valueAxis" type="xs:string"/>
+        <xs:attribute name="valueAxisX" type="xs:string"/>
+    </xs:complexType>
+
+    <xs:complexType name="chartScrollbar">
+        <xs:attribute name="autoGridCount" type="xs:boolean"/>
+        <xs:attribute name="backgroundAlpha" type="xs:double"/>
+        <xs:attribute name="backgroundColor" type="color"/>
+        <xs:attribute name="color" type="color"/>
+        <xs:attribute name="dragIconHeight" type="xs:integer"/>
+        <xs:attribute name="dragIconWidth" type="xs:integer"/>
+        <xs:attribute name="graph" type="xs:string"/>
+        <xs:attribute name="graphFillAlpha" type="xs:double"/>
+        <xs:attribute name="graphFillColor" type="color"/>
+        <xs:attribute name="graphLineAlpha" type="xs:double"/>
+        <xs:attribute name="graphLineColor" type="color"/>
+        <xs:attribute name="graphType" type="graphType"/>
+        <xs:attribute name="gridAlpha" type="xs:double"/>
+        <xs:attribute name="gridColor" type="color"/>
+        <xs:attribute name="gridCount" type="xs:integer"/>
+        <xs:attribute name="hideResizeGrips" type="xs:boolean"/>
+        <xs:attribute name="maximum" type="xs:double"/>
+        <xs:attribute name="minimum" type="xs:double"/>
+        <xs:attribute name="resizeEnabled" type="xs:boolean"/>
+        <xs:attribute name="scrollbarHeight" type="xs:integer"/>
+        <xs:attribute name="scrollDuration" type="xs:double"/>
+        <xs:attribute name="selectedBackgroundAlpha" type="xs:double"/>
+        <xs:attribute name="selectedBackgroundColor" type="color"/>
+        <xs:attribute name="selectedGraphFillAlpha" type="xs:double"/>
+        <xs:attribute name="selectedGraphFillColor" type="color"/>
+        <xs:attribute name="selectedGraphLineAlpha" type="xs:double"/>
+        <xs:attribute name="selectedGraphLineColor" type="color"/>
+        <xs:attribute name="updateOnReleaseOnly" type="xs:boolean"/>
+    </xs:complexType>
+
+    <xs:complexType name="chartGraph">
+        <xs:all>
+            <xs:element name="balloonFunction" minOccurs="0" maxOccurs="1"/>
+        </xs:all>
+
+        <xs:attribute name="id" type="xs:string"/>
+        <xs:attribute name="type" type="chartGraphType" use="required"/>
+
+        <xs:attribute name="alphaField" type="xs:string"/>
+        <xs:attribute name="balloonColor" type="color"/>
+        <xs:attribute name="balloonText" type="xs:string"/>
+        <xs:attribute name="behindColumns" type="xs:boolean"/>
+        <xs:attribute name="bullet" type="bulletType"/>
+        <xs:attribute name="bulletAlpha" type="xs:double"/>
+        <xs:attribute name="bulletAxis" type="xs:string"/>
+        <xs:attribute name="bulletBorderAlpha" type="xs:double"/>
+        <xs:attribute name="bulletBorderColor" type="color"/>
+        <xs:attribute name="bulletBorderThickness" type="xs:integer"/>
+        <xs:attribute name="bulletColor" type="color"/>
+        <xs:attribute name="bulletField" type="xs:string"/>
+        <xs:attribute name="bulletOffset" type="xs:integer"/>
+        <xs:attribute name="bulletSize" type="xs:integer"/>
+        <xs:attribute name="bulletSizeField" type="xs:string"/>
+        <xs:attribute name="closeField" type="xs:string"/>
+        <xs:attribute name="clustered" type="xs:boolean"/>
+        <xs:attribute name="color" type="color"/>
+        <xs:attribute name="colorField" type="xs:string"/>
+        <xs:attribute name="columnWidth" type="xs:string"/>
+        <xs:attribute name="connect" type="xs:boolean"/>
+        <xs:attribute name="cornerRadiusTop" type="xs:integer"/>
+        <xs:attribute name="cursorBulletAlpha" type="xs:double"/>
+        <xs:attribute name="customBullet" type="xs:string"/>
+        <xs:attribute name="customBulletField" type="xs:string"/>
+        <xs:attribute name="customMarker" type="xs:string"/>
+        <xs:attribute name="dashLength" type="xs:integer"/>
+        <xs:attribute name="dashLengthField" type="xs:string"/>
+        <xs:attribute name="descriptionField" type="xs:string"/>
+        <xs:attribute name="errorField" type="xs:string"/>
+        <xs:attribute name="fillAlphas" type="xs:double"/>
+        <xs:attribute name="fillColors" type="color"/>
+        <xs:attribute name="fillColorsField" type="xs:string"/>
+        <xs:attribute name="fillToGraph" type="xs:string"/>
+        <xs:attribute name="fontSize" type="xs:integer"/>
+        <xs:attribute name="gradientOrientation" type="gradientOrientation"/>
+        <xs:attribute name="hidden" type="xs:boolean"/>
+        <xs:attribute name="hideBulletsCount" type="xs:integer"/>
+        <xs:attribute name="highField" type="xs:string"/>
+        <xs:attribute name="includeInMinMax" type="xs:boolean"/>
+        <xs:attribute name="labelColorField" type="xs:string"/>
+        <xs:attribute name="labelPosition" type="valueLabelPosition"/>
+        <xs:attribute name="labelText" type="xs:string"/>
+        <xs:attribute name="legendAlpha" type="xs:double"/>
+        <xs:attribute name="legendColor" type="color"/>
+        <xs:attribute name="legendPeriodValueText" type="xs:string"/>
+        <xs:attribute name="legendValueText" type="xs:string"/>
+        <xs:attribute name="lineAlpha" type="xs:boolean"/>
+        <xs:attribute name="lineColor" type="color"/>
+        <xs:attribute name="lineColorField" type="xs:string"/>
+        <xs:attribute name="lineThickness" type="xs:integer"/>
+        <xs:attribute name="lowField" type="xs:string"/>
+        <xs:attribute name="markerType" type="markerType"/>
+        <xs:attribute name="maxBulletSize" type="xs:integer"/>
+        <xs:attribute name="minBulletSize" type="xs:integer"/>
+        <xs:attribute name="negativeBase" type="xs:double"/>
+        <xs:attribute name="negativeFillAlphas" type="xs:double"/>
+        <xs:attribute name="negativeFillColors" type="color"/>
+        <xs:attribute name="negativeLineAlpha" type="xs:double"/>
+        <xs:attribute name="negativeLineColor" type="color"/>
+        <xs:attribute name="noStepRisers" type="xs:boolean"/>
+        <xs:attribute name="openField" type="xs:string"/>
+        <xs:attribute name="pattern" type="pattern"/>
+        <xs:attribute name="patternField" type="xs:string"/>
+        <xs:attribute name="periodSpan" type="xs:integer"/>
+        <xs:attribute name="pointPosition" type="pointPosition"/>
+        <xs:attribute name="showAllValueLabels" type="xs:boolean"/>
+        <xs:attribute name="showBalloon" type="xs:boolean"/>
+        <xs:attribute name="showBalloonAt" type="balloonShowPosition"/>
+        <xs:attribute name="showHandOnHover" type="xs:boolean"/>
+        <xs:attribute name="stackable" type="xs:boolean"/>
+        <xs:attribute name="stepDirection" type="stepDirection"/>
+        <xs:attribute name="title" type="xs:string"/>
+        <xs:attribute name="urlField" type="xs:string"/>
+        <xs:attribute name="useLineColorForBulletBorder" type="xs:boolean"/>
+        <xs:attribute name="valueAxis" type="xs:string"/>
+        <xs:attribute name="valueField" type="xs:string"/>
+        <xs:attribute name="visibleInLegend" type="xs:boolean"/>
+        <xs:attribute name="xAxis" type="xs:string"/>
+        <xs:attribute name="xField" type="xs:string"/>
+        <xs:attribute name="yAxis" type="xs:string"/>
+        <xs:attribute name="yField" type="xs:string"/>
+    </xs:complexType>
 
     <xs:simpleType name="vendorType">
         <xs:restriction base="xs:string">
@@ -28,4 +972,341 @@
             <xs:enumeration value="jsgantt"/>
         </xs:restriction>
     </xs:simpleType>
+
+    <!-- Abstract charts -->
+
+    <xs:complexType name="abstractChart" abstract="true">
+        <xs:all>
+            <xs:element name="allLabels" minOccurs="0" maxOccurs="1">
+                <xs:complexType>
+                    <xs:sequence minOccurs="0" maxOccurs="1">
+                        <xs:element name="label" minOccurs="0" maxOccurs="unbounded" type="label"/>
+                    </xs:sequence>
+                </xs:complexType>
+            </xs:element>
+            <xs:element name="titles" minOccurs="0" maxOccurs="1">
+                <xs:complexType>
+                    <xs:sequence minOccurs="0" maxOccurs="1">
+                        <xs:element name="label" minOccurs="0" maxOccurs="unbounded" type="title"/>
+                    </xs:sequence>
+                </xs:complexType>
+            </xs:element>
+            <xs:element name="balloon" minOccurs="0" maxOccurs="1" type="balloon"/>
+            <xs:element name="exportConfig" minOccurs="0" maxOccurs="1" type="exportConfig"/>
+            <xs:element name="legend" minOccurs="0" maxOccurs="1" type="legend"/>
+        </xs:all>
+
+        <xs:attribute name="id" type="xs:string"/>
+        <xs:attribute name="backgroundColor" type="color"/>
+        <xs:attribute name="borderAlpha" type="xs:string"/>
+        <xs:attribute name="borderColor" type="color"/>
+        <xs:attribute name="color" type="color"/>
+        <xs:attribute name="fontFamily" type="xs:string"/>
+        <xs:attribute name="fontSize" type="xs:integer"/>
+        <xs:attribute name="handDrawn" type="xs:boolean"/>
+        <xs:attribute name="handDrawScatter" type="xs:integer"/>
+        <xs:attribute name="handDrawThickness" type="xs:integer"/>
+        <xs:attribute name="height" type="xs:string"/>
+        <xs:attribute name="hideBalloonTime" type="xs:integer"/>
+        <xs:attribute name="panEventsEnabled" type="xs:boolean"/>
+        <xs:attribute name="usePrefixes" type="xs:boolean"/>
+        <xs:attribute name="theme" type="chartTheme"/>
+
+        <xs:anyAttribute namespace="##other" processContents="lax"/>
+    </xs:complexType>
+
+    <xs:complexType name="coordinateChart" abstract="true">
+        <xs:complexContent>
+            <xs:extension base="abstractChart">
+                <xs:all>
+                    <xs:element name="colors" minOccurs="0" maxOccurs="1">
+                        <xs:complexType>
+                            <xs:sequence minOccurs="0" maxOccurs="1">
+                                <xs:element name="color" minOccurs="0" maxOccurs="unbounded">
+                                    <xs:complexType>
+                                        <xs:attribute name="value" type="color"/>
+                                    </xs:complexType>
+                                </xs:element>
+                            </xs:sequence>
+                        </xs:complexType>
+                    </xs:element>
+                    <xs:element name="graphs" minOccurs="0" maxOccurs="1">
+                        <xs:complexType>
+                            <xs:sequence minOccurs="0" maxOccurs="1">
+                                <xs:element name="graph" minOccurs="0" maxOccurs="unbounded" type="chartGraph"/>
+                            </xs:sequence>
+                        </xs:complexType>
+                    </xs:element>
+                    <xs:element name="valueAxes" minOccurs="0" maxOccurs="1">
+                        <xs:complexType>
+                            <xs:sequence minOccurs="0" maxOccurs="1">
+                                <xs:element name="axis" minOccurs="0" maxOccurs="unbounded" type="valueAxis"/>
+                            </xs:sequence>
+                        </xs:complexType>
+                    </xs:element>
+                </xs:all>
+
+                <xs:attribute name="startEffect" type="animationEffect"/>
+                <xs:attribute name="startDuration" type="xs:integer"/>
+                <xs:attribute name="startDuration" type="xs:integer"/>
+            </xs:extension>
+        </xs:complexContent>
+    </xs:complexType>
+
+    <xs:complexType name="rectangularChart" abstract="true">
+        <xs:complexContent>
+            <xs:extension base="coordinateChart">
+                <xs:all>
+                    <xs:element name="trendLines" minOccurs="0" maxOccurs="1">
+                        <xs:complexType>
+                            <xs:sequence minOccurs="0" maxOccurs="1">
+                                <xs:element name="trendLine" minOccurs="0" maxOccurs="unbounded" type="trendLine"/>
+                            </xs:sequence>
+                        </xs:complexType>
+                    </xs:element>
+                </xs:all>
+
+                <xs:attribute name="angle" type="xs:integer"/>
+                <xs:attribute name="autoMarginOffset" type="xs:integer"/>
+                <xs:attribute name="autoMargins" type="xs:boolean"/>
+                <xs:attribute name="chartCursor" type="chartCursor"/>
+                <xs:attribute name="chartScrollbar" type="chartScrollbar"/>
+                <xs:attribute name="depth3D" type="xs:integer"/>
+
+                <xs:attributeGroup ref="hasMargins"/>
+
+                <xs:attribute name="marginsUpdated" type="xs:boolean"/>
+                <xs:attribute name="plotAreaBorderAlpha" type="xs:double"/>
+                <xs:attribute name="plotAreaBorderColor" type="color"/>
+                <xs:attribute name="plotAreaFillAlphas" type="xs:double"/>
+                <xs:attribute name="plotAreaFillColors" type="color"/>
+                <xs:attribute name="plotAreaGradientAngle" type="xs:integer"/>
+                <xs:attribute name="zoomOutButtonAlpha" type="xs:double"/>
+                <xs:attribute name="zoomOutButtonColor" type="color"/>
+                <xs:attribute name="zoomOutButtonImage" type="xs:string"/>
+                <xs:attribute name="zoomOutButtonImageSize" type="xs:integer"/>
+                <xs:attribute name="zoomOutButtonPadding" type="xs:integer"/>
+                <xs:attribute name="zoomOutButtonRollOverAlpha" type="xs:double"/>
+                <xs:attribute name="zoomOutText" type="xs:string"/>
+            </xs:extension>
+        </xs:complexContent>
+    </xs:complexType>
+
+    <xs:complexType name="slicedChart" abstract="true">
+        <xs:complexContent>
+            <xs:extension base="abstractChart">
+                <xs:all>
+                    <xs:element name="colors" minOccurs="0" maxOccurs="1">
+                        <xs:complexType>
+                            <xs:sequence minOccurs="0" maxOccurs="1">
+                                <xs:element name="color" minOccurs="0" maxOccurs="unbounded">
+                                    <xs:complexType>
+                                        <xs:attribute name="value" type="color"/>
+                                    </xs:complexType>
+                                </xs:element>
+                            </xs:sequence>
+                        </xs:complexType>
+                    </xs:element>
+                    <xs:element name="gradientRatios" minOccurs="0" maxOccurs="1">
+                        <xs:complexType>
+                            <xs:sequence minOccurs="0" maxOccurs="1">
+                                <xs:element name="ratio" minOccurs="0" maxOccurs="unbounded">
+                                    <xs:complexType>
+                                        <xs:attribute name="value" type="xs:double"/>
+                                    </xs:complexType>
+                                </xs:element>
+                            </xs:sequence>
+                        </xs:complexType>
+                    </xs:element>
+                </xs:all>
+
+                <xs:attribute name="alpha" type="xs:double"/>
+                <xs:attribute name="alphaField" type="xs:double"/>
+                <xs:attribute name="baseColor" type="color"/>
+                <xs:attribute name="brightnessStep" type="xs:byte"/>
+                <xs:attribute name="colorField" type="xs:string"/>
+                <xs:attribute name="descriptionField" type="xs:string"/>
+                <xs:attribute name="groupedAlpha" type="xs:double"/>
+                <xs:attribute name="groupedColor" type="color"/>
+                <xs:attribute name="groupedDescription" type="xs:string"/>
+                <xs:attribute name="groupedPulled" type="xs:boolean"/>
+                <xs:attribute name="groupedTitle" type="xs:string"/>
+                <xs:attribute name="groupPercent" type="xs:double"/>
+                <xs:attribute name="hideLabelsPercent" type="xs:double"/>
+                <xs:attribute name="hoverAlpha" type="xs:double"/>
+                <xs:attribute name="labelsEnabled" type="xs:boolean"/>
+                <xs:attribute name="labelTickAlpha" type="xs:double"/>
+                <xs:attribute name="labelTickColor" type="color"/>
+
+                <xs:attributeGroup ref="hasMargins"/>
+
+                <xs:attribute name="outlineAlpha" type="xs:double"/>
+                <xs:attribute name="outlineColor" type="color"/>
+                <xs:attribute name="outlineThickness" type="xs:integer"/>
+                <xs:attribute name="patternField" type="xs:string"/>
+                <xs:attribute name="pulledField" type="xs:string"/>
+                <xs:attribute name="pullOutDuration" type="xs:integer"/>
+                <xs:attribute name="pullOutEffect" type="animationEffect"/>
+                <xs:attribute name="pullOutOnlyOne" type="xs:boolean"/>
+                <xs:attribute name="sequencedAnimation" type="xs:boolean"/>
+                <xs:attribute name="startAlpha" type="xs:double"/>
+                <xs:attribute name="startDuration" type="xs:integer"/>
+                <xs:attribute name="startEffect" type="animationEffect"/>
+                <xs:attribute name="titleField" type="xs:string"/>
+                <xs:attribute name="urlField" type="xs:string"/>
+                <xs:attribute name="urlTarget" type="xs:string"/>
+                <xs:attribute name="valueField" type="xs:string"/>
+                <xs:attribute name="visibleInLegendField" type="xs:string"/>
+            </xs:extension>
+        </xs:complexContent>
+    </xs:complexType>
+
+    <!-- Charts -->
+
+    <xs:element name="gaugeChart">
+        <xs:complexType>
+            <xs:complexContent>
+                <xs:extension base="abstractChart">
+                    <xs:all>
+                        <xs:element name="arrows" minOccurs="0" maxOccurs="1">
+                            <xs:complexType>
+                                <xs:sequence minOccurs="0" maxOccurs="1">
+                                    <xs:element name="arrow" minOccurs="0" maxOccurs="unbounded" type="gaugeArrow"/>
+                                </xs:sequence>
+                            </xs:complexType>
+                        </xs:element>
+                        <xs:element name="axes" minOccurs="0" maxOccurs="1">
+                            <xs:complexType>
+                                <xs:sequence minOccurs="0" maxOccurs="1">
+                                    <xs:element name="axis" minOccurs="0" maxOccurs="unbounded" type="gaugeAxis"/>
+                                </xs:sequence>
+                            </xs:complexType>
+                        </xs:element>
+                    </xs:all>
+                    <!--axes-->
+
+                    <xs:attribute name="adjustSize" type="xs:boolean"/>
+                    <xs:attribute name="clockWiseOnly" type="xs:boolean"/>
+                    <xs:attribute name="faceAlpha" type="xs:double"/>
+                    <xs:attribute name="faceBorderAlpha" type="xs:double"/>
+                    <xs:attribute name="faceBorderColor" type="color"/>
+                    <xs:attribute name="faceBorderWidth" type="xs:integer"/>
+                    <xs:attribute name="faceColor" type="color"/>
+                    <xs:attribute name="facePattern" type="pattern"/>
+                    <xs:attribute name="gaugeX" type="xs:string"/>
+                    <xs:attribute name="gaugeY" type="xs:string"/>
+
+                    <xs:attributeGroup ref="hasMargins"/>
+
+                    <xs:attribute name="minRadius" type="xs:integer"/>
+                    <xs:attribute name="startDuration" type="xs:integer"/>
+                    <xs:attribute name="startEffect" type="animationEffect"/>
+                </xs:extension>
+            </xs:complexContent>
+        </xs:complexType>
+    </xs:element>
+
+    <xs:element name="funnelChart">
+        <xs:complexType>
+            <xs:complexContent>
+                <xs:extension base="slicedChart">
+                    <xs:attribute name="balloonText" type="xs:string"/>
+                    <xs:attribute name="baseWidth" type="xs:string"/>
+                    <xs:attribute name="labelPosition" type="labelPosition"/>
+                    <xs:attribute name="labelText" type="xs:string"/>
+                    <xs:attribute name="neckHeight" type="xs:string"/>
+                    <xs:attribute name="neckWidth" type="xs:string"/>
+                    <xs:attribute name="pullDistance" type="xs:string"/>
+                    <xs:attribute name="rotate" type="xs:boolean"/>
+                    <xs:attribute name="startX" type="xs:integer"/>
+                    <xs:attribute name="startY" type="xs:integer"/>
+                    <xs:attribute name="valueRepresents" type="funnelValueRepresentation"/>
+                </xs:extension>
+            </xs:complexContent>
+        </xs:complexType>
+    </xs:element>
+
+    <xs:element name="pieChart">
+        <xs:complexType>
+            <xs:complexContent>
+                <xs:extension base="slicedChart">
+                    <xs:attribute name="angle" type="xs:integer"/>
+                    <xs:attribute name="balloonText" type="xs:string"/>
+                    <xs:attribute name="depth3D" type="xs:integer"/>
+                    <xs:attribute name="innerRadius" type="xs:string"/>
+                    <xs:attribute name="labelRadius" type="xs:integer"/>
+                    <xs:attribute name="labelRadiusField" type="xs:string"/>
+                    <xs:attribute name="labelText" type="xs:string"/>
+                    <xs:attribute name="minRadius" type="xs:integer"/>
+                    <xs:attribute name="pieAlpha" type="xs:double"/>
+                    <xs:attribute name="pieX" type="xs:string"/>
+                    <xs:attribute name="pieY" type="xs:string"/>
+                    <xs:attribute name="pullOutRadius" type="xs:string"/>
+                    <xs:attribute name="radius" type="xs:string"/>
+                    <xs:attribute name="startAngle" type="xs:integer"/>
+                    <xs:attribute name="startRadius" type="xs:string"/>
+                </xs:extension>
+            </xs:complexContent>
+        </xs:complexType>
+    </xs:element>
+
+    <xs:element name="radarChart">
+        <xs:complexType>
+            <xs:complexContent>
+                <xs:extension base="coordinateChart">
+                    <xs:attribute name="categoryField" type="xs:string"/>
+
+                    <xs:attributeGroup ref="hasMargins"/>
+
+                    <xs:attribute name="radius" type="xs:string"/>
+                </xs:extension>
+            </xs:complexContent>
+        </xs:complexType>
+    </xs:element>
+
+    <xs:element name="serialChart">
+        <xs:complexType>
+            <xs:complexContent>
+                <xs:extension base="rectangularChart">
+                    <xs:all>
+                        <xs:element name="categoryAxis" minOccurs="0" maxOccurs="1" type="categoryAxis"/>
+                    </xs:all>
+
+                    <xs:attribute name="balloonDateFormat" type="xs:string"/>
+                    <xs:attribute name="categoryField" type="xs:string"/>
+                    <xs:attribute name="columnSpacing" type="xs:integer"/>
+                    <xs:attribute name="columnSpacing3D" type="xs:integer"/>
+                    <xs:attribute name="columnWidth" type="xs:double"/>
+                    <xs:attribute name="maxSelectedSeries" type="xs:integer"/>
+                    <xs:attribute name="mouseWheelScrollEnabled" type="xs:boolean"/>
+                    <xs:attribute name="rotate" type="xs:boolean"/>
+                    <xs:attribute name="zoomOutOnDataUpdate" type="xs:boolean"/>
+                </xs:extension>
+            </xs:complexContent>
+        </xs:complexType>
+    </xs:element>
+
+    <xs:element name="xyChart">
+        <xs:complexType>
+            <xs:complexContent>
+                <xs:extension base="rectangularChart">
+                    <xs:attribute name="hideXScrollbar" type="xs:boolean"/>
+                    <xs:attribute name="hideYScrollbar" type="xs:boolean"/>
+                    <xs:attribute name="maxZoomFactor" type="xs:integer"/>
+                </xs:extension>
+            </xs:complexContent>
+        </xs:complexType>
+    </xs:element>
+
+    <xs:element name="ganttChart">
+        <xs:complexType>
+            <xs:attribute name="id" type="xs:string"/>
+            <xs:attribute name="caption" type="xs:string" default="msg://"/>
+            <xs:attribute name="vendor" type="vendorType" default="jsgantt" use="required"/>
+            <xs:attribute name="width" type="xs:string"/>
+            <xs:attribute name="height" type="xs:string"/>
+            <xs:attribute name="visible" type="xs:string"/>
+            <xs:attribute name="datasource" type="xs:string" use="required"/>
+        </xs:complexType>
+    </xs:element>
 </xs:schema>

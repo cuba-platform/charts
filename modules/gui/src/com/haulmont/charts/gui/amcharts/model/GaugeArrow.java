@@ -31,7 +31,7 @@ public class GaugeArrow extends AbstractConfigurationObject {
 
     private Double nailBorderAlpha;
 
-    private Double nailBorderThickness;
+    private Integer nailBorderThickness;
 
     private Integer nailRadius;
 
@@ -102,11 +102,11 @@ public class GaugeArrow extends AbstractConfigurationObject {
         return this;
     }
 
-    public Double getNailBorderThickness() {
+    public Integer getNailBorderThickness() {
         return nailBorderThickness;
     }
 
-    public GaugeArrow setNailBorderThickness(Double nailBorderThickness) {
+    public GaugeArrow setNailBorderThickness(Integer nailBorderThickness) {
         this.nailBorderThickness = nailBorderThickness;
         return this;
     }

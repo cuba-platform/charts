@@ -18,8 +18,7 @@ import java.util.List;
  * @version $Id$
  */
 @SuppressWarnings("unchecked")
-public abstract class RectangularChart<T extends RectangularChart>
-        extends CoordinateChart<T> {
+public abstract class RectangularChart<T extends RectangularChart> extends CoordinateChart<T> {
 
     private Integer angle;
 
@@ -59,7 +58,7 @@ public abstract class RectangularChart<T extends RectangularChart>
 
     private Color zoomOutButtonColor;
 
-    private Color zoomOutButtonImage;
+    private String zoomOutButtonImage;
 
     private Integer zoomOutButtonImageSize;
 
@@ -254,11 +253,11 @@ public abstract class RectangularChart<T extends RectangularChart>
         return (T) this;
     }
 
-    public Color getZoomOutButtonImage() {
+    public String getZoomOutButtonImage() {
         return zoomOutButtonImage;
     }
 
-    public T setZoomOutButtonImage(Color zoomOutButtonImage) {
+    public T setZoomOutButtonImage(String zoomOutButtonImage) {
         this.zoomOutButtonImage = zoomOutButtonImage;
         return (T) this;
     }

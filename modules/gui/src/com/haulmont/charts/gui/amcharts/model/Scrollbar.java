@@ -47,9 +47,9 @@ public class Scrollbar extends AbstractConfigurationObject {
 
     private Boolean hideResizeGrips;
 
-    private Integer maximum;
+    private Double maximum;
 
-    private Integer minimum;
+    private Double minimum;
 
     private Boolean resizeEnabled;
 
@@ -206,20 +206,20 @@ public class Scrollbar extends AbstractConfigurationObject {
         return this;
     }
 
-    public Integer getMaximum() {
+    public Double getMaximum() {
         return maximum;
     }
 
-    public Scrollbar setMaximum(Integer maximum) {
+    public Scrollbar setMaximum(Double maximum) {
         this.maximum = maximum;
         return this;
     }
 
-    public Integer getMinimum() {
+    public Double getMinimum() {
         return minimum;
     }
 
-    public Scrollbar setMinimum(Integer minimum) {
+    public Scrollbar setMinimum(Double minimum) {
         this.minimum = minimum;
         return this;
     }
