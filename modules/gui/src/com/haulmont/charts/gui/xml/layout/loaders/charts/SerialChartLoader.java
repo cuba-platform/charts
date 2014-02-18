@@ -21,7 +21,7 @@ import org.dom4j.Element;
  * @version $Id$
  */
 public class SerialChartLoader extends RectangularChartLoader<SerialChart> {
-    protected SerialChartLoader(Context context) {
+    public SerialChartLoader(Context context) {
         super(context);
     }
 

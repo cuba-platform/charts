@@ -7,6 +7,10 @@ package com.haulmont.charts.gui.amcharts.model.charts;
 
 import com.haulmont.charts.gui.amcharts.model.CategoryAxis;
 import com.haulmont.charts.gui.amcharts.model.ChartType;
+import org.apache.commons.lang.StringUtils;
+
+import java.util.ArrayList;
+import java.util.List;
 
 /**
  * See documentation for properties of AmSerialChart JS object.
@@ -163,5 +167,18 @@ public class SerialChart extends RectangularChart<SerialChart> {
     public SerialChart setZoomOutOnDataUpdate(Boolean zoomOutOnDataUpdate) {
         this.zoomOutOnDataUpdate = zoomOutOnDataUpdate;
         return this;
+    }
+
+    @Override
+    public List<String> getWiredFields() {
+        List<String> wiredFields = new ArrayList<>(super.getWiredFields());
+        if (StringUtils.isNotEmpty(categoryField)) {
+            wiredFields.add(categoryField);
+        }
+        if (categoryAxis != null && StringUtils.isNotEmpty(categoryAxis.getForceShowField())) {
+            wiredFields.add(categoryAxis.getForceShowField());
+        }
+
+        return wiredFields;
     }
 }

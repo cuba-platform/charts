@@ -17,7 +17,7 @@ import org.dom4j.Element;
  * @version $Id$
  */
 public class PieChartLoader extends SlicedChartLoader<PieChart> {
-    protected PieChartLoader(Context context) {
+    public PieChartLoader(Context context) {
         super(context);
     }
 

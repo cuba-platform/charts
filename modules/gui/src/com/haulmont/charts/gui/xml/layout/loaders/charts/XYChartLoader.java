@@ -17,7 +17,7 @@ import org.dom4j.Element;
  * @version $Id$
  */
 public class XYChartLoader extends RectangularChartLoader<XYChart> {
-    protected XYChartLoader(Context context) {
+    public XYChartLoader(Context context) {
         super(context);
     }
 

@@ -6,6 +6,7 @@ package com.haulmont.charts.gui.components.charts;
 
 import com.haulmont.charts.gui.amcharts.model.charts.AbstractChart;
 import com.haulmont.cuba.gui.components.Component;
+import com.haulmont.cuba.gui.data.CollectionDatasource;
 
 /**
  * @author artamonov
@@ -17,4 +18,9 @@ public interface Chart extends Component, Component.BelongToFrame, Component.Has
 
     AbstractChart getConfiguration();
     void setConfiguration(AbstractChart chart);
+
+    void setDatasource(CollectionDatasource datasource);
+    CollectionDatasource getDatasource();
+
+    void repaint();
 }

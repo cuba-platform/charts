@@ -6,6 +6,7 @@
 package com.haulmont.charts.gui.amcharts.model.charts;
 
 import com.haulmont.charts.gui.amcharts.model.*;
+import org.apache.commons.lang.StringUtils;
 
 import java.util.ArrayList;
 import java.util.Arrays;
@@ -497,5 +498,48 @@ public abstract class SlicedChart<T extends SlicedChart> extends AbstractChart<T
     public T setVisibleInLegendField(String visibleInLegendField) {
         this.visibleInLegendField = visibleInLegendField;
         return (T) this;
+    }
+
+    @Override
+    public List<String> getWiredFields() {
+        List<String> wiredFields = new ArrayList<>(super.getWiredFields());
+
+        if (StringUtils.isNotEmpty(alphaField)) {
+            wiredFields.add(alphaField);
+        }
+
+        if (StringUtils.isNotEmpty(colorField)) {
+            wiredFields.add(colorField);
+        }
+
+        if (StringUtils.isNotEmpty(descriptionField)) {
+            wiredFields.add(descriptionField);
+        }
+
+        if (StringUtils.isNotEmpty(patternField)) {
+            wiredFields.add(patternField);
+        }
+
+        if (StringUtils.isNotEmpty(pulledField)) {
+            wiredFields.add(pulledField);
+        }
+
+        if (StringUtils.isNotEmpty(titleField)) {
+            wiredFields.add(titleField);
+        }
+
+        if (StringUtils.isNotEmpty(urlField)) {
+            wiredFields.add(urlField);
+        }
+
+        if (StringUtils.isNotEmpty(valueField)) {
+            wiredFields.add(valueField);
+        }
+
+        if (StringUtils.isNotEmpty(visibleInLegendField)) {
+            wiredFields.add(visibleInLegendField);
+        }
+
+        return wiredFields;
     }
 }

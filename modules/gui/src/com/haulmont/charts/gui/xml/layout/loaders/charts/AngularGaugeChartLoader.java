@@ -17,8 +17,8 @@ import org.dom4j.Element;
  * @author artamonov
  * @version $Id$
  */
-public class AngularGaugeChartLoader extends AbtractChartLoader<AngularGaugeChart> {
-    protected AngularGaugeChartLoader(Context context) {
+public class AngularGaugeChartLoader extends AbstractChartLoader<AngularGaugeChart> {
+    public AngularGaugeChartLoader(Context context) {
         super(context);
     }
 

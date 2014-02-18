@@ -14,7 +14,7 @@ import org.dom4j.Element;
  * @author artamonov
  * @version $Id$
  */
-public abstract class CoordinateChartLoader<T extends CoordinateChart> extends AbtractChartLoader<T> {
+public abstract class CoordinateChartLoader<T extends CoordinateChart> extends AbstractChartLoader<T> {
 
     protected CoordinateChartLoader(Context context) {
         super(context);

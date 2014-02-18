@@ -1002,6 +1002,11 @@
         </xs:all>
 
         <xs:attribute name="id" type="xs:string"/>
+        <xs:attribute name="datasource" type="xs:string"/>
+
+        <xs:attribute name="width" type="xs:string"/>
+        <xs:attribute name="height" type="xs:string"/>
+
         <xs:attribute name="backgroundColor" type="color"/>
         <xs:attribute name="borderAlpha" type="xs:double"/>
         <xs:attribute name="borderColor" type="color"/>
@@ -1011,7 +1016,7 @@
         <xs:attribute name="handDrawn" type="xs:boolean"/>
         <xs:attribute name="handDrawScatter" type="xs:integer"/>
         <xs:attribute name="handDrawThickness" type="xs:integer"/>
-        <xs:attribute name="height" type="xs:string"/>
+        <xs:attribute name="chartHeight" type="xs:string"/>
         <xs:attribute name="hideBalloonTime" type="xs:integer"/>
         <xs:attribute name="panEventsEnabled" type="xs:boolean"/>
         <xs:attribute name="usePrefixes" type="xs:boolean"/>

@@ -19,7 +19,7 @@ import org.dom4j.Element;
  * @version $Id$
  */
 public class FunnelChartLoader extends SlicedChartLoader<FunnelChart> {
-    protected FunnelChartLoader(Context context) {
+    public FunnelChartLoader(Context context) {
         super(context);
     }
 

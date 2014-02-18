@@ -6,6 +6,7 @@
 package com.haulmont.charts.gui.amcharts.model.charts;
 
 import com.haulmont.charts.gui.amcharts.model.*;
+import org.apache.commons.lang.StringUtils;
 
 import java.util.ArrayList;
 import java.util.Arrays;
@@ -114,5 +115,92 @@ public abstract class CoordinateChart<T extends CoordinateChart> extends Abstrac
             this.valueAxes.addAll(Arrays.asList(valueAxes));
         }
         return (T) this;
+    }
+
+    @Override
+    public List<String> getWiredFields() {
+        List<String> wiredFields = new ArrayList<>(super.getWiredFields());
+
+        if (graphs != null) {
+            for (Graph g : graphs) {
+                if (StringUtils.isNotEmpty(g.getAlphaField())) {
+                    wiredFields.add(g.getAlphaField());
+                }
+
+                if (StringUtils.isNotEmpty(g.getBulletField())) {
+                    wiredFields.add(g.getBulletField());
+                }
+
+                if (StringUtils.isNotEmpty(g.getBulletSizeField())) {
+                    wiredFields.add(g.getBulletSizeField());
+                }
+
+                if (StringUtils.isNotEmpty(g.getCloseField())) {
+                    wiredFields.add(g.getCloseField());
+                }
+
+                if (StringUtils.isNotEmpty(g.getColorField())) {
+                    wiredFields.add(g.getColorField());
+                }
+
+                if (StringUtils.isNotEmpty(g.getCustomBulletField())) {
+                    wiredFields.add(g.getCustomBulletField());
+                }
+
+                if (StringUtils.isNotEmpty(g.getDashLengthField())) {
+                    wiredFields.add(g.getDashLengthField());
+                }
+
+                if (StringUtils.isNotEmpty(g.getDescriptionField())) {
+                    wiredFields.add(g.getDescriptionField());
+                }
+
+                if (StringUtils.isNotEmpty(g.getErrorField())) {
+                    wiredFields.add(g.getErrorField());
+                }
+
+                if (StringUtils.isNotEmpty(g.getFillColorsField())) {
+                    wiredFields.add(g.getFillColorsField());
+                }
+
+                if (StringUtils.isNotEmpty(g.getHighField())) {
+                    wiredFields.add(g.getHighField());
+                }
+
+                if (StringUtils.isNotEmpty(g.getLabelColorField())) {
+                    wiredFields.add(g.getLabelColorField());
+                }
+
+                if (StringUtils.isNotEmpty(g.getLineColorField())) {
+                    wiredFields.add(g.getLineColorField());
+                }
+
+                if (StringUtils.isNotEmpty(g.getLowField())) {
+                    wiredFields.add(g.getLowField());
+                }
+
+                if (StringUtils.isNotEmpty(g.getOpenField())) {
+                    wiredFields.add(g.getOpenField());
+                }
+
+                if (StringUtils.isNotEmpty(g.getPatternField())) {
+                    wiredFields.add(g.getPatternField());
+                }
+
+                if (StringUtils.isNotEmpty(g.getUrlField())) {
+                    wiredFields.add(g.getUrlField());
+                }
+
+                if (StringUtils.isNotEmpty(g.getXField())) {
+                    wiredFields.add(g.getXField());
+                }
+
+                if (StringUtils.isNotEmpty(g.getYField())) {
+                    wiredFields.add(g.getYField());
+                }
+            }
+        }
+
+        return wiredFields;
     }
 }

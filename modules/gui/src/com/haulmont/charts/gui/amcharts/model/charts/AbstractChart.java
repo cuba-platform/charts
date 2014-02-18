@@ -355,6 +355,10 @@ public abstract class AbstractChart<T extends AbstractConfigurationObject> exten
         return (T) this;
     }
 
+    public List<String> getWiredFields() {
+        return new ArrayList<>();
+    }
+
     public ChartType getType() {
         return type;
     }

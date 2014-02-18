@@ -6,6 +6,10 @@
 package com.haulmont.charts.gui.amcharts.model.charts;
 
 import com.haulmont.charts.gui.amcharts.model.ChartType;
+import org.apache.commons.lang.StringUtils;
+
+import java.util.ArrayList;
+import java.util.List;
 
 /**
  * See documentation for properties of AmPieChart JS object.
@@ -184,5 +188,16 @@ public class PieChart extends SlicedChart<PieChart> {
     public PieChart setStartRadius(String startRadius) {
         this.startRadius = startRadius;
         return this;
+    }
+
+    @Override
+    public List<String> getWiredFields() {
+        List<String> wiredFields = new ArrayList<>(super.getWiredFields());
+
+        if (StringUtils.isNotEmpty(labelRadiusField)) {
+            wiredFields.add(labelRadiusField);
+        }
+
+        return wiredFields;
     }
 }

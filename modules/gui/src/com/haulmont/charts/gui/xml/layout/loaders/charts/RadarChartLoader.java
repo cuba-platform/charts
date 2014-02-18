@@ -17,7 +17,7 @@ import org.dom4j.Element;
  * @version $Id$
  */
 public class RadarChartLoader extends CoordinateChartLoader<RadarChart> {
-    protected RadarChartLoader(Context context) {
+    public RadarChartLoader(Context context) {
         super(context);
     }
 

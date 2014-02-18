@@ -7,10 +7,11 @@ package com.haulmont.charts.gui.xml.layout.loaders.charts;
 
 import com.haulmont.charts.gui.amcharts.model.*;
 import com.haulmont.charts.gui.amcharts.model.charts.AbstractChart;
-import com.haulmont.charts.gui.amcharts.model.HasMargins;
-import com.haulmont.charts.gui.amcharts.model.HasStartEffect;
 import com.haulmont.charts.gui.components.charts.Chart;
+import com.haulmont.cuba.gui.GuiDevelopmentException;
 import com.haulmont.cuba.gui.components.Component;
+import com.haulmont.cuba.gui.data.CollectionDatasource;
+import com.haulmont.cuba.gui.data.Datasource;
 import com.haulmont.cuba.gui.xml.layout.ComponentsFactory;
 import com.haulmont.cuba.gui.xml.layout.loaders.ComponentLoader;
 import org.apache.commons.lang.StringUtils;
@@ -26,11 +27,11 @@ import java.util.List;
  * @author artamonov
  * @version $Id$
  */
-public abstract class AbtractChartLoader<T extends AbstractChart> extends ComponentLoader {
+public abstract class AbstractChartLoader<T extends AbstractChart> extends ComponentLoader {
 
     protected static final String CONFIG_DATE_FORMAT = "yyyy-MM-dd HH:mm:ss";
 
-    protected AbtractChartLoader(Context context) {
+    protected AbstractChartLoader(Context context) {
         super(context);
     }
 
@@ -39,8 +40,48 @@ public abstract class AbtractChartLoader<T extends AbstractChart> extends Compon
         Chart chart = factory.createComponent(Chart.NAME);
 
         loadId(chart, element);
+        loadWidth(chart, element);
+        loadHeight(chart, element);
+
+        loadDatasource(chart, element);
 
         return chart;
+    }
+
+    protected void loadDatasource(Chart chart, Element element) {
+        String datasource = element.attributeValue("datasource");
+        if (StringUtils.isNotEmpty(datasource)) {
+            Datasource ds = context.getDsContext().get(datasource);
+            if (ds == null) {
+                throw new GuiDevelopmentException("Can't find datasource by name: " + datasource, context.getCurrentIFrameId());
+            }
+
+            if (!(ds instanceof CollectionDatasource)) {
+                throw new GuiDevelopmentException("Not a CollectionDatasource: " + datasource, context.getCurrentIFrameId());
+            }
+
+            chart.setDatasource((CollectionDatasource) ds);
+        }
+    }
+
+    @Override
+    protected void loadWidth(Component component, Element element) {
+        final String width = element.attributeValue("width");
+        if ("auto".equalsIgnoreCase(width)) {
+            component.setWidth("640px");
+        } else if (!StringUtils.isBlank(width)) {
+            component.setWidth(width);
+        }
+    }
+
+    @Override
+    protected void loadHeight(Component component, Element element) {
+        final String width = element.attributeValue("width");
+        if ("auto".equalsIgnoreCase(width)) {
+            component.setWidth("480px");
+        } else if (!StringUtils.isBlank(width)) {
+            component.setWidth(width);
+        }
     }
 
     protected void loadLabels(Element element, T chart) {
@@ -727,7 +768,7 @@ public abstract class AbtractChartLoader<T extends AbstractChart> extends Compon
             chart.setHandDrawThickness(Integer.valueOf(handDrawThickness));
         }
 
-        String height = element.attributeValue("height");
+        String height = element.attributeValue("chartHeight");
         if (StringUtils.isNotEmpty(height)) {
             chart.setHeight(height);
         }

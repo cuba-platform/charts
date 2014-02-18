@@ -15,7 +15,7 @@ import org.dom4j.Element;
  * @author artamonov
  * @version $Id$
  */
-public abstract class SlicedChartLoader<T extends SlicedChart> extends AbtractChartLoader<T> {
+public abstract class SlicedChartLoader<T extends SlicedChart> extends AbstractChartLoader<T> {
 
     protected SlicedChartLoader(Context context) {
         super(context);
