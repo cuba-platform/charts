@@ -15,7 +15,7 @@ import java.util.List;
  * @author artamonov
  * @version $Id$
  */
-public class Legend extends AbstractConfigurationObject {
+public class Legend extends AbstractConfigurationObject implements HasMargins<Legend> {
 
     private static final long serialVersionUID = -8561508956306637129L;
 
@@ -247,37 +247,45 @@ public class Legend extends AbstractConfigurationObject {
         return this;
     }
 
+    @Override
     public Integer getMarginBottom() {
         return marginBottom;
     }
 
+    @Override
     public Legend setMarginBottom(Integer marginBottom) {
         this.marginBottom = marginBottom;
         return this;
     }
 
+    @Override
     public Integer getMarginLeft() {
         return marginLeft;
     }
 
+    @Override
     public Legend setMarginLeft(Integer marginLeft) {
         this.marginLeft = marginLeft;
         return this;
     }
 
+    @Override
     public Integer getMarginRight() {
         return marginRight;
     }
 
+    @Override
     public Legend setMarginRight(Integer marginRight) {
         this.marginRight = marginRight;
         return this;
     }
 
+    @Override
     public Integer getMarginTop() {
         return marginTop;
     }
 
+    @Override
     public Legend setMarginTop(Integer marginTop) {
         this.marginTop = marginTop;
         return this;

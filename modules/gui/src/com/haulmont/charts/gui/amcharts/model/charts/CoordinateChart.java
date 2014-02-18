@@ -18,7 +18,8 @@ import java.util.List;
  * @version $Id$
  */
 @SuppressWarnings("unchecked")
-public abstract class CoordinateChart<T extends CoordinateChart> extends AbstractChart<T> {
+public abstract class CoordinateChart<T extends CoordinateChart> extends AbstractChart<T>
+        implements HasStartEffect<T>, HasColors<T> {
 
     private List<Color> colors;
 
@@ -34,10 +35,12 @@ public abstract class CoordinateChart<T extends CoordinateChart> extends Abstrac
         super(type);
     }
 
+    @Override
     public List<Color> getColors() {
         return colors;
     }
 
+    @Override
     public T setColors(List<Color> colors) {
         this.colors = colors;
         return (T) this;
@@ -72,19 +75,23 @@ public abstract class CoordinateChart<T extends CoordinateChart> extends Abstrac
         return (T) this;
     }
 
+    @Override
     public AnimationEffect getStartEffect() {
         return startEffect;
     }
 
+    @Override
     public T setStartEffect(AnimationEffect startEffect) {
         this.startEffect = startEffect;
         return (T) this;
     }
 
+    @Override
     public Integer getStartDuration() {
         return startDuration;
     }
 
+    @Override
     public T setStartDuration(Integer startDuration) {
         this.startDuration = startDuration;
         return (T) this;

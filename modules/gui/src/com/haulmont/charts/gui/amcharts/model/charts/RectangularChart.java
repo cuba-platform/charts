@@ -18,7 +18,7 @@ import java.util.List;
  * @version $Id$
  */
 @SuppressWarnings("unchecked")
-public abstract class RectangularChart<T extends RectangularChart> extends CoordinateChart<T> {
+public abstract class RectangularChart<T extends RectangularChart> extends CoordinateChart<T> implements HasMargins<T> {
 
     private Integer angle;
 
@@ -145,30 +145,47 @@ public abstract class RectangularChart<T extends RectangularChart> extends Coord
         return (T) this;
     }
 
+    @Override
     public Integer getMarginBottom() {
         return marginBottom;
     }
 
+    @Override
     public T setMarginBottom(Integer marginBottom) {
         this.marginBottom = marginBottom;
         return (T) this;
     }
 
+    @Override
     public Integer getMarginLeft() {
         return marginLeft;
     }
 
+    @Override
     public T setMarginLeft(Integer marginLeft) {
         this.marginLeft = marginLeft;
         return (T) this;
     }
 
+    @Override
     public Integer getMarginRight() {
         return marginRight;
     }
 
+    @Override
     public T setMarginRight(Integer marginRight) {
         this.marginRight = marginRight;
+        return (T) this;
+    }
+
+    @Override
+    public Integer getMarginTop() {
+        return marginTop;
+    }
+
+    @Override
+    public T setMarginTop(Integer marginTop) {
+        this.marginTop = marginTop;
         return (T) this;
     }
 
@@ -178,15 +195,6 @@ public abstract class RectangularChart<T extends RectangularChart> extends Coord
 
     public T setMarginsUpdated(Boolean marginsUpdated) {
         this.marginsUpdated = marginsUpdated;
-        return (T) this;
-    }
-
-    public Integer getMarginTop() {
-        return marginTop;
-    }
-
-    public T setMarginTop(Integer marginTop) {
-        this.marginTop = marginTop;
         return (T) this;
     }
 

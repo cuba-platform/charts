@@ -421,6 +421,11 @@
         <xs:attribute name="marginTop" type="xs:integer"/>
     </xs:attributeGroup>
 
+    <xs:attributeGroup name="hasStartEffect">
+        <xs:attribute name="startEffect" type="animationEffect"/>
+        <xs:attribute name="startDuration" type="xs:integer"/>
+    </xs:attributeGroup>
+
     <!-- Chart controls -->
 
     <xs:complexType name="balloon">
@@ -566,7 +571,7 @@
         <xs:attribute name="endValue" type="xs:double"/>
         <xs:attribute name="innerRadius" type="xs:string"/>
         <xs:attribute name="radius" type="xs:string"/>
-        <xs:attribute name="startValue" type="xs:date"/>
+        <xs:attribute name="startValue" type="xs:double"/>
     </xs:complexType>
 
     <xs:complexType name="gaugeArrow">
@@ -639,7 +644,7 @@
         <xs:attribute name="inside" type="xs:boolean"/>
         <xs:attribute name="labelFrequency" type="xs:double"/>
         <xs:attribute name="labelRotation" type="xs:integer"/>
-        <xs:attribute name="labelsEnabled" type="xs:integer"/>
+        <xs:attribute name="labelsEnabled" type="xs:boolean"/>
         <xs:attribute name="minHorizontalGap" type="xs:integer"/>
         <xs:attribute name="minorGridAlpha" type="xs:double"/>
         <xs:attribute name="minorGridEnabled" type="xs:boolean"/>
@@ -752,7 +757,7 @@
     </xs:complexType>
 
     <xs:complexType name="title">
-        <xs:attribute name="title" type="xs:string"/>
+        <xs:attribute name="text" type="xs:string"/>
         <xs:attribute name="size" type="xs:integer"/>
         <xs:attribute name="color" type="color"/>
         <xs:attribute name="alpha" type="xs:double"/>
@@ -877,6 +882,7 @@
     <xs:complexType name="chartGraph">
         <xs:all>
             <xs:element name="balloonFunction" minOccurs="0" maxOccurs="1"/>
+            <xs:element name="pattern" minOccurs="0" maxOccurs="1" type="pattern"/>
         </xs:all>
 
         <xs:attribute name="id" type="xs:string"/>
@@ -944,7 +950,6 @@
         <xs:attribute name="negativeLineColor" type="color"/>
         <xs:attribute name="noStepRisers" type="xs:boolean"/>
         <xs:attribute name="openField" type="xs:string"/>
-        <xs:attribute name="pattern" type="pattern"/>
         <xs:attribute name="patternField" type="xs:string"/>
         <xs:attribute name="periodSpan" type="xs:integer"/>
         <xs:attribute name="pointPosition" type="pointPosition"/>
@@ -998,7 +1003,7 @@
 
         <xs:attribute name="id" type="xs:string"/>
         <xs:attribute name="backgroundColor" type="color"/>
-        <xs:attribute name="borderAlpha" type="xs:string"/>
+        <xs:attribute name="borderAlpha" type="xs:double"/>
         <xs:attribute name="borderColor" type="color"/>
         <xs:attribute name="color" type="color"/>
         <xs:attribute name="fontFamily" type="xs:string"/>
@@ -1046,9 +1051,7 @@
                     </xs:element>
                 </xs:all>
 
-                <xs:attribute name="startEffect" type="animationEffect"/>
-                <xs:attribute name="startDuration" type="xs:integer"/>
-                <xs:attribute name="startDuration" type="xs:integer"/>
+                <xs:attributeGroup ref="hasStartEffect"/>
             </xs:extension>
         </xs:complexContent>
     </xs:complexType>
@@ -1064,13 +1067,13 @@
                             </xs:sequence>
                         </xs:complexType>
                     </xs:element>
+                    <xs:element name="chartCursor" minOccurs="0" maxOccurs="1" type="chartCursor"/>
+                    <xs:element name="chartScrollbar" minOccurs="0" maxOccurs="1" type="chartScrollbar"/>
                 </xs:all>
 
                 <xs:attribute name="angle" type="xs:integer"/>
                 <xs:attribute name="autoMarginOffset" type="xs:integer"/>
                 <xs:attribute name="autoMargins" type="xs:boolean"/>
-                <xs:attribute name="chartCursor" type="chartCursor"/>
-                <xs:attribute name="chartScrollbar" type="chartScrollbar"/>
                 <xs:attribute name="depth3D" type="xs:integer"/>
 
                 <xs:attributeGroup ref="hasMargins"/>
@@ -1150,8 +1153,9 @@
                 <xs:attribute name="pullOutOnlyOne" type="xs:boolean"/>
                 <xs:attribute name="sequencedAnimation" type="xs:boolean"/>
                 <xs:attribute name="startAlpha" type="xs:double"/>
-                <xs:attribute name="startDuration" type="xs:integer"/>
-                <xs:attribute name="startEffect" type="animationEffect"/>
+
+                <xs:attributeGroup ref="hasStartEffect"/>
+
                 <xs:attribute name="titleField" type="xs:string"/>
                 <xs:attribute name="urlField" type="xs:string"/>
                 <xs:attribute name="urlTarget" type="xs:string"/>
@@ -1182,8 +1186,8 @@
                                 </xs:sequence>
                             </xs:complexType>
                         </xs:element>
+                        <xs:element name="facePattern" minOccurs="0" maxOccurs="1" type="pattern"/>
                     </xs:all>
-                    <!--axes-->
 
                     <xs:attribute name="adjustSize" type="xs:boolean"/>
                     <xs:attribute name="clockWiseOnly" type="xs:boolean"/>
@@ -1192,15 +1196,14 @@
                     <xs:attribute name="faceBorderColor" type="color"/>
                     <xs:attribute name="faceBorderWidth" type="xs:integer"/>
                     <xs:attribute name="faceColor" type="color"/>
-                    <xs:attribute name="facePattern" type="pattern"/>
                     <xs:attribute name="gaugeX" type="xs:string"/>
                     <xs:attribute name="gaugeY" type="xs:string"/>
 
                     <xs:attributeGroup ref="hasMargins"/>
 
                     <xs:attribute name="minRadius" type="xs:integer"/>
-                    <xs:attribute name="startDuration" type="xs:integer"/>
-                    <xs:attribute name="startEffect" type="animationEffect"/>
+
+                    <xs:attributeGroup ref="hasStartEffect"/>
                 </xs:extension>
             </xs:complexContent>
         </xs:complexType>
@@ -1278,6 +1281,8 @@
                     <xs:attribute name="columnSpacing3D" type="xs:integer"/>
                     <xs:attribute name="columnWidth" type="xs:double"/>
                     <xs:attribute name="maxSelectedSeries" type="xs:integer"/>
+                    <xs:attribute name="maxSelectedTime" type="xs:long"/>
+                    <xs:attribute name="minSelectedTime" type="xs:long"/>
                     <xs:attribute name="mouseWheelScrollEnabled" type="xs:boolean"/>
                     <xs:attribute name="rotate" type="xs:boolean"/>
                     <xs:attribute name="zoomOutOnDataUpdate" type="xs:boolean"/>

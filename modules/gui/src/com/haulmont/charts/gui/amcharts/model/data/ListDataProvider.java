@@ -5,6 +5,8 @@
 
 package com.haulmont.charts.gui.amcharts.model.data;
 
+import com.haulmont.charts.gui.amcharts.model.charts.AbstractChart;
+
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Collection;
@@ -65,5 +67,9 @@ public class ListDataProvider implements DataProvider {
     @Override
     public String getDateFormat() {
         return DEFAULT_DATE_FORMAT;
+    }
+
+    @Override
+    public void bindToChart(AbstractChart chart) {
     }
 }

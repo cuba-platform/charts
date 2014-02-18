@@ -5,10 +5,10 @@
 
 package com.haulmont.charts.gui.amcharts.model.charts;
 
-import com.haulmont.charts.gui.amcharts.model.AnimationEffect;
-import com.haulmont.charts.gui.amcharts.model.ChartType;
-import com.haulmont.charts.gui.amcharts.model.Color;
+import com.haulmont.charts.gui.amcharts.model.*;
 
+import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
 
 /**
@@ -18,7 +18,8 @@ import java.util.List;
  * @version $Id$
  */
 @SuppressWarnings("unchecked")
-public abstract class SlicedChart<T extends SlicedChart> extends AbstractChart<T> {
+public abstract class SlicedChart<T extends SlicedChart> extends AbstractChart<T>
+        implements HasMargins<T>, HasStartEffect<T>, HasColors<T> {
 
     private Double alpha;
 
@@ -149,12 +150,24 @@ public abstract class SlicedChart<T extends SlicedChart> extends AbstractChart<T
         return (T) this;
     }
 
+    @Override
     public List<Color> getColors() {
         return colors;
     }
 
+    @Override
     public T setColors(List<Color> colors) {
         this.colors = colors;
+        return (T) this;
+    }
+
+    public T addColors(Color... colors) {
+        if (colors != null) {
+            if (this.colors == null) {
+                this.colors = new ArrayList<>();
+            }
+            this.colors.addAll(Arrays.asList(colors));
+        }
         return (T) this;
     }
 
@@ -173,6 +186,16 @@ public abstract class SlicedChart<T extends SlicedChart> extends AbstractChart<T
 
     public T setGradientRatio(List<Double> gradientRatio) {
         this.gradientRatio = gradientRatio;
+        return (T) this;
+    }
+
+    public T addGradientRatio(Double... ratios) {
+        if (gradientRatio != null) {
+            if (this.gradientRatio == null) {
+                this.gradientRatio = new ArrayList<>();
+            }
+            this.gradientRatio.addAll(Arrays.asList(ratios));
+        }
         return (T) this;
     }
 
@@ -275,37 +298,45 @@ public abstract class SlicedChart<T extends SlicedChart> extends AbstractChart<T
         return (T) this;
     }
 
+    @Override
     public Integer getMarginBottom() {
         return marginBottom;
     }
 
+    @Override
     public T setMarginBottom(Integer marginBottom) {
         this.marginBottom = marginBottom;
         return (T) this;
     }
 
+    @Override
     public Integer getMarginLeft() {
         return marginLeft;
     }
 
+    @Override
     public T setMarginLeft(Integer marginLeft) {
         this.marginLeft = marginLeft;
         return (T) this;
     }
 
+    @Override
     public Integer getMarginRight() {
         return marginRight;
     }
 
+    @Override
     public T setMarginRight(Integer marginRight) {
         this.marginRight = marginRight;
         return (T) this;
     }
 
+    @Override
     public Integer getMarginTop() {
         return marginTop;
     }
 
+    @Override
     public T setMarginTop(Integer marginTop) {
         this.marginTop = marginTop;
         return (T) this;
@@ -401,19 +432,23 @@ public abstract class SlicedChart<T extends SlicedChart> extends AbstractChart<T
         return (T) this;
     }
 
+    @Override
     public Integer getStartDuration() {
         return startDuration;
     }
 
+    @Override
     public T setStartDuration(Integer startDuration) {
         this.startDuration = startDuration;
         return (T) this;
     }
 
+    @Override
     public AnimationEffect getStartEffect() {
         return startEffect;
     }
 
+    @Override
     public T setStartEffect(AnimationEffect startEffect) {
         this.startEffect = startEffect;
         return (T) this;

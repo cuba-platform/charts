@@ -69,7 +69,7 @@ public class Graph extends AbstractConfigurationObject {
 
     private Integer dashLength;
 
-    private Integer dashLengthField;
+    private String dashLengthField;
 
     private String descriptionField;
 
@@ -211,15 +211,6 @@ public class Graph extends AbstractConfigurationObject {
 
     public Graph setValueField(String valueField) {
         this.valueField = valueField;
-        return this;
-    }
-
-    public boolean isVisibleInLegend() {
-        return visibleInLegend;
-    }
-
-    public Graph setVisibleInLegend(boolean visibleInLegend) {
-        this.visibleInLegend = visibleInLegend;
         return this;
     }
 
@@ -475,11 +466,11 @@ public class Graph extends AbstractConfigurationObject {
         return this;
     }
 
-    public Integer getDashLengthField() {
+    public String getDashLengthField() {
         return dashLengthField;
     }
 
-    public Graph setDashLengthField(Integer dashLengthField) {
+    public Graph setDashLengthField(String dashLengthField) {
         this.dashLengthField = dashLengthField;
         return this;
     }
@@ -925,24 +916,6 @@ public class Graph extends AbstractConfigurationObject {
         return this;
     }
 
-    public String getxField() {
-        return xField;
-    }
-
-    public Graph setxField(String xField) {
-        this.xField = xField;
-        return this;
-    }
-
-    public String getyField() {
-        return yField;
-    }
-
-    public Graph setyField(String yField) {
-        this.yField = yField;
-        return this;
-    }
-
     public String getBulletAxis() {
         return bulletAxis;
     }
@@ -961,20 +934,20 @@ public class Graph extends AbstractConfigurationObject {
         return this;
     }
 
-    public String getxAxis() {
+    public String getXAxis() {
         return xAxis;
     }
 
-    public Graph setxAxis(String xAxis) {
+    public Graph setXAxis(String xAxis) {
         this.xAxis = xAxis;
         return this;
     }
 
-    public String getyAxis() {
+    public String getYAxis() {
         return yAxis;
     }
 
-    public Graph setyAxis(String yAxis) {
+    public Graph setYAxis(String yAxis) {
         this.yAxis = yAxis;
         return this;
     }

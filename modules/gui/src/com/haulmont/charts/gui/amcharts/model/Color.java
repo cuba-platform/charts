@@ -178,4 +178,8 @@ public class Color implements Serializable {
     public String toString() {
         return value;
     }
+
+    public static Color valueOf(String color) {
+        return new Color(color);
+    }
 }

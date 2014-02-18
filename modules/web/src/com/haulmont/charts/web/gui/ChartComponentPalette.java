@@ -7,7 +7,7 @@ package com.haulmont.charts.web.gui;
 
 import com.haulmont.charts.gui.components.charts.Chart;
 import com.haulmont.charts.gui.components.charts.GanttChart;
-import com.haulmont.charts.gui.xml.layout.loaders.charts.GanttChartLoader;
+import com.haulmont.charts.gui.xml.layout.loaders.charts.*;
 import com.haulmont.charts.web.gui.components.charts.amcharts.WebChart;
 import com.haulmont.charts.web.gui.components.charts.jsgantt.WebJSGanttChart;
 import com.haulmont.charts.web.toolkit.ui.gantt.JSGanttChart;
@@ -31,6 +31,13 @@ public class ChartComponentPalette implements ComponentPalette {
         Map<String, Class<? extends ComponentLoader>> loaders = new HashMap<>();
 
         loaders.put("ganttChart", GanttChartLoader.class);
+
+        loaders.put("gaugeChart", AngularGaugeChartLoader.class);
+        loaders.put("funnelChart", FunnelChartLoader.class);
+        loaders.put("pieChart", PieChartLoader.class);
+        loaders.put("radarChart", RadarChartLoader.class);
+        loaders.put("serialChart", SerialChartLoader.class);
+        loaders.put("xyChart", XYChartLoader.class);
 
         return loaders;
     }

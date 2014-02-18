@@ -112,7 +112,7 @@ public abstract class AbstractChart<T extends AbstractConfigurationObject> exten
         return balloon;
     }
 
-    public T setBaloon(Balloon balloon) {
+    public T setBalloon(Balloon balloon) {
         this.balloon = balloon;
         return (T) this;
     }
@@ -169,11 +169,6 @@ public abstract class AbstractChart<T extends AbstractConfigurationObject> exten
 
     public T setTheme(ChartTheme theme) {
         this.theme = theme;
-        return (T) this;
-    }
-
-    public T setBalloon(Balloon balloon) {
-        this.balloon = balloon;
         return (T) this;
     }
 

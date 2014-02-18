@@ -6,6 +6,7 @@
 package com.haulmont.charts.gui.amcharts.model.charts;
 
 import com.haulmont.charts.gui.amcharts.model.ChartType;
+import com.haulmont.charts.gui.amcharts.model.HasMargins;
 
 /**
  * See documentation for properties of AmRadarChart JS object.
@@ -13,7 +14,7 @@ import com.haulmont.charts.gui.amcharts.model.ChartType;
  * @author artamonov
  * @version $Id$
  */
-public class RadarChart extends CoordinateChart<RadarChart> {
+public class RadarChart extends CoordinateChart<RadarChart> implements HasMargins<RadarChart> {
 
     private static final long serialVersionUID = 7721119324768771106L;
 
@@ -42,37 +43,45 @@ public class RadarChart extends CoordinateChart<RadarChart> {
         return this;
     }
 
+    @Override
     public Integer getMarginBottom() {
         return marginBottom;
     }
 
+    @Override
     public RadarChart setMarginBottom(Integer marginBottom) {
         this.marginBottom = marginBottom;
         return this;
     }
 
+    @Override
     public Integer getMarginLeft() {
         return marginLeft;
     }
 
+    @Override
     public RadarChart setMarginLeft(Integer marginLeft) {
         this.marginLeft = marginLeft;
         return this;
     }
 
+    @Override
     public Integer getMarginRight() {
         return marginRight;
     }
 
+    @Override
     public RadarChart setMarginRight(Integer marginRight) {
         this.marginRight = marginRight;
         return this;
     }
 
+    @Override
     public Integer getMarginTop() {
         return marginTop;
     }
 
+    @Override
     public RadarChart setMarginTop(Integer marginTop) {
         this.marginTop = marginTop;
         return this;

@@ -17,7 +17,8 @@ import java.util.List;
  * @author artamonov
  * @version $Id$
  */
-public class AngularGaugeChart extends AbstractChart<AngularGaugeChart> {
+public class AngularGaugeChart extends AbstractChart<AngularGaugeChart>
+        implements HasMargins<AngularGaugeChart>, HasStartEffect<AngularGaugeChart> {
 
     private static final long serialVersionUID = -6090793752941909292L;
 
@@ -191,37 +192,45 @@ public class AngularGaugeChart extends AbstractChart<AngularGaugeChart> {
         return this;
     }
 
+    @Override
     public Integer getMarginBottom() {
         return marginBottom;
     }
 
+    @Override
     public AngularGaugeChart setMarginBottom(Integer marginBottom) {
         this.marginBottom = marginBottom;
         return this;
     }
 
+    @Override
     public Integer getMarginLeft() {
         return marginLeft;
     }
 
+    @Override
     public AngularGaugeChart setMarginLeft(Integer marginLeft) {
         this.marginLeft = marginLeft;
         return this;
     }
 
+    @Override
     public Integer getMarginRight() {
         return marginRight;
     }
 
+    @Override
     public AngularGaugeChart setMarginRight(Integer marginRight) {
         this.marginRight = marginRight;
         return this;
     }
 
+    @Override
     public Integer getMarginTop() {
         return marginTop;
     }
 
+    @Override
     public AngularGaugeChart setMarginTop(Integer marginTop) {
         this.marginTop = marginTop;
         return this;
@@ -236,19 +245,23 @@ public class AngularGaugeChart extends AbstractChart<AngularGaugeChart> {
         return this;
     }
 
+    @Override
     public Integer getStartDuration() {
         return startDuration;
     }
 
+    @Override
     public AngularGaugeChart setStartDuration(Integer startDuration) {
         this.startDuration = startDuration;
         return this;
     }
 
+    @Override
     public AnimationEffect getStartEffect() {
         return startEffect;
     }
 
+    @Override
     public AngularGaugeChart setStartEffect(AnimationEffect startEffect) {
         this.startEffect = startEffect;
         return this;

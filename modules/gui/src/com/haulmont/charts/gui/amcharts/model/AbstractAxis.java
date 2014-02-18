@@ -15,6 +15,7 @@ import java.util.List;
  * @author artamonov
  * @version $Id$
  */
+@SuppressWarnings("unchecked")
 public abstract class AbstractAxis<T extends AbstractAxis> extends AbstractConfigurationObject {
 
     private Boolean autoGridCount;
@@ -53,7 +54,7 @@ public abstract class AbstractAxis<T extends AbstractAxis> extends AbstractConfi
 
     private Integer labelRotation;
 
-    private Integer labelsEnabled;
+    private Boolean labelsEnabled;
 
     private Integer minHorizontalGap;
 
@@ -253,11 +254,11 @@ public abstract class AbstractAxis<T extends AbstractAxis> extends AbstractConfi
         return (T) this;
     }
 
-    public Integer getLabelsEnabled() {
+    public Boolean getLabelsEnabled() {
         return labelsEnabled;
     }
 
-    public T setLabelsEnabled(Integer labelsEnabled) {
+    public T setLabelsEnabled(Boolean labelsEnabled) {
         this.labelsEnabled = labelsEnabled;
         return (T) this;
     }

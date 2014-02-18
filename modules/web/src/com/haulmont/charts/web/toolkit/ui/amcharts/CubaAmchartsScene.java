@@ -296,6 +296,10 @@ public class CubaAmchartsScene extends AbstractComponent {
             if (chart != null) {
                 setupDefaults(chart);
 
+                if (chart.getDataProvider() != null) {
+                    chart.getDataProvider().bindToChart(chart);
+                }
+
                 getState().configuration = chart.toString();
             }
             dirty = false;
