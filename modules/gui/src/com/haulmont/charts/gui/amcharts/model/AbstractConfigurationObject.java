@@ -8,12 +8,10 @@ package com.haulmont.charts.gui.amcharts.model;
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
 import com.haulmont.charts.gui.amcharts.model.data.DataProvider;
-import com.haulmont.charts.gui.amcharts.model.gson.ChartEnumSerializer;
-import com.haulmont.charts.gui.amcharts.model.gson.ColorSerializer;
-import com.haulmont.charts.gui.amcharts.model.gson.DataProviderSerializer;
-import com.haulmont.charts.gui.amcharts.model.gson.JsFunctionSerializer;
+import com.haulmont.charts.gui.amcharts.model.gson.*;
 
 import java.io.Serializable;
+import java.util.Date;
 
 /**
  * Abstract base class for model classes to be serialized to JSON.
@@ -41,6 +39,7 @@ public abstract class AbstractConfigurationObject implements Serializable {
         builder.registerTypeHierarchyAdapter(Color.class, new ColorSerializer());
         builder.registerTypeHierarchyAdapter(JsFunction.class, new JsFunctionSerializer());
         builder.registerTypeHierarchyAdapter(DataProvider.class, new DataProviderSerializer());
+        builder.registerTypeHierarchyAdapter(Date.class, new ConfigDateSerializer());
         return builder;
     }
 

@@ -22,6 +22,7 @@ public class AmchartsConfig extends JavaScriptObject {
         AmchartsConfig configObject = (AmchartsConfig) JSONParser.parseLenient(config).isObject().getJavaScriptObject();
         applyCustomJson(configObject, json);
         activateFunctions(configObject);
+        parseConfigDateProperties(configObject);
         if (BrowserInfo.get().isIE() && BrowserInfo.get().getIEVersion() < 10) {
             disableExportFeatures(configObject);
         }
@@ -30,6 +31,59 @@ public class AmchartsConfig extends JavaScriptObject {
 
     private static native void disableExportFeatures(JavaScriptObject config) /*-{
         config.exportConfig = undefined;
+    }-*/;
+
+    private static native void parseConfigDateProperties(JavaScriptObject config) /*-{
+        var DEFAULT_JS_DATE_FORMAT = "YYYY-MM-DD JJ:NN:SS:QQQ";
+
+        (function () {
+            if (config.categoryAxis) {
+                if (config.categoryAxis.guides) {
+                    for (var i = 0; i < config.categoryAxis.guides.length; i++) {
+                        var guide = config.categoryAxis.guides[i];
+                        if (typeof guide.date == "string") {
+                            guide.date = $wnd.AmCharts.stringToDate(guide.date, DEFAULT_JS_DATE_FORMAT);
+                        }
+                        if (typeof guide.toDate == "string") {
+                            guide.toDate = $wnd.AmCharts.stringToDate(guide.toDate, DEFAULT_JS_DATE_FORMAT);
+                        }
+                    }
+                }
+            }
+        })();
+
+        (function () {
+            if (config.trendLines) {
+                for (var i = 0; i < config.trendLines.length; i++) {
+                    var trendLine = config.trendLines[i];
+                    if (typeof trendLine.finalDate == "string") {
+                        trendLine.finalDate = $wnd.AmCharts.stringToDate(trendLine.finalDate, DEFAULT_JS_DATE_FORMAT);
+                    }
+                    if (typeof trendLine.initialDate == "string") {
+                        trendLine.initialDate = $wnd.AmCharts.stringToDate(trendLine.initialDate, DEFAULT_JS_DATE_FORMAT);
+                    }
+                }
+            }
+        })();
+
+        (function () {
+            if (config.valueAxes) {
+                for (var i = 0; i < config.valueAxes.length; i++) {
+                    var valueAxis = config.valueAxes[i];
+                    if (valueAxis.guides) {
+                        for (var j = 0; j < valueAxis.guides.length; j++) {
+                            var guide = valueAxis.guides[j];
+                            if (typeof guide.date == "string") {
+                                guide.date = $wnd.AmCharts.stringToDate(guide.date, DEFAULT_JS_DATE_FORMAT);
+                            }
+                            if (typeof guide.toDate == "string") {
+                                guide.toDate = $wnd.AmCharts.stringToDate(guide.toDate, DEFAULT_JS_DATE_FORMAT);
+                            }
+                        }
+                    }
+                }
+            }
+        })();
     }-*/;
 
     private static native void applyCustomJson(JavaScriptObject config, String manualOptions) /*-{

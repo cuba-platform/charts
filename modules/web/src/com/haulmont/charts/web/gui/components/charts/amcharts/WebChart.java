@@ -24,6 +24,7 @@ import com.haulmont.cuba.gui.data.CollectionDatasource;
 import com.haulmont.cuba.web.gui.components.WebAbstractComponent;
 import org.apache.commons.lang.BooleanUtils;
 import org.apache.commons.lang.ObjectUtils;
+import org.apache.commons.lang.StringUtils;
 
 import java.text.DecimalFormatSymbols;
 import java.util.ArrayList;
@@ -87,10 +88,12 @@ public class WebChart extends WebAbstractComponent<CubaAmchartsScene> implements
         }
     }
 
+    @Override
     public boolean isByDate() {
         return byDate;
     }
 
+    @Override
     public void setByDate(boolean byDate) {
         this.byDate = byDate;
     }
@@ -192,6 +195,14 @@ public class WebChart extends WebAbstractComponent<CubaAmchartsScene> implements
             if (chart.getZoomOutText() == null) {
                 chart.setZoomOutText(messages.getMessage(AMCHARTS_MESSAGE_PACK, "amcharts.zoomOutText"));
             }
+
+            Cursor cursor = chart.getChartCursor();
+            if (cursor != null) {
+                if (StringUtils.isEmpty(cursor.getCategoryBalloonDateFormat())) {
+                    String format = messages.getMessage(AMCHARTS_MESSAGE_PACK, "amcharts.rectangualrChart.categoryBalloonDateFormat");
+                    cursor.setCategoryBalloonDateFormat(format);
+                }
+            }
         }
 
         protected void setupSerialChartDefaults(SerialChart chart) {
@@ -211,9 +222,14 @@ public class WebChart extends WebAbstractComponent<CubaAmchartsScene> implements
                     categoryAxis.setParseDates(true);
                 }
 
-                if (chart.getDataDateFormat() == null) {
+                if (StringUtils.isEmpty(chart.getDataDateFormat())) {
                     chart.setDataDateFormat(DEFAULT_JS_DATE_FORMAT);
                 }
+            }
+
+            if (StringUtils.isEmpty(chart.getBalloonDateFormat())) {
+                String format = messages.getMessage(AMCHARTS_MESSAGE_PACK, "amcharts.serialChart.balloonDateFormat");
+                chart.setBalloonDateFormat(format);
             }
         }
     }

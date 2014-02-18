@@ -19,6 +19,9 @@ public interface Chart extends Component, Component.BelongToFrame, Component.Has
     AbstractChart getConfiguration();
     void setConfiguration(AbstractChart chart);
 
+    boolean isByDate();
+    void setByDate(boolean byDate);
+
     void setDatasource(CollectionDatasource datasource);
     CollectionDatasource getDatasource();
 

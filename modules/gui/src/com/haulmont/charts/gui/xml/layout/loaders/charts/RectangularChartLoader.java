@@ -152,7 +152,7 @@ public abstract class RectangularChartLoader<T extends RectangularChart> extends
 
             String categoryBalloonDateFormat = cursorElement.attributeValue("categoryBalloonDateFormat");
             if (StringUtils.isNotEmpty(categoryBalloonDateFormat)) {
-                cursor.setCategoryBalloonDateFormat(categoryBalloonDateFormat);
+                cursor.setCategoryBalloonDateFormat(loadResourceString(categoryBalloonDateFormat));
             }
 
             String categoryBalloonEnabled = cursorElement.attributeValue("categoryBalloonEnabled");

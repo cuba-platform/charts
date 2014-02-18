@@ -33,6 +33,11 @@ public class SerialChartLoader extends RectangularChartLoader<SerialChart> {
         loadConfiguration(configuration, element);
         chart.setConfiguration(configuration);
 
+        String byDate = element.attributeValue("byDate");
+        if (StringUtils.isNotEmpty(byDate)) {
+            chart.setByDate(Boolean.valueOf(byDate));
+        }
+
         assignFrame(chart);
 
         return chart;
@@ -46,7 +51,7 @@ public class SerialChartLoader extends RectangularChartLoader<SerialChart> {
 
         String balloonDateFormat = element.attributeValue("balloonDateFormat");
         if (StringUtils.isNotEmpty(balloonDateFormat)) {
-            chart.setBalloonDateFormat(balloonDateFormat);
+            chart.setBalloonDateFormat(loadResourceString(balloonDateFormat));
         }
 
         String categoryField = element.attributeValue("categoryField");
