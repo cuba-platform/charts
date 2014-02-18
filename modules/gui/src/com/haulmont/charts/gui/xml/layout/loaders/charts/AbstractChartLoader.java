@@ -84,7 +84,7 @@ public abstract class AbstractChartLoader<T extends AbstractChart> extends Compo
         }
     }
 
-    protected void loadLabels(Element element, T chart) {
+    protected void loadLabels(T chart, Element element) {
         Element allLabels = element.element("allLabels");
         if (allLabels != null) {
             for (Object labelItem : allLabels.elements("label")) {
@@ -147,7 +147,7 @@ public abstract class AbstractChartLoader<T extends AbstractChart> extends Compo
         }
     }
 
-    protected void loadTitles(Element element, T chart) {
+    protected void loadTitles(T chart, Element element) {
         Element titles = element.element("titles");
         if (titles != null) {
             for (Object titleItem : titles.elements("title")) {
@@ -185,7 +185,7 @@ public abstract class AbstractChartLoader<T extends AbstractChart> extends Compo
         }
     }
 
-    protected void loadBalloon(Element element, T chart) {
+    protected void loadBalloon(T chart, Element element) {
         Element balloonElement = element.element("balloon");
         if (balloonElement != null) {
             Balloon balloon = new Balloon();
@@ -299,14 +299,14 @@ public abstract class AbstractChartLoader<T extends AbstractChart> extends Compo
         }
     }
 
-    protected void loadExportConfig(Element element, T chart) {
+    protected void loadExportConfig(T chart, Element element) {
         Element exportConfigElement = element.element("exportConfig");
         if (exportConfigElement != null) {
             ExportConfig exportConfig = new ExportConfig();
 
-            loadExportMenus(exportConfigElement, exportConfig);
+            loadExportMenus(exportConfig, exportConfigElement);
 
-            loadExportMenuItemStyle(exportConfigElement, exportConfig);
+            loadExportMenuItemStyle(exportConfig, exportConfigElement);
 
             String menuTop = exportConfigElement.attributeValue("menuTop");
             if (StringUtils.isNotEmpty(menuTop)) {
@@ -332,7 +332,7 @@ public abstract class AbstractChartLoader<T extends AbstractChart> extends Compo
         }
     }
 
-    protected void loadExportMenus(Element exportConfigElement, ExportConfig exportConfig) {
+    protected void loadExportMenus(ExportConfig exportConfig, Element exportConfigElement) {
         Element menuItemsElement = exportConfigElement.element("menuItems");
         if (menuItemsElement != null) {
             for (Object menuItem : menuItemsElement.elements("menu")) {
@@ -391,7 +391,7 @@ public abstract class AbstractChartLoader<T extends AbstractChart> extends Compo
         }
     }
 
-    protected void loadExportMenuItemStyle(Element exportConfigElement, ExportConfig exportConfig) {
+    protected void loadExportMenuItemStyle(ExportConfig exportConfig, Element exportConfigElement) {
         Element menuItemStyleElement = exportConfigElement.element("menuItemStyle");
         if (menuItemStyleElement != null) {
             ExportMenuItemStyle menuItemStyle = new ExportMenuItemStyle();
@@ -470,12 +470,12 @@ public abstract class AbstractChartLoader<T extends AbstractChart> extends Compo
         }
     }
 
-    protected void loadLegend(Element element, T chart) {
+    protected void loadLegend(T chart, Element element) {
         Element legendElement = element.element("legend");
         if (legendElement != null) {
             Legend legend = new Legend();
 
-            loadLegendItems(legendElement, legend);
+            loadLegendItems(legend, legendElement);
 
             String align = legendElement.attributeValue("align");
             if (StringUtils.isNotEmpty(align)) {
@@ -542,7 +542,7 @@ public abstract class AbstractChartLoader<T extends AbstractChart> extends Compo
                 legend.setLeft(Integer.valueOf(left));
             }
 
-            loadMargins(legendElement, legend);
+            loadMargins(legend, legendElement);
 
             String markerBorderAlpha = legendElement.attributeValue("markerBorderAlpha");
             if (StringUtils.isNotEmpty(markerBorderAlpha)) {
@@ -688,7 +688,7 @@ public abstract class AbstractChartLoader<T extends AbstractChart> extends Compo
         }
     }
 
-    protected void loadLegendItems(Element legendElement, Legend legend) {
+    protected void loadLegendItems(Legend legend, Element legendElement) {
         Element legendDataElement = legendElement.element("data");
         if (legendDataElement != null) {
             for (Object dataItem : legendDataElement.elements("item")) {
@@ -716,12 +716,12 @@ public abstract class AbstractChartLoader<T extends AbstractChart> extends Compo
         }
     }
 
-    protected void loadConfiguration(Element element, T chart) {
-        loadLabels(element, chart);
-        loadTitles(element, chart);
-        loadBalloon(element, chart);
-        loadLegend(element, chart);
-        loadExportConfig(element, chart);
+    protected void loadConfiguration(T chart, Element element) {
+        loadLabels(chart, element);
+        loadTitles(chart, element);
+        loadBalloon(chart, element);
+        loadLegend(chart, element);
+        loadExportConfig(chart, element);
 
         String backgroundColor = element.attributeValue("backgroundColor");
         if (StringUtils.isNotEmpty(backgroundColor)) {
@@ -794,7 +794,7 @@ public abstract class AbstractChartLoader<T extends AbstractChart> extends Compo
         }
     }
 
-    protected void loadMargins(Element element, HasMargins hasMargins) {
+    protected void loadMargins(HasMargins hasMargins, Element element) {
         String marginTop = element.attributeValue("marginTop");
         if (StringUtils.isNotEmpty(marginTop)) {
             hasMargins.setMarginTop(Integer.valueOf(marginTop));
@@ -816,7 +816,7 @@ public abstract class AbstractChartLoader<T extends AbstractChart> extends Compo
         }
     }
 
-    protected void loadStartEffect(Element element, HasStartEffect chart) {
+    protected void loadStartEffect(HasStartEffect chart, Element element) {
         String startDuration = element.attributeValue("startDuration");
         if (StringUtils.isNotEmpty(startDuration)) {
             chart.setStartDuration(Integer.valueOf(startDuration));
@@ -828,7 +828,7 @@ public abstract class AbstractChartLoader<T extends AbstractChart> extends Compo
         }
     }
 
-    protected void loadColors(Element element, HasColors chart) {
+    protected void loadColors(HasColors chart, Element element) {
         Element colorsElement = element.element("colors");
         if (colorsElement != null) {
             List<Color> colors = new ArrayList<>();
@@ -848,7 +848,7 @@ public abstract class AbstractChartLoader<T extends AbstractChart> extends Compo
         }
     }
 
-    protected void loadAbstractAxis(Element element, AbstractAxis axis) {
+    protected void loadAbstractAxis(AbstractAxis axis, Element element) {
         String autoGridCount = element.attributeValue("autoGridCount");
         if (StringUtils.isNotEmpty(autoGridCount)) {
             axis.setAutoGridCount(Boolean.valueOf(autoGridCount));

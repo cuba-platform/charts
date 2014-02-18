@@ -28,7 +28,7 @@ public class FunnelChartLoader extends SlicedChartLoader<FunnelChart> {
         Chart chart = super.loadComponent(factory, element, parent);
 
         FunnelChart configuration = new FunnelChart();
-        loadConfiguration(element, configuration);
+        loadConfiguration(configuration, element);
         chart.setConfiguration(configuration);
 
         assignFrame(chart);
@@ -37,8 +37,8 @@ public class FunnelChartLoader extends SlicedChartLoader<FunnelChart> {
     }
 
     @Override
-    protected void loadConfiguration(Element element, FunnelChart chart) {
-        super.loadConfiguration(element, chart);
+    protected void loadConfiguration(FunnelChart chart, Element element) {
+        super.loadConfiguration(chart, element);
 
         String balloonText = element.attributeValue("balloonText");
         if (StringUtils.isNotEmpty(balloonText)) {

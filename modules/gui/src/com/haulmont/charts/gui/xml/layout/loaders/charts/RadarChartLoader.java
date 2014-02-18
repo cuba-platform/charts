@@ -26,7 +26,7 @@ public class RadarChartLoader extends CoordinateChartLoader<RadarChart> {
         Chart chart = super.loadComponent(factory, element, parent);
 
         RadarChart configuration = new RadarChart();
-        loadConfiguration(element, configuration);
+        loadConfiguration(configuration, element);
         chart.setConfiguration(configuration);
 
         assignFrame(chart);
@@ -35,15 +35,15 @@ public class RadarChartLoader extends CoordinateChartLoader<RadarChart> {
     }
 
     @Override
-    protected void loadConfiguration(Element element, RadarChart chart) {
-        super.loadConfiguration(element, chart);
+    protected void loadConfiguration(RadarChart chart, Element element) {
+        super.loadConfiguration(chart, element);
 
         String categoryField = element.attributeValue("categoryField");
         if (StringUtils.isNotEmpty(categoryField)) {
             chart.setCategoryField(categoryField);
         }
 
-        loadMargins(element, chart);
+        loadMargins(chart, element);
 
         String radius = element.attributeValue("radius");
         if (StringUtils.isNotEmpty(radius)) {

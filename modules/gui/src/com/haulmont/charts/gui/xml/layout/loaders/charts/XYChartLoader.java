@@ -26,7 +26,7 @@ public class XYChartLoader extends RectangularChartLoader<XYChart> {
         Chart chart = super.loadComponent(factory, element, parent);
 
         XYChart configuration = new XYChart();
-        loadConfiguration(element, configuration);
+        loadConfiguration(configuration, element);
         chart.setConfiguration(configuration);
 
         assignFrame(chart);
@@ -35,8 +35,8 @@ public class XYChartLoader extends RectangularChartLoader<XYChart> {
     }
 
     @Override
-    protected void loadConfiguration(Element element, XYChart chart) {
-        super.loadConfiguration(element, chart);
+    protected void loadConfiguration(XYChart chart, Element element) {
+        super.loadConfiguration(chart, element);
 
         String hideXScrollbar = element.attributeValue("hideXScrollbar");
         if (StringUtils.isNotEmpty(hideXScrollbar)) {

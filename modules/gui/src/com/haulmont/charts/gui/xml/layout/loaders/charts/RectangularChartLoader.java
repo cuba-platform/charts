@@ -20,12 +20,12 @@ public abstract class RectangularChartLoader<T extends RectangularChart> extends
     }
 
     @Override
-    protected void loadConfiguration(Element element, T chart) {
-        super.loadConfiguration(element, chart);
+    protected void loadConfiguration(T chart, Element element) {
+        super.loadConfiguration(chart, element);
 
-        loadTrendLines(element, chart);
-        loadCursor(element, chart);
-        loadScrollbar(element, chart);
+        loadTrendLines(chart, element);
+        loadCursor(chart, element);
+        loadScrollbar(chart, element);
 
         String angle = element.attributeValue("angle");
         if (StringUtils.isNotEmpty(angle)) {
@@ -47,7 +47,7 @@ public abstract class RectangularChartLoader<T extends RectangularChart> extends
             chart.setDepth3D(Integer.valueOf(depth3D));
         }
 
-        loadMargins(element, chart);
+        loadMargins(chart, element);
 
         String marginsUpdated = element.attributeValue("marginsUpdated");
         if (StringUtils.isNotEmpty(marginsUpdated)) {
@@ -115,7 +115,7 @@ public abstract class RectangularChartLoader<T extends RectangularChart> extends
         }
     }
 
-    protected void loadCursor(Element element, T chart) {
+    protected void loadCursor(T chart, Element element) {
         Element cursorElement = element.element("chartCursor");
         if (cursorElement != null) {
             Cursor cursor = new Cursor();
@@ -229,7 +229,7 @@ public abstract class RectangularChartLoader<T extends RectangularChart> extends
         }
     }
 
-    protected void loadScrollbar(Element element, T chart) {
+    protected void loadScrollbar(T chart, Element element) {
         Element scrollbarElement = element.element("chartScrollbar");
         if (scrollbarElement != null) {
             Scrollbar scrollbar = new Scrollbar();
@@ -378,7 +378,7 @@ public abstract class RectangularChartLoader<T extends RectangularChart> extends
         }
     }
 
-    protected void loadTrendLines(Element element, T chart) {
+    protected void loadTrendLines(T chart, Element element) {
         Element trendLinesElement = element.element("trendLines");
         if (trendLinesElement != null) {
             for (Object trendLineItem : trendLinesElement.elements("trendLine")) {

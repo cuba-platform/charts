@@ -22,11 +22,11 @@ public abstract class SlicedChartLoader<T extends SlicedChart> extends AbstractC
     }
 
     @Override
-    protected void loadConfiguration(Element element, T chart) {
-        super.loadConfiguration(element, chart);
+    protected void loadConfiguration(T chart, Element element) {
+        super.loadConfiguration(chart, element);
 
-        loadColors(element, chart);
-        loadGradientRatios(element, chart);
+        loadColors(chart, element);
+        loadGradientRatios(chart, element);
 
         String alpha = element.attributeValue("alpha");
         if (StringUtils.isNotEmpty(alpha)) {
@@ -113,7 +113,7 @@ public abstract class SlicedChartLoader<T extends SlicedChart> extends AbstractC
             chart.setLabelTickColor(Color.valueOf(labelTickColor));
         }
 
-        loadMargins(element, chart);
+        loadMargins(chart, element);
 
         String outlineAlpha = element.attributeValue("outlineAlpha");
         if (StringUtils.isNotEmpty(outlineAlpha)) {
@@ -165,7 +165,7 @@ public abstract class SlicedChartLoader<T extends SlicedChart> extends AbstractC
             chart.setStartAlpha(Double.valueOf(startAlpha));
         }
 
-        loadStartEffect(element, chart);
+        loadStartEffect(chart, element);
 
         String titleField = element.attributeValue("titleField");
         if (StringUtils.isNotEmpty(titleField)) {
@@ -193,7 +193,7 @@ public abstract class SlicedChartLoader<T extends SlicedChart> extends AbstractC
         }
     }
 
-    protected void loadGradientRatios(Element element, T chart) {
+    protected void loadGradientRatios(T chart, Element element) {
         Element gradientRatiosElement = element.element("gradientRatios");
         if (gradientRatiosElement != null) {
             for (Object ratioItem : gradientRatiosElement.elements("ratio")) {

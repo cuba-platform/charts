@@ -30,7 +30,7 @@ public class SerialChartLoader extends RectangularChartLoader<SerialChart> {
         Chart chart = super.loadComponent(factory, element, parent);
 
         SerialChart configuration = new SerialChart();
-        loadConfiguration(element, configuration);
+        loadConfiguration(configuration, element);
         chart.setConfiguration(configuration);
 
         assignFrame(chart);
@@ -39,10 +39,10 @@ public class SerialChartLoader extends RectangularChartLoader<SerialChart> {
     }
 
     @Override
-    protected void loadConfiguration(Element element, SerialChart chart) {
-        super.loadConfiguration(element, chart);
+    protected void loadConfiguration(SerialChart chart, Element element) {
+        super.loadConfiguration(chart, element);
 
-        loadCategoryAxis(element, chart);
+        loadCategoryAxis(chart, element);
 
         String balloonDateFormat = element.attributeValue("balloonDateFormat");
         if (StringUtils.isNotEmpty(balloonDateFormat)) {
@@ -100,12 +100,12 @@ public class SerialChartLoader extends RectangularChartLoader<SerialChart> {
         }
     }
 
-    protected void loadCategoryAxis(Element element, SerialChart chart) {
+    protected void loadCategoryAxis(SerialChart chart, Element element) {
         Element axisElement = element.element("categoryAxis");
         if (axisElement != null) {
             CategoryAxis axis = new CategoryAxis();
 
-            loadAbstractAxis(axisElement, axis);
+            loadAbstractAxis(axis, axisElement);
 
             String categoryFunction = axisElement.elementText("categoryFunction");
             if (StringUtils.isNotEmpty(categoryFunction)) {

@@ -26,7 +26,7 @@ public class PieChartLoader extends SlicedChartLoader<PieChart> {
         Chart chart = super.loadComponent(factory, element, parent);
 
         PieChart configuration = new PieChart();
-        loadConfiguration(element, configuration);
+        loadConfiguration(configuration, element);
         chart.setConfiguration(configuration);
 
         assignFrame(chart);
@@ -35,8 +35,8 @@ public class PieChartLoader extends SlicedChartLoader<PieChart> {
     }
 
     @Override
-    protected void loadConfiguration(Element element, PieChart chart) {
-        super.loadConfiguration(element, chart);
+    protected void loadConfiguration(PieChart chart, Element element) {
+        super.loadConfiguration(chart, element);
 
         String angle = element.attributeValue("angle");
         if (StringUtils.isNotEmpty(angle)) {

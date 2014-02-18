@@ -27,7 +27,7 @@ public class AngularGaugeChartLoader extends AbstractChartLoader<AngularGaugeCha
         Chart chart = super.loadComponent(factory, element, parent);
 
         AngularGaugeChart configuration = new AngularGaugeChart();
-        loadConfiguration(element, configuration);
+        loadConfiguration(configuration, element);
         chart.setConfiguration(configuration);
 
         assignFrame(chart);
@@ -36,11 +36,11 @@ public class AngularGaugeChartLoader extends AbstractChartLoader<AngularGaugeCha
     }
 
     @Override
-    protected void loadConfiguration(Element element, AngularGaugeChart chart) {
-        super.loadConfiguration(element, chart);
+    protected void loadConfiguration(AngularGaugeChart chart, Element element) {
+        super.loadConfiguration(chart, element);
 
-        loadArrows(element, chart);
-        loadAxes(element, chart);
+        loadArrows(chart, element);
+        loadAxes(chart, element);
 
         Element facePatternElement = element.element("facePattern");
         if (facePatternElement != null) {
@@ -92,17 +92,17 @@ public class AngularGaugeChartLoader extends AbstractChartLoader<AngularGaugeCha
             chart.setGaugeY(gaugeY);
         }
 
-        loadMargins(element, chart);
+        loadMargins(chart, element);
 
         String minRadius = element.attributeValue("minRadius");
         if (StringUtils.isNotEmpty(minRadius)) {
             chart.setMinRadius(Integer.valueOf(minRadius));
         }
 
-        loadStartEffect(element, chart);
+        loadStartEffect(chart, element);
     }
 
-    protected void loadAxes(Element element, AngularGaugeChart chart) {
+    protected void loadAxes(AngularGaugeChart chart, Element element) {
         Element axesListElement = element.element("axes");
         if (axesListElement != null) {
             for (Object axisItem : axesListElement.elements("axis")) {
@@ -110,7 +110,7 @@ public class AngularGaugeChartLoader extends AbstractChartLoader<AngularGaugeCha
 
                 GaugeAxis axis = new GaugeAxis();
 
-                loadGaugeBands(axisElement, axis);
+                loadGaugeBands(axis, axisElement);
 
                 String axisAlpha = axisElement.attributeValue("axisAlpha");
                 if (StringUtils.isNotEmpty(axisAlpha)) {
@@ -312,7 +312,7 @@ public class AngularGaugeChartLoader extends AbstractChartLoader<AngularGaugeCha
         }
     }
 
-    protected void loadGaugeBands(Element axisElement, GaugeAxis axis) {
+    protected void loadGaugeBands(GaugeAxis axis, Element axisElement) {
         Element bandsElement = axisElement.element("bands");
         if (bandsElement != null) {
             for (Object bandItem : bandsElement.elements("band")) {
@@ -355,7 +355,7 @@ public class AngularGaugeChartLoader extends AbstractChartLoader<AngularGaugeCha
         }
     }
 
-    protected void loadArrows(Element element, AngularGaugeChart chart) {
+    protected void loadArrows(AngularGaugeChart chart, Element element) {
         Element arrowsElement = element.element("arrows");
         if (arrowsElement != null) {
             for (Object arrowItem : element.elements("arrow")) {

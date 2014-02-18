@@ -21,17 +21,17 @@ public abstract class CoordinateChartLoader<T extends CoordinateChart> extends A
     }
 
     @Override
-    protected void loadConfiguration(Element element, T chart) {
-        super.loadConfiguration(element, chart);
+    protected void loadConfiguration(T chart, Element element) {
+        super.loadConfiguration(chart, element);
 
-        loadColors(element, chart);
-        loadGraphs(element, chart);
-        loadValueAxes(element, chart);
+        loadColors(chart, element);
+        loadGraphs(chart, element);
+        loadValueAxes(chart, element);
 
-        loadStartEffect(element, chart);
+        loadStartEffect(chart, element);
     }
 
-    protected void loadGraphs(Element element, T chart) {
+    protected void loadGraphs(T chart, Element element) {
         Element graphsElement = element.element("graphs");
         if (graphsElement != null) {
             for (Object graphItem : graphsElement.elements("graph")) {
@@ -469,7 +469,7 @@ public abstract class CoordinateChartLoader<T extends CoordinateChart> extends A
         }
     }
 
-    protected void loadValueAxes(Element element, T chart) {
+    protected void loadValueAxes(T chart, Element element) {
         Element valueAxesElement = element.element("valueAxes");
         if (valueAxesElement != null) {
             for (Object axisItem : valueAxesElement.elements("axis")) {
@@ -477,7 +477,7 @@ public abstract class CoordinateChartLoader<T extends CoordinateChart> extends A
 
                 ValueAxis axis = new ValueAxis();
 
-                loadAbstractAxis(axisElement, axis);
+                loadAbstractAxis(axis, axisElement);
 
                 String axisTitleOffset = axisElement.attributeValue("axisTitleOffset");
                 if (StringUtils.isNotEmpty(axisTitleOffset)) {
