@@ -5,11 +5,16 @@
   -->
 
 <credits>
-
     <items>
+        <item name="AmCharts" web="http://www.amcharts.com/">
+            <license>
+                <![CDATA[
+                    AmCharts Free License
 
-        <item name="JFreeChart" web="http://www.jfree.org/jfreechart/" license="lgpl-2.1"/>
-
+                    You can download and use all amCharts products for free. The only limitation of the free version is that a small link to this web site will be displayed in the top left corner of your charts.
+If you would like to use charts without this link, or you appreciate the software and would like to support its creators, please purchase a commercial license.
+                ]]>
+            </license>
+        </item>
     </items>
-
 </credits>
