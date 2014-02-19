@@ -35,6 +35,11 @@ public class DataProviderSerializer implements JsonSerializer<DataProvider> {
             dataProviderElement.add(itemElement);
         }
 
+        // Prevent errors on client for empty dataprovider
+        if (dataProviderElement.size() == 0) {
+            dataProviderElement.add(new JsonObject());
+        }
+
         return dataProviderElement;
     }
 }

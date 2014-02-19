@@ -17,9 +17,13 @@ import com.haulmont.charts.web.toolkit.ui.amcharts.CubaAmchartsScene;
 import com.haulmont.charts.web.toolkit.ui.amcharts.events.*;
 import com.haulmont.chile.core.datatypes.Datatypes;
 import com.haulmont.chile.core.datatypes.FormatStrings;
+import com.haulmont.chile.core.datatypes.impl.EnumClass;
+import com.haulmont.chile.core.model.Instance;
+import com.haulmont.chile.core.model.utils.InstanceUtils;
 import com.haulmont.cuba.core.entity.Entity;
 import com.haulmont.cuba.core.global.AppBeans;
 import com.haulmont.cuba.core.global.Messages;
+import com.haulmont.cuba.core.global.MetadataTools;
 import com.haulmont.cuba.core.global.UserSessionSource;
 import com.haulmont.cuba.gui.data.CollectionDatasource;
 import com.haulmont.cuba.web.gui.components.WebAbstractComponent;
@@ -937,6 +941,7 @@ public class WebChart extends WebAbstractComponent<CubaAmchartsScene> implements
 
     protected static class EntityDataItem implements DataItem {
 
+        protected Messages messages = AppBeans.get(Messages.NAME);
         protected final EntityDataProvider dataProvider;
         protected final Entity item;
 
@@ -952,7 +957,14 @@ public class WebChart extends WebAbstractComponent<CubaAmchartsScene> implements
 
         @Override
         public Object getValue(String property) {
-            return item.getValue(property);
+            Object value = item.getValue(property);
+            if (value instanceof Entity) {
+                return InstanceUtils.getInstanceName((Instance) value);
+            }
+            if (value instanceof EnumClass) {
+                return messages.getMessage((Enum) value);
+            }
+            return value;
         }
     }
 }

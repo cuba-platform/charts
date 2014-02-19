@@ -14,7 +14,7 @@ public enum StackType implements ChartEnum {
     NONE("none"),
     REGULAR("regular"),
     FILL("100%"),
-    BOX_3D("3D");
+    BOX_3D("3d");
 
     private String id;
 

@@ -256,12 +256,12 @@
 
     <xs:simpleType name="chartGraphType">
         <xs:restriction base="xs:string">
-            <xs:enumeration value="line"/>
-            <xs:enumeration value="column"/>
-            <xs:enumeration value="step"/>
-            <xs:enumeration value="smoothedLine"/>
-            <xs:enumeration value="candlestick"/>
-            <xs:enumeration value="ohlc"/>
+            <xs:enumeration value="LINE"/>
+            <xs:enumeration value="COLUMN"/>
+            <xs:enumeration value="STEP"/>
+            <xs:enumeration value="smoothedline"/>
+            <xs:enumeration value="CANDLESTICK"/>
+            <xs:enumeration value="OHLC"/>
         </xs:restriction>
     </xs:simpleType>
 
