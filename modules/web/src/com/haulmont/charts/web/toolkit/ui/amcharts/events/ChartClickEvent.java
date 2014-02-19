@@ -43,7 +43,7 @@ public class ChartClickEvent extends Component.Event {
         return x;
     }
 
-    public double getxAxis() {
+    public double getXAxis() {
         return xAxis;
     }
 
@@ -51,7 +51,7 @@ public class ChartClickEvent extends Component.Event {
         return y;
     }
 
-    public double getyAxis() {
+    public double getYAxis() {
         return yAxis;
     }
 }

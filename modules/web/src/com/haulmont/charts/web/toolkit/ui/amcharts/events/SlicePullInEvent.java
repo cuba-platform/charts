@@ -17,7 +17,6 @@ public class SlicePullInEvent extends com.vaadin.ui.Component.Event {
 
     private final String sliceId;
 
-
     public SlicePullInEvent(CubaAmchartsScene scene, String sliceId) {
         super(scene);
         this.sliceId = sliceId;

@@ -225,11 +225,11 @@ public class CubaAmchartsScene extends AbstractComponent {
         removeListener(CubaAmchartsSceneState.SLICE_PULL_IN_EVENT, SlicePullInEvent.class, listener);
     }
 
-    public void addSlicePullOutMethod(SlicePullOutListener listener) {
+    public void addSlicePullOutListener(SlicePullOutListener listener) {
         addListener(CubaAmchartsSceneState.SLICE_PULL_OUT_EVENT, SlicePullOutEvent.class, listener, slicePullOutMethod);
     }
 
-    public void removeSlicePullOutMethod(SlicePullOutListener listener) {
+    public void removeSlicePullOutListener(SlicePullOutListener listener) {
         removeListener(CubaAmchartsSceneState.SLICE_PULL_OUT_EVENT, SlicePullOutEvent.class, listener);
     }
 
