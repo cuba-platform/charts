@@ -123,6 +123,10 @@ public abstract class CoordinateChart<T extends CoordinateChart> extends Abstrac
 
         if (graphs != null) {
             for (Graph g : graphs) {
+                if (StringUtils.isNotEmpty(g.getValueField())) {
+                    wiredFields.add(g.getValueField());
+                }
+
                 if (StringUtils.isNotEmpty(g.getAlphaField())) {
                     wiredFields.add(g.getAlphaField());
                 }

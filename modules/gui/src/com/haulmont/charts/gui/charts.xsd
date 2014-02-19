@@ -460,7 +460,7 @@
     <xs:complexType name="exportMenu">
         <xs:all>
             <xs:element name="onClick" minOccurs="0" maxOccurs="1"/>
-            <xs:element name="items" minOccurs="1" maxOccurs="1">
+            <xs:element name="items" minOccurs="0" maxOccurs="1">
                 <xs:complexType>
                     <xs:sequence>
                         <xs:element name="item" type="exportMenuItem" minOccurs="0" maxOccurs="unbounded"/>
@@ -886,7 +886,7 @@
         </xs:all>
 
         <xs:attribute name="id" type="xs:string"/>
-        <xs:attribute name="type" type="chartGraphType" use="required"/>
+        <xs:attribute name="type" type="chartGraphType"/>
 
         <xs:attribute name="alphaField" type="xs:string"/>
         <xs:attribute name="balloonColor" type="color"/>
@@ -935,7 +935,7 @@
         <xs:attribute name="legendColor" type="color"/>
         <xs:attribute name="legendPeriodValueText" type="xs:string"/>
         <xs:attribute name="legendValueText" type="xs:string"/>
-        <xs:attribute name="lineAlpha" type="xs:boolean"/>
+        <xs:attribute name="lineAlpha" type="xs:double"/>
         <xs:attribute name="lineColor" type="color"/>
         <xs:attribute name="lineColorField" type="xs:string"/>
         <xs:attribute name="lineThickness" type="xs:integer"/>

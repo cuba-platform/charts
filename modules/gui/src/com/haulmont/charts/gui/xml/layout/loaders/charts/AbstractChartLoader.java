@@ -71,16 +71,20 @@ public abstract class AbstractChartLoader<T extends AbstractChart> extends Compo
             component.setWidth("640px");
         } else if (!StringUtils.isBlank(width)) {
             component.setWidth(width);
+        } else {
+            component.setWidth("640px");
         }
     }
 
     @Override
     protected void loadHeight(Component component, Element element) {
-        final String width = element.attributeValue("width");
-        if ("auto".equalsIgnoreCase(width)) {
-            component.setWidth("480px");
-        } else if (!StringUtils.isBlank(width)) {
-            component.setWidth(width);
+        final String height = element.attributeValue("height");
+        if ("auto".equalsIgnoreCase(height)) {
+            component.setHeight("480px");
+        } else if (!StringUtils.isBlank(height)) {
+            component.setHeight(height);
+        } else {
+            component.setHeight("480px");
         }
     }
 
@@ -849,6 +853,8 @@ public abstract class AbstractChartLoader<T extends AbstractChart> extends Compo
     }
 
     protected void loadAbstractAxis(AbstractAxis axis, Element element) {
+        loadGuides(axis, element);
+
         String autoGridCount = element.attributeValue("autoGridCount");
         if (StringUtils.isNotEmpty(autoGridCount)) {
             axis.setAutoGridCount(Boolean.valueOf(autoGridCount));
@@ -1002,6 +1008,134 @@ public abstract class AbstractChartLoader<T extends AbstractChart> extends Compo
         String titleFontSize = element.attributeValue("titleFontSize");
         if (StringUtils.isNotEmpty(titleFontSize)) {
             axis.setTitleFontSize(Integer.valueOf(titleFontSize));
+        }
+    }
+
+    protected void loadGuides(AbstractAxis axis, Element element) {
+        Element guidesElement = element.element("guides");
+        if (guidesElement != null) {
+            for (Object guideItem : guidesElement.elements("guide")) {
+                Element guideElement = (Element) guideItem;
+
+                Guide guide = new Guide();
+
+                String above = guideElement.attributeValue("above");
+                if (StringUtils.isNotEmpty(above)) {
+                    guide.setAbove(Boolean.valueOf(above));
+                }
+
+                String angle = guideElement.attributeValue("angle");
+                if (StringUtils.isNotEmpty(angle)) {
+                    guide.setAngle(Integer.valueOf(angle));
+                }
+
+                String balloonColor = guideElement.attributeValue("balloonColor");
+                if (StringUtils.isNotEmpty(balloonColor)) {
+                    guide.setBalloonColor(Color.valueOf(balloonColor));
+                }
+
+                String balloonText = guideElement.attributeValue("balloonText");
+                if (StringUtils.isNotEmpty(balloonText)) {
+                    guide.setBalloonText(loadResourceString(balloonText));
+                }
+
+                String category = guideElement.attributeValue("category");
+                if (StringUtils.isNotEmpty(category)) {
+                    guide.setCategory(category);
+                }
+
+                String dashLength = guideElement.attributeValue("dashLength");
+                if (StringUtils.isNotEmpty(dashLength)) {
+                    guide.setDashLength(Integer.valueOf(dashLength));
+                }
+
+                String date = guideElement.attributeValue("date");
+                if (StringUtils.isNotEmpty(date)) {
+                    guide.setDate(loadDate(date));
+                }
+
+                String fillAlpha = guideElement.attributeValue("fillAlpha");
+                if (StringUtils.isNotEmpty(fillAlpha)) {
+                    guide.setFillAlpha(Double.valueOf(fillAlpha));
+                }
+
+                String fillColor = guideElement.attributeValue("fillColor");
+                if (StringUtils.isNotEmpty(fillColor)) {
+                    guide.setFillColor(Color.valueOf(fillColor));
+                }
+
+                String fontSize = guideElement.attributeValue("fontSize");
+                if (StringUtils.isNotEmpty(fontSize)) {
+                    guide.setFontSize(Integer.valueOf(fontSize));
+                }
+
+                String inside = guideElement.attributeValue("inside");
+                if (StringUtils.isNotEmpty(inside)) {
+                    guide.setInside(Boolean.valueOf(inside));
+                }
+
+                String label = guideElement.attributeValue("label");
+                if (StringUtils.isNotEmpty(label)) {
+                    guide.setLabel(loadResourceString(label));
+                }
+
+                String labelRotation = guideElement.attributeValue("labelRotation");
+                if (StringUtils.isNotEmpty(labelRotation)) {
+                    guide.setLabelRotation(Integer.valueOf(labelRotation));
+                }
+
+                String lineAlpha = guideElement.attributeValue("lineAlpha");
+                if (StringUtils.isNotEmpty(lineAlpha)) {
+                    guide.setLineAlpha(Double.valueOf(lineAlpha));
+                }
+
+                String lineColor = guideElement.attributeValue("lineColor");
+                if (StringUtils.isNotEmpty(lineColor)) {
+                    guide.setLineColor(Color.valueOf(lineColor));
+                }
+
+                String lineThickness = guideElement.attributeValue("lineThickness");
+                if (StringUtils.isNotEmpty(lineThickness)) {
+                    guide.setLineThickness(Integer.valueOf(lineThickness));
+                }
+
+                String position = guideElement.attributeValue("position");
+                if (StringUtils.isNotEmpty(position)) {
+                    guide.setPosition(Position.valueOf(position));
+                }
+
+                String tickLength = guideElement.attributeValue("tickLength");
+                if (StringUtils.isNotEmpty(tickLength)) {
+                    guide.setTickLength(Integer.valueOf(tickLength));
+                }
+
+                String toAngle = guideElement.attributeValue("toAngle");
+                if (StringUtils.isNotEmpty(toAngle)) {
+                    guide.setToAngle(Integer.valueOf(toAngle));
+                }
+
+                String toCategory = guideElement.attributeValue("toCategory");
+                if (StringUtils.isNotEmpty(toCategory)) {
+                    guide.setToCategory(toCategory);
+                }
+
+                String toDate = guideElement.attributeValue("toDate");
+                if (StringUtils.isNotEmpty(toDate)) {
+                    guide.setToDate(loadDate(toDate));
+                }
+
+                String toValue = guideElement.attributeValue("toValue");
+                if (StringUtils.isNotEmpty(toValue)) {
+                    guide.setValue(Double.valueOf(toValue));
+                }
+
+                String value = guideElement.attributeValue("value");
+                if (StringUtils.isNotEmpty(value)) {
+                    guide.setValue(Double.valueOf(value));
+                }
+
+                axis.addGuides(guide);
+            }
         }
     }
 
