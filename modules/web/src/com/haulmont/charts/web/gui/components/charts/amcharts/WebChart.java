@@ -19,11 +19,12 @@ import com.haulmont.chile.core.datatypes.Datatypes;
 import com.haulmont.chile.core.datatypes.FormatStrings;
 import com.haulmont.chile.core.datatypes.impl.EnumClass;
 import com.haulmont.chile.core.model.Instance;
+import com.haulmont.chile.core.model.MetaProperty;
 import com.haulmont.chile.core.model.utils.InstanceUtils;
 import com.haulmont.cuba.core.entity.Entity;
 import com.haulmont.cuba.core.global.AppBeans;
+import com.haulmont.cuba.core.global.DevelopmentException;
 import com.haulmont.cuba.core.global.Messages;
-import com.haulmont.cuba.core.global.MetadataTools;
 import com.haulmont.cuba.core.global.UserSessionSource;
 import com.haulmont.cuba.gui.data.CollectionDatasource;
 import com.haulmont.cuba.web.gui.components.WebAbstractComponent;
@@ -851,6 +852,19 @@ public class WebChart extends WebAbstractComponent<CubaAmchartsScene> implements
         }
 
         protected void setupSerialChartDefaults(SerialChart chart) {
+            boolean byDate = WebChart.this.byDate;
+
+            if (datasource != null && StringUtils.isNotEmpty(chart.getCategoryField())) {
+                MetaProperty property = datasource.getMetaClass().getProperty(chart.getCategoryField());
+                if (property == null) {
+                    throw new DevelopmentException(
+                            String.format("Unable to find metaproperty '%s' for class '%s'", chart.getCategoryField(), datasource.getMetaClass()));
+                }
+                if (Date.class.isAssignableFrom(property.getJavaType())) {
+                    byDate = true;
+                }
+            }
+
             if (byDate) {
                 CategoryAxis categoryAxis = chart.getCategoryAxis();
                 if (categoryAxis == null) {
