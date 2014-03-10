@@ -70,7 +70,7 @@ public abstract class AbstractGanttChartLoader extends ComponentLoader {
 
     protected void loadLegend(BaseGanttChart.HasLegend component, Element element) {
         String legend = element.attributeValue("legend");
-        if (!StringUtils.isEmpty(legend) && isBoolean(legend)) {
+        if (!StringUtils.isEmpty(legend)) {
             component.setHasLegend(Boolean.valueOf(legend));
         }
     }
