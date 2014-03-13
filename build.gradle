@@ -138,6 +138,7 @@ configure(chartsWebToolkitModule) {
         compile(chartsWebModule)
         compile(cubaWebToolkit)
 
+        widgetSetBuilding(cubaWeb)
         widgetSetBuilding(chartsWebModule)
         widgetSetBuilding(cubaWebToolkit)
     }
@@ -146,7 +147,6 @@ configure(chartsWebToolkitModule) {
     task buildWidgetSet(type: CubaWidgetSetBuilding) {
         widgetSetsDir = "$webOutDir/VAADIN/widgetsets"
         widgetSetClass = 'com.haulmont.charts.web.toolkit.ui.ChartsWidgetSet'
-//        jvmArgs('-Xdebug', '-Xrunjdwp:transport=dt_socket,server=y,suspend=y,address=8000')
 //        compilerArgs = ['-style' : 'PRETTY', '-localWorkers' : '2']
     }
 
