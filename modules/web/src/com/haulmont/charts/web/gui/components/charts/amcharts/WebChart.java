@@ -297,6 +297,7 @@ public class WebChart extends WebAbstractComponent<CubaAmchartsScene> implements
                     }
                 }
             };
+            component.addChartRightClickListener(rightClickHandler);
         }
         if (!rightClickListeners.contains(clickListener)) {
             rightClickListeners.add(clickListener);
