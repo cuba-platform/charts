@@ -8,8 +8,6 @@ package com.haulmont.charts.web.toolkit.ui.client.amcharts.events;
 import com.google.gwt.core.client.JavaScriptObject;
 import com.haulmont.cuba.web.toolkit.ui.client.JsDate;
 
-import java.util.Date;
-
 /**
  * @author artamonov
  * @version $Id$
