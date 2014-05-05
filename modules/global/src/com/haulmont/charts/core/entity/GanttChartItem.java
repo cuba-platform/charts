@@ -53,7 +53,6 @@ public abstract class GanttChartItem extends AbstractNotPersistentEntity {
 
     private String styleClass = "";
 
-
     @MetaProperty
     public Integer getItemId() {
         return itemId;
@@ -212,8 +211,16 @@ public abstract class GanttChartItem extends AbstractNotPersistentEntity {
     }
 
     @MetaProperty
+    public void setStartTs(Date startTs) {
+    }
+
+    @MetaProperty
     public Date getEndTs() {
         return null;
+    }
+
+    @MetaProperty
+    public void setEndTs(Date endTs) {
     }
 
     @MetaProperty

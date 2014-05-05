@@ -32,35 +32,31 @@ public class GanttChartTask extends GanttChartItem {
         this.parent = parent;
     }
 
-    @MetaProperty
     @Override
     public Date getStartTs() {
         return startTs;
     }
 
-    @MetaProperty
+    @Override
     public void setStartTs(Date startTs) {
         this.startTs = startTs;
     }
 
-    @MetaProperty
     @Override
     public Date getEndTs() {
         return endTs;
     }
 
-    @MetaProperty
+    @Override
     public void setEndTs(Date endTs) {
         this.endTs = endTs;
     }
 
-    @MetaProperty
     @Override
     public Integer getCompletePercent() {
         return completePercent;
     }
 
-    @MetaProperty
     @Override
     public void setCompletePercent(Integer completePercent) {
         this.completePercent = completePercent;
