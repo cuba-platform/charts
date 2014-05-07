@@ -29,6 +29,8 @@ public class ExportConfig extends AbstractConfigurationObject {
 
     private ExportMenuItemStyle menuItemStyle;
 
+    private ExportMenuItemOutput menuItemOutput;
+
     public String getMenuBottom() {
         return menuBottom;
     }
@@ -90,6 +92,15 @@ public class ExportConfig extends AbstractConfigurationObject {
 
     public ExportConfig setMenuTop(String menuTop) {
         this.menuTop = menuTop;
+        return this;
+    }
+
+    public ExportMenuItemOutput getMenuItemOutput() {
+        return menuItemOutput;
+    }
+
+    public ExportConfig setMenuItemOutput(ExportMenuItemOutput exportMenuItemOutput) {
+        this.menuItemOutput = exportMenuItemOutput;
         return this;
     }
 }

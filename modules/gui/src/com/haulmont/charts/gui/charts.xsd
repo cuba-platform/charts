@@ -495,6 +495,10 @@
         <xs:attribute name="textDecoration" type="xs:string"/>
     </xs:complexType>
 
+    <xs:complexType name="menuItemOutput">
+        <xs:attribute name="fileName" type="xs:string"/>
+    </xs:complexType>
+
     <xs:complexType name="exportConfig">
         <xs:all>
             <xs:element name="menuItems" minOccurs="1" maxOccurs="1">
@@ -504,6 +508,7 @@
                     </xs:sequence>
                 </xs:complexType>
             </xs:element>
+            <xs:element name="menuItemOutput" minOccurs="0" maxOccurs="1" type="menuItemOutput"/>
             <xs:element name="menuItemStyle" minOccurs="0" maxOccurs="1" type="menuItemStyle"/>
         </xs:all>
 

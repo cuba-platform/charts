@@ -310,6 +310,8 @@ public abstract class AbstractChartLoader<T extends AbstractChart> extends Compo
 
             loadExportMenus(exportConfig, exportConfigElement);
 
+            loadExportMenuOutput(exportConfig, exportConfigElement);
+
             loadExportMenuItemStyle(exportConfig, exportConfigElement);
 
             String menuTop = exportConfigElement.attributeValue("menuTop");
@@ -333,6 +335,19 @@ public abstract class AbstractChartLoader<T extends AbstractChart> extends Compo
             }
 
             chart.setExportConfig(exportConfig);
+        }
+    }
+
+    protected void loadExportMenuOutput(ExportConfig exportConfig, Element exportConfigElement) {
+        Element menuItemOutput = exportConfigElement.element("menuItemOutput");
+        if (menuItemOutput != null) {
+            ExportMenuItemOutput exportMenuItemOutput = new ExportMenuItemOutput();
+            exportConfig.setMenuItemOutput(exportMenuItemOutput);
+
+            String fileName = menuItemOutput.attributeValue("fileName");
+            if (StringUtils.isNotBlank(fileName)) {
+                exportMenuItemOutput.setFileName(fileName);
+            }
         }
     }
 
