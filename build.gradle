@@ -170,6 +170,8 @@ configure(chartsWebModule) {
         compile(chartsGuiModule)
         compile(cubaWeb)
 
+        compile("com.vaadin.tapio:googlemaps:0.7.1")
+
         provided(chartsGuiModule)
         provided(servletApi)
         provided(cubaWeb)
