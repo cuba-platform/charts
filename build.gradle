@@ -49,7 +49,7 @@ def chartsWebToolkitLegacyModule = project(':charts-web6-toolkit')
 
 def baseVersion = artifactVersion + (isSnapshot ? '-SNAPSHOT' : '')
 
-def servletApi = [group: 'org.apache.tomcat', name: 'servlet-api', version: '6.0.20']
+def servletApi = [group: 'org.apache.tomcat', name: 'tomcat-servlet-api', version: '7.0.53']
 
 def cubaWeb = [group: 'com.haulmont.cuba', name: 'cuba-web', version: baseVersion]
 def cubaWebLegacy = [group: 'com.haulmont.cuba', name: 'cuba-web6', version: baseVersion]
