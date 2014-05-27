@@ -1325,4 +1325,31 @@
             <xs:attribute name="datasource" type="xs:string" use="required"/>
         </xs:complexType>
     </xs:element>
+
+
+    <!-- Maps -->
+    <xs:element name="mapViewer">
+        <xs:complexType>
+            <xs:attribute name="id" type="xs:string"/>
+            <xs:attribute name="vendor" type="mapVendorType" default="google"/>
+            <xs:attribute name="width" type="xs:string"/>
+            <xs:attribute name="height" type="xs:string"/>
+            <xs:attribute name="mapType" type="mapTypeType" default="roadmap"/>
+        </xs:complexType>
+    </xs:element>
+
+    <xs:simpleType name="mapVendorType">
+        <xs:restriction base="xs:string">
+            <xs:enumeration value="google"/>
+        </xs:restriction>
+    </xs:simpleType>
+
+    <xs:simpleType name="mapTypeType">
+        <xs:restriction base="xs:string">
+            <xs:enumeration value="roadmap"/>
+            <xs:enumeration value="satellite"/>
+            <xs:enumeration value="hybrid"/>
+            <xs:enumeration value="terrain"/>
+        </xs:restriction>
+    </xs:simpleType>
 </xs:schema>
