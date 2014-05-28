@@ -14,7 +14,9 @@ import com.haulmont.cuba.web.gui.components.WebAbstractComponent;
 import com.vaadin.tapio.googlemaps.GoogleMap;
 import com.vaadin.tapio.googlemaps.client.*;
 
-import java.util.*;
+import java.util.ArrayList;
+import java.util.Collection;
+import java.util.List;
 
 /**
  * @author korotkov
@@ -25,12 +27,18 @@ public class WebGoogleMapViewer extends WebAbstractComponent<GoogleMap> implemen
     public static final String VENDOR = "google";
 
     protected MapConfig mapConfig = AppBeans.get(Configuration.class).getConfig(MapConfig.class);
-    protected Map<MapMoveListener, com.vaadin.tapio.googlemaps.client.events.MapMoveListener> mapMoveListeners;
-    protected Map<MarkerDragListener, com.vaadin.tapio.googlemaps.client.events.MarkerDragListener> markerDragListeners;
-    protected Map<MarkerClickListener,
-            com.vaadin.tapio.googlemaps.client.events.MarkerClickListener> markerClickListeners;
-    protected Map<InfoWindowClosedListener,
-            com.vaadin.tapio.googlemaps.client.events.InfoWindowClosedListener> infoWindowClosedListeners;
+
+    protected List<MapMoveListener> mapMoveListeners;
+    protected com.vaadin.tapio.googlemaps.client.events.MapMoveListener mapMoveHandler;
+
+    protected List<MarkerDragListener> markerDragListeners;
+    protected com.vaadin.tapio.googlemaps.client.events.MarkerDragListener markerDragHandler;
+
+    protected List<MarkerClickListener> markerClickListeners;
+    protected com.vaadin.tapio.googlemaps.client.events.MarkerClickListener markerClickHandler;
+
+    protected List<InfoWindowClosedListener> infoWindowClosedListeners;
+    protected com.vaadin.tapio.googlemaps.client.events.InfoWindowClosedListener infoWindowClosedHandler;
 
     public WebGoogleMapViewer() {
         super();
@@ -43,10 +51,6 @@ public class WebGoogleMapViewer extends WebAbstractComponent<GoogleMap> implemen
         }
         component = new GoogleMap(new LatLon(mapConfig.getDefLatitude(), mapConfig.getDefLongitude()), apiOrClientId);
 
-        mapMoveListeners = new HashMap<>();
-        markerDragListeners = new HashMap<>();
-        markerClickListeners = new HashMap<>();
-        infoWindowClosedListeners = new HashMap<>();
     }
 
     @Override
@@ -222,12 +226,6 @@ public class WebGoogleMapViewer extends WebAbstractComponent<GoogleMap> implemen
     }
 
     @Override
-    public void removeMapMoveListener(MapMoveListener listener) {
-        component.removeMapMoveListener(mapMoveListeners.get(listener));
-        mapMoveListeners.remove(listener);
-    }
-
-    @Override
     public GeoPoint createGeoPoint() {
         return new GeoPointDelegate();
     }
@@ -302,49 +300,148 @@ public class WebGoogleMapViewer extends WebAbstractComponent<GoogleMap> implemen
     }
 
     @Override
-    public void addMapMoveListener(final MapMoveListener listener) {
-        MapMoveListenerDelegate googleListener = new MapMoveListenerDelegate(listener);
-        mapMoveListeners.put(listener, googleListener);
-        component.addMapMoveListener(googleListener);
+    public void addMapMoveListener(MapMoveListener listener) {
+        if (mapMoveListeners == null) {
+            mapMoveListeners = new ArrayList<>();
+            mapMoveListeners.add(listener);
+
+            mapMoveHandler = new com.vaadin.tapio.googlemaps.client.events.MapMoveListener() {
+                @Override
+                public void mapMoved(double zoom, LatLon center, LatLon boundsNE, LatLon boundsSW) {
+                    MapMoveEvent event = new MapMoveEvent(zoom, new GeoPointDelegate(center),
+                            new GeoPointDelegate(boundsNE), new GeoPointDelegate(boundsSW));
+                    for (MapMoveListener l : new ArrayList<>(mapMoveListeners)) {
+                        l.onMove(event);
+                    }
+                }
+            };
+
+            component.addMapMoveListener(mapMoveHandler);
+        } else {
+            mapMoveListeners.add(listener);
+        }
     }
 
     @Override
-    public void removeMarkerDragListener(MarkerDragListener listener) {
-        component.removeMarkerDragListener(markerDragListeners.get(listener));
-        markerDragListeners.remove(listener);
+    public void removeMapMoveListener(MapMoveListener listener) {
+        if (mapMoveListeners != null) {
+            mapMoveListeners.remove(listener);
+
+            if (mapMoveListeners.isEmpty()) {
+                component.removeMapMoveListener(mapMoveHandler);
+                mapMoveHandler = null;
+                mapMoveListeners = null;
+            }
+        }
     }
 
     @Override
     public void addMarkerDragListener(MarkerDragListener listener) {
-        MarkerDragListenerDelegate googleListener = new MarkerDragListenerDelegate(listener);
-        markerDragListeners.put(listener, googleListener);
-        component.addMarkerDragListener(googleListener);
+        if (markerDragListeners == null) {
+            markerDragListeners = new ArrayList<>();
+            markerDragListeners.add(listener);
+
+            markerDragHandler = new com.vaadin.tapio.googlemaps.client.events.MarkerDragListener() {
+                @Override
+                public void markerDragged(GoogleMapMarker marker, LatLon oldPosition) {
+                    MarkerDragEvent event = new MarkerDragEvent(new MarkerDelegate(marker),
+                            new GeoPointDelegate(oldPosition));
+
+                    for (MarkerDragListener l : new ArrayList<>(markerDragListeners)) {
+                        l.onDrag(event);
+                    }
+                }
+            };
+
+            component.addMarkerDragListener(markerDragHandler);
+        } else {
+            markerDragListeners.add(listener);
+        }
     }
 
     @Override
-    public void removeMarkerClickListener(MarkerClickListener listener) {
-        component.removeMarkerClickListener(markerClickListeners.get(listener));
-        markerClickListeners.remove(listener);
+    public void removeMarkerDragListener(MarkerDragListener listener) {
+        if (markerDragListeners != null) {
+            markerDragListeners.remove(listener);
+
+            if (markerDragListeners.isEmpty()) {
+                component.removeMarkerDragListener(markerDragHandler);
+                markerDragHandler = null;
+                markerDragListeners = null;
+            }
+        }
     }
 
     @Override
     public void addMarkerClickListener(MarkerClickListener listener) {
-        MarkerClickListenerDelegate googleListener = new MarkerClickListenerDelegate(listener);
-        markerClickListeners.put(listener, googleListener);
-        component.addMarkerClickListener(googleListener);
+        if (markerClickListeners == null) {
+            markerClickListeners = new ArrayList<>();
+            markerClickListeners.add(listener);
+
+            markerClickHandler = new com.vaadin.tapio.googlemaps.client.events.MarkerClickListener() {
+
+                @Override
+                public void markerClicked(GoogleMapMarker marker) {
+                    MarkerClickEvent event = new MarkerClickEvent(new MarkerDelegate(marker));
+                    for (MarkerClickListener l : new ArrayList<>(markerClickListeners)) {
+                        l.onClick(event);
+                    }
+                }
+            };
+
+            component.addMarkerClickListener(markerClickHandler);
+        } else {
+            markerClickListeners.add(listener);
+        }
+    }
+
+    @Override
+    public void removeMarkerClickListener(MarkerClickListener listener) {
+        if (markerClickListeners != null) {
+            markerClickListeners.remove(listener);
+
+            if (markerClickListeners.isEmpty()) {
+                component.removeMarkerClickListener(markerClickHandler);
+                markerClickHandler = null;
+                markerClickListeners = null;
+            }
+        }
     }
 
     @Override
     public void addInfoWindowClosedListener(InfoWindowClosedListener listener) {
-        InfoWindowClosedListenerDelegate googleListener = new InfoWindowClosedListenerDelegate(listener);
-        infoWindowClosedListeners.put(listener, googleListener);
-        component.addInfoWindowClosedListener(googleListener);
+        if (infoWindowClosedListeners == null) {
+            infoWindowClosedListeners = new ArrayList<>();
+            infoWindowClosedListeners.add(listener);
+
+            infoWindowClosedHandler = new com.vaadin.tapio.googlemaps.client.events.InfoWindowClosedListener() {
+
+                @Override
+                public void infoWindowClosed(GoogleMapInfoWindow infoWindow) {
+                    InfoWindowCloseEvent event = new InfoWindowCloseEvent(new InfoWindowDelegate(infoWindow));
+                    for (InfoWindowClosedListener l : new ArrayList<>(infoWindowClosedListeners)) {
+                        l.onClose(event);
+                    }
+                }
+            };
+
+            component.addInfoWindowClosedListener(infoWindowClosedHandler);
+        } else {
+            infoWindowClosedListeners.add(listener);
+        }
     }
 
     @Override
     public void removeInfoWindowClosedListener(InfoWindowClosedListener listener) {
-        component.removeInfoWindowClosedListener(infoWindowClosedListeners.get(listener));
-        infoWindowClosedListeners.remove(listener);
+        if (infoWindowClosedListeners != null) {
+            infoWindowClosedListeners.remove(listener);
+
+            if (infoWindowClosedListeners.isEmpty()) {
+                component.removeInfoWindowClosedListener(infoWindowClosedHandler);
+                infoWindowClosedHandler = null;
+                infoWindowClosedListeners = null;
+            }
+        }
     }
 
     @Override
@@ -370,63 +467,5 @@ public class WebGoogleMapViewer extends WebAbstractComponent<GoogleMap> implemen
     @Override
     public void openInfoWindow(InfoWindow infoWindow) {
         component.openInfoWindow(((InfoWindowDelegate)infoWindow).getInfoWindow());
-    }
-
-
-
-    protected class MapMoveListenerDelegate implements com.vaadin.tapio.googlemaps.client.events.MapMoveListener {
-
-        protected MapMoveListener cubaListener;
-
-        public MapMoveListenerDelegate(MapMoveListener cubaListener) {
-            this.cubaListener = cubaListener;
-        }
-
-        @Override
-        public void mapMoved(double v, LatLon latLon, LatLon latLon2, LatLon latLon3) {
-            cubaListener.mapMoved(v, new GeoPointDelegate(latLon), new GeoPointDelegate(latLon2),
-                    new GeoPointDelegate(latLon3));
-        }
-    }
-
-    protected class MarkerDragListenerDelegate implements com.vaadin.tapio.googlemaps.client.events.MarkerDragListener {
-
-        protected MarkerDragListener cubaListener;
-
-        public MarkerDragListenerDelegate(MarkerDragListener cubaListener) {
-            this.cubaListener = cubaListener;
-        }
-
-        @Override
-        public void markerDragged(GoogleMapMarker googleMarker, LatLon oldPosition) {
-            cubaListener.markerDragged(new MarkerDelegate(googleMarker), new GeoPointDelegate(oldPosition));
-        }
-    }
-
-    protected class MarkerClickListenerDelegate implements com.vaadin.tapio.googlemaps.client.events.MarkerClickListener {
-
-        protected MarkerClickListener cubaListener;
-
-        public MarkerClickListenerDelegate(MarkerClickListener cubaListener) {
-            this.cubaListener = cubaListener;
-        }
-
-        @Override
-        public void markerClicked(GoogleMapMarker googleMapMarker) {
-            cubaListener.markerClicked(new MarkerDelegate(googleMapMarker));
-        }
-    }
-
-    protected class InfoWindowClosedListenerDelegate implements com.vaadin.tapio.googlemaps.client.events.InfoWindowClosedListener {
-        protected InfoWindowClosedListener cubaListener;
-
-        public InfoWindowClosedListenerDelegate(InfoWindowClosedListener cubaListener) {
-            this.cubaListener = cubaListener;
-        }
-
-        @Override
-        public void infoWindowClosed(GoogleMapInfoWindow googleMapInfoWindow) {
-            cubaListener.infoWindowClosed(new InfoWindowDelegate(googleMapInfoWindow));
-        }
     }
 }

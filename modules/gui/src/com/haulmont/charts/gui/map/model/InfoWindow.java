@@ -26,8 +26,8 @@ public interface InfoWindow {
     Integer getPixelOffsetHeight();
     void setPixelOffsetHeight(Integer pixelOffsetHeight);
 
-    Integer getzIndex();
-    void setzIndex(Integer zIndex);
+    Integer getZIndex();
+    void setZIndex(Integer zIndex);
 
     GeoPoint getPosition();
     void setPosition(GeoPoint position);

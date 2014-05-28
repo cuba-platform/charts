@@ -15,8 +15,6 @@ import java.util.Objects;
 
 public interface MapViewer extends Component, Component.BelongToFrame, Component.HasXmlDescriptor {
 
-    String NAME = "mapviewer";
-
     enum Type {
         Roadmap("roadmap"),
         Satellite("satellite"),
@@ -43,30 +41,104 @@ public interface MapViewer extends Component, Component.BelongToFrame, Component
         }
     }
 
+    static class MarkerClickEvent {
+        private Marker marker;
+
+        public MarkerClickEvent(Marker marker) {
+            this.marker = marker;
+        }
+
+        public Marker getMarker() {
+            return marker;
+        }
+    }
+
+
     interface MarkerClickListener {
-        void markerClicked(Marker marker);
+        void onClick(MarkerClickEvent event);
     }
 
     void addMarkerClickListener(MarkerClickListener listener);
     void removeMarkerClickListener(MarkerClickListener listener);
 
+
+    static class MarkerDragEvent {
+        private Marker marker;
+        private GeoPoint oldPosition;
+
+        public MarkerDragEvent(Marker marker, GeoPoint oldPosition) {
+            this.marker = marker;
+            this.oldPosition = oldPosition;
+        }
+
+        public Marker getMarker() {
+            return marker;
+        }
+
+        public GeoPoint getOldPosition() {
+            return oldPosition;
+        }
+    }
+
     interface MarkerDragListener {
-        void markerDragged(Marker marker, GeoPoint oldPosition);
+        void onDrag(MarkerDragEvent event);
     }
 
     void addMarkerDragListener(MarkerDragListener listener);
     void removeMarkerDragListener(MarkerDragListener listener);
 
 
+    static class MapMoveEvent {
+        private double zoom;
+        private GeoPoint center;
+        private GeoPoint boundsNE;
+        private GeoPoint boundsSW;
+
+        public MapMoveEvent(double zoom, GeoPoint center, GeoPoint boundsNE, GeoPoint boundsSW) {
+            this.zoom = zoom;
+            this.center = center;
+            this.boundsNE = boundsNE;
+            this.boundsSW = boundsSW;
+        }
+
+        public double getZoom() {
+            return zoom;
+        }
+
+        public GeoPoint getCenter() {
+            return center;
+        }
+
+        public GeoPoint getBoundsNE() {
+            return boundsNE;
+        }
+
+        public GeoPoint getBoundsSW() {
+            return boundsSW;
+        }
+    }
+
     interface MapMoveListener {
-        void mapMoved(double zoomLevel, GeoPoint center, GeoPoint boundsNE, GeoPoint boundsSW);
+        void onMove(MapMoveEvent event);
     }
 
     void addMapMoveListener(MapMoveListener listener);
     void removeMapMoveListener(MapMoveListener listener);
 
+    static class InfoWindowCloseEvent {
+        private InfoWindow infoWindow;
+
+        public InfoWindowCloseEvent(InfoWindow infoWindow) {
+            this.infoWindow = infoWindow;
+        }
+
+        public InfoWindow getInfoWindow() {
+            return infoWindow;
+        }
+    }
+
     interface InfoWindowClosedListener {
-        void infoWindowClosed(InfoWindow window);
+        void onClose(InfoWindowCloseEvent event);
     }
 
     GeoPoint createGeoPoint();

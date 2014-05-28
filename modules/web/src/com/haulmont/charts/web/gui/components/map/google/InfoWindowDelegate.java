@@ -85,12 +85,12 @@ public class InfoWindowDelegate implements InfoWindow {
     }
 
     @Override
-    public Integer getzIndex() {
+    public Integer getZIndex() {
         return infoWindow.getzIndex();
     }
 
     @Override
-    public void setzIndex(Integer zIndex) {
+    public void setZIndex(Integer zIndex) {
         infoWindow.setzIndex(zIndex);
     }
 

@@ -7,6 +7,7 @@ package com.haulmont.charts.web.gui;
 
 import com.haulmont.charts.gui.components.charts.Chart;
 import com.haulmont.charts.gui.components.charts.GanttChart;
+import com.haulmont.charts.gui.components.map.GoogleMapViewer;
 import com.haulmont.charts.gui.components.map.MapViewer;
 import com.haulmont.charts.gui.xml.layout.loaders.charts.*;
 import com.haulmont.charts.gui.xml.layout.loaders.map.MapViewerLoader;
@@ -54,7 +55,7 @@ public class ChartComponentPalette implements ComponentPalette {
         components.put(GanttChart.NAME  + "@" + JSGanttChart.VENDOR, WebJSGanttChart.class);
         components.put(Chart.NAME, WebChart.class);
 
-        components.put(MapViewer.NAME + "@" + WebGoogleMapViewer.VENDOR, WebGoogleMapViewer.class);
+        components.put(GoogleMapViewer.NAME, WebGoogleMapViewer.class);
         return components;
     }
 }

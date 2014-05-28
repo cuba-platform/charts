@@ -27,17 +27,14 @@ public interface MapConfig extends Config {
     void setMapsProvider(String key);
 
     @Property("cuba.charts.map.freeApiKey")
-    @DefaultString("AIzaSyBTewbdP-Y_NZBTvbCLxxTljr35vAuNVok")
     String getFreeApiKey();
     void setFreeApiKey(String key);
 
     @Property("cuba.charts.map.businessApiKey")
-    @DefaultString("iXVmkIu5DVEe7mU6XyACB_MUY0Y=")
     String getBusinessApiKey();
     void setBusinessApiKey(String key);
 
     @Property("cuba.charts.map.clientId")
-    @DefaultString("gme-haulmonttechnology")
     String getClientId();
     void setClientId(String id);
 
@@ -46,17 +43,14 @@ public interface MapConfig extends Config {
     boolean isUseBusinessApiKey();
     void setUseBusinessApiKey(boolean value);
 
-    @DefaultDouble(13.0)
     @Property("cuba.charts.map.defaultZoom")
     Double getDefZoom();
     void setDefZoom(Double defZoom);
 
-    @DefaultDouble(51.5001)
     @Property("cuba.charts.map.defaultLatitude")
     Double getDefLatitude();
     void setDefLatitude(Double defLatitude);
 
-    @DefaultDouble(-0.1262)
     @Property("cuba.charts.map.defaultLongitude")
     Double getDefLongitude();
     void setDefLongitude(Double defLongitude);
