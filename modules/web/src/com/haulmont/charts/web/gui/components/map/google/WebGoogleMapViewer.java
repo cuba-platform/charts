@@ -13,6 +13,7 @@ import com.haulmont.cuba.core.global.Configuration;
 import com.haulmont.cuba.web.gui.components.WebAbstractComponent;
 import com.vaadin.tapio.googlemaps.GoogleMap;
 import com.vaadin.tapio.googlemaps.client.*;
+import com.vaadin.tapio.googlemaps.client.overlays.*;
 
 import java.util.ArrayList;
 import java.util.Collection;
@@ -30,6 +31,9 @@ public class WebGoogleMapViewer extends WebAbstractComponent<GoogleMap> implemen
 
     protected List<MapMoveListener> mapMoveListeners;
     protected com.vaadin.tapio.googlemaps.client.events.MapMoveListener mapMoveHandler;
+
+    protected List<MapClickListener> mapClickListeners;
+    protected com.vaadin.tapio.googlemaps.client.events.MapClickListener mapClickHandler;
 
     protected List<MarkerDragListener> markerDragListeners;
     protected com.vaadin.tapio.googlemaps.client.events.MarkerDragListener markerDragHandler;
@@ -331,6 +335,41 @@ public class WebGoogleMapViewer extends WebAbstractComponent<GoogleMap> implemen
                 component.removeMapMoveListener(mapMoveHandler);
                 mapMoveHandler = null;
                 mapMoveListeners = null;
+            }
+        }
+    }
+
+    @Override
+    public void addMapClickListener(MapClickListener listener) {
+        if (mapClickListeners == null) {
+            mapClickListeners = new ArrayList<>();
+            mapClickListeners.add(listener);
+
+            mapClickHandler = new com.vaadin.tapio.googlemaps.client.events.MapClickListener() {
+                @Override
+                public void mapClicked(LatLon position) {
+                    MapClickEvent event = new MapClickEvent(new GeoPointDelegate(position));
+                    for (MapClickListener l : new ArrayList<>(mapClickListeners)) {
+                        l.onClick(event);
+                    }
+                }
+            };
+
+            component.addMapClickListener(mapClickHandler);
+        } else {
+            mapClickListeners.add(listener);
+        }
+    }
+
+    @Override
+    public void removeMapClickListener(MapClickListener listener) {
+        if (mapClickListeners != null) {
+            mapClickListeners.remove(listener);
+
+            if (mapClickListeners.isEmpty()) {
+                component.removeMapClickListener(mapClickHandler);
+                mapClickHandler = null;
+                mapClickListeners = null;
             }
         }
     }

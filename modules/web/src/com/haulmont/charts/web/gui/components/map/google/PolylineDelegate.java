@@ -7,7 +7,7 @@ package com.haulmont.charts.web.gui.components.map.google;
 
 import com.haulmont.charts.gui.map.model.GeoPoint;
 import com.haulmont.charts.gui.map.model.Polyline;
-import com.vaadin.tapio.googlemaps.client.GoogleMapPolyline;
+import com.vaadin.tapio.googlemaps.client.overlays.*;
 
 import java.util.List;
 

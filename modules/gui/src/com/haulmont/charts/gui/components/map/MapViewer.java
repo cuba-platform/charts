@@ -125,6 +125,25 @@ public interface MapViewer extends Component, Component.BelongToFrame, Component
     void addMapMoveListener(MapMoveListener listener);
     void removeMapMoveListener(MapMoveListener listener);
 
+    static class MapClickEvent {
+        private GeoPoint position;
+
+        public MapClickEvent(GeoPoint position) {
+            this.position = position;
+        }
+
+        public GeoPoint getPosition() {
+            return position;
+        }
+    }
+
+    interface MapClickListener {
+        void onClick(MapClickEvent event);
+    }
+
+    void addMapClickListener(MapClickListener listener);
+    void removeMapClickListener(MapClickListener listener);
+
     static class InfoWindowCloseEvent {
         private InfoWindow infoWindow;
 

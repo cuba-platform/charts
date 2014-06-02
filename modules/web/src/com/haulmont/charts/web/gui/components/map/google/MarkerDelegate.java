@@ -7,7 +7,7 @@ package com.haulmont.charts.web.gui.components.map.google;
 
 import com.haulmont.charts.gui.map.model.GeoPoint;
 import com.haulmont.charts.gui.map.model.Marker;
-import com.vaadin.tapio.googlemaps.client.GoogleMapMarker;
+import com.vaadin.tapio.googlemaps.client.overlays.*;
 
 /**
  * @author korotkov
