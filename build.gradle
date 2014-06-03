@@ -170,9 +170,7 @@ configure(chartsWebModule) {
         compile(chartsGuiModule)
         compile(cubaWeb)
 
-        compile("com.vaadin.tapio:googlemaps:0.8.1") {
-            exclude group: 'com.vaadin'
-        }
+        compile("com.haulmont.thirdparty:googlemaps:0.8.1")
 
         provided(chartsGuiModule)
         provided(servletApi)
