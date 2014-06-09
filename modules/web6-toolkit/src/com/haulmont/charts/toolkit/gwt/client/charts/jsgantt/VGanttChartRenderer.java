@@ -19,9 +19,8 @@ import java.util.LinkedList;
 import java.util.List;
 
 /**
- * <p>$Id$</p>
- *
  * @author artamonov
+ * @version $Id$
  */
 public class VGanttChartRenderer extends SimplePanel implements Paintable {
 

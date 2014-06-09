@@ -6,8 +6,8 @@
 package com.haulmont.charts.web.toolkit.ui.client.jsgantt;
 
 import com.google.gwt.core.client.GWT;
+import com.google.gwt.dom.client.Element;
 import com.google.gwt.user.client.DOM;
-import com.google.gwt.user.client.Element;
 import com.google.gwt.user.client.ui.HasWidgets;
 import com.google.gwt.user.client.ui.SimplePanel;
 import com.google.gwt.user.client.ui.Widget;
@@ -139,6 +139,7 @@ public class VGanttChartRenderer extends SimplePanel {
     }
 
 
+    @Override
     public void setWidth(String width) {
         super.setWidth(width);
         if (chartAPI != null) {
@@ -147,6 +148,7 @@ public class VGanttChartRenderer extends SimplePanel {
         }
     }
 
+    @Override
     public void setHeight(String height) {
         super.setHeight(height);
         if (chartAPI != null) {
@@ -203,7 +205,7 @@ public class VGanttChartRenderer extends SimplePanel {
         chartAPI.clearTaskPane();
         // load locale
         GanttMessagePack localeLabels = GWT.create(GanttMessagePack.class);
-        List<String> months = new LinkedList();
+        List<String> months = new LinkedList<String>();
 
         String labelPrefix = "gantt.label.";
         String monthPrefix = "gantt.month.";

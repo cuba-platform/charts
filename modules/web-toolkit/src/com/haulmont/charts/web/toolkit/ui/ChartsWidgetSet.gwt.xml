@@ -5,7 +5,7 @@
   -->
 
 <!DOCTYPE module PUBLIC "-//Google Inc.//DTD Google Web Toolkit 1.7.0//EN"
-        "http://google-web-toolkit.googlecode.com/svn/tags/2.3.0/distro-source/core/src/gwt-module.dtd">
+        "http://google-web-toolkit.googlecode.com/svn/trunk/distro-source/core/src/gwt-module.dtd">
 <module>
     <inherits name="com.haulmont.cuba.web.toolkit.ui.WidgetSet" />
     <inherits name="com.vaadin.tapio.googlemaps.WidgetSet" />
