@@ -39,4 +39,8 @@ public interface Polygon {
 
     boolean isGeodesic();
     void setGeodesic(boolean geodesic);
+
+    boolean isEditable();
+    void setEditable(boolean editable);
+
 }

@@ -6,6 +6,8 @@
 package com.haulmont.charts.gui.components.map;
 
 import com.haulmont.charts.gui.map.model.*;
+import com.haulmont.charts.gui.map.model.drawing.DrawingOptions;
+import com.haulmont.charts.gui.map.model.listeners.*;
 import com.haulmont.cuba.gui.components.Component;
 
 import java.util.Collection;
@@ -41,124 +43,26 @@ public interface MapViewer extends Component, Component.BelongToFrame, Component
         }
     }
 
-    static class MarkerClickEvent {
-        private Marker marker;
-
-        public MarkerClickEvent(Marker marker) {
-            this.marker = marker;
-        }
-
-        public Marker getMarker() {
-            return marker;
-        }
-    }
-
-
-    interface MarkerClickListener {
-        void onClick(MarkerClickEvent event);
-    }
-
     void addMarkerClickListener(MarkerClickListener listener);
     void removeMarkerClickListener(MarkerClickListener listener);
-
-
-    static class MarkerDragEvent {
-        private Marker marker;
-        private GeoPoint oldPosition;
-
-        public MarkerDragEvent(Marker marker, GeoPoint oldPosition) {
-            this.marker = marker;
-            this.oldPosition = oldPosition;
-        }
-
-        public Marker getMarker() {
-            return marker;
-        }
-
-        public GeoPoint getOldPosition() {
-            return oldPosition;
-        }
-    }
-
-    interface MarkerDragListener {
-        void onDrag(MarkerDragEvent event);
-    }
 
     void addMarkerDragListener(MarkerDragListener listener);
     void removeMarkerDragListener(MarkerDragListener listener);
 
-
-    static class MapMoveEvent {
-        private double zoom;
-        private GeoPoint center;
-        private GeoPoint boundsNE;
-        private GeoPoint boundsSW;
-
-        public MapMoveEvent(double zoom, GeoPoint center, GeoPoint boundsNE, GeoPoint boundsSW) {
-            this.zoom = zoom;
-            this.center = center;
-            this.boundsNE = boundsNE;
-            this.boundsSW = boundsSW;
-        }
-
-        public double getZoom() {
-            return zoom;
-        }
-
-        public GeoPoint getCenter() {
-            return center;
-        }
-
-        public GeoPoint getBoundsNE() {
-            return boundsNE;
-        }
-
-        public GeoPoint getBoundsSW() {
-            return boundsSW;
-        }
-    }
-
-    interface MapMoveListener {
-        void onMove(MapMoveEvent event);
-    }
-
     void addMapMoveListener(MapMoveListener listener);
     void removeMapMoveListener(MapMoveListener listener);
-
-    static class MapClickEvent {
-        private GeoPoint position;
-
-        public MapClickEvent(GeoPoint position) {
-            this.position = position;
-        }
-
-        public GeoPoint getPosition() {
-            return position;
-        }
-    }
-
-    interface MapClickListener {
-        void onClick(MapClickEvent event);
-    }
 
     void addMapClickListener(MapClickListener listener);
     void removeMapClickListener(MapClickListener listener);
 
-    static class InfoWindowCloseEvent {
-        private InfoWindow infoWindow;
+    void addInfoWindowClosedListener(InfoWindowClosedListener listener);
+    void removeInfoWindowClosedListener(InfoWindowClosedListener listener);
 
-        public InfoWindowCloseEvent(InfoWindow infoWindow) {
-            this.infoWindow = infoWindow;
-        }
+    void addPolygonCompleteListener(PolygonCompleteListener listener);
+    void removePolygonCompleteListener(PolygonCompleteListener listener);
 
-        public InfoWindow getInfoWindow() {
-            return infoWindow;
-        }
-    }
-
-    interface InfoWindowClosedListener {
-        void onClose(InfoWindowCloseEvent event);
-    }
+    void addPolygonEditListener(PolygonEditListener listener);
+    void removePolygonEditListener(PolygonEditListener listener);
 
     GeoPoint createGeoPoint();
     GeoPoint createGeoPoint(double latitude, double longitude);
@@ -180,11 +84,8 @@ public interface MapViewer extends Component, Component.BelongToFrame, Component
     InfoWindow createInfoWindow(String content);
     InfoWindow createInfoWindow(String content, Marker anchorMarker);
 
-    void addInfoWindowClosedListener(InfoWindowClosedListener listener);
-    void removeInfoWindowClosedListener(InfoWindowClosedListener listener);
-
-    void setZoom(double zoom);
-    double getZoom();
+    void setZoom(int zoom);
+    int getZoom();
 
     Marker addMarker(String caption, GeoPoint position, boolean draggable, String iconUrl);
     void addMarker(Marker marker);
@@ -207,11 +108,11 @@ public interface MapViewer extends Component, Component.BelongToFrame, Component
     boolean isVisibleAreaBoundLimitsEnabled();
     void setVisibleAreaBoundLimits(GeoPoint limitNE, GeoPoint limitSW);
 
-    void setMaxZoom(double maxZoom);
-    double getMaxZoom();
+    void setMaxZoom(int maxZoom);
+    int getMaxZoom();
 
-    void setMinZoom(double minZoom);
-    double getMinZoom();
+    void setMinZoom(int minZoom);
+    int getMinZoom();
 
     boolean isDraggable();
     void setDraggable(boolean draggable);
@@ -237,6 +138,8 @@ public interface MapViewer extends Component, Component.BelongToFrame, Component
     void closeInfoWindow(InfoWindow infoWindow);
 
     boolean isInfoWindowOpen(InfoWindow infoWindow);
+
+    void setDrawingOptions(DrawingOptions drawingOptions);
 
 //TODO korotkov: controls
 //    Set<MapControl> getControls();

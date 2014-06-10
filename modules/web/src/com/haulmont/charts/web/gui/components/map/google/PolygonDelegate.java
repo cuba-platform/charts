@@ -124,4 +124,14 @@ public class PolygonDelegate implements Polygon {
     public void setGeodesic(boolean geodesic) {
         polygon.setGeodesic(geodesic);
     }
+
+    @Override
+    public boolean isEditable() {
+        return polygon.isEditable();
+    }
+
+    @Override
+    public void setEditable(boolean editable) {
+        polygon.setEditable(editable);
+    }
 }

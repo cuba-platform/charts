@@ -8,6 +8,14 @@ package com.haulmont.charts.web.gui.components.map.google;
 import com.haulmont.charts.core.global.MapConfig;
 import com.haulmont.charts.gui.components.map.MapViewer;
 import com.haulmont.charts.gui.map.model.*;
+import com.haulmont.charts.gui.map.model.drawing.DrawingOptions;
+import com.haulmont.charts.gui.map.model.listeners.InfoWindowClosedListener;
+import com.haulmont.charts.gui.map.model.listeners.MapClickListener;
+import com.haulmont.charts.gui.map.model.listeners.MapMoveListener;
+import com.haulmont.charts.gui.map.model.listeners.MarkerClickListener;
+import com.haulmont.charts.gui.map.model.listeners.MarkerDragListener;
+import com.haulmont.charts.gui.map.model.listeners.PolygonCompleteListener;
+import com.haulmont.charts.gui.map.model.listeners.PolygonEditListener;
 import com.haulmont.cuba.core.global.AppBeans;
 import com.haulmont.cuba.core.global.Configuration;
 import com.haulmont.cuba.web.gui.components.WebAbstractComponent;
@@ -18,6 +26,13 @@ import com.vaadin.tapio.googlemaps.client.overlays.*;
 import java.util.ArrayList;
 import java.util.Collection;
 import java.util.List;
+
+import static com.haulmont.charts.gui.map.model.listeners.InfoWindowClosedListener.InfoWindowCloseEvent;
+import static com.haulmont.charts.gui.map.model.listeners.MapClickListener.MapClickEvent;
+import static com.haulmont.charts.gui.map.model.listeners.MapMoveListener.MapMoveEvent;
+import static com.haulmont.charts.gui.map.model.listeners.MarkerClickListener.MarkerClickEvent;
+import static com.haulmont.charts.gui.map.model.listeners.MarkerDragListener.MarkerDragEvent;
+import static com.haulmont.charts.gui.map.model.listeners.PolygonCompleteListener.PolygonCompleteEvent;
 
 /**
  * @author korotkov
@@ -44,6 +59,12 @@ public class WebGoogleMapViewer extends WebAbstractComponent<GoogleMap> implemen
     protected List<InfoWindowClosedListener> infoWindowClosedListeners;
     protected com.vaadin.tapio.googlemaps.client.events.InfoWindowClosedListener infoWindowClosedHandler;
 
+    protected List<PolygonCompleteListener> polygonCompleteListeners;
+    protected com.vaadin.tapio.googlemaps.client.events.PolygonCompleteListener polygonCompleteHandler;
+
+    protected List<PolygonEditListener> polygonEditListeners;
+    protected com.vaadin.tapio.googlemaps.client.events.PolygonEditListener polygonEditHandler;
+
     public WebGoogleMapViewer() {
         super();
 
@@ -63,12 +84,12 @@ public class WebGoogleMapViewer extends WebAbstractComponent<GoogleMap> implemen
     }
 
     @Override
-    public void setZoom(double zoom) {
+    public void setZoom(int zoom) {
         component.setZoom(zoom);
     }
 
     @Override
-    public double getZoom() {
+    public int getZoom() {
         return component.getZoom();
     }
 
@@ -179,22 +200,22 @@ public class WebGoogleMapViewer extends WebAbstractComponent<GoogleMap> implemen
     }
 
     @Override
-    public double getMinZoom() {
+    public int getMinZoom() {
         return component.getMinZoom();
     }
 
     @Override
-    public void setMinZoom(double minZoom) {
+    public void setMinZoom(int minZoom) {
         component.setMinZoom(minZoom);
     }
 
     @Override
-    public double getMaxZoom() {
+    public int getMaxZoom() {
         return component.getMaxZoom();
     }
 
     @Override
-    public void setMaxZoom(double maxZoom) {
+    public void setMaxZoom(int maxZoom) {
         component.setMaxZoom(maxZoom);
     }
 
@@ -311,7 +332,7 @@ public class WebGoogleMapViewer extends WebAbstractComponent<GoogleMap> implemen
 
             mapMoveHandler = new com.vaadin.tapio.googlemaps.client.events.MapMoveListener() {
                 @Override
-                public void mapMoved(double zoom, LatLon center, LatLon boundsNE, LatLon boundsSW) {
+                public void mapMoved(int zoom, LatLon center, LatLon boundsNE, LatLon boundsSW) {
                     MapMoveEvent event = new MapMoveEvent(zoom, new GeoPointDelegate(center),
                             new GeoPointDelegate(boundsNE), new GeoPointDelegate(boundsSW));
                     for (MapMoveListener l : new ArrayList<>(mapMoveListeners)) {
@@ -375,7 +396,7 @@ public class WebGoogleMapViewer extends WebAbstractComponent<GoogleMap> implemen
     }
 
     @Override
-    public void addMarkerDragListener(MarkerDragListener listener) {
+    public void addMarkerDragListener(com.haulmont.charts.gui.map.model.listeners.MarkerDragListener listener) {
         if (markerDragListeners == null) {
             markerDragListeners = new ArrayList<>();
             markerDragListeners.add(listener);
@@ -399,7 +420,7 @@ public class WebGoogleMapViewer extends WebAbstractComponent<GoogleMap> implemen
     }
 
     @Override
-    public void removeMarkerDragListener(MarkerDragListener listener) {
+    public void removeMarkerDragListener(com.haulmont.charts.gui.map.model.listeners.MarkerDragListener listener) {
         if (markerDragListeners != null) {
             markerDragListeners.remove(listener);
 
@@ -412,7 +433,7 @@ public class WebGoogleMapViewer extends WebAbstractComponent<GoogleMap> implemen
     }
 
     @Override
-    public void addMarkerClickListener(MarkerClickListener listener) {
+    public void addMarkerClickListener(com.haulmont.charts.gui.map.model.listeners.MarkerClickListener listener) {
         if (markerClickListeners == null) {
             markerClickListeners = new ArrayList<>();
             markerClickListeners.add(listener);
@@ -435,7 +456,7 @@ public class WebGoogleMapViewer extends WebAbstractComponent<GoogleMap> implemen
     }
 
     @Override
-    public void removeMarkerClickListener(MarkerClickListener listener) {
+    public void removeMarkerClickListener(com.haulmont.charts.gui.map.model.listeners.MarkerClickListener listener) {
         if (markerClickListeners != null) {
             markerClickListeners.remove(listener);
 
@@ -484,6 +505,95 @@ public class WebGoogleMapViewer extends WebAbstractComponent<GoogleMap> implemen
     }
 
     @Override
+    public void addPolygonCompleteListener(PolygonCompleteListener listener) {
+        if (polygonCompleteListeners == null) {
+            polygonCompleteListeners = new ArrayList<>();
+            polygonCompleteListeners.add(listener);
+
+            polygonCompleteHandler = new com.vaadin.tapio.googlemaps.client.events.PolygonCompleteListener() {
+
+                @Override
+                public void polygonComplete(GoogleMapPolygon polygon) {
+                    PolygonCompleteEvent event = new PolygonCompleteEvent(new PolygonDelegate(polygon));
+                    for (PolygonCompleteListener l : new ArrayList<>(polygonCompleteListeners)) {
+                        l.onComplete(event);
+                    }
+                }
+            };
+
+            component.addPolygonCompleteListener(polygonCompleteHandler);
+        } else {
+            polygonCompleteListeners.add(listener);
+        }
+    }
+
+    @Override
+    public void removePolygonCompleteListener(PolygonCompleteListener listener) {
+        if (polygonCompleteListeners != null) {
+            polygonCompleteListeners.remove(listener);
+
+            if (polygonCompleteListeners.isEmpty()) {
+                component.removePolygonCompleteListener(polygonCompleteHandler);
+                polygonCompleteHandler = null;
+                polygonCompleteListeners = null;
+            }
+        }
+    }
+
+    @Override
+    public void addPolygonEditListener(PolygonEditListener listener) {
+        if (polygonEditListeners == null) {
+            polygonEditListeners = new ArrayList<>();
+            polygonEditListeners.add(listener);
+
+            polygonEditHandler = new com.vaadin.tapio.googlemaps.client.events.PolygonEditListener() {
+
+                @Override
+                public void polygonEdited(GoogleMapPolygon polygon, ActionType actionType, int idx, LatLon latLon) {
+                    PolygonEditListener.PolygonEditEvent event =
+                            new PolygonEditListener.PolygonEditEvent(new PolygonDelegate(polygon),
+                                    toCubaActionType(actionType), idx, new GeoPointDelegate(latLon));
+                    for (PolygonEditListener l : new ArrayList<>(polygonEditListeners)) {
+                        l.onEdit(event);
+                    }
+                }
+            };
+
+            component.addPolygonEditListener(polygonEditHandler);
+        } else {
+            polygonEditListeners.add(listener);
+        }
+    }
+
+    private PolygonEditListener.ActionType toCubaActionType(
+            com.vaadin.tapio.googlemaps.client.events.PolygonEditListener.ActionType actionType) {
+        if (actionType == null) {
+            return null;
+        }
+
+        switch (actionType) {
+            case INSERT: return PolygonEditListener.ActionType.INSERT;
+            case REMOVE: return PolygonEditListener.ActionType.REMOVE;
+            case SET: return PolygonEditListener.ActionType.SET;
+        }
+
+        throw new IllegalArgumentException("Unknown edit action type: " + actionType);
+    }
+
+    @Override
+    public void removePolygonEditListener(PolygonEditListener listener) {
+        if (polygonEditListeners != null) {
+            polygonEditListeners.remove(listener);
+
+            if (polygonEditListeners.isEmpty()) {
+                component.removePolygonEditListener(polygonEditHandler);
+                polygonEditHandler = null;
+                polygonEditListeners = null;
+            }
+        }
+    }
+
+    @Override
     public void setMapType(Type type) {
         component.setMapType(DelegateHelper.toGoogleMapType(type));
     }
@@ -496,6 +606,11 @@ public class WebGoogleMapViewer extends WebAbstractComponent<GoogleMap> implemen
     @Override
     public boolean isInfoWindowOpen(InfoWindow infoWindow) {
         return component.isInfoWindowOpen(((InfoWindowDelegate)infoWindow).getInfoWindow());
+    }
+
+    @Override
+    public void setDrawingOptions(DrawingOptions drawingOptions) {
+        component.setDrawingOptions(DelegateHelper.toGoogleDrawingOptions(drawingOptions));
     }
 
     @Override

@@ -7,8 +7,13 @@ package com.haulmont.charts.web.gui.components.map.google;
 
 import com.haulmont.charts.gui.components.map.MapViewer;
 import com.haulmont.charts.gui.map.model.GeoPoint;
+import com.haulmont.charts.gui.map.model.drawing.*;
+import com.haulmont.charts.gui.map.model.drawing.DrawingOptions;
+import com.haulmont.charts.gui.map.model.drawing.OverlayType;
+import com.haulmont.charts.gui.map.model.drawing.PolygonOptions;
 import com.vaadin.tapio.googlemaps.GoogleMap;
 import com.vaadin.tapio.googlemaps.client.*;
+import com.vaadin.tapio.googlemaps.client.drawing.*;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -39,6 +44,113 @@ public class DelegateHelper {
             case Terrain: return MapViewer.Type.Terrain;
             default: throw new IllegalArgumentException("Unsupported map type: " + type);
         }
+    }
+
+    public static com.vaadin.tapio.googlemaps.client.drawing.DrawingOptions
+        toGoogleDrawingOptions(DrawingOptions options) {
+        if (options == null) {
+            return null;
+        }
+
+        com.vaadin.tapio.googlemaps.client.drawing.DrawingOptions gOptions
+                = new com.vaadin.tapio.googlemaps.client.drawing.DrawingOptions();
+
+        gOptions.setPolygonOptions(toGooglePolygonOptions(options.getPolygonOptions()));
+        gOptions.setDrawingControlOptions(toGoogleDrawingControlOptions(options.getDrawingControlOptions()));
+        gOptions.setInitialDrawingMode(toGoogleOverlayType(options.getInitialDrawingMode()));
+        gOptions.setEnableDrawingControl(options.isEnableDrawingControl());
+
+        return gOptions;
+    }
+
+    private static com.vaadin.tapio.googlemaps.client.drawing.OverlayType
+        toGoogleOverlayType(OverlayType overlayType) {
+        if (overlayType == null) {
+            return null;
+        }
+
+        switch (overlayType) {
+            case POLYGON: return com.vaadin.tapio.googlemaps.client.drawing.OverlayType.POLYGON;
+//            case CIRCLE: return com.vaadin.tapio.googlemaps.client.drawing.OverlayType.CIRCLE;
+//            case POLYLINE: return com.vaadin.tapio.googlemaps.client.drawing.OverlayType.POLYLINE;
+//            case MARKER: return com.vaadin.tapio.googlemaps.client.drawing.OverlayType.MARKER;
+//            case RECTANGLE: return com.vaadin.tapio.googlemaps.client.drawing.OverlayType.RECTANGLE;
+        }
+
+        throw new IllegalArgumentException("Unknown overlay type: " + overlayType);
+    }
+
+    private static List<com.vaadin.tapio.googlemaps.client.drawing.OverlayType>
+                toGoogleOverlayType(List<OverlayType> overlayTypes) {
+        if (overlayTypes == null) {
+            return null;
+        }
+
+        List<com.vaadin.tapio.googlemaps.client.drawing.OverlayType>
+                gOverlayTypes = new ArrayList<>(overlayTypes.size()*2);
+
+        for (OverlayType overlayType : overlayTypes) {
+            gOverlayTypes.add(toGoogleOverlayType(overlayType));
+        }
+
+        return gOverlayTypes;
+    }
+
+    private static DrawingControlOptions
+            toGoogleDrawingControlOptions(ControlOptions options) {
+        DrawingControlOptions gOptions = new DrawingControlOptions();
+        gOptions.setPosition(toGoogleControlPosition(options.getPosition()));
+        gOptions.setDrawingModes(toGoogleOverlayType(options.getDrawingModes()));
+        return gOptions;
+    }
+
+    private static ControlPosition toGoogleControlPosition(Position position) {
+        if (position == null) {
+            return null;
+        }
+
+        switch (position) {
+            case BOTTOM_CENTER: return ControlPosition.BOTTOM_CENTER;
+            case BOTTOM_LEFT: return ControlPosition.BOTTOM_LEFT;
+            case BOTTOM_RIGHT: return ControlPosition.BOTTOM_RIGHT;
+
+            case TOP_CENTER: return ControlPosition.TOP_CENTER;
+            case TOP_LEFT: return ControlPosition.TOP_LEFT;
+            case TOP_RIGHT: return ControlPosition.TOP_RIGHT;
+
+            case LEFT_CENTER: return ControlPosition.LEFT_CENTER;
+            case LEFT_TOP: return ControlPosition.LEFT_TOP;
+            case LEFT_BOTTOM: return ControlPosition.LEFT_BOTTOM;
+
+            case RIGHT_CENTER: return ControlPosition.RIGHT_CENTER;
+            case RIGHT_TOP: return ControlPosition.RIGHT_TOP;
+            case RIGHT_BOTTOM: return ControlPosition.RIGHT_BOTTOM;
+        }
+
+        throw new IllegalArgumentException("Unknown postition: " + position);
+    }
+
+    private static com.vaadin.tapio.googlemaps.client.drawing.PolygonOptions
+        toGooglePolygonOptions(PolygonOptions options) {
+        if (options == null) {
+            return null;
+        }
+
+        com.vaadin.tapio.googlemaps.client.drawing.PolygonOptions gOptions
+                = new com.vaadin.tapio.googlemaps.client.drawing.PolygonOptions();
+
+        gOptions.setEditable(options.isEditable());
+        gOptions.setStrokeOpacity(options.getStrokeOpacity());
+        gOptions.setStrokeColor(options.getStrokeColor());
+        gOptions.setStrokeWeight(options.getStrokeWeight());
+        gOptions.setFillOpacity(options.getFillOpacity());
+        gOptions.setFillColor(options.getFillColor());
+        gOptions.setClickable(options.isClickable());
+        gOptions.setGeodesic(options.isGeodesic());
+        gOptions.setVisible(options.isVisible());
+        gOptions.setZIndex(options.getZIndex());
+
+        return gOptions;
     }
 
     public static List<LatLon> toLatLon(List<GeoPoint> coordinates) {
