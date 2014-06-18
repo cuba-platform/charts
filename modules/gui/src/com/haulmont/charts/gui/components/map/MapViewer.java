@@ -14,7 +14,10 @@ import java.util.Collection;
 import java.util.List;
 import java.util.Objects;
 
-
+/**
+ * @author korotkov
+ * @version $Id$
+ */
 public interface MapViewer extends Component, Component.BelongToFrame, Component.HasXmlDescriptor {
 
     enum Type {
