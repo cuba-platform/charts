@@ -44,13 +44,16 @@ public interface MapConfig extends Config {
     void setUseBusinessApiKey(boolean value);
 
     @Property("cuba.charts.map.defaultZoom")
+    @DefaultDouble(13.0)
     Double getDefZoom();
     void setDefZoom(Double defZoom);
 
+    @DefaultDouble(53.485846)
     @Property("cuba.charts.map.defaultLatitude")
     Double getDefLatitude();
     void setDefLatitude(Double defLatitude);
 
+    @DefaultDouble(-2.24248)
     @Property("cuba.charts.map.defaultLongitude")
     Double getDefLongitude();
     void setDefLongitude(Double defLongitude);
