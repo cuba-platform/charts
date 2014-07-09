@@ -104,4 +104,24 @@ public class PolylineDelegate implements Polyline {
     public void setGeodesic(boolean geodesic) {
         polyline.setGeodesic(geodesic);
     }
+
+    @Override
+    public int hashCode() {
+        return polyline.hashCode();
+    }
+
+    @Override
+    public boolean equals(Object obj) {
+        if (this == obj) {
+            return true;
+        }
+        if (obj == null) {
+            return false;
+        }
+        if (getClass() != obj.getClass()) {
+            return false;
+        }
+        PolylineDelegate other = (PolylineDelegate) obj;
+        return polyline.equals(other.getPolyline());
+    }
 }

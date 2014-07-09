@@ -123,4 +123,24 @@ public class InfoWindowDelegate implements InfoWindow {
     public void setAutoPanDisabled(boolean autoPanDisabled) {
         infoWindow.setAutoPanDisabled(autoPanDisabled);
     }
+
+    @Override
+    public int hashCode() {
+        return infoWindow.hashCode();
+    }
+
+    @Override
+    public boolean equals(Object obj) {
+        if (this == obj) {
+            return true;
+        }
+        if (obj == null) {
+            return false;
+        }
+        if (getClass() != obj.getClass()) {
+            return false;
+        }
+        InfoWindowDelegate other = (InfoWindowDelegate) obj;
+        return infoWindow.equals(other.getInfoWindow());
+    }
 }

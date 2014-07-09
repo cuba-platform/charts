@@ -122,4 +122,24 @@ public class MarkerDelegate implements Marker {
     public GeoPoint getPosition() {
         return new GeoPointDelegate(marker.getPosition());
     }
+
+    @Override
+    public int hashCode() {
+        return marker.hashCode();
+    }
+
+    @Override
+    public boolean equals(Object obj) {
+        if (this == obj) {
+            return true;
+        }
+        if (obj == null) {
+            return false;
+        }
+        if (getClass() != obj.getClass()) {
+            return false;
+        }
+        MarkerDelegate other = (MarkerDelegate) obj;
+        return marker.equals(other.getMarker());
+    }
 }

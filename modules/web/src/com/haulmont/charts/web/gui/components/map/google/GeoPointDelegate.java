@@ -54,4 +54,24 @@ public class GeoPointDelegate implements GeoPoint {
     public Double getLatitude() {
         return latLon.getLat();
     }
+
+    @Override
+    public int hashCode() {
+        return latLon.hashCode();
+    }
+
+    @Override
+    public boolean equals(Object obj) {
+        if (this == obj) {
+            return true;
+        }
+        if (obj == null) {
+            return false;
+        }
+        if (getClass() != obj.getClass()) {
+            return false;
+        }
+        GeoPointDelegate other = (GeoPointDelegate) obj;
+        return latLon.equals(other.getLatLon());
+    }
 }
