@@ -125,6 +125,26 @@ public class InfoWindowDelegate implements InfoWindow {
     }
 
     @Override
+    public String getHeight() {
+        return infoWindow.getHeight();
+    }
+
+    @Override
+    public void setHeight(String height) {
+        infoWindow.setHeight(height);
+    }
+
+    @Override
+    public String getWidth() {
+        return infoWindow.getWidth();
+    }
+
+    @Override
+    public void setWidth(String width) {
+        infoWindow.setWidth(width);
+    }
+
+    @Override
     public int hashCode() {
         return infoWindow.hashCode();
     }

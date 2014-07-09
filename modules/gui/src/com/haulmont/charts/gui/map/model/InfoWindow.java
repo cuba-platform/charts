@@ -17,6 +17,12 @@ public interface InfoWindow {
     String getContent();
     void setContent(String content);
 
+    void setWidth(String width);
+    String getWidth();
+
+    void setHeight(String height);
+    String getHeight();
+
     Integer getMaxWidth();
     void setMaxWidth(Integer maxWidth);
 
