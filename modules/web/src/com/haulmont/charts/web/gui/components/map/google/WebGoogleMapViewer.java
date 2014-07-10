@@ -75,12 +75,21 @@ public class WebGoogleMapViewer extends WebAbstractComponent<GoogleMap> implemen
             apiOrClientId = mapConfig.getClientId();
         }
         component = new GoogleMap(new LatLon(mapConfig.getDefLatitude(), mapConfig.getDefLongitude()), apiOrClientId);
-
     }
 
     @Override
     public GeoPoint getCenter() {
         return new GeoPointDelegate(component.getCenter());
+    }
+
+    @Override
+    public GeoPoint getBoundSouthWest() {
+        return new GeoPointDelegate(component.getBoundSW());
+    }
+
+    @Override
+    public GeoPoint getBoundNorthEast() {
+        return new GeoPointDelegate(component.getBoundNE());
     }
 
     @Override

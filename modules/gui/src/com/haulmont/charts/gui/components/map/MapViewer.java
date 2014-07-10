@@ -103,6 +103,9 @@ public interface MapViewer extends Component, Component.BelongToFrame, Component
     GeoPoint getCenter();
     void setCenter(GeoPoint center);
 
+    GeoPoint getBoundNorthEast();
+    GeoPoint getBoundSouthWest();
+
     void addPolyline(Polyline polyline);
     void removePolyline(Polyline polyline);
 
