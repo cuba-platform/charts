@@ -164,7 +164,7 @@ configure(chartsWebModule) {
         compile(chartsGuiModule)
         compile(cubaWeb)
 
-        compile("com.haulmont.thirdparty:googlemaps:0.8.1.f")
+        compile("com.haulmont.thirdparty:googlemaps:0.8.1.g")
 
         provided(chartsGuiModule)
         provided(servletApi)
