@@ -6,7 +6,8 @@
 package com.haulmont.charts.web.gui.components.map.google;
 
 import com.haulmont.charts.gui.components.map.MapViewer;
-import com.haulmont.charts.gui.map.model.GeoPoint;
+import com.haulmont.charts.gui.map.model.*;
+import com.haulmont.charts.gui.map.model.WeightedLocation;
 import com.haulmont.charts.gui.map.model.drawing.*;
 import com.haulmont.charts.gui.map.model.drawing.DrawingOptions;
 import com.haulmont.charts.gui.map.model.drawing.OverlayType;
@@ -179,5 +180,36 @@ public class DelegateHelper {
             }
             return result;
         }
+    }
+
+    public static List<com.vaadin.tapio.googlemaps.client.WeightedLocation> toGoogleWeightedLocations(
+            List<WeightedLocation> weightedLocations) {
+        if (weightedLocations == null) {
+            return null;
+        }
+
+        List<com.vaadin.tapio.googlemaps.client.WeightedLocation> gWeightedLocations
+                = new ArrayList<>(weightedLocations.size()*2);
+        for (WeightedLocation w : weightedLocations) {
+            LatLon location = new LatLon(w.getLocation().getLatitude(), w.getLocation().getLongitude());
+            Double weight = w.getWeight();
+            gWeightedLocations.add(new com.vaadin.tapio.googlemaps.client.WeightedLocation(location, weight));
+        }
+
+        return gWeightedLocations;
+    }
+
+    public static List<WeightedLocation> toWeightedLocations(
+            List<com.vaadin.tapio.googlemaps.client.WeightedLocation> gWeightedLocations) {
+        if (gWeightedLocations == null) {
+            return null;
+        }
+
+        List<WeightedLocation> weightedLocations = new ArrayList<>(gWeightedLocations.size()*2);
+        for (com.vaadin.tapio.googlemaps.client.WeightedLocation w : gWeightedLocations) {
+            weightedLocations.add(new WeightedLocationDelegate(w));
+        }
+
+        return weightedLocations;
     }
 }

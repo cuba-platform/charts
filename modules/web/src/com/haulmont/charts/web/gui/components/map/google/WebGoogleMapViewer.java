@@ -9,6 +9,7 @@ import com.haulmont.charts.core.global.MapConfig;
 import com.haulmont.charts.gui.components.map.MapViewer;
 import com.haulmont.charts.gui.map.model.*;
 import com.haulmont.charts.gui.map.model.drawing.DrawingOptions;
+import com.haulmont.charts.gui.map.model.layer.HeatMapLayer;
 import com.haulmont.charts.gui.map.model.listeners.InfoWindowClosedListener;
 import com.haulmont.charts.gui.map.model.listeners.MapClickListener;
 import com.haulmont.charts.gui.map.model.listeners.MapMoveListener;
@@ -16,11 +17,13 @@ import com.haulmont.charts.gui.map.model.listeners.MarkerClickListener;
 import com.haulmont.charts.gui.map.model.listeners.MarkerDragListener;
 import com.haulmont.charts.gui.map.model.listeners.PolygonCompleteListener;
 import com.haulmont.charts.gui.map.model.listeners.PolygonEditListener;
+import com.haulmont.charts.web.gui.components.map.google.layer.HeatMapLayerDelegate;
 import com.haulmont.cuba.core.global.AppBeans;
 import com.haulmont.cuba.core.global.Configuration;
 import com.haulmont.cuba.web.gui.components.WebAbstractComponent;
 import com.vaadin.tapio.googlemaps.GoogleMap;
 import com.vaadin.tapio.googlemaps.client.*;
+import com.vaadin.tapio.googlemaps.client.layers.GoogleMapHeatMapLayer;
 import com.vaadin.tapio.googlemaps.client.overlays.*;
 
 import java.util.ArrayList;
@@ -334,6 +337,21 @@ public class WebGoogleMapViewer extends WebAbstractComponent<GoogleMap> implemen
     }
 
     @Override
+    public void removeHeatMapLayer(HeatMapLayer layer) {
+        component.removeHeatMapLayer(((HeatMapLayerDelegate) layer).getLayer());
+    }
+
+    @Override
+    public void addHeatMapLayer(HeatMapLayer layer) {
+        component.addHeatMapLayer(((HeatMapLayerDelegate)layer).getLayer());
+    }
+
+    @Override
+    public HeatMapLayer createHeatMapLayer() {
+        return new HeatMapLayerDelegate(new GoogleMapHeatMapLayer());
+    }
+
+    @Override
     public void addMapMoveListener(MapMoveListener listener) {
         if (mapMoveListeners == null) {
             mapMoveListeners = new ArrayList<>();
@@ -342,8 +360,10 @@ public class WebGoogleMapViewer extends WebAbstractComponent<GoogleMap> implemen
             mapMoveHandler = new com.vaadin.tapio.googlemaps.client.events.MapMoveListener() {
                 @Override
                 public void mapMoved(int zoom, LatLon center, LatLon boundsNE, LatLon boundsSW) {
-                    MapMoveEvent event = new MapMoveEvent(zoom, new GeoPointDelegate(center),
-                            new GeoPointDelegate(boundsNE), new GeoPointDelegate(boundsSW));
+                    GeoPointDelegate geoPointCenter = center != null ? new GeoPointDelegate(center) : null;
+                    GeoPointDelegate geoPointBoundNE = boundsNE != null ? new GeoPointDelegate(boundsNE) : null;
+                    GeoPointDelegate geoPointBoundSW = boundsSW != null ? new GeoPointDelegate(boundsSW) : null;
+                    MapMoveEvent event = new MapMoveEvent(zoom, geoPointCenter, geoPointBoundNE, geoPointBoundSW);
                     for (MapMoveListener l : new ArrayList<>(mapMoveListeners)) {
                         l.onMove(event);
                     }
@@ -378,7 +398,8 @@ public class WebGoogleMapViewer extends WebAbstractComponent<GoogleMap> implemen
             mapClickHandler = new com.vaadin.tapio.googlemaps.client.events.MapClickListener() {
                 @Override
                 public void mapClicked(LatLon position) {
-                    MapClickEvent event = new MapClickEvent(new GeoPointDelegate(position));
+                    GeoPointDelegate geoPoint = position != null ? new GeoPointDelegate(position) : null;
+                    MapClickEvent event = new MapClickEvent(geoPoint);
                     for (MapClickListener l : new ArrayList<>(mapClickListeners)) {
                         l.onClick(event);
                     }
@@ -413,8 +434,8 @@ public class WebGoogleMapViewer extends WebAbstractComponent<GoogleMap> implemen
             markerDragHandler = new com.vaadin.tapio.googlemaps.client.events.MarkerDragListener() {
                 @Override
                 public void markerDragged(GoogleMapMarker marker, LatLon oldPosition) {
-                    MarkerDragEvent event = new MarkerDragEvent(new MarkerDelegate(marker),
-                            new GeoPointDelegate(oldPosition));
+                    GeoPointDelegate geoPoint = oldPosition != null ? new GeoPointDelegate(oldPosition) : null;
+                    MarkerDragEvent event = new MarkerDragEvent(new MarkerDelegate(marker), geoPoint);
 
                     for (MarkerDragListener l : new ArrayList<>(markerDragListeners)) {
                         l.onDrag(event);
@@ -559,9 +580,10 @@ public class WebGoogleMapViewer extends WebAbstractComponent<GoogleMap> implemen
 
                 @Override
                 public void polygonEdited(GoogleMapPolygon polygon, ActionType actionType, int idx, LatLon latLon) {
+                    GeoPointDelegate geoPoint = latLon != null ? new GeoPointDelegate(latLon) : null;
                     PolygonEditListener.PolygonEditEvent event =
                             new PolygonEditListener.PolygonEditEvent(new PolygonDelegate(polygon),
-                                    toCubaActionType(actionType), idx, new GeoPointDelegate(latLon));
+                                    toCubaActionType(actionType), idx, geoPoint);
                     for (PolygonEditListener l : new ArrayList<>(polygonEditListeners)) {
                         l.onEdit(event);
                     }

@@ -7,6 +7,7 @@ package com.haulmont.charts.gui.components.map;
 
 import com.haulmont.charts.gui.map.model.*;
 import com.haulmont.charts.gui.map.model.drawing.DrawingOptions;
+import com.haulmont.charts.gui.map.model.layer.HeatMapLayer;
 import com.haulmont.charts.gui.map.model.listeners.*;
 import com.haulmont.cuba.gui.components.Component;
 
@@ -86,6 +87,10 @@ public interface MapViewer extends Component, Component.BelongToFrame, Component
     InfoWindow createInfoWindow();
     InfoWindow createInfoWindow(String content);
     InfoWindow createInfoWindow(String content, Marker anchorMarker);
+
+    HeatMapLayer createHeatMapLayer();
+    void addHeatMapLayer(HeatMapLayer layer);
+    void removeHeatMapLayer(HeatMapLayer layer);
 
     void setZoom(int zoom);
     int getZoom();
