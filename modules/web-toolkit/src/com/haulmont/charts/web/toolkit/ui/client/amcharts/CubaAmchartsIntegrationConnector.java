@@ -17,7 +17,7 @@ import com.vaadin.shared.ui.Connect;
  * @author artamonov
  * @version $Id$
  */
-@Connect(value = CubaAmchartsIntegration.class, loadStyle = Connect.LoadStyle.LAZY)
+@Connect(CubaAmchartsIntegration.class)
 public class CubaAmchartsIntegrationConnector extends AbstractExtensionConnector {
 
     @Override

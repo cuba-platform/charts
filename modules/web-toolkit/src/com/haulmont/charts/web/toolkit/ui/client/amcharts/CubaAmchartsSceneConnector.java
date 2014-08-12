@@ -23,7 +23,7 @@ import java.util.Set;
  * @author artamonov
  * @version $Id$
  */
-@Connect(value = CubaAmchartsScene.class, loadStyle = Connect.LoadStyle.LAZY)
+@Connect(CubaAmchartsScene.class)
 public class CubaAmchartsSceneConnector extends AbstractComponentConnector {
 
     protected CubaAmchartsServerRpc rpc = RpcProxy.create(CubaAmchartsServerRpc.class, this);
