@@ -976,12 +976,6 @@
         <xs:attribute name="yField" type="xs:string"/>
     </xs:complexType>
 
-    <xs:simpleType name="vendorType">
-        <xs:restriction base="xs:string">
-            <xs:enumeration value="jsgantt"/>
-        </xs:restriction>
-    </xs:simpleType>
-
     <!-- Abstract charts -->
 
     <xs:complexType name="abstractChart" abstract="true">
@@ -1313,19 +1307,6 @@
             </xs:complexContent>
         </xs:complexType>
     </xs:element>
-
-    <xs:element name="ganttChart">
-        <xs:complexType>
-            <xs:attribute name="id" type="xs:string"/>
-            <xs:attribute name="caption" type="xs:string" default="msg://"/>
-            <xs:attribute name="vendor" type="vendorType" default="jsgantt" use="required"/>
-            <xs:attribute name="width" type="xs:string"/>
-            <xs:attribute name="height" type="xs:string"/>
-            <xs:attribute name="visible" type="xs:string"/>
-            <xs:attribute name="datasource" type="xs:string" use="required"/>
-        </xs:complexType>
-    </xs:element>
-
 
     <!-- Maps -->
     <xs:element name="mapViewer">
