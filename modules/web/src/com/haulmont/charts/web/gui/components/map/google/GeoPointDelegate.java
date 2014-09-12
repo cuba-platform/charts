@@ -16,6 +16,10 @@ public class GeoPointDelegate implements GeoPoint {
 
     protected LatLon latLon;
 
+    public static GeoPoint fromLatLon(LatLon latLon) {
+        return latLon != null ? new GeoPointDelegate(latLon) : null;
+    }
+
     public GeoPointDelegate() {
         this.latLon = new LatLon();
     }

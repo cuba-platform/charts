@@ -10,21 +10,18 @@ import com.haulmont.charts.gui.components.map.MapViewer;
 import com.haulmont.charts.gui.map.model.*;
 import com.haulmont.charts.gui.map.model.drawing.DrawingOptions;
 import com.haulmont.charts.gui.map.model.layer.HeatMapLayer;
-import com.haulmont.charts.gui.map.model.listeners.InfoWindowClosedListener;
-import com.haulmont.charts.gui.map.model.listeners.MapClickListener;
-import com.haulmont.charts.gui.map.model.listeners.MapMoveListener;
-import com.haulmont.charts.gui.map.model.listeners.MarkerClickListener;
-import com.haulmont.charts.gui.map.model.listeners.MarkerDragListener;
-import com.haulmont.charts.gui.map.model.listeners.PolygonCompleteListener;
-import com.haulmont.charts.gui.map.model.listeners.PolygonEditListener;
+import com.haulmont.charts.gui.map.model.listeners.*;
 import com.haulmont.charts.web.gui.components.map.google.layer.HeatMapLayerDelegate;
 import com.haulmont.cuba.core.global.AppBeans;
 import com.haulmont.cuba.core.global.Configuration;
 import com.haulmont.cuba.web.gui.components.WebAbstractComponent;
 import com.vaadin.tapio.googlemaps.GoogleMap;
-import com.vaadin.tapio.googlemaps.client.*;
+import com.vaadin.tapio.googlemaps.client.LatLon;
 import com.vaadin.tapio.googlemaps.client.layers.GoogleMapHeatMapLayer;
-import com.vaadin.tapio.googlemaps.client.overlays.*;
+import com.vaadin.tapio.googlemaps.client.overlays.GoogleMapInfoWindow;
+import com.vaadin.tapio.googlemaps.client.overlays.GoogleMapMarker;
+import com.vaadin.tapio.googlemaps.client.overlays.GoogleMapPolygon;
+import com.vaadin.tapio.googlemaps.client.overlays.GoogleMapPolyline;
 
 import java.util.ArrayList;
 import java.util.Collection;
@@ -68,6 +65,9 @@ public class WebGoogleMapViewer extends WebAbstractComponent<GoogleMap> implemen
     protected List<PolygonEditListener> polygonEditListeners;
     protected com.vaadin.tapio.googlemaps.client.events.PolygonEditListener polygonEditHandler;
 
+    protected List<MapInitListener> mapInitListeners;
+    protected com.vaadin.tapio.googlemaps.client.events.MapInitListener mapInitHandler;
+
     public WebGoogleMapViewer() {
         super();
 
@@ -77,7 +77,23 @@ public class WebGoogleMapViewer extends WebAbstractComponent<GoogleMap> implemen
         } else {
             apiOrClientId = mapConfig.getClientId();
         }
-        component = new GoogleMap(new LatLon(mapConfig.getDefLatitude(), mapConfig.getDefLongitude()), apiOrClientId);
+
+        mapInitHandler = new com.vaadin.tapio.googlemaps.client.events.MapInitListener() {
+            @Override
+            public void init(LatLon center, int zoom, LatLon boundsNE, LatLon boundsSW) {
+                if (mapInitListeners == null) {
+                    return;
+                }
+
+                for (MapInitListener l : new ArrayList<>(mapInitListeners)) {
+                    l.init(GeoPointDelegate.fromLatLon(center), zoom, GeoPointDelegate.fromLatLon(boundsNE),
+                            GeoPointDelegate.fromLatLon(boundsSW));
+                }
+            }
+        };
+
+        component = new GoogleMap(new LatLon(mapConfig.getDefLatitude(), mapConfig.getDefLongitude()), 8,
+                apiOrClientId, mapInitHandler);
     }
 
     @Override
@@ -620,6 +636,27 @@ public class WebGoogleMapViewer extends WebAbstractComponent<GoogleMap> implemen
                 component.removePolygonEditListener(polygonEditHandler);
                 polygonEditHandler = null;
                 polygonEditListeners = null;
+            }
+        }
+    }
+
+    @Override
+    public void addMapInitListener(MapInitListener listener) {
+        if (mapInitListeners == null) {
+            mapInitListeners = new ArrayList<>();
+            mapInitListeners.add(listener);
+        } else {
+            mapInitListeners.add(listener);
+        }
+    }
+
+    @Override
+    public void removeMapInitListener(MapInitListener listener) {
+        if (mapInitListeners != null) {
+            mapInitListeners.remove(listener);
+
+            if (mapInitListeners.isEmpty()) {
+                mapInitListeners = null;
             }
         }
     }

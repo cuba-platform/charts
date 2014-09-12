@@ -22,10 +22,10 @@ import java.util.Objects;
 public interface MapViewer extends Component, Component.BelongToFrame, Component.HasXmlDescriptor {
 
     enum Type {
-        Roadmap("roadmap"),
-        Satellite("satellite"),
-        Hybrid("hybrid"),
-        Terrain("terrain");
+        ROADMAP("roadmap"),
+        SATELLITE("satellite"),
+        HYBRID("hybrid"),
+        TERRAIN("terrain");
 
         private String id;
 
@@ -67,6 +67,9 @@ public interface MapViewer extends Component, Component.BelongToFrame, Component
 
     void addPolygonEditListener(PolygonEditListener listener);
     void removePolygonEditListener(PolygonEditListener listener);
+
+    void addMapInitListener(MapInitListener listener);
+    void removeMapInitListener(MapInitListener listener);
 
     GeoPoint createGeoPoint();
     GeoPoint createGeoPoint(double latitude, double longitude);

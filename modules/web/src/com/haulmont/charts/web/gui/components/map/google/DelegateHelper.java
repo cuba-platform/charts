@@ -29,20 +29,20 @@ public class DelegateHelper {
 
     public static GoogleMap.MapType toGoogleMapType(MapViewer.Type type) {
         switch (type) {
-            case Roadmap: return Roadmap;
-            case Satellite: return GoogleMap.MapType.Satellite;
-            case Hybrid: return GoogleMap.MapType.Hybrid;
-            case Terrain: return GoogleMap.MapType.Terrain;
+            case ROADMAP: return Roadmap;
+            case SATELLITE: return GoogleMap.MapType.Satellite;
+            case HYBRID: return GoogleMap.MapType.Hybrid;
+            case TERRAIN: return GoogleMap.MapType.Terrain;
             default: throw new IllegalArgumentException("Unsupported map type: " + type);
         }
     }
 
     public static MapViewer.Type toCubaMapType(GoogleMap.MapType type) {
         switch (type) {
-            case Roadmap: return MapViewer.Type.Roadmap;
-            case Satellite: return MapViewer.Type.Satellite;
-            case Hybrid: return MapViewer.Type.Hybrid;
-            case Terrain: return MapViewer.Type.Terrain;
+            case Roadmap: return MapViewer.Type.ROADMAP;
+            case Satellite: return MapViewer.Type.SATELLITE;
+            case Hybrid: return MapViewer.Type.HYBRID;
+            case Terrain: return MapViewer.Type.TERRAIN;
             default: throw new IllegalArgumentException("Unsupported map type: " + type);
         }
     }
