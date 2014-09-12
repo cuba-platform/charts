@@ -8,6 +8,8 @@ package com.haulmont.charts.gui.map.model.listeners;
 import com.haulmont.charts.gui.map.model.Marker;
 
 /**
+ * Listener fired when user clicks marker
+ *
  * @author korotkov
  * @version $Id$
  */

@@ -36,16 +36,6 @@ public class PolygonDelegate implements Polygon {
     }
 
     @Override
-    public long getId() {
-        return polygon.getId();
-    }
-
-    @Override
-    public void setId(long id) {
-        polygon.setId(id);
-    }
-
-    @Override
     public List<GeoPoint> getCoordinates() {
         return DelegateHelper.toGeoPoint(polygon.getCoordinates());
     }

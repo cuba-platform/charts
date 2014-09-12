@@ -8,6 +8,8 @@ package com.haulmont.charts.gui.map.model.listeners;
 import com.haulmont.charts.gui.map.model.InfoWindow;
 
 /**
+ * Listener to be fired up on info window closing.
+ *
  * @author korotkov
  * @version $Id$
  */

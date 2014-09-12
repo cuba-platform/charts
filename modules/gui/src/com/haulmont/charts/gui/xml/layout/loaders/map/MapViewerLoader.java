@@ -57,7 +57,7 @@ public class MapViewerLoader extends ComponentLoader {
     private void loadMapType(MapViewer mapViewer, Element element) {
         String mapType = element.attributeValue("mapType");
         if (mapType != null) {
-            mapViewer.setMapType(MapViewer.Type.fromId(mapType));
+            mapViewer.setMapType(MapViewer.Type.valueOf(mapType.toUpperCase()));
         }
     }
 }

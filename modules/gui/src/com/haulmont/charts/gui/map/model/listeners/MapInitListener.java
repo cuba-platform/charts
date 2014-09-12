@@ -8,6 +8,9 @@ package com.haulmont.charts.gui.map.model.listeners;
 import com.haulmont.charts.gui.map.model.GeoPoint;
 
 /**
+ * Listener to be fired once when map initialization is finished: tiles are loaded up, coordinates of center
+ * and borders are known etc.
+ *
  * @author korotkov
  * @version $Id$
  */

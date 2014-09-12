@@ -36,16 +36,6 @@ public class PolylineDelegate implements Polyline {
     }
 
     @Override
-    public long getId() {
-        return polyline.getId();
-    }
-
-    @Override
-    public void setId(long id) {
-        polyline.setId(id);
-    }
-
-    @Override
     public List<GeoPoint> getCoordinates() {
         return DelegateHelper.toGeoPoint(polyline.getCoordinates());
     }

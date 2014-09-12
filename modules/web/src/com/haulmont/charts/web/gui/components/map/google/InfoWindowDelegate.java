@@ -35,16 +35,6 @@ public class InfoWindowDelegate implements InfoWindow {
     }
 
     @Override
-    public long getId() {
-        return infoWindow.getId();
-    }
-
-    @Override
-    public void setId(long id) {
-        infoWindow.setId(id);
-    }
-
-    @Override
     public String getContent() {
         return infoWindow.getContent();
     }

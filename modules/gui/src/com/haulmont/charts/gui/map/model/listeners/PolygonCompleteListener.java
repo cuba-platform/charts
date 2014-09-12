@@ -8,6 +8,9 @@ package com.haulmont.charts.gui.map.model.listeners;
 import com.haulmont.charts.gui.map.model.Polygon;
 
 /**
+ * Listener to be fired up when user finished drawing polygon, i.e. made the first and the last vertices
+ * of the polygon connected.
+ *
  * @author korotkov
  * @version $Id$
  */

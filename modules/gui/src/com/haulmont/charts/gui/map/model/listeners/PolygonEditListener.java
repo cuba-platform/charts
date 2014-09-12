@@ -9,6 +9,8 @@ import com.haulmont.charts.gui.map.model.GeoPoint;
 import com.haulmont.charts.gui.map.model.Polygon;
 
 /**
+ * Listener to be fired up when user adds/removes/moves polygon vertex.
+ *
  * @author korotkov
  * @version $Id$
  */

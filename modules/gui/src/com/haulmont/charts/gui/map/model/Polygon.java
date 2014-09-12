@@ -13,34 +13,105 @@ import java.util.List;
  */
 public interface Polygon {
 
-    long getId();
-    void setId(long id);
-
-    List<GeoPoint> getCoordinates();
+    /**
+     * Sets vertices coordinates
+     * @param coordinates coordinates
+     */
     void setCoordinates(List<GeoPoint> coordinates);
 
-    String getFillColor();
+    /**
+     * @return vertices coordinates
+     */
+    List<GeoPoint> getCoordinates();
+
+    /**
+     * Sets polygon fill color. Defaults to "#993366"
+     * @param fillColor fill color in any CSS3 format except extended name colors (aquamarine, chocolate etc)
+     */
     void setFillColor(String fillColor);
 
-    double getFillOpacity();
+    /**
+     * @return polygon fill color
+     */
+    String getFillColor();
+
+    /**
+     * Sets fill opacity. Defaults to 0.6
+     * @param fillOpacity fill opacity
+     */
     void setFillOpacity(double fillOpacity);
 
-    String getStrokeColor();
+    /**
+     * @return fill opacity
+     */
+    double getFillOpacity();
+
+    /**
+     * Sets stroke color. Defaults to "#000000"
+     * @param strokeColor stroke color in any CSS3 format except extended name colors (aquamarine, chocolate etc)
+     */
     void setStrokeColor(String strokeColor);
 
-    double getStrokeOpacity();
+    /**
+     * @return stroke color
+     */
+    String getStrokeColor();
+
+    /**
+     * Sets stroke opacity. Defaults to 1.0
+     * @param strokeOpacity
+     */
     void setStrokeOpacity(double strokeOpacity);
 
-    int getStrokeWeight();
+    /**
+     * @return stroke opacity
+     */
+    double getStrokeOpacity();
+
+    /**
+     * Sets stroke weight in pixels. Defaults to 3
+     * @param strokeWeight stroke weight in pixels
+     */
     void setStrokeWeight(int strokeWeight);
 
-    int getzIndex();
+    /**
+     * @return stroke weights in pixels
+     */
+    int getStrokeWeight();
+
+    /**
+     * Sets polygon z-index
+     * @param zIndex z-index
+     */
     void setzIndex(int zIndex);
 
-    boolean isGeodesic();
+    /**
+     * @return z-index
+     */
+    int getzIndex();
+
+    /**
+     * Sets whether polygon edges should be geodesic, which means they they curve will change depending of the polygon
+     * closeness to north/south pole. If edges aren't geodesic then they are rendered as straight lines in screen space.
+     * Defaults to false
+     *
+     * @param geodesic true if edges should be geodesic
+     */
     void setGeodesic(boolean geodesic);
 
-    boolean isEditable();
+    /**
+     * @return true if edges are geodesic
+     */
+    boolean isGeodesic();
+
+    /**
+     * Sets whether polygon should be editable, which allows user to move/add/delete polygon vertices. Defaults to false
+     * @param editable true if polygon should be editable
+     */
     void setEditable(boolean editable);
 
+    /**
+     * @return true if polygon is editable
+     */
+    boolean isEditable();
 }

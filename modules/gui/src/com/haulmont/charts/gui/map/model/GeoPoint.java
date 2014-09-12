@@ -6,6 +6,8 @@
 package com.haulmont.charts.gui.map.model;
 
 /**
+ * Represents geographical point, used for other map components and settings
+ *
  * @author korotkov
  * @version $Id$
  */

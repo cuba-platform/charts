@@ -8,6 +8,8 @@ package com.haulmont.charts.gui.map.model.listeners;
 import com.haulmont.charts.gui.map.model.GeoPoint;
 
 /**
+ * Listener to be fired up when user clicks on map.
+ *
  * @author korotkov
  * @version $Id$
  */

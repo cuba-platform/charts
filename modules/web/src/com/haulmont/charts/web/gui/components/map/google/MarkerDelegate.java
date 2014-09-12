@@ -34,16 +34,6 @@ public class MarkerDelegate implements Marker {
     }
 
     @Override
-    public void setId(long id) {
-        marker.setId(id);
-    }
-
-    @Override
-    public long getId() {
-        return marker.getId();
-    }
-
-    @Override
     public void setOptimized(boolean optimized) {
         marker.setOptimized(optimized);
     }

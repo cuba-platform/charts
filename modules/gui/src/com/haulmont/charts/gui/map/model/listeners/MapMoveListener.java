@@ -8,6 +8,10 @@ package com.haulmont.charts.gui.map.model.listeners;
 import com.haulmont.charts.gui.map.model.GeoPoint;
 
 /**
+ * Listener fired when map's center or bounds have been moved.
+ * If map's center or bounds are being changed continuously (when the user is dragging the map for example),
+ * then listener will be fired up only once, on moving finished.
+ *
  * @author korotkov
  * @version $Id$
  */

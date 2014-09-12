@@ -9,6 +9,8 @@ import com.haulmont.charts.gui.map.model.GeoPoint;
 import com.haulmont.charts.gui.map.model.Marker;
 
 /**
+ * Listener to be fired up when user dragged marker and released mouse button.
+ *
  * @author korotkov
  * @version $Id$
  */
