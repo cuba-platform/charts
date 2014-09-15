@@ -34,82 +34,150 @@ public class PolygonOptions {
         this.fillOpacity = fillOpacity;
     }
 
-    public boolean isClickable() {
-        return clickable;
-    }
-
-    public void setClickable(boolean clickable) {
-        this.clickable = clickable;
-    }
-
+    /**
+     * @return true if created polygon should be editable
+     */
     public boolean isEditable() {
         return editable;
     }
 
+    /**
+     * Sets whether newly created polygon should be editable, which allows user to move/add/delete polygon vertices.
+     * Defaults to false
+     *
+     * @param editable true if polygon should be editable
+     */
     public void setEditable(boolean editable) {
         this.editable = editable;
     }
 
+    /**
+     * @return polygon fill color
+     */
     public String getFillColor() {
         return fillColor;
     }
 
+    /**
+     * Sets polygon fill color.
+     * Defaults to "#993366"
+     *
+     * @param fillColor fill color in any CSS3 format except extended name colors (aquamarine, chocolate etc)
+     */
     public void setFillColor(String fillColor) {
         this.fillColor = fillColor;
     }
 
+    /**
+     * @return fill opacity
+     */
     public Double getFillOpacity() {
         return fillOpacity;
     }
 
+    /**
+     * Sets fill opacity. Defaults to 0.6
+     * @param fillOpacity fill opacity
+     */
     public void setFillOpacity(Double fillOpacity) {
         this.fillOpacity = fillOpacity;
     }
 
-    public boolean isGeodesic() {
-        return geodesic;
-    }
-
+    /**
+     * Sets whether polygon edges should be geodesic, which means they they curve will change depending of the polygon
+     * closeness to north/south pole. If edges aren't geodesic then they are rendered as straight lines in screen space.
+     * Defaults to false
+     *
+     * @param geodesic true if edges should be geodesic
+     */
     public void setGeodesic(boolean geodesic) {
         this.geodesic = geodesic;
     }
 
+    /**
+     * @return true if edges are geodesic
+     */
+    public boolean isGeodesic() {
+        return geodesic;
+    }
+
+    /**
+     * @return stroke color
+     */
     public String getStrokeColor() {
         return strokeColor;
     }
 
+    /**
+     * Sets stroke color.
+     * Defaults to "#000000" (black)
+     *
+     * @param strokeColor stroke color in any CSS3 format except extended name colors (aquamarine, chocolate etc)
+     */
     public void setStrokeColor(String strokeColor) {
         this.strokeColor = strokeColor;
     }
 
+    /**
+     * @return stroke opacity
+     */
     public Double getStrokeOpacity() {
         return strokeOpacity;
     }
 
+    /**
+     * Sets stroke opacity.
+     * Defaults to 1.0
+     *
+     * @param strokeOpacity
+     */
     public void setStrokeOpacity(Double strokeOpacity) {
         this.strokeOpacity = strokeOpacity;
     }
 
+    /**
+     * @return stroke opacity
+     */
     public Integer getStrokeWeight() {
         return strokeWeight;
     }
 
+    /**
+     * Sets stroke weight in pixels.
+     * Defaults to 3
+     *
+     * @param strokeWeight stroke weight in pixels
+     */
     public void setStrokeWeight(Integer strokeWeight) {
         this.strokeWeight = strokeWeight;
     }
 
+    /**
+     * @return visibility of newly drawn polygons
+     */
     public boolean isVisible() {
         return visible;
     }
 
+    /**
+     * Sets visibility of newly drawn polygons
+     * @param visible
+     */
     public void setVisible(boolean visible) {
         this.visible = visible;
     }
 
+    /**
+     * @return z-index
+     */
     public Integer  getZIndex() {
         return zIndex;
     }
 
+    /**
+     * Sets polygon z-index
+     * @param zIndex z-index
+     */
     public void setZIndex(Integer  zIndex) {
         this.zIndex = zIndex;
     }

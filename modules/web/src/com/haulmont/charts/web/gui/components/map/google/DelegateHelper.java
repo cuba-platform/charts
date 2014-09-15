@@ -146,7 +146,7 @@ public class DelegateHelper {
         gOptions.setStrokeWeight(options.getStrokeWeight());
         gOptions.setFillOpacity(options.getFillOpacity());
         gOptions.setFillColor(options.getFillColor());
-        gOptions.setClickable(options.isClickable());
+//        gOptions.setClickable(options.isClickable());
         gOptions.setGeodesic(options.isGeodesic());
         gOptions.setVisible(options.isVisible());
         gOptions.setZIndex(options.getZIndex());

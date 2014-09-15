@@ -25,9 +25,24 @@ public interface MapViewer extends Component, Component.BelongToFrame, Component
      * Map types
      */
     enum Type {
+        /**
+         * Normal street map
+         */
         ROADMAP,
+
+        /**
+         * Satellite images
+         */
         SATELLITE,
+
+        /**
+         * Satellite images with transparent layer of major streets
+         */
         HYBRID,
+
+        /**
+         * Map with physical features such as terrain and vegetation
+         */
         TERRAIN
     }
 
@@ -56,13 +71,13 @@ public interface MapViewer extends Component, Component.BelongToFrame, Component
     void removeMapInitListener(MapInitListener listener);
 
     /**
-     * Creating geo point
+     * Creates geo point with no coordinates
      * @return geo point
      */
     GeoPoint createGeoPoint();
 
     /**
-     * Creates geo point
+     * Creates geo point with given coordinates
      * @param latitude latitude
      * @param longitude latitude
      * @return geo point
@@ -218,7 +233,14 @@ public interface MapViewer extends Component, Component.BelongToFrame, Component
      */
     Collection<Marker> getMarkers();
 
+    /**
+     * Sets the size to 100% x 100%
+     */
     void setSizeFull();
+
+    /**
+     * Clears any size settings.
+     */
     void setSizeUndefined();
 
     /**
@@ -265,7 +287,7 @@ public interface MapViewer extends Component, Component.BelongToFrame, Component
     void setVisibleAreaBoundLimitsEnabled(boolean enabled);
 
     /**
-     * Changes map viewpoint to contain area defined by a given borders
+     * Changes map viewpoint to contain area defined by a given bounds
      * @param boundsNE north-east coordinate
      * @param boundsSW south-west coordinate
      */

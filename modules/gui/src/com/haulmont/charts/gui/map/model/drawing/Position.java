@@ -6,6 +6,8 @@
 package com.haulmont.charts.gui.map.model.drawing;
 
 /**
+ * Enum for setting position of various map elements: toolboxes, controls etc
+ *
  * @author korotkov
  * @version $Id$
  */

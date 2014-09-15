@@ -27,19 +27,35 @@ public class ControlOptions {
         this.drawingModes = drawingModes != null ? drawingModes : new ArrayList<OverlayType>();
     }
 
-    public Position getPosition() {
-        return position;
-    }
-
+    /**
+     * Sets position for drawing tools toolbox.
+     * Defaults to TOP_CENTER
+     *
+     * @param position
+     */
     public void setPosition(Position position) {
         this.position = position;
     }
 
-    public List<OverlayType> getDrawingModes() {
-        return drawingModes;
+    /**
+     * @return position of drawing tools toolbox
+     */
+    public Position getPosition() {
+        return position;
     }
 
+    /**
+     * Sets drawing modes to display in drawing tools toolbox
+     * @param drawingModes list of drawing modes
+     */
     public void setDrawingModes(List<OverlayType> drawingModes) {
         this.drawingModes = drawingModes;
+    }
+
+    /**
+     * @return list of drawing modes displayed in drawing tools toolbox
+     */
+    public List<OverlayType> getDrawingModes() {
+        return drawingModes;
     }
 }
