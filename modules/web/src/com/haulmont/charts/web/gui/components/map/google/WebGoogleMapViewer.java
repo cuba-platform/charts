@@ -31,6 +31,7 @@ import static com.haulmont.charts.gui.map.model.listeners.InfoWindowClosedListen
 import static com.haulmont.charts.gui.map.model.listeners.MapClickListener.MapClickEvent;
 import static com.haulmont.charts.gui.map.model.listeners.MapMoveListener.MapMoveEvent;
 import static com.haulmont.charts.gui.map.model.listeners.MarkerClickListener.MarkerClickEvent;
+import static com.haulmont.charts.gui.map.model.listeners.MarkerDoubleClickListener.MarkerDoubleClickEvent;
 import static com.haulmont.charts.gui.map.model.listeners.MarkerDragListener.MarkerDragEvent;
 import static com.haulmont.charts.gui.map.model.listeners.PolygonCompleteListener.PolygonCompleteEvent;
 
@@ -55,6 +56,9 @@ public class WebGoogleMapViewer extends WebAbstractComponent<GoogleMap> implemen
 
     protected List<MarkerClickListener> markerClickListeners;
     protected com.vaadin.tapio.googlemaps.client.events.MarkerClickListener markerClickHandler;
+
+    protected List<MarkerDoubleClickListener> markerDoubleClickListeners;
+    protected com.vaadin.tapio.googlemaps.client.events.MarkerDoubleClickListener markerDoubleClickHandler;
 
     protected List<InfoWindowClosedListener> infoWindowClosedListeners;
     protected com.vaadin.tapio.googlemaps.client.events.InfoWindowClosedListener infoWindowClosedHandler;
@@ -510,6 +514,42 @@ public class WebGoogleMapViewer extends WebAbstractComponent<GoogleMap> implemen
                 component.removeMarkerClickListener(markerClickHandler);
                 markerClickHandler = null;
                 markerClickListeners = null;
+            }
+        }
+    }
+
+    @Override
+    public void addMarkerDoubleClickListener(com.haulmont.charts.gui.map.model.listeners.MarkerDoubleClickListener listener) {
+        if (markerDoubleClickListeners == null) {
+            markerDoubleClickListeners = new ArrayList<>();
+            markerDoubleClickListeners.add(listener);
+
+            markerDoubleClickHandler = new com.vaadin.tapio.googlemaps.client.events.MarkerDoubleClickListener() {
+
+                @Override
+                public void markerDoubleClicked(GoogleMapMarker marker) {
+                    MarkerDoubleClickEvent event = new MarkerDoubleClickEvent(new MarkerDelegate(marker));
+                    for (MarkerDoubleClickListener l : new ArrayList<>(markerDoubleClickListeners)) {
+                        l.onClick(event);
+                    }
+                }
+            };
+
+            component.addMarkerDoubleClickListener(markerDoubleClickHandler);
+        } else {
+            markerDoubleClickListeners.add(listener);
+        }
+    }
+
+    @Override
+    public void removeMarkerDoubleClickListener(com.haulmont.charts.gui.map.model.listeners.MarkerDoubleClickListener listener) {
+        if (markerDoubleClickListeners != null) {
+            markerDoubleClickListeners.remove(listener);
+
+            if (markerDoubleClickListeners.isEmpty()) {
+                component.removeMarkerDoubleClickListener(markerDoubleClickHandler);
+                markerDoubleClickHandler = null;
+                markerDoubleClickListeners = null;
             }
         }
     }

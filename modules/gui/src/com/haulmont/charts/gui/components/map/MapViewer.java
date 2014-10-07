@@ -49,6 +49,9 @@ public interface MapViewer extends Component, Component.BelongToFrame, Component
     void addMarkerClickListener(MarkerClickListener listener);
     void removeMarkerClickListener(MarkerClickListener listener);
 
+    void addMarkerDoubleClickListener(MarkerDoubleClickListener listener);
+    void removeMarkerDoubleClickListener(MarkerDoubleClickListener listener);
+
     void addMarkerDragListener(MarkerDragListener listener);
     void removeMarkerDragListener(MarkerDragListener listener);
 
