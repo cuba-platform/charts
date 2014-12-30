@@ -164,7 +164,9 @@ configure(chartsWebModule) {
         compile(chartsGuiModule)
         compile(cubaWeb)
 
-        compile("com.haulmont.thirdparty:googlemaps:0.8.1.m")
+        compile("com.haulmont.thirdparty:googlemaps:0.8.1.m") {
+            exclude(group: 'junit', module: 'junit')
+        }
 
         provided(chartsGuiModule)
         provided(servletApi)
