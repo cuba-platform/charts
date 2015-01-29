@@ -6,8 +6,8 @@
 package com.haulmont.charts.web.gui.components.map.google;
 
 import com.haulmont.charts.gui.map.model.GeoPoint;
-import com.vaadin.tapio.googlemaps.client.LatLon;
-import com.vaadin.tapio.googlemaps.client.WeightedLocation;
+import com.vaadin.tapio.googlemaps.client.base.LatLon;
+import com.vaadin.tapio.googlemaps.client.base.WeightedLocation;
 
 import java.util.Objects;
 

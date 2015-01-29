@@ -6,7 +6,7 @@
 package com.haulmont.charts.web.gui.components.map.google;
 
 import com.haulmont.charts.gui.map.model.GeoPoint;
-import com.vaadin.tapio.googlemaps.client.LatLon;
+import com.vaadin.tapio.googlemaps.client.base.LatLon;
 
 /**
  * @author korotkov
@@ -39,6 +39,7 @@ public class GeoPointDelegate implements GeoPoint {
     public void setLatLon(LatLon latLon) {
         this.latLon = latLon;
     }
+
     @Override
     public void setLongitude(Double longitude) {
         latLon.setLon(longitude);

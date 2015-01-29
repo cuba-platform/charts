@@ -12,9 +12,19 @@ import com.haulmont.charts.gui.map.model.drawing.*;
 import com.haulmont.charts.gui.map.model.drawing.DrawingOptions;
 import com.haulmont.charts.gui.map.model.drawing.OverlayType;
 import com.haulmont.charts.gui.map.model.drawing.PolygonOptions;
+import com.haulmont.charts.web.gui.components.map.google.directions.DirectionsLegDelegate;
+import com.haulmont.charts.web.gui.components.map.google.directions.DirectionsRouteDelegate;
+import com.haulmont.charts.web.gui.components.map.google.directions.DirectionsStepDelegate;
+import com.haulmont.charts.web.gui.components.map.google.directions.DirectionsWaypointDelegate;
 import com.vaadin.tapio.googlemaps.GoogleMap;
 import com.vaadin.tapio.googlemaps.client.*;
+import com.vaadin.tapio.googlemaps.client.base.LatLon;
+import com.vaadin.tapio.googlemaps.client.base.LatLonBounds;
 import com.vaadin.tapio.googlemaps.client.drawing.*;
+import com.vaadin.tapio.googlemaps.client.services.DirectionsLeg;
+import com.vaadin.tapio.googlemaps.client.services.DirectionsRoute;
+import com.vaadin.tapio.googlemaps.client.services.DirectionsStep;
+import com.vaadin.tapio.googlemaps.client.services.DirectionsWaypoint;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -182,34 +192,118 @@ public class DelegateHelper {
         }
     }
 
-    public static List<com.vaadin.tapio.googlemaps.client.WeightedLocation> toGoogleWeightedLocations(
+    public static List<com.vaadin.tapio.googlemaps.client.base.WeightedLocation> toGoogleWeightedLocations(
             List<WeightedLocation> weightedLocations) {
         if (weightedLocations == null) {
             return null;
         }
 
-        List<com.vaadin.tapio.googlemaps.client.WeightedLocation> gWeightedLocations
+        List<com.vaadin.tapio.googlemaps.client.base.WeightedLocation> gWeightedLocations
                 = new ArrayList<>(weightedLocations.size()*2);
         for (WeightedLocation w : weightedLocations) {
             LatLon location = new LatLon(w.getLocation().getLatitude(), w.getLocation().getLongitude());
             Double weight = w.getWeight();
-            gWeightedLocations.add(new com.vaadin.tapio.googlemaps.client.WeightedLocation(location, weight));
+            gWeightedLocations.add(new com.vaadin.tapio.googlemaps.client.base.WeightedLocation(location, weight));
         }
 
         return gWeightedLocations;
     }
 
     public static List<WeightedLocation> toWeightedLocations(
-            List<com.vaadin.tapio.googlemaps.client.WeightedLocation> gWeightedLocations) {
+            List<com.vaadin.tapio.googlemaps.client.base.WeightedLocation> gWeightedLocations) {
         if (gWeightedLocations == null) {
             return null;
         }
 
         List<WeightedLocation> weightedLocations = new ArrayList<>(gWeightedLocations.size()*2);
-        for (com.vaadin.tapio.googlemaps.client.WeightedLocation w : gWeightedLocations) {
+        for (com.vaadin.tapio.googlemaps.client.base.WeightedLocation w : gWeightedLocations) {
             weightedLocations.add(new WeightedLocationDelegate(w));
         }
 
         return weightedLocations;
+    }
+
+    public static List<com.haulmont.charts.gui.map.model.directions.DirectionsLeg> toCubaDirectionsLegs(List<DirectionsLeg> gLegs) {
+        if (gLegs == null) {
+            return null;
+        } else {
+            List<com.haulmont.charts.gui.map.model.directions.DirectionsLeg> legs = new ArrayList<>(gLegs.size()*2);
+            for (DirectionsLeg gLeg : gLegs) {
+                legs.add(new DirectionsLegDelegate(gLeg));
+            }
+            return legs;
+        }
+    }
+
+    public static List<DirectionsLeg> toGoogleDirectionsLegs(List<com.haulmont.charts.gui.map.model.directions.DirectionsLeg> legs) {
+        if (legs == null) {
+            return null;
+        } else {
+            List<DirectionsLeg> gLegs = new ArrayList<>(legs.size()*2);
+            for (com.haulmont.charts.gui.map.model.directions.DirectionsLeg leg : legs) {
+                gLegs.add(((DirectionsLegDelegate)leg).getDirectionsLeg());
+            }
+            return gLegs;
+        }
+    }
+
+    public static List<com.haulmont.charts.gui.map.model.directions.DirectionsStep> toCubaDirectionsSteps(List<DirectionsStep> gSteps) {
+        if (gSteps == null) {
+            return null;
+        } else {
+            List<com.haulmont.charts.gui.map.model.directions.DirectionsStep> steps = new ArrayList<>(gSteps.size()*2);
+            for (DirectionsStep gStep : gSteps) {
+                steps.add(new DirectionsStepDelegate(gStep));
+            }
+            return steps;
+        }
+    }
+
+    public static List<DirectionsStep> toGoogleDirectionsSteps(List<com.haulmont.charts.gui.map.model.directions.DirectionsStep> steps) {
+        if (steps == null) {
+            return null;
+        } else {
+            List<DirectionsStep> gSteps = new ArrayList<>(steps.size()*2);
+            for (com.haulmont.charts.gui.map.model.directions.DirectionsStep step : steps) {
+                gSteps.add(((DirectionsStepDelegate) step).getDirectionsStep());
+            }
+            return gSteps;
+        }
+    }
+
+    public static List<com.haulmont.charts.gui.map.model.directions.DirectionsRoute> toCubaDirectionsRoutes(List<DirectionsRoute> gRoutes) {
+        if (gRoutes == null) {
+            return null;
+        } else {
+            List<com.haulmont.charts.gui.map.model.directions.DirectionsRoute> routes = new ArrayList<>(gRoutes.size()*2);
+            for (DirectionsRoute gRoute : gRoutes) {
+                routes.add(new DirectionsRouteDelegate(gRoute));
+            }
+            return routes;
+        }
+    }
+
+    public static List<com.haulmont.charts.gui.map.model.directions.DirectionsWaypoint> toCubaDirectionsWaypoints(List<DirectionsWaypoint> gWaypoints) {
+        if (gWaypoints == null) {
+            return null;
+        } else {
+            List<com.haulmont.charts.gui.map.model.directions.DirectionsWaypoint> waypoints = new ArrayList<>(gWaypoints.size()*2);
+            for (DirectionsWaypoint gWaypoint : gWaypoints) {
+                waypoints.add(new DirectionsWaypointDelegate(gWaypoint));
+            }
+            return waypoints;
+        }
+    }
+
+    public static List<DirectionsWaypoint> toGoogleDirectionsWaypoints(List<com.haulmont.charts.gui.map.model.directions.DirectionsWaypoint> waypoints) {
+        if (waypoints == null) {
+            return null;
+        } else {
+            List<DirectionsWaypoint> gWaypoints = new ArrayList<>(waypoints.size()*2);
+            for (com.haulmont.charts.gui.map.model.directions.DirectionsWaypoint waypoint : waypoints) {
+                gWaypoints.add(((DirectionsWaypointDelegate) waypoint).getDirectionsWaypoint());
+            }
+            return gWaypoints;
+        }
     }
 }

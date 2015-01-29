@@ -5,23 +5,34 @@
 
 package com.haulmont.charts.web.gui.components.map.google;
 
+import com.haulmont.bali.util.Preconditions;
 import com.haulmont.charts.core.global.MapConfig;
 import com.haulmont.charts.gui.components.map.MapViewer;
 import com.haulmont.charts.gui.map.model.*;
+import com.haulmont.charts.gui.map.model.directions.DirectionsRequest;
+import com.haulmont.charts.gui.map.model.directions.DirectionsRequestCallback;
+import com.haulmont.charts.gui.map.model.directions.DirectionsWaypoint;
+import com.haulmont.charts.gui.map.model.directions.TravelMode;
 import com.haulmont.charts.gui.map.model.drawing.DrawingOptions;
 import com.haulmont.charts.gui.map.model.layer.HeatMapLayer;
 import com.haulmont.charts.gui.map.model.listeners.*;
+import com.haulmont.charts.web.gui.components.map.google.directions.DirectionsRequestDelegate;
+import com.haulmont.charts.web.gui.components.map.google.directions.DirectionsResultDelegate;
+import com.haulmont.charts.web.gui.components.map.google.directions.DirectionsWaypointDelegate;
 import com.haulmont.charts.web.gui.components.map.google.layer.HeatMapLayerDelegate;
 import com.haulmont.cuba.core.global.AppBeans;
 import com.haulmont.cuba.core.global.Configuration;
 import com.haulmont.cuba.web.gui.components.WebAbstractComponent;
 import com.vaadin.tapio.googlemaps.GoogleMap;
-import com.vaadin.tapio.googlemaps.client.LatLon;
+import com.vaadin.tapio.googlemaps.client.base.LatLon;
 import com.vaadin.tapio.googlemaps.client.layers.GoogleMapHeatMapLayer;
 import com.vaadin.tapio.googlemaps.client.overlays.GoogleMapInfoWindow;
 import com.vaadin.tapio.googlemaps.client.overlays.GoogleMapMarker;
 import com.vaadin.tapio.googlemaps.client.overlays.GoogleMapPolygon;
 import com.vaadin.tapio.googlemaps.client.overlays.GoogleMapPolyline;
+import com.vaadin.tapio.googlemaps.client.services.DirectionsResult;
+import com.vaadin.tapio.googlemaps.client.services.DirectionsResultCallback;
+import com.vaadin.tapio.googlemaps.client.services.DirectionsStatus;
 
 import java.util.ArrayList;
 import java.util.Collection;
@@ -729,5 +740,41 @@ public class WebGoogleMapViewer extends WebAbstractComponent<GoogleMap> implemen
     @Override
     public void openInfoWindow(InfoWindow infoWindow) {
         component.openInfoWindow(((InfoWindowDelegate)infoWindow).getInfoWindow());
+    }
+
+    @Override
+    public DirectionsRequest createDirectionsRequest() {
+        return new DirectionsRequestDelegate(new com.vaadin.tapio.googlemaps.client.services.DirectionsRequest());
+    }
+
+    @Override
+    public DirectionsRequest createDirectionsRequest(GeoPoint origin, GeoPoint destination, TravelMode travelMode) {
+        Preconditions.checkNotNullArgument(origin);
+        Preconditions.checkNotNullArgument(destination);
+        Preconditions.checkNotNullArgument(travelMode);
+
+        return new DirectionsRequestDelegate(new com.vaadin.tapio.googlemaps.client.services.DirectionsRequest());
+    }
+
+    @Override
+    public DirectionsWaypoint createDirectionsWaypoint() {
+        return new DirectionsWaypointDelegate(new com.vaadin.tapio.googlemaps.client.services.DirectionsWaypoint());
+    }
+
+    @Override
+    public DirectionsWaypoint createDirectionsWaypoint(GeoPoint location, boolean stopOver) {
+        Preconditions.checkNotNullArgument(location);
+        return new DirectionsWaypointDelegate(new com.vaadin.tapio.googlemaps.client.services.DirectionsWaypoint(((GeoPointDelegate)location).getLatLon(), stopOver));
+    }
+
+    @Override
+    public void route(DirectionsRequest request, final DirectionsRequestCallback callback) {
+        component.route(((DirectionsRequestDelegate) request).getRequest(), new DirectionsResultCallback() {
+            @Override
+            public void onCallback(DirectionsResult result, DirectionsStatus status) {
+                callback.onCallback(new DirectionsResultDelegate(result),
+                        com.haulmont.charts.gui.map.model.directions.DirectionsStatus.fromValue(status.value()));
+            }
+        });
     }
 }

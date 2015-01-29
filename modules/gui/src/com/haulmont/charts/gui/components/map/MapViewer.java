@@ -6,6 +6,10 @@
 package com.haulmont.charts.gui.components.map;
 
 import com.haulmont.charts.gui.map.model.*;
+import com.haulmont.charts.gui.map.model.directions.DirectionsRequest;
+import com.haulmont.charts.gui.map.model.directions.DirectionsRequestCallback;
+import com.haulmont.charts.gui.map.model.directions.DirectionsWaypoint;
+import com.haulmont.charts.gui.map.model.directions.TravelMode;
 import com.haulmont.charts.gui.map.model.drawing.DrawingOptions;
 import com.haulmont.charts.gui.map.model.layer.HeatMapLayer;
 import com.haulmont.charts.gui.map.model.listeners.*;
@@ -172,6 +176,37 @@ public interface MapViewer extends Component, Component.BelongToFrame, Component
      * @return heatmap layer
      */
     HeatMapLayer createHeatMapLayer();
+
+    /**
+     * Creates directions request. Request directions api using {@link MapViewer#route(com.haulmont.charts.gui.map.model.directions.DirectionsRequest, com.haulmont.charts.gui.map.model.directions.DirectionsRequestCallback)}
+     * @return request
+     */
+    DirectionsRequest createDirectionsRequest();
+
+    /**
+     * Creates directions request. Request directions api using {@link MapViewer#route(com.haulmont.charts.gui.map.model.directions.DirectionsRequest, com.haulmont.charts.gui.map.model.directions.DirectionsRequestCallback)}
+     * @param origin location of origin
+     * @param destination location of destination
+     * @param travelMode type of routing requested
+     * @return directions request
+     */
+    DirectionsRequest createDirectionsRequest(GeoPoint origin, GeoPoint destination, TravelMode travelMode);
+
+
+    /**
+     * Creates directions waypoint.
+     * @return waypoint
+     */
+    DirectionsWaypoint createDirectionsWaypoint();
+
+    /**
+     * Creates directions waypoint.
+     * @param location location
+     * @param stopOver if true, indicates that this waypoint is a stop between the origin and destination. This has the effect of
+     * splitting the route into two. This value is true by default.
+     * @return waypoint
+     */
+    DirectionsWaypoint createDirectionsWaypoint(GeoPoint location, boolean stopOver);
 
     /**
      * Adds heatmap layer on map.
@@ -427,4 +462,11 @@ public interface MapViewer extends Component, Component.BelongToFrame, Component
      * @param drawingOptions drawing options
      */
     void setDrawingOptions(DrawingOptions drawingOptions);
+
+    /**
+     * Method for requesting mapping service to create a route
+     * @param request request
+     * @param callback callback object
+     */
+    void route(DirectionsRequest request, DirectionsRequestCallback callback);
 }
