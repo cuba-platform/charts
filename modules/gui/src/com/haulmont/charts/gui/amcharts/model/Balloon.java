@@ -41,6 +41,8 @@ public class Balloon extends AbstractConfigurationObject {
 
     private Integer horizontalPadding;
 
+    private Integer maxWidth;
+
     private Integer offsetX;
 
     private Integer offsetY;
@@ -171,6 +173,15 @@ public class Balloon extends AbstractConfigurationObject {
 
     public Balloon setHorizontalPadding(Integer horizontalPadding) {
         this.horizontalPadding = horizontalPadding;
+        return this;
+    }
+
+    public Integer getMaxWidth() {
+        return maxWidth;
+    }
+
+    public Balloon setMaxWidth(Integer maxWidth) {
+        this.maxWidth = maxWidth;
         return this;
     }
 

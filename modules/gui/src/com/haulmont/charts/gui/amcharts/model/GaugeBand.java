@@ -17,9 +17,13 @@ public class GaugeBand extends AbstractConfigurationObject {
 
     private Double alpha;
 
+    private String balloonText;
+
     private Color color;
 
     private Double endValue;
+
+    private String id;
 
     private String innerRadius;
 
@@ -79,5 +83,22 @@ public class GaugeBand extends AbstractConfigurationObject {
     public GaugeBand setStartValue(Double startValue) {
         this.startValue = startValue;
         return this;
+    }
+
+    public String getBalloonText() {
+        return balloonText;
+    }
+
+    public GaugeBand setBalloonText(String balloonText) {
+        this.balloonText = balloonText;
+        return this;
+    }
+
+    public String getId() {
+        return id;
+    }
+
+    public void setId(String id) {
+        this.id = id;
     }
 }

@@ -26,11 +26,21 @@ public abstract class CoordinateChart<T extends CoordinateChart> extends Abstrac
 
     private List<Graph> graphs;
 
+    private Boolean gridAboveGraphs;
+
+    private List<Guide> guides;
+
+    private Boolean sequencedAnimation;
+
+    private Double startAlpha;
+
     private AnimationEffect startEffect;
 
     private Integer startDuration;
 
     private List<ValueAxis> valueAxes;
+
+    private String urlTarget;
 
     public CoordinateChart(ChartType type) {
         super(type);
@@ -117,6 +127,61 @@ public abstract class CoordinateChart<T extends CoordinateChart> extends Abstrac
         return (T) this;
     }
 
+    public List<Guide> getGuides() {
+        return guides;
+    }
+
+    public T setGuides(List<Guide> guides) {
+        this.guides = guides;
+        return (T) this;
+    }
+
+    public T addGuides(Guide... guides) {
+        if (guides != null) {
+            if (this.guides == null) {
+                this.guides = new ArrayList<>();
+            }
+            this.guides.addAll(Arrays.asList(guides));
+        }
+        return (T) this;
+    }
+
+    public Boolean getGridAboveGraphs() {
+        return gridAboveGraphs;
+    }
+
+    public T setGridAboveGraphs(Boolean gridAboveGraphs) {
+        this.gridAboveGraphs = gridAboveGraphs;
+        return (T) this;
+    }
+
+    public Boolean getSequencedAnimation() {
+        return sequencedAnimation;
+    }
+
+    public T setSequencedAnimation(Boolean sequencedAnimation) {
+        this.sequencedAnimation = sequencedAnimation;
+        return (T) this;
+    }
+
+    public Double getStartAlpha() {
+        return startAlpha;
+    }
+
+    public T setStartAlpha(Double startAlpha) {
+        this.startAlpha = startAlpha;
+        return (T) this;
+    }
+
+    public String getUrlTarget() {
+        return urlTarget;
+    }
+
+    public T setUrlTarget(String urlTarget) {
+        this.urlTarget = urlTarget;
+        return (T) this;
+    }
+
     @Override
     public List<String> getWiredFields() {
         List<String> wiredFields = new ArrayList<>(super.getWiredFields());
@@ -165,6 +230,10 @@ public abstract class CoordinateChart<T extends CoordinateChart> extends Abstrac
 
                 if (StringUtils.isNotEmpty(g.getFillColorsField())) {
                     wiredFields.add(g.getFillColorsField());
+                }
+
+                if (StringUtils.isNotEmpty(g.getGapField())) {
+                    wiredFields.add(g.getGapField());
                 }
 
                 if (StringUtils.isNotEmpty(g.getHighField())) {

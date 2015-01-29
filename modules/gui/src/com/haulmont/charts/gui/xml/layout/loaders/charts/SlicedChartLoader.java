@@ -7,6 +7,7 @@ package com.haulmont.charts.gui.xml.layout.loaders.charts;
 
 import com.haulmont.charts.gui.amcharts.model.AnimationEffect;
 import com.haulmont.charts.gui.amcharts.model.Color;
+import com.haulmont.charts.gui.amcharts.model.JsFunction;
 import com.haulmont.charts.gui.amcharts.model.charts.SlicedChart;
 import org.apache.commons.lang.StringUtils;
 import org.dom4j.Element;
@@ -103,6 +104,11 @@ public abstract class SlicedChartLoader<T extends SlicedChart> extends AbstractC
             chart.setLabelsEnabled(Boolean.valueOf(labelsEnabled));
         }
 
+        String labelFunction = element.elementText("labelFunction");
+        if (StringUtils.isNotEmpty(labelFunction)) {
+            chart.setLabelFunction(new JsFunction(labelFunction));
+        }
+
         String labelTickAlpha = element.attributeValue("labelTickAlpha");
         if (StringUtils.isNotEmpty(labelTickAlpha)) {
             chart.setLabelTickAlpha(Double.valueOf(labelTickAlpha));
@@ -114,6 +120,11 @@ public abstract class SlicedChartLoader<T extends SlicedChart> extends AbstractC
         }
 
         loadMargins(chart, element);
+
+        String maxLabelWidth = element.attributeValue("maxLabelWidth");
+        if (StringUtils.isNotEmpty(maxLabelWidth)) {
+            chart.setMaxLabelWidth(Integer.valueOf(maxLabelWidth));
+        }
 
         String outlineAlpha = element.attributeValue("outlineAlpha");
         if (StringUtils.isNotEmpty(outlineAlpha)) {

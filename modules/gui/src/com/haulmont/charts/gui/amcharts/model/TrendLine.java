@@ -27,6 +27,8 @@ public class TrendLine extends AbstractConfigurationObject {
 
     private Double finalXValue;
 
+    private String id;
+
     private String initialCategory;
 
     private Date initialDate;
@@ -179,6 +181,15 @@ public class TrendLine extends AbstractConfigurationObject {
 
     public TrendLine setValueAxisX(String valueAxisX) {
         this.valueAxisX = valueAxisX;
+        return this;
+    }
+
+    public String getId() {
+        return id;
+    }
+
+    public TrendLine setId(String id) {
+        this.id = id;
         return this;
     }
 }

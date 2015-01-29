@@ -13,25 +13,27 @@ public class Label extends AbstractConfigurationObject {
 
     private static final long serialVersionUID = 3973480345155361978L;
 
-    private Integer x;
-
-    private Integer y;
-
-    private String text;
-
     private Align align;
-
-    private Integer size;
-
-    private Color color;
 
     private Double alpha;
 
-    private Integer rotation;
-
     private Boolean bold;
 
+    private Color color;
+
+    private String id;
+
+    private Integer rotation;
+
+    private Integer size;
+
+    private String text;
+
     private String url;
+
+    private Integer x;
+
+    private Integer y;
 
     public Align getAlign() {
         return align;
@@ -120,6 +122,15 @@ public class Label extends AbstractConfigurationObject {
 
     public Label setY(Integer y) {
         this.y = y;
+        return this;
+    }
+
+    public String getId() {
+        return id;
+    }
+
+    public Label setId(String id) {
+        this.id = id;
         return this;
     }
 }

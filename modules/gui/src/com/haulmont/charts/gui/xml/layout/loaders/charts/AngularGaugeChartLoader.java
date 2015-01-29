@@ -192,9 +192,19 @@ public class AngularGaugeChartLoader extends AbstractChartLoader<AngularGaugeCha
                     axis.setEndValue(Double.valueOf(endValue));
                 }
 
+                String gridCount = axisElement.attributeValue("gridCount");
+                if (StringUtils.isNotEmpty(gridCount)) {
+                    axis.setGridCount(Integer.valueOf(gridCount));
+                }
+
                 String gridInside = axisElement.attributeValue("gridInside");
                 if (StringUtils.isNotEmpty(gridInside)) {
                     axis.setGridInside(Boolean.valueOf(gridInside));
+                }
+
+                String id = axisElement.attributeValue("id");
+                if (StringUtils.isNotEmpty(id)) {
+                    axis.setId(id);
                 }
 
                 String inside = axisElement.attributeValue("inside");
@@ -210,6 +220,11 @@ public class AngularGaugeChartLoader extends AbstractChartLoader<AngularGaugeCha
                 String labelOffset = axisElement.attributeValue("labelOffset");
                 if (StringUtils.isNotEmpty(labelOffset)) {
                     axis.setLabelOffset(Integer.valueOf(labelOffset));
+                }
+
+                String labelsEnabled = axisElement.attributeValue("labelsEnabled");
+                if (StringUtils.isNotEmpty(labelsEnabled)) {
+                    axis.setLabelsEnabled(Boolean.valueOf(labelsEnabled));
                 }
 
                 String minorTickInterval = axisElement.attributeValue("minorTickInterval");
@@ -307,6 +322,11 @@ public class AngularGaugeChartLoader extends AbstractChartLoader<AngularGaugeCha
                     axis.setValueInterval(Integer.valueOf(valueInterval));
                 }
 
+                String usePrefixes = axisElement.attributeValue("usePrefixes");
+                if (StringUtils.isNotEmpty(usePrefixes)) {
+                    axis.setUsePrefixes(Boolean.valueOf(usePrefixes));
+                }
+
                 chart.addAxes(axis);
             }
         }
@@ -325,6 +345,11 @@ public class AngularGaugeChartLoader extends AbstractChartLoader<AngularGaugeCha
                     band.setAlpha(Double.valueOf(alpha));
                 }
 
+                String balloonText = bandElement.attributeValue("balloonText");
+                if (StringUtils.isNotEmpty(balloonText)) {
+                    band.setBalloonText(balloonText);
+                }
+
                 String color = bandElement.attributeValue("color");
                 if (StringUtils.isNotEmpty(color)) {
                     band.setColor(Color.valueOf(color));
@@ -333,6 +358,11 @@ public class AngularGaugeChartLoader extends AbstractChartLoader<AngularGaugeCha
                 String endValue = bandElement.attributeValue("endValue");
                 if (StringUtils.isNotEmpty(endValue)) {
                     band.setEndValue(Double.valueOf(endValue));
+                }
+
+                String id = bandElement.attributeValue("id");
+                if (StringUtils.isNotEmpty(id)) {
+                    band.setId(id);
                 }
 
                 String innerRadius = bandElement.attributeValue("innerRadius");
@@ -388,6 +418,11 @@ public class AngularGaugeChartLoader extends AbstractChartLoader<AngularGaugeCha
                     arrow.setColor(Color.valueOf(color));
                 }
 
+                String id = arrowElement.attributeValue("id");
+                if (StringUtils.isNotEmpty(id)) {
+                    arrow.setId(id);
+                }
+
                 String innerRadius = arrowElement.attributeValue("innerRadius");
                 if (StringUtils.isNotEmpty(innerRadius)) {
                     arrow.setInnerRadius(innerRadius);
@@ -421,6 +456,11 @@ public class AngularGaugeChartLoader extends AbstractChartLoader<AngularGaugeCha
                 String startWidth = arrowElement.attributeValue("startWidth");
                 if (StringUtils.isNotEmpty(startWidth)) {
                     arrow.setStartWidth(Integer.valueOf(startWidth));
+                }
+
+                String value = arrowElement.attributeValue("value");
+                if (StringUtils.isNotEmpty(value)) {
+                    arrow.setValue(Double.valueOf(value));
                 }
 
                 chart.addArrows(arrow);

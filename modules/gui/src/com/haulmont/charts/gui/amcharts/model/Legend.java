@@ -37,6 +37,10 @@ public class Legend extends AbstractConfigurationObject implements HasMargins<Le
 
     private List<LegendItem> data;
 
+    private String divId;
+
+    private Boolean enabled;
+
     private Boolean equalWidths;
 
     private Integer fontSize;
@@ -44,6 +48,8 @@ public class Legend extends AbstractConfigurationObject implements HasMargins<Le
     private Integer horizontalGap;
 
     private String labelText;
+
+    private Integer labelWidth;
 
     private Integer left;
 
@@ -105,11 +111,15 @@ public class Legend extends AbstractConfigurationObject implements HasMargins<Le
 
     private ValueAlign valueAlign;
 
+    private JsFunction valueFunction;
+
     private String valueText;
 
     private Integer valueWidth;
 
     private Integer verticalGap;
+
+    private Integer width;
 
     public Align getAlign() {
         return align;
@@ -480,7 +490,7 @@ public class Legend extends AbstractConfigurationObject implements HasMargins<Le
         return this;
     }
 
-    public Boolean getUseGraphsettings() {
+    public Boolean getUseGraphSettings() {
         return useGraphSettings;
     }
 
@@ -540,6 +550,51 @@ public class Legend extends AbstractConfigurationObject implements HasMargins<Le
 
     public Legend setVerticalGap(Integer verticalGap) {
         this.verticalGap = verticalGap;
+        return this;
+    }
+
+    public String getDivId() {
+        return divId;
+    }
+
+    public Legend setDivId(String divId) {
+        this.divId = divId;
+        return this;
+    }
+
+    public Boolean getEnabled() {
+        return enabled;
+    }
+
+    public Legend setEnabled(Boolean enabled) {
+        this.enabled = enabled;
+        return this;
+    }
+
+    public Integer getLabelWidth() {
+        return labelWidth;
+    }
+
+    public Legend setLabelWidth(Integer labelWidth) {
+        this.labelWidth = labelWidth;
+        return this;
+    }
+
+    public JsFunction getValueFunction() {
+        return valueFunction;
+    }
+
+    public Legend setValueFunction(JsFunction valueFunction) {
+        this.valueFunction = valueFunction;
+        return this;
+    }
+
+    public Integer getWidth() {
+        return width;
+    }
+
+    public Legend setWidth(Integer width) {
+        this.width = width;
         return this;
     }
 }

@@ -29,6 +29,42 @@ public abstract class CoordinateChartLoader<T extends CoordinateChart> extends A
         loadValueAxes(chart, element);
 
         loadStartEffect(chart, element);
+        loadGuides(chart, element);
+
+        String gridAboveGraphs = element.attributeValue("gridAboveGraphs");
+        if (StringUtils.isNotEmpty(gridAboveGraphs)) {
+            chart.setGridAboveGraphs(Boolean.valueOf(gridAboveGraphs));
+        }
+
+        String sequencedAnimation = element.attributeValue("sequencedAnimation");
+        if (StringUtils.isNotEmpty(sequencedAnimation)) {
+            chart.setSequencedAnimation(Boolean.valueOf(sequencedAnimation));
+        }
+
+        String startAlpha = element.attributeValue("startAlpha");
+        if (StringUtils.isNotEmpty(startAlpha)) {
+            chart.setStartAlpha(Double.valueOf(startAlpha));
+        }
+
+        String urlTarget = element.attributeValue("urlTarget");
+        if (StringUtils.isNotEmpty(urlTarget)) {
+            chart.setUrlTarget(urlTarget);
+        }
+    }
+
+    protected void loadGuides(T chart, Element element) {
+        Element guidesElement = element.element("guides");
+        if (guidesElement != null) {
+            for (Object guideItem : guidesElement.elements("guide")) {
+                Element guideElement = (Element) guideItem;
+
+                Guide guide = new Guide();
+
+                loadGuide(guide, guideElement);
+
+                chart.addGuides(guide);
+            }
+        }
     }
 
     protected void loadGraphs(T chart, Element element) {
@@ -62,6 +98,11 @@ public abstract class CoordinateChartLoader<T extends CoordinateChart> extends A
                 String alphaField = graphElement.attributeValue("alphaField");
                 if (StringUtils.isNotEmpty(alphaField)) {
                     graph.setAlphaField(alphaField);
+                }
+
+                String animationPlayed = graphElement.attributeValue("animationPlayed");
+                if (StringUtils.isNotEmpty(animationPlayed)) {
+                    graph.setAnimationPlayed(Boolean.valueOf(animationPlayed));
                 }
 
                 String balloonColor = graphElement.attributeValue("balloonColor");
@@ -224,14 +265,34 @@ public abstract class CoordinateChartLoader<T extends CoordinateChart> extends A
                     graph.setFillColorsField(fillColorsField);
                 }
 
+                String fillToAxis = graphElement.attributeValue("fillToAxis");
+                if (StringUtils.isNotEmpty(fillToAxis)) {
+                    graph.setFillToAxis(fillToAxis);
+                }
+
                 String fillToGraph = graphElement.attributeValue("fillToGraph");
                 if (StringUtils.isNotEmpty(fillToGraph)) {
                     graph.setFillToGraph(fillToGraph);
                 }
 
+                String fixedColumnWidth = graphElement.attributeValue("fixedColumnWidth");
+                if (StringUtils.isNotEmpty(fixedColumnWidth)) {
+                    graph.setFixedColumnWidth(Integer.valueOf(fixedColumnWidth));
+                }
+
                 String fontSize = graphElement.attributeValue("fontSize");
                 if (StringUtils.isNotEmpty(fontSize)) {
                     graph.setFontSize(Integer.valueOf(fontSize));
+                }
+
+                String gapField = graphElement.attributeValue("gapField");
+                if (StringUtils.isNotEmpty(gapField)) {
+                    graph.setGapField(gapField);
+                }
+
+                String gapPeriod = graphElement.attributeValue("gapPeriod");
+                if (StringUtils.isNotEmpty(gapPeriod)) {
+                    graph.setGapPeriod(Double.valueOf(gapPeriod));
                 }
 
                 String gradientOrientation = graphElement.attributeValue("gradientOrientation");
@@ -259,9 +320,24 @@ public abstract class CoordinateChartLoader<T extends CoordinateChart> extends A
                     graph.setIncludeInMinMax(Boolean.valueOf(includeInMinMax));
                 }
 
+                String labelAnchor = graphElement.attributeValue("labelAnchor");
+                if (StringUtils.isNotEmpty(labelAnchor)) {
+                    graph.setLabelAnchor(labelAnchor);
+                }
+
                 String labelColorField = graphElement.attributeValue("labelColorField");
                 if (StringUtils.isNotEmpty(labelColorField)) {
                     graph.setLabelColorField(labelColorField);
+                }
+
+                String labelFunction = graphElement.elementText("labelFunction");
+                if (StringUtils.isNotBlank(labelFunction)) {
+                    graph.setLabelFunction(new JsFunction(labelFunction));
+                }
+
+                String labelOffset = graphElement.attributeValue("labelOffset");
+                if (StringUtils.isNotEmpty(labelOffset)) {
+                    graph.setLabelOffset(Integer.valueOf(labelOffset));
                 }
 
                 String labelPosition = graphElement.attributeValue("labelPosition");
@@ -334,6 +410,11 @@ public abstract class CoordinateChartLoader<T extends CoordinateChart> extends A
                     graph.setMinBulletSize(Integer.valueOf(minBulletSize));
                 }
 
+                String minDistance = graphElement.attributeValue("minDistance");
+                if (StringUtils.isNotEmpty(minDistance)) {
+                    graph.setMinDistance(Integer.valueOf(minDistance));
+                }
+
                 String negativeBase = graphElement.attributeValue("negativeBase");
                 if (StringUtils.isNotEmpty(negativeBase)) {
                     graph.setNegativeBase(Double.valueOf(negativeBase));
@@ -357,6 +438,11 @@ public abstract class CoordinateChartLoader<T extends CoordinateChart> extends A
                 String negativeLineColor = graphElement.attributeValue("negativeLineColor");
                 if (StringUtils.isNotEmpty(negativeLineColor)) {
                     graph.setNegativeLineColor(Color.valueOf(negativeLineColor));
+                }
+
+                String newStack = graphElement.attributeValue("newStack");
+                if (StringUtils.isNotEmpty(newStack)) {
+                    graph.setNewStack(Boolean.valueOf(newStack));
                 }
 
                 String noStepRisers = graphElement.attributeValue("noStepRisers");
@@ -396,12 +482,22 @@ public abstract class CoordinateChartLoader<T extends CoordinateChart> extends A
 
                 String showBalloonAt = graphElement.attributeValue("showBalloonAt");
                 if (StringUtils.isNotEmpty(showBalloonAt)) {
-                    graph.setShowBalloonAt(BalloonShowPosition.valueOf(showBalloonAt));
+                    graph.setShowBalloonAt(ShowPositionOnCandle.valueOf(showBalloonAt));
+                }
+
+                String showBulletsAt = graphElement.attributeValue("showBulletsAt");
+                if (StringUtils.isNotEmpty(showBulletsAt)) {
+                    graph.setShowBulletsAt(ShowPositionOnCandle.valueOf(showBulletsAt));
                 }
 
                 String showHandOnHover = graphElement.attributeValue("showHandOnHover");
                 if (StringUtils.isNotEmpty(showHandOnHover)) {
                     graph.setShowHandOnHover(Boolean.valueOf(showHandOnHover));
+                }
+
+                String showOnAxis = graphElement.attributeValue("showOnAxis");
+                if (StringUtils.isNotEmpty(showOnAxis)) {
+                    graph.setShowOnAxis(Boolean.valueOf(showOnAxis));
                 }
 
                 String stackable = graphElement.attributeValue("stackable");
@@ -414,9 +510,19 @@ public abstract class CoordinateChartLoader<T extends CoordinateChart> extends A
                     graph.setStepDirection(StepDirection.valueOf(stepDirection));
                 }
 
+                String switchable = graphElement.attributeValue("switchable");
+                if (StringUtils.isNotEmpty(switchable)) {
+                    graph.setSwitchable(Boolean.valueOf(switchable));
+                }
+
                 String title = graphElement.attributeValue("title");
                 if (StringUtils.isNotEmpty(title)) {
                     graph.setTitle(loadResourceString(title));
+                }
+
+                String topRadius = graphElement.attributeValue("topRadius");
+                if (StringUtils.isNotEmpty(topRadius)) {
+                    graph.setTopRadius(Integer.valueOf(topRadius));
                 }
 
                 String urlField = graphElement.attributeValue("urlField");
@@ -424,9 +530,14 @@ public abstract class CoordinateChartLoader<T extends CoordinateChart> extends A
                     graph.setUrlField(urlField);
                 }
 
-                String useLineColorForBulletBorder = graphElement.attributeValue("useLineColorForBulletBorder");
-                if (StringUtils.isNotEmpty(useLineColorForBulletBorder)) {
-                    graph.setUseLineColorForBulletBorder(Boolean.valueOf(useLineColorForBulletBorder));
+                String urlTarget = graphElement.attributeValue("urlTarget");
+                if (StringUtils.isNotEmpty(urlTarget)) {
+                    graph.setUrlTarget(urlTarget);
+                }
+
+                String useNegativeColorIfDown = graphElement.attributeValue("useNegativeColorIfDown");
+                if (StringUtils.isNotEmpty(useNegativeColorIfDown)) {
+                    graph.setUseNegativeColorIfDown(Boolean.valueOf(useNegativeColorIfDown));
                 }
 
                 String valueAxis = graphElement.attributeValue("valueAxis");
@@ -577,6 +688,16 @@ public abstract class CoordinateChartLoader<T extends CoordinateChart> extends A
                 String totalTextColor = axisElement.attributeValue("totalTextColor");
                 if (StringUtils.isNotEmpty(totalTextColor)) {
                     axis.setTotalTextColor(Color.valueOf(totalTextColor));
+                }
+
+                String totalTextOffset = axisElement.attributeValue("totalTextOffset");
+                if (StringUtils.isNotEmpty(totalTextOffset)) {
+                    axis.setTotalTextOffset(Integer.valueOf(totalTextOffset));
+                }
+
+                String treatZeroAs = axisElement.attributeValue("treatZeroAs");
+                if (StringUtils.isNotEmpty(treatZeroAs)) {
+                    axis.setTreatZeroAs(Double.valueOf(treatZeroAs));
                 }
 
                 String unit = axisElement.attributeValue("unit");

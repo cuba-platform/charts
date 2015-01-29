@@ -803,17 +803,20 @@ public class WebChart extends WebAbstractComponent<CubaAmchartsScene> implements
             if (formatStrings != null) {
                 DecimalFormatSymbols formatSymbols = formatStrings.getFormatSymbols();
 
-                if (chart.getNumberFormatter() == null) {
-                    chart.setNumberFormatter(new NumberFormatter()
-                            .setPrecision(-1)
-                            .setDecimalSeparator(Character.toString(formatSymbols.getDecimalSeparator()))
-                            .setThousandsSeparator(Character.toString(formatSymbols.getGroupingSeparator())));
+                if (chart.getPrecision() == null) {
+                    chart.setPrecision(-1);
                 }
-                if (chart.getPercentFormatter() == null) {
-                    chart.setPercentFormatter(new NumberFormatter()
-                            .setPrecision(2)
-                            .setDecimalSeparator(Character.toString(formatSymbols.getDecimalSeparator()))
-                            .setThousandsSeparator(Character.toString(formatSymbols.getGroupingSeparator())));
+
+                if (chart.getPercentPrecision() == null) {
+                    chart.setPercentPrecision(2);
+                }
+
+                if (chart.getDecimalSeparator() == null) {
+                    chart.setDecimalSeparator(Character.toString(formatSymbols.getDecimalSeparator()));
+                }
+
+                if (chart.getThousandsSeparator() == null) {
+                    chart.setThousandsSeparator(Character.toString(formatSymbols.getGroupingSeparator()));
                 }
             }
 
@@ -908,7 +911,7 @@ public class WebChart extends WebAbstractComponent<CubaAmchartsScene> implements
         public void bindToChart(AbstractChart chart) {
             properties.clear();
             properties.add("id");
-            properties.addAll(chart.getWiredFields());
+            properties.addAll(new LinkedHashSet<String>(chart.getWiredFields()));
         }
 
         @Override

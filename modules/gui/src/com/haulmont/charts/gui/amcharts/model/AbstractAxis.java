@@ -26,6 +26,8 @@ public abstract class AbstractAxis<T extends AbstractAxis> extends AbstractConfi
 
     private Integer axisThickness;
 
+    private Boolean boldLabels;
+
     private Color color;
 
     private Integer dashLength;
@@ -55,6 +57,8 @@ public abstract class AbstractAxis<T extends AbstractAxis> extends AbstractConfi
     private Integer labelRotation;
 
     private Boolean labelsEnabled;
+
+    private JsFunction labelFunction;
 
     private Integer minHorizontalGap;
 
@@ -377,6 +381,24 @@ public abstract class AbstractAxis<T extends AbstractAxis> extends AbstractConfi
 
     public T setTitleFontSize(Integer titleFontSize) {
         this.titleFontSize = titleFontSize;
+        return (T) this;
+    }
+
+    public Boolean getBoldLabels() {
+        return boldLabels;
+    }
+
+    public T setBoldLabels(Boolean boldLabels) {
+        this.boldLabels = boldLabels;
+        return (T) this;
+    }
+
+    public JsFunction getLabelFunction() {
+        return labelFunction;
+    }
+
+    public T setLabelFunction(JsFunction labelFunction) {
+        this.labelFunction = labelFunction;
         return (T) this;
     }
 }

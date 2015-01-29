@@ -3,7 +3,7 @@ AmCharts.themes.patterns = {
 	themeName:"patterns",
 
 	AmChart: {
-		color: "#000000"
+		color: "#000000", backgroundColor: "#FFFFFF"
 	},
 
 	AmCoordinateChart: {
@@ -193,7 +193,7 @@ AmCharts.themes.patterns = {
 
 	SmallMap: {
 		mapColor: "#000000",
-		rectangleColor: "#f15135",
+		rectangleColor: "#FFFFFF",
 		backgroundColor: "#FFFFFF",
 		backgroundAlpha: 0.7,
 		borderThickness: 1,

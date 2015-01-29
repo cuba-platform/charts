@@ -19,9 +19,13 @@ public class FunnelChart extends SlicedChart<FunnelChart> {
 
     private static final long serialVersionUID = -8733320599720737456L;
 
+    private Integer angle;
+
     private String balloonText;
 
     private String baseWidth;
+
+    private Integer depth3D;
 
     private LabelPosition labelPosition;
 
@@ -141,6 +145,24 @@ public class FunnelChart extends SlicedChart<FunnelChart> {
 
     public FunnelChart setRotate(Boolean rotate) {
         this.rotate = rotate;
+        return this;
+    }
+
+    public Integer getAngle() {
+        return angle;
+    }
+
+    public FunnelChart setAngle(Integer angle) {
+        this.angle = angle;
+        return this;
+    }
+
+    public Integer getDepth3D() {
+        return depth3D;
+    }
+
+    public FunnelChart setDepth3D(Integer depth3D) {
+        this.depth3D = depth3D;
         return this;
     }
 }

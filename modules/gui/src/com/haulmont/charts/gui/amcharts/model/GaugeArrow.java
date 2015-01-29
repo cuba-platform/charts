@@ -25,6 +25,8 @@ public class GaugeArrow extends AbstractConfigurationObject {
 
     private Color color;
 
+    private String id;
+
     private String innerRadius;
 
     private Double nailAlpha;
@@ -38,6 +40,8 @@ public class GaugeArrow extends AbstractConfigurationObject {
     private String radius;
 
     private Integer startWidth;
+
+    private Double value;
 
     public Double getAlpha() {
         return alpha;
@@ -144,6 +148,24 @@ public class GaugeArrow extends AbstractConfigurationObject {
 
     public GaugeArrow setAxis(String axis) {
         this.axis = axis;
+        return this;
+    }
+
+    public String getId() {
+        return id;
+    }
+
+    public GaugeArrow setId(String id) {
+        this.id = id;
+        return this;
+    }
+
+    public Double getValue() {
+        return value;
+    }
+
+    public GaugeArrow setValue(Double value) {
+        this.value = value;
         return this;
     }
 }

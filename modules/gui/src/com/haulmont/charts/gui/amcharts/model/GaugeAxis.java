@@ -53,13 +53,19 @@ public class GaugeAxis extends AbstractConfigurationObject {
 
     private Double endValue;
 
+    private Integer gridCount;
+
     private Boolean gridInside;
+
+    private String id;
 
     private Boolean inside;
 
     private Double labelFrequency;
 
     private Integer labelOffset;
+
+    private Boolean labelsEnabled;
 
     private Integer minorTickInterval;
 
@@ -96,6 +102,8 @@ public class GaugeAxis extends AbstractConfigurationObject {
     private String unit;
 
     private UnitPosition unitPosition;
+
+    private Boolean usePrefixes;
 
     private Integer valueInterval;
 
@@ -466,6 +474,42 @@ public class GaugeAxis extends AbstractConfigurationObject {
             }
             this.bands.addAll(Arrays.asList(bands));
         }
+        return this;
+    }
+
+    public Integer getGridCount() {
+        return gridCount;
+    }
+
+    public GaugeAxis setGridCount(Integer gridCount) {
+        this.gridCount = gridCount;
+        return this;
+    }
+
+    public String getId() {
+        return id;
+    }
+
+    public GaugeAxis setId(String id) {
+        this.id = id;
+        return this;
+    }
+
+    public Boolean getLabelsEnabled() {
+        return labelsEnabled;
+    }
+
+    public GaugeAxis setLabelsEnabled(Boolean labelsEnabled) {
+        this.labelsEnabled = labelsEnabled;
+        return this;
+    }
+
+    public Boolean getUsePrefixes() {
+        return usePrefixes;
+    }
+
+    public GaugeAxis setUsePrefixes(Boolean usePrefixes) {
+        this.usePrefixes = usePrefixes;
         return this;
     }
 }

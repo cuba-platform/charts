@@ -27,6 +27,8 @@ public class Scrollbar extends AbstractConfigurationObject {
 
     private Integer dragIconWidth;
 
+    private Boolean enabled;
+
     private String graph;
 
     private Double graphFillAlpha;
@@ -50,6 +52,8 @@ public class Scrollbar extends AbstractConfigurationObject {
     private Double maximum;
 
     private Double minimum;
+
+    private Integer offset;
 
     private Boolean resizeEnabled;
 
@@ -320,6 +324,24 @@ public class Scrollbar extends AbstractConfigurationObject {
 
     public Scrollbar setGraph(String graph) {
         this.graph = graph;
+        return this;
+    }
+
+    public Boolean getEnabled() {
+        return enabled;
+    }
+
+    public Scrollbar setEnabled(Boolean enabled) {
+        this.enabled = enabled;
+        return this;
+    }
+
+    public Integer getOffset() {
+        return offset;
+    }
+
+    public Scrollbar setOffset(Integer offset) {
+        this.offset = offset;
         return this;
     }
 }

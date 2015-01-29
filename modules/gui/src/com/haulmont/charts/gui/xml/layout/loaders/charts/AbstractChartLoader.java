@@ -96,6 +96,51 @@ public abstract class AbstractChartLoader<T extends AbstractChart> extends Compo
 
                 Label label = new Label();
 
+                String align = labelElement.attributeValue("align");
+                if (StringUtils.isNotEmpty(align)) {
+                    label.setAlign(Align.valueOf(align));
+                }
+
+                String alpha = labelElement.attributeValue("alpha");
+                if (StringUtils.isNotEmpty(alpha)) {
+                    label.setAlpha(Double.valueOf(alpha));
+                }
+
+                String bold = labelElement.attributeValue("bold");
+                if (StringUtils.isNotEmpty(bold)) {
+                    label.setBold(Boolean.valueOf(bold));
+                }
+
+                String color = labelElement.attributeValue("color");
+                if (StringUtils.isNotEmpty(color)) {
+                    label.setColor(Color.valueOf(color));
+                }
+
+                String id = labelElement.attributeValue("id");
+                if (StringUtils.isNotEmpty(id)) {
+                    label.setId(id);
+                }
+
+                String rotation = labelElement.attributeValue("rotation");
+                if (StringUtils.isNotEmpty(rotation)) {
+                    label.setRotation(Integer.valueOf(rotation));
+                }
+
+                String size = labelElement.attributeValue("size");
+                if (StringUtils.isNotEmpty(size)) {
+                    label.setSize(Integer.valueOf(size));
+                }
+
+                String text = labelElement.attributeValue("text");
+                if (StringUtils.isNotEmpty(text)) {
+                    label.setText(loadResourceString(text));
+                }
+
+                String url = labelElement.attributeValue("url");
+                if (StringUtils.isNotEmpty(url)) {
+                    label.setUrl(url);
+                }
+
                 String x = labelElement.attributeValue("x");
                 if (StringUtils.isNotEmpty(x)) {
                     label.setX(Integer.valueOf(x));
@@ -104,46 +149,6 @@ public abstract class AbstractChartLoader<T extends AbstractChart> extends Compo
                 String y = labelElement.attributeValue("y");
                 if (StringUtils.isNotEmpty(y)) {
                     label.setY(Integer.valueOf(y));
-                }
-
-                String text = labelElement.attributeValue("text");
-                if (StringUtils.isNotEmpty(text)) {
-                    label.setText(loadResourceString(text));
-                }
-
-                String align = labelElement.attributeValue("align");
-                if (StringUtils.isNotEmpty(align)) {
-                    label.setAlign(Align.valueOf(align));
-                }
-
-                String size = labelElement.attributeValue("size");
-                if (StringUtils.isNotEmpty(size)) {
-                    label.setSize(Integer.valueOf(size));
-                }
-
-                String color = labelElement.attributeValue("color");
-                if (StringUtils.isNotEmpty(color)) {
-                    label.setColor(Color.valueOf(color));
-                }
-
-                String alpha = labelElement.attributeValue("alpha");
-                if (StringUtils.isNotEmpty(alpha)) {
-                    label.setAlpha(Double.valueOf(alpha));
-                }
-
-                String rotation = labelElement.attributeValue("rotation");
-                if (StringUtils.isNotEmpty(rotation)) {
-                    label.setRotation(Integer.valueOf(rotation));
-                }
-
-                String bold = labelElement.attributeValue("bold");
-                if (StringUtils.isNotEmpty(bold)) {
-                    label.setBold(Boolean.valueOf(bold));
-                }
-
-                String url = labelElement.attributeValue("url");
-                if (StringUtils.isNotEmpty(url)) {
-                    label.setUrl(url);
                 }
 
                 chart.addLabels(label);
@@ -159,21 +164,6 @@ public abstract class AbstractChartLoader<T extends AbstractChart> extends Compo
 
                 Title title = new Title();
 
-                String text = titleElement.attributeValue("text");
-                if (StringUtils.isNotEmpty(text)) {
-                    title.setText(loadResourceString(text));
-                }
-
-                String size = titleElement.attributeValue("size");
-                if (StringUtils.isNotEmpty(size)) {
-                    title.setSize(Integer.valueOf(size));
-                }
-
-                String color = titleElement.attributeValue("color");
-                if (StringUtils.isNotEmpty(color)) {
-                    title.setColor(Color.valueOf(color));
-                }
-
                 String alpha = titleElement.attributeValue("alpha");
                 if (StringUtils.isNotEmpty(alpha)) {
                     title.setAlpha(Double.valueOf(alpha));
@@ -182,6 +172,26 @@ public abstract class AbstractChartLoader<T extends AbstractChart> extends Compo
                 String bold = titleElement.attributeValue("bold");
                 if (StringUtils.isNotEmpty(bold)) {
                     title.setBold(Boolean.valueOf(bold));
+                }
+
+                String color = titleElement.attributeValue("color");
+                if (StringUtils.isNotEmpty(color)) {
+                    title.setColor(Color.valueOf(color));
+                }
+
+                String id = titleElement.attributeValue("id");
+                if (StringUtils.isNotEmpty(id)) {
+                    title.setId(id);
+                }
+
+                String size = titleElement.attributeValue("size");
+                if (StringUtils.isNotEmpty(size)) {
+                    title.setSize(Integer.valueOf(size));
+                }
+
+                String text = titleElement.attributeValue("text");
+                if (StringUtils.isNotEmpty(text)) {
+                    title.setText(loadResourceString(text));
                 }
 
                 chart.addTitles(title);
@@ -259,6 +269,11 @@ public abstract class AbstractChartLoader<T extends AbstractChart> extends Compo
                 balloon.setHorizontalPadding(Integer.valueOf(horizontalPadding));
             }
 
+            String maxWidth = balloonElement.attributeValue("maxWidth");
+            if (StringUtils.isNotEmpty(maxWidth)) {
+                balloon.setMaxWidth(Integer.valueOf(maxWidth));
+            }
+
             String offsetX = balloonElement.attributeValue("offsetX");
             if (StringUtils.isNotEmpty(offsetX)) {
                 balloon.setOffsetX(Integer.valueOf(offsetX));
@@ -308,33 +323,37 @@ public abstract class AbstractChartLoader<T extends AbstractChart> extends Compo
         if (exportConfigElement != null) {
             ExportConfig exportConfig = new ExportConfig();
 
-            loadExportMenus(exportConfig, exportConfigElement);
-
-            loadExportMenuOutput(exportConfig, exportConfigElement);
-
-            loadExportMenuItemStyle(exportConfig, exportConfigElement);
-
-            String menuTop = exportConfigElement.attributeValue("menuTop");
-            if (StringUtils.isNotEmpty(menuTop)) {
-                exportConfig.setMenuTop(menuTop);
-            }
-
-            String menuLeft = exportConfigElement.attributeValue("menuLeft");
-            if (StringUtils.isNotEmpty(menuLeft)) {
-                exportConfig.setMenuLeft(menuLeft);
-            }
-
-            String menuRight = exportConfigElement.attributeValue("menuRight");
-            if (StringUtils.isNotEmpty(menuRight)) {
-                exportConfig.setMenuRight(menuRight);
-            }
-
-            String menuBottom = exportConfigElement.attributeValue("menuBottom");
-            if (StringUtils.isNotEmpty(menuBottom)) {
-                exportConfig.setMenuBottom(menuBottom);
-            }
+            loadExportConfigProperties(exportConfig, exportConfigElement);
 
             chart.setExportConfig(exportConfig);
+        }
+    }
+
+    protected void loadExportConfigProperties(ExportConfig exportConfig, Element exportConfigElement) {
+        loadExportMenus(exportConfig, exportConfigElement);
+
+        loadExportMenuOutput(exportConfig, exportConfigElement);
+
+        loadExportMenuItemStyle(exportConfig, exportConfigElement);
+
+        String menuTop = exportConfigElement.attributeValue("menuTop");
+        if (StringUtils.isNotEmpty(menuTop)) {
+            exportConfig.setMenuTop(menuTop);
+        }
+
+        String menuLeft = exportConfigElement.attributeValue("menuLeft");
+        if (StringUtils.isNotEmpty(menuLeft)) {
+            exportConfig.setMenuLeft(menuLeft);
+        }
+
+        String menuRight = exportConfigElement.attributeValue("menuRight");
+        if (StringUtils.isNotEmpty(menuRight)) {
+            exportConfig.setMenuRight(menuRight);
+        }
+
+        String menuBottom = exportConfigElement.attributeValue("menuBottom");
+        if (StringUtils.isNotEmpty(menuBottom)) {
+            exportConfig.setMenuBottom(menuBottom);
         }
     }
 
@@ -489,6 +508,99 @@ public abstract class AbstractChartLoader<T extends AbstractChart> extends Compo
         }
     }
 
+    protected void loadExport(T chart, Element element) {
+        Element exportElement = element.element("export");
+        if (exportElement != null) {
+            Export export = new Export();
+
+            String bottom = exportElement.attributeValue("bottom");
+            if (StringUtils.isNotEmpty(bottom)) {
+                export.setBottom(bottom);
+            }
+
+            String buttonAlpha = exportElement.attributeValue("buttonAplha");
+            if (StringUtils.isNotEmpty(buttonAlpha)) {
+                export.setButtonAlpha(Double.valueOf(buttonAlpha));
+            }
+
+            String buttonIcon = exportElement.attributeValue("buttonIcon");
+            if (StringUtils.isNotEmpty(buttonIcon)) {
+                export.setButtonIcon(buttonIcon);
+            }
+
+            String buttonRollOverColor = exportElement.attributeValue("buttonRollOverColor");
+            if (StringUtils.isNotEmpty(buttonRollOverColor)) {
+                export.setButtonRollOverColor(Color.valueOf(buttonRollOverColor));
+            }
+
+            String buttonTitle = exportElement.attributeValue("buttonTitle");
+            if (StringUtils.isNotEmpty(buttonTitle)) {
+                export.setButtonTitle(buttonTitle);
+            }
+
+            String exportJPG = exportElement.attributeValue("exportJPG");
+            if (StringUtils.isNotEmpty(exportJPG)) {
+                export.setExportJPG(Boolean.valueOf(exportJPG));
+            }
+
+            String exportPDF = exportElement.attributeValue("exportPDF");
+            if (StringUtils.isNotEmpty(exportPDF)) {
+                export.setExportPDF(Boolean.valueOf(exportPDF));
+            }
+
+            String exportPNG = exportElement.attributeValue("exportPNG");
+            if (StringUtils.isNotEmpty(exportPNG)) {
+                export.setExportPNG(Boolean.valueOf(exportPNG));
+            }
+
+            String exportSVG = exportElement.attributeValue("exportSVG");
+            if (StringUtils.isNotEmpty(exportSVG)) {
+                export.setExportSVG(Boolean.valueOf(exportSVG));
+            }
+
+            String imageBackgroundColor = exportElement.attributeValue("imageBackgroundColor");
+            if (StringUtils.isNotEmpty(imageBackgroundColor)) {
+                export.setImageBackgroundColor(Color.valueOf(imageBackgroundColor));
+            }
+
+            String imageFileName = exportElement.attributeValue("imageFileName");
+            if (StringUtils.isNotEmpty(imageFileName)) {
+                export.setImageFileName(imageFileName);
+            }
+
+            String left = exportElement.attributeValue("left");
+            if (StringUtils.isNotEmpty(left)) {
+                export.setLeft(left);
+            }
+
+            String right = exportElement.attributeValue("right");
+            if (StringUtils.isNotEmpty(right)) {
+                export.setRight(right);
+            }
+
+            String textRollOverColor = exportElement.attributeValue("textRollOverColor");
+            if (StringUtils.isNotEmpty(textRollOverColor)) {
+                export.setTextRollOverColor(Color.valueOf(textRollOverColor));
+            }
+
+            String top = exportElement.attributeValue("top");
+            if (StringUtils.isNotEmpty(top)) {
+                export.setTop(top);
+            }
+
+            Element userCFGElement = exportElement.element("userCFG");
+            if (userCFGElement != null) {
+                ExportConfig exportConfig = new ExportConfig();
+
+                loadExportConfigProperties(exportConfig, userCFGElement);
+
+                export.setUserCFG(exportConfig);
+            }
+
+            chart.setAmExport(export);
+        }
+    }
+
     protected void loadLegend(T chart, Element element) {
         Element legendElement = element.element("legend");
         if (legendElement != null) {
@@ -536,6 +648,16 @@ public abstract class AbstractChartLoader<T extends AbstractChart> extends Compo
                 legend.setColor(Color.valueOf(color));
             }
 
+            String divId = legendElement.attributeValue("divId");
+            if (StringUtils.isNotEmpty(divId)) {
+                legend.setDivId(divId);
+            }
+
+            String enabled = legendElement.attributeValue("enabled");
+            if (StringUtils.isNotEmpty(enabled)) {
+                legend.setEnabled(Boolean.valueOf(enabled));
+            }
+
             String equalWidths = legendElement.attributeValue("equalWidths");
             if (StringUtils.isNotEmpty(equalWidths)) {
                 legend.setEqualWidths(Boolean.valueOf(equalWidths));
@@ -549,6 +671,11 @@ public abstract class AbstractChartLoader<T extends AbstractChart> extends Compo
             String horizontalGap = legendElement.attributeValue("horizontalGap");
             if (StringUtils.isNotEmpty(horizontalGap)) {
                 legend.setHorizontalGap(Integer.valueOf(horizontalGap));
+            }
+
+            String labelWidth = legendElement.attributeValue("labelWidth");
+            if (StringUtils.isNotEmpty(labelWidth)) {
+                legend.setLabelWidth(Integer.valueOf(labelWidth));
             }
 
             String labelText = legendElement.attributeValue("labelText");
@@ -688,6 +815,11 @@ public abstract class AbstractChartLoader<T extends AbstractChart> extends Compo
                 legend.setValueAlign(ValueAlign.valueOf(valueAlign));
             }
 
+            String valueFunction = legendElement.elementText("valueFunction");
+            if (StringUtils.isNotBlank(valueFunction)) {
+                legend.setValueFunction(new JsFunction(valueFunction));
+            }
+
             String valueText = legendElement.attributeValue("valueText");
             if (StringUtils.isNotEmpty(valueText)) {
                 legend.setValueText(loadResourceString(valueText));
@@ -701,6 +833,11 @@ public abstract class AbstractChartLoader<T extends AbstractChart> extends Compo
             String verticalGap = legendElement.attributeValue("verticalGap");
             if (StringUtils.isNotEmpty(verticalGap)) {
                 legend.setVerticalGap(Integer.valueOf(verticalGap));
+            }
+
+            String width = legendElement.attributeValue("width");
+            if (StringUtils.isNotEmpty(width)) {
+                legend.setWidth(Integer.valueOf(width));
             }
 
             chart.setLegend(legend);
@@ -740,11 +877,27 @@ public abstract class AbstractChartLoader<T extends AbstractChart> extends Compo
         loadTitles(chart, element);
         loadBalloon(chart, element);
         loadLegend(chart, element);
+        loadExport(chart, element);
         loadExportConfig(chart, element);
+
+        String addClassNames = element.attributeValue("addClassNames");
+        if (StringUtils.isNotEmpty(addClassNames)) {
+            chart.setAddClassNames(Boolean.valueOf(addClassNames));
+        }
 
         String backgroundColor = element.attributeValue("backgroundColor");
         if (StringUtils.isNotEmpty(backgroundColor)) {
             chart.setBackgroundColor(Color.valueOf(backgroundColor));
+        }
+
+        String classNamePrefix = element.attributeValue("classNamePrefix");
+        if (StringUtils.isNotEmpty(classNamePrefix)) {
+            chart.setClassNamePrefix(classNamePrefix);
+        }
+
+        String creditsPosition = element.attributeValue("creditsPosition");
+        if (StringUtils.isNotEmpty(creditsPosition)) {
+            chart.setCreditsPosition(creditsPosition);
         }
 
         String borderAlpha = element.attributeValue("borderAlpha");
@@ -760,6 +913,11 @@ public abstract class AbstractChartLoader<T extends AbstractChart> extends Compo
         String color = element.attributeValue("color");
         if (StringUtils.isNotEmpty(color)) {
             chart.setColor(Color.valueOf(color));
+        }
+
+        String decimalSeparator = element.attributeValue("decimalSeparator");
+        if (StringUtils.isNotEmpty(decimalSeparator)) {
+            chart.setDecimalSeparator(decimalSeparator);
         }
 
         String fontFamily = element.attributeValue("fontFamily");
@@ -787,19 +945,29 @@ public abstract class AbstractChartLoader<T extends AbstractChart> extends Compo
             chart.setHandDrawThickness(Integer.valueOf(handDrawThickness));
         }
 
-        String height = element.attributeValue("chartHeight");
-        if (StringUtils.isNotEmpty(height)) {
-            chart.setHeight(height);
-        }
-
         String hideBalloonTime = element.attributeValue("hideBalloonTime");
         if (StringUtils.isNotEmpty(hideBalloonTime)) {
             chart.setHideBalloonTime(Integer.valueOf(hideBalloonTime));
         }
 
+        String legendDiv = element.attributeValue("legendDiv");
+        if (StringUtils.isNotEmpty(legendDiv)) {
+            chart.setLegendDiv(legendDiv);
+        }
+
         String panEventsEnabled = element.attributeValue("panEventsEnabled");
         if (StringUtils.isNotEmpty(panEventsEnabled)) {
             chart.setPanEventsEnabled(Boolean.valueOf(panEventsEnabled));
+        }
+
+        String percentPrecision = element.attributeValue("percentPrecision");
+        if (StringUtils.isNotEmpty(percentPrecision)) {
+            chart.setPercentPrecision(Integer.valueOf(percentPrecision));
+        }
+
+        String precision = element.attributeValue("precision");
+        if (StringUtils.isNotEmpty(precision)) {
+            chart.setPrecision(Integer.valueOf(precision));
         }
 
         String usePrefixes = element.attributeValue("usePrefixes");
@@ -810,6 +978,11 @@ public abstract class AbstractChartLoader<T extends AbstractChart> extends Compo
         String theme = element.attributeValue("theme");
         if (StringUtils.isNotEmpty(theme)) {
             chart.setTheme(ChartTheme.valueOf(theme));
+        }
+
+        String thousandsSeparator = element.attributeValue("thousandsSeparator");
+        if (StringUtils.isNotEmpty(thousandsSeparator)) {
+            chart.setThousandsSeparator(thousandsSeparator);
         }
     }
 
@@ -888,6 +1061,11 @@ public abstract class AbstractChartLoader<T extends AbstractChart> extends Compo
         String axisThickness = element.attributeValue("axisThickness");
         if (StringUtils.isNotEmpty(axisThickness)) {
             axis.setAxisThickness(Integer.valueOf(axisThickness));
+        }
+
+        String boldLabels = element.attributeValue("boldLabels");
+        if (StringUtils.isNotEmpty(boldLabels)) {
+            axis.setBoldLabels(Boolean.valueOf(boldLabels));
         }
 
         String color = element.attributeValue("color");
@@ -1034,123 +1212,152 @@ public abstract class AbstractChartLoader<T extends AbstractChart> extends Compo
 
                 Guide guide = new Guide();
 
-                String above = guideElement.attributeValue("above");
-                if (StringUtils.isNotEmpty(above)) {
-                    guide.setAbove(Boolean.valueOf(above));
-                }
-
-                String angle = guideElement.attributeValue("angle");
-                if (StringUtils.isNotEmpty(angle)) {
-                    guide.setAngle(Integer.valueOf(angle));
-                }
-
-                String balloonColor = guideElement.attributeValue("balloonColor");
-                if (StringUtils.isNotEmpty(balloonColor)) {
-                    guide.setBalloonColor(Color.valueOf(balloonColor));
-                }
-
-                String balloonText = guideElement.attributeValue("balloonText");
-                if (StringUtils.isNotEmpty(balloonText)) {
-                    guide.setBalloonText(loadResourceString(balloonText));
-                }
-
-                String category = guideElement.attributeValue("category");
-                if (StringUtils.isNotEmpty(category)) {
-                    guide.setCategory(category);
-                }
-
-                String dashLength = guideElement.attributeValue("dashLength");
-                if (StringUtils.isNotEmpty(dashLength)) {
-                    guide.setDashLength(Integer.valueOf(dashLength));
-                }
-
-                String date = guideElement.attributeValue("date");
-                if (StringUtils.isNotEmpty(date)) {
-                    guide.setDate(loadDate(date));
-                }
-
-                String fillAlpha = guideElement.attributeValue("fillAlpha");
-                if (StringUtils.isNotEmpty(fillAlpha)) {
-                    guide.setFillAlpha(Double.valueOf(fillAlpha));
-                }
-
-                String fillColor = guideElement.attributeValue("fillColor");
-                if (StringUtils.isNotEmpty(fillColor)) {
-                    guide.setFillColor(Color.valueOf(fillColor));
-                }
-
-                String fontSize = guideElement.attributeValue("fontSize");
-                if (StringUtils.isNotEmpty(fontSize)) {
-                    guide.setFontSize(Integer.valueOf(fontSize));
-                }
-
-                String inside = guideElement.attributeValue("inside");
-                if (StringUtils.isNotEmpty(inside)) {
-                    guide.setInside(Boolean.valueOf(inside));
-                }
-
-                String label = guideElement.attributeValue("label");
-                if (StringUtils.isNotEmpty(label)) {
-                    guide.setLabel(loadResourceString(label));
-                }
-
-                String labelRotation = guideElement.attributeValue("labelRotation");
-                if (StringUtils.isNotEmpty(labelRotation)) {
-                    guide.setLabelRotation(Integer.valueOf(labelRotation));
-                }
-
-                String lineAlpha = guideElement.attributeValue("lineAlpha");
-                if (StringUtils.isNotEmpty(lineAlpha)) {
-                    guide.setLineAlpha(Double.valueOf(lineAlpha));
-                }
-
-                String lineColor = guideElement.attributeValue("lineColor");
-                if (StringUtils.isNotEmpty(lineColor)) {
-                    guide.setLineColor(Color.valueOf(lineColor));
-                }
-
-                String lineThickness = guideElement.attributeValue("lineThickness");
-                if (StringUtils.isNotEmpty(lineThickness)) {
-                    guide.setLineThickness(Integer.valueOf(lineThickness));
-                }
-
-                String position = guideElement.attributeValue("position");
-                if (StringUtils.isNotEmpty(position)) {
-                    guide.setPosition(Position.valueOf(position));
-                }
-
-                String tickLength = guideElement.attributeValue("tickLength");
-                if (StringUtils.isNotEmpty(tickLength)) {
-                    guide.setTickLength(Integer.valueOf(tickLength));
-                }
-
-                String toAngle = guideElement.attributeValue("toAngle");
-                if (StringUtils.isNotEmpty(toAngle)) {
-                    guide.setToAngle(Integer.valueOf(toAngle));
-                }
-
-                String toCategory = guideElement.attributeValue("toCategory");
-                if (StringUtils.isNotEmpty(toCategory)) {
-                    guide.setToCategory(toCategory);
-                }
-
-                String toDate = guideElement.attributeValue("toDate");
-                if (StringUtils.isNotEmpty(toDate)) {
-                    guide.setToDate(loadDate(toDate));
-                }
-
-                String toValue = guideElement.attributeValue("toValue");
-                if (StringUtils.isNotEmpty(toValue)) {
-                    guide.setValue(Double.valueOf(toValue));
-                }
-
-                String value = guideElement.attributeValue("value");
-                if (StringUtils.isNotEmpty(value)) {
-                    guide.setValue(Double.valueOf(value));
-                }
+                loadGuide(guide, guideElement);
 
                 axis.addGuides(guide);
             }
+        }
+    }
+
+    protected void loadGuide(Guide guide, Element guideElement) {
+        String above = guideElement.attributeValue("above");
+        if (StringUtils.isNotEmpty(above)) {
+            guide.setAbove(Boolean.valueOf(above));
+        }
+
+        String angle = guideElement.attributeValue("angle");
+        if (StringUtils.isNotEmpty(angle)) {
+            guide.setAngle(Integer.valueOf(angle));
+        }
+
+        String balloonColor = guideElement.attributeValue("balloonColor");
+        if (StringUtils.isNotEmpty(balloonColor)) {
+            guide.setBalloonColor(Color.valueOf(balloonColor));
+        }
+
+        String balloonText = guideElement.attributeValue("balloonText");
+        if (StringUtils.isNotEmpty(balloonText)) {
+            guide.setBalloonText(loadResourceString(balloonText));
+        }
+
+        String boldLabel = guideElement.attributeValue("boldLabel");
+        if (StringUtils.isNotEmpty(boldLabel)) {
+            guide.setBoldLabel(Boolean.valueOf(boldLabel));
+        }
+
+        String category = guideElement.attributeValue("category");
+        if (StringUtils.isNotEmpty(category)) {
+            guide.setCategory(category);
+        }
+
+        String color = guideElement.attributeValue("color");
+        if (StringUtils.isNotEmpty(color)) {
+            guide.setColor(Color.valueOf(color));
+        }
+
+        String dashLength = guideElement.attributeValue("dashLength");
+        if (StringUtils.isNotEmpty(dashLength)) {
+            guide.setDashLength(Integer.valueOf(dashLength));
+        }
+
+        String date = guideElement.attributeValue("date");
+        if (StringUtils.isNotEmpty(date)) {
+            guide.setDate(loadDate(date));
+        }
+
+        String expand = guideElement.attributeValue("expand");
+        if (StringUtils.isNotEmpty(expand)) {
+            guide.setExpand(Boolean.valueOf(expand));
+        }
+
+        String fillAlpha = guideElement.attributeValue("fillAlpha");
+        if (StringUtils.isNotEmpty(fillAlpha)) {
+            guide.setFillAlpha(Double.valueOf(fillAlpha));
+        }
+
+        String fillColor = guideElement.attributeValue("fillColor");
+        if (StringUtils.isNotEmpty(fillColor)) {
+            guide.setFillColor(Color.valueOf(fillColor));
+        }
+
+        String fontSize = guideElement.attributeValue("fontSize");
+        if (StringUtils.isNotEmpty(fontSize)) {
+            guide.setFontSize(Integer.valueOf(fontSize));
+        }
+
+        String id = guideElement.attributeValue("id");
+        if (StringUtils.isNotEmpty(id)) {
+            guide.setId(id);
+        }
+
+        String inside = guideElement.attributeValue("inside");
+        if (StringUtils.isNotEmpty(inside)) {
+            guide.setInside(Boolean.valueOf(inside));
+        }
+
+        String label = guideElement.attributeValue("label");
+        if (StringUtils.isNotEmpty(label)) {
+            guide.setLabel(loadResourceString(label));
+        }
+
+        String labelRotation = guideElement.attributeValue("labelRotation");
+        if (StringUtils.isNotEmpty(labelRotation)) {
+            guide.setLabelRotation(Integer.valueOf(labelRotation));
+        }
+
+        String lineAlpha = guideElement.attributeValue("lineAlpha");
+        if (StringUtils.isNotEmpty(lineAlpha)) {
+            guide.setLineAlpha(Double.valueOf(lineAlpha));
+        }
+
+        String lineColor = guideElement.attributeValue("lineColor");
+        if (StringUtils.isNotEmpty(lineColor)) {
+            guide.setLineColor(Color.valueOf(lineColor));
+        }
+
+        String lineThickness = guideElement.attributeValue("lineThickness");
+        if (StringUtils.isNotEmpty(lineThickness)) {
+            guide.setLineThickness(Integer.valueOf(lineThickness));
+        }
+
+        String position = guideElement.attributeValue("position");
+        if (StringUtils.isNotEmpty(position)) {
+            guide.setPosition(Position.valueOf(position));
+        }
+
+        String tickLength = guideElement.attributeValue("tickLength");
+        if (StringUtils.isNotEmpty(tickLength)) {
+            guide.setTickLength(Integer.valueOf(tickLength));
+        }
+
+        String toAngle = guideElement.attributeValue("toAngle");
+        if (StringUtils.isNotEmpty(toAngle)) {
+            guide.setToAngle(Integer.valueOf(toAngle));
+        }
+
+        String toCategory = guideElement.attributeValue("toCategory");
+        if (StringUtils.isNotEmpty(toCategory)) {
+            guide.setToCategory(toCategory);
+        }
+
+        String toDate = guideElement.attributeValue("toDate");
+        if (StringUtils.isNotEmpty(toDate)) {
+            guide.setToDate(loadDate(toDate));
+        }
+
+        String toValue = guideElement.attributeValue("toValue");
+        if (StringUtils.isNotEmpty(toValue)) {
+            guide.setValue(Double.valueOf(toValue));
+        }
+
+        String value = guideElement.attributeValue("value");
+        if (StringUtils.isNotEmpty(value)) {
+            guide.setValue(Double.valueOf(value));
+        }
+
+        String valueAxis = guideElement.attributeValue("valueAxis");
+        if (StringUtils.isNotEmpty(valueAxis)) {
+            guide.setValueAxis(valueAxis);
         }
     }
 

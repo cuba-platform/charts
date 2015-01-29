@@ -44,6 +44,8 @@ public class SerialChart extends RectangularChart<SerialChart> {
 
     private Boolean mouseWheelScrollEnabled;
 
+    private Boolean mouseWheelZoomEnabled;
+
     private Boolean rotate;
 
     private Boolean zoomOutOnDataUpdate;
@@ -169,14 +171,29 @@ public class SerialChart extends RectangularChart<SerialChart> {
         return this;
     }
 
+    public Boolean getMouseWheelZoomEnabled() {
+        return mouseWheelZoomEnabled;
+    }
+
+    public SerialChart setMouseWheelZoomEnabled(Boolean mouseWheelZoomEnabled) {
+        this.mouseWheelZoomEnabled = mouseWheelZoomEnabled;
+        return this;
+    }
+
     @Override
     public List<String> getWiredFields() {
         List<String> wiredFields = new ArrayList<>(super.getWiredFields());
         if (StringUtils.isNotEmpty(categoryField)) {
             wiredFields.add(categoryField);
         }
-        if (categoryAxis != null && StringUtils.isNotEmpty(categoryAxis.getForceShowField())) {
-            wiredFields.add(categoryAxis.getForceShowField());
+        if (categoryAxis != null) {
+            if (StringUtils.isNotEmpty(categoryAxis.getForceShowField())) {
+                wiredFields.add(categoryAxis.getForceShowField());
+            }
+
+            if (StringUtils.isNotEmpty(categoryAxis.getLabelColorField())) {
+                wiredFields.add(categoryAxis.getLabelColorField());
+            }
         }
 
         return wiredFields;

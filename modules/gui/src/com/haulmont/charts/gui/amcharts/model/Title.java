@@ -13,15 +13,17 @@ public class Title extends AbstractConfigurationObject {
 
     private static final long serialVersionUID = -2398460960797730153L;
 
-    private String text;
-
-    private Integer size;
-
-    private Color color;
-
     private Double alpha;
 
     private Boolean bold;
+
+    private Color color;
+
+    private String id;
+
+    private Integer size;
+
+    private String text;
 
     public Double getAlpha() {
         return alpha;
@@ -65,6 +67,15 @@ public class Title extends AbstractConfigurationObject {
 
     public Title setText(String text) {
         this.text = text;
+        return this;
+    }
+
+    public String getId() {
+        return id;
+    }
+
+    public Title setId(String id) {
+        this.id = id;
         return this;
     }
 }

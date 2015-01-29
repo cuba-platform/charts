@@ -15,6 +15,8 @@ public class Graph extends AbstractConfigurationObject {
 
     private String alphaField;
 
+    private Boolean animationPlayed;
+
     private Color balloonColor;
 
     private JsFunction balloonFunction;
@@ -81,9 +83,17 @@ public class Graph extends AbstractConfigurationObject {
 
     private String fillColorsField;
 
+    private String fillToAxis;
+
     private String fillToGraph;
 
+    private Integer fixedColumnWidth;
+
     private Integer fontSize;
+
+    private String gapField;
+
+    private Double gapPeriod;
 
     private GradientOrientation gradientOrientation;
 
@@ -97,7 +107,13 @@ public class Graph extends AbstractConfigurationObject {
 
     private Boolean includeInMinMax;
 
+    private String labelAnchor;
+
     private String labelColorField;
+
+    private JsFunction labelFunction;
+
+    private Integer labelOffset;
 
     private ValueLabelPosition labelPosition;
 
@@ -127,6 +143,8 @@ public class Graph extends AbstractConfigurationObject {
 
     private Integer minBulletSize;
 
+    private Integer minDistance;
+
     private Double negativeBase;
 
     private Double negativeFillAlphas;
@@ -137,9 +155,9 @@ public class Graph extends AbstractConfigurationObject {
 
     private Color negativeLineColor;
 
-    private Boolean noStepRisers;
+    private Boolean newStack;
 
-    private NumberFormatter numberFormatter;
+    private Boolean noStepRisers;
 
     private String openField;
 
@@ -155,15 +173,23 @@ public class Graph extends AbstractConfigurationObject {
 
     private Boolean showBalloon;
 
-    private BalloonShowPosition showBalloonAt;
+    private ShowPositionOnCandle showBalloonAt;
+
+    private ShowPositionOnCandle showBulletsAt;
 
     private Boolean showHandOnHover;
+
+    private Boolean showOnAxis;
 
     private Boolean stackable;
 
     private StepDirection stepDirection;
 
+    private Boolean switchable;
+
     private String title;
+
+    private Integer topRadius;
 
     private GraphType type;
 
@@ -171,7 +197,7 @@ public class Graph extends AbstractConfigurationObject {
 
     private String urlTarget;
 
-    private Boolean useLineColorForBulletBorder;
+    private Boolean useNegativeColorIfDown;
 
     private String valueAxis;
 
@@ -186,6 +212,15 @@ public class Graph extends AbstractConfigurationObject {
     private String yAxis;
 
     private String yField;
+
+    public Boolean getAnimationPlayed() {
+        return animationPlayed;
+    }
+
+    public Graph setAnimationPlayed(Boolean animationPlayed) {
+        this.animationPlayed = animationPlayed;
+        return this;
+    }
 
     public String getTitle() {
         return title;
@@ -772,15 +807,6 @@ public class Graph extends AbstractConfigurationObject {
         return this;
     }
 
-    public NumberFormatter getNumberFormatter() {
-        return numberFormatter;
-    }
-
-    public Graph setNumberFormatter(NumberFormatter numberFormatter) {
-        this.numberFormatter = numberFormatter;
-        return this;
-    }
-
     public String getOpenField() {
         return openField;
     }
@@ -844,11 +870,11 @@ public class Graph extends AbstractConfigurationObject {
         return this;
     }
 
-    public BalloonShowPosition getShowBalloonAt() {
+    public ShowPositionOnCandle getShowBalloonAt() {
         return showBalloonAt;
     }
 
-    public Graph setShowBalloonAt(BalloonShowPosition showBalloonAt) {
+    public Graph setShowBalloonAt(ShowPositionOnCandle showBalloonAt) {
         this.showBalloonAt = showBalloonAt;
         return this;
     }
@@ -898,12 +924,12 @@ public class Graph extends AbstractConfigurationObject {
         return this;
     }
 
-    public Boolean getUseLineColorForBulletBorder() {
-        return useLineColorForBulletBorder;
+    public Boolean getUseNegativeColorIfDown() {
+        return useNegativeColorIfDown;
     }
 
-    public Graph setUseLineColorForBulletBorder(Boolean useLineColorForBulletBorder) {
-        this.useLineColorForBulletBorder = useLineColorForBulletBorder;
+    public Graph setUseNegativeColorIfDown(Boolean useNegativeColorIfDown) {
+        this.useNegativeColorIfDown = useNegativeColorIfDown;
         return this;
     }
 
@@ -967,6 +993,123 @@ public class Graph extends AbstractConfigurationObject {
 
     public Graph setFillToGraph(String fillToGraph) {
         this.fillToGraph = fillToGraph;
+        return this;
+    }
+
+    public String getFillToAxis() {
+        return fillToAxis;
+    }
+
+    public Graph setFillToAxis(String fillToAxis) {
+        this.fillToAxis = fillToAxis;
+        return this;
+    }
+
+    public Integer getFixedColumnWidth() {
+        return fixedColumnWidth;
+    }
+
+    public Graph setFixedColumnWidth(Integer fixedColumnWidth) {
+        this.fixedColumnWidth = fixedColumnWidth;
+        return this;
+    }
+
+    public String getGapField() {
+        return gapField;
+    }
+
+    public Graph setGapField(String gapField) {
+        this.gapField = gapField;
+        return this;
+    }
+
+    public Double getGapPeriod() {
+        return gapPeriod;
+    }
+
+    public Graph setGapPeriod(Double gapPeriod) {
+        this.gapPeriod = gapPeriod;
+        return this;
+    }
+
+    public String getLabelAnchor() {
+        return labelAnchor;
+    }
+
+    public Graph setLabelAnchor(String labelAnchor) {
+        this.labelAnchor = labelAnchor;
+        return this;
+    }
+
+    public JsFunction getLabelFunction() {
+        return labelFunction;
+    }
+
+    public Graph setLabelFunction(JsFunction labelFunction) {
+        this.labelFunction = labelFunction;
+        return this;
+    }
+
+    public Integer getLabelOffset() {
+        return labelOffset;
+    }
+
+    public Graph setLabelOffset(Integer labelOffset) {
+        this.labelOffset = labelOffset;
+        return this;
+    }
+
+    public Integer getMinDistance() {
+        return minDistance;
+    }
+
+    public Graph setMinDistance(Integer minDistance) {
+        this.minDistance = minDistance;
+        return this;
+    }
+
+    public Boolean getNewStack() {
+        return newStack;
+    }
+
+    public Graph setNewStack(Boolean newStack) {
+        this.newStack = newStack;
+        return this;
+    }
+
+    public ShowPositionOnCandle getShowBulletsAt() {
+        return showBulletsAt;
+    }
+
+    public Graph setShowBulletsAt(ShowPositionOnCandle showBulletsAt) {
+        this.showBulletsAt = showBulletsAt;
+        return this;
+    }
+
+    public Boolean getShowOnAxis() {
+        return showOnAxis;
+    }
+
+    public Graph setShowOnAxis(Boolean showOnAxis) {
+        this.showOnAxis = showOnAxis;
+        return this;
+    }
+
+    public Boolean getSwitchable() {
+        return switchable;
+    }
+
+    public Graph setSwitchable(Boolean switchable) {
+        this.switchable = switchable;
+        return this;
+    }
+
+    public Integer getTopRadius() {
+        return topRadius;
+    }
+
+    public Graph setTopRadius(Integer topRadius) {
+        this.topRadius = topRadius;
         return this;
     }
 }

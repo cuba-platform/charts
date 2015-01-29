@@ -9,7 +9,7 @@ package com.haulmont.charts.gui.amcharts.model;
  * @author artamonov
  * @version $Id$
  */
-public enum BalloonShowPosition implements ChartEnum {
+public enum ShowPositionOnCandle implements ChartEnum {
     OPEN("open"),
     CLOSE("close"),
     HIGH("high"),
@@ -17,7 +17,7 @@ public enum BalloonShowPosition implements ChartEnum {
 
     private String id;
 
-    private BalloonShowPosition(String id) {
+    private ShowPositionOnCandle(String id) {
         this.id = id;
     }
 

@@ -50,6 +50,11 @@ public class FunnelChartLoader extends SlicedChartLoader<FunnelChart> {
             chart.setBaseWidth(baseWidth);
         }
 
+        String depth3D = element.attributeValue("depth3D");
+        if (StringUtils.isNotEmpty(depth3D)) {
+            chart.setDepth3D(Integer.valueOf(depth3D));
+        }
+
         String labelPosition = element.attributeValue("labelPosition");
         if (StringUtils.isNotEmpty(labelPosition)) {
             chart.setLabelPosition(LabelPosition.valueOf(labelPosition));

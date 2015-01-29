@@ -35,8 +35,6 @@ public class ValueAxis extends AbstractAxis<ValueAxis> {
 
     private Boolean integersOnly;
 
-    private JsFunction labelFunction;
-
     private Boolean logarithmic;
 
     private Double maximum;
@@ -62,6 +60,10 @@ public class ValueAxis extends AbstractAxis<ValueAxis> {
     private String totalText;
 
     private Color totalTextColor;
+
+    private Integer totalTextOffset;
+
+    private Double treatZeroAs;
 
     private String unit;
 
@@ -296,21 +298,30 @@ public class ValueAxis extends AbstractAxis<ValueAxis> {
         return this;
     }
 
-    public JsFunction getLabelFunction() {
-        return labelFunction;
-    }
-
-    public ValueAxis setLabelFunction(JsFunction labelFunction) {
-        this.labelFunction = labelFunction;
-        return this;
-    }
-
     public String getSynchronizeWith() {
         return synchronizeWith;
     }
 
     public ValueAxis setSynchronizeWith(String synchronizeWith) {
         this.synchronizeWith = synchronizeWith;
+        return this;
+    }
+
+    public Integer getTotalTextOffset() {
+        return totalTextOffset;
+    }
+
+    public ValueAxis setTotalTextOffset(Integer totalTextOffset) {
+        this.totalTextOffset = totalTextOffset;
+        return this;
+    }
+
+    public Double getTreatZeroAs() {
+        return treatZeroAs;
+    }
+
+    public ValueAxis setTreatZeroAs(Double treatZeroAs) {
+        this.treatZeroAs = treatZeroAs;
         return this;
     }
 }

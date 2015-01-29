@@ -94,6 +94,11 @@ public class SerialChartLoader extends RectangularChartLoader<SerialChart> {
             chart.setMouseWheelScrollEnabled(Boolean.valueOf(mouseWheelScrollEnabled));
         }
 
+        String mouseWheelZoomEnabled = element.attributeValue("mouseWheelZoomEnabled");
+        if (StringUtils.isNotEmpty(mouseWheelZoomEnabled)) {
+            chart.setMouseWheelZoomEnabled(Boolean.valueOf(mouseWheelZoomEnabled));
+        }
+
         String rotate = element.attributeValue("rotate");
         if (StringUtils.isNotEmpty(rotate)) {
             chart.setRotate(Boolean.valueOf(rotate));
@@ -111,6 +116,16 @@ public class SerialChartLoader extends RectangularChartLoader<SerialChart> {
             CategoryAxis axis = new CategoryAxis();
 
             loadAbstractAxis(axis, axisElement);
+
+            String autoRotateAngle = axisElement.attributeValue("autoRotateAngle");
+            if (StringUtils.isNotEmpty(autoRotateAngle)) {
+                axis.setAutoRotateAngle(Integer.valueOf(autoRotateAngle));
+            }
+
+            String autoRotateCount = axisElement.attributeValue("autoRotateCount");
+            if (StringUtils.isNotEmpty(autoRotateCount)) {
+                axis.setAutoRotateCount(Integer.valueOf(autoRotateCount));
+            }
 
             String categoryFunction = axisElement.elementText("categoryFunction");
             if (StringUtils.isNotEmpty(categoryFunction)) {
@@ -147,6 +162,11 @@ public class SerialChartLoader extends RectangularChartLoader<SerialChart> {
                 axis.setGridPosition(GridPosition.valueOf(gridPosition));
             }
 
+            String labelColorField = axisElement.attributeValue("labelColorField");
+            if (StringUtils.isNotEmpty(labelColorField)) {
+                axis.setLabelColorField(labelColorField);
+            }
+
             String markPeriodChange = axisElement.attributeValue("markPeriodChange");
             if (StringUtils.isNotEmpty(markPeriodChange)) {
                 axis.setMarkPeriodChange(Boolean.valueOf(markPeriodChange));
@@ -160,6 +180,16 @@ public class SerialChartLoader extends RectangularChartLoader<SerialChart> {
             String startOnAxis = axisElement.attributeValue("startOnAxis");
             if (StringUtils.isNotEmpty(startOnAxis)) {
                 axis.setStartOnAxis(Boolean.valueOf(startOnAxis));
+            }
+
+            String tickPosition = axisElement.attributeValue("tickPosition");
+            if (StringUtils.isNotEmpty(tickPosition)) {
+                axis.setTickPosition(tickPosition);
+            }
+
+            String twoLineMode = axisElement.attributeValue("twoLineMode");
+            if (StringUtils.isNotEmpty(twoLineMode)) {
+                axis.setTwoLineMode(Boolean.valueOf(twoLineMode));
             }
 
             chart.setCategoryAxis(axis);

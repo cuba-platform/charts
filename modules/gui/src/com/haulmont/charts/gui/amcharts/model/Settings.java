@@ -25,6 +25,8 @@ public class Settings extends AbstractConfigurationObject {
 
     private List<String> monthNames;
 
+    private Integer processDelay;
+
     private List<String> shortDayNames;
 
     private List<String> shortMonthNames;
@@ -91,6 +93,15 @@ public class Settings extends AbstractConfigurationObject {
 
     public Settings setUseUTC(Boolean useUTC) {
         this.useUTC = useUTC;
+        return this;
+    }
+
+    public Integer getProcessDelay() {
+        return processDelay;
+    }
+
+    public Settings setProcessDelay(Integer processDelay) {
+        this.processDelay = processDelay;
         return this;
     }
 }

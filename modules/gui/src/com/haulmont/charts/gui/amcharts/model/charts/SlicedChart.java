@@ -54,6 +54,8 @@ public abstract class SlicedChart<T extends SlicedChart> extends AbstractChart<T
 
     private Double hoverAlpha;
 
+    private JsFunction labelFunction;
+
     private Boolean labelsEnabled;
 
     private Double labelTickAlpha;
@@ -67,6 +69,8 @@ public abstract class SlicedChart<T extends SlicedChart> extends AbstractChart<T
     private Integer marginRight;
 
     private Integer marginTop;
+
+    private Integer maxLabelWidth;
 
     private Double outlineAlpha;
 
@@ -497,6 +501,24 @@ public abstract class SlicedChart<T extends SlicedChart> extends AbstractChart<T
 
     public T setVisibleInLegendField(String visibleInLegendField) {
         this.visibleInLegendField = visibleInLegendField;
+        return (T) this;
+    }
+
+    public JsFunction getLabelFunction() {
+        return labelFunction;
+    }
+
+    public T setLabelFunction(JsFunction labelFunction) {
+        this.labelFunction = labelFunction;
+        return (T) this;
+    }
+
+    public Integer getMaxLabelWidth() {
+        return maxLabelWidth;
+    }
+
+    public T setMaxLabelWidth(Integer maxLabelWidth) {
+        this.maxLabelWidth = maxLabelWidth;
         return (T) this;
     }
 

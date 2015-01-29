@@ -17,6 +17,10 @@ public class CategoryAxis extends AbstractAxis<CategoryAxis> {
 
     private static final long serialVersionUID = -8181114623535627249L;
 
+    private Integer autoRotateAngle;
+
+    private Integer autoRotateCount;
+
     private Boolean autoWrap;
 
     private Boolean boldPeriodBeginning;
@@ -35,7 +39,7 @@ public class CategoryAxis extends AbstractAxis<CategoryAxis> {
 
     private GridPosition gridPosition;
 
-    private JsFunction labelFunction;
+    private String labelColorField;
 
     private Boolean markPeriodChange;
 
@@ -44,6 +48,10 @@ public class CategoryAxis extends AbstractAxis<CategoryAxis> {
     private Boolean parseDates;
 
     private Boolean startOnAxis;
+
+    private String tickPosition;
+
+    private Boolean twoLineMode;
 
     public Boolean getAutoWrap() {
         return autoWrap;
@@ -162,12 +170,47 @@ public class CategoryAxis extends AbstractAxis<CategoryAxis> {
         return this;
     }
 
-    public JsFunction getLabelFunction() {
-        return labelFunction;
+    public Integer getAutoRotateAngle() {
+        return autoRotateAngle;
     }
 
-    public CategoryAxis setLabelFunction(JsFunction labelFunction) {
-        this.labelFunction = labelFunction;
+    public CategoryAxis setAutoRotateAngle(Integer autoRotateAngle) {
+        this.autoRotateAngle = autoRotateAngle;
         return this;
+    }
+
+    public Integer getAutoRotateCount() {
+        return autoRotateCount;
+    }
+
+    public CategoryAxis setAutoRotateCount(Integer autoRotateCount) {
+        this.autoRotateCount = autoRotateCount;
+        return this;
+    }
+
+    public String getLabelColorField() {
+        return labelColorField;
+    }
+
+    public CategoryAxis setLabelColorField(String labelColorField) {
+        this.labelColorField = labelColorField;
+        return this;
+    }
+
+    public String getTickPosition() {
+        return tickPosition;
+    }
+
+    public CategoryAxis setTickPosition(String tickPosition) {
+        this.tickPosition = tickPosition;
+        return this;
+    }
+
+    public Boolean getTwoLineMode() {
+        return twoLineMode;
+    }
+
+    public void setTwoLineMode(Boolean twoLineMode) {
+        this.twoLineMode = twoLineMode;
     }
 }

@@ -15,7 +15,13 @@ public class Cursor extends AbstractConfigurationObject {
 
     private static final long serialVersionUID = 4196605135301917493L;
 
+    private Integer adjustment;
+
     private Double animationDuration;
+
+    private Boolean avoidBalloonOverlapping;
+
+    private String balloonPointerOrientation;
 
     private Boolean bulletsEnabled;
 
@@ -41,6 +47,10 @@ public class Cursor extends AbstractConfigurationObject {
 
     private Boolean enabled;
 
+    private Boolean fullWidth;
+
+    private Double graphBulletAlpha;
+
     private Double graphBulletSize;
 
     private Boolean oneBalloonOnly;
@@ -55,7 +65,42 @@ public class Cursor extends AbstractConfigurationObject {
 
     private Boolean valueBalloonsEnabled;
 
+    private Double valueLineAlpha;
+
+    private String valueLineAxis;
+
+    private Boolean valueLineBalloonEnabled;
+
+    private Boolean valueLineEnabled;
+
     private Boolean zoomable;
+
+    public Integer getAdjustment() {
+        return adjustment;
+    }
+
+    public Cursor setAdjustment(Integer adjustment) {
+        this.adjustment = adjustment;
+        return this;
+    }
+
+    public Boolean getAvoidBalloonOverlapping() {
+        return avoidBalloonOverlapping;
+    }
+
+    public Cursor setAvoidBalloonOverlapping(Boolean avoidBalloonOverlapping) {
+        this.avoidBalloonOverlapping = avoidBalloonOverlapping;
+        return this;
+    }
+
+    public String getBalloonPointerOrientation() {
+        return balloonPointerOrientation;
+    }
+
+    public Cursor setBalloonPointerOrientation(String balloonPointerOrientation) {
+        this.balloonPointerOrientation = balloonPointerOrientation;
+        return this;
+    }
 
     public Double getAnimationDuration() {
         return animationDuration;
@@ -244,5 +289,58 @@ public class Cursor extends AbstractConfigurationObject {
     public Cursor setCategoryBalloonFunction(JsFunction categoryBalloonFunction) {
         this.categoryBalloonFunction = categoryBalloonFunction;
         return this;
+    }
+
+    public Boolean getFullWidth() {
+        return fullWidth;
+    }
+
+    public Cursor setFullWidth(Boolean fullWidth) {
+        this.fullWidth = fullWidth;
+        return this;
+    }
+
+    public Double getGraphBulletAlpha() {
+        return graphBulletAlpha;
+    }
+
+    public Cursor setGraphBulletAlpha(Double graphBulletAlpha) {
+        this.graphBulletAlpha = graphBulletAlpha;
+        return this;
+    }
+
+    public Double getValueLineAlpha() {
+        return valueLineAlpha;
+    }
+
+    public Cursor setValueLineAlpha(Double valueLineAlpha) {
+        this.valueLineAlpha = valueLineAlpha;
+        return this;
+    }
+
+    public String getValueLineAxis() {
+        return valueLineAxis;
+    }
+
+    public Cursor setValueLineAxis(String valueLineAxis) {
+        this.valueLineAxis = valueLineAxis;
+        return this;
+    }
+
+    public Boolean getValueLineBalloonEnabled() {
+        return valueLineBalloonEnabled;
+    }
+
+    public Cursor setValueLineBalloonEnabled(Boolean valueLineBalloonEnabled) {
+        this.valueLineBalloonEnabled = valueLineBalloonEnabled;
+        return this;
+    }
+
+    public Boolean getValueLineEnabled() {
+        return valueLineEnabled;
+    }
+
+    public void setValueLineEnabled(Boolean valueLineEnabled) {
+        this.valueLineEnabled = valueLineEnabled;
     }
 }

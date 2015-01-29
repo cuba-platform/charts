@@ -26,7 +26,11 @@ public abstract class AbstractChart<T extends AbstractConfigurationObject> exten
 
     private final ChartType type;
 
+    private Boolean addClassNames;
+
     private List<Label> allLabels;
+
+    private Export amExport;
 
     private Color backgroundColor;
 
@@ -36,7 +40,13 @@ public abstract class AbstractChart<T extends AbstractConfigurationObject> exten
 
     private Color borderColor;
 
+    private String classNamePrefix;
+
+    private String creditsPosition;
+
     private Color color;
+
+    private String decimalSeparator;
 
     private DataProvider dataProvider;
 
@@ -52,19 +62,19 @@ public abstract class AbstractChart<T extends AbstractConfigurationObject> exten
 
     private Integer handDrawThickness;
 
-    private String height;
-
     private Integer hideBalloonTime;
 
     private Legend legend;
 
-    private NumberFormatter numberFormatter;
+    private String legendDiv;
 
     private Boolean panEventsEnabled;
 
     private String pathToImages = "VAADIN/resources/amcharts/images/";
 
-    private NumberFormatter percentFormatter;
+    private Integer percentPrecision;
+
+    private Integer precision;
 
     private List<BigNumberPrefix> prefixesOfBigNumbers;
 
@@ -76,8 +86,19 @@ public abstract class AbstractChart<T extends AbstractConfigurationObject> exten
 
     private ChartTheme theme;
 
+    private String thousandsSeparator;
+
     protected AbstractChart(ChartType type) {
         this.type = type;
+    }
+
+    public Boolean getAddClassNames() {
+        return addClassNames;
+    }
+
+    public T setAddClassNames(Boolean addClassNames) {
+        this.addClassNames = addClassNames;
+        return (T) this;
     }
 
     public List<Label> getAllLabels() {
@@ -96,6 +117,15 @@ public abstract class AbstractChart<T extends AbstractConfigurationObject> exten
             }
             this.allLabels.addAll(Arrays.asList(allLabels));
         }
+        return (T) this;
+    }
+
+    public Export getAmExport() {
+        return amExport;
+    }
+
+    public T setAmExport(Export amExport) {
+        this.amExport = amExport;
         return (T) this;
     }
 
@@ -132,6 +162,42 @@ public abstract class AbstractChart<T extends AbstractConfigurationObject> exten
 
     public T setLegend(Legend legend) {
         this.legend = legend;
+        return (T) this;
+    }
+
+    public String getDecimalSeparator() {
+        return decimalSeparator;
+    }
+
+    public T setDecimalSeparator(String decimalSeparator) {
+        this.decimalSeparator = decimalSeparator;
+        return (T) this;
+    }
+
+    public String getLegendDiv() {
+        return legendDiv;
+    }
+
+    public T setLegendDiv(String legendDiv) {
+        this.legendDiv = legendDiv;
+        return (T) this;
+    }
+
+    public Integer getPercentPrecision() {
+        return percentPrecision;
+    }
+
+    public T setPercentPrecision(Integer percentPrecision) {
+        this.percentPrecision = percentPrecision;
+        return (T) this;
+    }
+
+    public Integer getPrecision() {
+        return precision;
+    }
+
+    public T setPrecision(Integer precision) {
+        this.precision = precision;
         return (T) this;
     }
 
@@ -190,6 +256,24 @@ public abstract class AbstractChart<T extends AbstractConfigurationObject> exten
         return (T) this;
     }
 
+    public String getClassNamePrefix() {
+        return classNamePrefix;
+    }
+
+    public T setClassNamePrefix(String classNamePrefix) {
+        this.classNamePrefix = classNamePrefix;
+        return (T) this;
+    }
+
+    public String getCreditsPosition() {
+        return creditsPosition;
+    }
+
+    public T setCreditsPosition(String creditsPosition) {
+        this.creditsPosition = creditsPosition;
+        return (T) this;
+    }
+
     public Color getColor() {
         return color;
     }
@@ -244,15 +328,6 @@ public abstract class AbstractChart<T extends AbstractConfigurationObject> exten
         return (T) this;
     }
 
-    public String getHeight() {
-        return height;
-    }
-
-    public T setHeight(String height) {
-        this.height = height;
-        return (T) this;
-    }
-
     public Integer getHideBalloonTime() {
         return hideBalloonTime;
     }
@@ -262,30 +337,12 @@ public abstract class AbstractChart<T extends AbstractConfigurationObject> exten
         return (T) this;
     }
 
-    public NumberFormatter getNumberFormatter() {
-        return numberFormatter;
-    }
-
-    public T setNumberFormatter(NumberFormatter numberFormatter) {
-        this.numberFormatter = numberFormatter;
-        return (T) this;
-    }
-
     public Boolean getPanEventsEnabled() {
         return panEventsEnabled;
     }
 
     public T setPanEventsEnabled(Boolean panEventsEnabled) {
         this.panEventsEnabled = panEventsEnabled;
-        return (T) this;
-    }
-
-    public NumberFormatter getPercentFormatter() {
-        return percentFormatter;
-    }
-
-    public T setPercentFormatter(NumberFormatter percentFormatter) {
-        this.percentFormatter = percentFormatter;
         return (T) this;
     }
 
@@ -324,6 +381,15 @@ public abstract class AbstractChart<T extends AbstractConfigurationObject> exten
             }
             this.prefixesOfSmallNumbers.addAll(Arrays.asList(prefixesOfSmallNumbers));
         }
+        return (T) this;
+    }
+
+    public String getThousandsSeparator() {
+        return thousandsSeparator;
+    }
+
+    public T setThousandsSeparator(String thousandsSeparator) {
+        this.thousandsSeparator = thousandsSeparator;
         return (T) this;
     }
 

@@ -25,17 +25,25 @@ public class Guide extends AbstractConfigurationObject {
 
     private String balloonText;
 
+    private Boolean boldLabel;
+
     private String category;
+
+    private Color color;
 
     private Integer dashLength;
 
     private Date date;
+
+    private Boolean expand;
 
     private Double fillAlpha;
 
     private Color fillColor;
 
     private Integer fontSize;
+
+    private String id;
 
     private Boolean inside;
 
@@ -62,6 +70,8 @@ public class Guide extends AbstractConfigurationObject {
     private Double toValue;
 
     private Double value;
+
+    private String valueAxis;
 
     public Boolean getAbove() {
         return above;
@@ -267,6 +277,51 @@ public class Guide extends AbstractConfigurationObject {
 
     public Guide setValue(Double value) {
         this.value = value;
+        return this;
+    }
+
+    public Boolean getBoldLabel() {
+        return boldLabel;
+    }
+
+    public Guide setBoldLabel(Boolean boldLabel) {
+        this.boldLabel = boldLabel;
+        return this;
+    }
+
+    public Color getColor() {
+        return color;
+    }
+
+    public Guide setColor(Color color) {
+        this.color = color;
+        return this;
+    }
+
+    public Boolean getExpand() {
+        return expand;
+    }
+
+    public Guide setExpand(Boolean expand) {
+        this.expand = expand;
+        return this;
+    }
+
+    public String getId() {
+        return id;
+    }
+
+    public Guide setId(String id) {
+        this.id = id;
+        return this;
+    }
+
+    public String getValueAxis() {
+        return valueAxis;
+    }
+
+    public Guide setValueAxis(String valueAxis) {
+        this.valueAxis = valueAxis;
         return this;
     }
 }
