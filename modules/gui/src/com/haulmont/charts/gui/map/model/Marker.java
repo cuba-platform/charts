@@ -5,6 +5,8 @@
 
 package com.haulmont.charts.gui.map.model;
 
+import com.haulmont.charts.gui.map.model.base.MarkerImage;
+
 /**
  * @author korotkov
  * @version $Id$
@@ -100,4 +102,15 @@ public interface Marker {
      * @param clickable true if marker is clickable
      */
     void setClickable(boolean clickable);
+
+    /**
+     * Sets icon
+     * @param icon icon
+     */
+    void setIcon(MarkerImage icon);
+
+    /**
+     * @return icon
+     */
+    MarkerImage getIcon();
 }

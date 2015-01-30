@@ -5,6 +5,7 @@
 
 package com.haulmont.charts.web.gui.components.map.google;
 
+import com.haulmont.bali.util.Preconditions;
 import com.haulmont.charts.gui.map.model.GeoPoint;
 import com.haulmont.charts.gui.map.model.Polygon;
 import com.vaadin.tapio.googlemaps.client.overlays.*;
@@ -24,6 +25,7 @@ public class PolygonDelegate implements Polygon {
     }
 
     public PolygonDelegate(GoogleMapPolygon polygon) {
+        Preconditions.checkNotNullArgument(polygon);
         this.polygon = polygon;
     }
 
@@ -37,7 +39,7 @@ public class PolygonDelegate implements Polygon {
 
     @Override
     public List<GeoPoint> getCoordinates() {
-        return DelegateHelper.toGeoPoint(polygon.getCoordinates());
+        return DelegateHelper.toGeoPoints(polygon.getCoordinates());
     }
 
     @Override

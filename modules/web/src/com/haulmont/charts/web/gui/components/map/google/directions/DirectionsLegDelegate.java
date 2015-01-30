@@ -5,6 +5,7 @@
 
 package com.haulmont.charts.web.gui.components.map.google.directions;
 
+import com.haulmont.bali.util.Preconditions;
 import com.haulmont.charts.gui.map.model.GeoPoint;
 import com.haulmont.charts.gui.map.model.directions.DirectionsLeg;
 import com.haulmont.charts.gui.map.model.directions.DirectionsStep;
@@ -23,7 +24,12 @@ public class DirectionsLegDelegate implements DirectionsLeg {
 
     private com.vaadin.tapio.googlemaps.client.services.DirectionsLeg directionsLeg;
 
+    public static DirectionsLegDelegate fromDirectionsLeg(com.vaadin.tapio.googlemaps.client.services.DirectionsLeg leg) {
+        return leg != null ? new DirectionsLegDelegate(leg) : null;
+    }
+
     public DirectionsLegDelegate(com.vaadin.tapio.googlemaps.client.services.DirectionsLeg directionsLeg) {
+        Preconditions.checkNotNullArgument(directionsLeg);
         this.directionsLeg = directionsLeg;
     }
 
@@ -37,22 +43,22 @@ public class DirectionsLegDelegate implements DirectionsLeg {
 
     @Override
     public Distance getDistance() {
-        return new DistanceDelegate(directionsLeg.getDistance());
+        return DistanceDelegate.fromDistance(directionsLeg.getDistance());
     }
 
     @Override
     public void setDistance(Distance distance) {
-        directionsLeg.setDistance(((DistanceDelegate)distance).getDistance());
+        directionsLeg.setDistance(distance != null ? ((DistanceDelegate)distance).getDistance() : null);
     }
 
     @Override
     public Duration getDuration() {
-        return new DurationDelegate(directionsLeg.getDuration());
+        return DurationDelegate.fromDuration(directionsLeg.getDuration());
     }
 
     @Override
     public void setDuration(Duration duration) {
-        directionsLeg.setDuration(((DurationDelegate) duration).getDuration());
+        directionsLeg.setDuration(duration != null ? ((DurationDelegate) duration).getDuration() : null);
     }
 
     @Override
@@ -77,12 +83,12 @@ public class DirectionsLegDelegate implements DirectionsLeg {
 
     @Override
     public GeoPoint getStartLocation() {
-        return new GeoPointDelegate(directionsLeg.getStartLocation());
+        return GeoPointDelegate.fromLatLon(directionsLeg.getStartLocation());
     }
 
     @Override
     public void setStartLocation(GeoPoint startLocation) {
-        directionsLeg.setStartLocation(((GeoPointDelegate)startLocation).getLatLon());
+        directionsLeg.setStartLocation(startLocation != null ? ((GeoPointDelegate)startLocation).getLatLon() : null);
     }
 
     @Override
@@ -97,7 +103,7 @@ public class DirectionsLegDelegate implements DirectionsLeg {
 
     @Override
     public List<GeoPoint> getViaWaypoints() {
-        return DelegateHelper.toGeoPoint(directionsLeg.getViaWaypoints());
+        return DelegateHelper.toGeoPoints(directionsLeg.getViaWaypoints());
     }
 
     @Override
@@ -107,11 +113,29 @@ public class DirectionsLegDelegate implements DirectionsLeg {
 
     @Override
     public GeoPoint getEndLocation() {
-        return new GeoPointDelegate(directionsLeg.getEndLocation());
+        return GeoPointDelegate.fromLatLon(directionsLeg.getEndLocation());
     }
 
     @Override
     public void setEndLocation(GeoPoint endLocation) {
-        directionsLeg.setEndLocation(((GeoPointDelegate)endLocation).getLatLon());
+        directionsLeg.setEndLocation(endLocation != null ? ((GeoPointDelegate)endLocation).getLatLon() : null);
+    }
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+
+        DirectionsLegDelegate that = (DirectionsLegDelegate) o;
+
+        if (directionsLeg != null ? !directionsLeg.equals(that.directionsLeg) : that.directionsLeg != null)
+            return false;
+
+        return true;
+    }
+
+    @Override
+    public int hashCode() {
+        return directionsLeg != null ? directionsLeg.hashCode() : 0;
     }
 }

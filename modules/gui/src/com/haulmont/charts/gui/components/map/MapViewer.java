@@ -6,6 +6,9 @@
 package com.haulmont.charts.gui.components.map;
 
 import com.haulmont.charts.gui.map.model.*;
+import com.haulmont.charts.gui.map.model.base.MarkerImage;
+import com.haulmont.charts.gui.map.model.base.Point;
+import com.haulmont.charts.gui.map.model.base.Size;
 import com.haulmont.charts.gui.map.model.directions.DirectionsRequest;
 import com.haulmont.charts.gui.map.model.directions.DirectionsRequestCallback;
 import com.haulmont.charts.gui.map.model.directions.DirectionsWaypoint;
@@ -117,6 +120,16 @@ public interface MapViewer extends Component, Component.BelongToFrame, Component
     Marker createMarker(String caption, GeoPoint position, boolean draggable, String iconUrl);
 
     /**
+     * Creates marker with given params. Add marker on map using {@link com.haulmont.charts.gui.components.map.MapViewer#addMarker(com.haulmont.charts.gui.map.model.Marker)}
+     * @param caption caption
+     * @param position position
+     * @param draggable draggable
+     * @param icon icon
+     * @return marker
+     */
+    Marker createMarker(String caption, GeoPoint position, boolean draggable, MarkerImage icon);
+
+    /**
      * Creates polygon. Add polygon on map using {@link com.haulmont.charts.gui.components.map.MapViewer#addPolygonOverlay(com.haulmont.charts.gui.map.model.Polygon)}
      * @return polygon
      */
@@ -202,11 +215,40 @@ public interface MapViewer extends Component, Component.BelongToFrame, Component
     /**
      * Creates directions waypoint.
      * @param location location
-     * @param stopOver if true, indicates that this waypoint is a stop between the origin and destination. This has the effect of
-     * splitting the route into two. This value is true by default.
+     * @param stopOver if true, indicates that this waypoint is a stop between the origin and destination.
+     *                 This has the effect of splitting the route into two. This value is true by default.
      * @return waypoint
      */
     DirectionsWaypoint createDirectionsWaypoint(GeoPoint location, boolean stopOver);
+
+    /**
+     * Creates marker image object
+     * @return marker image
+     */
+    MarkerImage createMarkerImage();
+
+    /**
+     * Creates marker image object
+     * @param url icon or sprites file url
+     * @return marker image
+     */
+    MarkerImage createMarkerImage(String url);
+
+    /**
+     * Creates size object
+     * @param width width
+     * @param height height
+     * @return size
+     */
+    Size createSize(double width, double height);
+
+    /**
+     * Creates point object
+     * @param x X coordinate
+     * @param y Y coordinate
+     * @return point
+     */
+    Point createPoint(double x, double y);
 
     /**
      * Adds heatmap layer on map.

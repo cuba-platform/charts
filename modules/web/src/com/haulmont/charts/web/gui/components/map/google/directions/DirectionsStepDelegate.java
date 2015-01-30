@@ -5,6 +5,7 @@
 
 package com.haulmont.charts.web.gui.components.map.google.directions;
 
+import com.haulmont.bali.util.Preconditions;
 import com.haulmont.charts.gui.map.model.GeoPoint;
 import com.haulmont.charts.gui.map.model.directions.DirectionsStep;
 import com.haulmont.charts.gui.map.model.directions.Distance;
@@ -23,7 +24,13 @@ public class DirectionsStepDelegate implements DirectionsStep {
 
     private com.vaadin.tapio.googlemaps.client.services.DirectionsStep directionsStep;
 
+    public static DirectionsStepDelegate fromDirectionsStep(
+            com.vaadin.tapio.googlemaps.client.services.DirectionsStep step) {
+        return step != null ? new DirectionsStepDelegate(step) : null;
+    }
+
     public DirectionsStepDelegate(com.vaadin.tapio.googlemaps.client.services.DirectionsStep directionsStep) {
+        Preconditions.checkNotNullArgument(directionsStep);
         this.directionsStep = directionsStep;
     }
 
@@ -37,42 +44,42 @@ public class DirectionsStepDelegate implements DirectionsStep {
 
     @Override
     public Distance getDistance() {
-        return new DistanceDelegate(directionsStep.getDistance());
+        return DistanceDelegate.fromDistance(directionsStep.getDistance());
     }
 
     @Override
     public void setDistance(Distance distance) {
-        directionsStep = (com.vaadin.tapio.googlemaps.client.services.DirectionsStep)distance;
+        directionsStep.setDistance(distance != null ? ((DistanceDelegate)distance).getDistance() : null);
     }
 
     @Override
     public Duration getDuration() {
-        return new DurationDelegate(directionsStep.getDuration());
+        return DurationDelegate.fromDuration(directionsStep.getDuration());
     }
 
     @Override
     public void setDuration(Duration duration) {
-        directionsStep.setDuration(((DurationDelegate)duration).getDuration());
+        directionsStep.setDuration(duration != null ? ((DurationDelegate)duration).getDuration() : null);
     }
 
     @Override
     public GeoPoint getEndLocation() {
-        return new GeoPointDelegate(directionsStep.getEndLocation());
+        return GeoPointDelegate.fromLatLon(directionsStep.getEndLocation());
     }
 
     @Override
     public void setEndLocation(GeoPoint endLocation) {
-        directionsStep.setEndLocation(((GeoPointDelegate)endLocation).getLatLon());
+        directionsStep.setEndLocation(endLocation != null ? ((GeoPointDelegate)endLocation).getLatLon() : null);
     }
 
     @Override
     public GeoPoint getStartLocation() {
-        return new GeoPointDelegate(directionsStep.getStartLocation());
+        return GeoPointDelegate.fromLatLon(directionsStep.getStartLocation());
     }
 
     @Override
     public void setStartLocation(GeoPoint startLocation) {
-        directionsStep.setStartLocation(((GeoPointDelegate)startLocation).getLatLon());
+        directionsStep.setStartLocation(startLocation != null ? ((GeoPointDelegate)startLocation).getLatLon() : null);
     }
 
     @Override
@@ -87,7 +94,7 @@ public class DirectionsStepDelegate implements DirectionsStep {
 
     @Override
     public List<GeoPoint> getPath() {
-        return DelegateHelper.toGeoPoint(directionsStep.getPath());
+        return DelegateHelper.toGeoPoints(directionsStep.getPath());
     }
 
     @Override
@@ -107,5 +114,23 @@ public class DirectionsStepDelegate implements DirectionsStep {
         } else {
             directionsStep.setTravelMode(com.vaadin.tapio.googlemaps.client.services.TravelMode.fromValue(travelMode.value()));
         }
+    }
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+
+        DirectionsStepDelegate that = (DirectionsStepDelegate) o;
+
+        if (directionsStep != null ? !directionsStep.equals(that.directionsStep) : that.directionsStep != null)
+            return false;
+
+        return true;
+    }
+
+    @Override
+    public int hashCode() {
+        return directionsStep != null ? directionsStep.hashCode() : 0;
     }
 }

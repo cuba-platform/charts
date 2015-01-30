@@ -5,6 +5,7 @@
 
 package com.haulmont.charts.web.gui.components.map.google;
 
+import com.haulmont.bali.util.Preconditions;
 import com.haulmont.charts.gui.map.model.GeoPoint;
 import com.haulmont.charts.gui.map.model.InfoWindow;
 import com.haulmont.charts.gui.map.model.Marker;
@@ -23,6 +24,7 @@ public class InfoWindowDelegate implements InfoWindow {
     }
 
     public InfoWindowDelegate(GoogleMapInfoWindow infoWindow) {
+        Preconditions.checkNotNullArgument(infoWindow);
         this.infoWindow = infoWindow;
     }
 
@@ -86,12 +88,12 @@ public class InfoWindowDelegate implements InfoWindow {
 
     @Override
     public GeoPoint getPosition() {
-        return new GeoPointDelegate(infoWindow.getPosition());
+        return GeoPointDelegate.fromLatLon(infoWindow.getPosition());
     }
 
     @Override
     public void setPosition(GeoPoint position) {
-        infoWindow.setPosition(((GeoPointDelegate)position).getLatLon());
+        infoWindow.setPosition(position != null ? ((GeoPointDelegate)position).getLatLon() : null);
     }
 
     @Override
@@ -101,7 +103,7 @@ public class InfoWindowDelegate implements InfoWindow {
 
     @Override
     public void setAnchorMarker(Marker anchorMarker) {
-        infoWindow.setAnchorMarker(((MarkerDelegate)anchorMarker).getMarker());
+        infoWindow.setAnchorMarker(anchorMarker != null ? ((MarkerDelegate)anchorMarker).getMarker() : null);
     }
 
     @Override

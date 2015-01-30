@@ -5,6 +5,7 @@
 
 package com.haulmont.charts.web.gui.components.map.google.directions;
 
+import com.haulmont.bali.util.Preconditions;
 import com.haulmont.charts.gui.map.model.directions.Duration;
 
 /**
@@ -15,7 +16,12 @@ public class DurationDelegate implements Duration {
 
     private com.vaadin.tapio.googlemaps.client.services.Duration duration;
 
+    public static DurationDelegate fromDuration(com.vaadin.tapio.googlemaps.client.services.Duration duration) {
+        return duration != null ? new DurationDelegate(duration) : null;
+    }
+
     public DurationDelegate(com.vaadin.tapio.googlemaps.client.services.Duration duration) {
+        Preconditions.checkNotNullArgument(duration);
         this.duration = duration;
     }
 
@@ -45,5 +51,22 @@ public class DurationDelegate implements Duration {
     @Override
     public void setValue(int value) {
         duration.setValue(value);
+    }
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+
+        DurationDelegate that = (DurationDelegate) o;
+
+        if (duration != null ? !duration.equals(that.duration) : that.duration != null) return false;
+
+        return true;
+    }
+
+    @Override
+    public int hashCode() {
+        return duration != null ? duration.hashCode() : 0;
     }
 }

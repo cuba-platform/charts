@@ -178,7 +178,7 @@ public class DelegateHelper {
         }
     }
 
-    public static List<GeoPoint> toGeoPoint(List<LatLon> coordinates) {
+    public static List<GeoPoint> toGeoPoints(List<LatLon> coordinates) {
         if (coordinates == null) {
             return null;
         } else if (coordinates.isEmpty()) {

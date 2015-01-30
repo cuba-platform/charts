@@ -5,6 +5,7 @@
 
 package com.haulmont.charts.web.gui.components.map.google.directions;
 
+import com.haulmont.bali.util.Preconditions;
 import com.haulmont.charts.gui.map.model.GeoPoint;
 import com.haulmont.charts.gui.map.model.directions.DirectionsRequest;
 import com.haulmont.charts.gui.map.model.directions.DirectionsWaypoint;
@@ -24,6 +25,7 @@ public class DirectionsRequestDelegate implements DirectionsRequest {
     private com.vaadin.tapio.googlemaps.client.services.DirectionsRequest request;
 
     public DirectionsRequestDelegate(com.vaadin.tapio.googlemaps.client.services.DirectionsRequest request) {
+        Preconditions.checkNotNullArgument(request);
         this.request = request;
     }
 
@@ -87,7 +89,7 @@ public class DirectionsRequestDelegate implements DirectionsRequest {
 
     @Override
     public GeoPoint getOrigin() {
-        return new GeoPointDelegate(request.getOrigin());
+        return GeoPointDelegate.fromLatLon(request.getOrigin());
     }
 
     @Override
@@ -97,7 +99,7 @@ public class DirectionsRequestDelegate implements DirectionsRequest {
 
     @Override
     public GeoPoint getDestination() {
-        return new GeoPointDelegate(request.getDestination());
+        return GeoPointDelegate.fromLatLon(request.getDestination());
     }
 
     @Override
@@ -117,21 +119,42 @@ public class DirectionsRequestDelegate implements DirectionsRequest {
 
     @Override
     public TravelMode getTravelMode() {
-        return TravelMode.fromValue(request.getTravelMode().value());
+        return request.getTravelMode() != null ? TravelMode.fromValue(request.getTravelMode().value()) : null;
     }
 
     @Override
     public void setTravelMode(TravelMode travelMode) {
-        request.setTravelMode(com.vaadin.tapio.googlemaps.client.services.TravelMode.fromValue(travelMode.value()));
+        request.setTravelMode(travelMode != null
+                ? com.vaadin.tapio.googlemaps.client.services.TravelMode.fromValue(travelMode.value())
+                : null);
     }
 
     @Override
     public UnitSystem getUnitSystem() {
-        return UnitSystem.fromValue(request.getUnitSystem().value());
+        return request.getUnitSystem() != null ? UnitSystem.fromValue(request.getUnitSystem().value()) : null;
     }
 
     @Override
     public void setUnitSystem(UnitSystem unitSystem) {
-        request.setUnitSystem(com.vaadin.tapio.googlemaps.client.services.UnitSystem.fromValue(unitSystem.value()));
+        request.setUnitSystem(unitSystem != null
+                ? com.vaadin.tapio.googlemaps.client.services.UnitSystem.fromValue(unitSystem.value())
+                : null);
+    }
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+
+        DirectionsRequestDelegate that = (DirectionsRequestDelegate) o;
+
+        if (request != null ? !request.equals(that.request) : that.request != null) return false;
+
+        return true;
+    }
+
+    @Override
+    public int hashCode() {
+        return request != null ? request.hashCode() : 0;
     }
 }

@@ -5,6 +5,7 @@
 
 package com.haulmont.charts.web.gui.components.map.google;
 
+import com.haulmont.bali.util.Preconditions;
 import com.haulmont.charts.gui.map.model.GeoPoint;
 import com.haulmont.charts.gui.map.model.Polyline;
 import com.vaadin.tapio.googlemaps.client.overlays.*;
@@ -24,6 +25,7 @@ public class PolylineDelegate implements Polyline {
     }
 
     public PolylineDelegate(GoogleMapPolyline polyline) {
+        Preconditions.checkNotNullArgument(polyline);
         this.polyline = polyline;
     }
 
@@ -37,7 +39,7 @@ public class PolylineDelegate implements Polyline {
 
     @Override
     public List<GeoPoint> getCoordinates() {
-        return DelegateHelper.toGeoPoint(polyline.getCoordinates());
+        return DelegateHelper.toGeoPoints(polyline.getCoordinates());
     }
 
     @Override

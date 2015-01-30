@@ -5,8 +5,11 @@
 
 package com.haulmont.charts.web.gui.components.map.google;
 
+import com.haulmont.bali.util.Preconditions;
 import com.haulmont.charts.gui.map.model.GeoPoint;
 import com.haulmont.charts.gui.map.model.Marker;
+import com.haulmont.charts.gui.map.model.base.MarkerImage;
+import com.haulmont.charts.web.gui.components.map.google.base.MarkerImageDelegate;
 import com.vaadin.tapio.googlemaps.client.overlays.*;
 
 /**
@@ -22,6 +25,7 @@ public class MarkerDelegate implements Marker {
     }
 
     public MarkerDelegate(GoogleMapMarker marker) {
+        Preconditions.checkNotNullArgument(marker);
         this.marker = marker;
     }
 
@@ -105,12 +109,22 @@ public class MarkerDelegate implements Marker {
 
     @Override
     public void setPosition(GeoPoint position) {
-        marker.setPosition(((GeoPointDelegate)position).getLatLon());
+        marker.setPosition(position != null ? ((GeoPointDelegate)position).getLatLon() : null);
     }
 
     @Override
     public GeoPoint getPosition() {
-        return new GeoPointDelegate(marker.getPosition());
+        return GeoPointDelegate.fromLatLon(marker.getPosition());
+    }
+
+    @Override
+    public void setIcon(MarkerImage icon) {
+        marker.setMarkerImage(icon != null ? ((MarkerImageDelegate)icon).getMarkerImage() : null);
+    }
+
+    @Override
+    public MarkerImage getIcon() {
+        return MarkerImageDelegate.fromMarkerImage(marker.getMarkerImage());
     }
 
     @Override

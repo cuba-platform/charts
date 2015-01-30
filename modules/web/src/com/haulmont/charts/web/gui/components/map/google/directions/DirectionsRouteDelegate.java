@@ -5,6 +5,7 @@
 
 package com.haulmont.charts.web.gui.components.map.google.directions;
 
+import com.haulmont.bali.util.Preconditions;
 import com.haulmont.charts.gui.map.model.Bounds;
 import com.haulmont.charts.gui.map.model.GeoPoint;
 import com.haulmont.charts.gui.map.model.directions.DirectionsLeg;
@@ -23,6 +24,7 @@ public class DirectionsRouteDelegate implements DirectionsRoute {
     private com.vaadin.tapio.googlemaps.client.services.DirectionsRoute directionsRoute;
 
     public DirectionsRouteDelegate(com.vaadin.tapio.googlemaps.client.services.DirectionsRoute directionsRoute) {
+        Preconditions.checkNotNullArgument(directionsRoute);
         this.directionsRoute = directionsRoute;
     }
 
@@ -36,12 +38,12 @@ public class DirectionsRouteDelegate implements DirectionsRoute {
 
     @Override
     public Bounds getBounds() {
-        return new BoundsDelegate(directionsRoute.getBounds());
+        return BoundsDelegate.fromLatLonBounds(directionsRoute.getBounds());
     }
 
     @Override
     public void setBounds(Bounds bounds) {
-        directionsRoute.setBounds(((BoundsDelegate)bounds).getBounds());
+        directionsRoute.setBounds(bounds != null ? ((BoundsDelegate)bounds).getBounds() : null);
     }
 
     @Override
@@ -66,7 +68,7 @@ public class DirectionsRouteDelegate implements DirectionsRoute {
 
     @Override
     public List<GeoPoint> getOverviewPath() {
-        return DelegateHelper.toGeoPoint(directionsRoute.getOverviewPath());
+        return DelegateHelper.toGeoPoints(directionsRoute.getOverviewPath());
     }
 
     @Override
@@ -92,5 +94,23 @@ public class DirectionsRouteDelegate implements DirectionsRoute {
     @Override
     public void setWaypointOrder(int[] waypointOrder) {
         directionsRoute.setWaypointOrder(waypointOrder);
+    }
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+
+        DirectionsRouteDelegate that = (DirectionsRouteDelegate) o;
+
+        if (directionsRoute != null ? !directionsRoute.equals(that.directionsRoute) : that.directionsRoute != null)
+            return false;
+
+        return true;
+    }
+
+    @Override
+    public int hashCode() {
+        return directionsRoute != null ? directionsRoute.hashCode() : 0;
     }
 }

@@ -9,6 +9,9 @@ import com.haulmont.bali.util.Preconditions;
 import com.haulmont.charts.core.global.MapConfig;
 import com.haulmont.charts.gui.components.map.MapViewer;
 import com.haulmont.charts.gui.map.model.*;
+import com.haulmont.charts.gui.map.model.base.MarkerImage;
+import com.haulmont.charts.gui.map.model.base.Point;
+import com.haulmont.charts.gui.map.model.base.Size;
 import com.haulmont.charts.gui.map.model.directions.DirectionsRequest;
 import com.haulmont.charts.gui.map.model.directions.DirectionsRequestCallback;
 import com.haulmont.charts.gui.map.model.directions.DirectionsWaypoint;
@@ -16,6 +19,9 @@ import com.haulmont.charts.gui.map.model.directions.TravelMode;
 import com.haulmont.charts.gui.map.model.drawing.DrawingOptions;
 import com.haulmont.charts.gui.map.model.layer.HeatMapLayer;
 import com.haulmont.charts.gui.map.model.listeners.*;
+import com.haulmont.charts.web.gui.components.map.google.base.MarkerImageDelegate;
+import com.haulmont.charts.web.gui.components.map.google.base.PointDelegate;
+import com.haulmont.charts.web.gui.components.map.google.base.SizeDelegate;
 import com.haulmont.charts.web.gui.components.map.google.directions.DirectionsRequestDelegate;
 import com.haulmont.charts.web.gui.components.map.google.directions.DirectionsResultDelegate;
 import com.haulmont.charts.web.gui.components.map.google.directions.DirectionsWaypointDelegate;
@@ -315,8 +321,19 @@ public class WebGoogleMapViewer extends WebAbstractComponent<GoogleMap> implemen
 
     @Override
     public Marker createMarker(String caption, GeoPoint position, boolean draggable, String iconUrl) {
-        return new MarkerDelegate(new GoogleMapMarker(caption, ((GeoPointDelegate)position).getLatLon(), draggable,
+        return new MarkerDelegate(new GoogleMapMarker(caption,
+                position != null ? ((GeoPointDelegate)position).getLatLon() : null,
+                draggable,
                 iconUrl));
+    }
+
+    @Override
+    public Marker createMarker(String caption, GeoPoint position, boolean draggable, MarkerImage icon) {
+        return new MarkerDelegate(new GoogleMapMarker(
+                caption,
+                position != null ? ((GeoPointDelegate)position).getLatLon() : null,
+                draggable,
+                icon != null ? ((MarkerImageDelegate)icon).getMarkerImage() : null));
     }
 
     @Override
@@ -776,5 +793,25 @@ public class WebGoogleMapViewer extends WebAbstractComponent<GoogleMap> implemen
                         com.haulmont.charts.gui.map.model.directions.DirectionsStatus.fromValue(status.value()));
             }
         });
+    }
+
+    @Override
+    public Size createSize(double width, double height) {
+        return new SizeDelegate(new com.vaadin.tapio.googlemaps.client.base.Size(width, height));
+    }
+
+    @Override
+    public Point createPoint(double x, double y) {
+        return new PointDelegate(new com.vaadin.tapio.googlemaps.client.base.Point(x, y));
+    }
+
+    @Override
+    public MarkerImage createMarkerImage() {
+        return new MarkerImageDelegate(new com.vaadin.tapio.googlemaps.client.base.MarkerImage());
+    }
+
+    @Override
+    public MarkerImage createMarkerImage(String url) {
+        return new MarkerImageDelegate(new com.vaadin.tapio.googlemaps.client.base.MarkerImage(url));
     }
 }

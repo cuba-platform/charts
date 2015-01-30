@@ -96,6 +96,6 @@ public class HeatMapLayerDelegate implements HeatMapLayer {
 
     @Override
     public List<GeoPoint> getData() {
-        return DelegateHelper.toGeoPoint(layer.getData());
+        return DelegateHelper.toGeoPoints(layer.getData());
     }
 }

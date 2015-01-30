@@ -5,6 +5,7 @@
 
 package com.haulmont.charts.web.gui.components.map.google;
 
+import com.haulmont.bali.util.Preconditions;
 import com.haulmont.charts.gui.map.model.GeoPoint;
 import com.vaadin.tapio.googlemaps.client.base.LatLon;
 import com.vaadin.tapio.googlemaps.client.base.WeightedLocation;
@@ -19,21 +20,18 @@ public class WeightedLocationDelegate implements com.haulmont.charts.gui.map.mod
     private WeightedLocation location;
 
     public WeightedLocationDelegate(WeightedLocation location) {
+        Preconditions.checkNotNullArgument(location);
         this.location = location;
     }
 
     @Override
     public GeoPoint getLocation() {
-        return new GeoPointDelegate(location.getLocation());
+        return GeoPointDelegate.fromLatLon(location.getLocation());
     }
 
     @Override
     public void setLocation(GeoPoint location) {
-        if (location == null) {
-            this.location.setLocation(null);
-        } else {
-            this.location.setLocation(new LatLon(location.getLatitude(), location.getLongitude()));
-        }
+        this.location.setLocation(location != null ? ((GeoPointDelegate)location).getLatLon() : null);
     }
 
     @Override

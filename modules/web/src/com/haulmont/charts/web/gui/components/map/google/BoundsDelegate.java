@@ -5,6 +5,7 @@
 
 package com.haulmont.charts.web.gui.components.map.google;
 
+import com.haulmont.bali.util.Preconditions;
 import com.haulmont.charts.gui.map.model.Bounds;
 import com.haulmont.charts.gui.map.model.GeoPoint;
 import com.vaadin.tapio.googlemaps.client.base.LatLonBounds;
@@ -16,7 +17,12 @@ import com.vaadin.tapio.googlemaps.client.base.LatLonBounds;
 public class BoundsDelegate implements Bounds {
     private LatLonBounds bounds;
 
+    public static BoundsDelegate fromLatLonBounds(LatLonBounds bounds) {
+        return bounds != null ? new BoundsDelegate(bounds) : null;
+    }
+
     public BoundsDelegate(LatLonBounds bounds) {
+        Preconditions.checkNotNullArgument(bounds);
         this.bounds = bounds;
     }
 
@@ -30,21 +36,21 @@ public class BoundsDelegate implements Bounds {
 
     @Override
     public GeoPoint getSw() {
-        return new GeoPointDelegate(bounds.getSw());
+        return GeoPointDelegate.fromLatLon(bounds.getSw());
     }
 
     @Override
     public void setSw(GeoPoint sw) {
-        bounds.setSw(((GeoPointDelegate)sw).getLatLon());
+        bounds.setSw(sw != null ? ((GeoPointDelegate)sw).getLatLon() : null);
     }
 
     @Override
     public GeoPoint getNe() {
-        return new GeoPointDelegate(bounds.getNe());
+        return GeoPointDelegate.fromLatLon(bounds.getNe());
     }
 
     @Override
     public void setNe(GeoPoint ne) {
-        bounds.setNe(((GeoPointDelegate)ne).getLatLon());
+        bounds.setNe(ne != null ? ((GeoPointDelegate)ne).getLatLon() : null);
     }
 }
