@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!--
-  ~ Copyright (c) 2008-2013 Haulmont. All rights reserved.
+  ~ Copyright (c) 2008-2015 Haulmont. All rights reserved.
   ~ Use is subject to license terms, see http://www.cuba-platform.com/license for details.
   -->
 
@@ -9,13 +9,23 @@
         <item name="AmCharts" web="http://www.amcharts.com/">
             <license>
                 <![CDATA[
-                    AmCharts Free License
+AmCharts Free License
 
-                    You can download and use all amCharts products for free. The only limitation of the free version is that a small link to this web site will be displayed in the top left corner of your charts.
+You can download and use all amCharts products for free. The only limitation of the free version is that a small link to this web site will be displayed in the top left corner of your charts.
 If you would like to use charts without this link, or you appreciate the software and would like to support its creators, please purchase a commercial license.
                 ]]>
             </license>
         </item>
-        <item name="GoogleMaps Vaadin Addon" web="http://vaadin.com/addon/googlemaps-add-on" license="apache-2.0"/>
+
+        <item name="GoogleMaps Vaadin Addon" web="http://vaadin.com/addon/googlemaps-add-on" license="apache-2.0">
+            <jar>googlemaps-.*</jar>
+        </item>
+
+        <item name="Google API Libraries for GWT" web="https://code.google.com/p/gwt-google-apis" license="apache-2.0">
+            <jar>gwt-maps-api-.*</jar>
+            <jar>gwt-ajaxloader-.*</jar>
+        </item>
+
+        <item name="Gson" web="https://code.google.com/p/google-gson" license="apache-2.0"/>
     </items>
 </credits>
