@@ -44,20 +44,16 @@ def chartsGlobalModule = project(':charts-global')
 def chartsGuiModule = project(':charts-gui')
 def chartsWebModule = project(':charts-web')
 def chartsWebToolkitModule = project(':charts-web-toolkit')
-def chartsWebLegacyModule = project(':charts-web6')
-def chartsWebToolkitLegacyModule = project(':charts-web6-toolkit')
 
 def baseVersion = artifactVersion + (isSnapshot ? '-SNAPSHOT' : '')
 
 def servletApi = [group: 'org.apache.tomcat', name: 'tomcat-servlet-api', version: '7.0.53']
 
 def cubaWeb = [group: 'com.haulmont.cuba', name: 'cuba-web', version: baseVersion]
-def cubaWebLegacy = [group: 'com.haulmont.cuba', name: 'cuba-web6', version: baseVersion]
 def cubaGui = [group: 'com.haulmont.cuba', name: 'cuba-gui', version: baseVersion]
 def cubaWebToolkit = [group: 'com.haulmont.cuba', name: 'cuba-web-toolkit', version: baseVersion]
-def cubaWebLegacyToolkit = [group: 'com.haulmont.cuba', name: 'cuba-web6-toolkit', version: baseVersion]
 
-configure([chartsGlobalModule, chartsGuiModule, chartsWebModule, chartsWebLegacyModule]) {
+configure([chartsGlobalModule, chartsGuiModule, chartsWebModule]) {
     apply(plugin: 'java')
     apply(plugin: 'idea')
     apply(plugin: 'maven')
@@ -96,7 +92,7 @@ configure([chartsGlobalModule, chartsGuiModule, chartsWebModule, chartsWebLegacy
     }
 }
 
-configure([chartsWebToolkitModule, chartsWebToolkitLegacyModule]) {
+configure(chartsWebToolkitModule) {
     apply(plugin: 'java')
     apply(plugin: 'idea')
     apply(plugin: 'maven')
@@ -188,64 +184,5 @@ configure(chartsWebModule) {
 
     artifacts {
         archives webArchive
-    }
-}
-
-configure(chartsWebLegacyModule) {
-    configurations {
-        gwtBuilding
-    }
-
-    dependencies {
-        compile(chartsGlobalModule)
-        compile(chartsGuiModule)
-        compile(cubaWebLegacy)
-
-        provided(chartsWebToolkitLegacyModule)
-        provided(cubaWebLegacyToolkit)
-
-        provided(servletApi)
-        provided(cubaWebLegacy)
-
-        gwtBuilding(cubaWebLegacyToolkit + ['classifier':'sources'])
-    }
-
-    File webOutDir = new File("$buildDir/web")
-    task buildWidgetSet(dependsOn: compileJava, type: CubaVaadinLegacyBuilding) {
-        widgetSetsDir = "$webOutDir/VAADIN/widgetsets"
-        inheritedArtifacts = ['cuba-web6-toolkit']
-        widgetSetModules = [chartsWebToolkitLegacyModule]
-        widgetSetClass = 'com.haulmont.charts.toolkit.gwt.ChartsWidgetSet'
-//        jvmArgs('-Xdebug', '-Xrunjdwp:transport=dt_socket,server=y,suspend=y,address=8000')
-        //        compilerArgs = ['-style' : 'PRETTY', '-localWorkers' : '2']
-    }
-
-    task webArchive(dependsOn: buildWidgetSet, type: Zip) {
-        from file('web')
-        from webOutDir
-        exclude '**/web.xml', '**/app.properties'
-        classifier = 'web'
-    }
-
-    artifacts {
-        archives webArchive
-    }
-
-    jar {
-        manifest {
-            attributes("Vaadin-Widgetsets": "com.haulmont.charts.toolkit.gwt.ChartsWidgetSet")
-        }
-    }
-}
-
-configure(chartsWebToolkitLegacyModule) {
-    dependencies {
-        compile(cubaWebLegacyToolkit)
-    }
-
-    jar {
-        manifest {
-            attributes("Vaadin-Widgetsets": "com.haulmont.charts.toolkit.gwt.ChartsWidgetSet")
-        }
     }
 }
