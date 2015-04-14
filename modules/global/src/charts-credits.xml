@@ -17,7 +17,8 @@ If you would like to use charts without this link, or you appreciate the softwar
             </license>
         </item>
 
-        <item name="GoogleMaps Vaadin Addon" web="http://vaadin.com/addon/googlemaps-add-on" license="apache-2.0">
+        <item name="GoogleMaps Vaadin Addon" web="http://vaadin.com/addon/googlemaps-add-on" license="apache-2.0"
+              fork="true">
             <jar>googlemaps-.*</jar>
         </item>
 
