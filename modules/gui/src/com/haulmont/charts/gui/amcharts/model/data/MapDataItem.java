@@ -19,6 +19,13 @@ public class MapDataItem implements DataItem {
 
     private Map<String, Object> properties = new HashMap<>();
 
+    public MapDataItem(Map<String, Object> properties) {
+        this.properties.putAll(properties);
+    }
+
+    public MapDataItem() {
+    }
+
     @Override
     public Collection<String> getProperties() {
         return properties.keySet();
