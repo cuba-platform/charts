@@ -187,7 +187,7 @@ public abstract class CoordinateChartLoader<T extends CoordinateChart> extends A
 
                 String color = graphElement.attributeValue("color");
                 if (StringUtils.isNotEmpty(color)) {
-                    graph.setClustered(Boolean.valueOf(color));
+                    graph.setColor(Color.valueOf(color));
                 }
 
                 String colorField = graphElement.attributeValue("colorField");
@@ -197,7 +197,7 @@ public abstract class CoordinateChartLoader<T extends CoordinateChart> extends A
 
                 String columnWidth = graphElement.attributeValue("columnWidth");
                 if (StringUtils.isNotEmpty(columnWidth)) {
-                    graph.setColumnWidth(Integer.valueOf(columnWidth));
+                    graph.setColumnWidth(Double.valueOf(columnWidth));
                 }
 
                 String connect = graphElement.attributeValue("connect");

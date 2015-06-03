@@ -55,7 +55,7 @@ public class Graph extends AbstractConfigurationObject {
 
     private String colorField;
 
-    private Integer columnWidth;
+    private Double columnWidth;
 
     private Boolean connect;
 
@@ -429,11 +429,11 @@ public class Graph extends AbstractConfigurationObject {
         return this;
     }
 
-    public Integer getColumnWidth() {
+    public Double getColumnWidth() {
         return columnWidth;
     }
 
-    public Graph setColumnWidth(Integer columnWidth) {
+    public Graph setColumnWidth(Double columnWidth) {
         this.columnWidth = columnWidth;
         return this;
     }
