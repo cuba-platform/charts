@@ -7,6 +7,7 @@ package com.haulmont.charts.web.gui;
 
 import com.haulmont.charts.gui.components.charts.Chart;
 import com.haulmont.charts.gui.components.map.GoogleMapViewer;
+import com.haulmont.charts.gui.components.map.MapViewer;
 import com.haulmont.charts.gui.xml.layout.loaders.charts.*;
 import com.haulmont.charts.gui.xml.layout.loaders.map.MapViewerLoader;
 import com.haulmont.charts.web.gui.components.charts.amcharts.WebChart;
@@ -37,7 +38,7 @@ public class ChartComponentPalette implements ComponentPalette {
         loaders.put("serialChart", SerialChartLoader.class);
         loaders.put("xyChart", XYChartLoader.class);
 
-        loaders.put("mapViewer", MapViewerLoader.class);
+        loaders.put(MapViewer.TAG_NAME, MapViewerLoader.class);
 
         return loaders;
     }

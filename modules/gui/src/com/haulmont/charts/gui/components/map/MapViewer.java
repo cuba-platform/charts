@@ -28,6 +28,9 @@ import java.util.Objects;
  */
 public interface MapViewer extends Component, Component.BelongToFrame, Component.HasXmlDescriptor {
 
+    /** Tag name for XML loader, for component name see {@link com.haulmont.charts.gui.components.map.GoogleMapViewer#NAME} */
+    String TAG_NAME = "mapViewer";
+
     /**
      * Map types
      */
