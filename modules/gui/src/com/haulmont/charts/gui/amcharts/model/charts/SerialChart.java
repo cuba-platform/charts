@@ -13,7 +13,9 @@ import java.util.ArrayList;
 import java.util.List;
 
 /**
- * See documentation for properties of AmSerialChart JS object.
+ * See documentation for properties of AmSerialChart JS object. <br/>
+ *
+ * <a href="http://docs.amcharts.com/3/javascriptcharts/AmSerialChart">http://docs.amcharts.com/3/javascriptcharts/AmSerialChart</a>
  *
  * @author artamonov
  * @version $Id$

@@ -8,7 +8,9 @@ package com.haulmont.charts.gui.amcharts.model;
 import java.util.List;
 
 /**
- * See documentation for properties of CategoryAxis JS Object.
+ * See documentation for properties of CategoryAxis JS Object. <br/>
+ *
+ * <a href="http://docs.amcharts.com/3/javascriptcharts/CategoryAxis">http://docs.amcharts.com/3/javascriptcharts/CategoryAxis</a>
  *
  * @author artamonov
  * @version $Id$

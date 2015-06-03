@@ -6,7 +6,9 @@
 package com.haulmont.charts.gui.amcharts.model;
 
 /**
- * See documentation for properties of GaugeBand JS Object.
+ * See documentation for properties of GaugeBand JS Object. <br/>
+ *
+ * <a href="http://docs.amcharts.com/3/javascriptcharts/GaugeBand">http://docs.amcharts.com/3/javascriptcharts/GaugeBand</a>
  *
  * @author artamonov
  * @version $Id$

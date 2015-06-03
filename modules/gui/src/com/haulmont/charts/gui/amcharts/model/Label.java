@@ -6,6 +6,10 @@
 package com.haulmont.charts.gui.amcharts.model;
 
 /**
+ * See documentation for properties of Label JS Object. <br/>
+ *
+ * <a href="http://docs.amcharts.com/3/javascriptcharts/Label">http://docs.amcharts.com/3/javascriptcharts/Label</a>
+ *
  * @author artamonov
  * @version $Id$
  */

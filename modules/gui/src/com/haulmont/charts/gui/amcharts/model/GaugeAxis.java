@@ -10,7 +10,9 @@ import java.util.Arrays;
 import java.util.List;
 
 /**
- * See documentation for properties of GaugeAxis JS Object.
+ * See documentation for properties of GaugeAxis JS Object. <br/>
+ *
+ * <a href="http://docs.amcharts.com/3/javascriptcharts/GaugeAxis">http://docs.amcharts.com/3/javascriptcharts/GaugeAxis</a>
  *
  * @author artamonov
  * @version $Id$

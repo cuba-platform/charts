@@ -10,7 +10,9 @@ import java.util.Arrays;
 import java.util.List;
 
 /**
- * See documentation for properties of AxisBase JS Object.
+ * See documentation for properties of AxisBase JS Object. <br/>
+ *
+ * <a href="http://docs.amcharts.com/3/javascriptcharts/AxisBase">http://docs.amcharts.com/3/javascriptcharts/AxisBase</a>
  *
  * @author artamonov
  * @version $Id$

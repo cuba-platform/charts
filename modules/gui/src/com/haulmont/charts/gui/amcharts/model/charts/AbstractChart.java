@@ -16,7 +16,9 @@ import java.util.List;
 
 /**
  * Base class for charts. <br/>
- * See documentation for properties of AmChart JS object.
+ * See documentation for properties of AmChart JS object. <br/>
+ *
+ * <a href="http://docs.amcharts.com/3/javascriptcharts/AmChart">http://docs.amcharts.com/3/javascriptcharts/AmChart</a>
  *
  * @author artamonov
  * @version $Id$

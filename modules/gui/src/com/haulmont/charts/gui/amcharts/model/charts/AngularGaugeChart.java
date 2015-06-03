@@ -12,7 +12,9 @@ import java.util.Arrays;
 import java.util.List;
 
 /**
- * See documentation for properties of AmAngularGauge JS object.
+ * See documentation for properties of AmAngularGauge JS object. <br/>
+ *
+ * <a href="http://docs.amcharts.com/3/javascriptcharts/AmAngularGauge">http://docs.amcharts.com/3/javascriptcharts/AmAngularGauge</a>
  *
  * @author artamonov
  * @version $Id$

@@ -13,7 +13,9 @@ import java.util.Arrays;
 import java.util.List;
 
 /**
- * See documentation for properties of AmCoordinateChart JS object.
+ * See documentation for properties of AmCoordinateChart JS object. <br/>
+ *
+ * <a href="http://docs.amcharts.com/3/javascriptcharts/AmCoordinateChart">http://docs.amcharts.com/3/javascriptcharts/AmCoordinateChart</a>
  *
  * @author artamonov
  * @version $Id$

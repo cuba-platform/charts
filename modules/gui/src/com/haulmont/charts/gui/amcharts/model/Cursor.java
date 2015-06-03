@@ -6,7 +6,9 @@
 package com.haulmont.charts.gui.amcharts.model;
 
 /**
- * See documentation for properties of ChartCursor JS Object.
+ * See documentation for properties of ChartCursor JS Object. <br/>
+ *
+ * <a href="http://docs.amcharts.com/3/javascriptcharts/ChartCursor">http://docs.amcharts.com/3/javascriptcharts/ChartCursor</a>
  *
  * @author artamonov
  * @version $Id$

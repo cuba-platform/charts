@@ -13,7 +13,9 @@ import java.util.Arrays;
 import java.util.List;
 
 /**
- * See documentation for properties of AmSlicedChart JS object.
+ * See documentation for properties of AmSlicedChart JS object. <br/>
+ *
+ * <a href="http://docs.amcharts.com/3/javascriptcharts/AmSlicedChart">http://docs.amcharts.com/3/javascriptcharts/AmSlicedChart</a>
  *
  * @author artamonov
  * @version $Id$

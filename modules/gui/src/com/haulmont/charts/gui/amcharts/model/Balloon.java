@@ -6,7 +6,9 @@
 package com.haulmont.charts.gui.amcharts.model;
 
 /**
- * See documentation for properties of AmBalloon JS object.
+ * See documentation for properties of AmBalloon JS object. <br/>
+ *
+ * <a href="http://docs.amcharts.com/3/javascriptcharts/AmBalloon">http://docs.amcharts.com/3/javascriptcharts/AmBalloon</a>
  *
  * @author artamonov
  * @version $Id$

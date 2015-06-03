@@ -8,7 +8,9 @@ package com.haulmont.charts.gui.amcharts.model;
 import java.util.Map;
 
 /**
- * See documentation for properties of ValueAxis JS Object.
+ * See documentation for properties of ValueAxis JS Object. <br/>
+ *
+ * <a href="http://docs.amcharts.com/3/javascriptcharts/ValueAxis">http://docs.amcharts.com/3/javascriptcharts/ValueAxis</a>
  *
  * @author artamonov
  * @version $Id$

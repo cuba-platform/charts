@@ -8,7 +8,9 @@ package com.haulmont.charts.gui.amcharts.model.charts;
 import com.haulmont.charts.gui.amcharts.model.ChartType;
 
 /**
- * See documentation for properties of AmXYChart JS object.
+ * See documentation for properties of AmXYChart JS object. <br/>
+ *
+ * <a href="http://docs.amcharts.com/3/javascriptcharts/AmXYChart">http://docs.amcharts.com/3/javascriptcharts/AmXYChart</a>
  *
  * @author artamonov
  * @version $Id$

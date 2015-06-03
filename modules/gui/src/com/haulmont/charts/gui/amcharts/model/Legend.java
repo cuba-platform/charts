@@ -10,7 +10,9 @@ import java.util.Arrays;
 import java.util.List;
 
 /**
- * See documentation for properties of AmLegend JS Object.
+ * See documentation for properties of AmLegend JS Object. <br/>
+ *
+ * <a href="http://docs.amcharts.com/3/javascriptcharts/AmLegend">http://docs.amcharts.com/3/javascriptcharts/AmLegend</a>
  *
  * @author artamonov
  * @version $Id$
