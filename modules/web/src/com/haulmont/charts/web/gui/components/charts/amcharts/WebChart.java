@@ -27,7 +27,9 @@ import com.haulmont.cuba.core.global.DevelopmentException;
 import com.haulmont.cuba.core.global.Messages;
 import com.haulmont.cuba.core.global.UserSessionSource;
 import com.haulmont.cuba.gui.data.CollectionDatasource;
+import com.haulmont.cuba.gui.data.impl.CollectionDsHelper;
 import com.haulmont.cuba.web.gui.components.WebAbstractComponent;
+import com.vaadin.server.ClientConnector;
 import org.apache.commons.lang.BooleanUtils;
 import org.apache.commons.lang.ObjectUtils;
 import org.apache.commons.lang.StringUtils;
@@ -125,6 +127,14 @@ public class WebChart extends WebAbstractComponent<CubaAmchartsScene> implements
         initLocale();
 
         component = new CubaAmchartsSceneExt();
+        component.addAttachListener(new ClientConnector.AttachListener() {
+            @Override
+            public void attach(ClientConnector.AttachEvent event) {
+                if (datasource != null) {
+                    CollectionDsHelper.autoRefreshInvalid(datasource, true);
+                }
+            }
+        });
     }
 
     protected void initLocale() {
@@ -189,7 +199,10 @@ public class WebChart extends WebAbstractComponent<CubaAmchartsScene> implements
 
         if (datasource == null) {
             component.getChart().setDataProvider(null);
+        } else {
+            CollectionDsHelper.autoRefreshInvalid(datasource, true);
         }
+
         if (component.getChart() != null) {
             component.getChart().setDataProvider(new EntityDataProvider(datasource));
         }
