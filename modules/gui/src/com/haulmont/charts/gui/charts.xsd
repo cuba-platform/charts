@@ -1085,6 +1085,10 @@
 
         <xs:attribute name="width" type="xs:string"/>
         <xs:attribute name="height" type="xs:string"/>
+        <xs:attribute name="stylename" type="xs:string"/>
+
+        <xs:attribute name="visible" type="xs:boolean"/>
+        <xs:attribute name="enable" type="xs:boolean"/>
 
         <xs:attribute name="backgroundColor" type="color"/>
         <xs:attribute name="classNamePrefix" type="xs:string"/>
@@ -1416,9 +1420,14 @@
         <xs:complexType>
             <xs:attribute name="id" type="xs:string"/>
             <xs:attribute name="vendor" type="mapVendorType" default="google"/>
+            <xs:attribute name="mapType" type="mapTypeType" default="roadmap"/>
+
             <xs:attribute name="width" type="xs:string"/>
             <xs:attribute name="height" type="xs:string"/>
-            <xs:attribute name="mapType" type="mapTypeType" default="roadmap"/>
+            <xs:attribute name="stylename" type="xs:string"/>
+
+            <xs:attribute name="visible" type="xs:boolean"/>
+            <xs:attribute name="enable" type="xs:boolean"/>
         </xs:complexType>
     </xs:element>
 

@@ -43,6 +43,10 @@ public abstract class AbstractChartLoader<T extends AbstractChart> extends Compo
         loadWidth(chart, element);
         loadHeight(chart, element);
 
+        loadVisible(chart, element);
+        loadEnable(chart, element);
+        loadStyleName(chart, element);
+
         loadDatasource(chart, element);
 
         return chart;

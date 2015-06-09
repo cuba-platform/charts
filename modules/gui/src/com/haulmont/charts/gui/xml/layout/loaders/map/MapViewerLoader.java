@@ -48,6 +48,11 @@ public class MapViewerLoader extends ComponentLoader {
         loadId(mapViewer, element);
         loadWidth(mapViewer, element, Component.AUTO_SIZE);
         loadHeight(mapViewer, element, Component.AUTO_SIZE);
+
+        loadVisible(mapViewer, element);
+        loadEnable(mapViewer, element);
+        loadStyleName(mapViewer, element);
+
         loadMapType(mapViewer, element);
 
         assignFrame(mapViewer);
