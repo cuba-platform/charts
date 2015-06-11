@@ -101,6 +101,7 @@ public class CubaAmchartsScene extends AbstractComponent {
     public void setJson(String json) {
         if (!StringUtils.equals(getJson(), json)) {
             getState().json = json;
+            forceStateChange();
         }
     }
 

@@ -19,7 +19,8 @@ public class AmchartsConfig extends JavaScriptObject {
     }
 
     public static AmchartsConfig fromServerConfig(String config, String json) {
-        AmchartsConfig configObject = (AmchartsConfig) JSONParser.parseLenient(config).isObject().getJavaScriptObject();
+        String configJson = config != null ? config : "{}";
+        AmchartsConfig configObject = (AmchartsConfig) JSONParser.parseLenient(configJson).isObject().getJavaScriptObject();
         applyCustomJson(configObject, json);
         activateFunctions(configObject);
         parseConfigDateProperties(configObject);
