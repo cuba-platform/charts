@@ -253,9 +253,11 @@ public interface Chart extends Component, Component.BelongToFrame, Component.Has
         private final int absoluteY;
 
         private final Entity item;
+        private final int itemIndex;
 
-        public GraphItemClickEvent(String graphId, Entity item, int x, int y, int absoluteX, int absoluteY) {
+        public GraphItemClickEvent(String graphId, Entity item, int itemIndex, int x, int y, int absoluteX, int absoluteY) {
             this.item = item;
+            this.itemIndex = itemIndex;
             this.absoluteY = absoluteY;
             this.absoluteX = absoluteX;
             this.graphId = graphId;
@@ -277,6 +279,10 @@ public interface Chart extends Component, Component.BelongToFrame, Component.Has
 
         public Entity getItem() {
             return item;
+        }
+
+        public int getItemIndex() {
+            return itemIndex;
         }
 
         public int getX() {

@@ -34,6 +34,10 @@ public class JsGraphItemClickEvent extends JavaScriptObject {
 
     public final native String getItemId() /*-{
         if (this.item && this.item.dataContext) {
+            if (!this.item.dataContext.id) {
+                return null;
+            }
+
             return "" + this.item.dataContext.id;
         }
         return null;

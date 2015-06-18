@@ -434,10 +434,9 @@ public class WebChart extends WebAbstractComponent<CubaAmchartsScene> implements
             graphItemClickHandler = new com.haulmont.charts.web.toolkit.ui.amcharts.events.GraphItemClickListener() {
                 @Override
                 public void onClick(com.haulmont.charts.web.toolkit.ui.amcharts.events.GraphItemClickEvent e) {
-
                     GraphItemClickEvent cubaEvent = new GraphItemClickEvent(
                             e.getGraphId(), getEventItem(e.getItemId()),
-                            e.getX(), e.getY(), e.getAbsoluteX(), e.getAbsoluteY());
+                            e.getItemIndex(), e.getX(), e.getY(), e.getAbsoluteX(), e.getAbsoluteY());
 
                     for (GraphItemClickListener listener : new ArrayList<>(graphItemClickListeners)) {
                         listener.onClick(cubaEvent);
@@ -472,7 +471,7 @@ public class WebChart extends WebAbstractComponent<CubaAmchartsScene> implements
                 public void onClick(GraphItemRightClickEvent e) {
                     GraphItemClickEvent cubaEvent = new GraphItemClickEvent(
                             e.getGraphId(), getEventItem(e.getItemId()),
-                            e.getX(), e.getY(), e.getAbsoluteX(), e.getAbsoluteY());
+                            e.getItemIndex(), e.getX(), e.getY(), e.getAbsoluteX(), e.getAbsoluteY());
 
                     for (GraphItemClickListener listener : new ArrayList<>(graphItemRightClickListeners)) {
                         listener.onClick(cubaEvent);
