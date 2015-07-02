@@ -110,7 +110,7 @@ configure(chartsWebToolkitModule) {
 
 configure(chartsGlobalModule) {
     task enhance(type: CubaEnhancing, dependsOn: compileJava) {
-        persistenceXml = "$chartsGlobalModule.projectDir/src/charts-persistence.xml"
+        persistenceConfig = 'cuba-persistence.xml charts-persistence.xml'
     }
 }
 
@@ -125,8 +125,12 @@ configure(chartsGuiModule) {
 
 configure(chartsWebToolkitModule) {
     dependencies {
-        compile(chartsWebModule)
-        compile(cubaWebToolkit)
+        compile(chartsWebModule) {
+            exclude(group: 'org.eclipse.persistence', module: 'eclipselink')            
+        }
+        compile(cubaWebToolkit) {
+            exclude(group: 'org.eclipse.persistence', module: 'eclipselink')            
+        }
     }
 
     task buildWidgetSet(type: CubaWidgetSetBuilding) {
