@@ -4,6 +4,6 @@
   ~ Use is subject to license terms, see http://www.cuba-platform.com/license for details.
   -->
 
-<screen-config xmlns="http://schemas.haulmont.com/cuba/5.5/screens.xsd">
+<screen-config xmlns="http://schemas.haulmont.com/cuba/screens.xsd">
     <screen id="chart$jsonChart" template="/com/haulmont/charts/web/ui/json-chart.xml"/>
 </screen-config>

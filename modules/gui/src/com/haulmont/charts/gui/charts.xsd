@@ -4,9 +4,9 @@
   ~ Use is subject to license terms, see http://www.cuba-platform.com/license for details.
   -->
 
-<xs:schema targetNamespace="http://schemas.haulmont.com/charts/5.5/charts.xsd"
+<xs:schema targetNamespace="http://schemas.haulmont.com/charts/charts.xsd"
            xmlns:xs="http://www.w3.org/2001/XMLSchema"
-           xmlns="http://schemas.haulmont.com/charts/5.5/charts.xsd"
+           xmlns="http://schemas.haulmont.com/charts/charts.xsd"
            elementFormDefault="qualified"
            attributeFormDefault="unqualified">
 
