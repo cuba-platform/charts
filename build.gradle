@@ -125,12 +125,8 @@ configure(chartsGuiModule) {
 
 configure(chartsWebToolkitModule) {
     dependencies {
-        compile(chartsWebModule) {
-            exclude(group: 'org.eclipse.persistence', module: 'eclipselink')            
-        }
-        compile(cubaWebToolkit) {
-            exclude(group: 'org.eclipse.persistence', module: 'eclipselink')            
-        }
+        compile(chartsWebModule)
+        compile(cubaWebToolkit)
     }
 
     task buildWidgetSet(type: CubaWidgetSetBuilding) {
