@@ -53,7 +53,7 @@ public class CubaAmchartsSceneConnector extends AbstractComponentConnector {
 
                 // Add resize listener lazily here.
                 // If done in init like in examples it will be called way too early,
-                // like before the wiget is not even rendered yet
+                // like before the widget is not even rendered yet
                 if (resizeListener == null) {
                     resizeListener = new ElementResizeListener() {
 
