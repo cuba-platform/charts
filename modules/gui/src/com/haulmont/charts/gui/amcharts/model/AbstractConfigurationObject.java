@@ -7,6 +7,7 @@ package com.haulmont.charts.gui.amcharts.model;
 
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
+import com.haulmont.charts.gui.amcharts.model.data.DataItem;
 import com.haulmont.charts.gui.amcharts.model.data.DataProvider;
 import com.haulmont.charts.gui.amcharts.model.gson.*;
 
@@ -40,6 +41,7 @@ public abstract class AbstractConfigurationObject implements Serializable {
         builder.registerTypeHierarchyAdapter(JsFunction.class, new JsFunctionSerializer());
         builder.registerTypeHierarchyAdapter(DataProvider.class, new DataProviderSerializer());
         builder.registerTypeHierarchyAdapter(Date.class, new ConfigDateSerializer());
+        builder.registerTypeHierarchyAdapter(DataItem.class, new DataItemSerializer());
         return builder;
     }
 

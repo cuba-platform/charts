@@ -5,6 +5,7 @@
 
 package com.haulmont.charts.web.toolkit.ui.client.amcharts;
 
+import com.google.gwt.core.client.JavaScriptObject;
 import com.google.gwt.core.client.Scheduler;
 import com.google.gwt.dom.client.Document;
 import com.google.gwt.user.client.Event;
@@ -126,5 +127,17 @@ public class CubaAmchartsSceneWidget extends Widget {
                 updateSize();
             }
         });
+    }
+
+    public void addPoint(JavaScriptObject jsObj) {
+        jsOverlay.addPoint(jsObj);
+    }
+
+    public void updatePoint(JavaScriptObject jsObj) {
+        jsOverlay.updatePoint(jsObj);
+    }
+
+    public void removePoint(JavaScriptObject jsObj) {
+        jsOverlay.removePoint(jsObj);
     }
 }

@@ -32,6 +32,43 @@ public class CubaAmchartsJsOverlay {
         return new CubaAmchartsJsOverlay(makeJsChart(placeHolder, json));
     }
 
+    public void addPoint(JavaScriptObject newValue) {
+        addPoint(chart, newValue);
+    }
+
+    private static native void addPoint(JavaScriptObject chart, JavaScriptObject newValue) /*-{
+        chart.dataProvider.push(newValue);
+        chart.validateData();
+    }-*/;
+
+    public void updatePoint(JavaScriptObject newValue) {
+        updatePoint(chart, newValue);
+    }
+
+    private static native void updatePoint(JavaScriptObject chart, JavaScriptObject newValue) /*-{
+        for (var i = 0; i < chart.dataProvider.length; i++) {
+            if (chart.dataProvider[i].id == newValue.id) {
+                chart.dataProvider[i] = newValue;
+                chart.validateData();
+                break;
+            }
+        }
+    }-*/;
+
+    public void removePoint(JavaScriptObject value) {
+        removePoint(chart, value);
+    }
+
+    private static native void removePoint(JavaScriptObject chart, JavaScriptObject value) /*-{
+        for (var i = 0; i < chart.dataProvider.length; i++) {
+            if (chart.dataProvider[i].id == value.id) {
+                chart.dataProvider.splice(i, 1);
+                chart.validateData();
+                break;
+            }
+        }
+    }-*/;
+
     private static native void handleLoad() /*-{
         $wnd.AmCharts.handleLoad();
     }-*/;

@@ -6,7 +6,12 @@
 package com.haulmont.charts.web.toolkit.ui.amcharts;
 
 import com.haulmont.charts.gui.amcharts.model.charts.*;
+import com.haulmont.charts.gui.amcharts.model.data.ConfigurationChangeListener;
+import com.haulmont.charts.gui.amcharts.model.data.DataAddedEvent;
+import com.haulmont.charts.gui.amcharts.model.data.DataRemovedEvent;
+import com.haulmont.charts.gui.amcharts.model.data.DataUpdatedEvent;
 import com.haulmont.charts.web.toolkit.ui.amcharts.events.*;
+import com.haulmont.charts.web.toolkit.ui.client.amcharts.CubaAmchartClientRpc;
 import com.haulmont.charts.web.toolkit.ui.client.amcharts.CubaAmchartsSceneState;
 import com.haulmont.charts.web.toolkit.ui.client.amcharts.CubaAmchartsServerRpc;
 import com.vaadin.ui.AbstractComponent;
@@ -72,6 +77,8 @@ public class CubaAmchartsScene extends AbstractComponent {
 
     private final static Method axisZoomMethod =
             ReflectTools.findMethod(AxisZoomListener.class, "onZoom", AxisZoomEvent.class);
+
+    protected final ConfigurationChangeListener changeListener = new ProxyChangeForwarder(this);
 
     private boolean dirty = false;
 
@@ -299,6 +306,7 @@ public class CubaAmchartsScene extends AbstractComponent {
 
                 if (chart.getDataProvider() != null) {
                     chart.getDataProvider().bindToChart(chart);
+                    chart.getDataProvider().addChangeListener(changeListener);
                 }
 
                 getState().configuration = chart.toString();
@@ -400,6 +408,42 @@ public class CubaAmchartsScene extends AbstractComponent {
         @Override
         public void onValueAxisZoom(String axisId, double startValue, double endValue) {
             fireEvent(new AxisZoomEvent(CubaAmchartsScene.this, axisId, startValue, endValue));
+        }
+    }
+
+    private static class ProxyChangeForwarder implements ConfigurationChangeListener {
+
+        private final CubaAmchartsScene chart;
+
+        private ProxyChangeForwarder(CubaAmchartsScene chart) {
+            this.chart = chart;
+        }
+
+        @Override
+        public void dataAdded(DataAddedEvent event) {
+            if (event.getItem() != null) {
+                chart.getRpcProxy(CubaAmchartClientRpc.class).addPoint(event.getItem().toString());
+            }
+        }
+
+        @Override
+        public void dataRemoved(DataRemovedEvent event) {
+            if (event.getItem() != null) {
+                chart.getRpcProxy(CubaAmchartClientRpc.class).removePoint(event.getItem().toString());
+            }
+        }
+
+        @Override
+        public void dataUpdated(DataUpdatedEvent event) {
+            if (event.getItem() != null) {
+                chart.getRpcProxy(CubaAmchartClientRpc.class).updatePoint(event.getItem().toString());
+            }
+        }
+
+        @Override
+        public void dataRefreshed() {
+            chart.getChart().getDataProvider().removeChangeListener(this);
+            chart.drawChart();
         }
     }
 }

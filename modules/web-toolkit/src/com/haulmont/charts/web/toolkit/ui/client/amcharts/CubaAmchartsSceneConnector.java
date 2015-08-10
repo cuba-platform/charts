@@ -5,8 +5,10 @@
 
 package com.haulmont.charts.web.toolkit.ui.client.amcharts;
 
+import com.google.gwt.core.client.JavaScriptObject;
 import com.google.gwt.core.client.Scheduler;
 import com.google.gwt.dom.client.NativeEvent;
+import com.google.gwt.json.client.JSONParser;
 import com.haulmont.charts.web.toolkit.ui.amcharts.CubaAmchartsScene;
 import com.haulmont.charts.web.toolkit.ui.client.amcharts.events.*;
 import com.haulmont.cuba.web.toolkit.ui.client.JsDate;
@@ -28,6 +30,44 @@ public class CubaAmchartsSceneConnector extends AbstractComponentConnector {
 
     protected CubaAmchartsServerRpc rpc = RpcProxy.create(CubaAmchartsServerRpc.class, this);
     protected ElementResizeListener resizeListener;
+
+    public CubaAmchartsSceneConnector() {
+             registerRpc(CubaAmchartClientRpc.class, new CubaAmchartClientRpc() {
+                 @Override
+                 public void addPoint(final String json) {
+                     Scheduler.get().scheduleDeferred(new Scheduler.ScheduledCommand() {
+                         @Override
+                         public void execute() {
+                             getWidget().addPoint(getPointAsObject(json));
+                         }
+                     });
+                 }
+
+                 @Override
+                 public void updatePoint(final String json) {
+                     Scheduler.get().scheduleDeferred(new Scheduler.ScheduledCommand() {
+                         @Override
+                         public void execute() {
+                             getWidget().updatePoint(getPointAsObject(json));
+                         }
+                     });
+                 }
+
+                 @Override
+                 public void removePoint(final String json) {
+                     Scheduler.get().scheduleDeferred(new Scheduler.ScheduledCommand() {
+                         @Override
+                         public void execute() {
+                             getWidget().removePoint(getPointAsObject(json));
+                         }
+                     });
+                 }
+             });
+    }
+
+    protected JavaScriptObject getPointAsObject(String json) {
+        return JSONParser.parseLenient(json).isObject().getJavaScriptObject();
+    }
 
     @Override
     public CubaAmchartsSceneState getState() {

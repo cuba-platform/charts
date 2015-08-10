@@ -9,8 +9,7 @@ import com.haulmont.charts.gui.amcharts.model.*;
 import com.haulmont.charts.gui.amcharts.model.charts.AbstractChart;
 import com.haulmont.charts.gui.amcharts.model.charts.RectangularChart;
 import com.haulmont.charts.gui.amcharts.model.charts.SerialChart;
-import com.haulmont.charts.gui.amcharts.model.data.DataItem;
-import com.haulmont.charts.gui.amcharts.model.data.DataProvider;
+import com.haulmont.charts.gui.amcharts.model.data.*;
 import com.haulmont.charts.gui.components.charts.Chart;
 import com.haulmont.charts.web.toolkit.ui.amcharts.CubaAmchartsIntegration;
 import com.haulmont.charts.web.toolkit.ui.amcharts.CubaAmchartsScene;
@@ -28,6 +27,7 @@ import com.haulmont.cuba.core.global.Messages;
 import com.haulmont.cuba.core.global.UserSessionSource;
 import com.haulmont.cuba.gui.data.CollectionDatasource;
 import com.haulmont.cuba.gui.data.impl.CollectionDsHelper;
+import com.haulmont.cuba.gui.data.impl.CollectionDsListenerAdapter;
 import com.haulmont.cuba.web.gui.components.WebAbstractComponent;
 import com.vaadin.server.ClientConnector;
 import org.apache.commons.lang.BooleanUtils;
@@ -913,9 +913,71 @@ public class WebChart extends WebAbstractComponent<CubaAmchartsScene> implements
 
         protected final CollectionDatasource datasource;
         protected List<String> properties = new ArrayList<>();
+        protected final List<ConfigurationChangeListener> changeListeners = new ArrayList<>();
 
+        @SuppressWarnings("unchecked")
         public EntityDataProvider(CollectionDatasource datasource) {
             this.datasource = datasource;
+
+            this.datasource.addListener(new CollectionDsListenerAdapter() {
+                @Override
+                public void collectionChanged(CollectionDatasource ds, Operation operation, List items) {
+                    switch (operation) {
+                        case ADD: fireDataAdded(items);
+                            break;
+                        case REMOVE: fireDataRemoved(items);
+                            break;
+                        case UPDATE: fireDataUpdated(items);
+                            break;
+                        case REFRESH:
+                        case CLEAR: fireDataRefreshed();
+                            break;
+                    }
+                }
+            });
+        }
+
+        protected void fireDataAdded(List items) {
+            for (Object entityItem : items) {
+                Entity entity = (Entity) entityItem;
+
+                DataAddedEvent dataAddedEvent = new DataAddedEvent(new EntityDataItem(this, entity));
+                List<ConfigurationChangeListener> changeListeners = new ArrayList<>(this.changeListeners);
+                for (ConfigurationChangeListener listener : changeListeners) {
+                    listener.dataAdded(dataAddedEvent);
+                }
+            }
+        }
+
+        protected void fireDataRemoved(List items) {
+            for (Object entityItem : items) {
+                Entity entity = (Entity) entityItem;
+
+                DataRemovedEvent dataRemovedEvent = new DataRemovedEvent(new EntityDataItem(this, entity));
+                List<ConfigurationChangeListener> changeListeners = new ArrayList<>(this.changeListeners);
+                for (ConfigurationChangeListener listener : changeListeners) {
+                    listener.dataRemoved(dataRemovedEvent);
+                }
+            }
+        }
+
+        protected void fireDataUpdated(List items) {
+            for (Object entityItem : items) {
+                Entity entity = (Entity) entityItem;
+
+                DataUpdatedEvent dataUpdatedEvent = new DataUpdatedEvent(new EntityDataItem(this, entity));
+                List<ConfigurationChangeListener> changeListeners = new ArrayList<>(this.changeListeners);
+                for (ConfigurationChangeListener listener : changeListeners) {
+                    listener.dataUpdated(dataUpdatedEvent);
+                }
+            }
+        }
+
+        protected void fireDataRefreshed() {
+            List<ConfigurationChangeListener> changeListeners = new ArrayList<>(this.changeListeners);
+            for (ConfigurationChangeListener listener : changeListeners) {
+                listener.dataRefreshed();
+            }
         }
 
         @Override
@@ -967,9 +1029,21 @@ public class WebChart extends WebAbstractComponent<CubaAmchartsScene> implements
         public Collection<String> getProperties() {
             return properties;
         }
+
+        @Override
+        public void addChangeListener(ConfigurationChangeListener listener) {
+            if (!changeListeners.contains(listener)) {
+                changeListeners.add(listener);
+            }
+        }
+
+        @Override
+        public void removeChangeListener(ConfigurationChangeListener listener) {
+            changeListeners.remove(listener);
+        }
     }
 
-    protected static class EntityDataItem implements DataItem {
+    protected static class EntityDataItem extends AbstractConfigurationObject implements DataItem {
 
         protected Messages messages = AppBeans.get(Messages.NAME);
         protected final EntityDataProvider dataProvider;

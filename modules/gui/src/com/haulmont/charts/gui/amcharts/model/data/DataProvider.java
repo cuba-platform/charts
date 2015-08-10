@@ -36,4 +36,8 @@ public interface DataProvider extends Serializable {
     void removeItem(DataItem item);
 
     String getDateFormat();
+
+    void addChangeListener(ConfigurationChangeListener listener);
+
+    void removeChangeListener(ConfigurationChangeListener listener);
 }
