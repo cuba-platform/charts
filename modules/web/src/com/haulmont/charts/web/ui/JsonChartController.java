@@ -22,7 +22,7 @@ public class JsonChartController extends AbstractFrame {
         WebChart webChart = new WebChart();
         webChart.setHeight("100%");
         webChart.setWidth("100%");
-        CubaAmchartsScene cubaAmchartsScene = webChart.getComponent();
+        CubaAmchartsScene cubaAmchartsScene = (CubaAmchartsScene) webChart.getComponent();
         cubaAmchartsScene.drawChart(new PieChart());
         cubaAmchartsScene.setJson(chartJson);
         cubaAmchartsScene.drawChart();
