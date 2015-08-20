@@ -43,7 +43,7 @@ public class MapViewerLoader extends ComponentLoader {
                 throw new IllegalArgumentException("Unknown maps vendor: " + vendor);
         }
 
-        MapViewer mapViewer = factory.createComponent(componentId);
+        MapViewer mapViewer = (MapViewer) factory.createComponent(componentId);
 
         loadId(mapViewer, element);
         loadWidth(mapViewer, element, Component.AUTO_SIZE);
