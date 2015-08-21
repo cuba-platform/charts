@@ -57,11 +57,11 @@ public abstract class AbstractChartLoader<T extends AbstractChart> extends Compo
         if (StringUtils.isNotEmpty(datasource)) {
             Datasource ds = context.getDsContext().get(datasource);
             if (ds == null) {
-                throw new GuiDevelopmentException("Can't find datasource by name: " + datasource, context.getCurrentIFrameId());
+                throw new GuiDevelopmentException("Can't find datasource by name: " + datasource, context.getCurrentFrameId());
             }
 
             if (!(ds instanceof CollectionDatasource)) {
-                throw new GuiDevelopmentException("Not a CollectionDatasource: " + datasource, context.getCurrentIFrameId());
+                throw new GuiDevelopmentException("Not a CollectionDatasource: " + datasource, context.getCurrentFrameId());
             }
 
             chart.setDatasource((CollectionDatasource) ds);
