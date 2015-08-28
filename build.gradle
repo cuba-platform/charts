@@ -131,7 +131,11 @@ configure(chartsWebToolkitModule) {
 
     task buildWidgetSet(type: CubaWidgetSetBuilding) {
         widgetSetClass = 'com.haulmont.charts.web.toolkit.ui.ChartsWidgetSet'
-//        compilerArgs = ['-style' : 'PRETTY', '-localWorkers' : '2']
+    }
+
+    task buildDebugWidgetSet(type: CubaWidgetSetBuilding) {
+        widgetSetClass = 'com.haulmont.charts.web.toolkit.ui.ChartsWidgetSet'
+        style = 'PRETTY'
     }
 
     jar {
@@ -145,8 +149,16 @@ configure(chartsWebToolkitModule) {
         classifier = 'web'
     }
 
+    task webDebugArchive(dependsOn: buildDebugWidgetSet, type: Zip) {
+        from file('web')
+        from file("$buildDir/web")
+        exclude '**/web.xml', '**/app.properties'
+        classifier = 'debug'
+    }
+
     artifacts {
         archives webArchive
+        archives webDebugArchive
     }
 }
 
