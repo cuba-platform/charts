@@ -47,7 +47,7 @@ def chartsWebToolkitModule = project(':charts-web-toolkit')
 
 def baseVersion = artifactVersion + (isSnapshot ? '-SNAPSHOT' : '')
 
-def servletApi = [group: 'org.apache.tomcat', name: 'tomcat-servlet-api', version: '7.0.53']
+def servletApi = 'org.apache.tomcat:tomcat-servlet-api:8.0.26'
 
 def cubaWeb = [group: 'com.haulmont.cuba', name: 'cuba-web', version: baseVersion]
 def cubaGui = [group: 'com.haulmont.cuba', name: 'cuba-gui', version: baseVersion]
@@ -63,7 +63,7 @@ configure([chartsGlobalModule, chartsGuiModule, chartsWebModule]) {
     dependencies {
         compile(group: 'com.haulmont.cuba', name: 'cuba-global', version: baseVersion)
 
-        testCompile(group: 'junit', name: 'junit', version: '4.5')
+        testCompile('junit:junit:4.12')
     }
 
     task sourceJar(type: Jar) {
