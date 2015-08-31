@@ -37,7 +37,7 @@ public abstract class AbstractChartLoader<T extends AbstractChart> extends Compo
 
     @Override
     public Chart loadComponent(ComponentsFactory factory, Element element, Component parent) {
-        Chart chart = (Chart) factory.createComponent(element.getName());
+        Chart chart = (Chart) factory.createComponent(Chart.NAME);
 
         loadId(chart, element);
         loadWidth(chart, element);
