@@ -40,9 +40,9 @@ public abstract class RectangularChart<T extends RectangularChart> extends Coord
 
     private Integer marginRight;
 
-    private Integer marginTop;
-
     private Boolean marginsUpdated;
+
+    private Integer marginTop;
 
     private Double plotAreaBorderAlpha;
 

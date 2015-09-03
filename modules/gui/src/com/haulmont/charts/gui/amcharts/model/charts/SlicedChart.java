@@ -30,7 +30,7 @@ public abstract class SlicedChart<T extends SlicedChart> extends AbstractChart<T
 
     private Color baseColor;
 
-    private Byte brightnessStep;
+    private String classNameField;
 
     private String colorField;
 
@@ -92,6 +92,8 @@ public abstract class SlicedChart<T extends SlicedChart> extends AbstractChart<T
 
     private Boolean sequencedAnimation;
 
+    private Boolean showZeroSlices;
+
     private Double startAlpha;
 
     private Integer startDuration;
@@ -136,15 +138,6 @@ public abstract class SlicedChart<T extends SlicedChart> extends AbstractChart<T
 
     public T setBaseColor(Color baseColor) {
         this.baseColor = baseColor;
-        return (T) this;
-    }
-
-    public Byte getBrightnessStep() {
-        return brightnessStep;
-    }
-
-    public T setBrightnessStep(Byte brightnessStep) {
-        this.brightnessStep = brightnessStep;
         return (T) this;
     }
 
@@ -565,5 +558,23 @@ public abstract class SlicedChart<T extends SlicedChart> extends AbstractChart<T
         }
 
         return wiredFields;
+    }
+
+    public String getClassNameField() {
+        return classNameField;
+    }
+
+    public T setClassNameField(String classNameField) {
+        this.classNameField = classNameField;
+        return (T) this;
+    }
+
+    public Boolean getShowZeroSlices() {
+        return showZeroSlices;
+    }
+
+    public T setShowZeroSlices(Boolean showZeroSlices) {
+        this.showZeroSlices = showZeroSlices;
+        return (T) this;
     }
 }

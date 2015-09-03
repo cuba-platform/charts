@@ -345,6 +345,11 @@ public abstract class CoordinateChartLoader<T extends CoordinateChart> extends A
                     graph.setLabelPosition(ValueLabelPosition.valueOf(labelPosition));
                 }
 
+                String labelRotation = graphElement.attributeValue("labelRotation");
+                if (StringUtils.isNotEmpty(labelRotation)) {
+                    graph.setLabelRotation(Integer.valueOf(labelRotation));
+                }
+
                 String labelText = graphElement.attributeValue("labelText");
                 if (StringUtils.isNotEmpty(labelText)) {
                     graph.setLabelText(loadResourceString(labelText));
@@ -470,6 +475,16 @@ public abstract class CoordinateChartLoader<T extends CoordinateChart> extends A
                     graph.setPointPosition(PointPosition.valueOf(pointPosition));
                 }
 
+                String precision = graphElement.attributeValue("precision");
+                if (StringUtils.isNotEmpty(precision)) {
+                    graph.setPrecision(Integer.valueOf(precision));
+                }
+
+                String proCandlesticks = graphElement.attributeValue("proCandlesticks");
+                if (StringUtils.isNotEmpty(proCandlesticks)) {
+                    graph.setProCandlesticks(Boolean.valueOf(proCandlesticks));
+                }
+
                 String showAllValueLabels = graphElement.attributeValue("showAllValueLabels");
                 if (StringUtils.isNotEmpty(showAllValueLabels)) {
                     graph.setShowAllValueLabels(Boolean.valueOf(showAllValueLabels));
@@ -535,6 +550,11 @@ public abstract class CoordinateChartLoader<T extends CoordinateChart> extends A
                     graph.setUrlTarget(urlTarget);
                 }
 
+                String useLineColorForBulletBorder = graphElement.attributeValue("useLineColorForBulletBorder");
+                if (StringUtils.isNotEmpty(useLineColorForBulletBorder)) {
+                    graph.setUseLineColorForBulletBorder(Boolean.valueOf(useLineColorForBulletBorder));
+                }
+
                 String useNegativeColorIfDown = graphElement.attributeValue("useNegativeColorIfDown");
                 if (StringUtils.isNotEmpty(useNegativeColorIfDown)) {
                     graph.setUseNegativeColorIfDown(Boolean.valueOf(useNegativeColorIfDown));
@@ -590,6 +610,11 @@ public abstract class CoordinateChartLoader<T extends CoordinateChart> extends A
 
                 loadAbstractAxis(axis, axisElement);
 
+                String labelFunction = valueAxesElement.elementText("labelFunction");
+                if (StringUtils.isNotBlank(labelFunction)) {
+                    axis.setLabelFunction(new JsFunction(labelFunction));
+                }
+
                 String axisTitleOffset = axisElement.attributeValue("axisTitleOffset");
                 if (StringUtils.isNotEmpty(axisTitleOffset)) {
                     axis.setAxisTitleOffset(Integer.valueOf(axisTitleOffset));
@@ -608,6 +633,11 @@ public abstract class CoordinateChartLoader<T extends CoordinateChart> extends A
                 String gridType = axisElement.attributeValue("gridType");
                 if (StringUtils.isNotEmpty(gridType)) {
                     axis.setGridType(GridType.valueOf(gridType));
+                }
+
+                String includeAllValues = axisElement.attributeValue("includeAllValues");
+                if (StringUtils.isNotEmpty(includeAllValues)) {
+                    axis.setIncludeAllValues(Boolean.valueOf(includeAllValues));
                 }
 
                 String includeGuidesInMinMax = axisElement.attributeValue("includeGuidesInMinMax");
@@ -635,14 +665,29 @@ public abstract class CoordinateChartLoader<T extends CoordinateChart> extends A
                     axis.setMaximum(Double.valueOf(maximum));
                 }
 
+                String maximumDate = axisElement.attributeValue("maximumDate");
+                if (StringUtils.isNotEmpty(maximumDate)) {
+                    axis.setMaximumDate(loadDate(maximumDate));
+                }
+
                 String minimum = axisElement.attributeValue("minimum");
                 if (StringUtils.isNotEmpty(minimum)) {
                     axis.setMinimum(Double.valueOf(minimum));
                 }
 
+                String minimumDate = axisElement.attributeValue("minimumDate");
+                if (StringUtils.isNotEmpty(minimumDate)) {
+                    axis.setMinimumDate(loadDate(minimumDate));
+                }
+
                 String minMaxMultiplier = axisElement.attributeValue("minMaxMultiplier");
                 if (StringUtils.isNotEmpty(minMaxMultiplier)) {
                     axis.setMinMaxMultiplier(Double.valueOf(minMaxMultiplier));
+                }
+
+                String pointPosition = axisElement.attributeValue("pointPosition");
+                if (StringUtils.isNotEmpty(pointPosition)) {
+                    axis.setPointPosition(PointPosition.valueOf(pointPosition));
                 }
 
                 String precision = axisElement.attributeValue("precision");
@@ -668,6 +713,11 @@ public abstract class CoordinateChartLoader<T extends CoordinateChart> extends A
                 String stackType = axisElement.attributeValue("stackType");
                 if (StringUtils.isNotEmpty(stackType)) {
                     axis.setStackType(StackType.valueOf(stackType));
+                }
+
+                String strictMinMax = axisElement.attributeValue("strictMinMax");
+                if (StringUtils.isNotEmpty(strictMinMax)) {
+                    axis.setStrictMinMax(Boolean.valueOf(strictMinMax));
                 }
 
                 String synchronizationMultiplier = axisElement.attributeValue("synchronizationMultiplier");
@@ -698,6 +748,11 @@ public abstract class CoordinateChartLoader<T extends CoordinateChart> extends A
                 String treatZeroAs = axisElement.attributeValue("treatZeroAs");
                 if (StringUtils.isNotEmpty(treatZeroAs)) {
                     axis.setTreatZeroAs(Double.valueOf(treatZeroAs));
+                }
+
+                String type = axisElement.attributeValue("type");
+                if (StringUtils.isNotEmpty(type)) {
+                    axis.setType(ValueAxisType.valueOf(type));
                 }
 
                 String unit = axisElement.attributeValue("unit");

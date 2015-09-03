@@ -47,6 +47,8 @@ public class Legend extends AbstractConfigurationObject implements HasMargins<Le
 
     private Integer fontSize;
 
+    private Boolean forceWidth;
+
     private Integer horizontalGap;
 
     private String labelText;
@@ -597,6 +599,15 @@ public class Legend extends AbstractConfigurationObject implements HasMargins<Le
 
     public Legend setWidth(Integer width) {
         this.width = width;
+        return this;
+    }
+
+    public Boolean getForceWidth() {
+        return forceWidth;
+    }
+
+    public Legend setForceWidth(Boolean forceWidth) {
+        this.forceWidth = forceWidth;
         return this;
     }
 }

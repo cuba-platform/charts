@@ -19,10 +19,6 @@ public class CategoryAxis extends AbstractAxis<CategoryAxis> {
 
     private static final long serialVersionUID = -8181114623535627249L;
 
-    private Integer autoRotateAngle;
-
-    private Integer autoRotateCount;
-
     private Boolean autoWrap;
 
     private Boolean boldPeriodBeginning;
@@ -30,8 +26,6 @@ public class CategoryAxis extends AbstractAxis<CategoryAxis> {
     private JsFunction categoryFunction;
 
     private Boolean centerLabelOnFullPeriod;
-
-    private List<DateFormat> dateFormats;
 
     private Boolean equalSpacing;
 
@@ -42,6 +36,8 @@ public class CategoryAxis extends AbstractAxis<CategoryAxis> {
     private GridPosition gridPosition;
 
     private String labelColorField;
+
+    private JsFunction labelFunction;
 
     private Boolean markPeriodChange;
 
@@ -79,15 +75,6 @@ public class CategoryAxis extends AbstractAxis<CategoryAxis> {
 
     public CategoryAxis setCenterLabelOnFullPeriod(Boolean centerLabelOnFullPeriod) {
         this.centerLabelOnFullPeriod = centerLabelOnFullPeriod;
-        return this;
-    }
-
-    public List<DateFormat> getDateFormats() {
-        return dateFormats;
-    }
-
-    public CategoryAxis setDateFormats(List<DateFormat> dateFormats) {
-        this.dateFormats = dateFormats;
         return this;
     }
 
@@ -172,24 +159,6 @@ public class CategoryAxis extends AbstractAxis<CategoryAxis> {
         return this;
     }
 
-    public Integer getAutoRotateAngle() {
-        return autoRotateAngle;
-    }
-
-    public CategoryAxis setAutoRotateAngle(Integer autoRotateAngle) {
-        this.autoRotateAngle = autoRotateAngle;
-        return this;
-    }
-
-    public Integer getAutoRotateCount() {
-        return autoRotateCount;
-    }
-
-    public CategoryAxis setAutoRotateCount(Integer autoRotateCount) {
-        this.autoRotateCount = autoRotateCount;
-        return this;
-    }
-
     public String getLabelColorField() {
         return labelColorField;
     }
@@ -214,5 +183,14 @@ public class CategoryAxis extends AbstractAxis<CategoryAxis> {
 
     public void setTwoLineMode(Boolean twoLineMode) {
         this.twoLineMode = twoLineMode;
+    }
+
+    public JsFunction getLabelFunction() {
+        return labelFunction;
+    }
+
+    public CategoryAxis setLabelFunction(JsFunction labelFunction) {
+        this.labelFunction = labelFunction;
+        return this;
     }
 }

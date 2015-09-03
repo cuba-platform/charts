@@ -65,6 +65,8 @@ public class GaugeAxis extends AbstractConfigurationObject {
 
     private Double labelFrequency;
 
+    private JsFunction labelFunction;
+
     private Integer labelOffset;
 
     private Boolean labelsEnabled;
@@ -512,6 +514,15 @@ public class GaugeAxis extends AbstractConfigurationObject {
 
     public GaugeAxis setUsePrefixes(Boolean usePrefixes) {
         this.usePrefixes = usePrefixes;
+        return this;
+    }
+
+    public JsFunction getLabelFunction() {
+        return labelFunction;
+    }
+
+    public GaugeAxis setLabelFunction(JsFunction labelFunction) {
+        this.labelFunction = labelFunction;
         return this;
     }
 }

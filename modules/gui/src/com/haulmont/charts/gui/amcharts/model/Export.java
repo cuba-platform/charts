@@ -5,6 +5,9 @@
 
 package com.haulmont.charts.gui.amcharts.model;
 
+import java.util.ArrayList;
+import java.util.List;
+
 /**
  * @author artamonov
  * @version $Id$
@@ -13,179 +16,45 @@ public class Export extends AbstractConfigurationObject {
 
     private static final long serialVersionUID = -8908356283007782587L;
 
-    private String bottom;
+    private Boolean enabled = true;
 
-    private Double buttonAlpha;
+    private ExportLibs libs;
 
-    private String buttonIcon;
+    private List<ExportMenuItem> menu;
 
-    private Color buttonRollOverColor;
-
-    private String buttonTitle;
-
-    private Boolean exportJPG;
-
-    private Boolean exportPDF;
-
-    private Boolean exportPNG;
-
-    private Boolean exportSVG;
-
-    private Color imageBackgroundColor;
-
-    private String imageFileName;
-
-    private String left;
-
-    private String right;
-
-    private Color textRollOverColor;
-
-    private String top;
-
-    private ExportConfig userCFG;
-
-    public String getBottom() {
-        return bottom;
+    public Boolean getEnabled() {
+        return enabled;
     }
 
-    public Export setBottom(String bottom) {
-        this.bottom = bottom;
+    public Export setEnabled(Boolean enabled) {
+        this.enabled = enabled;
         return this;
     }
 
-    public Double getButtonAlpha() {
-        return buttonAlpha;
+    public ExportLibs getLibs() {
+        return libs;
     }
 
-    public Export setButtonAlpha(Double buttonAlpha) {
-        this.buttonAlpha = buttonAlpha;
+    public Export setLibs(ExportLibs libs) {
+        this.libs = libs;
         return this;
     }
 
-    public String getButtonIcon() {
-        return buttonIcon;
+    public List<ExportMenuItem> getMenu() {
+        return menu;
     }
 
-    public Export setButtonIcon(String buttonIcon) {
-        this.buttonIcon = buttonIcon;
+    public Export setMenu(List<ExportMenuItem> menu) {
+        this.menu = menu;
         return this;
     }
 
-    public Color getButtonRollOverColor() {
-        return buttonRollOverColor;
-    }
+    public Export addMenuItem(ExportMenuItem menuItem) {
+        if (menu == null) {
+            menu = new ArrayList<>();
+        }
+        menu.add(menuItem);
 
-    public Export setButtonRollOverColor(Color buttonRollOverColor) {
-        this.buttonRollOverColor = buttonRollOverColor;
-        return this;
-    }
-
-    public String getButtonTitle() {
-        return buttonTitle;
-    }
-
-    public Export setButtonTitle(String buttonTitle) {
-        this.buttonTitle = buttonTitle;
-        return this;
-    }
-
-    public Boolean getExportJPG() {
-        return exportJPG;
-    }
-
-    public Export setExportJPG(Boolean exportJPG) {
-        this.exportJPG = exportJPG;
-        return this;
-    }
-
-    public Boolean getExportPDF() {
-        return exportPDF;
-    }
-
-    public Export setExportPDF(Boolean exportPDF) {
-        this.exportPDF = exportPDF;
-        return this;
-    }
-
-    public Boolean getExportPNG() {
-        return exportPNG;
-    }
-
-    public Export setExportPNG(Boolean exportPNG) {
-        this.exportPNG = exportPNG;
-        return this;
-    }
-
-    public Boolean getExportSVG() {
-        return exportSVG;
-    }
-
-    public Export setExportSVG(Boolean exportSVG) {
-        this.exportSVG = exportSVG;
-        return this;
-    }
-
-    public Color getImageBackgroundColor() {
-        return imageBackgroundColor;
-    }
-
-    public Export setImageBackgroundColor(Color imageBackgroundColor) {
-        this.imageBackgroundColor = imageBackgroundColor;
-        return this;
-    }
-
-    public String getImageFileName() {
-        return imageFileName;
-    }
-
-    public Export setImageFileName(String imageFileName) {
-        this.imageFileName = imageFileName;
-        return this;
-    }
-
-    public String getLeft() {
-        return left;
-    }
-
-    public Export setLeft(String left) {
-        this.left = left;
-        return this;
-    }
-
-    public String getRight() {
-        return right;
-    }
-
-    public Export setRight(String right) {
-        this.right = right;
-        return this;
-    }
-
-    public Color getTextRollOverColor() {
-        return textRollOverColor;
-    }
-
-    public Export setTextRollOverColor(Color textRollOverColor) {
-        this.textRollOverColor = textRollOverColor;
-        return this;
-    }
-
-    public String getTop() {
-        return top;
-    }
-
-    public Export setTop(String top) {
-        this.top = top;
-        return this;
-    }
-
-    public ExportConfig getUserCFG() {
-        return userCFG;
-    }
-
-    public Export setUserCFG(ExportConfig userCFG) {
-        this.userCFG = userCFG;
         return this;
     }
 }

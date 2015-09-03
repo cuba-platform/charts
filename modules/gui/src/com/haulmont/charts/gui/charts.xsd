@@ -395,6 +395,13 @@
         </xs:restriction>
     </xs:simpleType>
 
+    <xs:simpleType name="valueAxisType">
+        <xs:restriction base="xs:string">
+            <xs:enumeration value="NUMERIC"/>
+            <xs:enumeration value="DATE"/>
+        </xs:restriction>
+    </xs:simpleType>
+
     <xs:simpleType name="valueLabelPosition">
         <xs:restriction base="xs:string">
             <xs:enumeration value="BOTTOM"/>
@@ -437,6 +444,7 @@
         <xs:attribute name="borderThickness" type="xs:integer"/>
         <xs:attribute name="color" type="color"/>
         <xs:attribute name="cornerRadius" type="xs:integer"/>
+        <xs:attribute name="disableMouseEvents" type="xs:boolean"/>
         <xs:attribute name="fadeOutDuration" type="xs:double"/>
         <xs:attribute name="fillAlpha" type="xs:double"/>
         <xs:attribute name="fillColor" type="color"/>
@@ -455,14 +463,19 @@
     </xs:complexType>
 
     <xs:complexType name="exportMenuItem">
-        <xs:attribute name="title" type="xs:string"/>
         <xs:attribute name="format" type="exportFormat"/>
+        <xs:attribute name="label" type="xs:string"/>
+        <xs:attribute name="title" type="xs:string"/>
     </xs:complexType>
 
-    <xs:complexType name="exportMenu">
+    <xs:complexType name="exportLibs">
+        <xs:attribute name="path" type="xs:string"/>
+    </xs:complexType>
+
+    <xs:complexType name="amExport">
         <xs:all>
-            <xs:element name="onClick" minOccurs="0" maxOccurs="1"/>
-            <xs:element name="items" minOccurs="0" maxOccurs="1">
+            <xs:element name="libs" type="exportLibs" minOccurs="0" maxOccurs="1"/>
+            <xs:element name="menu" minOccurs="0" maxOccurs="1">
                 <xs:complexType>
                     <xs:sequence>
                         <xs:element name="item" type="exportMenuItem" minOccurs="0" maxOccurs="unbounded"/>
@@ -470,76 +483,7 @@
                 </xs:complexType>
             </xs:element>
         </xs:all>
-
-        <xs:attribute name="textAlign" type="align"/>
-        <xs:attribute name="icon" type="xs:string"/>
-        <xs:attribute name="iconTitle" type="xs:string"/>
-        <xs:attribute name="format" type="exportFormat"/>
-    </xs:complexType>
-
-    <xs:complexType name="menuItemStyle">
-        <xs:attribute name="backgroundColor" type="color"/>
-        <xs:attribute name="rollOverBackgroundColor" type="color"/>
-        <xs:attribute name="color" type="color"/>
-        <xs:attribute name="rollOverColor" type="color"/>
-
-        <xs:attribute name="paddingTop" type="xs:string"/>
-        <xs:attribute name="paddingRight" type="xs:string"/>
-        <xs:attribute name="paddingBottom" type="xs:string"/>
-        <xs:attribute name="paddingLeft" type="xs:string"/>
-
-        <xs:attribute name="marginTop" type="xs:string"/>
-        <xs:attribute name="marginRight" type="xs:string"/>
-        <xs:attribute name="marginBottom" type="xs:string"/>
-        <xs:attribute name="marginLeft" type="xs:string"/>
-
-        <xs:attribute name="textAlign" type="align"/>
-        <xs:attribute name="textDecoration" type="xs:string"/>
-    </xs:complexType>
-
-    <xs:complexType name="menuItemOutput">
-        <xs:attribute name="fileName" type="xs:string"/>
-    </xs:complexType>
-
-    <xs:complexType name="amExport">
-        <xs:all>
-            <xs:element name="userCFG" minOccurs="0" maxOccurs="1" type="exportConfig"/>
-        </xs:all>
-
-        <xs:attribute name="bottom" type="xs:string"/>
-        <xs:attribute name="buttonAlpha" type="xs:double"/>
-        <xs:attribute name="buttonIcon" type="xs:string"/>
-        <xs:attribute name="buttonRollOverColor" type="color"/>
-        <xs:attribute name="buttonTitle" type="xs:string"/>
-        <xs:attribute name="exportJPG" type="xs:boolean"/>
-        <xs:attribute name="exportPDF" type="xs:boolean"/>
-        <xs:attribute name="exportPNG" type="xs:boolean"/>
-        <xs:attribute name="exportSVG" type="xs:boolean"/>
-        <xs:attribute name="imageBackgroundColor" type="color"/>
-        <xs:attribute name="imageFileName" type="xs:string"/>
-        <xs:attribute name="left" type="xs:string"/>
-        <xs:attribute name="right" type="xs:string"/>
-        <xs:attribute name="textRollOverColor" type="color"/>
-        <xs:attribute name="top" type="xs:string"/>
-    </xs:complexType>
-
-    <xs:complexType name="exportConfig">
-        <xs:all>
-            <xs:element name="menuItems" minOccurs="1" maxOccurs="1">
-                <xs:complexType>
-                    <xs:sequence>
-                        <xs:element name="menu" type="exportMenu" minOccurs="0" maxOccurs="unbounded"/>
-                    </xs:sequence>
-                </xs:complexType>
-            </xs:element>
-            <xs:element name="menuItemOutput" minOccurs="0" maxOccurs="1" type="menuItemOutput"/>
-            <xs:element name="menuItemStyle" minOccurs="0" maxOccurs="1" type="menuItemStyle"/>
-        </xs:all>
-
-        <xs:attribute name="menuTop" type="xs:string"/>
-        <xs:attribute name="menuLeft" type="xs:string"/>
-        <xs:attribute name="menuRight" type="xs:string"/>
-        <xs:attribute name="menuBottom" type="xs:string"/>
+        <xs:attribute name="enabled" type="xs:boolean"/>
     </xs:complexType>
 
     <xs:complexType name="gaugeAxis">
@@ -551,6 +495,7 @@
                     </xs:sequence>
                 </xs:complexType>
             </xs:element>
+            <xs:element name="labelFunction" minOccurs="0" maxOccurs="1"/>
         </xs:all>
 
         <xs:attribute name="axisAlpha" type="xs:double"/>
@@ -607,6 +552,7 @@
         <xs:attribute name="innerRadius" type="xs:string"/>
         <xs:attribute name="radius" type="xs:string"/>
         <xs:attribute name="startValue" type="xs:double"/>
+        <xs:attribute name="url" type="xs:string"/>
     </xs:complexType>
 
     <xs:complexType name="gaugeArrow">
@@ -666,14 +612,16 @@
                     </xs:sequence>
                 </xs:complexType>
             </xs:element>
-            <xs:element name="labelFunction" minOccurs="0" maxOccurs="1"/>
         </xs:all>
 
         <xs:attribute name="autoGridCount" type="xs:boolean"/>
+        <xs:attribute name="autoRotateAngle" type="xs:integer"/>
+        <xs:attribute name="autoRotateCount" type="xs:integer"/>
         <xs:attribute name="axisAlpha" type="xs:double"/>
         <xs:attribute name="axisColor" type="color"/>
         <xs:attribute name="axisThickness" type="xs:integer"/>
         <xs:attribute name="boldLabels" type="xs:boolean"/>
+        <xs:attribute name="centerLabels" type="xs:boolean"/>
         <xs:attribute name="color" type="color"/>
         <xs:attribute name="dashLength" type="xs:integer"/>
         <xs:attribute name="fillAlpha" type="xs:double"/>
@@ -691,6 +639,7 @@
         <xs:attribute name="minHorizontalGap" type="xs:integer"/>
         <xs:attribute name="minorGridAlpha" type="xs:double"/>
         <xs:attribute name="minorGridEnabled" type="xs:boolean"/>
+        <xs:attribute name="minorTickLength" type="xs:integer"/>
         <xs:attribute name="minVerticalGap" type="xs:integer"/>
         <xs:attribute name="offset" type="xs:integer"/>
         <xs:attribute name="position" type="position"/>
@@ -701,6 +650,7 @@
         <xs:attribute name="titleBold" type="xs:boolean"/>
         <xs:attribute name="titleColor" type="color"/>
         <xs:attribute name="titleFontSize" type="xs:integer"/>
+        <xs:attribute name="titleRotation" type="xs:integer"/>
     </xs:complexType>
 
     <xs:complexType name="categoryAxis">
@@ -710,8 +660,6 @@
                     <xs:element name="categoryFunction" minOccurs="0" maxOccurs="1"/>
                 </xs:all>
 
-                <xs:attribute name="autoRotateAngle" type="xs:integer"/>
-                <xs:attribute name="autoRotateCount" type="xs:integer"/>
                 <xs:attribute name="autoWrap" type="xs:boolean"/>
                 <xs:attribute name="boldPeriodBeginning" type="xs:boolean"/>
                 <xs:attribute name="centerLabelOnFullPeriod" type="xs:boolean"/>
@@ -726,6 +674,20 @@
                 <xs:attribute name="twoLineMode" type="xs:boolean"/>
             </xs:extension>
         </xs:complexContent>
+    </xs:complexType>
+
+    <xs:complexType name="image">
+        <xs:attribute name="balloonColor" type="color"/>
+        <xs:attribute name="balloonText" type="xs:string"/>
+        <xs:attribute name="color" type="color"/>
+        <xs:attribute name="height" type="xs:integer"/>
+        <xs:attribute name="offsetX" type="xs:integer"/>
+        <xs:attribute name="offsetY" type="xs:integer"/>
+        <xs:attribute name="outlineColor" type="color"/>
+        <xs:attribute name="rotation" type="xs:integer"/>
+        <xs:attribute name="svgPath" type="xs:string"/>
+        <xs:attribute name="url" type="xs:string"/>
+        <xs:attribute name="width" type="xs:integer"/>
     </xs:complexType>
 
     <xs:complexType name="legendItem">
@@ -758,6 +720,7 @@
         <xs:attribute name="enabled" type="xs:boolean"/>
         <xs:attribute name="equalWidths" type="xs:boolean"/>
         <xs:attribute name="fontSize" type="xs:integer"/>
+        <xs:attribute name="forceWidth" type="xs:boolean"/>
         <xs:attribute name="horizontalGap" type="xs:integer"/>
         <xs:attribute name="labelWidth" type="xs:integer"/>
         <xs:attribute name="labelText" type="xs:string"/>
@@ -828,30 +791,40 @@
     <xs:complexType name="valueAxis">
         <xs:complexContent>
             <xs:extension base="abstractAxis">
+                <xs:all>
+                    <xs:element name="labelFunction" minOccurs="0" maxOccurs="1"/>
+                </xs:all>
+
                 <xs:attribute name="id" type="xs:string"/>
 
                 <xs:attribute name="axisTitleOffset" type="xs:integer"/>
                 <xs:attribute name="baseValue" type="xs:double"/>
                 <xs:attribute name="duration" type="duration"/>
                 <xs:attribute name="gridType" type="gridType"/>
+                <xs:attribute name="includeAllValues" type="xs:boolean"/>
                 <xs:attribute name="includeGuidesInMinMax" type="xs:boolean"/>
                 <xs:attribute name="includeHidden" type="xs:boolean"/>
                 <xs:attribute name="integersOnly" type="xs:boolean"/>
                 <xs:attribute name="logarithmic" type="xs:boolean"/>
                 <xs:attribute name="maximum" type="xs:double"/>
+                <xs:attribute name="maximumDate" type="xs:date"/>
                 <xs:attribute name="minimum" type="xs:double"/>
+                <xs:attribute name="minimumDate" type="xs:date"/>
                 <xs:attribute name="minMaxMultiplier" type="xs:double"/>
+                <xs:attribute name="pointPosition" type="pointPosition"/>
                 <xs:attribute name="precision" type="xs:integer"/>
                 <xs:attribute name="radarCategoriesEnabled" type="xs:boolean"/>
                 <xs:attribute name="recalculateToPercents" type="xs:boolean"/>
                 <xs:attribute name="reversed" type="xs:boolean"/>
                 <xs:attribute name="stackType" type="stackType"/>
+                <xs:attribute name="strictMinMax" type="xs:boolean"/>
                 <xs:attribute name="synchronizationMultiplier" type="xs:double"/>
                 <xs:attribute name="synchronizeWith" type="xs:string"/>
                 <xs:attribute name="totalText" type="xs:string"/>
                 <xs:attribute name="totalTextColor" type="color"/>
                 <xs:attribute name="totalTextOffset" type="xs:integer"/>
                 <xs:attribute name="treatZeroAs" type="xs:double"/>
+                <xs:attribute name="type" type="valueAxisType"/>
                 <xs:attribute name="unit" type="xs:string"/>
                 <xs:attribute name="unitPosition" type="unitPosition"/>
                 <xs:attribute name="usePrefixes" type="xs:boolean"/>
@@ -875,6 +848,7 @@
         <xs:attribute name="categoryBalloonColor" type="color"/>
         <xs:attribute name="categoryBalloonDateFormat" type="xs:string"/>
         <xs:attribute name="categoryBalloonEnabled" type="xs:boolean"/>
+        <xs:attribute name="categoryBalloonText" type="xs:string"/>
         <xs:attribute name="color" type="color"/>
         <xs:attribute name="cursorAlpha" type="xs:double"/>
         <xs:attribute name="cursorColor" type="color"/>
@@ -883,6 +857,8 @@
         <xs:attribute name="fullWidth" type="xs:boolean"/>
         <xs:attribute name="graphBulletAlpha" type="xs:double"/>
         <xs:attribute name="graphBulletSize" type="xs:double"/>
+        <xs:attribute name="leaveAfterTouch" type="xs:boolean"/>
+        <xs:attribute name="leaveCursor" type="xs:boolean"/>
         <xs:attribute name="oneBalloonOnly" type="xs:boolean"/>
         <xs:attribute name="pan" type="xs:boolean"/>
         <xs:attribute name="selectionAlpha" type="xs:double"/>
@@ -894,17 +870,20 @@
         <xs:attribute name="valueLineBalloonEnabled" type="xs:boolean"/>
         <xs:attribute name="valueLineEnabled" type="xs:boolean"/>
         <xs:attribute name="zoomable" type="xs:boolean"/>
+        <xs:attribute name="zooming" type="xs:boolean"/>
     </xs:complexType>
 
     <xs:complexType name="trendLine">
         <xs:attribute name="dashLength" type="xs:integer"/>
         <xs:attribute name="finalCategory" type="xs:string"/>
         <xs:attribute name="finalDate" type="xs:date"/>
+        <xs:attribute name="finalImage" type="image"/>
         <xs:attribute name="finalValue" type="xs:double"/>
         <xs:attribute name="finalXValue" type="xs:double"/>
         <xs:attribute name="id" type="xs:string"/>
         <xs:attribute name="initialCategory" type="xs:string"/>
         <xs:attribute name="initialDate" type="xs:date"/>
+        <xs:attribute name="initialImage" type="image"/>
         <xs:attribute name="initialValue" type="xs:double"/>
         <xs:attribute name="initialXValue" type="xs:double"/>
         <xs:attribute name="isProtected" type="xs:boolean"/>
@@ -920,6 +899,7 @@
         <xs:attribute name="backgroundAlpha" type="xs:double"/>
         <xs:attribute name="backgroundColor" type="color"/>
         <xs:attribute name="color" type="color"/>
+        <xs:attribute name="dragIcon" type="xs:string"/>
         <xs:attribute name="dragIconHeight" type="xs:integer"/>
         <xs:attribute name="dragIconWidth" type="xs:integer"/>
         <xs:attribute name="enabled" type="xs:boolean"/>
@@ -933,9 +913,11 @@
         <xs:attribute name="gridColor" type="color"/>
         <xs:attribute name="gridCount" type="xs:integer"/>
         <xs:attribute name="hideResizeGrips" type="xs:boolean"/>
+        <xs:attribute name="ignoreCustomColors" type="xs:boolean"/>
         <xs:attribute name="maximum" type="xs:double"/>
         <xs:attribute name="minimum" type="xs:double"/>
         <xs:attribute name="offset" type="xs:integer"/>
+        <xs:attribute name="oppositeAxis" type="xs:boolean"/>
         <xs:attribute name="resizeEnabled" type="xs:boolean"/>
         <xs:attribute name="scrollbarHeight" type="xs:integer"/>
         <xs:attribute name="scrollDuration" type="xs:double"/>
@@ -1007,6 +989,7 @@
         <xs:attribute name="labelColorField" type="xs:string"/>
         <xs:attribute name="labelOffset" type="xs:integer"/>
         <xs:attribute name="labelPosition" type="valueLabelPosition"/>
+        <xs:attribute name="labelRotation" type="xs:integer"/>
         <xs:attribute name="labelText" type="xs:string"/>
         <xs:attribute name="legendAlpha" type="xs:double"/>
         <xs:attribute name="legendColor" type="color"/>
@@ -1032,6 +1015,8 @@
         <xs:attribute name="patternField" type="xs:string"/>
         <xs:attribute name="periodSpan" type="xs:integer"/>
         <xs:attribute name="pointPosition" type="pointPosition"/>
+        <xs:attribute name="precision" type="xs:integer"/>
+        <xs:attribute name="proCandlesticks" type="xs:boolean"/>
         <xs:attribute name="showAllValueLabels" type="xs:boolean"/>
         <xs:attribute name="showBalloon" type="xs:boolean"/>
         <xs:attribute name="showBalloonAt" type="showPositionOnCandle"/>
@@ -1045,6 +1030,7 @@
         <xs:attribute name="topRadius" type="xs:integer"/>
         <xs:attribute name="urlField" type="xs:string"/>
         <xs:attribute name="urlTarget" type="xs:string"/>
+        <xs:attribute name="useLineColorForBulletBorder" type="xs:boolean"/>
         <xs:attribute name="useNegativeColorIfDown" type="xs:boolean"/>
         <xs:attribute name="valueAxis" type="xs:string"/>
         <xs:attribute name="valueField" type="xs:string"/>
@@ -1066,7 +1052,7 @@
                     </xs:sequence>
                 </xs:complexType>
             </xs:element>
-            <xs:element name="amExport" minOccurs="0" maxOccurs="1" type="amExport"/>
+            <xs:element name="export" minOccurs="0" maxOccurs="1" type="amExport"/>
             <xs:element name="titles" minOccurs="0" maxOccurs="1">
                 <xs:complexType>
                     <xs:sequence minOccurs="0" maxOccurs="1">
@@ -1075,7 +1061,6 @@
                 </xs:complexType>
             </xs:element>
             <xs:element name="balloon" minOccurs="0" maxOccurs="1" type="balloon"/>
-            <xs:element name="exportConfig" minOccurs="0" maxOccurs="1" type="exportConfig"/>
             <xs:element name="legend" minOccurs="0" maxOccurs="1" type="legend"/>
         </xs:all>
 
@@ -1090,26 +1075,33 @@
         <xs:attribute name="visible" type="xs:boolean"/>
         <xs:attribute name="enable" type="xs:boolean"/>
 
+        <xs:attribute name="autoDisplay" type="xs:boolean"/>
+        <xs:attribute name="autoResize" type="xs:boolean"/>
+        <xs:attribute name="backgroundAlpha" type="xs:double"/>
         <xs:attribute name="backgroundColor" type="color"/>
-        <xs:attribute name="classNamePrefix" type="xs:string"/>
-        <xs:attribute name="creditsPosition" type="xs:string"/>
         <xs:attribute name="borderAlpha" type="xs:double"/>
         <xs:attribute name="borderColor" type="color"/>
+        <xs:attribute name="classNamePrefix" type="xs:string"/>
         <xs:attribute name="color" type="color"/>
+        <xs:attribute name="creditsPosition" type="xs:string"/>
         <xs:attribute name="decimalSeparator" type="xs:string"/>
+        <xs:attribute name="defs" type="xs:string"/>
         <xs:attribute name="fontFamily" type="xs:string"/>
         <xs:attribute name="fontSize" type="xs:integer"/>
         <xs:attribute name="handDrawn" type="xs:boolean"/>
         <xs:attribute name="handDrawScatter" type="xs:integer"/>
         <xs:attribute name="handDrawThickness" type="xs:integer"/>
         <xs:attribute name="hideBalloonTime" type="xs:integer"/>
+        <xs:attribute name="language" type="xs:string"/>
         <xs:attribute name="legendDiv" type="xs:string"/>
         <xs:attribute name="panEventsEnabled" type="xs:boolean"/>
         <xs:attribute name="percentPrecision" type="xs:integer"/>
         <xs:attribute name="precision" type="xs:integer"/>
-        <xs:attribute name="usePrefixes" type="xs:boolean"/>
+        <xs:attribute name="svgIcons" type="xs:boolean"/>
+        <xs:attribute name="tapToActivate" type="xs:boolean"/>
         <xs:attribute name="theme" type="chartTheme"/>
         <xs:attribute name="thousandsSeparator" type="xs:string"/>
+        <xs:attribute name="usePrefixes" type="xs:boolean"/>
 
         <xs:anyAttribute namespace="##other" processContents="lax"/>
     </xs:complexType>
@@ -1232,7 +1224,7 @@
                 <xs:attribute name="alpha" type="xs:double"/>
                 <xs:attribute name="alphaField" type="xs:double"/>
                 <xs:attribute name="baseColor" type="color"/>
-                <xs:attribute name="brightnessStep" type="xs:byte"/>
+                <xs:attribute name="classNameField" type="xs:string"/>
                 <xs:attribute name="colorField" type="xs:string"/>
                 <xs:attribute name="descriptionField" type="xs:string"/>
                 <xs:attribute name="groupedAlpha" type="xs:double"/>
@@ -1259,6 +1251,7 @@
                 <xs:attribute name="pullOutEffect" type="animationEffect"/>
                 <xs:attribute name="pullOutOnlyOne" type="xs:boolean"/>
                 <xs:attribute name="sequencedAnimation" type="xs:boolean"/>
+                <xs:attribute name="showZeroSlices" type="xs:boolean"/>
                 <xs:attribute name="startAlpha" type="xs:double"/>
 
                 <xs:attributeGroup ref="hasStartEffect"/>
@@ -1342,6 +1335,7 @@
         <xs:complexType>
             <xs:complexContent>
                 <xs:extension base="slicedChart">
+                    <xs:attribute name="adjustPrecision" type="xs:boolean"/>
                     <xs:attribute name="angle" type="xs:integer"/>
                     <xs:attribute name="balloonText" type="xs:string"/>
                     <xs:attribute name="depth3D" type="xs:integer"/>

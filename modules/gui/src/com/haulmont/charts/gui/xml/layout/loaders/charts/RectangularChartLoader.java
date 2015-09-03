@@ -175,6 +175,11 @@ public abstract class RectangularChartLoader<T extends RectangularChart> extends
                 cursor.setCategoryBalloonEnabled(Boolean.valueOf(categoryBalloonEnabled));
             }
 
+            String categoryBalloonText = cursorElement.attributeValue("categoryBalloonText");
+            if (StringUtils.isNotEmpty(categoryBalloonText)) {
+                cursor.setCategoryBalloonText(categoryBalloonText);
+            }
+
             String color = cursorElement.attributeValue("color");
             if (StringUtils.isNotEmpty(color)) {
                 cursor.setColor(Color.valueOf(color));
@@ -218,6 +223,16 @@ public abstract class RectangularChartLoader<T extends RectangularChart> extends
             String oneBalloonOnly = cursorElement.attributeValue("oneBalloonOnly");
             if (StringUtils.isNotEmpty(oneBalloonOnly)) {
                 cursor.setOneBalloonOnly(Boolean.valueOf(oneBalloonOnly));
+            }
+
+            String leaveAfterTouch = cursorElement.attributeValue("leaveAfterTouch");
+            if (StringUtils.isNotEmpty(leaveAfterTouch)) {
+                cursor.setLeaveAfterTouch(Boolean.valueOf(leaveAfterTouch));
+            }
+
+            String leaveCursor = cursorElement.attributeValue("leaveCursor");
+            if (StringUtils.isNotEmpty(leaveCursor)) {
+                cursor.setLeaveCursor(Boolean.valueOf(leaveCursor));
             }
 
             String pan = cursorElement.attributeValue("pan");
@@ -270,6 +285,11 @@ public abstract class RectangularChartLoader<T extends RectangularChart> extends
                 cursor.setZoomable(Boolean.valueOf(zoomable));
             }
 
+            String zooming = cursorElement.attributeValue("zooming");
+            if (StringUtils.isNotEmpty(zooming)) {
+                cursor.setZooming(Boolean.valueOf(zooming));
+            }
+
             chart.setChartCursor(cursor);
         }
     }
@@ -297,6 +317,11 @@ public abstract class RectangularChartLoader<T extends RectangularChart> extends
             String color = scrollbarElement.attributeValue("color");
             if (StringUtils.isNotEmpty(color)) {
                 scrollbar.setColor(Color.valueOf(color));
+            }
+
+            String dragIcon = scrollbarElement.attributeValue("dragIcon");
+            if (StringUtils.isNotEmpty(dragIcon)) {
+                scrollbar.setDragIcon(dragIcon);
             }
 
             String dragIconHeight = scrollbarElement.attributeValue("dragIconHeight");
@@ -364,6 +389,11 @@ public abstract class RectangularChartLoader<T extends RectangularChart> extends
                 scrollbar.setHideResizeGrips(Boolean.valueOf(hideResizeGrips));
             }
 
+            String ignoreCustomColors = scrollbarElement.attributeValue("ignoreCustomColors");
+            if (StringUtils.isNotEmpty(ignoreCustomColors)) {
+                scrollbar.setIgnoreCustomColors(Boolean.valueOf(ignoreCustomColors));
+            }
+
             String maximum = scrollbarElement.attributeValue("maximum");
             if (StringUtils.isNotEmpty(maximum)) {
                 scrollbar.setMaximum(Double.valueOf(maximum));
@@ -377,6 +407,11 @@ public abstract class RectangularChartLoader<T extends RectangularChart> extends
             String offset = scrollbarElement.attributeValue("offset");
             if (StringUtils.isNotEmpty(offset)) {
                 scrollbar.setOffset(Integer.valueOf(offset));
+            }
+
+            String oppositeAxis = scrollbarElement.attributeValue("oppositeAxis");
+            if (StringUtils.isNotEmpty(oppositeAxis)) {
+                scrollbar.setOppositeAxis(Boolean.valueOf(oppositeAxis));
             }
 
             String resizeEnabled = scrollbarElement.attributeValue("resizeEnabled");
@@ -457,6 +492,11 @@ public abstract class RectangularChartLoader<T extends RectangularChart> extends
                     trendLine.setFinalDate(loadDate(finalDate));
                 }
 
+                Element finalImageElement = trendLineElement.element("finalImage");
+                if (finalImageElement != null) {
+                    trendLine.setFinalImage(loadImage(finalImageElement));
+                }
+
                 String finalValue = trendLineElement.attributeValue("finalValue");
                 if (StringUtils.isNotEmpty(finalValue)) {
                     trendLine.setFinalValue(Double.valueOf(finalValue));
@@ -480,6 +520,11 @@ public abstract class RectangularChartLoader<T extends RectangularChart> extends
                 String initialDate = trendLineElement.attributeValue("initialDate");
                 if (StringUtils.isNotEmpty(initialDate)) {
                     trendLine.setInitialDate(loadDate(initialDate));
+                }
+
+                Element initialImageElement = trendLineElement.element("initialImage");
+                if (initialImageElement != null) {
+                    trendLine.setFinalImage(loadImage(initialImageElement));
                 }
 
                 String initialValue = trendLineElement.attributeValue("initialValue");

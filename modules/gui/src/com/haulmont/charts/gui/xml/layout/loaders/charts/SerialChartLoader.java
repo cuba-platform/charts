@@ -117,14 +117,9 @@ public class SerialChartLoader extends RectangularChartLoader<SerialChart> {
 
             loadAbstractAxis(axis, axisElement);
 
-            String autoRotateAngle = axisElement.attributeValue("autoRotateAngle");
-            if (StringUtils.isNotEmpty(autoRotateAngle)) {
-                axis.setAutoRotateAngle(Integer.valueOf(autoRotateAngle));
-            }
-
-            String autoRotateCount = axisElement.attributeValue("autoRotateCount");
-            if (StringUtils.isNotEmpty(autoRotateCount)) {
-                axis.setAutoRotateCount(Integer.valueOf(autoRotateCount));
+            String labelFunction = axisElement.elementText("labelFunction");
+            if (StringUtils.isNotBlank(labelFunction)) {
+                axis.setLabelFunction(new JsFunction(labelFunction));
             }
 
             String categoryFunction = axisElement.elementText("categoryFunction");

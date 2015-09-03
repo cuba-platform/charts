@@ -39,6 +39,8 @@ public class Cursor extends AbstractConfigurationObject {
 
     private JsFunction categoryBalloonFunction;
 
+    private String categoryBalloonText;
+
     private Color color;
 
     private Double cursorAlpha;
@@ -54,6 +56,10 @@ public class Cursor extends AbstractConfigurationObject {
     private Double graphBulletAlpha;
 
     private Double graphBulletSize;
+
+    private Boolean leaveAfterTouch;
+
+    private Boolean leaveCursor;
 
     private Boolean oneBalloonOnly;
 
@@ -76,6 +82,8 @@ public class Cursor extends AbstractConfigurationObject {
     private Boolean valueLineEnabled;
 
     private Boolean zoomable;
+    
+    private Boolean zooming;
 
     public Integer getAdjustment() {
         return adjustment;
@@ -342,7 +350,44 @@ public class Cursor extends AbstractConfigurationObject {
         return valueLineEnabled;
     }
 
-    public void setValueLineEnabled(Boolean valueLineEnabled) {
+    public Cursor setValueLineEnabled(Boolean valueLineEnabled) {
         this.valueLineEnabled = valueLineEnabled;
+        return this;
+    }
+
+    public String getCategoryBalloonText() {
+        return categoryBalloonText;
+    }
+
+    public Cursor setCategoryBalloonText(String categoryBalloonText) {
+        this.categoryBalloonText = categoryBalloonText;
+        return this;
+    }
+
+    public Boolean getLeaveAfterTouch() {
+        return leaveAfterTouch;
+    }
+
+    public Cursor setLeaveAfterTouch(Boolean leaveAfterTouch) {
+        this.leaveAfterTouch = leaveAfterTouch;
+        return this;
+    }
+
+    public Boolean getLeaveCursor() {
+        return leaveCursor;
+    }
+
+    public Cursor setLeaveCursor(Boolean leaveCursor) {
+        this.leaveCursor = leaveCursor;
+        return this;
+    }
+
+    public Boolean getZooming() {
+        return zooming;
+    }
+
+    public Cursor setZooming(Boolean zooming) {
+        this.zooming = zooming;
+        return this;
     }
 }

@@ -5,6 +5,7 @@
 
 package com.haulmont.charts.gui.amcharts.model;
 
+import java.util.Date;
 import java.util.Map;
 
 /**
@@ -31,19 +32,29 @@ public class ValueAxis extends AbstractAxis<ValueAxis> {
 
     private String id;
 
+    private Boolean includeAllValues;
+
     private Boolean includeGuidesInMinMax;
 
     private Boolean includeHidden;
 
     private Boolean integersOnly;
 
+    private JsFunction labelFunction;
+
     private Boolean logarithmic;
 
     private Double maximum;
 
+    private Date maximumDate;
+
     private Double minimum;
 
+    private Date minimumDate;
+
     private Double minMaxMultiplier;
+
+    private PointPosition pointPosition;
 
     private Integer precision;
 
@@ -54,6 +65,8 @@ public class ValueAxis extends AbstractAxis<ValueAxis> {
     private Boolean reversed;
 
     private StackType stackType;
+
+    private Boolean strictMinMax;
 
     private Double synchronizationMultiplier;
 
@@ -66,6 +79,8 @@ public class ValueAxis extends AbstractAxis<ValueAxis> {
     private Integer totalTextOffset;
 
     private Double treatZeroAs;
+
+    private ValueAxisType type;
 
     private String unit;
 
@@ -324,6 +339,69 @@ public class ValueAxis extends AbstractAxis<ValueAxis> {
 
     public ValueAxis setTreatZeroAs(Double treatZeroAs) {
         this.treatZeroAs = treatZeroAs;
+        return this;
+    }
+
+    public Boolean getIncludeAllValues() {
+        return includeAllValues;
+    }
+
+    public ValueAxis setIncludeAllValues(Boolean includeAllValues) {
+        this.includeAllValues = includeAllValues;
+        return this;
+    }
+
+    public JsFunction getLabelFunction() {
+        return labelFunction;
+    }
+
+    public ValueAxis setLabelFunction(JsFunction labelFunction) {
+        this.labelFunction = labelFunction;
+        return this;
+    }
+
+    public Date getMaximumDate() {
+        return maximumDate;
+    }
+
+    public ValueAxis setMaximumDate(Date maximumDate) {
+        this.maximumDate = maximumDate;
+        return this;
+    }
+
+    public Date getMinimumDate() {
+        return minimumDate;
+    }
+
+    public ValueAxis setMinimumDate(Date minimumDate) {
+        this.minimumDate = minimumDate;
+        return this;
+    }
+
+    public PointPosition getPointPosition() {
+        return pointPosition;
+    }
+
+    public ValueAxis setPointPosition(PointPosition pointPosition) {
+        this.pointPosition = pointPosition;
+        return this;
+    }
+
+    public Boolean getStrictMinMax() {
+        return strictMinMax;
+    }
+
+    public ValueAxis setStrictMinMax(Boolean strictMinMax) {
+        this.strictMinMax = strictMinMax;
+        return this;
+    }
+
+    public ValueAxisType getType() {
+        return type;
+    }
+
+    public ValueAxis setType(ValueAxisType type) {
+        this.type = type;
         return this;
     }
 }

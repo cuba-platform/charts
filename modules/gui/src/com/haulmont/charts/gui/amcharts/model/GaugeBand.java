@@ -33,6 +33,8 @@ public class GaugeBand extends AbstractConfigurationObject {
 
     private Double startValue;
 
+    private String url;
+
     public Double getAlpha() {
         return alpha;
     }
@@ -100,7 +102,17 @@ public class GaugeBand extends AbstractConfigurationObject {
         return id;
     }
 
-    public void setId(String id) {
+    public GaugeBand setId(String id) {
         this.id = id;
+        return this;
+    }
+
+    public String getUrl() {
+        return url;
+    }
+
+    public GaugeBand setUrl(String url) {
+        this.url = url;
+        return this;
     }
 }

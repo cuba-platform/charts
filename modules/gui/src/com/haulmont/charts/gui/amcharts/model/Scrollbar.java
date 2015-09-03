@@ -25,6 +25,8 @@ public class Scrollbar extends AbstractConfigurationObject {
 
     private Color color;
 
+    private String dragIcon;
+
     private Integer dragIconHeight;
 
     private Integer dragIconWidth;
@@ -51,12 +53,16 @@ public class Scrollbar extends AbstractConfigurationObject {
 
     private Boolean hideResizeGrips;
 
+    private Boolean ignoreCustomColors;
+
     private Double maximum;
 
     private Double minimum;
 
     private Integer offset;
 
+    private Boolean oppositeAxis;
+    
     private Boolean resizeEnabled;
 
     private Integer scrollbarHeight;
@@ -344,6 +350,33 @@ public class Scrollbar extends AbstractConfigurationObject {
 
     public Scrollbar setOffset(Integer offset) {
         this.offset = offset;
+        return this;
+    }
+
+    public String getDragIcon() {
+        return dragIcon;
+    }
+
+    public Scrollbar setDragIcon(String dragIcon) {
+        this.dragIcon = dragIcon;
+        return this;
+    }
+
+    public Boolean getIgnoreCustomColors() {
+        return ignoreCustomColors;
+    }
+
+    public Scrollbar setIgnoreCustomColors(Boolean ignoreCustomColors) {
+        this.ignoreCustomColors = ignoreCustomColors;
+        return this;
+    }
+
+    public Boolean getOppositeAxis() {
+        return oppositeAxis;
+    }
+
+    public Scrollbar setOppositeAxis(Boolean oppositeAxis) {
+        this.oppositeAxis = oppositeAxis;
         return this;
     }
 }

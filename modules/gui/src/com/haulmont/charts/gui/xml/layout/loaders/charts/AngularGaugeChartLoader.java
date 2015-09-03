@@ -112,6 +112,11 @@ public class AngularGaugeChartLoader extends AbstractChartLoader<AngularGaugeCha
 
                 loadGaugeBands(axis, axisElement);
 
+                String labelFunction = axesListElement.elementText("labelFunction");
+                if (StringUtils.isNotBlank(labelFunction)) {
+                    axis.setLabelFunction(new JsFunction(labelFunction));
+                }
+
                 String axisAlpha = axisElement.attributeValue("axisAlpha");
                 if (StringUtils.isNotEmpty(axisAlpha)) {
                     axis.setAxisAlpha(Double.valueOf(axisAlpha));
@@ -378,6 +383,11 @@ public class AngularGaugeChartLoader extends AbstractChartLoader<AngularGaugeCha
                 String startValue = bandElement.attributeValue("startValue");
                 if (StringUtils.isNotEmpty(startValue)) {
                     axis.setStartValue(Double.valueOf(startValue));
+                }
+
+                String url = bandElement.attributeValue("url");
+                if (StringUtils.isNotEmpty(url)) {
+                    band.setUrl(url);
                 }
 
                 axis.addBands(band);

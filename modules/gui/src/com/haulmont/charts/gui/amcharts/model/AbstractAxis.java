@@ -22,6 +22,10 @@ public abstract class AbstractAxis<T extends AbstractAxis> extends AbstractConfi
 
     private Boolean autoGridCount;
 
+    private Integer autoRotateAngle;
+
+    private Integer autoRotateCount;
+
     private Double axisAlpha;
 
     private Color axisColor;
@@ -30,9 +34,13 @@ public abstract class AbstractAxis<T extends AbstractAxis> extends AbstractConfi
 
     private Boolean boldLabels;
 
+    private Boolean centerLabels;
+
     private Color color;
 
     private Integer dashLength;
+
+    private List<DateFormat> dateFormats;
 
     private Double fillAlpha;
 
@@ -60,13 +68,13 @@ public abstract class AbstractAxis<T extends AbstractAxis> extends AbstractConfi
 
     private Boolean labelsEnabled;
 
-    private JsFunction labelFunction;
-
     private Integer minHorizontalGap;
 
     private Double minorGridAlpha;
 
     private Boolean minorGridEnabled;
+
+    private Integer minorTickLength;
 
     private Integer minVerticalGap;
 
@@ -87,6 +95,8 @@ public abstract class AbstractAxis<T extends AbstractAxis> extends AbstractConfi
     private Color titleColor;
 
     private Integer titleFontSize;
+
+    private Integer titleRotation;
 
     public Boolean getAutoGridCount() {
         return autoGridCount;
@@ -395,12 +405,57 @@ public abstract class AbstractAxis<T extends AbstractAxis> extends AbstractConfi
         return (T) this;
     }
 
-    public JsFunction getLabelFunction() {
-        return labelFunction;
+    public Integer getAutoRotateAngle() {
+        return autoRotateAngle;
     }
 
-    public T setLabelFunction(JsFunction labelFunction) {
-        this.labelFunction = labelFunction;
+    public T setAutoRotateAngle(Integer autoRotateAngle) {
+        this.autoRotateAngle = autoRotateAngle;
+        return (T) this;
+    }
+
+    public Integer getAutoRotateCount() {
+        return autoRotateCount;
+    }
+
+    public T setAutoRotateCount(Integer autoRotateCount) {
+        this.autoRotateCount = autoRotateCount;
+        return (T) this;
+    }
+
+    public Boolean getCenterLabels() {
+        return centerLabels;
+    }
+
+    public T setCenterLabels(Boolean centerLabels) {
+        this.centerLabels = centerLabels;
+        return (T) this;
+    }
+
+    public List<DateFormat> getDateFormats() {
+        return dateFormats;
+    }
+
+    public T setDateFormats(List<DateFormat> dateFormats) {
+        this.dateFormats = dateFormats;
+        return (T) this;
+    }
+
+    public Integer getMinorTickLength() {
+        return minorTickLength;
+    }
+
+    public T setMinorTickLength(Integer minorTickLength) {
+        this.minorTickLength = minorTickLength;
+        return (T) this;
+    }
+
+    public Integer getTitleRotation() {
+        return titleRotation;
+    }
+
+    public T setTitleRotation(Integer titleRotation) {
+        this.titleRotation = titleRotation;
         return (T) this;
     }
 }

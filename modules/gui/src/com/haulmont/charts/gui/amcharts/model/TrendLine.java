@@ -25,6 +25,8 @@ public class TrendLine extends AbstractConfigurationObject {
 
     private Date finalDate;
 
+    private Image finalImage;
+
     private Double finalValue;
 
     private Double finalXValue;
@@ -34,6 +36,8 @@ public class TrendLine extends AbstractConfigurationObject {
     private String initialCategory;
 
     private Date initialDate;
+
+    private Image initialImage;
 
     private Double initialValue;
 
@@ -192,6 +196,24 @@ public class TrendLine extends AbstractConfigurationObject {
 
     public TrendLine setId(String id) {
         this.id = id;
+        return this;
+    }
+
+    public Image getFinalImage() {
+        return finalImage;
+    }
+
+    public TrendLine setFinalImage(Image finalImage) {
+        this.finalImage = finalImage;
+        return this;
+    }
+
+    public Image getInitialImage() {
+        return initialImage;
+    }
+
+    public TrendLine setInitialImage(Image initialImage) {
+        this.initialImage = initialImage;
         return this;
     }
 }

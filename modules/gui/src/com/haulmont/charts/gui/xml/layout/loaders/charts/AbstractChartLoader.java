@@ -243,6 +243,11 @@ public abstract class AbstractChartLoader<T extends AbstractChart> extends Compo
                 balloon.setCornerRadius(Integer.valueOf(cornerRadius));
             }
 
+            String disableMouseEvents = balloonElement.attributeValue("disableMouseEvents");
+            if (StringUtils.isNotEmpty(disableMouseEvents)) {
+                balloon.setDisableMouseEvents(Boolean.valueOf(disableMouseEvents));
+            }
+
             String fadeOutDuration = balloonElement.attributeValue("fadeOutDuration");
             if (StringUtils.isNotEmpty(fadeOutDuration)) {
                 balloon.setFadeOutDuration(Double.valueOf(fadeOutDuration));
@@ -322,193 +327,38 @@ public abstract class AbstractChartLoader<T extends AbstractChart> extends Compo
         }
     }
 
-    protected void loadExportConfig(T chart, Element element) {
-        Element exportConfigElement = element.element("exportConfig");
-        if (exportConfigElement != null) {
-            ExportConfig exportConfig = new ExportConfig();
+    protected ExportMenuItem loadExportMenuItem(Element menuItemElement) {
+        ExportMenuItem menuItem = new ExportMenuItem();
 
-            loadExportConfigProperties(exportConfig, exportConfigElement);
-
-            chart.setExportConfig(exportConfig);
+        String format = menuItemElement.attributeValue("format");
+        if (StringUtils.isNotBlank(format)) {
+            menuItem.setFormat(ExportFormat.valueOf(format));
         }
+
+        String title = menuItemElement.attributeValue("title");
+        if (StringUtils.isNotBlank(title)) {
+            menuItem.setTitle(loadResourceString(title));
+        }
+
+        String label = menuItemElement.attributeValue("label");
+        if (StringUtils.isNotBlank(label)) {
+            menuItem.setLabel(loadResourceString(label));
+        }
+
+        return menuItem;
     }
 
-    protected void loadExportConfigProperties(ExportConfig exportConfig, Element exportConfigElement) {
-        loadExportMenus(exportConfig, exportConfigElement);
+    protected void loadExportMenu(Export export, Element exportElement) {
+        Element menuElement = exportElement.element("menu");
+        if (menuElement != null) {
+            List<ExportMenuItem> items = new ArrayList<>();
 
-        loadExportMenuOutput(exportConfig, exportConfigElement);
-
-        loadExportMenuItemStyle(exportConfig, exportConfigElement);
-
-        String menuTop = exportConfigElement.attributeValue("menuTop");
-        if (StringUtils.isNotEmpty(menuTop)) {
-            exportConfig.setMenuTop(menuTop);
-        }
-
-        String menuLeft = exportConfigElement.attributeValue("menuLeft");
-        if (StringUtils.isNotEmpty(menuLeft)) {
-            exportConfig.setMenuLeft(menuLeft);
-        }
-
-        String menuRight = exportConfigElement.attributeValue("menuRight");
-        if (StringUtils.isNotEmpty(menuRight)) {
-            exportConfig.setMenuRight(menuRight);
-        }
-
-        String menuBottom = exportConfigElement.attributeValue("menuBottom");
-        if (StringUtils.isNotEmpty(menuBottom)) {
-            exportConfig.setMenuBottom(menuBottom);
-        }
-    }
-
-    protected void loadExportMenuOutput(ExportConfig exportConfig, Element exportConfigElement) {
-        Element menuItemOutput = exportConfigElement.element("menuItemOutput");
-        if (menuItemOutput != null) {
-            ExportMenuItemOutput exportMenuItemOutput = new ExportMenuItemOutput();
-            exportConfig.setMenuItemOutput(exportMenuItemOutput);
-
-            String fileName = menuItemOutput.attributeValue("fileName");
-            if (StringUtils.isNotBlank(fileName)) {
-                exportMenuItemOutput.setFileName(fileName);
-            }
-        }
-    }
-
-    protected void loadExportMenus(ExportConfig exportConfig, Element exportConfigElement) {
-        Element menuItemsElement = exportConfigElement.element("menuItems");
-        if (menuItemsElement != null) {
-            for (Object menuItem : menuItemsElement.elements("menu")) {
-                Element menuElement = (Element) menuItem;
-
-                ExportMenu menu = new ExportMenu();
-
-                String onClick = menuElement.elementText("onClick");
-                if (StringUtils.isNotBlank(onClick)) {
-                    menu.setOnclick(new JsFunction(onClick));
-                }
-
-                Element subMenuItemsElement = menuElement.element("items");
-                if (subMenuItemsElement != null) {
-                    for (Object subMenuElementItem : subMenuItemsElement.elements("item")) {
-                        Element subMenuElement = (Element) subMenuElementItem;
-
-                        ExportMenuItem subMenuItem = new ExportMenuItem();
-
-                        String title = subMenuElement.attributeValue("title");
-                        if (StringUtils.isNotBlank(title)) {
-                            subMenuItem.setTitle(loadResourceString(title));
-                        }
-
-                        String format = subMenuElement.attributeValue("format");
-                        if (StringUtils.isNotBlank(format)) {
-                            subMenuItem.setFormat(ExportFormat.valueOf(format));
-                        }
-
-                        menu.addItems(subMenuItem);
-                    }
-                }
-
-                String textAlign = menuElement.attributeValue("textAlign");
-                if (StringUtils.isNotEmpty(textAlign)) {
-                    menu.setTextAlign(Align.valueOf(textAlign));
-                }
-
-                String icon = menuElement.attributeValue("icon");
-                if (StringUtils.isNotEmpty(icon)) {
-                    menu.setIcon(icon);
-                }
-
-                String iconTitle = menuElement.attributeValue("iconTitle");
-                if (StringUtils.isNotEmpty(iconTitle)) {
-                    menu.setIconTitle(loadResourceString(iconTitle));
-                }
-
-                String format = menuElement.attributeValue("format");
-                if (StringUtils.isNotEmpty(format)) {
-                    menu.setFormat(ExportFormat.valueOf(format));
-                }
-
-                exportConfig.addMenu(menu);
-            }
-        }
-    }
-
-    protected void loadExportMenuItemStyle(ExportConfig exportConfig, Element exportConfigElement) {
-        Element menuItemStyleElement = exportConfigElement.element("menuItemStyle");
-        if (menuItemStyleElement != null) {
-            ExportMenuItemStyle menuItemStyle = new ExportMenuItemStyle();
-
-            String backgroundColor = menuItemStyleElement.attributeValue("backgroundColor");
-            if (StringUtils.isNotEmpty(backgroundColor)) {
-                menuItemStyle.setBackgroundColor(Color.valueOf(backgroundColor));
+            for (Object menuElementItem : menuElement.elements("item")) {
+                Element menuItemElement = (Element) menuElementItem;
+                items.add(loadExportMenuItem(menuItemElement));
             }
 
-            String rollOverBackgroundColor = menuItemStyleElement.attributeValue("rollOverBackgroundColor");
-            if (StringUtils.isNotEmpty(rollOverBackgroundColor)) {
-                menuItemStyle.setRollOverBackgroundColor(Color.valueOf(rollOverBackgroundColor));
-            }
-
-            String color = menuItemStyleElement.attributeValue("color");
-            if (StringUtils.isNotEmpty(color)) {
-                menuItemStyle.setColor(Color.valueOf(color));
-            }
-
-            String rollOverColor = menuItemStyleElement.attributeValue("rollOverColor");
-            if (StringUtils.isNotEmpty(rollOverColor)) {
-                menuItemStyle.setRollOverColor(Color.valueOf(rollOverColor));
-            }
-
-            String paddingTop = menuItemStyleElement.attributeValue("paddingTop");
-            if (StringUtils.isNotEmpty(paddingTop)) {
-                menuItemStyle.setPaddingTop(paddingTop);
-            }
-
-            String paddingRight = menuItemStyleElement.attributeValue("paddingRight");
-            if (StringUtils.isNotEmpty(paddingRight)) {
-                menuItemStyle.setPaddingRight(paddingRight);
-            }
-
-            String paddingBottom = menuItemStyleElement.attributeValue("paddingBottom");
-            if (StringUtils.isNotEmpty(paddingBottom)) {
-                menuItemStyle.setPaddingBottom(paddingBottom);
-            }
-
-            String paddingLeft = menuItemStyleElement.attributeValue("paddingLeft");
-            if (StringUtils.isNotEmpty(paddingLeft)) {
-                menuItemStyle.setPaddingLeft(paddingLeft);
-            }
-
-            String marginTop = menuItemStyleElement.attributeValue("marginTop");
-            if (StringUtils.isNotEmpty(marginTop)) {
-                menuItemStyle.setMarginTop(marginTop);
-            }
-
-            String marginRight = menuItemStyleElement.attributeValue("marginRight");
-            if (StringUtils.isNotEmpty(marginRight)) {
-                menuItemStyle.setMarginRight(marginRight);
-            }
-
-            String marginBottom = menuItemStyleElement.attributeValue("marginBottom");
-            if (StringUtils.isNotEmpty(marginBottom)) {
-                menuItemStyle.setMarginBottom(marginBottom);
-            }
-
-            String marginLeft = menuItemStyleElement.attributeValue("marginLeft");
-            if (StringUtils.isNotEmpty(marginLeft)) {
-                menuItemStyle.setMarginLeft(marginLeft);
-            }
-
-            String textAlign = menuItemStyleElement.attributeValue("textAlign");
-            if (StringUtils.isNotEmpty(textAlign)) {
-                menuItemStyle.setTextAlign(Align.valueOf(textAlign));
-            }
-
-            String textDecoration = menuItemStyleElement.elementText("textDecoration");
-            if (StringUtils.isNotEmpty(textDecoration)) {
-                menuItemStyle.setTextDecoration(textDecoration);
-            }
-
-            exportConfig.setMenuItemStyle(menuItemStyle);
+            export.setMenu(items);
         }
     }
 
@@ -517,91 +367,28 @@ public abstract class AbstractChartLoader<T extends AbstractChart> extends Compo
         if (exportElement != null) {
             Export export = new Export();
 
-            String bottom = exportElement.attributeValue("bottom");
-            if (StringUtils.isNotEmpty(bottom)) {
-                export.setBottom(bottom);
+            loadExportMenu(export, exportElement);
+
+            String enabled = exportElement.attributeValue("enabled");
+            if (StringUtils.isNotEmpty(enabled)) {
+                export.setEnabled(Boolean.valueOf(enabled));
             }
 
-            String buttonAlpha = exportElement.attributeValue("buttonAplha");
-            if (StringUtils.isNotEmpty(buttonAlpha)) {
-                export.setButtonAlpha(Double.valueOf(buttonAlpha));
+            Element libsElement = exportElement.element("libs");
+            ExportLibs libs = new ExportLibs();
+            if (libsElement != null) {
+                loadExportLibs(libs, libsElement);
             }
+            export.setLibs(libs);
 
-            String buttonIcon = exportElement.attributeValue("buttonIcon");
-            if (StringUtils.isNotEmpty(buttonIcon)) {
-                export.setButtonIcon(buttonIcon);
-            }
+            chart.setExport(export);
+        }
+    }
 
-            String buttonRollOverColor = exportElement.attributeValue("buttonRollOverColor");
-            if (StringUtils.isNotEmpty(buttonRollOverColor)) {
-                export.setButtonRollOverColor(Color.valueOf(buttonRollOverColor));
-            }
-
-            String buttonTitle = exportElement.attributeValue("buttonTitle");
-            if (StringUtils.isNotEmpty(buttonTitle)) {
-                export.setButtonTitle(buttonTitle);
-            }
-
-            String exportJPG = exportElement.attributeValue("exportJPG");
-            if (StringUtils.isNotEmpty(exportJPG)) {
-                export.setExportJPG(Boolean.valueOf(exportJPG));
-            }
-
-            String exportPDF = exportElement.attributeValue("exportPDF");
-            if (StringUtils.isNotEmpty(exportPDF)) {
-                export.setExportPDF(Boolean.valueOf(exportPDF));
-            }
-
-            String exportPNG = exportElement.attributeValue("exportPNG");
-            if (StringUtils.isNotEmpty(exportPNG)) {
-                export.setExportPNG(Boolean.valueOf(exportPNG));
-            }
-
-            String exportSVG = exportElement.attributeValue("exportSVG");
-            if (StringUtils.isNotEmpty(exportSVG)) {
-                export.setExportSVG(Boolean.valueOf(exportSVG));
-            }
-
-            String imageBackgroundColor = exportElement.attributeValue("imageBackgroundColor");
-            if (StringUtils.isNotEmpty(imageBackgroundColor)) {
-                export.setImageBackgroundColor(Color.valueOf(imageBackgroundColor));
-            }
-
-            String imageFileName = exportElement.attributeValue("imageFileName");
-            if (StringUtils.isNotEmpty(imageFileName)) {
-                export.setImageFileName(imageFileName);
-            }
-
-            String left = exportElement.attributeValue("left");
-            if (StringUtils.isNotEmpty(left)) {
-                export.setLeft(left);
-            }
-
-            String right = exportElement.attributeValue("right");
-            if (StringUtils.isNotEmpty(right)) {
-                export.setRight(right);
-            }
-
-            String textRollOverColor = exportElement.attributeValue("textRollOverColor");
-            if (StringUtils.isNotEmpty(textRollOverColor)) {
-                export.setTextRollOverColor(Color.valueOf(textRollOverColor));
-            }
-
-            String top = exportElement.attributeValue("top");
-            if (StringUtils.isNotEmpty(top)) {
-                export.setTop(top);
-            }
-
-            Element userCFGElement = exportElement.element("userCFG");
-            if (userCFGElement != null) {
-                ExportConfig exportConfig = new ExportConfig();
-
-                loadExportConfigProperties(exportConfig, userCFGElement);
-
-                export.setUserCFG(exportConfig);
-            }
-
-            chart.setAmExport(export);
+    protected void loadExportLibs(ExportLibs libs, Element libsElement) {
+        String path = libsElement.attributeValue("path");
+        if (StringUtils.isNotEmpty(path)) {
+            libs.setPath(path);
         }
     }
 
@@ -670,6 +457,11 @@ public abstract class AbstractChartLoader<T extends AbstractChart> extends Compo
             String fontSize = legendElement.attributeValue("fontSize");
             if (StringUtils.isNotEmpty(fontSize)) {
                 legend.setFontSize(Integer.valueOf(fontSize));
+            }
+
+            String forceWidth = legendElement.attributeValue("forceWidth");
+            if (StringUtils.isNotEmpty(forceWidth)) {
+                legend.setForceWidth(Boolean.valueOf(forceWidth));
             }
 
             String horizontalGap = legendElement.attributeValue("horizontalGap");
@@ -882,11 +674,25 @@ public abstract class AbstractChartLoader<T extends AbstractChart> extends Compo
         loadBalloon(chart, element);
         loadLegend(chart, element);
         loadExport(chart, element);
-        loadExportConfig(chart, element);
 
         String addClassNames = element.attributeValue("addClassNames");
         if (StringUtils.isNotEmpty(addClassNames)) {
             chart.setAddClassNames(Boolean.valueOf(addClassNames));
+        }
+
+        String autoDisplay = element.attributeValue("autoDisplay");
+        if (StringUtils.isNotEmpty(autoDisplay)) {
+            chart.setAutoDisplay(Boolean.valueOf(autoDisplay));
+        }
+
+        String autoResize = element.attributeValue("autoResize");
+        if (StringUtils.isNotEmpty(autoResize)) {
+            chart.setAutoResize(Boolean.valueOf(autoResize));
+        }
+
+        String backgroundAlpha = element.attributeValue("backgroundAlpha");
+        if (StringUtils.isNotEmpty(backgroundAlpha)) {
+            chart.setBackgroundAlpha(Double.valueOf(backgroundAlpha));
         }
 
         String backgroundColor = element.attributeValue("backgroundColor");
@@ -954,6 +760,11 @@ public abstract class AbstractChartLoader<T extends AbstractChart> extends Compo
             chart.setHideBalloonTime(Integer.valueOf(hideBalloonTime));
         }
 
+        String language = element.attributeValue("language");
+        if (StringUtils.isNotEmpty(language)) {
+            chart.setLanguage(language);
+        }
+
         String legendDiv = element.attributeValue("legendDiv");
         if (StringUtils.isNotEmpty(legendDiv)) {
             chart.setLegendDiv(legendDiv);
@@ -974,6 +785,16 @@ public abstract class AbstractChartLoader<T extends AbstractChart> extends Compo
             chart.setPrecision(Integer.valueOf(precision));
         }
 
+        String svgIcons = element.attributeValue("svgIcons");
+        if (StringUtils.isNotEmpty(svgIcons)) {
+            chart.setSvgIcons(Boolean.valueOf(svgIcons));
+        }
+
+        String tapToActivate = element.attributeValue("tapToActivate");
+        if (StringUtils.isNotEmpty(tapToActivate)) {
+            chart.setTapToActivate(Boolean.valueOf(tapToActivate));
+        }
+
         String usePrefixes = element.attributeValue("usePrefixes");
         if (StringUtils.isNotEmpty(usePrefixes)) {
             chart.setUsePrefixes(Boolean.valueOf(usePrefixes));
@@ -987,6 +808,11 @@ public abstract class AbstractChartLoader<T extends AbstractChart> extends Compo
         String thousandsSeparator = element.attributeValue("thousandsSeparator");
         if (StringUtils.isNotEmpty(thousandsSeparator)) {
             chart.setThousandsSeparator(thousandsSeparator);
+        }
+
+        String defs = element.attributeValue("defs");
+        if (StringUtils.isNotEmpty(defs)) {
+            chart.setDefs(defs);
         }
     }
 
@@ -1052,6 +878,16 @@ public abstract class AbstractChartLoader<T extends AbstractChart> extends Compo
             axis.setAutoGridCount(Boolean.valueOf(autoGridCount));
         }
 
+        String autoRotateAngle = element.attributeValue("autoRotateAngle");
+        if (StringUtils.isNotEmpty(autoRotateAngle)) {
+            axis.setAutoRotateAngle(Integer.valueOf(autoRotateAngle));
+        }
+
+        String autoRotateCount = element.attributeValue("autoRotateCount");
+        if (StringUtils.isNotEmpty(autoRotateCount)) {
+            axis.setAutoRotateCount(Integer.valueOf(autoRotateCount));
+        }
+
         String axisAlpha = element.attributeValue("axisAlpha");
         if (StringUtils.isNotEmpty(axisAlpha)) {
             axis.setAxisAlpha(Double.valueOf(axisAlpha));
@@ -1069,7 +905,12 @@ public abstract class AbstractChartLoader<T extends AbstractChart> extends Compo
 
         String boldLabels = element.attributeValue("boldLabels");
         if (StringUtils.isNotEmpty(boldLabels)) {
-            axis.setBoldLabels(Boolean.valueOf(boldLabels));
+            axis.setCenterLabels(Boolean.valueOf(boldLabels));
+        }
+
+        String centerLabels = element.attributeValue("centerLabels");
+        if (StringUtils.isNotEmpty(centerLabels)) {
+            axis.setBoldLabels(Boolean.valueOf(centerLabels));
         }
 
         String color = element.attributeValue("color");
@@ -1162,6 +1003,11 @@ public abstract class AbstractChartLoader<T extends AbstractChart> extends Compo
             axis.setMinVerticalGap(Integer.valueOf(minVerticalGap));
         }
 
+        String minorTickLength = element.attributeValue("minorTickLength");
+        if (StringUtils.isNotEmpty(minorTickLength)) {
+            axis.setMinorTickLength(Integer.valueOf(minorTickLength));
+        }
+
         String offset = element.attributeValue("offset");
         if (StringUtils.isNotEmpty(offset)) {
             axis.setOffset(Integer.valueOf(offset));
@@ -1205,6 +1051,11 @@ public abstract class AbstractChartLoader<T extends AbstractChart> extends Compo
         String titleFontSize = element.attributeValue("titleFontSize");
         if (StringUtils.isNotEmpty(titleFontSize)) {
             axis.setTitleFontSize(Integer.valueOf(titleFontSize));
+        }
+
+        String titleRotation = element.attributeValue("titleRotation");
+        if (StringUtils.isNotEmpty(titleRotation)) {
+            axis.setTitleRotation(Integer.valueOf(titleRotation));
         }
     }
 
@@ -1393,5 +1244,67 @@ public abstract class AbstractChartLoader<T extends AbstractChart> extends Compo
         } catch (ParseException e) {
             throw new RuntimeException("Unable to parse date from XML chart configuration", e);
         }
+    }
+
+    protected Image loadImage(Element element) {
+
+        Image image = new Image();
+
+        String balloonColor = element.attributeValue("balloonColor");
+        if (StringUtils.isNotEmpty(balloonColor)) {
+            image.setBalloonColor(Color.valueOf(balloonColor));
+        }
+
+        String balloonText = element.attributeValue("balloonText");
+        if (StringUtils.isNotEmpty(balloonText)) {
+            image.setBalloonText(balloonText);
+        }
+
+        String color = element.attributeValue("color");
+        if (StringUtils.isNotEmpty(color)) {
+            image.setColor(Color.valueOf(color));
+        }
+
+        String height = element.attributeValue("height");
+        if (StringUtils.isNotEmpty(height)) {
+            image.setHeight(Integer.valueOf(height));
+        }
+
+        String offsetX = element.attributeValue("offsetX");
+        if (StringUtils.isNotEmpty(offsetX)) {
+            image.setOffsetX(Integer.valueOf(offsetX));
+        }
+
+        String offsetY = element.attributeValue("offsetY");
+        if (StringUtils.isNotEmpty(offsetY)) {
+            image.setOffsetY(Integer.valueOf(offsetY));
+        }
+
+        String outlineColor = element.attributeValue("outlineColor");
+        if (StringUtils.isNotEmpty(outlineColor)) {
+            image.setOutlineColor(Color.valueOf(outlineColor));
+        }
+
+        String rotation = element.attributeValue("rotation");
+        if (StringUtils.isNotEmpty(rotation)) {
+            image.setRotation(Integer.valueOf(rotation));
+        }
+
+        String svgPath = element.attributeValue("svgPath");
+        if (StringUtils.isNotEmpty(svgPath)) {
+            image.setSvgPath(svgPath);
+        }
+
+        String url = element.attributeValue("url");
+        if (StringUtils.isNotEmpty(url)) {
+            image.setUrl(url);
+        }
+
+        String width = element.attributeValue("width");
+        if (StringUtils.isNotEmpty(width)) {
+            image.setWidth(Integer.valueOf(width));
+        }
+
+        return image;
     }
 }

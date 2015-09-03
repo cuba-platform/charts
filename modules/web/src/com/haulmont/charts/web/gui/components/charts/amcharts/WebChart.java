@@ -985,7 +985,7 @@ public class WebChart extends WebAbstractComponent<CubaAmchartsScene> implements
         public void bindToChart(AbstractChart chart) {
             properties.clear();
             properties.add("id");
-            properties.addAll(new LinkedHashSet<String>(chart.getWiredFields()));
+            properties.addAll(new LinkedHashSet<>(chart.getWiredFields()));
         }
 
         @Override

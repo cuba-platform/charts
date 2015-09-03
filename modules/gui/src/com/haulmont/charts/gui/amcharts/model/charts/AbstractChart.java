@@ -26,13 +26,15 @@ import java.util.List;
 @SuppressWarnings("unchecked")
 public abstract class AbstractChart<T extends AbstractConfigurationObject> extends AbstractConfigurationObject {
 
-    private final ChartType type;
-
     private Boolean addClassNames;
 
     private List<Label> allLabels;
 
-    private Export amExport;
+    private Boolean autoDisplay;
+
+    private Boolean autoResize;
+
+    private Double backgroundAlpha;
 
     private Color backgroundColor;
 
@@ -44,15 +46,22 @@ public abstract class AbstractChart<T extends AbstractConfigurationObject> exten
 
     private String classNamePrefix;
 
-    private String creditsPosition;
-
     private Color color;
 
-    private String decimalSeparator;
+    private String creditsPosition;
 
     private DataProvider dataProvider;
 
-    private ExportConfig exportConfig;
+    private String decimalSeparator;
+
+    /**
+     * Using this property you can add any additional information to SVG,
+     * like SVG filters or clip paths. The structure of this object should be
+     * identical to XML structure of a object you are adding, only in JSON format.
+     */
+    private String defs;
+
+    private Export export;
 
     private String fontFamily;
 
@@ -66,13 +75,17 @@ public abstract class AbstractChart<T extends AbstractConfigurationObject> exten
 
     private Integer hideBalloonTime;
 
+    private String language;
+
     private Legend legend;
 
     private String legendDiv;
 
     private Boolean panEventsEnabled;
 
-    private String pathToImages = "VAADIN/resources/amcharts/images/";
+    private String path = "VAADIN/resources/amcharts/";
+
+    private String pathToImages;
 
     private Integer percentPrecision;
 
@@ -82,13 +95,19 @@ public abstract class AbstractChart<T extends AbstractConfigurationObject> exten
 
     private List<SmallNumberPrefix> prefixesOfSmallNumbers;
 
-    private List<Title> titles;
+    private Boolean svgIcons;
 
-    private Boolean usePrefixes;
+    private Boolean tapToActivate;
 
     private ChartTheme theme;
 
     private String thousandsSeparator;
+
+    private List<Title> titles;
+
+    private final ChartType type;
+
+    private Boolean usePrefixes;
 
     protected AbstractChart(ChartType type) {
         this.type = type;
@@ -122,12 +141,12 @@ public abstract class AbstractChart<T extends AbstractConfigurationObject> exten
         return (T) this;
     }
 
-    public Export getAmExport() {
-        return amExport;
+    public Export getExport() {
+        return export;
     }
 
-    public T setAmExport(Export amExport) {
-        this.amExport = amExport;
+    public T setExport(Export amExport) {
+        this.export = amExport;
         return (T) this;
     }
 
@@ -146,15 +165,6 @@ public abstract class AbstractChart<T extends AbstractConfigurationObject> exten
 
     public T setBalloon(Balloon balloon) {
         this.balloon = balloon;
-        return (T) this;
-    }
-
-    public ExportConfig getExportConfig() {
-        return exportConfig;
-    }
-
-    public T setExportConfig(ExportConfig exportConfig) {
-        this.exportConfig = exportConfig;
         return (T) this;
     }
 
@@ -429,5 +439,86 @@ public abstract class AbstractChart<T extends AbstractConfigurationObject> exten
 
     public ChartType getType() {
         return type;
+    }
+
+    public Boolean getAutoDisplay() {
+        return autoDisplay;
+    }
+
+    public T setAutoDisplay(Boolean autoDisplay) {
+        this.autoDisplay = autoDisplay;
+        return (T) this;
+    }
+
+
+    public Boolean getAutoResize() {
+        return autoResize;
+    }
+
+    public T setAutoResize(Boolean autoResize) {
+        this.autoResize = autoResize;
+        return (T) this;
+    }
+
+    public Double getBackgroundAlpha() {
+        return backgroundAlpha;
+    }
+
+    public T setBackgroundAlpha(Double backgroundAlpha) {
+        this.backgroundAlpha = backgroundAlpha;
+        return (T) this;
+    }
+
+    public String getLanguage() {
+        return language;
+    }
+
+    public T setLanguage(String language) {
+        this.language = language;
+        return (T) this;
+    }
+
+    public String getPath() {
+        return path;
+    }
+
+    public T setPath(String path) {
+        this.path = path;
+        return (T) this;
+    }
+
+    public Boolean getSvgIcons() {
+        return svgIcons;
+    }
+
+    public T setSvgIcons(Boolean svgIcons) {
+        this.svgIcons = svgIcons;
+        return (T) this;
+    }
+
+    public Boolean getTapToActivate() {
+        return tapToActivate;
+    }
+
+    public T setTapToActivate(Boolean tapToActivate) {
+        this.tapToActivate = tapToActivate;
+        return (T) this;
+    }
+
+    public String getDefs() {
+        return defs;
+    }
+
+    /**
+     * /**
+     * Using this property you can add any additional information to SVG,
+     * like SVG filters or clip paths. The structure of this object should be
+     * identical to XML structure of a object you are adding, only in JSON format.
+     * @param defs json string
+     * @return this object
+     */
+    public T setDefs(String defs) {
+        this.defs = defs;
+        return (T) this;
     }
 }

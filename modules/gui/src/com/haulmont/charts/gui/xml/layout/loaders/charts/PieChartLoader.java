@@ -38,6 +38,11 @@ public class PieChartLoader extends SlicedChartLoader<PieChart> {
     protected void loadConfiguration(PieChart chart, Element element) {
         super.loadConfiguration(chart, element);
 
+        String adjustPrecision = element.attributeValue("adjustPrecision");
+        if (StringUtils.isNotEmpty(adjustPrecision)) {
+            chart.setAdjustPrecision(Boolean.valueOf(adjustPrecision));
+        }
+
         String angle = element.attributeValue("angle");
         if (StringUtils.isNotEmpty(angle)) {
             chart.setAngle(Integer.valueOf(angle));

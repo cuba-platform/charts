@@ -23,6 +23,8 @@ public class PieChart extends SlicedChart<PieChart> {
 
     private static final long serialVersionUID = 7721119324768771106L;
 
+    private Boolean adjustPrecision;
+
     private Integer angle;
 
     private String balloonText;
@@ -201,5 +203,14 @@ public class PieChart extends SlicedChart<PieChart> {
         }
 
         return wiredFields;
+    }
+
+    public Boolean getAdjustPrecision() {
+        return adjustPrecision;
+    }
+
+    public PieChart setAdjustPrecision(Boolean adjustPrecision) {
+        this.adjustPrecision = adjustPrecision;
+        return this;
     }
 }

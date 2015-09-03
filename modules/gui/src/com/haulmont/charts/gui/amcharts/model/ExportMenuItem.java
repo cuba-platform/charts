@@ -11,19 +11,13 @@ package com.haulmont.charts.gui.amcharts.model;
  */
 public class ExportMenuItem extends AbstractConfigurationObject {
 
-    private static final long serialVersionUID = -7641875968839847097L;
-
-    private String title;
+    private static final long serialVersionUID = 7821740492043242236L;
 
     private ExportFormat format;
 
-    public ExportMenuItem() {
-    }
+    private String label;
 
-    public ExportMenuItem(ExportFormat format, String title) {
-        this.format = format;
-        this.title = title;
-    }
+    private String title;
 
     public ExportFormat getFormat() {
         return format;
@@ -31,6 +25,15 @@ public class ExportMenuItem extends AbstractConfigurationObject {
 
     public ExportMenuItem setFormat(ExportFormat format) {
         this.format = format;
+        return this;
+    }
+
+    public String getLabel() {
+        return label;
+    }
+
+    public ExportMenuItem setLabel(String label) {
+        this.label = label;
         return this;
     }
 

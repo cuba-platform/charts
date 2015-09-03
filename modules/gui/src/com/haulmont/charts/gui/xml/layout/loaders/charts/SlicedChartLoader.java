@@ -44,9 +44,9 @@ public abstract class SlicedChartLoader<T extends SlicedChart> extends AbstractC
             chart.setBaseColor(Color.valueOf(baseColor));
         }
 
-        String brightnessStep = element.attributeValue("brightnessStep");
-        if (StringUtils.isNotEmpty(brightnessStep)) {
-            chart.setBrightnessStep(Byte.valueOf(brightnessStep));
+        String classNameField = element.attributeValue("classNameField");
+        if (StringUtils.isNotEmpty(classNameField)) {
+            chart.setClassNameField(classNameField);
         }
 
         String colorField = element.attributeValue("colorField");
@@ -169,6 +169,11 @@ public abstract class SlicedChartLoader<T extends SlicedChart> extends AbstractC
         String sequencedAnimation = element.attributeValue("sequencedAnimation");
         if (StringUtils.isNotEmpty(sequencedAnimation)) {
             chart.setSequencedAnimation(Boolean.valueOf(sequencedAnimation));
+        }
+
+        String showZeroSlices = element.attributeValue("showZeroSlices");
+        if (StringUtils.isNotEmpty(showZeroSlices)) {
+            chart.setShowZeroSlices(Boolean.valueOf(showZeroSlices));
         }
 
         String startAlpha = element.attributeValue("startAlpha");

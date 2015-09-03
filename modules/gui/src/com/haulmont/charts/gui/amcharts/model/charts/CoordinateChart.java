@@ -36,13 +36,13 @@ public abstract class CoordinateChart<T extends CoordinateChart> extends Abstrac
 
     private Double startAlpha;
 
-    private AnimationEffect startEffect;
-
     private Integer startDuration;
 
-    private List<ValueAxis> valueAxes;
+    private AnimationEffect startEffect;
 
     private String urlTarget;
+
+    private List<ValueAxis> valueAxes;
 
     public CoordinateChart(ChartType type) {
         super(type);

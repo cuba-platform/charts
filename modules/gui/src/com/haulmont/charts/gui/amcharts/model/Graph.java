@@ -77,6 +77,8 @@ public class Graph extends AbstractConfigurationObject {
 
     private String dashLengthField;
 
+    private DateFormat dateFormat;
+
     private String descriptionField;
 
     private String errorField;
@@ -120,6 +122,8 @@ public class Graph extends AbstractConfigurationObject {
     private Integer labelOffset;
 
     private ValueLabelPosition labelPosition;
+
+    private Integer labelRotation;
 
     private String labelText;
 
@@ -173,6 +177,10 @@ public class Graph extends AbstractConfigurationObject {
 
     private PointPosition pointPosition;
 
+    private Integer precision;
+
+    private Boolean proCandlesticks;
+
     private Boolean showAllValueLabels;
 
     private Boolean showBalloon;
@@ -200,6 +208,8 @@ public class Graph extends AbstractConfigurationObject {
     private String urlField;
 
     private String urlTarget;
+
+    private Boolean useLineColorForBulletBorder;
 
     private Boolean useNegativeColorIfDown;
 
@@ -1114,6 +1124,51 @@ public class Graph extends AbstractConfigurationObject {
 
     public Graph setTopRadius(Integer topRadius) {
         this.topRadius = topRadius;
+        return this;
+    }
+
+    public DateFormat getDateFormat() {
+        return dateFormat;
+    }
+
+    public Graph setDateFormat(DateFormat dateFormat) {
+        this.dateFormat = dateFormat;
+        return this;
+    }
+
+    public Integer getLabelRotation() {
+        return labelRotation;
+    }
+
+    public Graph setLabelRotation(Integer labelRotation) {
+        this.labelRotation = labelRotation;
+        return this;
+    }
+
+    public Integer getPrecision() {
+        return precision;
+    }
+
+    public Graph setPrecision(Integer precision) {
+        this.precision = precision;
+        return this;
+    }
+
+    public Boolean getProCandlesticks() {
+        return proCandlesticks;
+    }
+
+    public Graph setProCandlesticks(Boolean proCandlesticks) {
+        this.proCandlesticks = proCandlesticks;
+        return this;
+    }
+
+    public Boolean getUseLineColorForBulletBorder() {
+        return useLineColorForBulletBorder;
+    }
+
+    public Graph setUseLineColorForBulletBorder(Boolean useLineColorForBulletBorder) {
+        this.useLineColorForBulletBorder = useLineColorForBulletBorder;
         return this;
     }
 }

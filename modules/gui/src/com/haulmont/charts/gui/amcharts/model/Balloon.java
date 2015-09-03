@@ -31,6 +31,8 @@ public class Balloon extends AbstractConfigurationObject {
 
     private Integer cornerRadius;
 
+    private Boolean disableMouseEvents;
+
     private Double fadeOutDuration;
 
     private Double fillAlpha;
@@ -256,6 +258,15 @@ public class Balloon extends AbstractConfigurationObject {
 
     public Balloon setVerticalPadding(Integer verticalPadding) {
         this.verticalPadding = verticalPadding;
+        return this;
+    }
+
+    public Boolean getDisableMouseEvents() {
+        return disableMouseEvents;
+    }
+
+    public Balloon setDisableMouseEvents(Boolean disableMouseEvents) {
+        this.disableMouseEvents = disableMouseEvents;
         return this;
     }
 }

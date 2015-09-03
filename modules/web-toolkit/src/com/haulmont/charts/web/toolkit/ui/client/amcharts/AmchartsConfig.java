@@ -21,6 +21,7 @@ public class AmchartsConfig extends JavaScriptObject {
     public static AmchartsConfig fromServerConfig(String config, String json) {
         String configJson = config != null ? config : "{}";
         AmchartsConfig configObject = (AmchartsConfig) JSONParser.parseLenient(configJson).isObject().getJavaScriptObject();
+        parseDefs(configObject);
         applyCustomJson(configObject, json);
         activateFunctions(configObject);
         parseConfigDateProperties(configObject);
@@ -30,8 +31,23 @@ public class AmchartsConfig extends JavaScriptObject {
         return configObject;
     }
 
+    private static native String getDefs(JavaScriptObject config) /*-{
+        return config.defs;
+    }-*/;
+
+    private static native void setDefs(JavaScriptObject config, JavaScriptObject defsObject) /*-{
+        config.defs = defsObject;
+    }-*/;
+
+    protected static void parseDefs(JavaScriptObject config) {
+        String defs = getDefs(config);
+        if (defs != null) {
+            setDefs(config, JSONParser.parseLenient(defs).isObject().getJavaScriptObject());
+        }
+    }
+
     private static native void disableExportFeatures(JavaScriptObject config) /*-{
-        config.exportConfig = undefined;
+        config['export'] = undefined;
     }-*/;
 
     private static native void parseConfigDateProperties(JavaScriptObject config) /*-{
