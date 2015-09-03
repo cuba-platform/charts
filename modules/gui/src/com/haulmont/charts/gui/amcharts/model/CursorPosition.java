@@ -16,7 +16,7 @@ public enum CursorPosition implements ChartEnum {
 
     private String id;
 
-    private CursorPosition(String id) {
+    CursorPosition(String id) {
         this.id = id;
     }
 

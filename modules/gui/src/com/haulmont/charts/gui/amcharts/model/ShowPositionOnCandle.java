@@ -17,7 +17,7 @@ public enum ShowPositionOnCandle implements ChartEnum {
 
     private String id;
 
-    private ShowPositionOnCandle(String id) {
+    ShowPositionOnCandle(String id) {
         this.id = id;
     }
 

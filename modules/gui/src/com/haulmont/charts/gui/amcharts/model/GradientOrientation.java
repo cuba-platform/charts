@@ -15,7 +15,7 @@ public enum GradientOrientation implements ChartEnum {
 
     private String id;
 
-    private GradientOrientation(String id) {
+    GradientOrientation(String id) {
         this.id = id;
     }
 

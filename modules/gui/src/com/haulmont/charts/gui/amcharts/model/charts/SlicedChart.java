@@ -24,6 +24,8 @@ import java.util.List;
 public abstract class SlicedChart<T extends SlicedChart> extends AbstractChart<T>
         implements HasMargins<T>, HasStartEffect<T>, HasColors<T> {
 
+    private static final long serialVersionUID = -9176849613764858438L;
+
     private Double alpha;
 
     private String alphaField;

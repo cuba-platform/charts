@@ -18,7 +18,7 @@ public enum Duration implements ChartEnum {
 
     private String id;
 
-    private Duration(String id) {
+    Duration(String id) {
         this.id = id;
     }
 

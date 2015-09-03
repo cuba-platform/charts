@@ -911,6 +911,8 @@ public class WebChart extends WebAbstractComponent<CubaAmchartsScene> implements
 
     protected static class EntityDataProvider implements DataProvider {
 
+        private static final long serialVersionUID = -631516572260683521L;
+
         protected final CollectionDatasource datasource;
         protected List<String> properties = new ArrayList<>();
         protected final List<ConfigurationChangeListener> changeListeners = new ArrayList<>();
@@ -1044,6 +1046,8 @@ public class WebChart extends WebAbstractComponent<CubaAmchartsScene> implements
     }
 
     protected static class EntityDataItem extends AbstractConfigurationObject implements DataItem {
+
+        private static final long serialVersionUID = -2703129637028051748L;
 
         protected Messages messages = AppBeans.get(Messages.NAME);
         protected final EntityDataProvider dataProvider;

@@ -18,7 +18,7 @@ public enum StackType implements ChartEnum {
 
     private String id;
 
-    private StackType(String id) {
+    StackType(String id) {
         this.id = id;
     }
 

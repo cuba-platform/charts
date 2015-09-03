@@ -16,7 +16,7 @@ public enum LabelPosition implements ChartEnum {
 
     private String id;
 
-    private LabelPosition(String id) {
+    LabelPosition(String id) {
         this.id = id;
     }
 

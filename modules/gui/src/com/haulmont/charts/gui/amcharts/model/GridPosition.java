@@ -15,7 +15,7 @@ public enum GridPosition implements ChartEnum {
 
     private String id;
 
-    private GridPosition(String id) {
+    GridPosition(String id) {
         this.id = id;
     }
 

@@ -21,7 +21,7 @@ public enum ChartType implements ChartEnum {
 
     private String id;
 
-    private ChartType(String id) {
+    ChartType(String id) {
         this.id = id;
     }
 

@@ -20,6 +20,8 @@ import java.util.List;
 @SuppressWarnings("unchecked")
 public abstract class AbstractAxis<T extends AbstractAxis> extends AbstractConfigurationObject {
 
+    private static final long serialVersionUID = -3780316839158653495L;
+
     private Boolean autoGridCount;
 
     private Integer autoRotateAngle;

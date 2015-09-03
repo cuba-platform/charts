@@ -15,7 +15,7 @@ public enum LegendSwitch implements ChartEnum {
 
     private String id;
 
-    private LegendSwitch(String id) {
+    LegendSwitch(String id) {
         this.id = id;
     }
 

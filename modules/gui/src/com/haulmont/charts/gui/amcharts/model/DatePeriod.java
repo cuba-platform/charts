@@ -21,7 +21,7 @@ public enum DatePeriod implements ChartEnum {
 
     private String id;
 
-    private DatePeriod(String id) {
+    DatePeriod(String id) {
         this.id = id;
     }
 

@@ -22,6 +22,8 @@ import java.util.List;
 @SuppressWarnings("unchecked")
 public abstract class RectangularChart<T extends RectangularChart> extends CoordinateChart<T> implements HasMargins<T> {
 
+    private static final long serialVersionUID = -5847502638455406714L;
+
     private Integer angle;
 
     private Integer autoMarginOffset;

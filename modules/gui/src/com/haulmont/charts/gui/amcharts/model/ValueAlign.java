@@ -15,7 +15,7 @@ public enum ValueAlign implements ChartEnum {
 
     private String id;
 
-    private ValueAlign(String id) {
+    ValueAlign(String id) {
         this.id = id;
     }
 

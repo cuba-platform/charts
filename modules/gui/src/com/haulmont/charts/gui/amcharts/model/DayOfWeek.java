@@ -20,7 +20,7 @@ public enum DayOfWeek implements ChartEnum {
 
     private int id;
 
-    private DayOfWeek(int id) {
+    DayOfWeek(int id) {
         this.id = id;
     }
 

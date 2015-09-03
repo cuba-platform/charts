@@ -16,7 +16,7 @@ public enum PointPosition implements ChartEnum {
 
     private String id;
 
-    private PointPosition(String id) {
+    PointPosition(String id) {
         this.id = id;
     }
 

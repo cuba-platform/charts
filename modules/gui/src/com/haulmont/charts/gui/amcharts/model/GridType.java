@@ -15,7 +15,7 @@ public enum GridType implements ChartEnum {
 
     private String id;
 
-    private GridType(String id) {
+    GridType(String id) {
         this.id = id;
     }
 

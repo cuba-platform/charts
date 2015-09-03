@@ -18,7 +18,7 @@ public enum LegendPosition implements ChartEnum {
 
     private String id;
 
-    private LegendPosition(String id) {
+    LegendPosition(String id) {
         this.id = id;
     }
 

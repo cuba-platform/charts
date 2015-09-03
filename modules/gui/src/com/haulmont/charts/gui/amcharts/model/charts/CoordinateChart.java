@@ -24,6 +24,8 @@ import java.util.List;
 public abstract class CoordinateChart<T extends CoordinateChart> extends AbstractChart<T>
         implements HasStartEffect<T>, HasColors<T> {
 
+    private static final long serialVersionUID = -8779874684644002376L;
+
     private List<Color> colors;
 
     private List<Graph> graphs;

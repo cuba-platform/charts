@@ -19,7 +19,7 @@ public enum GraphType implements ChartEnum {
 
     private String id;
 
-    private GraphType(String id) {
+    GraphType(String id) {
         this.id = id;
     }
 

@@ -25,7 +25,7 @@ public enum BulletType implements ChartEnum {
 
     private String id;
 
-    private BulletType(String id) {
+    BulletType(String id) {
         this.id = id;
     }
 

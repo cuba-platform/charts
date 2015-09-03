@@ -22,7 +22,7 @@ public enum MarkerType implements ChartEnum {
 
     private String id;
 
-    private MarkerType(String id) {
+    MarkerType(String id) {
         this.id = id;
     }
 

@@ -17,7 +17,7 @@ public enum ExportFormat implements ChartEnum {
 
     private String id;
 
-    private ExportFormat(String id) {
+    ExportFormat(String id) {
         this.id = id;
     }
 

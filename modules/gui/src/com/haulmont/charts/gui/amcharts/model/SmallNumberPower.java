@@ -21,7 +21,7 @@ public enum SmallNumberPower implements ChartEnum {
 
     private String id;
 
-    private SmallNumberPower(String id) {
+    SmallNumberPower(String id) {
         this.id = id;
     }
 

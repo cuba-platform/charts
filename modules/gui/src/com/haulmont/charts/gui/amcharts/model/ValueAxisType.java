@@ -15,7 +15,7 @@ public enum ValueAxisType implements ChartEnum {
 
     private String id;
 
-    private ValueAxisType(String id) {
+    ValueAxisType(String id) {
         this.id = id;
     }
 

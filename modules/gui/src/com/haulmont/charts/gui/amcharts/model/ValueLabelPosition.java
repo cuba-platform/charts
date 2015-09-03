@@ -19,7 +19,7 @@ public enum ValueLabelPosition implements ChartEnum {
 
     private String id;
 
-    private ValueLabelPosition(String id) {
+    ValueLabelPosition(String id) {
         this.id = id;
     }
 

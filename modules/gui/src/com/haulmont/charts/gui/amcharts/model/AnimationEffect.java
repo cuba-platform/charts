@@ -17,7 +17,7 @@ public enum AnimationEffect implements ChartEnum {
 
     private String id;
 
-    private AnimationEffect(String id) {
+    AnimationEffect(String id) {
         this.id = id;
     }
 

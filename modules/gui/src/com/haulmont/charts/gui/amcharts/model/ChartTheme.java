@@ -19,7 +19,7 @@ public enum ChartTheme implements ChartEnum {
 
     private String id;
 
-    private ChartTheme(String id) {
+    ChartTheme(String id) {
         this.id = id;
     }
 

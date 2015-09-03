@@ -15,7 +15,7 @@ public enum StepDirection implements ChartEnum {
 
     private String id;
 
-    private StepDirection(String id) {
+    StepDirection(String id) {
         this.id = id;
     }
 

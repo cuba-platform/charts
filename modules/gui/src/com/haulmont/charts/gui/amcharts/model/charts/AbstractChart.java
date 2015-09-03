@@ -26,6 +26,8 @@ import java.util.List;
 @SuppressWarnings("unchecked")
 public abstract class AbstractChart<T extends AbstractConfigurationObject> extends AbstractConfigurationObject {
 
+    private static final long serialVersionUID = -7360797549413731632L;
+
     private Boolean addClassNames;
 
     private List<Label> allLabels;

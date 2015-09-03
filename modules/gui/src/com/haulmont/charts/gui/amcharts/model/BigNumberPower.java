@@ -21,7 +21,7 @@ public enum BigNumberPower implements ChartEnum {
 
     private String id;
 
-    private BigNumberPower(String id) {
+    BigNumberPower(String id) {
         this.id = id;
     }
 

@@ -15,7 +15,7 @@ public enum FunnelValueRepresentation implements ChartEnum {
 
     private String id;
 
-    private FunnelValueRepresentation(String id) {
+    FunnelValueRepresentation(String id) {
         this.id = id;
     }
 
