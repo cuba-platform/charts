@@ -1075,6 +1075,7 @@
         <xs:attribute name="visible" type="xs:boolean"/>
         <xs:attribute name="enable" type="xs:boolean"/>
 
+        <xs:attribute name="additionalFields" type="xs:string"/>
         <xs:attribute name="autoDisplay" type="xs:boolean"/>
         <xs:attribute name="autoResize" type="xs:boolean"/>
         <xs:attribute name="backgroundAlpha" type="xs:double"/>
@@ -1370,28 +1371,55 @@
         </xs:complexType>
     </xs:element>
 
-    <xs:element name="serialChart">
+    <xs:complexType name="serialChartType">
+        <xs:complexContent>
+            <xs:extension base="rectangularChart">
+                <xs:all>
+                    <xs:element name="categoryAxis" minOccurs="0" maxOccurs="1" type="categoryAxis"/>
+                </xs:all>
+
+                <xs:attribute name="byDate" type="xs:boolean"/>
+
+                <xs:attribute name="balloonDateFormat" type="xs:string"/>
+                <xs:attribute name="categoryField" type="xs:string"/>
+                <xs:attribute name="columnSpacing" type="xs:integer"/>
+                <xs:attribute name="columnSpacing3D" type="xs:integer"/>
+                <xs:attribute name="columnWidth" type="xs:double"/>
+                <xs:attribute name="maxSelectedSeries" type="xs:integer"/>
+                <xs:attribute name="maxSelectedTime" type="xs:long"/>
+                <xs:attribute name="minSelectedTime" type="xs:long"/>
+                <xs:attribute name="mouseWheelScrollEnabled" type="xs:boolean"/>
+                <xs:attribute name="mouseWheelZoomEnabled" type="xs:boolean"/>
+                <xs:attribute name="rotate" type="xs:boolean"/>
+                <xs:attribute name="zoomOutOnDataUpdate" type="xs:boolean"/>
+            </xs:extension>
+        </xs:complexContent>
+    </xs:complexType>
+
+    <xs:element name="serialChart" type="serialChartType"/>
+
+    <xs:element name="ganttChart">
         <xs:complexType>
             <xs:complexContent>
-                <xs:extension base="rectangularChart">
+                <xs:extension base="serialChartType">
                     <xs:all>
-                        <xs:element name="categoryAxis" minOccurs="0" maxOccurs="1" type="categoryAxis"/>
+                        <xs:element name="valueAxis" minOccurs="0" maxOccurs="1" type="valueAxis"/>
+                        <xs:element name="graph" minOccurs="0" maxOccurs="1" type="chartGraph"/>
                     </xs:all>
 
-                    <xs:attribute name="byDate" type="xs:boolean"/>
-
-                    <xs:attribute name="balloonDateFormat" type="xs:string"/>
-                    <xs:attribute name="categoryField" type="xs:string"/>
-                    <xs:attribute name="columnSpacing" type="xs:integer"/>
-                    <xs:attribute name="columnSpacing3D" type="xs:integer"/>
-                    <xs:attribute name="columnWidth" type="xs:double"/>
-                    <xs:attribute name="maxSelectedSeries" type="xs:integer"/>
-                    <xs:attribute name="maxSelectedTime" type="xs:long"/>
-                    <xs:attribute name="minSelectedTime" type="xs:long"/>
-                    <xs:attribute name="mouseWheelScrollEnabled" type="xs:boolean"/>
-                    <xs:attribute name="mouseWheelZoomEnabled" type="xs:boolean"/>
-                    <xs:attribute name="rotate" type="xs:boolean"/>
-                    <xs:attribute name="zoomOutOnDataUpdate" type="xs:boolean"/>
+                    <xs:attribute name="additionalSegmentFields" type="xs:string"/>
+                    <xs:attribute name="brightnessStep" type="xs:integer"/>
+                    <xs:attribute name="colorField" type="xs:string"/>
+                    <xs:attribute name="columnWidthField" type="xs:string"/>
+                    <xs:attribute name="durationField" type="xs:string"/>
+                    <xs:attribute name="endDate" type="xs:date"/>
+                    <xs:attribute name="endDateField" type="xs:string"/>
+                    <xs:attribute name="endField" type="xs:string"/>
+                    <xs:attribute name="period" type="xs:string"/>
+                    <xs:attribute name="segmentsField" type="xs:string"/>
+                    <xs:attribute name="startDate" type="xs:date"/>
+                    <xs:attribute name="startDateField" type="xs:string"/>
+                    <xs:attribute name="startField" type="xs:string"/>
                 </xs:extension>
             </xs:complexContent>
         </xs:complexType>

@@ -5,8 +5,11 @@
 
 package com.haulmont.charts.gui.amcharts.model;
 
+import com.google.gson.ExclusionStrategy;
+import com.google.gson.FieldAttributes;
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
+import com.google.gson.annotations.Expose;
 import com.haulmont.charts.gui.amcharts.model.data.DataItem;
 import com.haulmont.charts.gui.amcharts.model.data.DataProvider;
 import com.haulmont.charts.gui.amcharts.model.gson.*;
@@ -26,7 +29,18 @@ public abstract class AbstractConfigurationObject implements Serializable {
 
     static {
         // GSON is thread safe so we can use shared GSON instance
-        gson = createGsonBuilder().create();
+        gson = createGsonBuilder().setExclusionStrategies(new ExclusionStrategy() {
+            @Override
+            public boolean shouldSkipField(FieldAttributes f) {
+                Expose expose = f.getAnnotation(Expose.class);
+                return expose != null && !expose.serialize();
+            }
+
+            @Override
+            public boolean shouldSkipClass(Class<?> clazz) {
+                return false;
+            }
+        }).create();
     }
 
     /**

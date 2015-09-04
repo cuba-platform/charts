@@ -25,6 +25,8 @@ public interface DataProvider extends Serializable {
 
     List<DataItem> getItems();
 
+    AbstractChart getChart();
+
     void addItem(DataItem item);
 
     void addItems(Collection<DataItem> items);

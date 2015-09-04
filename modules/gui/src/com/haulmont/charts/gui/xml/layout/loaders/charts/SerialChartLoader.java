@@ -20,7 +20,7 @@ import org.dom4j.Element;
  * @author artamonov
  * @version $Id$
  */
-public class SerialChartLoader extends RectangularChartLoader<SerialChart> {
+public class SerialChartLoader<T extends SerialChart> extends RectangularChartLoader<T> {
     public SerialChartLoader(Context context) {
         super(context);
     }
@@ -29,7 +29,7 @@ public class SerialChartLoader extends RectangularChartLoader<SerialChart> {
     public Chart loadComponent(ComponentsFactory factory, Element element, Component parent) {
         Chart chart = super.loadComponent(factory, element, parent);
 
-        SerialChart configuration = new SerialChart();
+        T configuration = getConfiguration();
         loadConfiguration(configuration, element);
         chart.setConfiguration(configuration);
 
@@ -43,8 +43,13 @@ public class SerialChartLoader extends RectangularChartLoader<SerialChart> {
         return chart;
     }
 
+    @SuppressWarnings("unchecked")
+    protected T getConfiguration() {
+        return (T) new SerialChart();
+    }
+
     @Override
-    protected void loadConfiguration(SerialChart chart, Element element) {
+    protected void loadConfiguration(T chart, Element element) {
         super.loadConfiguration(chart, element);
 
         loadCategoryAxis(chart, element);
@@ -110,7 +115,7 @@ public class SerialChartLoader extends RectangularChartLoader<SerialChart> {
         }
     }
 
-    protected void loadCategoryAxis(SerialChart chart, Element element) {
+    protected void loadCategoryAxis(T chart, Element element) {
         Element axisElement = element.element("categoryAxis");
         if (axisElement != null) {
             CategoryAxis axis = new CategoryAxis();

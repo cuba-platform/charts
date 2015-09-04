@@ -20,6 +20,7 @@ import org.dom4j.Element;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.Date;
 import java.util.List;
 
@@ -679,6 +680,11 @@ public abstract class AbstractChartLoader<T extends AbstractChart> extends Compo
         String addClassNames = element.attributeValue("addClassNames");
         if (StringUtils.isNotEmpty(addClassNames)) {
             chart.setAddClassNames(Boolean.valueOf(addClassNames));
+        }
+
+        String additionalFields = element.attributeValue("additionalFields");
+        if (StringUtils.isNotEmpty(additionalFields)) {
+            chart.addAdditionalFields(additionalFields.split(","));
         }
 
         String autoDisplay = element.attributeValue("autoDisplay");

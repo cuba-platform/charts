@@ -20,7 +20,8 @@ import java.util.List;
  * @author artamonov
  * @version $Id$
  */
-public class SerialChart extends RectangularChart<SerialChart> {
+@SuppressWarnings("unchecked")
+public class SerialChart<T extends SerialChart> extends RectangularChart<T> {
 
     private static final long serialVersionUID = 4097450050182930159L;
 
@@ -56,130 +57,134 @@ public class SerialChart extends RectangularChart<SerialChart> {
         super(ChartType.SERIAL);
     }
 
+    protected SerialChart(ChartType type) {
+        super(type);
+    }
+
     public CategoryAxis getCategoryAxis() {
         return categoryAxis;
     }
 
-    public SerialChart setCategoryAxis(CategoryAxis categoryAxis) {
+    public T setCategoryAxis(CategoryAxis categoryAxis) {
         this.categoryAxis = categoryAxis;
-        return this;
+        return (T) this;
     }
 
     public String getCategoryField() {
         return categoryField;
     }
 
-    public SerialChart setCategoryField(String categoryField) {
+    public T setCategoryField(String categoryField) {
         this.categoryField = categoryField;
-        return this;
+        return (T) this;
     }
 
     public String getBalloonDateFormat() {
         return balloonDateFormat;
     }
 
-    public SerialChart setBalloonDateFormat(String balloonDateFormat) {
+    public T setBalloonDateFormat(String balloonDateFormat) {
         this.balloonDateFormat = balloonDateFormat;
-        return this;
+        return (T) this;
     }
 
     public Integer getColumnSpacing3D() {
         return columnSpacing3D;
     }
 
-    public SerialChart setColumnSpacing3D(Integer columnSpacing3D) {
+    public T setColumnSpacing3D(Integer columnSpacing3D) {
         this.columnSpacing3D = columnSpacing3D;
-        return this;
+        return (T) this;
     }
 
     public Integer getColumnSpacing() {
         return columnSpacing;
     }
 
-    public SerialChart setColumnSpacing(Integer columnSpacing) {
+    public T setColumnSpacing(Integer columnSpacing) {
         this.columnSpacing = columnSpacing;
-        return this;
+        return (T) this;
     }
 
     public Double getColumnWidth() {
         return columnWidth;
     }
 
-    public SerialChart setColumnWidth(Double columnWidth) {
+    public T setColumnWidth(Double columnWidth) {
         this.columnWidth = columnWidth;
-        return this;
+        return (T) this;
     }
 
     public String getDataDateFormat() {
         return dataDateFormat;
     }
 
-    public SerialChart setDataDateFormat(String dataDateFormat) {
+    public T setDataDateFormat(String dataDateFormat) {
         this.dataDateFormat = dataDateFormat;
-        return this;
+        return (T) this;
     }
 
     public Integer getMaxSelectedSeries() {
         return maxSelectedSeries;
     }
 
-    public SerialChart setMaxSelectedSeries(Integer maxSelectedSeries) {
+    public T setMaxSelectedSeries(Integer maxSelectedSeries) {
         this.maxSelectedSeries = maxSelectedSeries;
-        return this;
+        return (T) this;
     }
 
     public Long getMaxSelectedTime() {
         return maxSelectedTime;
     }
 
-    public SerialChart setMaxSelectedTime(Long maxSelectedTime) {
+    public T setMaxSelectedTime(Long maxSelectedTime) {
         this.maxSelectedTime = maxSelectedTime;
-        return this;
+        return (T) this;
     }
 
     public Long getMinSelectedTime() {
         return minSelectedTime;
     }
 
-    public SerialChart setMinSelectedTime(Long minSelectedTime) {
+    public T setMinSelectedTime(Long minSelectedTime) {
         this.minSelectedTime = minSelectedTime;
-        return this;
+        return (T) this;
     }
 
     public Boolean getMouseWheelScrollEnabled() {
         return mouseWheelScrollEnabled;
     }
 
-    public SerialChart setMouseWheelScrollEnabled(Boolean mouseWheelScrollEnabled) {
+    public T setMouseWheelScrollEnabled(Boolean mouseWheelScrollEnabled) {
         this.mouseWheelScrollEnabled = mouseWheelScrollEnabled;
-        return this;
+        return (T) this;
     }
 
     public Boolean getRotate() {
         return rotate;
     }
 
-    public SerialChart setRotate(Boolean rotate) {
+    public T setRotate(Boolean rotate) {
         this.rotate = rotate;
-        return this;
+        return (T) this;
     }
 
     public Boolean getZoomOutOnDataUpdate() {
         return zoomOutOnDataUpdate;
     }
 
-    public SerialChart setZoomOutOnDataUpdate(Boolean zoomOutOnDataUpdate) {
+    public T setZoomOutOnDataUpdate(Boolean zoomOutOnDataUpdate) {
         this.zoomOutOnDataUpdate = zoomOutOnDataUpdate;
-        return this;
+        return (T) this;
     }
 
     public Boolean getMouseWheelZoomEnabled() {
         return mouseWheelZoomEnabled;
     }
 
-    public SerialChart setMouseWheelZoomEnabled(Boolean mouseWheelZoomEnabled) {
+    public T setMouseWheelZoomEnabled(Boolean mouseWheelZoomEnabled) {
         this.mouseWheelZoomEnabled = mouseWheelZoomEnabled;
-        return this;
+        return (T) this;
     }
 
     @Override

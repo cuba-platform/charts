@@ -21,7 +21,7 @@ public class ListDataProvider implements DataProvider {
     private static final long serialVersionUID = -8893186272622531844L;
 
     protected final ArrayList<ConfigurationChangeListener> changeListeners = new ArrayList<>();
-
+    protected AbstractChart chart;
     private List<DataItem> items = new ArrayList<>();
 
     public ListDataProvider() {
@@ -73,6 +73,12 @@ public class ListDataProvider implements DataProvider {
 
     @Override
     public void bindToChart(AbstractChart chart) {
+        this.chart = chart;
+    }
+
+    @Override
+    public AbstractChart getChart() {
+        return chart;
     }
 
     @Override

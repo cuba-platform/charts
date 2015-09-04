@@ -5,10 +5,12 @@
 
 package com.haulmont.charts.gui.amcharts.model.charts;
 
+import com.google.gson.annotations.Expose;
 import com.haulmont.charts.gui.amcharts.model.*;
 import com.haulmont.charts.gui.amcharts.model.data.DataItem;
 import com.haulmont.charts.gui.amcharts.model.data.DataProvider;
 import com.haulmont.charts.gui.amcharts.model.data.ListDataProvider;
+import org.apache.commons.collections.CollectionUtils;
 
 import java.util.ArrayList;
 import java.util.Arrays;
@@ -110,6 +112,9 @@ public abstract class AbstractChart<T extends AbstractConfigurationObject> exten
     private final ChartType type;
 
     private Boolean usePrefixes;
+
+    @Expose(serialize = false, deserialize = false)
+    private List<String> additionalFields;
 
     protected AbstractChart(ChartType type) {
         this.type = type;
@@ -436,7 +441,28 @@ public abstract class AbstractChart<T extends AbstractConfigurationObject> exten
     }
 
     public List<String> getWiredFields() {
-        return new ArrayList<>();
+        List<String> fileds = new ArrayList<>();
+        if (CollectionUtils.isNotEmpty(getAdditionalFields())) {
+            fileds.addAll(getAdditionalFields());
+        }
+        return fileds;
+    }
+
+    public List<String> getAdditionalFields() {
+        return additionalFields;
+    }
+
+    public T setAdditionalFields(List<String> additionalFields) {
+        this.additionalFields = additionalFields;
+        return (T) this;
+    }
+
+    public T addAdditionalFields(String... fields) {
+        if (additionalFields == null) {
+            additionalFields = new ArrayList<>();
+        }
+        additionalFields.addAll(Arrays.asList(fields));
+        return (T) this;
     }
 
     public ChartType getType() {

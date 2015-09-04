@@ -36,6 +36,7 @@ public class ChartComponentPalette implements ComponentPalette {
         loaders.put("pieChart", PieChartLoader.class);
         loaders.put("radarChart", RadarChartLoader.class);
         loaders.put("serialChart", SerialChartLoader.class);
+        loaders.put("ganttChart", GanttChartLoader.class);
         loaders.put("xyChart", XYChartLoader.class);
 
         loaders.put(MapViewer.TAG_NAME, MapViewerLoader.class);

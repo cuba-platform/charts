@@ -6,12 +6,19 @@
 package com.haulmont.charts.gui.amcharts.model.gson;
 
 import com.google.gson.*;
+import com.haulmont.charts.gui.amcharts.model.charts.GanttChart;
 import com.haulmont.charts.gui.amcharts.model.data.DataItem;
 import com.haulmont.charts.gui.amcharts.model.data.DataProvider;
+import com.haulmont.cuba.core.entity.Entity;
+import org.apache.commons.collections.CollectionUtils;
+import org.apache.commons.lang.StringUtils;
 
 import java.lang.reflect.Type;
 import java.text.SimpleDateFormat;
+import java.util.ArrayList;
+import java.util.Collection;
 import java.util.Date;
+import java.util.List;
 
 /**
  * @author artamonov
@@ -26,11 +33,37 @@ public class DataProviderSerializer implements JsonSerializer<DataProvider> {
             JsonObject itemElement = new JsonObject();
             for (String property: item.getProperties()) {
                 Object value = item.getValue(property);
-                if (value instanceof Date) {
-                    value = dateFormat.format((Date) value);
+                addPropertty(itemElement, property, value, dateFormat, context);
+            }
+
+            if (src.getChart() instanceof GanttChart) {
+                GanttChart chart = (GanttChart) src.getChart();
+
+                String segmentsField = chart.getSegmentsField();
+
+                List<String> fields = new ArrayList<>();
+                fields.add(chart.getStartField());
+                fields.add(chart.getDurationField());
+                fields.add(chart.getColorField());
+                if (CollectionUtils.isNotEmpty(chart.getAdditionalSegmentFields())) {
+                    fields.addAll(chart.getAdditionalSegmentFields());
                 }
 
-                itemElement.add(property, context.serialize(value));
+                JsonArray segments = new JsonArray();
+
+                for (Entity entity : (Collection<Entity>) item.getValue(segmentsField)) {
+                    JsonObject segment = new JsonObject();
+
+                    for (String field : fields) {
+                        if (StringUtils.isNotEmpty(field)) {
+                            addPropertty(segment, field, entity.getValue(field), dateFormat, context);
+                        }
+                    }
+
+                    segments.add(segment);
+                }
+
+                itemElement.add(segmentsField, segments);
             }
             dataProviderElement.add(itemElement);
         }
@@ -41,5 +74,13 @@ public class DataProviderSerializer implements JsonSerializer<DataProvider> {
         }
 
         return dataProviderElement;
+    }
+
+    protected void addPropertty(JsonObject jsonObject, String property, Object value,
+                                SimpleDateFormat dateFormat, JsonSerializationContext context) {
+        if (value instanceof Date) {
+            value = dateFormat.format((Date) value);
+        }
+        jsonObject.add(property, context.serialize(value));
     }
 }

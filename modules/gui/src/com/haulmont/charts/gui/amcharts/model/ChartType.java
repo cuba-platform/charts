@@ -17,7 +17,8 @@ public enum ChartType implements ChartEnum {
     XY("xy"),
     RADAR("radar"),
     FUNNEL("funnel"),
-    GAUGE("gauge");
+    GAUGE("gauge"),
+    GANTT("gantt");
 
     private String id;
 

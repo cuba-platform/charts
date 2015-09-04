@@ -914,6 +914,8 @@ public class WebChart extends WebAbstractComponent<CubaAmchartsScene> implements
 
         private static final long serialVersionUID = -631516572260683521L;
 
+        protected AbstractChart chart;
+
         protected final CollectionDatasource datasource;
         protected List<String> properties = new ArrayList<>();
         protected final List<ConfigurationChangeListener> changeListeners = new ArrayList<>();
@@ -987,6 +989,7 @@ public class WebChart extends WebAbstractComponent<CubaAmchartsScene> implements
         @Override
         @SuppressWarnings("unchecked")
         public void bindToChart(AbstractChart chart) {
+            this.chart = chart;
             properties.clear();
             properties.add("id");
             properties.addAll(new LinkedHashSet<>(chart.getWiredFields()));
@@ -1002,6 +1005,11 @@ public class WebChart extends WebAbstractComponent<CubaAmchartsScene> implements
                 items.add(new EntityDataItem(this, entity));
             }
             return items;
+        }
+
+        @Override
+        public AbstractChart getChart() {
+            return chart;
         }
 
         @Override
