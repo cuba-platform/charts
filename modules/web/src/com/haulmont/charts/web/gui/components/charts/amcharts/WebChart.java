@@ -27,7 +27,6 @@ import com.haulmont.cuba.core.global.Messages;
 import com.haulmont.cuba.core.global.UserSessionSource;
 import com.haulmont.cuba.gui.data.CollectionDatasource;
 import com.haulmont.cuba.gui.data.impl.CollectionDsHelper;
-import com.haulmont.cuba.gui.data.impl.CollectionDsListenerAdapter;
 import com.haulmont.cuba.web.gui.components.WebAbstractComponent;
 import com.vaadin.server.ClientConnector;
 import org.apache.commons.lang.BooleanUtils;
@@ -923,20 +922,21 @@ public class WebChart extends WebAbstractComponent<CubaAmchartsScene> implements
         public EntityDataProvider(CollectionDatasource datasource) {
             this.datasource = datasource;
 
-            this.datasource.addListener(new CollectionDsListenerAdapter() {
-                @Override
-                public void collectionChanged(CollectionDatasource ds, Operation operation, List items) {
-                    switch (operation) {
-                        case ADD: fireDataAdded(items);
-                            break;
-                        case REMOVE: fireDataRemoved(items);
-                            break;
-                        case UPDATE: fireDataUpdated(items);
-                            break;
-                        case REFRESH:
-                        case CLEAR: fireDataRefreshed();
-                            break;
-                    }
+            this.datasource.addCollectionChangeListener(e -> {
+                switch (e.getOperation()) {
+                    case ADD:
+                        fireDataAdded(e.getItems());
+                        break;
+                    case REMOVE:
+                        fireDataRemoved(e.getItems());
+                        break;
+                    case UPDATE:
+                        fireDataUpdated(e.getItems());
+                        break;
+                    case REFRESH:
+                    case CLEAR:
+                        fireDataRefreshed();
+                        break;
                 }
             });
         }
