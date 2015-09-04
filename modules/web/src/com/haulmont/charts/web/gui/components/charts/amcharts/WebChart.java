@@ -795,6 +795,8 @@ public class WebChart extends WebAbstractComponent<CubaAmchartsScene> implements
 
     protected class CubaAmchartsSceneExt extends CubaAmchartsScene {
 
+        private static final long serialVersionUID = 4357940484867437795L;
+
         @Override
         protected void setupDefaults(AbstractChart chart) {
             super.setupDefaults(chart);
