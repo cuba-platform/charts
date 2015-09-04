@@ -29,7 +29,8 @@ import java.util.List;
  */
 public abstract class AbstractChartLoader<T extends AbstractChart> extends ComponentLoader {
 
-    protected static final String CONFIG_DATE_FORMAT = "yyyy-MM-dd HH:mm:ss";
+    protected static final String CONFIG_DATE_FORMAT = "yyyy-MM-dd";
+    protected static final String CONFIG_TIME_FORMAT = "HH:mm:ss";
 
     protected AbstractChartLoader(Context context) {
         super(context);
@@ -375,11 +376,11 @@ public abstract class AbstractChartLoader<T extends AbstractChart> extends Compo
             }
 
             Element libsElement = exportElement.element("libs");
-            ExportLibs libs = new ExportLibs();
             if (libsElement != null) {
+                ExportLibs libs = new ExportLibs();
                 loadExportLibs(libs, libsElement);
+                export.setLibs(libs);
             }
-            export.setLibs(libs);
 
             chart.setExport(export);
         }
@@ -1238,11 +1239,17 @@ public abstract class AbstractChartLoader<T extends AbstractChart> extends Compo
     }
 
     protected Date loadDate(String value) {
-        SimpleDateFormat df = new SimpleDateFormat(CONFIG_DATE_FORMAT);
+        String fullDateFormat = String.format("%s %s", CONFIG_DATE_FORMAT, CONFIG_TIME_FORMAT);
+        SimpleDateFormat df = new SimpleDateFormat(fullDateFormat);
         try {
             return df.parse(value);
-        } catch (ParseException e) {
-            throw new RuntimeException("Unable to parse date from XML chart configuration", e);
+        } catch (ParseException ignore) {
+            df = new SimpleDateFormat(CONFIG_DATE_FORMAT);
+            try {
+                return df.parse(value);
+            } catch (ParseException e) {
+                throw new RuntimeException("Unable to parse date from XML chart configuration", e);
+            }
         }
     }
 
