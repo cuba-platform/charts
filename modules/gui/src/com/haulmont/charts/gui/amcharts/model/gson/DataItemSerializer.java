@@ -16,6 +16,8 @@ import java.text.SimpleDateFormat;
 import java.util.Date;
 
 /**
+ * User for insert/update/delete single item in chart
+ *
  * @author gorelov
  * @version $Id$
  */
