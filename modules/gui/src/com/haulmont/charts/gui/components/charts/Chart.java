@@ -81,7 +81,7 @@ public interface Chart extends Component, Component.BelongToFrame, Component.Has
     void addZoomListener(ZoomListener zoomListener);
     void removeZoomListener(ZoomListener zoomListener);
 
-    static class AxisZoomEvent {
+    class AxisZoomEvent {
         private final String axisId;
         private final double startValue;
         private final double endValue;
@@ -109,7 +109,7 @@ public interface Chart extends Component, Component.BelongToFrame, Component.Has
         void onZoom(AxisZoomEvent event);
     }
 
-    static class ChartClickEvent {
+    class ChartClickEvent {
 
         private final int x;
         private final int y;
@@ -156,7 +156,7 @@ public interface Chart extends Component, Component.BelongToFrame, Component.Has
         void onClick(ChartClickEvent event);
     }
 
-    static class CursorPeriodSelectEvent {
+    class CursorPeriodSelectEvent {
 
         private final String start;
         private final String end;
@@ -179,7 +179,7 @@ public interface Chart extends Component, Component.BelongToFrame, Component.Has
         void onSelect(CursorPeriodSelectEvent event);
     }
 
-    static class CursorZoomEvent {
+    class CursorZoomEvent {
 
         private final String start;
         private final String end;
@@ -202,7 +202,7 @@ public interface Chart extends Component, Component.BelongToFrame, Component.Has
         void onZoom(CursorZoomEvent event);
     }
 
-    static class GraphClickEvent {
+    class GraphClickEvent {
 
         private final String graphId;
 
@@ -244,7 +244,7 @@ public interface Chart extends Component, Component.BelongToFrame, Component.Has
         void onClick(GraphClickEvent event);
     }
 
-    static class GraphItemClickEvent {
+    class GraphItemClickEvent {
         private final String graphId;
 
         private final int x;
@@ -298,7 +298,7 @@ public interface Chart extends Component, Component.BelongToFrame, Component.Has
         void onClick(GraphItemClickEvent event);
     }
 
-    static class LegendItemHideEvent {
+    class LegendItemHideEvent {
 
         private final Entity item;
 
@@ -315,7 +315,7 @@ public interface Chart extends Component, Component.BelongToFrame, Component.Has
         void onHide(LegendItemHideEvent event);
     }
 
-    static class LegendItemShowEvent {
+    class LegendItemShowEvent {
 
         private final Entity item;
 
@@ -332,7 +332,7 @@ public interface Chart extends Component, Component.BelongToFrame, Component.Has
         void onShow(LegendItemShowEvent event);
     }
 
-    static class LegendItemClickEvent {
+    class LegendItemClickEvent {
 
         private final Entity item;
 
@@ -349,7 +349,7 @@ public interface Chart extends Component, Component.BelongToFrame, Component.Has
         void onClick(LegendItemClickEvent event);
     }
 
-    static class SliceClickEvent {
+    class SliceClickEvent {
         private final Entity item;
 
         private final int x;
@@ -390,7 +390,7 @@ public interface Chart extends Component, Component.BelongToFrame, Component.Has
         void onClick(SliceClickEvent event);
     }
 
-    static class SlicePullInEvent {
+    class SlicePullInEvent {
 
         private final Entity item;
 
@@ -407,7 +407,7 @@ public interface Chart extends Component, Component.BelongToFrame, Component.Has
         void onPullIn(SlicePullInEvent event);
     }
 
-    static class SlicePullOutEvent {
+    class SlicePullOutEvent {
 
         private final Entity item;
 
@@ -424,7 +424,7 @@ public interface Chart extends Component, Component.BelongToFrame, Component.Has
         void onPullOut(SlicePullOutEvent event);
     }
 
-    static class ZoomEvent {
+    class ZoomEvent {
 
         private final int startIndex;
         private final int endIndex;
