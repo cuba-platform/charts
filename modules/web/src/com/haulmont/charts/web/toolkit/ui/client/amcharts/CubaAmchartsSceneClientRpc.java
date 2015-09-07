@@ -11,7 +11,7 @@ import com.vaadin.shared.communication.ClientRpc;
  * @author gorelov
  * @version $Id$
  */
-public interface CubaAmchartClientRpc extends ClientRpc {
+public interface CubaAmchartsSceneClientRpc extends ClientRpc {
 
     void addPoint(String json);
 

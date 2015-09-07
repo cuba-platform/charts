@@ -11,7 +11,7 @@ import com.haulmont.charts.gui.amcharts.model.data.DataAddedEvent;
 import com.haulmont.charts.gui.amcharts.model.data.DataRemovedEvent;
 import com.haulmont.charts.gui.amcharts.model.data.DataUpdatedEvent;
 import com.haulmont.charts.web.toolkit.ui.amcharts.events.*;
-import com.haulmont.charts.web.toolkit.ui.client.amcharts.CubaAmchartClientRpc;
+import com.haulmont.charts.web.toolkit.ui.client.amcharts.CubaAmchartsSceneClientRpc;
 import com.haulmont.charts.web.toolkit.ui.client.amcharts.CubaAmchartsSceneState;
 import com.haulmont.charts.web.toolkit.ui.client.amcharts.CubaAmchartsServerRpc;
 import com.vaadin.ui.AbstractComponent;
@@ -422,21 +422,21 @@ public class CubaAmchartsScene extends AbstractComponent {
         @Override
         public void dataAdded(DataAddedEvent event) {
             if (event.getItem() != null) {
-                chart.getRpcProxy(CubaAmchartClientRpc.class).addPoint(event.getItem().toString());
+                chart.getRpcProxy(CubaAmchartsSceneClientRpc.class).addPoint(event.getItem().toString());
             }
         }
 
         @Override
         public void dataRemoved(DataRemovedEvent event) {
             if (event.getItem() != null) {
-                chart.getRpcProxy(CubaAmchartClientRpc.class).removePoint(event.getItem().toString());
+                chart.getRpcProxy(CubaAmchartsSceneClientRpc.class).removePoint(event.getItem().toString());
             }
         }
 
         @Override
         public void dataUpdated(DataUpdatedEvent event) {
             if (event.getItem() != null) {
-                chart.getRpcProxy(CubaAmchartClientRpc.class).updatePoint(event.getItem().toString());
+                chart.getRpcProxy(CubaAmchartsSceneClientRpc.class).updatePoint(event.getItem().toString());
             }
         }
 

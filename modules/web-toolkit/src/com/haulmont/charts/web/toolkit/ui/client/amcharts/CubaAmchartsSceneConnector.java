@@ -32,7 +32,7 @@ public class CubaAmchartsSceneConnector extends AbstractComponentConnector {
     protected ElementResizeListener resizeListener;
 
     public CubaAmchartsSceneConnector() {
-             registerRpc(CubaAmchartClientRpc.class, new CubaAmchartClientRpc() {
+             registerRpc(CubaAmchartsSceneClientRpc.class, new CubaAmchartsSceneClientRpc() {
                  @Override
                  public void addPoint(final String json) {
                      Scheduler.get().scheduleDeferred(new Scheduler.ScheduledCommand() {
