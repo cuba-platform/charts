@@ -161,6 +161,12 @@ public class CubaAmchartsScene extends AbstractComponent {
         return xyChart;
     }
 
+    public GanttChart ganttChart() {
+        GanttChart ganttChart = new GanttChart();
+        drawChart(ganttChart);
+        return ganttChart;
+    }
+
     public void addChartClickListener(ChartClickListener listener) {
         addListener(CubaAmchartsSceneState.CHART_CLICK_EVENT, ChartClickEvent.class, listener, chartClickMethod);
     }
