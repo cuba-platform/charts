@@ -79,6 +79,11 @@ public class SerialChartLoader<T extends SerialChart> extends RectangularChartLo
             chart.setColumnWidth(Double.valueOf(columnWidth));
         }
 
+        String dataDateFormat = element.attributeValue("dataDateFormat");
+        if (StringUtils.isNotEmpty(dataDateFormat)) {
+            chart.setDataDateFormat(dataDateFormat);
+        }
+
         String maxSelectedSeries = element.attributeValue("maxSelectedSeries");
         if (StringUtils.isNotEmpty(maxSelectedSeries)) {
             chart.setMaxSelectedSeries(Integer.valueOf(maxSelectedSeries));
