@@ -41,6 +41,11 @@ public class DataProviderSerializer implements JsonSerializer<DataProvider> {
 
                 String segmentsField = chart.getSegmentsField();
 
+                Object value = item.getValue(segmentsField);
+                if (value != null && !(value instanceof Collection)) {
+                    throw new RuntimeException("Gantt chart segments field must be a collection");
+                }
+
                 List<String> fields = new ArrayList<>();
                 fields.add(chart.getStartField());
                 fields.add(chart.getDurationField());
@@ -51,20 +56,18 @@ public class DataProviderSerializer implements JsonSerializer<DataProvider> {
 
                 JsonArray segments = new JsonArray();
 
-                for (Entity entity : (Collection<Entity>) item.getValue(segmentsField)) {
+                for (DataItem dataItem : (Collection<DataItem>) value) {
                     JsonObject segment = new JsonObject();
-
                     for (String field : fields) {
                         if (StringUtils.isNotEmpty(field)) {
-                            addPropertty(segment, field, entity.getValue(field), dateFormat, context);
+                            addPropertty(segment, field, dataItem.getValue(field), dateFormat, context);
                         }
                     }
-
                     segments.add(segment);
                 }
-
                 itemElement.add(segmentsField, segments);
             }
+
             dataProviderElement.add(itemElement);
         }
 

@@ -1082,6 +1082,14 @@ public class WebChart extends WebAbstractComponent<CubaAmchartsScene> implements
             if (value instanceof EnumClass) {
                 return messages.getMessage((Enum) value);
             }
+            if (value instanceof Collection) {
+                List<DataItem> items = new ArrayList<>();
+
+                for (Object item : (Collection) value) {
+                    items.add(new EntityDataItem(dataProvider, (Entity) item));
+                }
+                return items;
+            }
             return value;
         }
     }
