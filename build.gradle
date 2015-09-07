@@ -134,6 +134,7 @@ configure(chartsWebToolkitModule) {
     }
 
     task buildDebugWidgetSet(type: CubaWidgetSetBuilding) {
+        widgetSetsDir = "$project.buildDir/web-debug/VAADIN/widgetsets"
         widgetSetClass = 'com.haulmont.charts.web.toolkit.ui.ChartsWidgetSet'
         style = 'PRETTY'
     }
@@ -158,7 +159,9 @@ configure(chartsWebToolkitModule) {
 
     artifacts {
         archives webArchive
-        archives webDebugArchive
+        if (!isSnapshot) {
+            archives webDebugArchive
+        }
     }
 }
 
