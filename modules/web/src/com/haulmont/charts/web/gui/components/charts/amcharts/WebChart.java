@@ -163,7 +163,39 @@ public class WebChart extends WebAbstractComponent<CubaAmchartsScene> implements
             settings.setMonthNames(monthNames);
             settings.setShortMonthNames(shortMonthNames);
 
+            // export
+            Map<String, String> localeMap = new LinkedHashMap<>();
+            localeMap.put("fallback.save.text", messages.getMessage(AMCHARTS_MESSAGE_PACK, "fallback.save.text"));
+            localeMap.put("fallback.save.image", messages.getMessage(AMCHARTS_MESSAGE_PACK, "fallback.save.image"));
+
+            localeMap.put("capturing.delayed.menu.label", messages.getMessage(AMCHARTS_MESSAGE_PACK, "capturing.delayed.menu.label"));
+            localeMap.put("capturing.delayed.menu.title", messages.getMessage(AMCHARTS_MESSAGE_PACK, "capturing.delayed.menu.title"));
+
+            localeMap.put("menu.label.print", messages.getMessage(AMCHARTS_MESSAGE_PACK, "menu.label.print"));
+            localeMap.put("menu.label.undo", messages.getMessage(AMCHARTS_MESSAGE_PACK, "menu.label.undo"));
+            localeMap.put("menu.label.redo", messages.getMessage(AMCHARTS_MESSAGE_PACK, "menu.label.redo"));
+            localeMap.put("menu.label.cancel", messages.getMessage(AMCHARTS_MESSAGE_PACK, "menu.label.cancel"));
+
+            localeMap.put("menu.label.save.image", messages.getMessage(AMCHARTS_MESSAGE_PACK, "menu.label.save.image"));
+            localeMap.put("menu.label.save.data", messages.getMessage(AMCHARTS_MESSAGE_PACK, "menu.label.save.data"));
+
+            localeMap.put("menu.label.draw", messages.getMessage(AMCHARTS_MESSAGE_PACK, "menu.label.draw"));
+            localeMap.put("menu.label.draw.change", messages.getMessage(AMCHARTS_MESSAGE_PACK, "menu.label.draw.change"));
+            localeMap.put("menu.label.draw.add", messages.getMessage(AMCHARTS_MESSAGE_PACK, "menu.label.draw.add"));
+            localeMap.put("menu.label.draw.shapes", messages.getMessage(AMCHARTS_MESSAGE_PACK, "menu.label.draw.shapes"));
+            localeMap.put("menu.label.draw.colors", messages.getMessage(AMCHARTS_MESSAGE_PACK, "menu.label.draw.colors"));
+            localeMap.put("menu.label.draw.widths", messages.getMessage(AMCHARTS_MESSAGE_PACK, "menu.label.draw.widths"));
+            localeMap.put("menu.label.draw.opacities", messages.getMessage(AMCHARTS_MESSAGE_PACK, "menu.label.draw.opacities"));
+            localeMap.put("menu.label.draw.text", messages.getMessage(AMCHARTS_MESSAGE_PACK, "menu.label.draw.text"));
+
+            localeMap.put("menu.label.draw.modes", messages.getMessage(AMCHARTS_MESSAGE_PACK, "menu.label.draw.modes"));
+            localeMap.put("menu.label.draw.modes.pencil", messages.getMessage(AMCHARTS_MESSAGE_PACK, "menu.label.draw.modes.pencil"));
+            localeMap.put("menu.label.draw.modes.line", messages.getMessage(AMCHARTS_MESSAGE_PACK, "menu.label.draw.modes.line"));
+            localeMap.put("menu.label.draw.modes.arrow", messages.getMessage(AMCHARTS_MESSAGE_PACK, "menu.label.draw.modes.arrow"));
+
             amchartsIntegration.setSettings(settings);
+
+            amchartsIntegration.setExportMessages(messages.getTools().localeToString(userSessionSource.getLocale()), localeMap);
             amchartsIntegration.setLocale(userSessionSource.getLocale());
         }
     }
@@ -811,6 +843,9 @@ public class WebChart extends WebAbstractComponent<CubaAmchartsScene> implements
         }
 
         protected void setupChartLocale(AbstractChart chart) {
+            // language
+            chart.setLanguage(messages.getTools().localeToString(userSessionSource.getLocale()));
+
             // number formatting
             FormatStrings formatStrings = Datatypes.getFormatStrings(userSessionSource.getLocale());
             if (formatStrings != null) {

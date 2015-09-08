@@ -5,6 +5,8 @@
 
 package com.haulmont.charts.web.toolkit.ui.amcharts;
 
+import com.google.gson.Gson;
+import com.google.gson.JsonObject;
 import com.haulmont.charts.gui.amcharts.model.Settings;
 import com.haulmont.charts.web.toolkit.ui.client.amcharts.CubaAmchartsIntegrationState;
 import com.vaadin.annotations.JavaScript;
@@ -12,7 +14,10 @@ import com.vaadin.server.AbstractExtension;
 import com.vaadin.server.Extension;
 import com.vaadin.ui.UI;
 
+import java.util.Collections;
+import java.util.HashMap;
 import java.util.Locale;
+import java.util.Map;
 
 /**
  * @author artamonov
@@ -48,9 +53,38 @@ public class CubaAmchartsIntegration extends AbstractExtension {
         getState().version++;
     }
 
+    public void setExportMessages(String localeCode, Map<String, String> localeMap) {
+        if (getState(false).exportMessages == null) {
+            getState().exportMessages = new HashMap<>();
+        }
+
+        JsonObject jsonLocaleMap = new JsonObject();
+        for (Map.Entry<String, String> localeEntry : localeMap.entrySet()) {
+            jsonLocaleMap.addProperty(localeEntry.getKey(), localeEntry.getValue());
+        }
+
+        getState().exportMessages.put(localeCode, jsonLocaleMap.toString());
+    }
+
+    public Map<String, String> getExportMessages(String localeCode) {
+        if (getState(false).exportMessages == null) {
+            return Collections.emptyMap();
+        }
+
+        String jsonLocaleMap = getState(false).exportMessages.get(localeCode);
+        //noinspection unchecked
+        Map<String, String> localeMap = new Gson().fromJson(jsonLocaleMap, Map.class);
+        return Collections.unmodifiableMap(localeMap);
+    }
+
     @Override
     protected CubaAmchartsIntegrationState getState() {
         return (CubaAmchartsIntegrationState) super.getState();
+    }
+
+    @Override
+    protected CubaAmchartsIntegrationState getState(boolean markAsDirty) {
+        return (CubaAmchartsIntegrationState) super.getState(markAsDirty);
     }
 
     @Override

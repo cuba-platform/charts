@@ -13,6 +13,8 @@ import com.vaadin.client.communication.StateChangeEvent;
 import com.vaadin.client.extensions.AbstractExtensionConnector;
 import com.vaadin.shared.ui.Connect;
 
+import java.util.Map;
+
 /**
  * @author artamonov
  * @version $Id$
@@ -38,7 +40,19 @@ public class CubaAmchartsIntegrationConnector extends AbstractExtensionConnector
             JavaScriptObject options = JSONParser.parseLenient(getState().json).isObject().getJavaScriptObject();
             applyOptions(options);
         }
+
+        if (stateChangeEvent.hasPropertyChanged("exportMessages")) {
+            Map<String, String> exportMessages = getState().exportMessages;
+            for (final Map.Entry<String, String> entry : exportMessages.entrySet()) {
+                JavaScriptObject exportLocalization = JSONParser.parseLenient(entry.getValue()).isObject().getJavaScriptObject();
+                applyExportMessages(entry.getKey(), exportLocalization);
+            }
+        }
     }
+
+    private native void applyExportMessages(String localeCode, JavaScriptObject exportMessages) /*-{
+        $wnd.AmCharts.translations['export'][localeCode] = exportMessages;
+    }-*/;
 
     private native void applyOptions(JavaScriptObject options) /*-{
         var merge = function (dst, src) {

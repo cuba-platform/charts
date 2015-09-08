@@ -7,6 +7,8 @@ package com.haulmont.charts.web.toolkit.ui.client.amcharts;
 
 import com.vaadin.shared.communication.SharedState;
 
+import java.util.Map;
+
 /**
  * @author artamonov
  * @version $Id$
@@ -14,6 +16,9 @@ import com.vaadin.shared.communication.SharedState;
 public class CubaAmchartsIntegrationState extends SharedState {
 
     public String json;
+
+    // key: language; value: messageKeys as json
+    public Map<String, String> exportMessages;
 
     public int version = 0;
 }
