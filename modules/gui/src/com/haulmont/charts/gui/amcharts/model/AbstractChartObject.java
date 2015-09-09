@@ -29,18 +29,7 @@ public abstract class AbstractChartObject implements Serializable {
 
     static {
         // GSON is thread safe so we can use shared GSON instance
-        gson = createGsonBuilder().setExclusionStrategies(new ExclusionStrategy() {
-            @Override
-            public boolean shouldSkipField(FieldAttributes f) {
-                Expose expose = f.getAnnotation(Expose.class);
-                return expose != null && !expose.serialize();
-            }
-
-            @Override
-            public boolean shouldSkipClass(Class<?> clazz) {
-                return false;
-            }
-        }).create();
+        gson = createGsonBuilder().create();
     }
 
     public static Gson getSharedGson() {
@@ -52,6 +41,18 @@ public abstract class AbstractChartObject implements Serializable {
      */
     public static GsonBuilder createGsonBuilder() {
         GsonBuilder builder = new GsonBuilder();
+        builder.setExclusionStrategies(new ExclusionStrategy() {
+            @Override
+            public boolean shouldSkipField(FieldAttributes f) {
+                Expose expose = f.getAnnotation(Expose.class);
+                return expose != null && !expose.serialize();
+            }
+
+            @Override
+            public boolean shouldSkipClass(Class<?> clazz) {
+                return false;
+            }
+        });
         // uncomment if you wish to debug generated json
         // builder.setPrettyPrinting();
         builder.registerTypeHierarchyAdapter(ChartEnum.class, new ChartEnumSerializer());
