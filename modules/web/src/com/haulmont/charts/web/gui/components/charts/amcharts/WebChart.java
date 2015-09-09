@@ -844,7 +844,9 @@ public class WebChart extends WebAbstractComponent<CubaAmchartsScene> implements
 
         protected void setupChartLocale(AbstractChart chart) {
             // language
-            chart.setLanguage(messages.getTools().localeToString(userSessionSource.getLocale()));
+            if (StringUtils.isEmpty(chart.getLanguage())) {
+                chart.setLanguage(messages.getTools().localeToString(userSessionSource.getLocale()));
+            }
 
             // number formatting
             FormatStrings formatStrings = Datatypes.getFormatStrings(userSessionSource.getLocale());
@@ -1090,7 +1092,7 @@ public class WebChart extends WebAbstractComponent<CubaAmchartsScene> implements
         }
     }
 
-    protected static class EntityDataItem extends AbstractConfigurationObject implements DataItem {
+    protected static class EntityDataItem implements DataItem {
 
         private static final long serialVersionUID = -2703129637028051748L;
 

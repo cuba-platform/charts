@@ -520,14 +520,14 @@ public class CubaAmchartsScene extends AbstractComponent {
         }
     }
 
-    protected class CubaAmchartsSceneJsonSerializationContext extends AbstractConfigurationObject implements JsonSerializationContext {
+    protected class CubaAmchartsSceneJsonSerializationContext implements JsonSerializationContext {
 
         public JsonElement serialize(Object src) {
-            return gson.toJsonTree(src);
+            return AbstractConfigurationObject.getSharedGson().toJsonTree(src);
         }
 
         public JsonElement serialize(Object src, Type typeOfSrc) {
-            return gson.toJsonTree(src, typeOfSrc);
+            return AbstractConfigurationObject.getSharedGson().toJsonTree(src, typeOfSrc);
         }
     }
 }

@@ -43,6 +43,10 @@ public abstract class AbstractConfigurationObject implements Serializable {
         }).create();
     }
 
+    public static Gson getSharedGson() {
+        return gson;
+    }
+
     /**
      * Returns default GSON builder for configuration serializer.
      */
