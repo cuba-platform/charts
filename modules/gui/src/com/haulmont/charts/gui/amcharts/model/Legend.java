@@ -17,7 +17,7 @@ import java.util.List;
  * @author artamonov
  * @version $Id$
  */
-public class Legend extends AbstractConfigurationObject implements HasMargins<Legend> {
+public class Legend extends AbstractChartObject implements HasMargins<Legend> {
 
     private static final long serialVersionUID = -8561508956306637129L;
 

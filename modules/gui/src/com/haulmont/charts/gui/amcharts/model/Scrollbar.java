@@ -13,7 +13,7 @@ package com.haulmont.charts.gui.amcharts.model;
  * @author artamonov
  * @version $Id$
  */
-public class Scrollbar extends AbstractConfigurationObject {
+public class Scrollbar extends AbstractChartObject {
 
     private static final long serialVersionUID = 6850646494521513508L;
 

@@ -15,7 +15,7 @@ import java.util.List;
  * @author artamonov
  * @version $Id$
  */
-public class Settings extends AbstractConfigurationObject {
+public class Settings extends AbstractChartObject {
 
     private static final long serialVersionUID = 8224937687234516612L;
 

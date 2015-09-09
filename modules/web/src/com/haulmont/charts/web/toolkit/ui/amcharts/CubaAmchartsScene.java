@@ -6,7 +6,7 @@
 package com.haulmont.charts.web.toolkit.ui.amcharts;
 
 import com.google.gson.*;
-import com.haulmont.charts.gui.amcharts.model.AbstractConfigurationObject;
+import com.haulmont.charts.gui.amcharts.model.AbstractChartObject;
 import com.haulmont.charts.gui.amcharts.model.charts.*;
 import com.haulmont.charts.gui.amcharts.model.data.*;
 import com.haulmont.charts.gui.amcharts.model.gson.DataItemsSerializer;
@@ -523,11 +523,11 @@ public class CubaAmchartsScene extends AbstractComponent {
     protected class CubaAmchartsSceneJsonSerializationContext implements JsonSerializationContext {
 
         public JsonElement serialize(Object src) {
-            return AbstractConfigurationObject.getSharedGson().toJsonTree(src);
+            return AbstractChartObject.getSharedGson().toJsonTree(src);
         }
 
         public JsonElement serialize(Object src, Type typeOfSrc) {
-            return AbstractConfigurationObject.getSharedGson().toJsonTree(src, typeOfSrc);
+            return AbstractChartObject.getSharedGson().toJsonTree(src, typeOfSrc);
         }
     }
 }

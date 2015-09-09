@@ -17,7 +17,7 @@ import java.util.List;
  * @author artamonov
  * @version $Id$
  */
-public class GaugeAxis extends AbstractConfigurationObject {
+public class GaugeAxis extends AbstractChartObject {
 
     private static final long serialVersionUID = -27560253244597238L;
 

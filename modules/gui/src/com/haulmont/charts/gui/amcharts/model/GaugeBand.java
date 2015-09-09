@@ -13,7 +13,7 @@ package com.haulmont.charts.gui.amcharts.model;
  * @author artamonov
  * @version $Id$
  */
-public class GaugeBand extends AbstractConfigurationObject {
+public class GaugeBand extends AbstractChartObject {
 
     private static final long serialVersionUID = 6480625092225201700L;
 

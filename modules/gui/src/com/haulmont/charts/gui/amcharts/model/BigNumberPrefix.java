@@ -9,7 +9,7 @@ package com.haulmont.charts.gui.amcharts.model;
  * @author artamonov
  * @version $Id$
  */
-public class BigNumberPrefix extends AbstractConfigurationObject {
+public class BigNumberPrefix extends AbstractChartObject {
 
     private static final long serialVersionUID = -9041838899608052695L;
 

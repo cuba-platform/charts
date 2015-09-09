@@ -13,7 +13,7 @@ package com.haulmont.charts.gui.amcharts.model;
  * @author artamonov
  * @version $Id$
  */
-public class Balloon extends AbstractConfigurationObject {
+public class Balloon extends AbstractChartObject {
 
     private static final long serialVersionUID = -4143720120608274912L;
 

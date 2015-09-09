@@ -15,7 +15,7 @@ import java.util.Date;
  * @author artamonov
  * @version $Id$
  */
-public class TrendLine extends AbstractConfigurationObject {
+public class TrendLine extends AbstractChartObject {
 
     private static final long serialVersionUID = -6846712713867338160L;
 

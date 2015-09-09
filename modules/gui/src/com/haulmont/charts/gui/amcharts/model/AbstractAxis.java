@@ -18,7 +18,7 @@ import java.util.List;
  * @version $Id$
  */
 @SuppressWarnings("unchecked")
-public abstract class AbstractAxis<T extends AbstractAxis> extends AbstractConfigurationObject {
+public abstract class AbstractAxis<T extends AbstractAxis> extends AbstractChartObject {
 
     private static final long serialVersionUID = -3780316839158653495L;
 

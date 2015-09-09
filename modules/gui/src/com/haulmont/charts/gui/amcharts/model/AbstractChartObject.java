@@ -23,7 +23,7 @@ import java.util.Date;
  * @author artamonov
  * @version $Id$
  */
-public abstract class AbstractConfigurationObject implements Serializable {
+public abstract class AbstractChartObject implements Serializable {
 
     protected final static Gson gson;
 

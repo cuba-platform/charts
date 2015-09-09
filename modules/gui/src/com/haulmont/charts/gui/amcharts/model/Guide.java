@@ -15,7 +15,7 @@ import java.util.Date;
  * @author artamonov
  * @version $Id$
  */
-public class Guide extends AbstractConfigurationObject {
+public class Guide extends AbstractChartObject {
 
     private static final long serialVersionUID = -6465377479319328449L;
 
