@@ -34,38 +34,18 @@ public class CubaAmchartsSceneConnector extends AbstractComponentConnector {
     public CubaAmchartsSceneConnector() {
              registerRpc(CubaAmchartsSceneClientRpc.class, new CubaAmchartsSceneClientRpc() {
                  @Override
-                 public void addPoint(final String json) {
+                 public void updatePoints(final String json) {
                      Scheduler.get().scheduleDeferred(new Scheduler.ScheduledCommand() {
                          @Override
                          public void execute() {
-                             getWidget().addPoint(getPointAsObject(json));
-                         }
-                     });
-                 }
-
-                 @Override
-                 public void updatePoint(final String json) {
-                     Scheduler.get().scheduleDeferred(new Scheduler.ScheduledCommand() {
-                         @Override
-                         public void execute() {
-                             getWidget().updatePoint(getPointAsObject(json));
-                         }
-                     });
-                 }
-
-                 @Override
-                 public void removePoint(final String json) {
-                     Scheduler.get().scheduleDeferred(new Scheduler.ScheduledCommand() {
-                         @Override
-                         public void execute() {
-                             getWidget().removePoint(getPointAsObject(json));
+                             getWidget().updatePoints(getJsonAsObject(json));
                          }
                      });
                  }
              });
     }
 
-    protected JavaScriptObject getPointAsObject(String json) {
+    protected JavaScriptObject getJsonAsObject(String json) {
         return JSONParser.parseLenient(json).isObject().getJavaScriptObject();
     }
 

@@ -129,15 +129,7 @@ public class CubaAmchartsSceneWidget extends Widget {
         });
     }
 
-    public void addPoint(JavaScriptObject jsObj) {
-        jsOverlay.addPoint(jsObj);
-    }
-
-    public void updatePoint(JavaScriptObject jsObj) {
-        jsOverlay.updatePoint(jsObj);
-    }
-
-    public void removePoint(JavaScriptObject jsObj) {
-        jsOverlay.removePoint(jsObj);
+    public void updatePoints(JavaScriptObject jsObj) {
+        jsOverlay.updatePoints(jsObj);
     }
 }

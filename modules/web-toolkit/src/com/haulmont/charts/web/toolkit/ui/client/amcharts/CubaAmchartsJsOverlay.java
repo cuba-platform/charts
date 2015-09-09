@@ -32,41 +32,43 @@ public class CubaAmchartsJsOverlay {
         return new CubaAmchartsJsOverlay(makeJsChart(placeHolder, json));
     }
 
-    public void addPoint(JavaScriptObject newValue) {
-        addPoint(chart, newValue);
+    public void updatePoints(JavaScriptObject value) {
+        updatePoints(chart, value);
     }
 
-    private static native void addPoint(JavaScriptObject chart, JavaScriptObject newValue) /*-{
-        chart.dataProvider.push(newValue);
+    private native void updatePoints(JavaScriptObject chart, JavaScriptObject src) /*-{
+        var opp = 'add';
+        if (src[opp] != null) {
+            for (var i = 0; i < src[opp].length; i++) {
+                chart.dataProvider.push(src[opp][i]);
+            }
+        }
+
+        opp = 'remove';
+        if (src[opp] != null) {
+            for (var i = 0; i < src[opp].length; i++) {
+                for (var j = 0; j < chart.dataProvider.length; j++) {
+                    if (chart.dataProvider[j].id == src[opp][i].id) {
+                        chart.dataProvider.splice(j, 1);
+                        break;
+                    }
+                }
+            }
+        }
+
+        opp = 'update'
+        if (src[opp] != null) {
+            for (var i = 0; i < src[opp].length; i++) {
+                for (var j = 0; j < chart.dataProvider.length; j++) {
+                    if (chart.dataProvider[j].id == src[opp][i].id) {
+                        chart.dataProvider[j] = src[opp][i]
+                        break;
+                    }
+                }
+            }
+        }
+
         chart.validateData();
-    }-*/;
-
-    public void updatePoint(JavaScriptObject newValue) {
-        updatePoint(chart, newValue);
-    }
-
-    private static native void updatePoint(JavaScriptObject chart, JavaScriptObject newValue) /*-{
-        for (var i = 0; i < chart.dataProvider.length; i++) {
-            if (chart.dataProvider[i].id == newValue.id) {
-                chart.dataProvider[i] = newValue;
-                chart.validateData();
-                break;
-            }
-        }
-    }-*/;
-
-    public void removePoint(JavaScriptObject value) {
-        removePoint(chart, value);
-    }
-
-    private static native void removePoint(JavaScriptObject chart, JavaScriptObject value) /*-{
-        for (var i = 0; i < chart.dataProvider.length; i++) {
-            if (chart.dataProvider[i].id == value.id) {
-                chart.dataProvider.splice(i, 1);
-                chart.validateData();
-                break;
-            }
-        }
     }-*/;
 
     private static native void handleLoad() /*-{

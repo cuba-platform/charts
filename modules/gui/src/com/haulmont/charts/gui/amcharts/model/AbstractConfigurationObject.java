@@ -55,7 +55,6 @@ public abstract class AbstractConfigurationObject implements Serializable {
         builder.registerTypeHierarchyAdapter(JsFunction.class, new JsFunctionSerializer());
         builder.registerTypeHierarchyAdapter(DataProvider.class, new DataProviderSerializer());
         builder.registerTypeHierarchyAdapter(Date.class, new ConfigDateSerializer());
-        builder.registerTypeHierarchyAdapter(DataItem.class, new DataItemSerializer());
         return builder;
     }
 

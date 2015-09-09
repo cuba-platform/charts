@@ -5,11 +5,11 @@
 
 package com.haulmont.charts.web.toolkit.ui.amcharts;
 
+import com.google.gson.*;
+import com.haulmont.charts.gui.amcharts.model.AbstractConfigurationObject;
 import com.haulmont.charts.gui.amcharts.model.charts.*;
-import com.haulmont.charts.gui.amcharts.model.data.ConfigurationChangeListener;
-import com.haulmont.charts.gui.amcharts.model.data.DataAddedEvent;
-import com.haulmont.charts.gui.amcharts.model.data.DataRemovedEvent;
-import com.haulmont.charts.gui.amcharts.model.data.DataUpdatedEvent;
+import com.haulmont.charts.gui.amcharts.model.data.*;
+import com.haulmont.charts.gui.amcharts.model.gson.DataItemsSerializer;
 import com.haulmont.charts.web.toolkit.ui.amcharts.events.*;
 import com.haulmont.charts.web.toolkit.ui.client.amcharts.CubaAmchartsSceneClientRpc;
 import com.haulmont.charts.web.toolkit.ui.client.amcharts.CubaAmchartsSceneState;
@@ -19,7 +19,8 @@ import com.vaadin.util.ReflectTools;
 import org.apache.commons.lang.StringUtils;
 
 import java.lang.reflect.Method;
-import java.util.Date;
+import java.lang.reflect.Type;
+import java.util.*;
 
 /**
  * @author artamonov
@@ -84,6 +85,27 @@ public class CubaAmchartsScene extends AbstractComponent {
 
     private AbstractChart chart;
 
+    private Map<String, List<DataItem>> changedItems;
+
+    protected JsonSerializationContext serializationContext;
+
+    protected enum Operations {
+        ADD("add"),
+        REMOVE("remove"),
+        UPDATE("update");
+
+        private String id;
+
+        Operations(String id) {
+            this.id = id;
+        }
+
+        @Override
+        public String toString() {
+            return id;
+        }
+    }
+
     public CubaAmchartsScene() {
         // enable amcharts integration
         CubaAmchartsIntegration.get();
@@ -123,6 +145,27 @@ public class CubaAmchartsScene extends AbstractComponent {
     public void drawChart(AbstractChart chart) {
         this.chart = chart;
         forceStateChange();
+    }
+
+    protected void setChangedItems(Map<String, List<DataItem>> changedItems) {
+        this.changedItems = changedItems;
+        markAsDirty();
+    }
+
+    protected void addChangedItem(Operations type, DataItem item) {
+        if (changedItems == null) {
+            changedItems = new HashMap<>();
+        }
+
+        List<DataItem> items = changedItems.get(type.toString());
+        if (items == null) {
+            items = new ArrayList<>();
+            changedItems.put(type.toString(), items);
+        }
+
+        items.add(item);
+
+        markAsDirty();
     }
 
     public AngularGaugeChart gaugeChart() {
@@ -319,6 +362,29 @@ public class CubaAmchartsScene extends AbstractComponent {
             }
             dirty = false;
         }
+
+        if (changedItems != null && !changedItems.isEmpty()) {
+
+            DataItemsSerializer serializer = new DataItemsSerializer();
+            JsonObject jsonChangedItemsElement = new JsonObject();
+            for (Map.Entry<String, List<DataItem>> entry : changedItems.entrySet()) {
+                JsonArray jsonItemsArray = new JsonArray();
+
+                if (serializationContext == null) {
+                    serializationContext = new CubaAmchartsSceneJsonSerializationContext();
+                }
+
+                List<JsonObject> jsonObjects = serializer.serialize(
+                        chart.getDataProvider(), entry.getValue(), serializationContext);
+                for (JsonObject jsonObject : jsonObjects) {
+                    jsonItemsArray.add(jsonObject);
+                }
+                jsonChangedItemsElement.add(entry.getKey(), jsonItemsArray);
+            }
+
+            getRpcProxy(CubaAmchartsSceneClientRpc.class).updatePoints(jsonChangedItemsElement.toString());
+            setChangedItems(null);
+        }
     }
 
     protected void setupDefaults(AbstractChart chart) {
@@ -417,7 +483,7 @@ public class CubaAmchartsScene extends AbstractComponent {
         }
     }
 
-    private static class ProxyChangeForwarder implements ConfigurationChangeListener {
+    protected static class ProxyChangeForwarder implements ConfigurationChangeListener {
 
         private final CubaAmchartsScene chart;
 
@@ -428,28 +494,40 @@ public class CubaAmchartsScene extends AbstractComponent {
         @Override
         public void dataAdded(DataAddedEvent event) {
             if (event.getItem() != null) {
-                chart.getRpcProxy(CubaAmchartsSceneClientRpc.class).addPoint(event.getItem().toString());
+                chart.addChangedItem(Operations.ADD, event.getItem());
             }
         }
 
         @Override
         public void dataRemoved(DataRemovedEvent event) {
             if (event.getItem() != null) {
-                chart.getRpcProxy(CubaAmchartsSceneClientRpc.class).removePoint(event.getItem().toString());
+                chart.addChangedItem(Operations.REMOVE, event.getItem());
             }
         }
 
         @Override
         public void dataUpdated(DataUpdatedEvent event) {
             if (event.getItem() != null) {
-                chart.getRpcProxy(CubaAmchartsSceneClientRpc.class).updatePoint(event.getItem().toString());
+                chart.addChangedItem(Operations.UPDATE, event.getItem());
             }
         }
 
         @Override
         public void dataRefreshed() {
             chart.getChart().getDataProvider().removeChangeListener(this);
+            chart.setChangedItems(null);
             chart.drawChart();
+        }
+    }
+
+    protected class CubaAmchartsSceneJsonSerializationContext extends AbstractConfigurationObject implements JsonSerializationContext {
+
+        public JsonElement serialize(Object src) {
+            return gson.toJsonTree(src);
+        }
+
+        public JsonElement serialize(Object src, Type typeOfSrc) {
+            return gson.toJsonTree(src, typeOfSrc);
         }
     }
 }

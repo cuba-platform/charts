@@ -13,10 +13,5 @@ import com.vaadin.shared.communication.ClientRpc;
  */
 public interface CubaAmchartsSceneClientRpc extends ClientRpc {
 
-    void addPoint(String json);
-
-    void updatePoint(String json);
-
-    void removePoint(String json);
-
+    void updatePoints(String json);
 }
