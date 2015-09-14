@@ -90,6 +90,12 @@ configure([chartsGlobalModule, chartsGuiModule, chartsWebModule]) {
                 out: "$checkstyleDir/$project.name-checkstyle.html",
                 style: "$checkstyleConfigDir/checkstyle.xsl")
     }
+
+    jar {
+        manifest {
+            attributes("Implementation-Version": cubaVersion)
+        }
+    }
 }
 
 configure(chartsWebToolkitModule) {
