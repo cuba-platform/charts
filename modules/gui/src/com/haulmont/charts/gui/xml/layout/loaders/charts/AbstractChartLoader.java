@@ -30,7 +30,6 @@ import java.util.List;
 public abstract class AbstractChartLoader<T extends AbstractChart> extends ComponentLoader {
 
     protected static final String CONFIG_DATE_FORMAT = "yyyy-MM-dd";
-    protected static final String CONFIG_TIMESTAMP_FORMAT = "yyyy-MM-dd HH:mm:ss";
 
     protected AbstractChartLoader(Context context) {
         super(context);
@@ -1244,17 +1243,12 @@ public abstract class AbstractChartLoader<T extends AbstractChart> extends Compo
     }
 
     protected Date loadDate(String value) {
-        SimpleDateFormat df = new SimpleDateFormat(CONFIG_TIMESTAMP_FORMAT);
+        SimpleDateFormat df = new SimpleDateFormat(CONFIG_DATE_FORMAT);
         try {
             return df.parse(value);
-        } catch (ParseException ignore) {
-            df = new SimpleDateFormat(CONFIG_DATE_FORMAT);
-            try {
-                return df.parse(value);
-            } catch (ParseException e) {
-                throw new GuiDevelopmentException("Unable to parse date from XML chart configuration",
+        } catch (ParseException e) {
+            throw new GuiDevelopmentException("Unable to parse date from XML chart configuration",
                         context.getCurrentFrameId(), "date", value);
-            }
         }
     }
 
