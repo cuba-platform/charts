@@ -101,6 +101,15 @@ public class AmchartsConfig extends JavaScriptObject {
                 }
             }
         })();
+
+        (function(){
+            if (config.startDate) {
+                config.startDate = $wnd.AmCharts.stringToDate(config.startDate, DEFAULT_JS_DATE_FORMAT);
+            }
+            if (config.endDate) {
+                config.endDate = $wnd.AmCharts.stringToDate(config.endDate, DEFAULT_JS_DATE_FORMAT);
+            }
+        })();
     }-*/;
 
     private static native void applyCustomJson(JavaScriptObject config, String manualOptions) /*-{

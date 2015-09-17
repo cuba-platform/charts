@@ -20,7 +20,6 @@ import org.dom4j.Element;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.Date;
 import java.util.List;
 
@@ -31,7 +30,7 @@ import java.util.List;
 public abstract class AbstractChartLoader<T extends AbstractChart> extends ComponentLoader {
 
     protected static final String CONFIG_DATE_FORMAT = "yyyy-MM-dd";
-    protected static final String CONFIG_TIME_FORMAT = "HH:mm:ss";
+    protected static final String CONFIG_TIMESTAMP_FORMAT = "yyyy-MM-dd HH:mm:ss";
 
     protected AbstractChartLoader(Context context) {
         super(context);
@@ -1245,8 +1244,7 @@ public abstract class AbstractChartLoader<T extends AbstractChart> extends Compo
     }
 
     protected Date loadDate(String value) {
-        String fullDateFormat = String.format("%s %s", CONFIG_DATE_FORMAT, CONFIG_TIME_FORMAT);
-        SimpleDateFormat df = new SimpleDateFormat(fullDateFormat);
+        SimpleDateFormat df = new SimpleDateFormat(CONFIG_TIMESTAMP_FORMAT);
         try {
             return df.parse(value);
         } catch (ParseException ignore) {
@@ -1254,13 +1252,13 @@ public abstract class AbstractChartLoader<T extends AbstractChart> extends Compo
             try {
                 return df.parse(value);
             } catch (ParseException e) {
-                throw new RuntimeException("Unable to parse date from XML chart configuration", e);
+                throw new GuiDevelopmentException("Unable to parse date from XML chart configuration",
+                        context.getCurrentFrameId(), "date", value);
             }
         }
     }
 
     protected Image loadImage(Element element) {
-
         Image image = new Image();
 
         String balloonColor = element.attributeValue("balloonColor");
