@@ -25,7 +25,7 @@ public interface Polygon {
     List<GeoPoint> getCoordinates();
 
     /**
-     * Sets polygon fill color. Defaults to "#993366"
+     * Sets polygon fill color. Defaults to "#ffffff"
      * @param fillColor fill color in any CSS3 format except extended name colors (aquamarine, chocolate etc)
      */
     void setFillColor(String fillColor);
@@ -36,7 +36,7 @@ public interface Polygon {
     String getFillColor();
 
     /**
-     * Sets fill opacity. Defaults to 0.6
+     * Sets fill opacity. Defaults to 1.0
      * @param fillOpacity fill opacity
      */
     void setFillOpacity(double fillOpacity);
@@ -69,7 +69,7 @@ public interface Polygon {
     double getStrokeOpacity();
 
     /**
-     * Sets stroke weight in pixels. Defaults to 3
+     * Sets stroke weight in pixels. Defaults to 1
      * @param strokeWeight stroke weight in pixels
      */
     void setStrokeWeight(int strokeWeight);

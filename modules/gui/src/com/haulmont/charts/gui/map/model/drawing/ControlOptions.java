@@ -5,6 +5,7 @@
 
 package com.haulmont.charts.gui.map.model.drawing;
 
+import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -12,7 +13,7 @@ import java.util.List;
  * @author korotkov
  * @version $Id$
  */
-public class ControlOptions {
+public class ControlOptions implements Serializable {
 
     private static final long serialVersionUID = 10977779698792392L;
 

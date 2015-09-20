@@ -10,9 +10,9 @@ package com.haulmont.charts.gui.map.model.drawing;
  * @version $Id$
  */
 public enum OverlayType {
-    POLYGON
-//    ,
-//    CIRCLE,
+    POLYGON,
+    CIRCLE
+// ,
 //    MARKER,
 //    POLYLINE,
 //    RECTANGLE

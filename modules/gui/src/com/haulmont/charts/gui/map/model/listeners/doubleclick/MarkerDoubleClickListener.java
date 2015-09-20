@@ -3,7 +3,7 @@
  * Use is subject to license terms, see http://www.cuba-platform.com/license for details.
  */
 
-package com.haulmont.charts.gui.map.model.listeners;
+package com.haulmont.charts.gui.map.model.listeners.doubleclick;
 
 import com.haulmont.charts.gui.map.model.Marker;
 

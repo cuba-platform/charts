@@ -16,11 +16,20 @@ import com.haulmont.charts.gui.map.model.directions.TravelMode;
 import com.haulmont.charts.gui.map.model.drawing.DrawingOptions;
 import com.haulmont.charts.gui.map.model.layer.HeatMapLayer;
 import com.haulmont.charts.gui.map.model.listeners.*;
+import com.haulmont.charts.gui.map.model.listeners.centerchange.CircleCenterChangeListener;
+import com.haulmont.charts.gui.map.model.listeners.click.CircleClickListener;
+import com.haulmont.charts.gui.map.model.listeners.click.MapClickListener;
+import com.haulmont.charts.gui.map.model.listeners.click.MarkerClickListener;
+import com.haulmont.charts.gui.map.model.listeners.doubleclick.CircleDoubleClickListener;
+import com.haulmont.charts.gui.map.model.listeners.doubleclick.MarkerDoubleClickListener;
+import com.haulmont.charts.gui.map.model.listeners.drag.MarkerDragListener;
+import com.haulmont.charts.gui.map.model.listeners.overlaycomplete.CircleCompleteListener;
+import com.haulmont.charts.gui.map.model.listeners.overlaycomplete.PolygonCompleteListener;
+import com.haulmont.charts.gui.map.model.listeners.radiuschange.CircleRadiusChangeListener;
 import com.haulmont.cuba.gui.components.Component;
 
 import java.util.Collection;
 import java.util.List;
-import java.util.Objects;
 
 /**
  * @author korotkov
@@ -82,6 +91,21 @@ public interface MapViewer extends Component, Component.BelongToFrame, Component
 
     void addMapInitListener(MapInitListener listener);
     void removeMapInitListener(MapInitListener listener);
+
+    void addCircleClickListener(CircleClickListener listener);
+    void removeCircleClickListener(CircleClickListener listener);
+
+    void addCircleDoubleClickListener(CircleDoubleClickListener listener);
+    void removeCircleDoubleClickListener(CircleDoubleClickListener listener);
+
+    void addCircleRadiusChangeListener(CircleRadiusChangeListener listener);
+    void removeCircleRadiusChangeListener(CircleRadiusChangeListener listener);
+
+    void addCircleCenterChangeListener(CircleCenterChangeListener listener);
+    void removeCircleCenterChangeListener(CircleCenterChangeListener listener);
+
+    void addCircleCompleteListener(CircleCompleteListener listener);
+    void removeCircleCompleteListener(CircleCompleteListener listener);
 
     /**
      * Creates geo point with no coordinates
@@ -150,6 +174,18 @@ public interface MapViewer extends Component, Component.BelongToFrame, Component
      */
     Polygon createPolygon(List<GeoPoint> coordinates, String fillColor, double fillOpacity, String strokeColor,
                           double strokeOpacity,int strokeWeight);
+
+    /**
+     * Creates circle. Add circle on map using {@link com.haulmont.charts.gui.components.map.MapViewer#addCircleOverlay(com.haulmont.charts.gui.map.model.Circle)}
+     * @return circle
+     */
+    Circle createCircle();
+
+    /**
+     * Creates circle with given center location and radius (in meters). Add circle on map using {@link com.haulmont.charts.gui.components.map.MapViewer#addCircleOverlay(com.haulmont.charts.gui.map.model.Circle)}
+     * @return circle
+     */
+    Circle createCircle(GeoPoint center, double radius);
 
     /**
      * Creates polyline. Add polyline on map using {@link com.haulmont.charts.gui.components.map.MapViewer#addPolyline(com.haulmont.charts.gui.map.model.Polyline)}
@@ -362,6 +398,18 @@ public interface MapViewer extends Component, Component.BelongToFrame, Component
      * @param polyline polyline
      */
     void removePolyline(Polyline polyline);
+
+    /**
+     * Adds circle on map
+     * @param circle circle
+     */
+    void addCircleOverlay(Circle circle);
+
+    /**
+     * Removes circle from map
+     * @param circle circle
+     */
+    void removeCircleOverlay(Circle circle);
 
     /**
      * Enables limiting of the visible area by a given bounds

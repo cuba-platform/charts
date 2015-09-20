@@ -16,6 +16,7 @@ public class DrawingOptions {
     private static final long serialVersionUID = -19754086700404391L;
 
     protected PolygonOptions polygonOptions;
+    protected CircleOptions circleOptions;
     protected OverlayType initialDrawingMode;
     protected boolean enableDrawingControl;
     protected ControlOptions controlOptions;
@@ -24,8 +25,8 @@ public class DrawingOptions {
     }
 
     /**
-     * Sets options of drawing polygons
-     * @param polygonOptions
+     * Sets options for drawing polygons
+     * @param polygonOptions options
      */
     public void setPolygonOptions(PolygonOptions polygonOptions) {
         this.polygonOptions = polygonOptions;
@@ -36,6 +37,21 @@ public class DrawingOptions {
      */
     public PolygonOptions getPolygonOptions() {
         return polygonOptions;
+    }
+
+    /**
+     * @return circle drawing options
+     */
+    public CircleOptions getCircleOptions() {
+        return circleOptions;
+    }
+
+    /**
+     * Sets options for drawing circle
+     * @param circleOptions options
+     */
+    public void setCircleOptions(CircleOptions circleOptions) {
+        this.circleOptions = circleOptions;
     }
 
     /**

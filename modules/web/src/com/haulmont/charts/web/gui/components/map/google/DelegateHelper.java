@@ -9,6 +9,7 @@ import com.haulmont.charts.gui.components.map.MapViewer;
 import com.haulmont.charts.gui.map.model.*;
 import com.haulmont.charts.gui.map.model.WeightedLocation;
 import com.haulmont.charts.gui.map.model.drawing.*;
+import com.haulmont.charts.gui.map.model.drawing.CircleOptions;
 import com.haulmont.charts.gui.map.model.drawing.DrawingOptions;
 import com.haulmont.charts.gui.map.model.drawing.OverlayType;
 import com.haulmont.charts.gui.map.model.drawing.PolygonOptions;
@@ -17,9 +18,7 @@ import com.haulmont.charts.web.gui.components.map.google.directions.DirectionsRo
 import com.haulmont.charts.web.gui.components.map.google.directions.DirectionsStepDelegate;
 import com.haulmont.charts.web.gui.components.map.google.directions.DirectionsWaypointDelegate;
 import com.vaadin.tapio.googlemaps.GoogleMap;
-import com.vaadin.tapio.googlemaps.client.*;
 import com.vaadin.tapio.googlemaps.client.base.LatLon;
-import com.vaadin.tapio.googlemaps.client.base.LatLonBounds;
 import com.vaadin.tapio.googlemaps.client.drawing.*;
 import com.vaadin.tapio.googlemaps.client.services.DirectionsLeg;
 import com.vaadin.tapio.googlemaps.client.services.DirectionsRoute;
@@ -67,6 +66,7 @@ public class DelegateHelper {
                 = new com.vaadin.tapio.googlemaps.client.drawing.DrawingOptions();
 
         gOptions.setPolygonOptions(toGooglePolygonOptions(options.getPolygonOptions()));
+        gOptions.setCircleOptions(toGoogleCircleOptions(options.getCircleOptions()));
         gOptions.setDrawingControlOptions(toGoogleDrawingControlOptions(options.getDrawingControlOptions()));
         gOptions.setInitialDrawingMode(toGoogleOverlayType(options.getInitialDrawingMode()));
         gOptions.setEnableDrawingControl(options.isEnableDrawingControl());
@@ -82,7 +82,7 @@ public class DelegateHelper {
 
         switch (overlayType) {
             case POLYGON: return com.vaadin.tapio.googlemaps.client.drawing.OverlayType.POLYGON;
-//            case CIRCLE: return com.vaadin.tapio.googlemaps.client.drawing.OverlayType.CIRCLE;
+            case CIRCLE: return com.vaadin.tapio.googlemaps.client.drawing.OverlayType.CIRCLE;
 //            case POLYLINE: return com.vaadin.tapio.googlemaps.client.drawing.OverlayType.POLYLINE;
 //            case MARKER: return com.vaadin.tapio.googlemaps.client.drawing.OverlayType.MARKER;
 //            case RECTANGLE: return com.vaadin.tapio.googlemaps.client.drawing.OverlayType.RECTANGLE;
@@ -142,7 +142,7 @@ public class DelegateHelper {
     }
 
     private static com.vaadin.tapio.googlemaps.client.drawing.PolygonOptions
-        toGooglePolygonOptions(PolygonOptions options) {
+    toGooglePolygonOptions(PolygonOptions options) {
         if (options == null) {
             return null;
         }
@@ -159,6 +159,27 @@ public class DelegateHelper {
 //        gOptions.setClickable(options.isClickable());
         gOptions.setGeodesic(options.isGeodesic());
         gOptions.setVisible(options.isVisible());
+        gOptions.setZIndex(options.getZIndex());
+
+        return gOptions;
+    }
+
+    private static com.vaadin.tapio.googlemaps.client.drawing.CircleOptions toGoogleCircleOptions(CircleOptions options) {
+        if (options == null) {
+            return null;
+        }
+
+        com.vaadin.tapio.googlemaps.client.drawing.CircleOptions gOptions
+                = new com.vaadin.tapio.googlemaps.client.drawing.CircleOptions();
+        gOptions.setRadius(options.getRadius());
+        gOptions.setCenter(options.getCenter() != null ? ((GeoPointDelegate)options.getCenter()).getLatLon() : null);
+        gOptions.setEditable(options.isEditable());
+        gOptions.setStrokeOpacity(options.getStrokeOpacity());
+        gOptions.setStrokeColor(options.getStrokeColor());
+        gOptions.setStrokeWeight(options.getStrokeWeight());
+        gOptions.setFillOpacity(options.getFillOpacity());
+        gOptions.setFillColor(options.getFillColor());
+        gOptions.setClickable(options.isClickable());
         gOptions.setZIndex(options.getZIndex());
 
         return gOptions;

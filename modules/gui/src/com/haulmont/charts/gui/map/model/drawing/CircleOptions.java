@@ -1,9 +1,11 @@
 /*
- * Copyright (c) 2008-2014 Haulmont. All rights reserved.
+ * Copyright (c) 2008-2015 Haulmont. All rights reserved.
  * Use is subject to license terms, see http://www.cuba-platform.com/license for details.
  */
 
 package com.haulmont.charts.gui.map.model.drawing;
+
+import com.haulmont.charts.gui.map.model.GeoPoint;
 
 import java.io.Serializable;
 
@@ -11,30 +13,30 @@ import java.io.Serializable;
  * @author korotkov
  * @version $Id$
  */
-public class PolygonOptions implements Serializable {
+public class CircleOptions implements Serializable {
 
-    private static final long serialVersionUID = -1836885545431952265L;
+    private static final long serialVersionUID = 456182536005952265L;
 
+    protected GeoPoint center = null;
+    protected Double radius = null;
     protected boolean clickable = true;
     protected boolean editable = false;
-    protected String fillColor = "#993366";
+    protected String fillColor = "#33ee66";
     protected Double fillOpacity = 0.6;
-    protected boolean geodesic = false;
     protected String strokeColor = "#000000";
     protected Double strokeOpacity = 1.0;
-    protected Integer strokeWeight = 3;
-    protected boolean visible = true;
+    protected Integer strokeWeight = 1;
     protected Integer zIndex = 0;
 
-    public PolygonOptions() {
+    public CircleOptions() {
     }
 
-    public PolygonOptions(boolean clickable, boolean editable) {
+    public CircleOptions(boolean clickable, boolean editable) {
         this.clickable = clickable;
         this.editable = editable;
     }
 
-    public PolygonOptions(boolean clickable, boolean editable, String fillColor, Double fillOpacity) {
+    public CircleOptions(boolean clickable, boolean editable, String fillColor, Double fillOpacity) {
         this.clickable = clickable;
         this.editable = editable;
         this.fillColor = fillColor;
@@ -42,47 +44,48 @@ public class PolygonOptions implements Serializable {
     }
 
     /**
-     * @return true if created polygon should be editable
-     */
-    public boolean isEditable() {
-        return editable;
-    }
-
-    /**
-     * Sets whether newly created polygon should be editable, which allows user to move/add/delete polygon vertices.
-     * Defaults to false
-     *
-     * @param editable true if polygon should be editable
-     */
-    public void setEditable(boolean editable) {
-        this.editable = editable;
-    }
-
-    /**
-     * @return true if created polygon should handle click events. Defaults to true
+     * @return true if created circle should handle click events. Defaults to true
      */
     public boolean isClickable() {
         return clickable;
     }
 
     /**
-     * Flag defining whether newly created polygon should handle click events. Defaults to true
-     * @param clickable true if polygon should handle click events
+     * Flag defining whether newly created circle should handle click events. Defaults to true
+     * @param clickable true if circle should handle click events
      */
     public void setClickable(boolean clickable) {
         this.clickable = clickable;
     }
 
     /**
-     * @return polygon fill color
+     * @return true if created circle should be editable
+     */
+    public boolean isEditable() {
+        return editable;
+    }
+
+    /**
+     * Sets whether newly created circle should be editable, which allows user to drag control points at center
+     * of circle and on its circumference.
+     * Defaults to false
+     *
+     * @param editable true if circle should be editable
+     */
+    public void setEditable(boolean editable) {
+        this.editable = editable;
+    }
+
+    /**
+     * @return circle fill color
      */
     public String getFillColor() {
         return fillColor;
     }
 
     /**
-     * Sets polygon fill color.
-     * Defaults to "#993366"
+     * Sets circle fill color.
+     * Defaults to "#33ee66"
      *
      * @param fillColor fill color in any CSS3 format except extended name colors (aquamarine, chocolate etc)
      */
@@ -103,24 +106,6 @@ public class PolygonOptions implements Serializable {
      */
     public void setFillOpacity(Double fillOpacity) {
         this.fillOpacity = fillOpacity;
-    }
-
-    /**
-     * Sets whether polygon edges should be geodesic, which means they they curve will change depending of the polygon
-     * closeness to north/south pole. If edges aren't geodesic then they are rendered as straight lines in screen space.
-     * Defaults to false
-     *
-     * @param geodesic true if edges should be geodesic
-     */
-    public void setGeodesic(boolean geodesic) {
-        this.geodesic = geodesic;
-    }
-
-    /**
-     * @return true if edges are geodesic
-     */
-    public boolean isGeodesic() {
-        return geodesic;
     }
 
     /**
@@ -175,32 +160,49 @@ public class PolygonOptions implements Serializable {
     }
 
     /**
-     * @return visibility of newly drawn polygons
-     */
-    public boolean isVisible() {
-        return visible;
-    }
-
-    /**
-     * Sets visibility of newly drawn polygons
-     * @param visible
-     */
-    public void setVisible(boolean visible) {
-        this.visible = visible;
-    }
-
-    /**
      * @return z-index
      */
-    public Integer  getZIndex() {
+    public Integer getZIndex() {
         return zIndex;
     }
 
     /**
-     * Sets polygon z-index
+     * Sets circle z-index
      * @param zIndex z-index
      */
-    public void setZIndex(Integer  zIndex) {
+    public void setZIndex(Integer zIndex) {
         this.zIndex = zIndex;
+    }
+
+    /**
+     * Not used for drawing
+     * @return center
+     */
+    public GeoPoint getCenter() {
+        return center;
+    }
+
+    /**
+     * Not used for drawing
+     * @param center center
+     */
+    public void setCenter(GeoPoint center) {
+        this.center = center;
+    }
+
+    /**
+     * Not used for drawing
+     * @return radius
+     */
+    public Double getRadius() {
+        return radius;
+    }
+
+    /**
+     * Not used for drawing
+     * @param radius radius
+     */
+    public void setRadius(Double radius) {
+        this.radius = radius;
     }
 }
