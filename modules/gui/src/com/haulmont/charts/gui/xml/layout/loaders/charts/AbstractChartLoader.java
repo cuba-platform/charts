@@ -1207,7 +1207,7 @@ public abstract class AbstractChartLoader<T extends AbstractChart> extends Compo
 
         String toValue = guideElement.attributeValue("toValue");
         if (StringUtils.isNotEmpty(toValue)) {
-            guide.setValue(Double.valueOf(toValue));
+            guide.setToValue(Double.valueOf(toValue));
         }
 
         String value = guideElement.attributeValue("value");

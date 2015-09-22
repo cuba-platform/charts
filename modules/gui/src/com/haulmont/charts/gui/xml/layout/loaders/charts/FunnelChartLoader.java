@@ -40,6 +40,11 @@ public class FunnelChartLoader extends SlicedChartLoader<FunnelChart> {
     protected void loadConfiguration(FunnelChart chart, Element element) {
         super.loadConfiguration(chart, element);
 
+        String angle = element.attributeValue("angle");
+        if (StringUtils.isNotEmpty(angle)) {
+            chart.setAngle(Integer.valueOf(angle));
+        }
+
         String balloonText = element.attributeValue("balloonText");
         if (StringUtils.isNotEmpty(balloonText)) {
             chart.setBalloonText(loadResourceString(balloonText));

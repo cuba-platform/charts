@@ -382,7 +382,7 @@ public class AngularGaugeChartLoader extends AbstractChartLoader<AngularGaugeCha
 
                 String startValue = bandElement.attributeValue("startValue");
                 if (StringUtils.isNotEmpty(startValue)) {
-                    axis.setStartValue(Double.valueOf(startValue));
+                    band.setStartValue(Double.valueOf(startValue));
                 }
 
                 String url = bandElement.attributeValue("url");
@@ -398,7 +398,7 @@ public class AngularGaugeChartLoader extends AbstractChartLoader<AngularGaugeCha
     protected void loadArrows(AngularGaugeChart chart, Element element) {
         Element arrowsElement = element.element("arrows");
         if (arrowsElement != null) {
-            for (Object arrowItem : element.elements("arrow")) {
+            for (Object arrowItem : arrowsElement.elements("arrow")) {
                 Element arrowElement = (Element) arrowItem;
 
                 GaugeArrow arrow = new GaugeArrow();
