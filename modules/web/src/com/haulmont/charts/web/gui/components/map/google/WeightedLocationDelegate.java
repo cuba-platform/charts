@@ -7,7 +7,6 @@ package com.haulmont.charts.web.gui.components.map.google;
 
 import com.haulmont.bali.util.Preconditions;
 import com.haulmont.charts.gui.map.model.GeoPoint;
-import com.vaadin.tapio.googlemaps.client.base.LatLon;
 import com.vaadin.tapio.googlemaps.client.base.WeightedLocation;
 
 import java.util.Objects;
@@ -58,5 +57,4 @@ public class WeightedLocationDelegate implements com.haulmont.charts.gui.map.mod
     public int hashCode() {
         return location != null ? location.hashCode() : 0;
     }
-
 }

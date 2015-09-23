@@ -25,7 +25,7 @@ public class ControlOptions implements Serializable {
 
     public ControlOptions(Position position, List<OverlayType> drawingModes) {
         this.position = position;
-        this.drawingModes = drawingModes != null ? drawingModes : new ArrayList<OverlayType>();
+        this.drawingModes = drawingModes != null ? drawingModes : new ArrayList<>();
     }
 
     /**

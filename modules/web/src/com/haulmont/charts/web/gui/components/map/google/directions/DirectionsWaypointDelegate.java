@@ -9,7 +9,6 @@ import com.haulmont.bali.util.Preconditions;
 import com.haulmont.charts.gui.map.model.GeoPoint;
 import com.haulmont.charts.gui.map.model.directions.DirectionsWaypoint;
 import com.haulmont.charts.web.gui.components.map.google.GeoPointDelegate;
-import com.vaadin.tapio.googlemaps.client.base.LatLon;
 
 /**
  * @author korotkov

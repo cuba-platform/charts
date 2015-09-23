@@ -6,20 +6,17 @@
 package com.haulmont.charts.web.gui.components.map.google;
 
 import com.haulmont.charts.gui.components.map.MapViewer;
-import com.haulmont.charts.gui.map.model.*;
+import com.haulmont.charts.gui.map.model.GeoPoint;
 import com.haulmont.charts.gui.map.model.WeightedLocation;
 import com.haulmont.charts.gui.map.model.drawing.*;
-import com.haulmont.charts.gui.map.model.drawing.CircleOptions;
-import com.haulmont.charts.gui.map.model.drawing.DrawingOptions;
-import com.haulmont.charts.gui.map.model.drawing.OverlayType;
-import com.haulmont.charts.gui.map.model.drawing.PolygonOptions;
 import com.haulmont.charts.web.gui.components.map.google.directions.DirectionsLegDelegate;
 import com.haulmont.charts.web.gui.components.map.google.directions.DirectionsRouteDelegate;
 import com.haulmont.charts.web.gui.components.map.google.directions.DirectionsStepDelegate;
 import com.haulmont.charts.web.gui.components.map.google.directions.DirectionsWaypointDelegate;
 import com.vaadin.tapio.googlemaps.GoogleMap;
 import com.vaadin.tapio.googlemaps.client.base.LatLon;
-import com.vaadin.tapio.googlemaps.client.drawing.*;
+import com.vaadin.tapio.googlemaps.client.drawing.ControlPosition;
+import com.vaadin.tapio.googlemaps.client.drawing.DrawingControlOptions;
 import com.vaadin.tapio.googlemaps.client.services.DirectionsLeg;
 import com.vaadin.tapio.googlemaps.client.services.DirectionsRoute;
 import com.vaadin.tapio.googlemaps.client.services.DirectionsStep;

@@ -5,8 +5,6 @@
 
 package com.haulmont.charts.gui.amcharts.model;
 
-import java.util.List;
-
 /**
  * See documentation for properties of CategoryAxis JS Object. <br/>
  *

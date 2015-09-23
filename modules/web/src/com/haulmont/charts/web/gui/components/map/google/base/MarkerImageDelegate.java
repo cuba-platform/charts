@@ -6,11 +6,9 @@
 package com.haulmont.charts.web.gui.components.map.google.base;
 
 import com.haulmont.bali.util.Preconditions;
-import com.haulmont.charts.gui.map.model.GeoPoint;
 import com.haulmont.charts.gui.map.model.base.MarkerImage;
 import com.haulmont.charts.gui.map.model.base.Point;
 import com.haulmont.charts.gui.map.model.base.Size;
-import com.haulmont.charts.web.gui.components.map.google.GeoPointDelegate;
 
 /**
  * @author korotkov

@@ -522,10 +522,12 @@ public class CubaAmchartsScene extends AbstractComponent {
 
     protected class CubaAmchartsSceneJsonSerializationContext implements JsonSerializationContext {
 
+        @Override
         public JsonElement serialize(Object src) {
             return AbstractChartObject.getSharedGson().toJsonTree(src);
         }
 
+        @Override
         public JsonElement serialize(Object src, Type typeOfSrc) {
             return AbstractChartObject.getSharedGson().toJsonTree(src, typeOfSrc);
         }
