@@ -21,18 +21,18 @@ public interface HeatMapLayer {
     /**
      * @return list of geographical points displayed
      */
-    public List<GeoPoint> getData();
+    List<GeoPoint> getData();
 
     /**
      * @param data list of geographical points to display on the heatmap. Calling this method is enough to
      *             update already added on the map layer.
      */
-    public void setData(List<GeoPoint> data);
+    void setData(List<GeoPoint> data);
 
     /**
      * @return list of weighted locations
      */
-    public List<WeightedLocation> getWeightedData();
+    List<WeightedLocation> getWeightedData();
 
     /**
      * Sets weighted locations to display on the heatmap. Adding location with weight 3 equals to adding three
@@ -42,8 +42,7 @@ public interface HeatMapLayer {
      *
      * @param weightedData list of weighted locations
      */
-    public void setWeightedData(List<WeightedLocation> weightedData);
-
+    void setWeightedData(List<WeightedLocation> weightedData);
 
     /**
      * Sets colors to use for depicting intensity of the data. The order is from lowest to highest.
@@ -54,34 +53,34 @@ public interface HeatMapLayer {
      *
      * @param gradient list of colors
      */
-    public void setGradient(List<String> gradient);
+    void setGradient(List<String> gradient);
 
     /**
      * @return colors used for depicting density of the data
      */
-    public List<String> getGradient();
+    List<String> getGradient();
 
     /**
      * @return opacity
      */
-    public Double getOpacity();
+    Double getOpacity();
 
     /**
      * Sets heatmap opacity. Default value is 0.6
      * @param opacity opacity
      */
-    public void setOpacity(Double opacity);
+    void setOpacity(Double opacity);
 
     /**
      * @return radius of influence of each location
      */
-    public Double getRadius();
+    Double getRadius();
 
     /**
      * Sets the radius of influence for each location.
      * @param radius radius in pixels
      */
-    public void setRadius(Double radius);
+    void setRadius(Double radius);
 
     /**
      * Sets the maximum intensity of the heatmap. If maximum intensity is not set then colors will be dynamically
@@ -89,12 +88,12 @@ public interface HeatMapLayer {
      *
      * @param maxIntensity max intensity
      */
-    public void setMaxIntensity(Double maxIntensity);
+    void setMaxIntensity(Double maxIntensity);
 
     /**
      * @return max intensity
      */
-    public Double getMaxIntensity();
+    Double getMaxIntensity();
 
     /**
      * Sets whether heatmap dissipate on zoom. When turned on the radius of influence doesn't change on zoom.
@@ -102,10 +101,10 @@ public interface HeatMapLayer {
      *
      * @param dissipating dissipating
      */
-    public void setDissipating(Boolean dissipating);
+    void setDissipating(Boolean dissipating);
 
     /**
      * @return true if heatmap dissipates on zoom, false otherwise
      */
-    public Boolean getDissipating();
+    Boolean getDissipating();
 }

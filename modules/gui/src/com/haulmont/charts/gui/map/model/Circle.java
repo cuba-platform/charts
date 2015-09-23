@@ -14,73 +14,73 @@ public interface Circle {
     /**
      * @return center of the circle overlay
      */
-    public GeoPoint getCenter();
+    GeoPoint getCenter();
 
     /**
      * Sets center of the circle overlay
      * @param center center
      */
-    public void setCenter(GeoPoint center);
+    void setCenter(GeoPoint center);
 
     /**
      * @return true if user is able to drag overlay over the map. Defaults to false
      */
-    public boolean isDraggable();
+    boolean isDraggable();
 
     /**
      * If set to true, the user can drag overlay over the map. Defaults to false
      * @param draggable draggable
      */
-    public void setDraggable(boolean draggable);
+    void setDraggable(boolean draggable);
 
     /**
      * @return true if the user can edit this overlay by dragging the control points displayed in the center of
      * the circle and on the edges. Defaults to false.
      */
-    public boolean isEditable();
+    boolean isEditable();
 
     /**
      * If set to true, the user can edit this overlay by dragging the control points displayed in the center of
      * the circle and on the edges. Defaults to false.
      * @param editable editable
      */
-    public void setEditable(boolean editable);
+    void setEditable(boolean editable);
 
     /**
      * Flag defining whether overlay is visible on the map. Defaults to true.
      * @return true is overlay is visible
      */
-    public boolean isVisible();
+    boolean isVisible();
 
     /**
      * Sets flag defining whether overlay is visible on the map. Defaults to true.
      * @param visible visible
      */
-    public void setVisible(boolean visible);
+    void setVisible(boolean visible);
 
     /**
      * Flag defining whether overlay handles click (and double click) events. Defaults to true.
      * @return true if clickable
      */
-    public boolean isClickable();
+    boolean isClickable();
 
     /**
      * Sets flag defining whether overlay handles click (and double click) events. Defaults to true.
      * @param clickable clickable
      */
-    public void setClickable(boolean clickable);
+    void setClickable(boolean clickable);
 
     /**
      * Radius of the circle overlay in meters on the Earth's surface
      * @return radius in meters
      */
-    public double getRadius();
+    double getRadius();
 
     /**
      * Sets radius of the circle overlay in meters on the Earth's surface
      * @param radius radius in meters
      */
-    public void setRadius(double radius);
+    void setRadius(double radius);
 
     /**
      * Sets circle fill color. Defaults to "#ffffff"

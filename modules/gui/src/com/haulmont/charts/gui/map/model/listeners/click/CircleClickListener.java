@@ -12,7 +12,7 @@ import com.haulmont.charts.gui.map.model.Circle;
  * @version $Id$
  */
 public interface CircleClickListener {
-    static class CircleClickEvent {
+    class CircleClickEvent {
         private Circle circle;
 
         public CircleClickEvent(Circle circle) {

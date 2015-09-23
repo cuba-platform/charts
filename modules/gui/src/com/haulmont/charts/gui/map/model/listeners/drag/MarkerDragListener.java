@@ -16,7 +16,7 @@ import com.haulmont.charts.gui.map.model.Marker;
  */
 public interface MarkerDragListener {
 
-    static class MarkerDragEvent {
+    class MarkerDragEvent {
         private Marker marker;
         private GeoPoint oldPosition;
 

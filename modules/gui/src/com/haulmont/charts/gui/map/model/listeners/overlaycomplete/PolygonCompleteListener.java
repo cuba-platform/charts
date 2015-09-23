@@ -16,7 +16,7 @@ import com.haulmont.charts.gui.map.model.Polygon;
  */
 public interface PolygonCompleteListener {
 
-    static class PolygonCompleteEvent {
+    class PolygonCompleteEvent {
         private Polygon polygon;
 
         public PolygonCompleteEvent(Polygon polygon) {

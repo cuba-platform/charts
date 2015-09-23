@@ -13,7 +13,7 @@ import com.haulmont.charts.gui.map.model.Circle;
  */
 public interface CircleRadiusChangeListener {
 
-    static class CircleRadiusChangeEvent {
+    class CircleRadiusChangeEvent {
 
         private Circle circle;
         private double oldRadius;

@@ -14,7 +14,7 @@ import com.haulmont.charts.gui.map.model.GeoPoint;
  */
 public interface CircleCenterChangeListener {
 
-    static class CircleCenterChangeEvent {
+    class CircleCenterChangeEvent {
         private Circle circle;
         private GeoPoint oldCenter;
 

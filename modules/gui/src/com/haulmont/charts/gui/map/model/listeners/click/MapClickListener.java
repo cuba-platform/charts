@@ -14,7 +14,7 @@ import com.haulmont.charts.gui.map.model.GeoPoint;
  * @version $Id$
  */
 public interface MapClickListener {
-    static class MapClickEvent {
+    class MapClickEvent {
         private GeoPoint position;
 
         public MapClickEvent(GeoPoint position) {

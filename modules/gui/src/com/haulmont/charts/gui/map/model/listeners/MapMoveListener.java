@@ -16,7 +16,7 @@ import com.haulmont.charts.gui.map.model.GeoPoint;
  * @version $Id$
  */
 public interface MapMoveListener {
-    static class MapMoveEvent {
+    class MapMoveEvent {
         private double zoom;
         private GeoPoint center;
         private GeoPoint boundsNE;

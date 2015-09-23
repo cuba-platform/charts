@@ -15,7 +15,7 @@ import com.haulmont.charts.gui.map.model.Marker;
  */
 public interface MarkerClickListener {
 
-    static class MarkerClickEvent {
+    class MarkerClickEvent {
         private Marker marker;
 
         public MarkerClickEvent(Marker marker) {

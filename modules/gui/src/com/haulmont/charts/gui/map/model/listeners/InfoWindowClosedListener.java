@@ -15,7 +15,7 @@ import com.haulmont.charts.gui.map.model.InfoWindow;
  */
 public interface InfoWindowClosedListener {
 
-    static class InfoWindowCloseEvent {
+    class InfoWindowCloseEvent {
         private InfoWindow infoWindow;
 
         public InfoWindowCloseEvent(InfoWindow infoWindow) {
@@ -28,5 +28,4 @@ public interface InfoWindowClosedListener {
     }
 
     void onClose(InfoWindowCloseEvent event);
-
 }

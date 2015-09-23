@@ -12,7 +12,7 @@ import com.haulmont.charts.gui.map.model.Marker;
  * @version $Id$
  */
 public interface MarkerDoubleClickListener {
-    static class MarkerDoubleClickEvent {
+    class MarkerDoubleClickEvent {
         private Marker marker;
 
         public MarkerDoubleClickEvent(Marker marker) {

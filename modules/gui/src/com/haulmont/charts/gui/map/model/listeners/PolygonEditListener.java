@@ -29,7 +29,7 @@ public interface PolygonEditListener {
         SET
     }
 
-    static class PolygonEditEvent {
+    class PolygonEditEvent {
         private Polygon polygon;
         private ActionType actionType;
         private int index;
