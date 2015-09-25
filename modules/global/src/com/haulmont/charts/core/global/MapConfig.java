@@ -22,7 +22,7 @@ public interface MapConfig extends Config {
 
     @Property("cuba.charts.map.provider")
     @DefaultString("google")
-    String getDefaultMapsProvider();
+    String getMapsProvider();
     void setMapsProvider(String key);
 
     @Property("cuba.charts.map.freeApiKey")

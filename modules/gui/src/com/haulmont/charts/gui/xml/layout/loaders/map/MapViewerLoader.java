@@ -31,7 +31,7 @@ public class MapViewerLoader extends ComponentLoader {
     public Component loadComponent(ComponentsFactory factory, Element element, Component parent) {
         String vendor = element.attributeValue("vendor");
         if (vendor == null) {
-            vendor = mapConfig.getDefaultMapsProvider();
+            vendor = mapConfig.getMapsProvider();
         }
 
         String componentId;
