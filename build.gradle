@@ -120,9 +120,7 @@ configure(chartsWebToolkitModule) {
 }
 
 configure(chartsGlobalModule) {
-    task enhance(type: CubaEnhancing, dependsOn: compileJava) {
-        persistenceConfig = 'cuba-persistence.xml charts-persistence.xml'
-    }
+    task enhance(type: CubaEnhancing)
 }
 
 configure(chartsGuiModule) {
