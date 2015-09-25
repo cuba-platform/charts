@@ -11,6 +11,7 @@ import com.haulmont.charts.gui.map.model.layer.HeatMapLayer;
 import com.haulmont.charts.web.gui.components.map.google.DelegateHelper;
 import com.vaadin.tapio.googlemaps.client.layers.GoogleMapHeatMapLayer;
 
+import java.util.ArrayList;
 import java.util.List;
 
 /**
@@ -71,7 +72,7 @@ public class HeatMapLayerDelegate implements HeatMapLayer {
 
     @Override
     public void setGradient(List<String> gradient) {
-        layer.setGradient(getGradient());
+        layer.setGradient(gradient != null ? new ArrayList<>(gradient) : null);
     }
 
     @Override
