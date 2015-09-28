@@ -37,36 +37,42 @@ public class CubaAmchartsJsOverlay {
     }
 
     private native void updatePoints(JavaScriptObject chart, JavaScriptObject src) /*-{
-        var opp = 'add';
-        if (src[opp] != null) {
-            for (var i = 0; i < src[opp].length; i++) {
-                chart.dataProvider.push(src[opp][i]);
+        (function () {
+            var opp = 'add';
+            if (src[opp] != null) {
+                for (var i = 0; i < src[opp].length; i++) {
+                    chart.dataProvider.push(src[opp][i]);
+                }
             }
-        }
+        })();
 
-        opp = 'remove';
-        if (src[opp] != null) {
-            for (var i = 0; i < src[opp].length; i++) {
-                for (var j = 0; j < chart.dataProvider.length; j++) {
-                    if (chart.dataProvider[j].id == src[opp][i].id) {
-                        chart.dataProvider.splice(j, 1);
-                        break;
+        (function () {
+            var opp = 'remove';
+            if (src[opp] != null) {
+                for (var i = 0; i < src[opp].length; i++) {
+                    for (var j = 0; j < chart.dataProvider.length; j++) {
+                        if (chart.dataProvider[j].id == src[opp][i].id) {
+                            chart.dataProvider.splice(j, 1);
+                            break;
+                        }
                     }
                 }
             }
-        }
+        })();
 
-        opp = 'update'
-        if (src[opp] != null) {
-            for (var i = 0; i < src[opp].length; i++) {
-                for (var j = 0; j < chart.dataProvider.length; j++) {
-                    if (chart.dataProvider[j].id == src[opp][i].id) {
-                        chart.dataProvider[j] = src[opp][i]
-                        break;
+        (function () {
+            var opp = 'update';
+            if (src[opp] != null) {
+                for (var i = 0; i < src[opp].length; i++) {
+                    for (var j = 0; j < chart.dataProvider.length; j++) {
+                        if (chart.dataProvider[j].id == src[opp][i].id) {
+                            chart.dataProvider[j] = src[opp][i]
+                            break;
+                        }
                     }
                 }
             }
-        }
+        })();
 
         chart.validateData();
     }-*/;
@@ -136,9 +142,9 @@ public class CubaAmchartsJsOverlay {
     }
 
     private static native void addGraphClickHandler(JavaScriptObject chart, GraphClickHandler handler) /*-{
-        chart.addListener("clickGraph", function (event) {
+        chart.addListener("clickGraph", $entry(function (event) {
             handler.@com.haulmont.charts.web.toolkit.ui.client.amcharts.events.GraphClickHandler::onClick(Lcom/haulmont/charts/web/toolkit/ui/client/amcharts/events/JsGraphClickEvent;)(event);
-        });
+        }));
     }-*/;
 
     public void addGraphItemClickHandler(GraphItemClickHandler handler) {
@@ -146,9 +152,9 @@ public class CubaAmchartsJsOverlay {
     }
 
     private static native void addGraphItemClickHandler(JavaScriptObject chart, GraphItemClickHandler handler) /*-{
-        chart.addListener("clickGraphItem", function (event) {
+        chart.addListener("clickGraphItem", $entry(function (event) {
             handler.@com.haulmont.charts.web.toolkit.ui.client.amcharts.events.GraphItemClickHandler::onClick(Lcom/haulmont/charts/web/toolkit/ui/client/amcharts/events/JsGraphItemClickEvent;)(event);
-        });
+        }));
     }-*/;
 
     public void addGraphItemRightClickHandler(GraphItemClickHandler handler) {
@@ -156,11 +162,11 @@ public class CubaAmchartsJsOverlay {
     }
 
     private static native void addGraphItemRightClickHandler(JavaScriptObject chart, GraphItemClickHandler handler) /*-{
-        chart.addListener("rightClickGraphItem", function (event) {
+        chart.addListener("rightClickGraphItem", $entry(function (event) {
             handler.@com.haulmont.charts.web.toolkit.ui.client.amcharts.events.GraphItemClickHandler::onClick(Lcom/haulmont/charts/web/toolkit/ui/client/amcharts/events/JsGraphItemClickEvent;)(event);
 
             event.event.preventDefault();
-        });
+        }));
     }-*/;
 
     public void addZoomHandler(ZoomHandler zoomHandler) {
@@ -168,9 +174,9 @@ public class CubaAmchartsJsOverlay {
     }
 
     private static native void addZoomHandler(JavaScriptObject chart, ZoomHandler handler) /*-{
-        chart.addListener("zoomed", function (event) {
+        chart.addListener("zoomed", $entry(function (event) {
             handler.@com.haulmont.charts.web.toolkit.ui.client.amcharts.events.ZoomHandler::onZoom(Lcom/haulmont/charts/web/toolkit/ui/client/amcharts/events/JsZoomEvent;)(event);
-        });
+        }));
     }-*/;
 
     public void addSliceClickHandler(SliceClickHandler sliceClickHandler) {
@@ -178,9 +184,9 @@ public class CubaAmchartsJsOverlay {
     }
 
     private static native void addSliceClickHandler(JavaScriptObject chart, SliceClickHandler handler) /*-{
-        chart.addListener("clickSlice", function (event) {
+        chart.addListener("clickSlice", $entry(function (event) {
             handler.@com.haulmont.charts.web.toolkit.ui.client.amcharts.events.SliceClickHandler::onEvent(Lcom/haulmont/charts/web/toolkit/ui/client/amcharts/events/JsSliceClickEvent;)(event);
-        });
+        }));
     }-*/;
 
     public void addSliceRightClickHandler(SliceClickHandler sliceRightClickHandler) {
@@ -188,11 +194,11 @@ public class CubaAmchartsJsOverlay {
     }
 
     private static native void addSliceRightClickHandler(JavaScriptObject chart, SliceClickHandler handler) /*-{
-        chart.addListener("rightClickSlice", function (event) {
+        chart.addListener("rightClickSlice", $entry(function (event) {
             handler.@com.haulmont.charts.web.toolkit.ui.client.amcharts.events.SliceClickHandler::onEvent(Lcom/haulmont/charts/web/toolkit/ui/client/amcharts/events/JsSliceClickEvent;)(event);
 
             event.event.preventDefault();
-        });
+        }));
     }-*/;
 
     public void addSlicePullInHandler(SlicePullHandler slicePullInHandler) {
@@ -200,9 +206,9 @@ public class CubaAmchartsJsOverlay {
     }
 
     private static native void addSlicePullInHandler(JavaScriptObject chart, SlicePullHandler handler) /*-{
-        chart.addListener("pullInSlice", function (event) {
+        chart.addListener("pullInSlice", $entry(function (event) {
             handler.@com.haulmont.charts.web.toolkit.ui.client.amcharts.events.SlicePullHandler::onEvent(Lcom/haulmont/charts/web/toolkit/ui/client/amcharts/events/JsSlicePullEvent;)(event);
-        });
+        }));
     }-*/;
 
     public void addSlicePullOutHandler(SlicePullHandler slicePullOutHandler) {
@@ -210,9 +216,9 @@ public class CubaAmchartsJsOverlay {
     }
 
     private static native void addSlicePullOutHandler(JavaScriptObject chart, SlicePullHandler handler)  /*-{
-        chart.addListener("pullOutSlice", function (event) {
+        chart.addListener("pullOutSlice", $entry(function (event) {
             handler.@com.haulmont.charts.web.toolkit.ui.client.amcharts.events.SlicePullHandler::onEvent(Lcom/haulmont/charts/web/toolkit/ui/client/amcharts/events/JsSlicePullEvent;)(event);
-        });
+        }));
     }-*/;
 
     public void addLegendLabelClickHandler(LegendEventHandler legendLabelClickHandler) {
@@ -221,9 +227,9 @@ public class CubaAmchartsJsOverlay {
 
     private native static void addLegendLabelClickHandler(JavaScriptObject chart, LegendEventHandler handler) /*-{
         if (chart.legend) {
-            chart.legend.addListener("clickLabel", function (event) {
+            chart.legend.addListener("clickLabel", $entry(function (event) {
                 handler.@com.haulmont.charts.web.toolkit.ui.client.amcharts.events.LegendEventHandler::onEvent(Lcom/haulmont/charts/web/toolkit/ui/client/amcharts/events/JsLegendEvent;)(event);
-            });
+            }));
         }
     }-*/;
 
@@ -233,9 +239,9 @@ public class CubaAmchartsJsOverlay {
 
     private native static void addLegendMarkerClickHandler(JavaScriptObject chart, LegendEventHandler handler) /*-{
         if (chart.legend) {
-            chart.legend.addListener("clickMarker", function (event) {
+            chart.legend.addListener("clickMarker", $entry(function (event) {
                 handler.@com.haulmont.charts.web.toolkit.ui.client.amcharts.events.LegendEventHandler::onEvent(Lcom/haulmont/charts/web/toolkit/ui/client/amcharts/events/JsLegendEvent;)(event);
-            });
+            }));
         }
     }-*/;
 
@@ -245,9 +251,9 @@ public class CubaAmchartsJsOverlay {
 
     private native static void addLegendItemShowHandler(JavaScriptObject chart, LegendEventHandler handler) /*-{
         if (chart.legend) {
-            chart.legend.addListener("showItem", function (event) {
+            chart.legend.addListener("showItem", $entry(function (event) {
                 handler.@com.haulmont.charts.web.toolkit.ui.client.amcharts.events.LegendEventHandler::onEvent(Lcom/haulmont/charts/web/toolkit/ui/client/amcharts/events/JsLegendEvent;)(event);
-            });
+            }));
         }
     }-*/;
 
@@ -257,9 +263,9 @@ public class CubaAmchartsJsOverlay {
 
     private native static void addLegendItemHideHandler(JavaScriptObject chart, LegendEventHandler handler) /*-{
         if (chart.legend) {
-            chart.legend.addListener("hideItem", function (event) {
+            chart.legend.addListener("hideItem", $entry(function (event) {
                 handler.@com.haulmont.charts.web.toolkit.ui.client.amcharts.events.LegendEventHandler::onEvent(Lcom/haulmont/charts/web/toolkit/ui/client/amcharts/events/JsLegendEvent;)(event);
-            });
+            }));
         }
     }-*/;
 
@@ -269,9 +275,9 @@ public class CubaAmchartsJsOverlay {
 
     private native static void addCursorPeriodSelectHandler(JavaScriptObject chart, CursorEventHandler handler) /*-{
         if (chart.chartCursor) {
-            chart.chartCursor.addListener("selected", function (event) {
+            chart.chartCursor.addListener("selected", $entry(function (event) {
                 handler.@com.haulmont.charts.web.toolkit.ui.client.amcharts.events.CursorEventHandler::onEvent(Lcom/haulmont/charts/web/toolkit/ui/client/amcharts/events/JsCursorEvent;)(event);
-            });
+            }));
         }
     }-*/;
 
@@ -281,9 +287,9 @@ public class CubaAmchartsJsOverlay {
 
     private native static void addCursorZoomHandler(JavaScriptObject chart, CursorEventHandler handler) /*-{
         if (chart.chartCursor) {
-            chart.chartCursor.addListener("zoomed", function (event) {
+            chart.chartCursor.addListener("zoomed", $entry(function (event) {
                 handler.@com.haulmont.charts.web.toolkit.ui.client.amcharts.events.CursorEventHandler::onEvent(Lcom/haulmont/charts/web/toolkit/ui/client/amcharts/events/JsCursorEvent;)(event);
-            });
+            }));
         }
     }-*/;
 
@@ -298,14 +304,14 @@ public class CubaAmchartsJsOverlay {
                 (function () {
                     // store axisId in function scope, prevent reference on mutable variable
                     var axisId = axis.id;
-                    axis.addListener("axisZoomed", function (event) {
+                    axis.addListener("axisZoomed", $entry(function (event) {
                         var axisEvent = {};
                         axisEvent.startValue = event.startValue;
                         axisEvent.endValue = event.endValue;
                         axisEvent.axisId = axisId;
 
                         handler.@com.haulmont.charts.web.toolkit.ui.client.amcharts.events.AxisZoomHandler::onZoom(Lcom/haulmont/charts/web/toolkit/ui/client/amcharts/events/JsAxisZoomedEvent;)(axisEvent);
-                    });
+                    }));
                 })();
             }
         }
