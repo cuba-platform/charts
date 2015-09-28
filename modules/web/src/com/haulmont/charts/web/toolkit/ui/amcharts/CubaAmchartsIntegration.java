@@ -23,9 +23,9 @@ import java.util.Map;
  * @author artamonov
  * @version $Id$
  */
-@JavaScript({"resources/amcharts/amcharts-all.min.js",
-        "resources/amcharts/themes.min.js",
-        "resources/amcharts/exporting.min.js"})
+@JavaScript({"vaadin://resources/amcharts/amcharts-all.min.js",
+        "vaadin://resources/amcharts/themes.min.js",
+        "vaadin://resources/amcharts/exporting.min.js"})
 public class CubaAmchartsIntegration extends AbstractExtension {
 
     private Settings settings;
