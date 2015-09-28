@@ -197,6 +197,11 @@ public class SerialChartLoader<T extends SerialChart> extends RectangularChartLo
                 axis.setTwoLineMode(Boolean.valueOf(twoLineMode));
             }
 
+            String widthField = axisElement.attributeValue("widthField");
+            if (StringUtils.isNotEmpty(widthField)) {
+                axis.setWidthField(widthField);
+            }
+
             chart.setCategoryAxis(axis);
         }
     }

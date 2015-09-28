@@ -49,6 +49,8 @@ public class CategoryAxis extends AbstractAxis<CategoryAxis> {
 
     private Boolean twoLineMode;
 
+    private String widthField;
+
     public Boolean getAutoWrap() {
         return autoWrap;
     }
@@ -189,6 +191,15 @@ public class CategoryAxis extends AbstractAxis<CategoryAxis> {
 
     public CategoryAxis setLabelFunction(JsFunction labelFunction) {
         this.labelFunction = labelFunction;
+        return this;
+    }
+
+    public String getWidthField() {
+        return widthField;
+    }
+
+    public CategoryAxis setWidthField(String widthField) {
+        this.widthField = widthField;
         return this;
     }
 }

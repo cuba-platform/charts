@@ -49,6 +49,8 @@ public class Legend extends AbstractChartObject implements HasMargins<Legend> {
 
     private Boolean forceWidth;
 
+    private Integer gradientRotation;
+
     private Integer horizontalGap;
 
     private String labelText;
@@ -608,6 +610,15 @@ public class Legend extends AbstractChartObject implements HasMargins<Legend> {
 
     public Legend setForceWidth(Boolean forceWidth) {
         this.forceWidth = forceWidth;
+        return this;
+    }
+
+    public Integer getGradientRotation() {
+        return gradientRotation;
+    }
+
+    public Legend setGradientRotation(Integer gradientRotation) {
+        this.gradientRotation = gradientRotation;
         return this;
     }
 }

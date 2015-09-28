@@ -464,6 +464,11 @@ public abstract class AbstractChartLoader<T extends AbstractChart> extends Compo
                 legend.setForceWidth(Boolean.valueOf(forceWidth));
             }
 
+            String gradientRotation = legendElement.attributeValue("gradientRotation");
+            if (StringUtils.isNotEmpty(gradientRotation)) {
+                legend.setGradientRotation(Integer.valueOf(gradientRotation));
+            }
+
             String horizontalGap = legendElement.attributeValue("horizontalGap");
             if (StringUtils.isNotEmpty(horizontalGap)) {
                 legend.setHorizontalGap(Integer.valueOf(horizontalGap));
