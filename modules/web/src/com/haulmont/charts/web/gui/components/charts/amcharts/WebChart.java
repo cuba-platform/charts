@@ -42,8 +42,6 @@ import java.util.*;
  */
 public class WebChart extends WebAbstractComponent<CubaAmchartsScene> implements Chart {
 
-    public static final String AMCHARTS_MESSAGE_PACK = "com.haulmont.charts.gui.amcharts";
-
     public static final String DEFAULT_JS_DATE_FORMAT = "YYYY-MM-DD JJ:NN:SS:QQQ";
 
     protected boolean byDate = false;
@@ -143,59 +141,64 @@ public class WebChart extends WebAbstractComponent<CubaAmchartsScene> implements
 
             Settings settings = new Settings();
 
+            // chart
+            Map<String, List<String>> chartLocaleMap = new LinkedHashMap<>();
+            String localeString = messages.getTools().localeToString(userSessionSource.getLocale());
             // day of week
             List<String> dayNames = new LinkedList<>();
             List<String> shortDayNames = new LinkedList<>();
             for (DayOfWeek day : DayOfWeek.values()) {
-                dayNames.add(messages.getMessage(AMCHARTS_MESSAGE_PACK, "amcharts.dayNames." + day.name()));
-                shortDayNames.add(messages.getMessage(AMCHARTS_MESSAGE_PACK, "amcharts.shortDayNames." + day.name()));
+                dayNames.add(messages.getMainMessage("amcharts.dayNames." + day.name()));
+                shortDayNames.add(messages.getMainMessage("amcharts.shortDayNames." + day.name()));
             }
-            settings.setDayNames(dayNames);
-            settings.setShortDayNames(shortDayNames);
+            chartLocaleMap.put("dayNames", dayNames);
+            chartLocaleMap.put("shortDayNames", shortDayNames);
 
             // months
             List<String> monthNames = new LinkedList<>();
             List<String> shortMonthNames = new LinkedList<>();
             for (Month m : Month.values()) {
-                monthNames.add(messages.getMessage(AMCHARTS_MESSAGE_PACK, "amcharts.monthNames." + m.name()));
-                shortMonthNames.add(messages.getMessage(AMCHARTS_MESSAGE_PACK, "amcharts.shortMonthNames." + m.name()));
+                monthNames.add(messages.getMainMessage("amcharts.monthNames." + m.name()));
+                shortMonthNames.add(messages.getMainMessage("amcharts.shortMonthNames." + m.name()));
             }
-            settings.setMonthNames(monthNames);
-            settings.setShortMonthNames(shortMonthNames);
+            chartLocaleMap.put("monthNames", monthNames);
+            chartLocaleMap.put("shortMonthNames", shortMonthNames);
+
+            amchartsIntegration.setChartMessages(localeString, chartLocaleMap);
 
             // export
-            Map<String, String> localeMap = new LinkedHashMap<>();
-            localeMap.put("fallback.save.text", messages.getMessage(AMCHARTS_MESSAGE_PACK, "fallback.save.text"));
-            localeMap.put("fallback.save.image", messages.getMessage(AMCHARTS_MESSAGE_PACK, "fallback.save.image"));
+            Map<String, String> exportLocaleMap = new LinkedHashMap<>();
+            exportLocaleMap.put("fallback.save.text", messages.getMainMessage("fallback.save.text"));
+            exportLocaleMap.put("fallback.save.image", messages.getMainMessage("fallback.save.image"));
 
-            localeMap.put("capturing.delayed.menu.label", messages.getMessage(AMCHARTS_MESSAGE_PACK, "capturing.delayed.menu.label"));
-            localeMap.put("capturing.delayed.menu.title", messages.getMessage(AMCHARTS_MESSAGE_PACK, "capturing.delayed.menu.title"));
+            exportLocaleMap.put("capturing.delayed.menu.label", messages.getMainMessage("capturing.delayed.menu.label"));
+            exportLocaleMap.put("capturing.delayed.menu.title", messages.getMainMessage("capturing.delayed.menu.title"));
 
-            localeMap.put("menu.label.print", messages.getMessage(AMCHARTS_MESSAGE_PACK, "menu.label.print"));
-            localeMap.put("menu.label.undo", messages.getMessage(AMCHARTS_MESSAGE_PACK, "menu.label.undo"));
-            localeMap.put("menu.label.redo", messages.getMessage(AMCHARTS_MESSAGE_PACK, "menu.label.redo"));
-            localeMap.put("menu.label.cancel", messages.getMessage(AMCHARTS_MESSAGE_PACK, "menu.label.cancel"));
+            exportLocaleMap.put("menu.label.print", messages.getMainMessage("menu.label.print"));
+            exportLocaleMap.put("menu.label.undo", messages.getMainMessage("menu.label.undo"));
+            exportLocaleMap.put("menu.label.redo", messages.getMainMessage("menu.label.redo"));
+            exportLocaleMap.put("menu.label.cancel", messages.getMainMessage("menu.label.cancel"));
 
-            localeMap.put("menu.label.save.image", messages.getMessage(AMCHARTS_MESSAGE_PACK, "menu.label.save.image"));
-            localeMap.put("menu.label.save.data", messages.getMessage(AMCHARTS_MESSAGE_PACK, "menu.label.save.data"));
+            exportLocaleMap.put("menu.label.save.image", messages.getMainMessage("menu.label.save.image"));
+            exportLocaleMap.put("menu.label.save.data", messages.getMainMessage("menu.label.save.data"));
 
-            localeMap.put("menu.label.draw", messages.getMessage(AMCHARTS_MESSAGE_PACK, "menu.label.draw"));
-            localeMap.put("menu.label.draw.change", messages.getMessage(AMCHARTS_MESSAGE_PACK, "menu.label.draw.change"));
-            localeMap.put("menu.label.draw.add", messages.getMessage(AMCHARTS_MESSAGE_PACK, "menu.label.draw.add"));
-            localeMap.put("menu.label.draw.shapes", messages.getMessage(AMCHARTS_MESSAGE_PACK, "menu.label.draw.shapes"));
-            localeMap.put("menu.label.draw.colors", messages.getMessage(AMCHARTS_MESSAGE_PACK, "menu.label.draw.colors"));
-            localeMap.put("menu.label.draw.widths", messages.getMessage(AMCHARTS_MESSAGE_PACK, "menu.label.draw.widths"));
-            localeMap.put("menu.label.draw.opacities", messages.getMessage(AMCHARTS_MESSAGE_PACK, "menu.label.draw.opacities"));
-            localeMap.put("menu.label.draw.text", messages.getMessage(AMCHARTS_MESSAGE_PACK, "menu.label.draw.text"));
+            exportLocaleMap.put("menu.label.draw", messages.getMainMessage("menu.label.draw"));
+            exportLocaleMap.put("menu.label.draw.change", messages.getMainMessage("menu.label.draw.change"));
+            exportLocaleMap.put("menu.label.draw.add", messages.getMainMessage("menu.label.draw.add"));
+            exportLocaleMap.put("menu.label.draw.shapes", messages.getMainMessage("menu.label.draw.shapes"));
+            exportLocaleMap.put("menu.label.draw.colors", messages.getMainMessage("menu.label.draw.colors"));
+            exportLocaleMap.put("menu.label.draw.widths", messages.getMainMessage("menu.label.draw.widths"));
+            exportLocaleMap.put("menu.label.draw.opacities", messages.getMainMessage("menu.label.draw.opacities"));
+            exportLocaleMap.put("menu.label.draw.text", messages.getMainMessage("menu.label.draw.text"));
 
-            localeMap.put("menu.label.draw.modes", messages.getMessage(AMCHARTS_MESSAGE_PACK, "menu.label.draw.modes"));
-            localeMap.put("menu.label.draw.modes.pencil", messages.getMessage(AMCHARTS_MESSAGE_PACK, "menu.label.draw.modes.pencil"));
-            localeMap.put("menu.label.draw.modes.line", messages.getMessage(AMCHARTS_MESSAGE_PACK, "menu.label.draw.modes.line"));
-            localeMap.put("menu.label.draw.modes.arrow", messages.getMessage(AMCHARTS_MESSAGE_PACK, "menu.label.draw.modes.arrow"));
+            exportLocaleMap.put("menu.label.draw.modes", messages.getMainMessage("menu.label.draw.modes"));
+            exportLocaleMap.put("menu.label.draw.modes.pencil", messages.getMainMessage("menu.label.draw.modes.pencil"));
+            exportLocaleMap.put("menu.label.draw.modes.line", messages.getMainMessage("menu.label.draw.modes.line"));
+            exportLocaleMap.put("menu.label.draw.modes.arrow", messages.getMainMessage("menu.label.draw.modes.arrow"));
 
             amchartsIntegration.setSettings(settings);
 
-            amchartsIntegration.setExportMessages(messages.getTools().localeToString(userSessionSource.getLocale()), localeMap);
+            amchartsIntegration.setExportMessages(localeString, exportLocaleMap);
             amchartsIntegration.setLocale(userSessionSource.getLocale());
         }
     }
@@ -876,7 +879,7 @@ public class WebChart extends WebAbstractComponent<CubaAmchartsScene> implements
                     List<BigNumberPrefix> prefixes = new LinkedList<>();
                     for (BigNumberPower power : BigNumberPower.values()) {
                         prefixes.add(new BigNumberPrefix(power,
-                                messages.getMessage(AMCHARTS_MESSAGE_PACK, "amcharts.bigNumberPower." + power.name())));
+                                messages.getMainMessage("amcharts.bigNumberPower." + power.name())));
                     }
                     chart.setPrefixesOfBigNumbers(prefixes);
                 }
@@ -884,7 +887,7 @@ public class WebChart extends WebAbstractComponent<CubaAmchartsScene> implements
                     List<SmallNumberPrefix> prefixes = new LinkedList<>();
                     for (SmallNumberPower power : SmallNumberPower.values()) {
                         prefixes.add(new SmallNumberPrefix(power,
-                                messages.getMessage(AMCHARTS_MESSAGE_PACK, "amcharts.smallNumberPower." + power.name())));
+                                messages.getMainMessage("amcharts.smallNumberPower." + power.name())));
                     }
                     chart.setPrefixesOfSmallNumbers(prefixes);
                 }
@@ -893,13 +896,13 @@ public class WebChart extends WebAbstractComponent<CubaAmchartsScene> implements
 
         protected void setupRectangularChartDefaults(RectangularChart chart) {
             if (chart.getZoomOutText() == null) {
-                chart.setZoomOutText(messages.getMessage(AMCHARTS_MESSAGE_PACK, "amcharts.zoomOutText"));
+                chart.setZoomOutText(messages.getMainMessage("amcharts.zoomOutText"));
             }
 
             Cursor cursor = chart.getChartCursor();
             if (cursor != null) {
                 if (StringUtils.isEmpty(cursor.getCategoryBalloonDateFormat())) {
-                    String format = messages.getMessage(AMCHARTS_MESSAGE_PACK, "amcharts.rectangualrChart.categoryBalloonDateFormat");
+                    String format = messages.getMainMessage("amcharts.rectangualrChart.categoryBalloonDateFormat");
                     cursor.setCategoryBalloonDateFormat(format);
                 }
             }
@@ -926,7 +929,7 @@ public class WebChart extends WebAbstractComponent<CubaAmchartsScene> implements
                     chart.setCategoryAxis(categoryAxis);
                 }
 
-                String firstDayOfWeek = messages.getMessage(AMCHARTS_MESSAGE_PACK, "amcharts.firstDayOfWeek");
+                String firstDayOfWeek = messages.getMainMessage("amcharts.firstDayOfWeek");
                 if (categoryAxis.getFirstDayOfWeek() == null) {
                     categoryAxis.setFirstDayOfWeek(DayOfWeek.valueOf(firstDayOfWeek));
                 }
@@ -941,7 +944,7 @@ public class WebChart extends WebAbstractComponent<CubaAmchartsScene> implements
             }
 
             if (StringUtils.isEmpty(chart.getBalloonDateFormat())) {
-                String format = messages.getMessage(AMCHARTS_MESSAGE_PACK, "amcharts.serialChart.balloonDateFormat");
+                String format = messages.getMainMessage("amcharts.serialChart.balloonDateFormat");
                 chart.setBalloonDateFormat(format);
             }
         }

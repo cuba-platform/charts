@@ -41,7 +41,15 @@ public class CubaAmchartsIntegrationConnector extends AbstractExtensionConnector
             applyOptions(options);
         }
 
-        if (stateChangeEvent.hasPropertyChanged("exportMessages")) {
+        if (stateChangeEvent.hasPropertyChanged("chartMessages") && getState().chartMessages != null) {
+            Map<String, String> chartMessages = getState().chartMessages;
+            for (final Map.Entry<String, String> entry : chartMessages.entrySet()) {
+                JavaScriptObject chartLocalization = JSONParser.parseLenient(entry.getValue()).isObject().getJavaScriptObject();
+                applyChartMessages(entry.getKey(), chartLocalization);
+            }
+        }
+
+        if (stateChangeEvent.hasPropertyChanged("exportMessages") && getState().exportMessages != null) {
             Map<String, String> exportMessages = getState().exportMessages;
             for (final Map.Entry<String, String> entry : exportMessages.entrySet()) {
                 JavaScriptObject exportLocalization = JSONParser.parseLenient(entry.getValue()).isObject().getJavaScriptObject();
@@ -49,6 +57,10 @@ public class CubaAmchartsIntegrationConnector extends AbstractExtensionConnector
             }
         }
     }
+
+    private native void applyChartMessages(String localeCode, JavaScriptObject chartMessages) /*-{
+        $wnd.AmCharts.translations[localeCode] = chartMessages;
+    }-*/;
 
     private native void applyExportMessages(String localeCode, JavaScriptObject exportMessages) /*-{
         $wnd.AmCharts.translations['export'][localeCode] = exportMessages;

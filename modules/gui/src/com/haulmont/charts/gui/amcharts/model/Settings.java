@@ -48,42 +48,6 @@ public class Settings extends AbstractChartObject {
         return this;
     }
 
-    public List<String> getDayNames() {
-        return dayNames;
-    }
-
-    public Settings setDayNames(List<String> dayNames) {
-        this.dayNames = dayNames;
-        return this;
-    }
-
-    public List<String> getMonthNames() {
-        return monthNames;
-    }
-
-    public Settings setMonthNames(List<String> monthNames) {
-        this.monthNames = monthNames;
-        return this;
-    }
-
-    public List<String> getShortDayNames() {
-        return shortDayNames;
-    }
-
-    public Settings setShortDayNames(List<String> shortDayNames) {
-        this.shortDayNames = shortDayNames;
-        return this;
-    }
-
-    public List<String> getShortMonthNames() {
-        return shortMonthNames;
-    }
-
-    public Settings setShortMonthNames(List<String> shortMonthNames) {
-        this.shortMonthNames = shortMonthNames;
-        return this;
-    }
-
     public ChartTheme getTheme() {
         return theme;
     }

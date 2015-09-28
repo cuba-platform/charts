@@ -18,6 +18,9 @@ public class CubaAmchartsIntegrationState extends SharedState {
     public String json;
 
     // key: language; value: messagesMap as json
+    public Map<String, String> chartMessages;
+
+    // key: language; value: messagesMap as json
     public Map<String, String> exportMessages;
 
     public int version = 0;
