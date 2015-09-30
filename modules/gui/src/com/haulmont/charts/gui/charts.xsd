@@ -672,6 +672,7 @@
                 <xs:attribute name="startOnAxis" type="xs:boolean"/>
                 <xs:attribute name="tickPosition" type="xs:string"/>
                 <xs:attribute name="twoLineMode" type="xs:boolean"/>
+                <xs:attribute name="widthField" type="xs:string"/>
             </xs:extension>
         </xs:complexContent>
     </xs:complexType>
@@ -721,6 +722,7 @@
         <xs:attribute name="equalWidths" type="xs:boolean"/>
         <xs:attribute name="fontSize" type="xs:integer"/>
         <xs:attribute name="forceWidth" type="xs:boolean"/>
+        <xs:attribute name="gradientRotation" type="xs:integer"/>
         <xs:attribute name="horizontalGap" type="xs:integer"/>
         <xs:attribute name="labelWidth" type="xs:integer"/>
         <xs:attribute name="labelText" type="xs:string"/>
