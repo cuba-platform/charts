@@ -10,14 +10,14 @@ package com.haulmont.charts.gui.amcharts.model;
  * @version $Id$
  */
 public enum SmallNumberPower implements ChartEnum {
-    MILLI("1e-3"),
-    MICRO("1e-6"),
-    NANO("1e-9"),
-    PICO("1e-12"),
-    FEMTO("1e-15"),
-    ATTO("1e-18"),
+    YOCTO("1e-24"),
     ZEPTO("1e-21"),
-    YOCTO("1e-24");
+    ATTO("1e-18"),
+    FEMTO("1e-15"),
+    PICO("1e-12"),
+    NANO("1e-9"),
+    MICRO("1e-6"),
+    MILLI("1e-3");
 
     private String id;
 
