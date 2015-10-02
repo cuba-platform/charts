@@ -18,21 +18,13 @@ import org.dom4j.Element;
  * @version $Id$
  */
 public class AngularGaugeChartLoader extends AbstractChartLoader<AngularGaugeChart> {
-    public AngularGaugeChartLoader(Context context) {
-        super(context);
-    }
-
     @Override
-    public Chart loadComponent(ComponentsFactory factory, Element element, Component parent) {
-        Chart chart = super.loadComponent(factory, element, parent);
+    public void loadComponent() {
+        super.loadComponent();
 
         AngularGaugeChart configuration = new AngularGaugeChart();
         loadConfiguration(configuration, element);
-        chart.setConfiguration(configuration);
-
-        assignFrame(chart);
-
-        return chart;
+        resultComponent.setConfiguration(configuration);
     }
 
     @Override

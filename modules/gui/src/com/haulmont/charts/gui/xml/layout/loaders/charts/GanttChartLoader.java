@@ -15,12 +15,8 @@ import org.dom4j.Element;
  */
 public class GanttChartLoader extends SerialChartLoader<GanttChart> {
 
-    public GanttChartLoader(Context context) {
-        super(context);
-    }
-
     @Override
-    protected GanttChart getConfiguration() {
+    protected GanttChart createConfiguration() {
         return new GanttChart();
     }
 

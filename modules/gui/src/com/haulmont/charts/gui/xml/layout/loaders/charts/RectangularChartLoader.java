@@ -15,9 +15,6 @@ import org.dom4j.Element;
  * @version $Id$
  */
 public abstract class RectangularChartLoader<T extends RectangularChart> extends CoordinateChartLoader<T> {
-    protected RectangularChartLoader(Context context) {
-        super(context);
-    }
 
     @Override
     protected void loadConfiguration(T chart, Element element) {

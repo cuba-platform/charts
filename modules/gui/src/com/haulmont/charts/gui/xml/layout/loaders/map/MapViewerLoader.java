@@ -11,26 +11,22 @@ import com.haulmont.charts.gui.components.map.MapViewer;
 import com.haulmont.cuba.core.global.AppBeans;
 import com.haulmont.cuba.core.global.Configuration;
 import com.haulmont.cuba.gui.components.Component;
-import com.haulmont.cuba.gui.xml.layout.ComponentsFactory;
-import com.haulmont.cuba.gui.xml.layout.loaders.ComponentLoader;
+import com.haulmont.cuba.gui.xml.layout.loaders.AbstractComponentLoader;
 import org.dom4j.Element;
 
 /**
  * @author korotkov
  * @version $Id$
  */
-public class MapViewerLoader extends ComponentLoader {
-
-    protected MapConfig mapConfig = AppBeans.get(Configuration.class).getConfig(MapConfig.class);
-
-    public MapViewerLoader(Context context) {
-        super(context);
-    }
+public class MapViewerLoader extends AbstractComponentLoader<MapViewer> {
 
     @Override
-    public Component loadComponent(ComponentsFactory factory, Element element, Component parent) {
+    public void createComponent() {
         String vendor = element.attributeValue("vendor");
         if (vendor == null) {
+            Configuration configuration = AppBeans.get(Configuration.NAME);
+            MapConfig mapConfig = configuration.getConfig(MapConfig.class);
+
             vendor = mapConfig.getMapsProvider();
         }
 
@@ -43,23 +39,24 @@ public class MapViewerLoader extends ComponentLoader {
                 throw new IllegalArgumentException("Unknown maps vendor: " + vendor);
         }
 
-        MapViewer mapViewer = (MapViewer) factory.createComponent(componentId);
-
-        loadId(mapViewer, element);
-        loadWidth(mapViewer, element, Component.AUTO_SIZE);
-        loadHeight(mapViewer, element, Component.AUTO_SIZE);
-
-        loadVisible(mapViewer, element);
-        loadEnable(mapViewer, element);
-        loadStyleName(mapViewer, element);
-
-        loadMapType(mapViewer, element);
-
-        assignFrame(mapViewer);
-        return mapViewer;
+        resultComponent = (MapViewer) factory.createComponent(componentId);
+        loadId(resultComponent, element);
     }
 
-    private void loadMapType(MapViewer mapViewer, Element element) {
+    @Override
+    public void loadComponent() {
+        assignFrame(resultComponent);
+        loadWidth(resultComponent, element, Component.AUTO_SIZE);
+        loadHeight(resultComponent, element, Component.AUTO_SIZE);
+
+        loadVisible(resultComponent, element);
+        loadEnable(resultComponent, element);
+        loadStyleName(resultComponent, element);
+
+        loadMapType(resultComponent, element);
+    }
+
+    protected void loadMapType(MapViewer mapViewer, Element element) {
         String mapType = element.attributeValue("mapType");
         if (mapType != null) {
             mapViewer.setMapType(MapViewer.Type.valueOf(mapType.toUpperCase()));

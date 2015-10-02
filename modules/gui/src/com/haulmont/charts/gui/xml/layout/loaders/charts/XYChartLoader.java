@@ -6,9 +6,6 @@
 package com.haulmont.charts.gui.xml.layout.loaders.charts;
 
 import com.haulmont.charts.gui.amcharts.model.charts.XYChart;
-import com.haulmont.charts.gui.components.charts.Chart;
-import com.haulmont.cuba.gui.components.Component;
-import com.haulmont.cuba.gui.xml.layout.ComponentsFactory;
 import org.apache.commons.lang.StringUtils;
 import org.dom4j.Element;
 
@@ -17,21 +14,14 @@ import org.dom4j.Element;
  * @version $Id$
  */
 public class XYChartLoader extends RectangularChartLoader<XYChart> {
-    public XYChartLoader(Context context) {
-        super(context);
-    }
 
     @Override
-    public Chart loadComponent(ComponentsFactory factory, Element element, Component parent) {
-        Chart chart = super.loadComponent(factory, element, parent);
+    public void loadComponent() {
+        super.loadComponent();
 
         XYChart configuration = new XYChart();
         loadConfiguration(configuration, element);
-        chart.setConfiguration(configuration);
-
-        assignFrame(chart);
-
-        return chart;
+        resultComponent.setConfiguration(configuration);
     }
 
     @Override

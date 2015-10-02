@@ -10,9 +10,6 @@ import com.haulmont.charts.gui.amcharts.model.DatePeriod;
 import com.haulmont.charts.gui.amcharts.model.GridPosition;
 import com.haulmont.charts.gui.amcharts.model.JsFunction;
 import com.haulmont.charts.gui.amcharts.model.charts.SerialChart;
-import com.haulmont.charts.gui.components.charts.Chart;
-import com.haulmont.cuba.gui.components.Component;
-import com.haulmont.cuba.gui.xml.layout.ComponentsFactory;
 import org.apache.commons.lang.StringUtils;
 import org.dom4j.Element;
 
@@ -21,30 +18,22 @@ import org.dom4j.Element;
  * @version $Id$
  */
 public class SerialChartLoader<T extends SerialChart> extends RectangularChartLoader<T> {
-    public SerialChartLoader(Context context) {
-        super(context);
-    }
-
     @Override
-    public Chart loadComponent(ComponentsFactory factory, Element element, Component parent) {
-        Chart chart = super.loadComponent(factory, element, parent);
+    public void loadComponent() {
+        super.loadComponent();
 
-        T configuration = getConfiguration();
+        T configuration = createConfiguration();
         loadConfiguration(configuration, element);
-        chart.setConfiguration(configuration);
+        resultComponent.setConfiguration(configuration);
 
         String byDate = element.attributeValue("byDate");
         if (StringUtils.isNotEmpty(byDate)) {
-            chart.setByDate(Boolean.valueOf(byDate));
+            resultComponent.setByDate(Boolean.valueOf(byDate));
         }
-
-        assignFrame(chart);
-
-        return chart;
     }
 
     @SuppressWarnings("unchecked")
-    protected T getConfiguration() {
+    protected T createConfiguration() {
         return (T) new SerialChart();
     }
 

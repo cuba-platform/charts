@@ -12,8 +12,7 @@ import com.haulmont.cuba.gui.GuiDevelopmentException;
 import com.haulmont.cuba.gui.components.Component;
 import com.haulmont.cuba.gui.data.CollectionDatasource;
 import com.haulmont.cuba.gui.data.Datasource;
-import com.haulmont.cuba.gui.xml.layout.ComponentsFactory;
-import com.haulmont.cuba.gui.xml.layout.loaders.ComponentLoader;
+import com.haulmont.cuba.gui.xml.layout.loaders.AbstractComponentLoader;
 import org.apache.commons.lang.StringUtils;
 import org.dom4j.Element;
 
@@ -27,29 +26,28 @@ import java.util.List;
  * @author artamonov
  * @version $Id$
  */
-public abstract class AbstractChartLoader<T extends AbstractChart> extends ComponentLoader {
+public abstract class AbstractChartLoader<T extends AbstractChart> extends AbstractComponentLoader<Chart> {
 
     protected static final String CONFIG_DATE_FORMAT = "yyyy-MM-dd";
 
-    protected AbstractChartLoader(Context context) {
-        super(context);
+    @Override
+    public void createComponent() {
+        resultComponent = (Chart) factory.createComponent(Chart.NAME);
+        loadId(resultComponent, element);
     }
 
     @Override
-    public Chart loadComponent(ComponentsFactory factory, Element element, Component parent) {
-        Chart chart = (Chart) factory.createComponent(Chart.NAME);
+    public void loadComponent() {
+        assignFrame(resultComponent);
 
-        loadId(chart, element);
-        loadWidth(chart, element);
-        loadHeight(chart, element);
+        loadWidth(resultComponent, element);
+        loadHeight(resultComponent, element);
 
-        loadVisible(chart, element);
-        loadEnable(chart, element);
-        loadStyleName(chart, element);
+        loadVisible(resultComponent, element);
+        loadEnable(resultComponent, element);
+        loadStyleName(resultComponent, element);
 
-        loadDatasource(chart, element);
-
-        return chart;
+        loadDatasource(resultComponent, element);
     }
 
     protected void loadDatasource(Chart chart, Element element) {
@@ -1253,7 +1251,7 @@ public abstract class AbstractChartLoader<T extends AbstractChart> extends Compo
             return df.parse(value);
         } catch (ParseException e) {
             throw new GuiDevelopmentException("Unable to parse date from XML chart configuration",
-                        context.getCurrentFrameId(), "date", value);
+                    context.getCurrentFrameId(), "date", value);
         }
     }
 

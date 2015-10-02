@@ -16,10 +16,6 @@ import org.dom4j.Element;
  */
 public abstract class CoordinateChartLoader<T extends CoordinateChart> extends AbstractChartLoader<T> {
 
-    protected CoordinateChartLoader(Context context) {
-        super(context);
-    }
-
     @Override
     protected void loadConfiguration(T chart, Element element) {
         super.loadConfiguration(chart, element);

@@ -18,10 +18,6 @@ import org.dom4j.Element;
  */
 public abstract class SlicedChartLoader<T extends SlicedChart> extends AbstractChartLoader<T> {
 
-    protected SlicedChartLoader(Context context) {
-        super(context);
-    }
-
     @Override
     protected void loadConfiguration(T chart, Element element) {
         super.loadConfiguration(chart, element);
