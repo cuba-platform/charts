@@ -851,6 +851,11 @@ public class WebChart extends WebAbstractComponent<CubaAmchartsScene> implements
                 chart.setLanguage(messages.getTools().localeToString(userSessionSource.getLocale()));
             }
 
+            // export
+            if (chart.getExport() != null && chart.getExport().getDateFormat() == null) {
+                chart.getExport().setDateFormat(messages.getMainMessage("amcharts.export.dateFormat"));
+            }
+
             // number formatting
             FormatStrings formatStrings = Datatypes.getFormatStrings(userSessionSource.getLocale());
             if (formatStrings != null) {

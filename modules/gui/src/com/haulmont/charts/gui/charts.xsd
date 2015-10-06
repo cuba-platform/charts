@@ -420,6 +420,15 @@
         </xs:restriction>
     </xs:simpleType>
 
+    <xs:simpleType name="exportPosition">
+        <xs:restriction base="xs:string">
+            <xs:enumeration value="TOP_LEFT"/>
+            <xs:enumeration value="TOP_RIGHT"/>
+            <xs:enumeration value="BOTTOM_LEFT"/>
+            <xs:enumeration value="BOTTOM_RIGHT"/>
+        </xs:restriction>
+    </xs:simpleType>
+
     <!-- Shared attributes -->
 
     <xs:attributeGroup name="hasMargins">
@@ -483,7 +492,17 @@
                 </xs:complexType>
             </xs:element>
         </xs:all>
+        <xs:attribute name="backgroundColor" type="color"/>
         <xs:attribute name="enabled" type="xs:boolean"/>
+        <xs:attribute name="fileName" type="xs:string"/>
+        <xs:attribute name="position" type="exportPosition"/>
+        <xs:attribute name="removeImages" type="xs:boolean"/>
+        <xs:attribute name="exportTitles" type="xs:boolean"/>
+        <xs:attribute name="exportSelection" type="xs:boolean"/>
+        <xs:attribute name="dataDateFormat" type="xs:date"/>
+        <xs:attribute name="dateFormat" type="xs:date"/>
+        <xs:attribute name="keyListener" type="xs:boolean"/>
+        <xs:attribute name="fileListener" type="xs:boolean"/>
     </xs:complexType>
 
     <xs:complexType name="gaugeAxis">

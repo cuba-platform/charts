@@ -379,6 +379,56 @@ public abstract class AbstractChartLoader<T extends AbstractChart> extends Abstr
                 export.setLibs(libs);
             }
 
+            String backgroundColor = exportElement.attributeValue("backgroundColor");
+            if (StringUtils.isNotEmpty(backgroundColor)) {
+                export.setBackgroundColor(Color.valueOf(backgroundColor));
+            }
+
+            String fileName = exportElement.attributeValue("fileName");
+            if (StringUtils.isNotEmpty(fileName)) {
+                export.setFileName(fileName);
+            }
+
+            String position = exportElement.attributeValue("position");
+            if (StringUtils.isNotEmpty(position)) {
+                export.setPosition(ExportPosition.valueOf(position));
+            }
+
+            String removeImages = exportElement.attributeValue("removeImages");
+            if (StringUtils.isNotEmpty(removeImages)) {
+                export.setRemoveImages(Boolean.valueOf(removeImages));
+            }
+
+            String exportTitles = exportElement.attributeValue("exportTitles");
+            if (StringUtils.isNotEmpty(exportTitles)) {
+                export.setExportTitles(Boolean.valueOf(exportTitles));
+            }
+
+            String exportSelection = exportElement.attributeValue("exportSelection");
+            if (StringUtils.isNotEmpty(exportSelection)) {
+                export.setExportSelection(Boolean.valueOf(exportSelection));
+            }
+
+            String dataDateFormat = exportElement.attributeValue("dataDateFormat");
+            if (StringUtils.isNotEmpty(dataDateFormat)) {
+                export.setDataDateFormat(dataDateFormat);
+            }
+
+            String dateFormat = exportElement.attributeValue("dateFormat");
+            if (StringUtils.isNotEmpty(dateFormat)) {
+                export.setDateFormat(dateFormat);
+            }
+
+            String keyListener = exportElement.attributeValue("keyListener");
+            if (StringUtils.isNotEmpty(keyListener)) {
+                export.setKeyListener(Boolean.valueOf(keyListener));
+            }
+
+            String fileListener = exportElement.attributeValue("fileListener");
+            if (StringUtils.isNotEmpty(fileListener)) {
+                export.setFileListener(Boolean.valueOf(fileListener));
+            }
+
             chart.setExport(export);
         }
     }
