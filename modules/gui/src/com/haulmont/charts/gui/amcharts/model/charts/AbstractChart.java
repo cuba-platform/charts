@@ -109,7 +109,7 @@ public abstract class AbstractChart<T extends AbstractChartObject> extends Abstr
 
     private List<Title> titles;
 
-    private final ChartType type;
+    private ChartType type;
 
     private Boolean usePrefixes;
 
@@ -118,6 +118,9 @@ public abstract class AbstractChart<T extends AbstractChartObject> extends Abstr
 
     protected AbstractChart(ChartType type) {
         this.type = type;
+    }
+
+    protected AbstractChart() {
     }
 
     public Boolean getAddClassNames() {

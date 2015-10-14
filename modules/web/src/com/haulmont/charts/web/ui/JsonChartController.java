@@ -4,7 +4,7 @@
  */
 package com.haulmont.charts.web.ui;
 
-import com.haulmont.charts.gui.amcharts.model.charts.PieChart;
+import com.haulmont.charts.gui.amcharts.model.charts.AbstractChart;
 import com.haulmont.charts.gui.components.charts.Chart;
 import com.haulmont.charts.web.toolkit.ui.amcharts.CubaAmchartsScene;
 import com.haulmont.cuba.gui.WindowParam;
@@ -36,9 +36,16 @@ public class JsonChartController extends AbstractFrame {
         chart.setWidth("100%");
 
         CubaAmchartsScene cubaAmchartsScene = (CubaAmchartsScene) WebComponentsHelper.unwrap(chart);
-        cubaAmchartsScene.drawChart(new PieChart());
+        cubaAmchartsScene.drawChart(new CustomChart());
         cubaAmchartsScene.setJson(chartJson);
 
         add(chart);
+    }
+
+    /**
+     * Used for default initialization in
+     * {@link com.haulmont.charts.web.gui.components.charts.amcharts.WebChart.CubaAmchartsSceneExt#setupDefaults(AbstractChart)}}
+     */
+    protected static class CustomChart extends AbstractChart {
     }
 }
