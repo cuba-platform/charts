@@ -90,6 +90,8 @@ public class ValueAxis extends AbstractAxis<ValueAxis> {
 
     private Boolean useScientificNotation;
 
+    private Double zeroGridAlpha;
+
     public Integer getAxisTitleOffset() {
         return axisTitleOffset;
     }
@@ -402,6 +404,15 @@ public class ValueAxis extends AbstractAxis<ValueAxis> {
 
     public ValueAxis setType(ValueAxisType type) {
         this.type = type;
+        return this;
+    }
+
+    public Double getZeroGridAlpha() {
+        return zeroGridAlpha;
+    }
+
+    public ValueAxis setZeroGridAlpha(Double zeroGridAlpha) {
+        this.zeroGridAlpha = zeroGridAlpha;
         return this;
     }
 }

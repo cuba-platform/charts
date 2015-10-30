@@ -850,6 +850,7 @@
                 <xs:attribute name="unitPosition" type="unitPosition"/>
                 <xs:attribute name="usePrefixes" type="xs:boolean"/>
                 <xs:attribute name="useScientificNotation" type="xs:boolean"/>
+                <xs:attribute name="zeroGridAlpha" type="xs:double"/>
             </xs:extension>
         </xs:complexContent>
     </xs:complexType>

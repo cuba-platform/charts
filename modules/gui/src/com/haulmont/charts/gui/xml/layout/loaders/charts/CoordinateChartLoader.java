@@ -769,6 +769,11 @@ public abstract class CoordinateChartLoader<T extends CoordinateChart> extends A
             axis.setUseScientificNotation(Boolean.valueOf(useScientificNotation));
         }
 
+        String zeroGridAlpha = valueAxisElement.attributeValue("zeroGridAlpha");
+        if (StringUtils.isNotEmpty(zeroGridAlpha)) {
+            axis.setZeroGridAlpha(Double.valueOf(zeroGridAlpha));
+        }
+
         return axis;
     }
 

@@ -142,7 +142,7 @@ public class WebChart extends WebAbstractComponent<CubaAmchartsScene> implements
             Settings settings = new Settings();
 
             // chart
-            Map<String, List<String>> chartLocaleMap = new LinkedHashMap<>();
+            Map<String, Object> chartLocaleMap = new LinkedHashMap<>();
             String localeString = messages.getTools().localeToString(userSessionSource.getLocale());
             // day of week
             List<String> dayNames = new LinkedList<>();
@@ -163,6 +163,10 @@ public class WebChart extends WebAbstractComponent<CubaAmchartsScene> implements
             }
             chartLocaleMap.put("monthNames", monthNames);
             chartLocaleMap.put("shortMonthNames", shortMonthNames);
+
+            // formatting time
+            chartLocaleMap.put("am", messages.getMainMessage("amcharts.am"));
+            chartLocaleMap.put("pm", messages.getMainMessage("amcharts.pm"));
 
             amchartsIntegration.setChartMessages(localeString, chartLocaleMap);
 

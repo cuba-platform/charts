@@ -5,10 +5,7 @@
 
 package com.haulmont.charts.web.toolkit.ui.amcharts;
 
-import com.google.gson.Gson;
-import com.google.gson.JsonArray;
-import com.google.gson.JsonObject;
-import com.google.gson.JsonPrimitive;
+import com.google.gson.*;
 import com.haulmont.charts.gui.amcharts.model.Settings;
 import com.haulmont.charts.web.toolkit.ui.client.amcharts.CubaAmchartsIntegrationState;
 import com.vaadin.annotations.JavaScript;
@@ -63,18 +60,25 @@ public class CubaAmchartsIntegration extends AbstractExtension {
         return Collections.unmodifiableMap(localeMap);
     }
 
-    public void setChartMessages(String localeCode, Map<String, List<String>> localeMap) {
+    public void setChartMessages(String localeCode, Map<String, Object> localeMap) {
         if (getState(false).chartMessages == null) {
             getState().chartMessages = new HashMap<>();
         }
 
         JsonObject jsonLocaleMap = new JsonObject();
-        for (Map.Entry<String, List<String>> localeEntry : localeMap.entrySet()) {
-            JsonArray array = new JsonArray();
-            for (String value : localeEntry.getValue()) {
-                array.add(new JsonPrimitive(value));
+        for (Map.Entry<String, Object> localeEntry : localeMap.entrySet()) {
+            JsonElement element;
+            if (localeEntry.getValue() instanceof List) {
+                List list = (List) localeEntry.getValue();
+                JsonArray array = new JsonArray();
+                for (Object value : list) {
+                    array.add(new JsonPrimitive((String) value));
+                }
+                element = array;
+            } else {
+                element = new JsonPrimitive((String) localeEntry.getValue());
             }
-            jsonLocaleMap.add(localeEntry.getKey(), array);
+            jsonLocaleMap.add(localeEntry.getKey(), element);
         }
 
         getState().chartMessages.put(localeCode, jsonLocaleMap.toString());
