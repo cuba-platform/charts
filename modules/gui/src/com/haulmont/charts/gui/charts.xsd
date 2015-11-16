@@ -277,10 +277,8 @@
 
     <xs:simpleType name="gradientOrientation">
         <xs:restriction base="xs:string">
-            <xs:enumeration value="JPG"/>
-            <xs:enumeration value="PNG"/>
-            <xs:enumeration value="SVG"/>
-            <xs:enumeration value="PDF"/>
+            <xs:enumeration value="VERTICAL"/>
+            <xs:enumeration value="HORIZONTAL"/>
         </xs:restriction>
     </xs:simpleType>
 
@@ -688,6 +686,7 @@
                 <xs:attribute name="labelColorField" type="xs:string"/>
                 <xs:attribute name="markPeriodChange" type="xs:boolean"/>
                 <xs:attribute name="minPeriod" type="datePeriod"/>
+                <xs:attribute name="parseDates" type="xs:boolean"/>
                 <xs:attribute name="startOnAxis" type="xs:boolean"/>
                 <xs:attribute name="tickPosition" type="xs:string"/>
                 <xs:attribute name="twoLineMode" type="xs:boolean"/>
