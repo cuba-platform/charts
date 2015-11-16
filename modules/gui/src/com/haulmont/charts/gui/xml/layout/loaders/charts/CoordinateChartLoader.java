@@ -604,6 +604,11 @@ public abstract class CoordinateChartLoader<T extends CoordinateChart> extends A
 
         loadAbstractAxis(axis, valueAxisElement);
 
+        String id = valueAxisElement.attributeValue("id");
+        if (StringUtils.isNotEmpty(id)) {
+            axis.setId(id);
+        }
+
         String labelFunction = valueAxisElement.elementText("labelFunction");
         if (StringUtils.isNotBlank(labelFunction)) {
             axis.setLabelFunction(new JsFunction(labelFunction));
