@@ -173,7 +173,7 @@ public class SerialChartLoader<T extends SerialChart> extends RectangularChartLo
 
             String parseDates = axisElement.attributeValue("parseDates");
             if (StringUtils.isNotEmpty(parseDates)) {
-                axis.setStartOnAxis(Boolean.valueOf(parseDates));
+                axis.setParseDates(Boolean.valueOf(parseDates));
             }
 
             String startOnAxis = axisElement.attributeValue("startOnAxis");
