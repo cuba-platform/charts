@@ -20,6 +20,7 @@ import com.haulmont.charts.gui.map.model.listeners.centerchange.CircleCenterChan
 import com.haulmont.charts.gui.map.model.listeners.click.CircleClickListener;
 import com.haulmont.charts.gui.map.model.listeners.click.MapClickListener;
 import com.haulmont.charts.gui.map.model.listeners.click.MarkerClickListener;
+import com.haulmont.charts.gui.map.model.listeners.click.PolygonClickListener;
 import com.haulmont.charts.gui.map.model.listeners.doubleclick.CircleDoubleClickListener;
 import com.haulmont.charts.gui.map.model.listeners.doubleclick.MarkerDoubleClickListener;
 import com.haulmont.charts.gui.map.model.listeners.drag.MarkerDragListener;
@@ -88,6 +89,9 @@ public interface MapViewer extends Component, Component.BelongToFrame, Component
 
     void addPolygonEditListener(PolygonEditListener listener);
     void removePolygonEditListener(PolygonEditListener listener);
+
+    void addPolygonClickListener(PolygonClickListener listener);
+    void removePolygonClickListener(PolygonClickListener listener);
 
     void addMapInitListener(MapInitListener listener);
     void removeMapInitListener(MapInitListener listener);

@@ -23,6 +23,7 @@ import com.haulmont.charts.gui.map.model.listeners.centerchange.CircleCenterChan
 import com.haulmont.charts.gui.map.model.listeners.click.CircleClickListener;
 import com.haulmont.charts.gui.map.model.listeners.click.MapClickListener;
 import com.haulmont.charts.gui.map.model.listeners.click.MarkerClickListener;
+import com.haulmont.charts.gui.map.model.listeners.click.PolygonClickListener;
 import com.haulmont.charts.gui.map.model.listeners.doubleclick.CircleDoubleClickListener;
 import com.haulmont.charts.gui.map.model.listeners.doubleclick.MarkerDoubleClickListener;
 import com.haulmont.charts.gui.map.model.listeners.drag.MarkerDragListener;
@@ -92,6 +93,9 @@ public class WebGoogleMapViewer extends WebAbstractComponent<GoogleMap> implemen
 
     protected List<PolygonEditListener> polygonEditListeners;
     protected com.vaadin.tapio.googlemaps.client.events.PolygonEditListener polygonEditHandler;
+
+    protected List<PolygonClickListener> polygonClickListeners;
+    protected com.vaadin.tapio.googlemaps.client.events.click.PolygonClickListener polygonClickHandler;
 
     protected List<MapInitListener> mapInitListeners;
     protected com.vaadin.tapio.googlemaps.client.events.MapInitListener mapInitHandler;
@@ -513,6 +517,42 @@ public class WebGoogleMapViewer extends WebAbstractComponent<GoogleMap> implemen
                 mapClickHandler = null;
                 mapClickListeners = null;
             }
+        }
+    }
+
+    @Override
+    public void removePolygonClickListener(PolygonClickListener listener) {
+        if (polygonClickListeners != null) {
+            polygonClickListeners.remove(listener);
+
+            if (polygonClickListeners.isEmpty()) {
+                component.removePolygonClickListener(polygonClickHandler);
+                polygonClickHandler = null;
+                polygonClickListeners = null;
+            }
+        }
+    }
+
+    @Override
+    public void addPolygonClickListener(PolygonClickListener listener) {
+        if (polygonClickListeners == null) {
+            polygonClickListeners = new ArrayList<>();
+            polygonClickListeners.add(listener);
+
+            polygonClickHandler = new com.vaadin.tapio.googlemaps.client.events.click.PolygonClickListener() {
+                @Override
+                public void polygonClicked(GoogleMapPolygon polygon) {
+                    PolygonClickListener.PolygonClickEvent event =
+                            new PolygonClickListener.PolygonClickEvent(new PolygonDelegate(polygon));
+                    for (PolygonClickListener l : new ArrayList<>(polygonClickListeners)) {
+                        l.onClick(event);
+                    }
+                }
+            };
+
+            component.addPolygonClickListener(polygonClickHandler);
+        } else {
+            polygonClickListeners.add(listener);
         }
     }
 
