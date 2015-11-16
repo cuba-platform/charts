@@ -140,8 +140,8 @@ public class WebGoogleMapViewer extends WebAbstractComponent<GoogleMap> implemen
             }
         };
 
-        component = new GoogleMap(new LatLon(mapConfig.getDefLatitude(), mapConfig.getDefLongitude()), 8,
-                apiOrClientId, mapInitHandler);
+        component = new GoogleMap(new LatLon(mapConfig.getDefLatitude(), mapConfig.getDefLongitude()),
+                mapConfig.getDefZoom().intValue(), apiOrClientId, mapInitHandler);
     }
 
     @Override

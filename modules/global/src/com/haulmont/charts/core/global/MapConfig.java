@@ -43,7 +43,7 @@ public interface MapConfig extends Config {
     void setUseBusinessApiKey(boolean value);
 
     @Property("cuba.charts.map.defaultZoom")
-    @DefaultDouble(13.0)
+    @DefaultDouble(8.0)
     Double getDefZoom();
     void setDefZoom(Double defZoom);
 
