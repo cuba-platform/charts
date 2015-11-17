@@ -443,6 +443,16 @@ public abstract class AbstractAxis<T extends AbstractAxis> extends AbstractChart
         return (T) this;
     }
 
+    public T addDateFormats(DateFormat... dateFormats) {
+        if (dateFormats != null) {
+            if (this.dateFormats == null) {
+                this.dateFormats = new ArrayList<>();
+            }
+            this.dateFormats.addAll(Arrays.asList(dateFormats));
+        }
+        return (T) this;
+    }
+
     public Integer getMinorTickLength() {
         return minorTickLength;
     }

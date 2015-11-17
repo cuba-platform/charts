@@ -76,6 +76,13 @@ public abstract class CoordinateChartLoader<T extends CoordinateChart> extends A
     protected Graph loadGraph(Element graphElement) {
         Graph graph = new Graph();
 
+        Element dateFormatElement = element.element("dateFormat");
+        if (dateFormatElement != null) {
+            DateFormat dateFormat = new DateFormat();
+            loadDateFormat(dateFormat, dateFormatElement);
+            graph.setDateFormat(dateFormat);
+        }
+
         String balloonFunction = graphElement.elementText("balloonFunction");
         if (StringUtils.isNotEmpty(balloonFunction)) {
             graph.setBalloonFunction(new JsFunction(balloonFunction));

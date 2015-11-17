@@ -930,6 +930,7 @@ public abstract class AbstractChartLoader<T extends AbstractChart> extends Abstr
 
     protected void loadAbstractAxis(AbstractAxis axis, Element element) {
         loadGuides(axis, element);
+        loadDateFormats(axis, element);
 
         String autoGridCount = element.attributeValue("autoGridCount");
         if (StringUtils.isNotEmpty(autoGridCount)) {
@@ -1114,6 +1115,33 @@ public abstract class AbstractChartLoader<T extends AbstractChart> extends Abstr
         String titleRotation = element.attributeValue("titleRotation");
         if (StringUtils.isNotEmpty(titleRotation)) {
             axis.setTitleRotation(Integer.valueOf(titleRotation));
+        }
+    }
+
+    protected void loadDateFormats(AbstractAxis axis, Element element) {
+        Element dateFormatsElement = element.element("dateFormats");
+        if (dateFormatsElement != null) {
+            for (Object dateFormatItem : dateFormatsElement.elements("dateFormat")) {
+                Element dateFormatElement = (Element) dateFormatItem;
+
+                DateFormat dateFormat = new DateFormat();
+
+                loadDateFormat(dateFormat, dateFormatElement);
+
+                axis.addDateFormats(dateFormat);
+            }
+        }
+    }
+
+    protected void loadDateFormat(DateFormat dateFormat, Element dateFormatElement) {
+        String period = dateFormatElement.attributeValue("period");
+        if (StringUtils.isNotEmpty(period)) {
+            dateFormat.setPeriod(DatePeriod.valueOf(period));
+        }
+
+        String format = dateFormatElement.attributeValue("format");
+        if (StringUtils.isNotEmpty(format)) {
+            dateFormat.setFormat(format);
         }
     }
 

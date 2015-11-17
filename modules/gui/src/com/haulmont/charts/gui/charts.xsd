@@ -589,6 +589,11 @@
         <xs:attribute name="value" type="xs:double"/>
     </xs:complexType>
 
+    <xs:complexType name="dateFormat">
+        <xs:attribute name="format" type="xs:string"/>
+        <xs:attribute name="period" type="datePeriod"/>
+    </xs:complexType>
+
     <xs:complexType name="guide">
         <xs:attribute name="above" type="xs:boolean"/>
         <xs:attribute name="angle" type="xs:integer"/>
@@ -626,6 +631,13 @@
                 <xs:complexType>
                     <xs:sequence minOccurs="0" maxOccurs="1">
                         <xs:element name="guide" minOccurs="0" maxOccurs="unbounded" type="guide"/>
+                    </xs:sequence>
+                </xs:complexType>
+            </xs:element>
+            <xs:element name="dateFormats" minOccurs="0" maxOccurs="1">
+                <xs:complexType>
+                    <xs:sequence minOccurs="0" maxOccurs="1">
+                        <xs:element name="dateFormat" minOccurs="0" maxOccurs="unbounded" type="dateFormat"/>
                     </xs:sequence>
                 </xs:complexType>
             </xs:element>
@@ -989,6 +1001,7 @@
         <xs:attribute name="customBulletField" type="xs:string"/>
         <xs:attribute name="customMarker" type="xs:string"/>
         <xs:attribute name="dashLength" type="xs:integer"/>
+        <xs:attribute name="dateFormat" type="dateFormat"/>
         <xs:attribute name="dashLengthField" type="xs:string"/>
         <xs:attribute name="descriptionField" type="xs:string"/>
         <xs:attribute name="errorField" type="xs:string"/>
