@@ -153,16 +153,12 @@ configure(chartsWebToolkitModule) {
     }
 
     task webArchive(dependsOn: buildWidgetSet, type: Zip) {
-        from file('web')
         from file("$buildDir/web")
-        exclude '**/web.xml', '**/app.properties'
         classifier = 'web'
     }
 
     task webDebugArchive(dependsOn: buildDebugWidgetSet, type: Zip) {
-        from file('web')
-        from file("$buildDir/web")
-        exclude '**/web.xml', '**/app.properties'
+        from file("$buildDir/web-debug")
         classifier = 'debug'
     }
 
