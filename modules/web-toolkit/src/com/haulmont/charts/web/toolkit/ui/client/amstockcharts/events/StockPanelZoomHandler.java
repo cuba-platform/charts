@@ -9,7 +9,7 @@ package com.haulmont.charts.web.toolkit.ui.client.amstockcharts.events;
  * @author gorelov
  * @version $Id$
  */
-public interface StockZoomHandler {
+public interface StockPanelZoomHandler {
 
-    void onZoom(JsStockZoomEvent event);
+    void onZoom(JsStockPanelZoomEvent event);
 }

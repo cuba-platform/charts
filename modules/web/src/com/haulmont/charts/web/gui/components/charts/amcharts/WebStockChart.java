@@ -56,8 +56,8 @@ public class WebStockChart extends WebAbstractComponent<CubaAmStockChartScene> i
     protected List<StockEventRollOverListener> stockEventRollOverListeners;
     protected com.haulmont.charts.web.toolkit.ui.amcharts.events.StockEventRollOverListener stockEventRollOverHandler;
 
-    protected List<StockZoomListener> stockZoomListeners;
-    protected com.haulmont.charts.web.toolkit.ui.amcharts.events.StockZoomListener stockZoomHandler;
+    protected List<ZoomListener> zoomListeners;
+    protected com.haulmont.charts.web.toolkit.ui.amcharts.events.StockPanelZoomListener stockPanelZoomHandler;
 
     protected List<PeriodSelectorChangeListener> periodSelectorChangeListeners;
     protected com.haulmont.charts.web.toolkit.ui.amcharts.events.PeriodSelectorChangeListener periodSelectorChangeHandler;
@@ -353,31 +353,31 @@ public class WebStockChart extends WebAbstractComponent<CubaAmStockChartScene> i
     }
 
     @Override
-    public void addZoomListener(StockZoomListener zoomListener) {
-        if (stockZoomListeners == null) {
-            stockZoomListeners = new LinkedList<>();
-            stockZoomHandler = e -> {
-                StockZoomEvent cubaEvent = new StockZoomEvent(e.getStartDate(), e.getEndDate(), e.getPeriod());
+    public void addZoomListener(ZoomListener zoomListener) {
+        if (zoomListeners == null) {
+            zoomListeners = new LinkedList<>();
+            stockPanelZoomHandler = e -> {
+                ZoomEvent cubaEvent = new ZoomEvent(e.getStartDate(), e.getEndDate(), e.getPeriod());
 
-                for (StockZoomListener listener : new ArrayList<>(stockZoomListeners)) {
+                for (ZoomListener listener : new ArrayList<>(zoomListeners)) {
                     listener.onZoom(cubaEvent);
                 }
             };
-            component.addStockZoomListener(stockZoomHandler);
+            component.addStockPanelZoomListener(stockPanelZoomHandler);
         }
-        if (!stockZoomListeners.contains(zoomListener)) {
-            stockZoomListeners.add(zoomListener);
+        if (!zoomListeners.contains(zoomListener)) {
+            zoomListeners.add(zoomListener);
         }
     }
 
     @Override
-    public void removeZoomListener(StockZoomListener zoomListener) {
-        if (stockZoomListeners != null) {
-            stockZoomListeners.remove(zoomListener);
-            if (stockZoomListeners.isEmpty()) {
-                component.removeStockZoomListener(stockZoomHandler);
-                stockZoomHandler = null;
-                stockZoomListeners = null;
+    public void removeZoomListener(ZoomListener zoomListener) {
+        if (zoomListeners != null) {
+            zoomListeners.remove(zoomListener);
+            if (zoomListeners.isEmpty()) {
+                component.removeStockPanelZoomListener(stockPanelZoomHandler);
+                stockPanelZoomHandler = null;
+                zoomListeners = null;
             }
         }
     }

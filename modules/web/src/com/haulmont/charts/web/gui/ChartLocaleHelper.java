@@ -16,7 +16,10 @@ import java.util.*;
  * @author gorelov
  * @version $Id$
  */
-public class ChartLocaleHelper {
+public final class ChartLocaleHelper {
+
+    private ChartLocaleHelper() {
+    }
 
     public static Map<String, Object> getChartLocaleMap(Locale locale) {
 

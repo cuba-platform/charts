@@ -5,7 +5,7 @@
 
 package com.haulmont.charts.web.toolkit.ui.amcharts.events;
 
-import com.vaadin.ui.AbstractComponent;
+import com.haulmont.charts.web.toolkit.ui.amcharts.CubaAmStockChartScene;
 import com.vaadin.ui.Component;
 
 /**
@@ -19,7 +19,7 @@ public class StockChartClickEvent extends Component.Event {
     private final int absoluteX;
     private final int absoluteY;
 
-    public StockChartClickEvent(AbstractComponent source, int x, int y, int absoluteX, int absoluteY) {
+    public StockChartClickEvent(CubaAmStockChartScene source, int x, int y, int absoluteX, int absoluteY) {
         super(source);
         this.x = x;
         this.y = y;

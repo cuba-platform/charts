@@ -100,13 +100,13 @@ public class CubaAmStockChartJsOverlay {
         }));
     }-*/;
 
-    public void addStockZoomHandler(StockZoomHandler handler) {
+    public void addStockPanelZoomHandler(StockPanelZoomHandler handler) {
         addStockZoomHandler(chart, handler);
     }
 
-    private static native void addStockZoomHandler(JavaScriptObject chart, StockZoomHandler handler) /*-{
+    private static native void addStockZoomHandler(JavaScriptObject chart, StockPanelZoomHandler handler) /*-{
         chart.addListener("zoomed", $entry(function (event) {
-            handler.@com.haulmont.charts.web.toolkit.ui.client.amstockcharts.events.StockZoomHandler::onZoom(Lcom/haulmont/charts/web/toolkit/ui/client/amstockcharts/events/JsStockZoomEvent;)(event);
+            handler.@com.haulmont.charts.web.toolkit.ui.client.amstockcharts.events.StockPanelZoomHandler::onZoom(Lcom/haulmont/charts/web/toolkit/ui/client/amstockcharts/events/JsStockPanelZoomEvent;)(event);
         }));
     }-*/;
 

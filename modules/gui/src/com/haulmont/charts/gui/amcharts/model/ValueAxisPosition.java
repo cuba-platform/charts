@@ -9,13 +9,13 @@ package com.haulmont.charts.gui.amcharts.model;
  * @author gorelov
  * @version $Id$
  */
-public enum ValueAxesPosition implements ChartEnum {
+public enum ValueAxisPosition implements ChartEnum {
     LEFT("left"),
     RIGHT("right");
 
     private String id;
 
-    ValueAxesPosition(String id) {
+    ValueAxisPosition(String id) {
         this.id = id;
     }
 

@@ -63,7 +63,7 @@ public class ValueAxesSettings extends AbstractChartObject {
 
     private Integer offset;
 
-    private ValueAxesPosition position;
+    private ValueAxisPosition position;
 
     private Boolean reversed;
 
@@ -286,11 +286,11 @@ public class ValueAxesSettings extends AbstractChartObject {
         return this;
     }
 
-    public ValueAxesPosition getPosition() {
+    public ValueAxisPosition getPosition() {
         return position;
     }
 
-    public ValueAxesSettings setPosition(ValueAxesPosition position) {
+    public ValueAxesSettings setPosition(ValueAxisPosition position) {
         this.position = position;
         return this;
     }

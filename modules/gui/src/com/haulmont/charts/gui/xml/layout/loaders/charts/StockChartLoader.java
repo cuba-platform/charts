@@ -1538,7 +1538,7 @@ public class StockChartLoader extends AbstractComponentLoader<StockChart> {
 
             String position = valueAxesSettingsElement.attributeValue("position");
             if (StringUtils.isNotEmpty(position)) {
-                valueAxesSettings.setPosition(ValueAxesPosition.valueOf(position));
+                valueAxesSettings.setPosition(ValueAxisPosition.valueOf(position));
             }
 
             String reversed = valueAxesSettingsElement.attributeValue("reversed");

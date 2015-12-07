@@ -88,8 +88,8 @@ public class CubaAmStockChartSceneWidget extends Widget {
             jsOverlay.addStockEventRollOverHandler(amStockChartEvents.getStockEventRollOverHandler());
         }
 
-        if (amStockChartEvents.getStockZoomHandler() != null) {
-            jsOverlay.addStockZoomHandler(amStockChartEvents.getStockZoomHandler());
+        if (amStockChartEvents.getStockPanelZoomHandler() != null) {
+            jsOverlay.addStockPanelZoomHandler(amStockChartEvents.getStockPanelZoomHandler());
         }
 
         if (amStockChartEvents.getPeriodSelectorChangeHandler() != null) {

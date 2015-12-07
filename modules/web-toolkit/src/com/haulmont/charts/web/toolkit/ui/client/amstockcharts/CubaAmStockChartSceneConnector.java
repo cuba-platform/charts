@@ -93,9 +93,9 @@ public class CubaAmStockChartSceneConnector extends AbstractComponentConnector {
             bindStockGraphItemEvents(amStockChartEvents, events);
 
             if (events.contains(CubaAmStockChartSceneState.STOCK_ZOOM_EVENT)) {
-                amStockChartEvents.setStockZoomHandler(new StockZoomHandler() {
+                amStockChartEvents.setStockPanelZoomHandler(new StockPanelZoomHandler() {
                     @Override
-                    public void onZoom(JsStockZoomEvent event) {
+                    public void onZoom(JsStockPanelZoomEvent event) {
                         rpc.onZoom(JsDate.toJava(event.getStartDate()), JsDate.toJava(event.getEndDate()), event.getPeriod());
                     }
                 });

@@ -12,9 +12,9 @@ import com.haulmont.cuba.web.toolkit.ui.client.JsDate;
  * @author gorelov
  * @version $Id$
  */
-public class JsStockZoomEvent extends JavaScriptObject {
+public class JsStockPanelZoomEvent extends JavaScriptObject {
 
-    protected JsStockZoomEvent() {
+    protected JsStockPanelZoomEvent() {
     }
 
     public final native String getPeriod() /*-{

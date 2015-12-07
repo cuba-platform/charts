@@ -44,8 +44,8 @@ public interface StockChart extends Component, Component.BelongToFrame, Componen
     void addStockEventRollOverListener(StockEventRollOverListener rollOverListener);
     void removeStockEventRollOverListener(StockEventRollOverListener rollOverListener);
 
-    void addZoomListener(StockZoomListener zoomListener);
-    void removeZoomListener(StockZoomListener zoomListener);
+    void addZoomListener(ZoomListener zoomListener);
+    void removeZoomListener(ZoomListener zoomListener);
 
     void addPeriodSelectorChangeListener(PeriodSelectorChangeListener changeListener);
     void removePeriodSelectorChangeListener(PeriodSelectorChangeListener changeListener);
@@ -169,12 +169,12 @@ public interface StockChart extends Component, Component.BelongToFrame, Componen
         void onRollOver(StockEventRollOverEvent event);
     }
 
-    class StockZoomEvent {
+    class ZoomEvent {
         private final Date startDate;
         private final Date endDate;
         private final String period;
 
-        public StockZoomEvent(Date startDate, Date endDate, String period) {
+        public ZoomEvent(Date startDate, Date endDate, String period) {
             this.startDate = startDate;
             this.endDate = endDate;
             this.period = period;
@@ -193,8 +193,8 @@ public interface StockChart extends Component, Component.BelongToFrame, Componen
         }
     }
 
-    interface StockZoomListener {
-        void onZoom(StockZoomEvent event);
+    interface ZoomListener {
+        void onZoom(ZoomEvent event);
     }
 
     class PeriodSelectorChangeEvent {

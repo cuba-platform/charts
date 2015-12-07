@@ -20,7 +20,7 @@ public class AmStockChartEvents {
     private StockEventRollOutHandler stockEventRollOutHandler;
     private StockEventRollOverHandler stockEventRollOverHandler;
 
-    private StockZoomHandler stockZoomHandler;
+    private StockPanelZoomHandler stockPanelZoomHandler;
 
     private PeriodSelectorChangeHandler periodSelectorChangeHandler;
 
@@ -77,12 +77,12 @@ public class AmStockChartEvents {
         this.stockEventRollOverHandler = stockEventRollOverHandler;
     }
 
-    public StockZoomHandler getStockZoomHandler() {
-        return stockZoomHandler;
+    public StockPanelZoomHandler getStockPanelZoomHandler() {
+        return stockPanelZoomHandler;
     }
 
-    public void setStockZoomHandler(StockZoomHandler stockZoomHandler) {
-        this.stockZoomHandler = stockZoomHandler;
+    public void setStockPanelZoomHandler(StockPanelZoomHandler stockPanelZoomHandler) {
+        this.stockPanelZoomHandler = stockPanelZoomHandler;
     }
 
     public PeriodSelectorChangeHandler getPeriodSelectorChangeHandler() {

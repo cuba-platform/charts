@@ -1546,7 +1546,7 @@
         </xs:restriction>
     </xs:simpleType>
 
-    <xs:simpleType name="valueAxesPosition">
+    <xs:simpleType name="valueAxisPosition">
         <xs:restriction base="xs:string">
             <xs:enumeration value="LEFT"/>
             <xs:enumeration value="RIGHT"/>
@@ -1961,7 +1961,7 @@
         <xs:attribute name="minimum" type="xs:double"/>
         <xs:attribute name="minMaxMultiplier" type="xs:double"/>
         <xs:attribute name="offset" type="xs:integer"/>
-        <xs:attribute name="position" type="valueAxesPosition"/>
+        <xs:attribute name="position" type="valueAxisPosition"/>
         <xs:attribute name="reversed" type="xs:boolean"/>
         <xs:attribute name="showFirstLabel" type="xs:boolean"/>
         <xs:attribute name="showLastLabel" type="xs:boolean"/>
@@ -2007,8 +2007,6 @@
     </xs:complexType>
 
     <!-- Charts -->
-
-    <xs:element name="stockPanel" type="stockPanelType"/>
 
     <xs:element name="stockChart">
         <xs:complexType>

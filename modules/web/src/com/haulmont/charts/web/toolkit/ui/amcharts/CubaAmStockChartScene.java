@@ -42,7 +42,7 @@ public class CubaAmStockChartScene extends AbstractComponent {
             ReflectTools.findMethod(StockEventRollOverListener.class, "onRollOver", StockEventRollOverEvent.class);
 
     private final static Method stockZoomMethod =
-            ReflectTools.findMethod(StockZoomListener.class, "onZoom", StockZoomEvent.class);
+            ReflectTools.findMethod(StockPanelZoomListener.class, "onZoom", StockPanelZoomEvent.class);
 
     private final static Method periodSelectorChangeMethod =
             ReflectTools.findMethod(PeriodSelectorChangeListener.class, "onChange", PeriodSelectorChangeEvent.class);
@@ -162,12 +162,12 @@ public class CubaAmStockChartScene extends AbstractComponent {
         removeListener(CubaAmStockChartSceneState.STOCK_EVENT_ROLL_OVER_EVENT, StockEventRollOverEvent.class, listener);
     }
 
-    public void addStockZoomListener(StockZoomListener listener) {
-        addListener(CubaAmStockChartSceneState.STOCK_ZOOM_EVENT, StockZoomEvent.class, listener, stockZoomMethod);
+    public void addStockPanelZoomListener(StockPanelZoomListener listener) {
+        addListener(CubaAmStockChartSceneState.STOCK_ZOOM_EVENT, StockPanelZoomEvent.class, listener, stockZoomMethod);
     }
 
-    public void removeStockZoomListener(StockZoomListener listener) {
-        removeListener(CubaAmStockChartSceneState.STOCK_ZOOM_EVENT, StockZoomEvent.class, listener);
+    public void removeStockPanelZoomListener(StockPanelZoomListener listener) {
+        removeListener(CubaAmStockChartSceneState.STOCK_ZOOM_EVENT, StockPanelZoomEvent.class, listener);
     }
 
     public void addPeriodSelectorChangeListener(PeriodSelectorChangeListener listener) {
@@ -319,7 +319,7 @@ public class CubaAmStockChartScene extends AbstractComponent {
 
         @Override
         public void onZoom(Date startDate, Date endDate, String period) {
-            fireEvent(new StockZoomEvent(CubaAmStockChartScene.this, startDate, endDate, period));
+            fireEvent(new StockPanelZoomEvent(CubaAmStockChartScene.this, startDate, endDate, period));
         }
 
         @Override

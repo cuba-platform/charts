@@ -14,7 +14,7 @@ import java.util.Date;
  * @author gorelov
  * @version $Id$
  */
-public class StockZoomEvent extends Component.Event {
+public class StockPanelZoomEvent extends Component.Event {
 
     private static final long serialVersionUID = -8555462390239325142L;
 
@@ -22,7 +22,7 @@ public class StockZoomEvent extends Component.Event {
     private final Date endDate;
     private final String period;
 
-    public StockZoomEvent(CubaAmStockChartScene scene, Date startDate, Date endDate, String period) {
+    public StockPanelZoomEvent(CubaAmStockChartScene scene, Date startDate, Date endDate, String period) {
         super(scene);
         this.startDate = startDate;
         this.endDate = endDate;
