@@ -23,6 +23,8 @@ public interface DataProvider extends Serializable {
 
     void bindToChart(AbstractChart chart);
 
+    void bindWiredFields(List<String> wiredFields);
+
     List<DataItem> getItems();
 
     AbstractChart getChart();

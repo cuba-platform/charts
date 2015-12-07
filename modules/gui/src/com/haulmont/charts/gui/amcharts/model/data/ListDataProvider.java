@@ -77,6 +77,11 @@ public class ListDataProvider implements DataProvider {
     }
 
     @Override
+    public void bindWiredFields(List<String> wiredFields) {
+        // do nothing
+    }
+
+    @Override
     public AbstractChart getChart() {
         return chart;
     }

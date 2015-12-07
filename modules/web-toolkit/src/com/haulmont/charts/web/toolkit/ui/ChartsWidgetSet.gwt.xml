@@ -8,6 +8,7 @@
         "http://google-web-toolkit.googlecode.com/svn/trunk/distro-source/core/src/gwt-module.dtd">
 <module>
     <stylesheet src="amcharts/export_3_17_3.css" />
+    <stylesheet src="amcharts/stock_chart_3_17_3.css" />
 
     <inherits name="com.haulmont.cuba.web.toolkit.ui.WidgetSet" />
     <inherits name="com.vaadin.tapio.googlemaps.WidgetSet" />

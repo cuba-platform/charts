@@ -13,7 +13,8 @@ package com.haulmont.charts.gui.amcharts.model;
  * @author artamonov
  * @version $Id$
  */
-public class Graph extends AbstractChartObject {
+@SuppressWarnings("unchecked")
+public class Graph<T extends Graph> extends AbstractChartObject {
 
     private static final long serialVersionUID = 3973480345155361978L;
 
@@ -231,944 +232,944 @@ public class Graph extends AbstractChartObject {
         return animationPlayed;
     }
 
-    public Graph setAnimationPlayed(Boolean animationPlayed) {
+    public T setAnimationPlayed(Boolean animationPlayed) {
         this.animationPlayed = animationPlayed;
-        return this;
+        return (T) this;
     }
 
     public String getTitle() {
         return title;
     }
 
-    public Graph setTitle(String title) {
+    public T setTitle(String title) {
         this.title = title;
-        return this;
+        return (T) this;
     }
 
     public GraphType getType() {
         return type;
     }
 
-    public Graph setType(GraphType type) {
+    public T setType(GraphType type) {
         this.type = type;
-        return this;
+        return (T) this;
     }
 
     public String getValueField() {
         return valueField;
     }
 
-    public Graph setValueField(String valueField) {
+    public T setValueField(String valueField) {
         this.valueField = valueField;
-        return this;
+        return (T) this;
     }
 
     public String getXField() {
         return xField;
     }
 
-    public Graph setXField(String xField) {
+    public T setXField(String xField) {
         this.xField = xField;
-        return this;
+        return (T) this;
     }
 
     public String getYField() {
         return yField;
     }
 
-    public Graph setYField(String yField) {
+    public T setYField(String yField) {
         this.yField = yField;
-        return this;
+        return (T) this;
     }
 
     public String getAlphaField() {
         return alphaField;
     }
 
-    public Graph setAlphaField(String alphaField) {
+    public T setAlphaField(String alphaField) {
         this.alphaField = alphaField;
-        return this;
+        return (T) this;
     }
 
     public Color getBalloonColor() {
         return balloonColor;
     }
 
-    public Graph setBalloonColor(Color balloonColor) {
+    public T setBalloonColor(Color balloonColor) {
         this.balloonColor = balloonColor;
-        return this;
+        return (T) this;
     }
 
     public String getBalloonText() {
         return balloonText;
     }
 
-    public Graph setBalloonText(String balloonText) {
+    public T setBalloonText(String balloonText) {
         this.balloonText = balloonText;
-        return this;
+        return (T) this;
     }
 
     public Boolean getBehindColumns() {
         return behindColumns;
     }
 
-    public Graph setBehindColumns(Boolean behindColumns) {
+    public T setBehindColumns(Boolean behindColumns) {
         this.behindColumns = behindColumns;
-        return this;
+        return (T) this;
     }
 
     public BulletType getBullet() {
         return bullet;
     }
 
-    public Graph setBullet(BulletType bullet) {
+    public T setBullet(BulletType bullet) {
         this.bullet = bullet;
-        return this;
+        return (T) this;
     }
 
     public Double getBulletAlpha() {
         return bulletAlpha;
     }
 
-    public Graph setBulletAlpha(Double bulletAlpha) {
+    public T setBulletAlpha(Double bulletAlpha) {
         this.bulletAlpha = bulletAlpha;
-        return this;
+        return (T) this;
     }
 
     public Double getBulletBorderAlpha() {
         return bulletBorderAlpha;
     }
 
-    public Graph setBulletBorderAlpha(Double bulletBorderAlpha) {
+    public T setBulletBorderAlpha(Double bulletBorderAlpha) {
         this.bulletBorderAlpha = bulletBorderAlpha;
-        return this;
+        return (T) this;
     }
 
     public Color getBulletBorderColor() {
         return bulletBorderColor;
     }
 
-    public Graph setBulletBorderColor(Color bulletBorderColor) {
+    public T setBulletBorderColor(Color bulletBorderColor) {
         this.bulletBorderColor = bulletBorderColor;
-        return this;
+        return (T) this;
     }
 
     public Integer getBulletBorderThickness() {
         return bulletBorderThickness;
     }
 
-    public Graph setBulletBorderThickness(Integer bulletBorderThickness) {
+    public T setBulletBorderThickness(Integer bulletBorderThickness) {
         this.bulletBorderThickness = bulletBorderThickness;
-        return this;
+        return (T) this;
     }
 
     public Color getBulletColor() {
         return bulletColor;
     }
 
-    public Graph setBulletColor(Color bulletColor) {
+    public T setBulletColor(Color bulletColor) {
         this.bulletColor = bulletColor;
-        return this;
+        return (T) this;
     }
 
     public String getBulletField() {
         return bulletField;
     }
 
-    public Graph setBulletField(String bulletField) {
+    public T setBulletField(String bulletField) {
         this.bulletField = bulletField;
-        return this;
+        return (T) this;
     }
 
     public Integer getBulletOffset() {
         return bulletOffset;
     }
 
-    public Graph setBulletOffset(Integer bulletOffset) {
+    public T setBulletOffset(Integer bulletOffset) {
         this.bulletOffset = bulletOffset;
-        return this;
+        return (T) this;
     }
 
     public Integer getBulletSize() {
         return bulletSize;
     }
 
-    public Graph setBulletSize(Integer bulletSize) {
+    public T setBulletSize(Integer bulletSize) {
         this.bulletSize = bulletSize;
-        return this;
+        return (T) this;
     }
 
     public String getBulletSizeField() {
         return bulletSizeField;
     }
 
-    public Graph setBulletSizeField(String bulletSizeField) {
+    public T setBulletSizeField(String bulletSizeField) {
         this.bulletSizeField = bulletSizeField;
-        return this;
+        return (T) this;
     }
 
     public String getCloseField() {
         return closeField;
     }
 
-    public Graph setCloseField(String closeField) {
+    public T setCloseField(String closeField) {
         this.closeField = closeField;
-        return this;
+        return (T) this;
     }
 
     public Boolean getClustered() {
         return clustered;
     }
 
-    public Graph setClustered(Boolean clustered) {
+    public T setClustered(Boolean clustered) {
         this.clustered = clustered;
-        return this;
+        return (T) this;
     }
 
     public Color getColor() {
         return color;
     }
 
-    public Graph setColor(Color color) {
+    public T setColor(Color color) {
         this.color = color;
-        return this;
+        return (T) this;
     }
 
     public String getColorField() {
         return colorField;
     }
 
-    public Graph setColorField(String colorField) {
+    public T setColorField(String colorField) {
         this.colorField = colorField;
-        return this;
+        return (T) this;
     }
 
     public Double getColumnWidth() {
         return columnWidth;
     }
 
-    public Graph setColumnWidth(Double columnWidth) {
+    public T setColumnWidth(Double columnWidth) {
         this.columnWidth = columnWidth;
-        return this;
+        return (T) this;
     }
 
     public Boolean getConnect() {
         return connect;
     }
 
-    public Graph setConnect(Boolean connect) {
+    public T setConnect(Boolean connect) {
         this.connect = connect;
-        return this;
+        return (T) this;
     }
 
     public Integer getCornerRadiusTop() {
         return cornerRadiusTop;
     }
 
-    public Graph setCornerRadiusTop(Integer cornerRadiusTop) {
+    public T setCornerRadiusTop(Integer cornerRadiusTop) {
         this.cornerRadiusTop = cornerRadiusTop;
-        return this;
+        return (T) this;
     }
 
     public Double getCursorBulletAlpha() {
         return cursorBulletAlpha;
     }
 
-    public Graph setCursorBulletAlpha(Double cursorBulletAlpha) {
+    public T setCursorBulletAlpha(Double cursorBulletAlpha) {
         this.cursorBulletAlpha = cursorBulletAlpha;
-        return this;
+        return (T) this;
     }
 
     public String getCustomBullet() {
         return customBullet;
     }
 
-    public Graph setCustomBullet(String customBullet) {
+    public T setCustomBullet(String customBullet) {
         this.customBullet = customBullet;
-        return this;
+        return (T) this;
     }
 
     public String getCustomBulletField() {
         return customBulletField;
     }
 
-    public Graph setCustomBulletField(String customBulletField) {
+    public T setCustomBulletField(String customBulletField) {
         this.customBulletField = customBulletField;
-        return this;
+        return (T) this;
     }
 
     public String getCustomMarker() {
         return customMarker;
     }
 
-    public Graph setCustomMarker(String customMarker) {
+    public T setCustomMarker(String customMarker) {
         this.customMarker = customMarker;
-        return this;
+        return (T) this;
     }
 
     public Integer getDashLength() {
         return dashLength;
     }
 
-    public Graph setDashLength(Integer dashLength) {
+    public T setDashLength(Integer dashLength) {
         this.dashLength = dashLength;
-        return this;
+        return (T) this;
     }
 
     public String getDashLengthField() {
         return dashLengthField;
     }
 
-    public Graph setDashLengthField(String dashLengthField) {
+    public T setDashLengthField(String dashLengthField) {
         this.dashLengthField = dashLengthField;
-        return this;
+        return (T) this;
     }
 
     public String getDescriptionField() {
         return descriptionField;
     }
 
-    public Graph setDescriptionField(String descriptionField) {
+    public T setDescriptionField(String descriptionField) {
         this.descriptionField = descriptionField;
-        return this;
+        return (T) this;
     }
 
     public String getErrorField() {
         return errorField;
     }
 
-    public Graph setErrorField(String errorField) {
+    public T setErrorField(String errorField) {
         this.errorField = errorField;
-        return this;
+        return (T) this;
     }
 
     public Double getFillAlphas() {
         return fillAlphas;
     }
 
-    public Graph setFillAlphas(Double fillAlphas) {
+    public T setFillAlphas(Double fillAlphas) {
         this.fillAlphas = fillAlphas;
-        return this;
+        return (T) this;
     }
 
     public Color getFillColors() {
         return fillColors;
     }
 
-    public Graph setFillColors(Color fillColors) {
+    public T setFillColors(Color fillColors) {
         this.fillColors = fillColors;
-        return this;
+        return (T) this;
     }
 
     public String getFillColorsField() {
         return fillColorsField;
     }
 
-    public Graph setFillColorsField(String fillColorsField) {
+    public T setFillColorsField(String fillColorsField) {
         this.fillColorsField = fillColorsField;
-        return this;
+        return (T) this;
     }
 
     public Integer getFontSize() {
         return fontSize;
     }
 
-    public Graph setFontSize(Integer fontSize) {
+    public T setFontSize(Integer fontSize) {
         this.fontSize = fontSize;
-        return this;
+        return (T) this;
     }
 
     public GradientOrientation getGradientOrientation() {
         return gradientOrientation;
     }
 
-    public Graph setGradientOrientation(GradientOrientation gradientOrientation) {
+    public T setGradientOrientation(GradientOrientation gradientOrientation) {
         this.gradientOrientation = gradientOrientation;
-        return this;
+        return (T) this;
     }
 
     public Boolean getHidden() {
         return hidden;
     }
 
-    public Graph setHidden(Boolean hidden) {
+    public T setHidden(Boolean hidden) {
         this.hidden = hidden;
-        return this;
+        return (T) this;
     }
 
     public Integer getHideBulletsCount() {
         return hideBulletsCount;
     }
 
-    public Graph setHideBulletsCount(Integer hideBulletsCount) {
+    public T setHideBulletsCount(Integer hideBulletsCount) {
         this.hideBulletsCount = hideBulletsCount;
-        return this;
+        return (T) this;
     }
 
     public String getHighField() {
         return highField;
     }
 
-    public Graph setHighField(String highField) {
+    public T setHighField(String highField) {
         this.highField = highField;
-        return this;
+        return (T) this;
     }
 
     public String getId() {
         return id;
     }
 
-    public Graph setId(String id) {
+    public T setId(String id) {
         this.id = id;
-        return this;
+        return (T) this;
     }
 
     public Boolean getIncludeInMinMax() {
         return includeInMinMax;
     }
 
-    public Graph setIncludeInMinMax(Boolean includeInMinMax) {
+    public T setIncludeInMinMax(Boolean includeInMinMax) {
         this.includeInMinMax = includeInMinMax;
-        return this;
+        return (T) this;
     }
 
     public String getLabelColorField() {
         return labelColorField;
     }
 
-    public Graph setLabelColorField(String labelColorField) {
+    public T setLabelColorField(String labelColorField) {
         this.labelColorField = labelColorField;
-        return this;
+        return (T) this;
     }
 
     public ValueLabelPosition getLabelPosition() {
         return labelPosition;
     }
 
-    public Graph setLabelPosition(ValueLabelPosition labelPosition) {
+    public T setLabelPosition(ValueLabelPosition labelPosition) {
         this.labelPosition = labelPosition;
-        return this;
+        return (T) this;
     }
 
     public String getLabelText() {
         return labelText;
     }
 
-    public Graph setLabelText(String labelText) {
+    public T setLabelText(String labelText) {
         this.labelText = labelText;
-        return this;
+        return (T) this;
     }
 
     public Double getLegendAlpha() {
         return legendAlpha;
     }
 
-    public Graph setLegendAlpha(Double legendAlpha) {
+    public T setLegendAlpha(Double legendAlpha) {
         this.legendAlpha = legendAlpha;
-        return this;
+        return (T) this;
     }
 
     public Color getLegendColor() {
         return legendColor;
     }
 
-    public Graph setLegendColor(Color legendColor) {
+    public T setLegendColor(Color legendColor) {
         this.legendColor = legendColor;
-        return this;
+        return (T) this;
     }
 
     public String getLegendPeriodValueText() {
         return legendPeriodValueText;
     }
 
-    public Graph setLegendPeriodValueText(String legendPeriodValueText) {
+    public T setLegendPeriodValueText(String legendPeriodValueText) {
         this.legendPeriodValueText = legendPeriodValueText;
-        return this;
+        return (T) this;
     }
 
     public String getLegendValueText() {
         return legendValueText;
     }
 
-    public Graph setLegendValueText(String legendValueText) {
+    public T setLegendValueText(String legendValueText) {
         this.legendValueText = legendValueText;
-        return this;
+        return (T) this;
     }
 
     public Double getLineAlpha() {
         return lineAlpha;
     }
 
-    public Graph setLineAlpha(Double lineAlpha) {
+    public T setLineAlpha(Double lineAlpha) {
         this.lineAlpha = lineAlpha;
-        return this;
+        return (T) this;
     }
 
     public Color getLineColor() {
         return lineColor;
     }
 
-    public Graph setLineColor(Color lineColor) {
+    public T setLineColor(Color lineColor) {
         this.lineColor = lineColor;
-        return this;
+        return (T) this;
     }
 
     public String getLineColorField() {
         return lineColorField;
     }
 
-    public Graph setLineColorField(String lineColorField) {
+    public T setLineColorField(String lineColorField) {
         this.lineColorField = lineColorField;
-        return this;
+        return (T) this;
     }
 
     public Integer getLineThickness() {
         return lineThickness;
     }
 
-    public Graph setLineThickness(Integer lineThickness) {
+    public T setLineThickness(Integer lineThickness) {
         this.lineThickness = lineThickness;
-        return this;
+        return (T) this;
     }
 
     public String getLowField() {
         return lowField;
     }
 
-    public Graph setLowField(String lowField) {
+    public T setLowField(String lowField) {
         this.lowField = lowField;
-        return this;
+        return (T) this;
     }
 
     public MarkerType getMarkerType() {
         return markerType;
     }
 
-    public Graph setMarkerType(MarkerType markerType) {
+    public T setMarkerType(MarkerType markerType) {
         this.markerType = markerType;
-        return this;
+        return (T) this;
     }
 
     public Integer getMaxBulletSize() {
         return maxBulletSize;
     }
 
-    public Graph setMaxBulletSize(Integer maxBulletSize) {
+    public T setMaxBulletSize(Integer maxBulletSize) {
         this.maxBulletSize = maxBulletSize;
-        return this;
+        return (T) this;
     }
 
     public Integer getMinBulletSize() {
         return minBulletSize;
     }
 
-    public Graph setMinBulletSize(Integer minBulletSize) {
+    public T setMinBulletSize(Integer minBulletSize) {
         this.minBulletSize = minBulletSize;
-        return this;
+        return (T) this;
     }
 
     public Double getNegativeBase() {
         return negativeBase;
     }
 
-    public Graph setNegativeBase(Double negativeBase) {
+    public T setNegativeBase(Double negativeBase) {
         this.negativeBase = negativeBase;
-        return this;
+        return (T) this;
     }
 
     public Double getNegativeFillAlphas() {
         return negativeFillAlphas;
     }
 
-    public Graph setNegativeFillAlphas(Double negativeFillAlphas) {
+    public T setNegativeFillAlphas(Double negativeFillAlphas) {
         this.negativeFillAlphas = negativeFillAlphas;
-        return this;
+        return (T) this;
     }
 
     public Color getNegativeFillColors() {
         return negativeFillColors;
     }
 
-    public Graph setNegativeFillColors(Color negativeFillColors) {
+    public T setNegativeFillColors(Color negativeFillColors) {
         this.negativeFillColors = negativeFillColors;
-        return this;
+        return (T) this;
     }
 
     public Double getNegativeLineAlpha() {
         return negativeLineAlpha;
     }
 
-    public Graph setNegativeLineAlpha(Double negativeLineAlpha) {
+    public T setNegativeLineAlpha(Double negativeLineAlpha) {
         this.negativeLineAlpha = negativeLineAlpha;
-        return this;
+        return (T) this;
     }
 
     public Color getNegativeLineColor() {
         return negativeLineColor;
     }
 
-    public Graph setNegativeLineColor(Color negativeLineColor) {
+    public T setNegativeLineColor(Color negativeLineColor) {
         this.negativeLineColor = negativeLineColor;
-        return this;
+        return (T) this;
     }
 
     public Boolean getNoStepRisers() {
         return noStepRisers;
     }
 
-    public Graph setNoStepRisers(Boolean noStepRisers) {
+    public T setNoStepRisers(Boolean noStepRisers) {
         this.noStepRisers = noStepRisers;
-        return this;
+        return (T) this;
     }
 
     public String getOpenField() {
         return openField;
     }
 
-    public Graph setOpenField(String openField) {
+    public T setOpenField(String openField) {
         this.openField = openField;
-        return this;
+        return (T) this;
     }
 
     public Pattern getPattern() {
         return pattern;
     }
 
-    public Graph setPattern(Pattern pattern) {
+    public T setPattern(Pattern pattern) {
         this.pattern = pattern;
-        return this;
+        return (T) this;
     }
 
     public String getPatternField() {
         return patternField;
     }
 
-    public Graph setPatternField(String patternField) {
+    public T setPatternField(String patternField) {
         this.patternField = patternField;
-        return this;
+        return (T) this;
     }
 
     public Integer getPeriodSpan() {
         return periodSpan;
     }
 
-    public Graph setPeriodSpan(Integer periodSpan) {
+    public T setPeriodSpan(Integer periodSpan) {
         this.periodSpan = periodSpan;
-        return this;
+        return (T) this;
     }
 
     public PointPosition getPointPosition() {
         return pointPosition;
     }
 
-    public Graph setPointPosition(PointPosition pointPosition) {
+    public T setPointPosition(PointPosition pointPosition) {
         this.pointPosition = pointPosition;
-        return this;
+        return (T) this;
     }
 
     public Boolean getShowAllValueLabels() {
         return showAllValueLabels;
     }
 
-    public Graph setShowAllValueLabels(Boolean showAllValueLabels) {
+    public T setShowAllValueLabels(Boolean showAllValueLabels) {
         this.showAllValueLabels = showAllValueLabels;
-        return this;
+        return (T) this;
     }
 
     public Boolean getShowBalloon() {
         return showBalloon;
     }
 
-    public Graph setShowBalloon(Boolean showBalloon) {
+    public T setShowBalloon(Boolean showBalloon) {
         this.showBalloon = showBalloon;
-        return this;
+        return (T) this;
     }
 
     public ShowPositionOnCandle getShowBalloonAt() {
         return showBalloonAt;
     }
 
-    public Graph setShowBalloonAt(ShowPositionOnCandle showBalloonAt) {
+    public T setShowBalloonAt(ShowPositionOnCandle showBalloonAt) {
         this.showBalloonAt = showBalloonAt;
-        return this;
+        return (T) this;
     }
 
     public Boolean getShowHandOnHover() {
         return showHandOnHover;
     }
 
-    public Graph setShowHandOnHover(Boolean showHandOnHover) {
+    public T setShowHandOnHover(Boolean showHandOnHover) {
         this.showHandOnHover = showHandOnHover;
-        return this;
+        return (T) this;
     }
 
     public Boolean getStackable() {
         return stackable;
     }
 
-    public Graph setStackable(Boolean stackable) {
+    public T setStackable(Boolean stackable) {
         this.stackable = stackable;
-        return this;
+        return (T) this;
     }
 
     public StepDirection getStepDirection() {
         return stepDirection;
     }
 
-    public Graph setStepDirection(StepDirection stepDirection) {
+    public T setStepDirection(StepDirection stepDirection) {
         this.stepDirection = stepDirection;
-        return this;
+        return (T) this;
     }
 
     public String getUrlField() {
         return urlField;
     }
 
-    public Graph setUrlField(String urlField) {
+    public T setUrlField(String urlField) {
         this.urlField = urlField;
-        return this;
+        return (T) this;
     }
 
     public String getUrlTarget() {
         return urlTarget;
     }
 
-    public Graph setUrlTarget(String urlTarget) {
+    public T setUrlTarget(String urlTarget) {
         this.urlTarget = urlTarget;
-        return this;
+        return (T) this;
     }
 
     public Boolean getUseNegativeColorIfDown() {
         return useNegativeColorIfDown;
     }
 
-    public Graph setUseNegativeColorIfDown(Boolean useNegativeColorIfDown) {
+    public T setUseNegativeColorIfDown(Boolean useNegativeColorIfDown) {
         this.useNegativeColorIfDown = useNegativeColorIfDown;
-        return this;
+        return (T) this;
     }
 
     public Boolean getVisibleInLegend() {
         return visibleInLegend;
     }
 
-    public Graph setVisibleInLegend(Boolean visibleInLegend) {
+    public T setVisibleInLegend(Boolean visibleInLegend) {
         this.visibleInLegend = visibleInLegend;
-        return this;
+        return (T) this;
     }
 
     public String getBulletAxis() {
         return bulletAxis;
     }
 
-    public Graph setBulletAxis(String bulletAxis) {
+    public T setBulletAxis(String bulletAxis) {
         this.bulletAxis = bulletAxis;
-        return this;
+        return (T) this;
     }
 
     public String getValueAxis() {
         return valueAxis;
     }
 
-    public Graph setValueAxis(String valueAxis) {
+    public T setValueAxis(String valueAxis) {
         this.valueAxis = valueAxis;
-        return this;
+        return (T) this;
     }
 
     public String getXAxis() {
         return xAxis;
     }
 
-    public Graph setXAxis(String xAxis) {
+    public T setXAxis(String xAxis) {
         this.xAxis = xAxis;
-        return this;
+        return (T) this;
     }
 
     public String getYAxis() {
         return yAxis;
     }
 
-    public Graph setYAxis(String yAxis) {
+    public T setYAxis(String yAxis) {
         this.yAxis = yAxis;
-        return this;
+        return (T) this;
     }
 
     public JsFunction getBalloonFunction() {
         return balloonFunction;
     }
 
-    public Graph setBalloonFunction(JsFunction balloonFunction) {
+    public T setBalloonFunction(JsFunction balloonFunction) {
         this.balloonFunction = balloonFunction;
-        return this;
+        return (T) this;
     }
 
-    public String getFillToGraph() {
+    public String getFillToT() {
         return fillToGraph;
     }
 
-    public Graph setFillToGraph(String fillToGraph) {
+    public T setFillToGraph(String fillToGraph) {
         this.fillToGraph = fillToGraph;
-        return this;
+        return (T) this;
     }
 
     public String getFillToAxis() {
         return fillToAxis;
     }
 
-    public Graph setFillToAxis(String fillToAxis) {
+    public T setFillToAxis(String fillToAxis) {
         this.fillToAxis = fillToAxis;
-        return this;
+        return (T) this;
     }
 
     public Integer getFixedColumnWidth() {
         return fixedColumnWidth;
     }
 
-    public Graph setFixedColumnWidth(Integer fixedColumnWidth) {
+    public T setFixedColumnWidth(Integer fixedColumnWidth) {
         this.fixedColumnWidth = fixedColumnWidth;
-        return this;
+        return (T) this;
     }
 
     public String getGapField() {
         return gapField;
     }
 
-    public Graph setGapField(String gapField) {
+    public T setGapField(String gapField) {
         this.gapField = gapField;
-        return this;
+        return (T) this;
     }
 
     public Double getGapPeriod() {
         return gapPeriod;
     }
 
-    public Graph setGapPeriod(Double gapPeriod) {
+    public T setGapPeriod(Double gapPeriod) {
         this.gapPeriod = gapPeriod;
-        return this;
+        return (T) this;
     }
 
     public String getLabelAnchor() {
         return labelAnchor;
     }
 
-    public Graph setLabelAnchor(String labelAnchor) {
+    public T setLabelAnchor(String labelAnchor) {
         this.labelAnchor = labelAnchor;
-        return this;
+        return (T) this;
     }
 
     public JsFunction getLabelFunction() {
         return labelFunction;
     }
 
-    public Graph setLabelFunction(JsFunction labelFunction) {
+    public T setLabelFunction(JsFunction labelFunction) {
         this.labelFunction = labelFunction;
-        return this;
+        return (T) this;
     }
 
     public Integer getLabelOffset() {
         return labelOffset;
     }
 
-    public Graph setLabelOffset(Integer labelOffset) {
+    public T setLabelOffset(Integer labelOffset) {
         this.labelOffset = labelOffset;
-        return this;
+        return (T) this;
     }
 
     public Integer getMinDistance() {
         return minDistance;
     }
 
-    public Graph setMinDistance(Integer minDistance) {
+    public T setMinDistance(Integer minDistance) {
         this.minDistance = minDistance;
-        return this;
+        return (T) this;
     }
 
     public Boolean getNewStack() {
         return newStack;
     }
 
-    public Graph setNewStack(Boolean newStack) {
+    public T setNewStack(Boolean newStack) {
         this.newStack = newStack;
-        return this;
+        return (T) this;
     }
 
     public ShowPositionOnCandle getShowBulletsAt() {
         return showBulletsAt;
     }
 
-    public Graph setShowBulletsAt(ShowPositionOnCandle showBulletsAt) {
+    public T setShowBulletsAt(ShowPositionOnCandle showBulletsAt) {
         this.showBulletsAt = showBulletsAt;
-        return this;
+        return (T) this;
     }
 
     public Boolean getShowOnAxis() {
         return showOnAxis;
     }
 
-    public Graph setShowOnAxis(Boolean showOnAxis) {
+    public T setShowOnAxis(Boolean showOnAxis) {
         this.showOnAxis = showOnAxis;
-        return this;
+        return (T) this;
     }
 
     public Boolean getSwitchable() {
         return switchable;
     }
 
-    public Graph setSwitchable(Boolean switchable) {
+    public T setSwitchable(Boolean switchable) {
         this.switchable = switchable;
-        return this;
+        return (T) this;
     }
 
     public Integer getTopRadius() {
         return topRadius;
     }
 
-    public Graph setTopRadius(Integer topRadius) {
+    public T setTopRadius(Integer topRadius) {
         this.topRadius = topRadius;
-        return this;
+        return (T) this;
     }
 
     public DateFormat getDateFormat() {
         return dateFormat;
     }
 
-    public Graph setDateFormat(DateFormat dateFormat) {
+    public T setDateFormat(DateFormat dateFormat) {
         this.dateFormat = dateFormat;
-        return this;
+        return (T) this;
     }
 
     public Integer getLabelRotation() {
         return labelRotation;
     }
 
-    public Graph setLabelRotation(Integer labelRotation) {
+    public T setLabelRotation(Integer labelRotation) {
         this.labelRotation = labelRotation;
-        return this;
+        return (T) this;
     }
 
     public Integer getPrecision() {
         return precision;
     }
 
-    public Graph setPrecision(Integer precision) {
+    public T setPrecision(Integer precision) {
         this.precision = precision;
-        return this;
+        return (T) this;
     }
 
     public Boolean getProCandlesticks() {
         return proCandlesticks;
     }
 
-    public Graph setProCandlesticks(Boolean proCandlesticks) {
+    public T setProCandlesticks(Boolean proCandlesticks) {
         this.proCandlesticks = proCandlesticks;
-        return this;
+        return (T) this;
     }
 
     public Boolean getUseLineColorForBulletBorder() {
         return useLineColorForBulletBorder;
     }
 
-    public Graph setUseLineColorForBulletBorder(Boolean useLineColorForBulletBorder) {
+    public T setUseLineColorForBulletBorder(Boolean useLineColorForBulletBorder) {
         this.useLineColorForBulletBorder = useLineColorForBulletBorder;
-        return this;
+        return (T) this;
     }
 }

@@ -440,256 +440,249 @@ public abstract class AbstractChartLoader<T extends AbstractChart> extends Abstr
         }
     }
 
-    protected void loadLegend(T chart, Element element) {
-        Element legendElement = element.element("legend");
-        if (legendElement != null) {
-            Legend legend = new Legend();
+    protected void loadLegend(Legend legend, Element legendElement) {
+        loadLegendItems(legend, legendElement);
 
-            loadLegendItems(legend, legendElement);
+        String align = legendElement.attributeValue("align");
+        if (StringUtils.isNotEmpty(align)) {
+            legend.setAlign(Align.valueOf(align));
+        }
 
-            String align = legendElement.attributeValue("align");
-            if (StringUtils.isNotEmpty(align)) {
-                legend.setAlign(Align.valueOf(align));
-            }
+        String autoMargins = legendElement.attributeValue("autoMargins");
+        if (StringUtils.isNotEmpty(autoMargins)) {
+            legend.setAutoMargins(Boolean.valueOf(autoMargins));
+        }
 
-            String autoMargins = legendElement.attributeValue("autoMargins");
-            if (StringUtils.isNotEmpty(autoMargins)) {
-                legend.setAutoMargins(Boolean.valueOf(autoMargins));
-            }
+        String backgroundAlpha = legendElement.attributeValue("backgroundAlpha");
+        if (StringUtils.isNotEmpty(backgroundAlpha)) {
+            legend.setBackgroundAlpha(Double.valueOf(backgroundAlpha));
+        }
 
-            String backgroundAlpha = legendElement.attributeValue("backgroundAlpha");
-            if (StringUtils.isNotEmpty(backgroundAlpha)) {
-                legend.setBackgroundAlpha(Double.valueOf(backgroundAlpha));
-            }
+        String backgroundColor = legendElement.attributeValue("backgroundColor");
+        if (StringUtils.isNotEmpty(backgroundColor)) {
+            legend.setBackgroundColor(Color.valueOf(backgroundColor));
+        }
 
-            String backgroundColor = legendElement.attributeValue("backgroundColor");
-            if (StringUtils.isNotEmpty(backgroundColor)) {
-                legend.setBackgroundColor(Color.valueOf(backgroundColor));
-            }
+        String borderAlpha = legendElement.attributeValue("borderAlpha");
+        if (StringUtils.isNotEmpty(borderAlpha)) {
+            legend.setBorderAlpha(Double.valueOf(borderAlpha));
+        }
 
-            String borderAlpha = legendElement.attributeValue("borderAlpha");
-            if (StringUtils.isNotEmpty(borderAlpha)) {
-                legend.setBorderAlpha(Double.valueOf(borderAlpha));
-            }
+        String borderColor = legendElement.attributeValue("borderColor");
+        if (StringUtils.isNotEmpty(borderColor)) {
+            legend.setBackgroundColor(Color.valueOf(borderColor));
+        }
 
-            String borderColor = legendElement.attributeValue("borderColor");
-            if (StringUtils.isNotEmpty(borderColor)) {
-                legend.setBackgroundColor(Color.valueOf(borderColor));
-            }
+        String bottom = legendElement.attributeValue("bottom");
+        if (StringUtils.isNotEmpty(bottom)) {
+            legend.setBottom(Integer.valueOf(bottom));
+        }
 
-            String bottom = legendElement.attributeValue("bottom");
-            if (StringUtils.isNotEmpty(bottom)) {
-                legend.setBottom(Integer.valueOf(bottom));
-            }
+        String color = legendElement.attributeValue("color");
+        if (StringUtils.isNotEmpty(color)) {
+            legend.setColor(Color.valueOf(color));
+        }
 
-            String color = legendElement.attributeValue("color");
-            if (StringUtils.isNotEmpty(color)) {
-                legend.setColor(Color.valueOf(color));
-            }
+        String divId = legendElement.attributeValue("divId");
+        if (StringUtils.isNotEmpty(divId)) {
+            legend.setDivId(divId);
+        }
 
-            String divId = legendElement.attributeValue("divId");
-            if (StringUtils.isNotEmpty(divId)) {
-                legend.setDivId(divId);
-            }
+        String enabled = legendElement.attributeValue("enabled");
+        if (StringUtils.isNotEmpty(enabled)) {
+            legend.setEnabled(Boolean.valueOf(enabled));
+        }
 
-            String enabled = legendElement.attributeValue("enabled");
-            if (StringUtils.isNotEmpty(enabled)) {
-                legend.setEnabled(Boolean.valueOf(enabled));
-            }
+        String equalWidths = legendElement.attributeValue("equalWidths");
+        if (StringUtils.isNotEmpty(equalWidths)) {
+            legend.setEqualWidths(Boolean.valueOf(equalWidths));
+        }
 
-            String equalWidths = legendElement.attributeValue("equalWidths");
-            if (StringUtils.isNotEmpty(equalWidths)) {
-                legend.setEqualWidths(Boolean.valueOf(equalWidths));
-            }
+        String fontSize = legendElement.attributeValue("fontSize");
+        if (StringUtils.isNotEmpty(fontSize)) {
+            legend.setFontSize(Integer.valueOf(fontSize));
+        }
 
-            String fontSize = legendElement.attributeValue("fontSize");
-            if (StringUtils.isNotEmpty(fontSize)) {
-                legend.setFontSize(Integer.valueOf(fontSize));
-            }
+        String forceWidth = legendElement.attributeValue("forceWidth");
+        if (StringUtils.isNotEmpty(forceWidth)) {
+            legend.setForceWidth(Boolean.valueOf(forceWidth));
+        }
 
-            String forceWidth = legendElement.attributeValue("forceWidth");
-            if (StringUtils.isNotEmpty(forceWidth)) {
-                legend.setForceWidth(Boolean.valueOf(forceWidth));
-            }
+        String gradientRotation = legendElement.attributeValue("gradientRotation");
+        if (StringUtils.isNotEmpty(gradientRotation)) {
+            legend.setGradientRotation(Integer.valueOf(gradientRotation));
+        }
 
-            String gradientRotation = legendElement.attributeValue("gradientRotation");
-            if (StringUtils.isNotEmpty(gradientRotation)) {
-                legend.setGradientRotation(Integer.valueOf(gradientRotation));
-            }
+        String horizontalGap = legendElement.attributeValue("horizontalGap");
+        if (StringUtils.isNotEmpty(horizontalGap)) {
+            legend.setHorizontalGap(Integer.valueOf(horizontalGap));
+        }
 
-            String horizontalGap = legendElement.attributeValue("horizontalGap");
-            if (StringUtils.isNotEmpty(horizontalGap)) {
-                legend.setHorizontalGap(Integer.valueOf(horizontalGap));
-            }
+        String labelWidth = legendElement.attributeValue("labelWidth");
+        if (StringUtils.isNotEmpty(labelWidth)) {
+            legend.setLabelWidth(Integer.valueOf(labelWidth));
+        }
 
-            String labelWidth = legendElement.attributeValue("labelWidth");
-            if (StringUtils.isNotEmpty(labelWidth)) {
-                legend.setLabelWidth(Integer.valueOf(labelWidth));
-            }
+        String labelText = legendElement.attributeValue("labelText");
+        if (StringUtils.isNotEmpty(labelText)) {
+            legend.setLabelText(loadResourceString(labelText));
+        }
 
-            String labelText = legendElement.attributeValue("labelText");
-            if (StringUtils.isNotEmpty(labelText)) {
-                legend.setLabelText(loadResourceString(labelText));
-            }
+        String left = legendElement.attributeValue("left");
+        if (StringUtils.isNotEmpty(left)) {
+            legend.setLeft(Integer.valueOf(left));
+        }
 
-            String left = legendElement.attributeValue("left");
-            if (StringUtils.isNotEmpty(left)) {
-                legend.setLeft(Integer.valueOf(left));
-            }
+        loadMargins(legend, legendElement);
 
-            loadMargins(legend, legendElement);
+        String markerBorderAlpha = legendElement.attributeValue("markerBorderAlpha");
+        if (StringUtils.isNotEmpty(markerBorderAlpha)) {
+            legend.setMarkerBorderAlpha(Double.valueOf(markerBorderAlpha));
+        }
 
-            String markerBorderAlpha = legendElement.attributeValue("markerBorderAlpha");
-            if (StringUtils.isNotEmpty(markerBorderAlpha)) {
-                legend.setMarkerBorderAlpha(Double.valueOf(markerBorderAlpha));
-            }
+        String markerBorderColor = legendElement.attributeValue("markerBorderColor");
+        if (StringUtils.isNotEmpty(markerBorderColor)) {
+            legend.setMarkerBorderColor(Color.valueOf(markerBorderColor));
+        }
 
-            String markerBorderColor = legendElement.attributeValue("markerBorderColor");
-            if (StringUtils.isNotEmpty(markerBorderColor)) {
-                legend.setMarkerBorderColor(Color.valueOf(markerBorderColor));
-            }
+        String markerBorderThickness = legendElement.attributeValue("markerBorderThickness");
+        if (StringUtils.isNotEmpty(markerBorderThickness)) {
+            legend.setMarkerBorderThickness(Integer.valueOf(markerBorderThickness));
+        }
 
-            String markerBorderThickness = legendElement.attributeValue("markerBorderThickness");
-            if (StringUtils.isNotEmpty(markerBorderThickness)) {
-                legend.setMarkerBorderThickness(Integer.valueOf(markerBorderThickness));
-            }
+        String markerDisabledColor = legendElement.attributeValue("markerDisabledColor");
+        if (StringUtils.isNotEmpty(markerDisabledColor)) {
+            legend.setMarkerDisabledColor(Color.valueOf(markerDisabledColor));
+        }
 
-            String markerDisabledColor = legendElement.attributeValue("markerDisabledColor");
-            if (StringUtils.isNotEmpty(markerDisabledColor)) {
-                legend.setMarkerDisabledColor(Color.valueOf(markerDisabledColor));
-            }
+        String markerLabelGap = legendElement.attributeValue("markerLabelGap");
+        if (StringUtils.isNotEmpty(markerLabelGap)) {
+            legend.setMarkerLabelGap(Integer.valueOf(markerLabelGap));
+        }
 
-            String markerLabelGap = legendElement.attributeValue("markerLabelGap");
-            if (StringUtils.isNotEmpty(markerLabelGap)) {
-                legend.setMarkerLabelGap(Integer.valueOf(markerLabelGap));
-            }
+        String markerSize = legendElement.attributeValue("markerSize");
+        if (StringUtils.isNotEmpty(markerSize)) {
+            legend.setMarkerSize(Integer.valueOf(markerSize));
+        }
 
-            String markerSize = legendElement.attributeValue("markerSize");
-            if (StringUtils.isNotEmpty(markerSize)) {
-                legend.setMarkerSize(Integer.valueOf(markerSize));
-            }
+        String markerType = legendElement.attributeValue("markerType");
+        if (StringUtils.isNotEmpty(markerType)) {
+            legend.setMarkerType(MarkerType.valueOf(markerType));
+        }
 
-            String markerType = legendElement.attributeValue("markerType");
-            if (StringUtils.isNotEmpty(markerType)) {
-                legend.setMarkerType(MarkerType.valueOf(markerType));
-            }
+        String maxColumns = legendElement.attributeValue("maxColumns");
+        if (StringUtils.isNotEmpty(maxColumns)) {
+            legend.setMaxColumns(Integer.valueOf(maxColumns));
+        }
 
-            String maxColumns = legendElement.attributeValue("maxColumns");
-            if (StringUtils.isNotEmpty(maxColumns)) {
-                legend.setMaxColumns(Integer.valueOf(maxColumns));
-            }
+        String periodValueText = legendElement.attributeValue("periodValueText");
+        if (StringUtils.isNotEmpty(periodValueText)) {
+            legend.setPeriodValueText(loadResourceString(periodValueText));
+        }
 
-            String periodValueText = legendElement.attributeValue("periodValueText");
-            if (StringUtils.isNotEmpty(periodValueText)) {
-                legend.setPeriodValueText(loadResourceString(periodValueText));
-            }
+        String position = legendElement.attributeValue("position");
+        if (StringUtils.isNotEmpty(position)) {
+            legend.setPosition(LegendPosition.valueOf(position));
+        }
 
-            String position = legendElement.attributeValue("position");
-            if (StringUtils.isNotEmpty(position)) {
-                legend.setPosition(LegendPosition.valueOf(position));
-            }
+        String reversedOrder = legendElement.attributeValue("reversedOrder");
+        if (StringUtils.isNotEmpty(reversedOrder)) {
+            legend.setReversedOrder(Boolean.valueOf(reversedOrder));
+        }
 
-            String reversedOrder = legendElement.attributeValue("reversedOrder");
-            if (StringUtils.isNotEmpty(reversedOrder)) {
-                legend.setReversedOrder(Boolean.valueOf(reversedOrder));
-            }
+        String right = legendElement.attributeValue("right");
+        if (StringUtils.isNotEmpty(right)) {
+            legend.setRight(Integer.valueOf(right));
+        }
 
-            String right = legendElement.attributeValue("right");
-            if (StringUtils.isNotEmpty(right)) {
-                legend.setRight(Integer.valueOf(right));
-            }
+        String rollOverColor = legendElement.attributeValue("rollOverColor");
+        if (StringUtils.isNotEmpty(rollOverColor)) {
+            legend.setRollOverColor(Color.valueOf(rollOverColor));
+        }
 
-            String rollOverColor = legendElement.attributeValue("rollOverColor");
-            if (StringUtils.isNotEmpty(rollOverColor)) {
-                legend.setRollOverColor(Color.valueOf(rollOverColor));
-            }
+        String rollOverGraphAlpha = legendElement.attributeValue("rollOverGraphAlpha");
+        if (StringUtils.isNotEmpty(rollOverGraphAlpha)) {
+            legend.setRollOverGraphAlpha(Double.valueOf(rollOverGraphAlpha));
+        }
 
-            String rollOverGraphAlpha = legendElement.attributeValue("rollOverGraphAlpha");
-            if (StringUtils.isNotEmpty(rollOverGraphAlpha)) {
-                legend.setRollOverGraphAlpha(Double.valueOf(rollOverGraphAlpha));
-            }
+        String showEntries = legendElement.attributeValue("showEntries");
+        if (StringUtils.isNotEmpty(showEntries)) {
+            legend.setShowEntries(Boolean.valueOf(showEntries));
+        }
 
-            String showEntries = legendElement.attributeValue("showEntries");
-            if (StringUtils.isNotEmpty(showEntries)) {
-                legend.setShowEntries(Boolean.valueOf(showEntries));
-            }
+        String spacing = legendElement.attributeValue("spacing");
+        if (StringUtils.isNotEmpty(spacing)) {
+            legend.setSpacing(Integer.valueOf(spacing));
+        }
 
-            String spacing = legendElement.attributeValue("spacing");
-            if (StringUtils.isNotEmpty(spacing)) {
-                legend.setSpacing(Integer.valueOf(spacing));
-            }
+        String switchable = legendElement.attributeValue("switchable");
+        if (StringUtils.isNotEmpty(switchable)) {
+            legend.setSwitchable(Boolean.valueOf(switchable));
+        }
 
-            String switchable = legendElement.attributeValue("switchable");
-            if (StringUtils.isNotEmpty(switchable)) {
-                legend.setSwitchable(Boolean.valueOf(switchable));
-            }
+        String switchColor = legendElement.attributeValue("switchColor");
+        if (StringUtils.isNotEmpty(switchColor)) {
+            legend.setSwitchColor(Color.valueOf(switchColor));
+        }
 
-            String switchColor = legendElement.attributeValue("switchColor");
-            if (StringUtils.isNotEmpty(switchColor)) {
-                legend.setSwitchColor(Color.valueOf(switchColor));
-            }
+        String switchType = legendElement.attributeValue("switchType");
+        if (StringUtils.isNotEmpty(switchType)) {
+            legend.setSwitchType(LegendSwitch.valueOf(switchType));
+        }
 
-            String switchType = legendElement.attributeValue("switchType");
-            if (StringUtils.isNotEmpty(switchType)) {
-                legend.setSwitchType(LegendSwitch.valueOf(switchType));
-            }
+        String textClickEnabled = legendElement.attributeValue("textClickEnabled");
+        if (StringUtils.isNotEmpty(textClickEnabled)) {
+            legend.setTextClickEnabled(Boolean.valueOf(textClickEnabled));
+        }
 
-            String textClickEnabled = legendElement.attributeValue("textClickEnabled");
-            if (StringUtils.isNotEmpty(textClickEnabled)) {
-                legend.setTextClickEnabled(Boolean.valueOf(textClickEnabled));
-            }
+        String top = legendElement.attributeValue("top");
+        if (StringUtils.isNotEmpty(top)) {
+            legend.setTop(Integer.valueOf(top));
+        }
 
-            String top = legendElement.attributeValue("top");
-            if (StringUtils.isNotEmpty(top)) {
-                legend.setTop(Integer.valueOf(top));
-            }
+        String useGraphSettings = legendElement.attributeValue("useGraphSettings");
+        if (StringUtils.isNotEmpty(useGraphSettings)) {
+            legend.setUseGraphSettings(Boolean.valueOf(useGraphSettings));
+        }
 
-            String useGraphSettings = legendElement.attributeValue("useGraphSettings");
-            if (StringUtils.isNotEmpty(useGraphSettings)) {
-                legend.setUseGraphSettings(Boolean.valueOf(useGraphSettings));
-            }
+        String useMarkerColorForLabels = legendElement.attributeValue("useMarkerColorForLabels");
+        if (StringUtils.isNotEmpty(useMarkerColorForLabels)) {
+            legend.setUseMarkerColorForLabels(Boolean.valueOf(useMarkerColorForLabels));
+        }
 
-            String useMarkerColorForLabels = legendElement.attributeValue("useMarkerColorForLabels");
-            if (StringUtils.isNotEmpty(useMarkerColorForLabels)) {
-                legend.setUseMarkerColorForLabels(Boolean.valueOf(useMarkerColorForLabels));
-            }
+        String useMarkerColorForValues = legendElement.attributeValue("useMarkerColorForValues");
+        if (StringUtils.isNotEmpty(useMarkerColorForValues)) {
+            legend.setUseMarkerColorForValues(Boolean.valueOf(useMarkerColorForValues));
+        }
 
-            String useMarkerColorForValues = legendElement.attributeValue("useMarkerColorForValues");
-            if (StringUtils.isNotEmpty(useMarkerColorForValues)) {
-                legend.setUseMarkerColorForValues(Boolean.valueOf(useMarkerColorForValues));
-            }
+        String valueAlign = legendElement.attributeValue("valueAlign");
+        if (StringUtils.isNotEmpty(valueAlign)) {
+            legend.setValueAlign(ValueAlign.valueOf(valueAlign));
+        }
 
-            String valueAlign = legendElement.attributeValue("valueAlign");
-            if (StringUtils.isNotEmpty(valueAlign)) {
-                legend.setValueAlign(ValueAlign.valueOf(valueAlign));
-            }
+        String valueFunction = legendElement.elementText("valueFunction");
+        if (StringUtils.isNotBlank(valueFunction)) {
+            legend.setValueFunction(new JsFunction(valueFunction));
+        }
 
-            String valueFunction = legendElement.elementText("valueFunction");
-            if (StringUtils.isNotBlank(valueFunction)) {
-                legend.setValueFunction(new JsFunction(valueFunction));
-            }
+        String valueText = legendElement.attributeValue("valueText");
+        if (StringUtils.isNotEmpty(valueText)) {
+            legend.setValueText(loadResourceString(valueText));
+        }
 
-            String valueText = legendElement.attributeValue("valueText");
-            if (StringUtils.isNotEmpty(valueText)) {
-                legend.setValueText(loadResourceString(valueText));
-            }
+        String valueWidth = legendElement.attributeValue("valueWidth");
+        if (StringUtils.isNotEmpty(valueWidth)) {
+            legend.setValueWidth(Integer.valueOf(valueWidth));
+        }
 
-            String valueWidth = legendElement.attributeValue("valueWidth");
-            if (StringUtils.isNotEmpty(valueWidth)) {
-                legend.setValueWidth(Integer.valueOf(valueWidth));
-            }
+        String verticalGap = legendElement.attributeValue("verticalGap");
+        if (StringUtils.isNotEmpty(verticalGap)) {
+            legend.setVerticalGap(Integer.valueOf(verticalGap));
+        }
 
-            String verticalGap = legendElement.attributeValue("verticalGap");
-            if (StringUtils.isNotEmpty(verticalGap)) {
-                legend.setVerticalGap(Integer.valueOf(verticalGap));
-            }
-
-            String width = legendElement.attributeValue("width");
-            if (StringUtils.isNotEmpty(width)) {
-                legend.setWidth(Integer.valueOf(width));
-            }
-
-            chart.setLegend(legend);
+        String width = legendElement.attributeValue("width");
+        if (StringUtils.isNotEmpty(width)) {
+            legend.setWidth(Integer.valueOf(width));
         }
     }
 
@@ -725,7 +718,7 @@ public abstract class AbstractChartLoader<T extends AbstractChart> extends Abstr
         loadLabels(chart, element);
         loadTitles(chart, element);
         loadBalloon(chart, element);
-        loadLegend(chart, element);
+//        loadLegend(chart, element);
         loadExport(chart, element);
 
         String addClassNames = element.attributeValue("addClassNames");
@@ -821,6 +814,13 @@ public abstract class AbstractChartLoader<T extends AbstractChart> extends Abstr
         String language = element.attributeValue("language");
         if (StringUtils.isNotEmpty(language)) {
             chart.setLanguage(language);
+        }
+
+        Element legendElement = element.element("legend");
+        if (legendElement != null) {
+            Legend legend = new Legend();
+            loadLegend(legend, legendElement);
+            chart.setLegend(legend);
         }
 
         String legendDiv = element.attributeValue("legendDiv");

@@ -1,0 +1,43 @@
+/*
+ * Copyright (c) 2008-2015 Haulmont. All rights reserved.
+ * Use is subject to license terms, see http://www.cuba-platform.com/license for details.
+ */
+
+package com.haulmont.charts.web.toolkit.ui.amcharts.events;
+
+import com.haulmont.charts.web.toolkit.ui.amcharts.CubaAmStockChartScene;
+import com.vaadin.ui.Component;
+
+import java.util.Date;
+
+/**
+ * @author gorelov
+ * @version $Id$
+ */
+public class StockZoomEvent extends Component.Event {
+
+    private static final long serialVersionUID = -8555462390239325142L;
+
+    private final Date startDate;
+    private final Date endDate;
+    private final String period;
+
+    public StockZoomEvent(CubaAmStockChartScene scene, Date startDate, Date endDate, String period) {
+        super(scene);
+        this.startDate = startDate;
+        this.endDate = endDate;
+        this.period = period;
+    }
+
+    public Date getEndDate() {
+        return endDate;
+    }
+
+    public Date getStartDate() {
+        return startDate;
+    }
+
+    public String getPeriod() {
+        return period;
+    }
+}

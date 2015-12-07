@@ -5,6 +5,7 @@
 
 package com.haulmont.charts.gui.xml.layout.loaders.charts;
 
+import com.haulmont.charts.gui.amcharts.model.Graph;
 import com.haulmont.charts.gui.amcharts.model.charts.GanttChart;
 import org.apache.commons.lang.StringUtils;
 import org.dom4j.Element;
@@ -29,9 +30,11 @@ public class GanttChartLoader extends SerialChartLoader<GanttChart> {
             chart.setValueAxis(loadValueAxis(valueAxisElement));
         }
 
-        Element graph = element.element("graph");
-        if (graph != null) {
-            chart.setGraph(loadGraph(graph));
+        Element graphElement = element.element("graph");
+        if (graphElement != null) {
+            Graph graph = new Graph();
+            loadGraph(graph, graphElement);
+            chart.setGraph(graph);
         }
 
         String additionalSegmentFields = element.attributeValue("additionalSegmentFields");

@@ -6,6 +6,7 @@
 package com.haulmont.charts.web.toolkit.ui.amcharts.events;
 
 import com.haulmont.charts.web.toolkit.ui.amcharts.CubaAmchartsScene;
+import com.vaadin.ui.AbstractComponent;
 import com.vaadin.ui.Component;
 
 /**
@@ -21,7 +22,7 @@ public class ChartClickEvent extends Component.Event {
     private final double xAxis;
     private final double yAxis;
 
-    public ChartClickEvent(CubaAmchartsScene source, int x, int y, int absoluteX, int absoluteY, double xAxis, double yAxis) {
+    public ChartClickEvent(AbstractComponent source, int x, int y, int absoluteX, int absoluteY, double xAxis, double yAxis) {
         super(source);
         this.x = x;
         this.y = y;

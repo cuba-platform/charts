@@ -68,15 +68,15 @@ public abstract class CoordinateChartLoader<T extends CoordinateChart> extends A
         if (graphsElement != null) {
             for (Object graphItem : graphsElement.elements("graph")) {
                 Element graphElement = (Element) graphItem;
-                chart.addGraphs(loadGraph(graphElement));
+                Graph graph = new Graph();
+                loadGraph(graph, graphElement);
+                chart.addGraphs(graph);
             }
         }
     }
 
-    protected Graph loadGraph(Element graphElement) {
-        Graph graph = new Graph();
-
-        Element dateFormatElement = element.element("dateFormat");
+    protected void loadGraph(Graph graph, Element graphElement) {
+        Element dateFormatElement = graphElement.element("dateFormat");
         if (dateFormatElement != null) {
             DateFormat dateFormat = new DateFormat();
             loadDateFormat(dateFormat, dateFormatElement);
@@ -602,8 +602,6 @@ public abstract class CoordinateChartLoader<T extends CoordinateChart> extends A
         if (StringUtils.isNotEmpty(yField)) {
             graph.setYField(yField);
         }
-
-        return graph;
     }
 
     protected ValueAxis loadValueAxis(Element valueAxisElement) {

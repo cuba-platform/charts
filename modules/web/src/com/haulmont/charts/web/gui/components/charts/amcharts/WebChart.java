@@ -11,6 +11,7 @@ import com.haulmont.charts.gui.amcharts.model.charts.RectangularChart;
 import com.haulmont.charts.gui.amcharts.model.charts.SerialChart;
 import com.haulmont.charts.gui.amcharts.model.data.*;
 import com.haulmont.charts.gui.components.charts.Chart;
+import com.haulmont.charts.web.gui.ChartLocaleHelper;
 import com.haulmont.charts.web.toolkit.ui.amcharts.CubaAmchartsIntegration;
 import com.haulmont.charts.web.toolkit.ui.amcharts.CubaAmchartsScene;
 import com.haulmont.charts.web.toolkit.ui.amcharts.events.*;
@@ -140,69 +141,16 @@ public class WebChart extends WebAbstractComponent<CubaAmchartsScene> implements
                 || !ObjectUtils.equals(userSessionSource.getLocale(), amchartsIntegration.getLocale())) {
 
             Settings settings = new Settings();
+            Locale locale = userSessionSource.getLocale();
 
             // chart
-            Map<String, Object> chartLocaleMap = new LinkedHashMap<>();
-            String localeString = messages.getTools().localeToString(userSessionSource.getLocale());
-            // day of week
-            List<String> dayNames = new LinkedList<>();
-            List<String> shortDayNames = new LinkedList<>();
-            for (DayOfWeek day : DayOfWeek.values()) {
-                dayNames.add(messages.getMainMessage("amcharts.dayNames." + day.name()));
-                shortDayNames.add(messages.getMainMessage("amcharts.shortDayNames." + day.name()));
-            }
-            chartLocaleMap.put("dayNames", dayNames);
-            chartLocaleMap.put("shortDayNames", shortDayNames);
-
-            // months
-            List<String> monthNames = new LinkedList<>();
-            List<String> shortMonthNames = new LinkedList<>();
-            for (Month m : Month.values()) {
-                monthNames.add(messages.getMainMessage("amcharts.monthNames." + m.name()));
-                shortMonthNames.add(messages.getMainMessage("amcharts.shortMonthNames." + m.name()));
-            }
-            chartLocaleMap.put("monthNames", monthNames);
-            chartLocaleMap.put("shortMonthNames", shortMonthNames);
-
-            // formatting time
-            chartLocaleMap.put("am", messages.getMainMessage("amcharts.am"));
-            chartLocaleMap.put("pm", messages.getMainMessage("amcharts.pm"));
-
-            amchartsIntegration.setChartMessages(localeString, chartLocaleMap);
+            String localeString = messages.getTools().localeToString(locale);
+            amchartsIntegration.setChartMessages(localeString, ChartLocaleHelper.getChartLocaleMap(locale));
 
             // export
-            Map<String, String> exportLocaleMap = new LinkedHashMap<>();
-            exportLocaleMap.put("fallback.save.text", messages.getMainMessage("fallback.save.text"));
-            exportLocaleMap.put("fallback.save.image", messages.getMainMessage("fallback.save.image"));
-
-            exportLocaleMap.put("capturing.delayed.menu.label", messages.getMainMessage("capturing.delayed.menu.label"));
-            exportLocaleMap.put("capturing.delayed.menu.title", messages.getMainMessage("capturing.delayed.menu.title"));
-
-            exportLocaleMap.put("menu.label.print", messages.getMainMessage("menu.label.print"));
-            exportLocaleMap.put("menu.label.undo", messages.getMainMessage("menu.label.undo"));
-            exportLocaleMap.put("menu.label.redo", messages.getMainMessage("menu.label.redo"));
-            exportLocaleMap.put("menu.label.cancel", messages.getMainMessage("menu.label.cancel"));
-
-            exportLocaleMap.put("menu.label.save.image", messages.getMainMessage("menu.label.save.image"));
-            exportLocaleMap.put("menu.label.save.data", messages.getMainMessage("menu.label.save.data"));
-
-            exportLocaleMap.put("menu.label.draw", messages.getMainMessage("menu.label.draw"));
-            exportLocaleMap.put("menu.label.draw.change", messages.getMainMessage("menu.label.draw.change"));
-            exportLocaleMap.put("menu.label.draw.add", messages.getMainMessage("menu.label.draw.add"));
-            exportLocaleMap.put("menu.label.draw.shapes", messages.getMainMessage("menu.label.draw.shapes"));
-            exportLocaleMap.put("menu.label.draw.colors", messages.getMainMessage("menu.label.draw.colors"));
-            exportLocaleMap.put("menu.label.draw.widths", messages.getMainMessage("menu.label.draw.widths"));
-            exportLocaleMap.put("menu.label.draw.opacities", messages.getMainMessage("menu.label.draw.opacities"));
-            exportLocaleMap.put("menu.label.draw.text", messages.getMainMessage("menu.label.draw.text"));
-
-            exportLocaleMap.put("menu.label.draw.modes", messages.getMainMessage("menu.label.draw.modes"));
-            exportLocaleMap.put("menu.label.draw.modes.pencil", messages.getMainMessage("menu.label.draw.modes.pencil"));
-            exportLocaleMap.put("menu.label.draw.modes.line", messages.getMainMessage("menu.label.draw.modes.line"));
-            exportLocaleMap.put("menu.label.draw.modes.arrow", messages.getMainMessage("menu.label.draw.modes.arrow"));
+            amchartsIntegration.setExportMessages(localeString, ChartLocaleHelper.getExportLocaleMap(locale));
 
             amchartsIntegration.setSettings(settings);
-
-            amchartsIntegration.setExportMessages(localeString, exportLocaleMap);
             amchartsIntegration.setLocale(userSessionSource.getLocale());
         }
     }
@@ -1045,6 +993,13 @@ public class WebChart extends WebAbstractComponent<CubaAmchartsScene> implements
         }
 
         @Override
+        public void bindWiredFields(List<String> wiredFields) {
+            properties.clear();
+            properties.add("id");
+            properties.addAll(new LinkedHashSet<>(wiredFields));
+        }
+
+        @Override
         public List<DataItem> getItems() {
             List<DataItem> items = new ArrayList<>();
 
@@ -1089,6 +1044,10 @@ public class WebChart extends WebAbstractComponent<CubaAmchartsScene> implements
 
         public Collection<String> getProperties() {
             return properties;
+        }
+
+        public CollectionDatasource getDatasource() {
+            return datasource;
         }
 
         @Override
