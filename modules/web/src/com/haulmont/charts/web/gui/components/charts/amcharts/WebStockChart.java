@@ -357,7 +357,7 @@ public class WebStockChart extends WebAbstractComponent<CubaAmStockChartScene> i
         if (zoomListeners == null) {
             zoomListeners = new LinkedList<>();
             stockPanelZoomHandler = e -> {
-                ZoomEvent cubaEvent = new ZoomEvent(e.getStartDate(), e.getEndDate(), e.getPeriod());
+                ZoomEvent cubaEvent = new ZoomEvent(e.getStartDate(), e.getEndDate(), DatePeriod.fromId(e.getPeriod()));
 
                 for (ZoomListener listener : new ArrayList<>(zoomListeners)) {
                     listener.onZoom(cubaEvent);
@@ -388,7 +388,8 @@ public class WebStockChart extends WebAbstractComponent<CubaAmStockChartScene> i
             periodSelectorChangeListeners = new LinkedList<>();
             periodSelectorChangeHandler = e -> {
                 PeriodSelectorChangeEvent cubaEvent = new PeriodSelectorChangeEvent(e.getStartDate(), e.getEndDate(),
-                        e.getPredefinedPeriod(), e.getCount(), e.getX(), e.getY(), e.getAbsoluteX(), e.getAbsoluteY());
+                        PeriodType.fromId(e.getPredefinedPeriod()), e.getCount(),
+                        e.getX(), e.getY(), e.getAbsoluteX(), e.getAbsoluteY());
 
                 for (PeriodSelectorChangeListener listener : new ArrayList<>(periodSelectorChangeListeners)) {
                     listener.onChange(cubaEvent);

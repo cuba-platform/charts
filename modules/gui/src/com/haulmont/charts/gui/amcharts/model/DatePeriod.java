@@ -5,6 +5,8 @@
 
 package com.haulmont.charts.gui.amcharts.model;
 
+import javax.annotation.Nullable;
+
 /**
  * @author artamonov
  * @version $Id$
@@ -27,6 +29,16 @@ public enum DatePeriod implements ChartEnum {
 
     public String getId() {
         return id;
+    }
+
+    @Nullable
+    public static DatePeriod fromId(String id) {
+        for (DatePeriod period : values()) {
+            if (period.getId().equals(id)) {
+                return period;
+            }
+        }
+        return null;
     }
 
     @Override

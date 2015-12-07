@@ -5,6 +5,8 @@
 
 package com.haulmont.charts.gui.components.charts;
 
+import com.haulmont.charts.gui.amcharts.model.DatePeriod;
+import com.haulmont.charts.gui.amcharts.model.PeriodType;
 import com.haulmont.charts.gui.amcharts.model.StockEvent;
 import com.haulmont.charts.gui.amcharts.model.charts.StockChartGroup;
 import com.haulmont.cuba.core.entity.Entity;
@@ -172,9 +174,9 @@ public interface StockChart extends Component, Component.BelongToFrame, Componen
     class ZoomEvent {
         private final Date startDate;
         private final Date endDate;
-        private final String period;
+        private final DatePeriod period;
 
-        public ZoomEvent(Date startDate, Date endDate, String period) {
+        public ZoomEvent(Date startDate, Date endDate, DatePeriod period) {
             this.startDate = startDate;
             this.endDate = endDate;
             this.period = period;
@@ -188,7 +190,7 @@ public interface StockChart extends Component, Component.BelongToFrame, Componen
             return startDate;
         }
 
-        public String getPeriod() {
+        public DatePeriod getPeriod() {
             return period;
         }
     }
@@ -201,7 +203,7 @@ public interface StockChart extends Component, Component.BelongToFrame, Componen
         private final Date startDate;
         private final Date endDate;
 
-        private final String predefinedPeriod;
+        private final PeriodType predefinedPeriod;
         private final Integer count;
 
         private final int x;
@@ -209,7 +211,7 @@ public interface StockChart extends Component, Component.BelongToFrame, Componen
         private final int absoluteX;
         private final int absoluteY;
 
-        public PeriodSelectorChangeEvent(Date startDate, Date endDate, String predefinedPeriod,
+        public PeriodSelectorChangeEvent(Date startDate, Date endDate, PeriodType predefinedPeriod,
                                          Integer count, int x, int y, int absoluteX, int absoluteY) {
             this.startDate = startDate;
             this.endDate = endDate;
@@ -229,7 +231,7 @@ public interface StockChart extends Component, Component.BelongToFrame, Componen
             return endDate;
         }
 
-        public String getPredefinedPeriod() {
+        public PeriodType getPredefinedPeriod() {
             return predefinedPeriod;
         }
 
