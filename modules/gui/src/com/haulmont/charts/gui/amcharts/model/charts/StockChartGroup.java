@@ -396,4 +396,8 @@ public class StockChartGroup extends AbstractChartObject
         }
         return null;
     }
+
+    public ChartType getType() {
+        return type;
+    }
 }

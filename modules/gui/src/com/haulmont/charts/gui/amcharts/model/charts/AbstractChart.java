@@ -481,7 +481,6 @@ public abstract class AbstractChart<T extends AbstractChartObject> extends Abstr
         return (T) this;
     }
 
-
     public Boolean getAutoResize() {
         return autoResize;
     }

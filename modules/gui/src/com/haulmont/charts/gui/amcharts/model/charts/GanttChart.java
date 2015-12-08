@@ -23,7 +23,7 @@ import java.util.List;
  * @author gorelov
  * @version $Id$
  */
-public class GanttChart extends SerialChart<GanttChart> {
+public class GanttChart extends AbstractSerialChart<GanttChart> {
 
     private static final long serialVersionUID = 5489743047811238869L;
 

@@ -14,7 +14,7 @@ import org.dom4j.Element;
  * @author gorelov
  * @version $Id$
  */
-public class GanttChartLoader extends SerialChartLoader<GanttChart> {
+public class GanttChartLoader extends AbstractSerialChartLoader<GanttChart> {
 
     @Override
     protected GanttChart createConfiguration() {

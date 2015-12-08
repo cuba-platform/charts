@@ -17,6 +17,16 @@ import org.dom4j.Element;
 public class StockPanelLoader extends AbstractSerialChartLoader<StockPanel> {
 
     @Override
+    public void loadComponent() {
+        // do nothing
+    }
+
+    @Override
+    protected StockPanel createConfiguration() {
+        return new StockPanel();
+    }
+
+    @Override
     protected void loadConfiguration(StockPanel chart, Element element) {
         super.loadConfiguration(chart, element);
 

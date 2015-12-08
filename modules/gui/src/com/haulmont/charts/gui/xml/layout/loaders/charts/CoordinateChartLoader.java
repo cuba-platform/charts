@@ -75,7 +75,7 @@ public abstract class CoordinateChartLoader<T extends CoordinateChart> extends A
         }
     }
 
-    protected void loadGraph(Graph graph, Element graphElement) {
+    protected void loadGraph(AbstractGraph graph, Element graphElement) {
         Element dateFormatElement = graphElement.element("dateFormat");
         if (dateFormatElement != null) {
             DateFormat dateFormat = new DateFormat();

@@ -440,7 +440,7 @@ public abstract class AbstractChartLoader<T extends AbstractChart> extends Abstr
         }
     }
 
-    protected void loadLegend(Legend legend, Element legendElement) {
+    protected void loadLegend(AbstractLegend legend, Element legendElement) {
         loadLegendItems(legend, legendElement);
 
         String align = legendElement.attributeValue("align");
@@ -686,7 +686,7 @@ public abstract class AbstractChartLoader<T extends AbstractChart> extends Abstr
         }
     }
 
-    protected void loadLegendItems(Legend legend, Element legendElement) {
+    protected void loadLegendItems(AbstractLegend legend, Element legendElement) {
         Element legendDataElement = legendElement.element("data");
         if (legendDataElement != null) {
             for (Object dataItem : legendDataElement.elements("item")) {
@@ -718,7 +718,6 @@ public abstract class AbstractChartLoader<T extends AbstractChart> extends Abstr
         loadLabels(chart, element);
         loadTitles(chart, element);
         loadBalloon(chart, element);
-//        loadLegend(chart, element);
         loadExport(chart, element);
 
         String addClassNames = element.attributeValue("addClassNames");

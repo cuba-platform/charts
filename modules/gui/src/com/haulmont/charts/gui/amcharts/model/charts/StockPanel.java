@@ -24,7 +24,7 @@ import java.util.List;
  * @author gorelov
  * @version $Id$
  */
-public class StockPanel extends SerialChart<StockPanel> {
+public class StockPanel extends AbstractSerialChart<StockPanel> {
 
     private static final long serialVersionUID = 3129940127141352054L;
 
@@ -65,7 +65,7 @@ public class StockPanel extends SerialChart<StockPanel> {
     private Integer trendLineThickness;
 
     public StockPanel() {
-        super();
+        super(null);
         this.id = UuidProvider.createUuid().toString();
     }
 

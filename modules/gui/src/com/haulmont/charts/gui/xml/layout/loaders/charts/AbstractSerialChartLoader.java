@@ -9,7 +9,7 @@ import com.haulmont.charts.gui.amcharts.model.CategoryAxis;
 import com.haulmont.charts.gui.amcharts.model.DatePeriod;
 import com.haulmont.charts.gui.amcharts.model.GridPosition;
 import com.haulmont.charts.gui.amcharts.model.JsFunction;
-import com.haulmont.charts.gui.amcharts.model.charts.SerialChart;
+import com.haulmont.charts.gui.amcharts.model.charts.AbstractSerialChart;
 import org.apache.commons.lang.StringUtils;
 import org.dom4j.Element;
 
@@ -17,7 +17,25 @@ import org.dom4j.Element;
  * @author gorelov
  * @version $Id$
  */
-public class AbstractSerialChartLoader<T extends SerialChart> extends RectangularChartLoader<T> {
+public abstract class AbstractSerialChartLoader<T extends AbstractSerialChart> extends RectangularChartLoader<T> {
+
+    @Override
+    public void loadComponent() {
+        super.loadComponent();
+
+        T configuration = createConfiguration();
+        loadConfiguration(configuration, element);
+        resultComponent.setConfiguration(configuration);
+
+        String byDate = element.attributeValue("byDate");
+        if (StringUtils.isNotEmpty(byDate)) {
+            resultComponent.setByDate(Boolean.valueOf(byDate));
+        }
+    }
+
+    @SuppressWarnings("unchecked")
+    protected abstract T createConfiguration();
+
     @Override
     protected void loadConfiguration(T chart, Element element) {
         super.loadConfiguration(chart, element);

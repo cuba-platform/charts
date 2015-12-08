@@ -6,29 +6,14 @@
 package com.haulmont.charts.gui.xml.layout.loaders.charts;
 
 import com.haulmont.charts.gui.amcharts.model.charts.SerialChart;
-import org.apache.commons.lang.StringUtils;
 
 /**
  * @author artamonov
  * @version $Id$
  */
-public class SerialChartLoader<T extends SerialChart> extends AbstractSerialChartLoader<T> {
-    @Override
-    public void loadComponent() {
-        super.loadComponent();
+public class SerialChartLoader extends AbstractSerialChartLoader<SerialChart> {
 
-        T configuration = createConfiguration();
-        loadConfiguration(configuration, element);
-        resultComponent.setConfiguration(configuration);
-
-        String byDate = element.attributeValue("byDate");
-        if (StringUtils.isNotEmpty(byDate)) {
-            resultComponent.setByDate(Boolean.valueOf(byDate));
-        }
-    }
-
-    @SuppressWarnings("unchecked")
-    protected T createConfiguration() {
-        return (T) new SerialChart();
+    protected SerialChart createConfiguration() {
+        return new SerialChart();
     }
 }

@@ -13,7 +13,7 @@ package com.haulmont.charts.gui.amcharts.model;
  * @author gorelov
  * @version $Id$
  */
-public class StockGraph extends Graph<StockGraph> {
+public class StockGraph extends AbstractGraph<StockGraph> {
 
     private static final long serialVersionUID = -1746419165781920815L;
 

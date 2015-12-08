@@ -13,7 +13,7 @@ package com.haulmont.charts.gui.amcharts.model;
  * @author gorelov
  * @version $Id$
  */
-public class StockLegend extends Legend<StockLegend> {
+public class StockLegend extends AbstractLegend<StockLegend> {
 
     private static final long serialVersionUID = -5155850515331784520L;
 
