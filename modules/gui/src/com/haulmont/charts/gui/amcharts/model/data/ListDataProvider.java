@@ -53,37 +53,12 @@ public class ListDataProvider implements DataProvider {
     }
 
     @Override
-    public boolean contains(DataItem item) {
-        return items.contains(item);
-    }
-
-    @Override
     public void updateItem(DataItem item) {
     }
 
     @Override
     public void removeItem(DataItem item) {
         items.remove(item);
-    }
-
-    @Override
-    public String getDateFormat() {
-        return DEFAULT_DATE_FORMAT;
-    }
-
-    @Override
-    public void bindToChart(AbstractChart chart) {
-        this.chart = chart;
-    }
-
-    @Override
-    public void bindWiredFields(List<String> wiredFields) {
-        // do nothing
-    }
-
-    @Override
-    public AbstractChart getChart() {
-        return chart;
     }
 
     @Override

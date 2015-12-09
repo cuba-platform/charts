@@ -10,7 +10,6 @@ import com.google.gson.JsonObject;
 import com.google.gson.JsonSerializationContext;
 import com.haulmont.charts.gui.amcharts.model.charts.GanttChart;
 import com.haulmont.charts.gui.amcharts.model.data.DataItem;
-import com.haulmont.charts.gui.amcharts.model.data.DataProvider;
 import org.apache.commons.collections.CollectionUtils;
 import org.apache.commons.lang.StringUtils;
 
@@ -25,50 +24,56 @@ import java.util.List;
  * @version $Id$
  */
 public class DataItemsSerializer {
-    public List<JsonObject> serialize(DataProvider src, List<DataItem> items, JsonSerializationContext context) {
+
+    protected final String DEFAULT_DATE_FORMAT = "yyyy-MM-dd HH:mm:ss:S";
+
+    public List<JsonObject> serialize(List<DataItem> items, JsonSerializationContext context) {
         List<JsonObject> serialized = new ArrayList<>();
 
-        SimpleDateFormat dateFormat = new SimpleDateFormat(src.getDateFormat());
-        for (DataItem item : items) {
-            JsonObject itemElement = new JsonObject();
-            for (String property: item.getProperties()) {
-                Object value = item.getValue(property);
-                addProperty(itemElement, property, value, dateFormat, context);
-            }
-
-            if (src.getChart() instanceof GanttChart) {
-                GanttChart chart = (GanttChart) src.getChart();
-
-                String segmentsField = chart.getSegmentsField();
-
-                Object value = item.getValue(segmentsField);
-                if (value != null && !(value instanceof Collection)) {
-                    throw new RuntimeException("Gantt chart segments field must be a collection");
+        SimpleDateFormat dateFormat = new SimpleDateFormat(DEFAULT_DATE_FORMAT);
+        if (context instanceof ChartJsonSerializationContext) {
+            ChartJsonSerializationContext chartContext = (ChartJsonSerializationContext) context;
+            for (DataItem item : items) {
+                JsonObject itemElement = new JsonObject();
+                for (String property : chartContext.getProperties()) {
+                    Object value = item.getValue(property);
+                    addProperty(itemElement, property, value, dateFormat, context);
                 }
 
-                List<String> fields = new ArrayList<>();
-                fields.add(chart.getStartField());
-                fields.add(chart.getDurationField());
-                fields.add(chart.getColorField());
-                if (CollectionUtils.isNotEmpty(chart.getAdditionalSegmentFields())) {
-                    fields.addAll(chart.getAdditionalSegmentFields());
-                }
+                if (chartContext.getChartModel() instanceof GanttChart) {
+                    GanttChart chart = (GanttChart) chartContext.getChartModel();
 
-                JsonArray segments = new JsonArray();
+                    String segmentsField = chart.getSegmentsField();
 
-                for (DataItem dataItem : (Collection<DataItem>) value) {
-                    JsonObject segment = new JsonObject();
-                    for (String field : fields) {
-                        if (StringUtils.isNotEmpty(field)) {
-                            addProperty(segment, field, dataItem.getValue(field), dateFormat, context);
-                        }
+                    Object value = item.getValue(segmentsField);
+                    if (value != null && !(value instanceof Collection)) {
+                        throw new RuntimeException("Gantt chart segments field must be a collection");
                     }
-                    segments.add(segment);
-                }
-                itemElement.add(segmentsField, segments);
-            }
 
-            serialized.add(itemElement);
+                    List<String> fields = new ArrayList<>();
+                    fields.add(chart.getStartField());
+                    fields.add(chart.getDurationField());
+                    fields.add(chart.getColorField());
+                    if (CollectionUtils.isNotEmpty(chart.getAdditionalSegmentFields())) {
+                        fields.addAll(chart.getAdditionalSegmentFields());
+                    }
+
+                    JsonArray segments = new JsonArray();
+
+                    for (DataItem dataItem : (Collection<DataItem>) value) {
+                        JsonObject segment = new JsonObject();
+                        for (String field : fields) {
+                            if (StringUtils.isNotEmpty(field)) {
+                                addProperty(segment, field, dataItem.getValue(field), dateFormat, context);
+                            }
+                        }
+                        segments.add(segment);
+                    }
+                    itemElement.add(segmentsField, segments);
+                }
+
+                serialized.add(itemElement);
+            }
         }
 
         return serialized;

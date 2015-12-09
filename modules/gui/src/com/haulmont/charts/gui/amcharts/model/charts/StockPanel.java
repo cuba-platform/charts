@@ -5,10 +5,7 @@
 
 package com.haulmont.charts.gui.amcharts.model.charts;
 
-import com.haulmont.charts.gui.amcharts.model.Color;
-import com.haulmont.charts.gui.amcharts.model.StockGraph;
-import com.haulmont.charts.gui.amcharts.model.StockLegend;
-import com.haulmont.charts.gui.amcharts.model.ValueAxis;
+import com.haulmont.charts.gui.amcharts.model.*;
 import com.haulmont.cuba.core.global.UuidProvider;
 
 import java.util.ArrayList;
@@ -239,5 +236,18 @@ public class StockPanel extends AbstractSerialChart<StockPanel> {
     public StockPanel setTrendLineThickness(Integer trendLineThickness) {
         this.trendLineThickness = trendLineThickness;
         return this;
+    }
+
+    @Override
+    public List<String> getWiredFields() {
+        List<String> wiredFields = new ArrayList<>(super.getWiredFields());
+
+        if (stockGraphs != null) {
+            for (StockGraph g : stockGraphs) {
+                wiredFields.addAll(g.getWiredFields());
+            }
+        }
+
+        return wiredFields;
     }
 }

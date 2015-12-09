@@ -9,6 +9,7 @@ import com.haulmont.charts.gui.amcharts.model.*;
 import com.haulmont.charts.gui.amcharts.model.charts.StockChartGroup;
 import com.haulmont.charts.gui.amcharts.model.charts.StockPanel;
 import com.haulmont.charts.gui.amcharts.model.data.DataProvider;
+import com.haulmont.charts.gui.amcharts.model.data.EntityDataProvider;
 import com.haulmont.charts.gui.components.charts.StockChart;
 import com.haulmont.charts.web.gui.ChartLocaleHelper;
 import com.haulmont.charts.web.toolkit.ui.amcharts.CubaAmStockChartScene;
@@ -136,7 +137,7 @@ public class WebStockChart extends WebAbstractComponent<CubaAmStockChartScene> i
                 dataSet.setDataProvider(null);
             } else {
                 CollectionDsHelper.autoRefreshInvalid(datasource, true);
-                dataSet.setDataProvider(new WebChart.EntityDataProvider(datasource));
+                dataSet.setDataProvider(new EntityDataProvider(datasource));
             }
         }
     }
@@ -147,8 +148,8 @@ public class WebStockChart extends WebAbstractComponent<CubaAmStockChartScene> i
         if (dataSet != null) {
             DataProvider dataProvider = dataSet.getDataProvider();
             if (dataProvider != null) {
-                if (dataProvider instanceof WebChart.EntityDataProvider) {
-                    return ((WebChart.EntityDataProvider) dataProvider).getDatasource();
+                if (dataProvider instanceof EntityDataProvider) {
+                    return ((EntityDataProvider) dataProvider).getDatasource();
                 } else {
                     throw new IllegalArgumentException(""); // TODO: gg, exception text
                 }

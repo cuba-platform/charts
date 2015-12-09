@@ -5,6 +5,11 @@
 
 package com.haulmont.charts.gui.amcharts.model;
 
+import org.apache.commons.lang.StringUtils;
+
+import java.util.ArrayList;
+import java.util.List;
+
 /**
  * See documentation for properties of StockGraph JS object. <br/>
  *
@@ -301,5 +306,16 @@ public class StockGraph extends AbstractGraph<StockGraph> {
     public StockGraph setUseDataSetColors(Boolean useDataSetColors) {
         this.useDataSetColors = useDataSetColors;
         return this;
+    }
+
+    @Override
+    public List<String> getWiredFields() {
+        List<String> wiredFields = new ArrayList<>(super.getWiredFields());
+
+        if (StringUtils.isNotEmpty(getCompareField())) {
+            wiredFields.add(getCompareField());
+        }
+
+        return wiredFields;
     }
 }

@@ -6,7 +6,6 @@
 package com.haulmont.charts.gui.amcharts.model.data;
 
 import java.io.Serializable;
-import java.util.Collection;
 
 /**
  * Chart data item.
@@ -15,8 +14,6 @@ import java.util.Collection;
  * @version $Id$
  */
 public interface DataItem extends Serializable {
-
-    Collection<String> getProperties();
 
     Object getValue(String property);
 }

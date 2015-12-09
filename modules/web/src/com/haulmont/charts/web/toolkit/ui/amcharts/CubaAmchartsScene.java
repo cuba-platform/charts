@@ -5,10 +5,12 @@
 
 package com.haulmont.charts.web.toolkit.ui.amcharts;
 
-import com.google.gson.*;
-import com.haulmont.charts.gui.amcharts.model.AbstractChartObject;
+import com.google.gson.JsonArray;
+import com.google.gson.JsonObject;
+import com.google.gson.JsonSerializationContext;
 import com.haulmont.charts.gui.amcharts.model.charts.*;
 import com.haulmont.charts.gui.amcharts.model.data.*;
+import com.haulmont.charts.gui.amcharts.model.gson.ChartJsonSerializationContext;
 import com.haulmont.charts.gui.amcharts.model.gson.DataItemsSerializer;
 import com.haulmont.charts.web.toolkit.ui.amcharts.events.*;
 import com.haulmont.charts.web.toolkit.ui.client.amcharts.CubaAmchartsSceneClientRpc;
@@ -19,7 +21,6 @@ import com.vaadin.util.ReflectTools;
 import org.apache.commons.lang.StringUtils;
 
 import java.lang.reflect.Method;
-import java.lang.reflect.Type;
 import java.util.*;
 
 /**
@@ -354,7 +355,6 @@ public class CubaAmchartsScene extends AbstractComponent {
                 setupDefaults(chart);
 
                 if (chart.getDataProvider() != null) {
-                    chart.getDataProvider().bindToChart(chart);
                     chart.getDataProvider().addChangeListener(changeListener);
                 }
 
@@ -371,11 +371,10 @@ public class CubaAmchartsScene extends AbstractComponent {
                 JsonArray jsonItemsArray = new JsonArray();
 
                 if (serializationContext == null) {
-                    serializationContext = new CubaAmchartsSceneJsonSerializationContext();
+                    serializationContext = new ChartJsonSerializationContext(chart);
                 }
 
-                List<JsonObject> jsonObjects = serializer.serialize(
-                        chart.getDataProvider(), entry.getValue(), serializationContext);
+                List<JsonObject> jsonObjects = serializer.serialize(entry.getValue(), serializationContext);
                 for (JsonObject jsonObject : jsonObjects) {
                     jsonItemsArray.add(jsonObject);
                 }
@@ -517,19 +516,6 @@ public class CubaAmchartsScene extends AbstractComponent {
             chart.getChart().getDataProvider().removeChangeListener(this);
             chart.setChangedItems(null);
             chart.drawChart();
-        }
-    }
-
-    protected class CubaAmchartsSceneJsonSerializationContext implements JsonSerializationContext {
-
-        @Override
-        public JsonElement serialize(Object src) {
-            return AbstractChartObject.getSharedGson().toJsonTree(src);
-        }
-
-        @Override
-        public JsonElement serialize(Object src, Type typeOfSrc) {
-            return AbstractChartObject.getSharedGson().toJsonTree(src, typeOfSrc);
         }
     }
 }

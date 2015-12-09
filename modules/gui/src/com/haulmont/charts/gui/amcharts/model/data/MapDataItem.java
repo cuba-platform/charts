@@ -5,7 +5,6 @@
 
 package com.haulmont.charts.gui.amcharts.model.data;
 
-import java.util.Collection;
 import java.util.HashMap;
 import java.util.Map;
 
@@ -24,11 +23,6 @@ public class MapDataItem implements DataItem {
     }
 
     public MapDataItem() {
-    }
-
-    @Override
-    public Collection<String> getProperties() {
-        return properties.keySet();
     }
 
     @Override

@@ -10,7 +10,6 @@ import com.google.gson.FieldAttributes;
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
 import com.google.gson.annotations.Expose;
-import com.haulmont.charts.gui.amcharts.model.data.DataProvider;
 import com.haulmont.charts.gui.amcharts.model.gson.*;
 
 import java.io.Serializable;
@@ -52,14 +51,17 @@ public abstract class AbstractChartObject implements Serializable {
                 return false;
             }
         });
+        setDefaultProperties(builder);
+        return builder;
+    }
+
+    protected static void setDefaultProperties(GsonBuilder builder) {
         // uncomment if you wish to debug generated json
         // builder.setPrettyPrinting();
         builder.registerTypeHierarchyAdapter(ChartEnum.class, new ChartEnumSerializer());
         builder.registerTypeHierarchyAdapter(Color.class, new ColorSerializer());
         builder.registerTypeHierarchyAdapter(JsFunction.class, new JsFunctionSerializer());
-        builder.registerTypeHierarchyAdapter(DataProvider.class, new DataProviderSerializer());
         builder.registerTypeHierarchyAdapter(Date.class, new ConfigDateSerializer());
-        return builder;
     }
 
     @Override

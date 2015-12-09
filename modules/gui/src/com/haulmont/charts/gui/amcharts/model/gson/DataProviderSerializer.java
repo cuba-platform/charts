@@ -19,7 +19,7 @@ public class DataProviderSerializer extends DataItemsSerializer implements JsonS
     @Override
     public JsonElement serialize(DataProvider src, Type typeOfSrc, JsonSerializationContext context) {
         JsonArray dataProviderElement = new JsonArray();
-        List<JsonObject> jsonObjects = serialize(src, src.getItems(), context);
+        List<JsonObject> jsonObjects = serialize(src.getItems(), context);
         for (JsonObject jsonObject : jsonObjects) {
             dataProviderElement.add(jsonObject);
         }

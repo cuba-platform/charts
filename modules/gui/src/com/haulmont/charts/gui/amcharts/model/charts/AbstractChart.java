@@ -5,11 +5,14 @@
 
 package com.haulmont.charts.gui.amcharts.model.charts;
 
+import com.google.gson.*;
 import com.google.gson.annotations.Expose;
 import com.haulmont.charts.gui.amcharts.model.*;
 import com.haulmont.charts.gui.amcharts.model.data.DataItem;
 import com.haulmont.charts.gui.amcharts.model.data.DataProvider;
 import com.haulmont.charts.gui.amcharts.model.data.ListDataProvider;
+import com.haulmont.charts.gui.amcharts.model.gson.ChartJsonSerializationContext;
+import com.haulmont.charts.gui.amcharts.model.gson.DataProviderSerializer;
 import org.apache.commons.collections.CollectionUtils;
 
 import java.util.ArrayList;
@@ -26,7 +29,7 @@ import java.util.List;
  * @version $Id$
  */
 @SuppressWarnings("unchecked")
-public abstract class AbstractChart<T extends AbstractChartObject> extends AbstractChartObject {
+public abstract class AbstractChart<T extends AbstractChartObject> extends ChartModel {
 
     private static final long serialVersionUID = -7360797549413731632L;
 
@@ -443,12 +446,13 @@ public abstract class AbstractChart<T extends AbstractChartObject> extends Abstr
         return (T) this;
     }
 
+    @Override
     public List<String> getWiredFields() {
-        List<String> fileds = new ArrayList<>();
+        List<String> fields = new ArrayList<>();
         if (CollectionUtils.isNotEmpty(getAdditionalFields())) {
-            fileds.addAll(getAdditionalFields());
+            fields.addAll(getAdditionalFields());
         }
-        return fileds;
+        return fields;
     }
 
     public List<String> getAdditionalFields() {
@@ -550,5 +554,19 @@ public abstract class AbstractChart<T extends AbstractChartObject> extends Abstr
     public T setDefs(String defs) {
         this.defs = defs;
         return (T) this;
+    }
+
+    @Override
+    public String toString() {
+        JsonElement jsonTree = chartGson.toJsonTree(this);
+
+        if (dataProvider != null) {
+            DataProviderSerializer serializer = new DataProviderSerializer();
+            ChartJsonSerializationContext context = new ChartJsonSerializationContext(this);
+            JsonElement dataProviderElement = serializer.serialize(dataProvider, dataProvider.getClass(), context);
+            jsonTree.getAsJsonObject().add("dataProvider", dataProviderElement);
+        }
+
+        return jsonTree.toString();
     }
 }

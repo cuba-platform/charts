@@ -5,8 +5,6 @@
 
 package com.haulmont.charts.gui.amcharts.model.data;
 
-import com.haulmont.charts.gui.amcharts.model.charts.AbstractChart;
-
 import java.io.Serializable;
 import java.util.Collection;
 import java.util.List;
@@ -19,27 +17,19 @@ import java.util.List;
  */
 public interface DataProvider extends Serializable {
 
-    String DEFAULT_DATE_FORMAT = "yyyy-MM-dd HH:mm:ss:S";
-
-    void bindToChart(AbstractChart chart);
-
-    void bindWiredFields(List<String> wiredFields);
-
     List<DataItem> getItems();
-
-    AbstractChart getChart();
 
     void addItem(DataItem item);
 
-    void addItems(Collection<DataItem> items);
-
-    boolean contains(DataItem item);
+    default void addItems(Collection<DataItem> items) {
+        for (DataItem item : items) {
+            addItem(item);
+        }
+    }
 
     void updateItem(DataItem item);
 
     void removeItem(DataItem item);
-
-    String getDateFormat();
 
     void addChangeListener(ConfigurationChangeListener listener);
 

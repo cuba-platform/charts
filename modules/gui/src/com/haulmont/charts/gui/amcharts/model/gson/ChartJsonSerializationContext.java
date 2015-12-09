@@ -1,0 +1,50 @@
+/*
+ * Copyright (c) 2008-2015 Haulmont. All rights reserved.
+ * Use is subject to license terms, see http://www.cuba-platform.com/license for details.
+ */
+
+package com.haulmont.charts.gui.amcharts.model.gson;
+
+import com.google.gson.JsonElement;
+import com.google.gson.JsonSerializationContext;
+import com.haulmont.charts.gui.amcharts.model.AbstractChartObject;
+import com.haulmont.charts.gui.amcharts.model.charts.ChartModel;
+
+import java.lang.reflect.Type;
+import java.util.ArrayList;
+import java.util.LinkedHashSet;
+import java.util.List;
+
+/**
+ * @author gorelov
+ * @version $Id$
+ */
+public class ChartJsonSerializationContext implements JsonSerializationContext {
+
+    protected ChartModel chartModel;
+
+    public ChartJsonSerializationContext(ChartModel chartModel) {
+        this.chartModel = chartModel;
+    }
+
+    @Override
+    public JsonElement serialize(Object src) {
+        return AbstractChartObject.getSharedGson().toJsonTree(src);
+    }
+
+    @Override
+    public JsonElement serialize(Object src, Type typeOfSrc) {
+        return AbstractChartObject.getSharedGson().toJsonTree(src, typeOfSrc);
+    }
+
+    public ChartModel getChartModel() {
+        return chartModel;
+    }
+
+    public List<String> getProperties() {
+        List<String> properties = new ArrayList<>();
+        properties.add("id");
+        properties.addAll(new LinkedHashSet<>(chartModel.getWiredFields()));
+        return properties;
+    }
+}

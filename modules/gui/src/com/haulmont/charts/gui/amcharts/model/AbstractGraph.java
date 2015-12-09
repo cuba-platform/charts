@@ -5,9 +5,14 @@
 
 package com.haulmont.charts.gui.amcharts.model;
 
+import org.apache.commons.lang.StringUtils;
+
+import java.util.ArrayList;
+import java.util.List;
+
 /**
  * See documentation for properties of AmGraph JS Object. <br/>
- *
+ * <p>
  * <a href="http://docs.amcharts.com/3/javascriptcharts/AmGraph">http://docs.amcharts.com/3/javascriptcharts/AmGraph</a>
  *
  * @author artamonov
@@ -1171,5 +1176,95 @@ public class AbstractGraph<T extends AbstractGraph> extends AbstractChartObject 
     public T setUseLineColorForBulletBorder(Boolean useLineColorForBulletBorder) {
         this.useLineColorForBulletBorder = useLineColorForBulletBorder;
         return (T) this;
+    }
+
+    public List<String> getWiredFields() {
+        List<String> wiredFields = new ArrayList<>();
+
+        if (StringUtils.isNotEmpty(getValueField())) {
+            wiredFields.add(getValueField());
+        }
+
+        if (StringUtils.isNotEmpty(getAlphaField())) {
+            wiredFields.add(getAlphaField());
+        }
+
+        if (StringUtils.isNotEmpty(getBulletField())) {
+            wiredFields.add(getBulletField());
+        }
+
+        if (StringUtils.isNotEmpty(getBulletSizeField())) {
+            wiredFields.add(getBulletSizeField());
+        }
+
+        if (StringUtils.isNotEmpty(getCloseField())) {
+            wiredFields.add(getCloseField());
+        }
+
+        if (StringUtils.isNotEmpty(getColorField())) {
+            wiredFields.add(getColorField());
+        }
+
+        if (StringUtils.isNotEmpty(getCustomBulletField())) {
+            wiredFields.add(getCustomBulletField());
+        }
+
+        if (StringUtils.isNotEmpty(getDashLengthField())) {
+            wiredFields.add(getDashLengthField());
+        }
+
+        if (StringUtils.isNotEmpty(getDescriptionField())) {
+            wiredFields.add(getDescriptionField());
+        }
+
+        if (StringUtils.isNotEmpty(getErrorField())) {
+            wiredFields.add(getErrorField());
+        }
+
+        if (StringUtils.isNotEmpty(getFillColorsField())) {
+            wiredFields.add(getFillColorsField());
+        }
+
+        if (StringUtils.isNotEmpty(getGapField())) {
+            wiredFields.add(getGapField());
+        }
+
+        if (StringUtils.isNotEmpty(getHighField())) {
+            wiredFields.add(getHighField());
+        }
+
+        if (StringUtils.isNotEmpty(getLabelColorField())) {
+            wiredFields.add(getLabelColorField());
+        }
+
+        if (StringUtils.isNotEmpty(getLineColorField())) {
+            wiredFields.add(getLineColorField());
+        }
+
+        if (StringUtils.isNotEmpty(getLowField())) {
+            wiredFields.add(getLowField());
+        }
+
+        if (StringUtils.isNotEmpty(getOpenField())) {
+            wiredFields.add(getOpenField());
+        }
+
+        if (StringUtils.isNotEmpty(getPatternField())) {
+            wiredFields.add(getPatternField());
+        }
+
+        if (StringUtils.isNotEmpty(getUrlField())) {
+            wiredFields.add(getUrlField());
+        }
+
+        if (StringUtils.isNotEmpty(getXField())) {
+            wiredFields.add(getXField());
+        }
+
+        if (StringUtils.isNotEmpty(getYField())) {
+            wiredFields.add(getYField());
+        }
+
+        return wiredFields;
     }
 }

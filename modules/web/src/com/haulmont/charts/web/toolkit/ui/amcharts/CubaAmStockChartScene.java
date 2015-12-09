@@ -5,9 +5,7 @@
 
 package com.haulmont.charts.web.toolkit.ui.amcharts;
 
-import com.haulmont.charts.gui.amcharts.model.DataSet;
 import com.haulmont.charts.gui.amcharts.model.charts.StockChartGroup;
-import com.haulmont.charts.gui.amcharts.model.charts.StockPanel;
 import com.haulmont.charts.web.toolkit.ui.amcharts.events.*;
 import com.haulmont.charts.web.toolkit.ui.client.amstockcharts.CubaAmStockChartSceneState;
 import com.haulmont.charts.web.toolkit.ui.client.amstockcharts.CubaAmStockChartServerRpc;
@@ -16,9 +14,7 @@ import com.vaadin.util.ReflectTools;
 import org.apache.commons.lang.StringUtils;
 
 import java.lang.reflect.Method;
-import java.util.ArrayList;
 import java.util.Date;
-import java.util.List;
 
 /**
  * @author gorelov
@@ -264,18 +260,6 @@ public class CubaAmStockChartScene extends AbstractComponent {
         if (initial || dirty) {
             if (chart != null) {
                 setupDefaults(chart);
-
-                List<DataSet> dataSets = chart.getDataSets();
-                for (DataSet dataSet : dataSets) {
-                    if (dataSet.getDataProvider() != null) {
-                        List<String> wiredFields = new ArrayList<>(dataSet.getWiredFields());
-                        for (StockPanel panel : chart.getPanels()) {
-                            wiredFields.addAll(panel.getWiredFields());
-                        }
-                        dataSet.getDataProvider().bindWiredFields(wiredFields);
-                    }
-                }
-
                 getState().configuration = chart.toString();
             }
             dirty = false;

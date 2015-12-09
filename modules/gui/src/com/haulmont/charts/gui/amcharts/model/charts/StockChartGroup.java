@@ -5,7 +5,14 @@
 
 package com.haulmont.charts.gui.amcharts.model.charts;
 
+import com.google.gson.JsonArray;
+import com.google.gson.JsonElement;
+import com.google.gson.JsonObject;
+import com.google.gson.annotations.Expose;
 import com.haulmont.charts.gui.amcharts.model.*;
+import com.haulmont.charts.gui.amcharts.model.gson.ChartJsonSerializationContext;
+import com.haulmont.charts.gui.amcharts.model.gson.DataProviderSerializer;
+import org.apache.commons.collections.CollectionUtils;
 
 import java.util.ArrayList;
 import java.util.Arrays;
@@ -19,7 +26,7 @@ import java.util.List;
  * @author gorelov
  * @version $Id$
  */
-public class StockChartGroup extends AbstractChartObject
+public class StockChartGroup extends ChartModel
         implements HasColors<StockChartGroup> {
 
     private static final long serialVersionUID = -8514686195948609709L;
@@ -85,6 +92,9 @@ public class StockChartGroup extends AbstractChartObject
     private ValueAxesSettings valueAxesSettings;
 
     private Boolean zoomOutOnDataSetChange;
+
+    @Expose(serialize = false, deserialize = false)
+    private List<String> additionalFields;
 
     public Boolean getAddClassNames() {
         return addClassNames;
@@ -399,5 +409,59 @@ public class StockChartGroup extends AbstractChartObject
 
     public ChartType getType() {
         return type;
+    }
+
+    public List<String> getAdditionalFields() {
+        return additionalFields;
+    }
+
+    public StockChartGroup setAdditionalFields(List<String> additionalFields) {
+        this.additionalFields = additionalFields;
+        return this;
+    }
+
+    @Override
+    public List<String> getWiredFields() {
+        List<String> wiredFields = new ArrayList<>();
+        if (CollectionUtils.isNotEmpty(getAdditionalFields())) {
+            wiredFields.addAll(getAdditionalFields());
+        }
+        if (CollectionUtils.isNotEmpty(panels)) {
+            for (StockPanel panel : panels) {
+                wiredFields.addAll(panel.getWiredFields());
+            }
+        }
+        if (CollectionUtils.isNotEmpty(dataSets)) {
+            for (DataSet dataSet : dataSets) {
+                if (dataSet.getDataProvider() != null) {
+                    wiredFields.addAll(dataSet.getWiredFields());
+                }
+            }
+        }
+        return wiredFields;
+    }
+
+    @Override
+    public String toString() {
+        JsonElement jsonTree = chartGson.toJsonTree(this);
+
+        if (CollectionUtils.isNotEmpty(dataSets)) {
+            DataProviderSerializer serializer = new DataProviderSerializer();
+            ChartJsonSerializationContext context = new ChartJsonSerializationContext(this);
+
+            JsonArray jsonDataSets = (JsonArray) jsonTree.getAsJsonObject().get("dataSets");
+            for (JsonElement dataSetElement : jsonDataSets) {
+                JsonObject dataSetObject = (JsonObject) dataSetElement;
+                String id = dataSetObject.get("id").getAsString();
+                DataSet dataSet = getDataSet(id);
+                if (dataSet != null && dataSet.getDataProvider() != null) {
+                    JsonElement dataProviderElement = serializer.serialize(dataSet.getDataProvider(),
+                            dataSet.getDataProvider().getClass(), context);
+                    dataSetObject.add("dataProvider", dataProviderElement);
+                }
+            }
+        }
+
+        return jsonTree.toString();
     }
 }
