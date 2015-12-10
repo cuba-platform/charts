@@ -18,6 +18,7 @@ import com.haulmont.charts.web.toolkit.ui.client.amcharts.CubaAmchartsSceneState
 import com.haulmont.charts.web.toolkit.ui.client.amcharts.CubaAmchartsServerRpc;
 import com.vaadin.ui.AbstractComponent;
 import com.vaadin.util.ReflectTools;
+import org.apache.commons.collections.CollectionUtils;
 import org.apache.commons.lang.StringUtils;
 
 import java.lang.reflect.Method;
@@ -80,7 +81,7 @@ public class CubaAmchartsScene extends AbstractComponent {
     private final static Method axisZoomMethod =
             ReflectTools.findMethod(AxisZoomListener.class, "onZoom", AxisZoomEvent.class);
 
-    protected final ConfigurationChangeListener changeListener = new ProxyChangeForwarder(this);
+    protected final DataChangeListener changeListener = new ProxyChangeForwarder(this);
 
     private boolean dirty = false;
 
@@ -90,14 +91,14 @@ public class CubaAmchartsScene extends AbstractComponent {
 
     protected JsonSerializationContext serializationContext;
 
-    protected enum Operations {
+    protected enum Operation {
         ADD("add"),
         REMOVE("remove"),
         UPDATE("update");
 
         private String id;
 
-        Operations(String id) {
+        Operation(String id) {
             this.id = id;
         }
 
@@ -153,7 +154,7 @@ public class CubaAmchartsScene extends AbstractComponent {
         markAsDirty();
     }
 
-    protected void addChangedItem(Operations type, DataItem item) {
+    protected void addChangedItems(Operation type, List<DataItem> item) {
         if (changedItems == null) {
             changedItems = new HashMap<>();
         }
@@ -164,7 +165,7 @@ public class CubaAmchartsScene extends AbstractComponent {
             changedItems.put(type.toString(), items);
         }
 
-        items.add(item);
+        items.addAll(item);
 
         markAsDirty();
     }
@@ -482,7 +483,7 @@ public class CubaAmchartsScene extends AbstractComponent {
         }
     }
 
-    protected static class ProxyChangeForwarder implements ConfigurationChangeListener {
+    protected static class ProxyChangeForwarder implements DataChangeListener {
 
         private final CubaAmchartsScene chart;
 
@@ -491,31 +492,27 @@ public class CubaAmchartsScene extends AbstractComponent {
         }
 
         @Override
-        public void dataAdded(DataAddedEvent event) {
-            if (event.getItem() != null) {
-                chart.addChangedItem(Operations.ADD, event.getItem());
+        public void dataItemsChanged(DataItemsChangeEvent e) {
+            Operation operation = null;
+            switch (e.getOperation()) {
+                case ADD:
+                    operation = Operation.ADD;
+                    break;
+                case REMOVE:
+                    operation = Operation.REMOVE;
+                    break;
+                case UPDATE:
+                    operation = Operation.UPDATE;
+                    break;
+                case REFRESH:
+                    chart.getChart().getDataProvider().removeChangeListener(this);
+                    chart.setChangedItems(null);
+                    chart.drawChart();
+                    break;
             }
-        }
-
-        @Override
-        public void dataRemoved(DataRemovedEvent event) {
-            if (event.getItem() != null) {
-                chart.addChangedItem(Operations.REMOVE, event.getItem());
+            if (operation != null && CollectionUtils.isNotEmpty(e.getItems())) {
+                chart.addChangedItems(operation, e.getItems());
             }
-        }
-
-        @Override
-        public void dataUpdated(DataUpdatedEvent event) {
-            if (event.getItem() != null) {
-                chart.addChangedItem(Operations.UPDATE, event.getItem());
-            }
-        }
-
-        @Override
-        public void dataRefreshed() {
-            chart.getChart().getDataProvider().removeChangeListener(this);
-            chart.setChangedItems(null);
-            chart.drawChart();
         }
     }
 }

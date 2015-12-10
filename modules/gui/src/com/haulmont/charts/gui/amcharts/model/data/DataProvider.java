@@ -31,7 +31,7 @@ public interface DataProvider extends Serializable {
 
     void removeItem(DataItem item);
 
-    void addChangeListener(ConfigurationChangeListener listener);
+    void addChangeListener(DataChangeListener listener);
 
-    void removeChangeListener(ConfigurationChangeListener listener);
+    void removeChangeListener(DataChangeListener listener);
 }

@@ -5,13 +5,13 @@
 
 package com.haulmont.charts.gui.amcharts.model.data;
 
+import java.io.Serializable;
+
 /**
  * @author gorelov
  * @version $Id$
  */
-public class DataUpdatedEvent extends AbstractDataChangeEvent {
+public interface DataChangeListener extends Serializable {
 
-    public DataUpdatedEvent(DataItem item) {
-        super(item);
-    }
+    void dataItemsChanged(DataItemsChangeEvent e);
 }

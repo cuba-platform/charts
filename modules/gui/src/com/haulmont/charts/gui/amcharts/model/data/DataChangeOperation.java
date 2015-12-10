@@ -9,9 +9,9 @@ package com.haulmont.charts.gui.amcharts.model.data;
  * @author gorelov
  * @version $Id$
  */
-public class DataRemovedEvent extends AbstractDataChangeEvent {
-
-    public DataRemovedEvent(DataItem item) {
-        super(item);
-    }
+public enum DataChangeOperation {
+    REFRESH,
+    ADD,
+    REMOVE,
+    UPDATE
 }
