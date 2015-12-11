@@ -462,6 +462,6 @@ public class StockChartGroup extends ChartModel
             }
         }
 
-        return jsonTree.toString();
+        return chartGson.toJson(jsonTree);
     }
 }

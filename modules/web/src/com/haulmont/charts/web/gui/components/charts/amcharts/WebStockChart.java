@@ -10,6 +10,7 @@ import com.haulmont.charts.gui.amcharts.model.charts.StockChartGroup;
 import com.haulmont.charts.gui.amcharts.model.charts.StockPanel;
 import com.haulmont.charts.gui.amcharts.model.data.DataProvider;
 import com.haulmont.charts.gui.amcharts.model.data.EntityDataProvider;
+import com.haulmont.charts.gui.amcharts.model.gson.ChartJsonSerializationContext;
 import com.haulmont.charts.gui.components.charts.StockChart;
 import com.haulmont.charts.web.gui.ChartLocaleHelper;
 import com.haulmont.charts.web.toolkit.ui.amcharts.CubaAmStockChartScene;
@@ -35,8 +36,6 @@ import java.util.*;
  * @version $Id$
  */
 public class WebStockChart extends WebAbstractComponent<CubaAmStockChartScene> implements StockChart {
-
-    public static final String DEFAULT_JS_DATE_FORMAT = "YYYY-MM-DD JJ:NN:SS:QQQ";
 
     protected Messages messages = AppBeans.get(Messages.class);
 
@@ -151,7 +150,7 @@ public class WebStockChart extends WebAbstractComponent<CubaAmStockChartScene> i
                 if (dataProvider instanceof EntityDataProvider) {
                     return ((EntityDataProvider) dataProvider).getDatasource();
                 } else {
-                    throw new IllegalArgumentException(""); // TODO: gg, exception text
+                    throw new IllegalArgumentException("Trying to get datasource from non EntityDataProvider");
                 }
             }
         }
@@ -196,15 +195,12 @@ public class WebStockChart extends WebAbstractComponent<CubaAmStockChartScene> i
     public void addClickListener(StockChartClickListener clickListener) {
         if (clickListeners == null) {
             clickListeners = new LinkedList<>();
-            clickHandler = new com.haulmont.charts.web.toolkit.ui.amcharts.events.StockChartClickListener() {
-                @Override
-                public void onClick(com.haulmont.charts.web.toolkit.ui.amcharts.events.StockChartClickEvent e) {
-                    StockChartClickEvent cubaEvent = new StockChartClickEvent(
-                            e.getX(), e.getY(), e.getAbsoluteX(), e.getAbsoluteY());
+            clickHandler = e -> {
+                StockChartClickEvent cubaEvent = new StockChartClickEvent(
+                        e.getX(), e.getY(), e.getAbsoluteX(), e.getAbsoluteY());
 
-                    for (StockChartClickListener listener : new ArrayList<>(clickListeners)) {
-                        listener.onClick(cubaEvent);
-                    }
+                for (StockChartClickListener listener : new ArrayList<>(clickListeners)) {
+                    listener.onClick(cubaEvent);
                 }
             };
             component.addChartClickListener(clickHandler);
@@ -230,15 +226,12 @@ public class WebStockChart extends WebAbstractComponent<CubaAmStockChartScene> i
     public void addRightClickListener(StockChartClickListener clickListener) {
         if (rightClickListeners == null) {
             rightClickListeners = new LinkedList<>();
-            rightClickHandler = new com.haulmont.charts.web.toolkit.ui.amcharts.events.StockChartRightClickListener() {
-                @Override
-                public void onClick(com.haulmont.charts.web.toolkit.ui.amcharts.events.StockChartRightClickEvent e) {
-                    StockChartClickEvent cubaEvent = new StockChartClickEvent(
-                            e.getX(), e.getY(), e.getAbsoluteX(), e.getAbsoluteY());
+            rightClickHandler = e -> {
+                StockChartClickEvent cubaEvent = new StockChartClickEvent(
+                        e.getX(), e.getY(), e.getAbsoluteX(), e.getAbsoluteY());
 
-                    for (StockChartClickListener listener : new ArrayList<>(rightClickListeners)) {
-                        listener.onClick(cubaEvent);
-                    }
+                for (StockChartClickListener listener : new ArrayList<>(rightClickListeners)) {
+                    listener.onClick(cubaEvent);
                 }
             };
             component.addChartRightClickListener(rightClickHandler);
@@ -736,7 +729,7 @@ public class WebStockChart extends WebAbstractComponent<CubaAmStockChartScene> i
             setupChartLocale(chart);
 
             if (StringUtils.isEmpty(chart.getDataDateFormat())) {
-                chart.setDataDateFormat(DEFAULT_JS_DATE_FORMAT);
+                chart.setDataDateFormat(ChartJsonSerializationContext.DEFAULT_JS_DATE_FORMAT);
             }
         }
 

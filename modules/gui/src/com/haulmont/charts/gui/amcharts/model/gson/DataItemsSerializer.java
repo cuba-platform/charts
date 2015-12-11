@@ -25,12 +25,10 @@ import java.util.List;
  */
 public class DataItemsSerializer {
 
-    protected final String DEFAULT_DATE_FORMAT = "yyyy-MM-dd HH:mm:ss:S";
-
     public List<JsonObject> serialize(List<DataItem> items, JsonSerializationContext context) {
         List<JsonObject> serialized = new ArrayList<>();
 
-        SimpleDateFormat dateFormat = new SimpleDateFormat(DEFAULT_DATE_FORMAT);
+        SimpleDateFormat dateFormat = new SimpleDateFormat(ChartJsonSerializationContext.DEFAULT_DATE_FORMAT);
         if (context instanceof ChartJsonSerializationContext) {
             ChartJsonSerializationContext chartContext = (ChartJsonSerializationContext) context;
             for (DataItem item : items) {

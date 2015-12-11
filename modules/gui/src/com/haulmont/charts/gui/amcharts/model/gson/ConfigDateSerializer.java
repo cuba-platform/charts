@@ -20,11 +20,9 @@ import java.util.Date;
  */
 public class ConfigDateSerializer implements JsonSerializer<Date> {
 
-    String DEFAULT_DATE_FORMAT = "yyyy-MM-dd HH:mm:ss:S";
-
     @Override
     public JsonElement serialize(Date src, Type typeOfSrc, JsonSerializationContext context) {
-        SimpleDateFormat df = new SimpleDateFormat(DEFAULT_DATE_FORMAT);
+        SimpleDateFormat df = new SimpleDateFormat(ChartJsonSerializationContext.DEFAULT_DATE_FORMAT);
 
         return new JsonPrimitive(df.format(src));
     }

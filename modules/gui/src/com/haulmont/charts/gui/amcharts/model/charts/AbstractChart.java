@@ -567,6 +567,6 @@ public abstract class AbstractChart<T extends AbstractChartObject> extends Chart
             jsonTree.getAsJsonObject().add("dataProvider", dataProviderElement);
         }
 
-        return jsonTree.toString();
+        return chartGson.toJson(jsonTree);
     }
 }

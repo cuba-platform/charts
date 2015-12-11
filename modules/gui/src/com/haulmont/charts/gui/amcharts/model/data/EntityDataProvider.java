@@ -86,18 +86,22 @@ public class EntityDataProvider implements DataProvider {
 
     @Override
     public void addItem(DataItem item) {
+        throw new UnsupportedOperationException("Use datasource for changing data items of EntityDataProvider");
     }
 
     @Override
     public void addItems(Collection<DataItem> items) {
+        throw new UnsupportedOperationException("Use datasource for changing data items of EntityDataProvider");
     }
 
     @Override
     public void updateItem(DataItem item) {
+        throw new UnsupportedOperationException("Use datasource for changing data items of EntityDataProvider");
     }
 
     @Override
     public void removeItem(DataItem item) {
+        throw new UnsupportedOperationException("Use datasource for changing data items of EntityDataProvider");
     }
 
     public CollectionDatasource getDatasource() {

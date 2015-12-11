@@ -10,6 +10,7 @@ import com.haulmont.charts.gui.amcharts.model.charts.AbstractChart;
 import com.haulmont.charts.gui.amcharts.model.charts.RectangularChart;
 import com.haulmont.charts.gui.amcharts.model.charts.SerialChart;
 import com.haulmont.charts.gui.amcharts.model.data.EntityDataProvider;
+import com.haulmont.charts.gui.amcharts.model.gson.ChartJsonSerializationContext;
 import com.haulmont.charts.gui.components.charts.Chart;
 import com.haulmont.charts.web.gui.ChartLocaleHelper;
 import com.haulmont.charts.web.toolkit.ui.amcharts.CubaAmchartsIntegration;
@@ -39,8 +40,6 @@ import java.util.*;
  * @version $Id$
  */
 public class WebChart extends WebAbstractComponent<CubaAmchartsScene> implements Chart {
-
-    public static final String DEFAULT_JS_DATE_FORMAT = "YYYY-MM-DD JJ:NN:SS:QQQ";
 
     protected boolean byDate = false;
 
@@ -893,7 +892,7 @@ public class WebChart extends WebAbstractComponent<CubaAmchartsScene> implements
                 }
 
                 if (StringUtils.isEmpty(chart.getDataDateFormat())) {
-                    chart.setDataDateFormat(DEFAULT_JS_DATE_FORMAT);
+                    chart.setDataDateFormat(ChartJsonSerializationContext.DEFAULT_JS_DATE_FORMAT);
                 }
             }
 

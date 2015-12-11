@@ -21,6 +21,10 @@ import java.util.List;
  */
 public class ChartJsonSerializationContext implements JsonSerializationContext {
 
+    public static final String DEFAULT_JS_DATE_FORMAT = "YYYY-MM-DD JJ:NN:SS:QQQ";
+
+    public static final String DEFAULT_DATE_FORMAT = "yyyy-MM-dd HH:mm:ss:S";
+
     protected ChartModel chartModel;
 
     public ChartJsonSerializationContext(ChartModel chartModel) {
