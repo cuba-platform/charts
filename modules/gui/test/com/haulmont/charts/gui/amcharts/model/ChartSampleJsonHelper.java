@@ -11,18 +11,20 @@ import java.net.URL;
 import java.nio.charset.StandardCharsets;
 import java.nio.file.Files;
 import java.nio.file.Paths;
-import java.text.SimpleDateFormat;
 
 /**
  * @author gorelov
  * @version $Id$
  */
-public class SerializationTest {
+public final class ChartSampleJsonHelper {
 
-    protected SimpleDateFormat df = new SimpleDateFormat("yyyy-MM-dd");
+    public static final java.lang.String DATE_FORMAT = "yyyy-MM-dd";
 
-    protected String readFile(String fileName) throws IOException, URISyntaxException {
-        URL resource = getClass().getResource("/com/haulmont/charts/gui/amcharts/model/" + fileName);
+    private ChartSampleJsonHelper() {
+    }
+
+    public static String readFile(String fileName) throws IOException, URISyntaxException {
+        URL resource = ChartSampleJsonHelper.class.getResource("/com/haulmont/charts/gui/amcharts/model/" + fileName);
         byte[] encoded = Files.readAllBytes(Paths.get(resource.toURI()));
         return new String(encoded, StandardCharsets.UTF_8);
     }

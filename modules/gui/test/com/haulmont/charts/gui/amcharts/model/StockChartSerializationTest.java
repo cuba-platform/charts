@@ -20,13 +20,14 @@ import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.Calendar;
 import java.util.Date;
-import java.util.Random;
 
 /**
  * @author gorelov
  * @version $Id$
  */
-public class StockChartSerializationTest extends SerializationTest {
+public class StockChartSerializationTest {
+
+    private SimpleDateFormat df = new SimpleDateFormat(ChartSampleJsonHelper.DATE_FORMAT);
 
     @Test
     public void testStockChartWithMultipleDataSets() throws ParseException, IOException, URISyntaxException {
@@ -84,7 +85,7 @@ public class StockChartSerializationTest extends SerializationTest {
                 .setExport(new Export());
 
         String gson = stockChart.toString();
-        String expected = readFile("StockChartWithMultipleDataSets.json");
+        String expected = ChartSampleJsonHelper.readFile("StockChartWithMultipleDataSets.json");
         Assert.assertEquals(null, expected, gson);
     }
 
@@ -125,7 +126,7 @@ public class StockChartSerializationTest extends SerializationTest {
                 .setExport(new Export().setPosition(ExportPosition.BOTTOM_RIGHT));
 
         String gson = stockChart.toString();
-        String expected = readFile("StockChartWithIntradayDatas.json");
+        String expected = ChartSampleJsonHelper.readFile("StockChartWithIntradayDatas.json");
         Assert.assertEquals(null, expected, gson);
     }
 

@@ -16,6 +16,7 @@ import org.junit.Test;
 import java.io.IOException;
 import java.net.URISyntaxException;
 import java.text.ParseException;
+import java.text.SimpleDateFormat;
 import java.util.Arrays;
 import java.util.HashMap;
 import java.util.Map;
@@ -24,7 +25,9 @@ import java.util.Map;
  * @author gorelov
  * @version $Id$
  */
-public class ChartsSerializationTest extends SerializationTest {
+public class ChartsSerializationTest {
+
+    private SimpleDateFormat df = new SimpleDateFormat(ChartSampleJsonHelper.DATE_FORMAT);
 
     @Test
     public void testSerialChart() throws IOException, URISyntaxException {
@@ -57,7 +60,7 @@ public class ChartsSerializationTest extends SerializationTest {
                 .setExport(new Export());
 
         String gson = chart.toString();
-        String expected = readFile("SerialChart.json");
+        String expected = ChartSampleJsonHelper.readFile("SerialChart.json");
         Assert.assertEquals(null, expected, gson);
     }
 
@@ -96,7 +99,7 @@ public class ChartsSerializationTest extends SerializationTest {
                         new ValueAxis().setAxisAlpha(0.0).setDashLength(1).setTitle("Y Axis").setPosition(Position.LEFT));
 
         String gson = chart.toString();
-        String expected = readFile("XYChart.json");
+        String expected = ChartSampleJsonHelper.readFile("XYChart.json");
         Assert.assertEquals(null, expected, gson);
     }
 
@@ -119,7 +122,7 @@ public class ChartsSerializationTest extends SerializationTest {
 
 
         String gson = chart.toString();
-        String expected = readFile("PieChart.json");
+        String expected = ChartSampleJsonHelper.readFile("PieChart.json");
         Assert.assertEquals(null, expected, gson);
     }
 
@@ -198,7 +201,7 @@ public class ChartsSerializationTest extends SerializationTest {
                 .setExport(new Export());
 
         String gson = chart.toString();
-        String expected = readFile("GanttChart.json");
+        String expected = ChartSampleJsonHelper.readFile("GanttChart.json");
         Assert.assertEquals(null, expected, gson);
     }
 
