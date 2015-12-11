@@ -8,6 +8,7 @@ package com.haulmont.charts.web.toolkit.ui.amcharts;
 import com.google.gson.JsonArray;
 import com.google.gson.JsonObject;
 import com.google.gson.JsonSerializationContext;
+import com.haulmont.charts.gui.amcharts.model.AbstractChartObject;
 import com.haulmont.charts.gui.amcharts.model.charts.*;
 import com.haulmont.charts.gui.amcharts.model.data.*;
 import com.haulmont.charts.gui.amcharts.model.gson.ChartJsonSerializationContext;
@@ -382,7 +383,8 @@ public class CubaAmchartsScene extends AbstractComponent {
                 jsonChangedItemsElement.add(entry.getKey(), jsonItemsArray);
             }
 
-            getRpcProxy(CubaAmchartsSceneClientRpc.class).updatePoints(jsonChangedItemsElement.toString());
+            getRpcProxy(CubaAmchartsSceneClientRpc.class).updatePoints(
+                    AbstractChartObject.getSharedGson().toJson(jsonChangedItemsElement));
             setChangedItems(null);
         }
     }

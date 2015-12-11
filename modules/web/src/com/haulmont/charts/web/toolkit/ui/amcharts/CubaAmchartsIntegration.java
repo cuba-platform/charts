@@ -6,6 +6,7 @@
 package com.haulmont.charts.web.toolkit.ui.amcharts;
 
 import com.google.gson.*;
+import com.haulmont.charts.gui.amcharts.model.AbstractChartObject;
 import com.haulmont.charts.gui.amcharts.model.Settings;
 import com.haulmont.charts.web.toolkit.ui.client.amcharts.CubaAmchartsIntegrationState;
 import com.vaadin.annotations.JavaScript;
@@ -81,7 +82,7 @@ public class CubaAmchartsIntegration extends AbstractExtension {
             jsonLocaleMap.add(localeEntry.getKey(), element);
         }
 
-        getState().chartMessages.put(localeCode, jsonLocaleMap.toString());
+        getState().chartMessages.put(localeCode, AbstractChartObject.getSharedGson().toJson(jsonLocaleMap));
     }
 
     public Map<String, String> getExportMessages(String localeCode) {
@@ -105,7 +106,7 @@ public class CubaAmchartsIntegration extends AbstractExtension {
             jsonLocaleMap.addProperty(localeEntry.getKey(), localeEntry.getValue());
         }
 
-        getState().exportMessages.put(localeCode, jsonLocaleMap.toString());
+        getState().exportMessages.put(localeCode, AbstractChartObject.getSharedGson().toJson(jsonLocaleMap));
     }
 
     @Override
