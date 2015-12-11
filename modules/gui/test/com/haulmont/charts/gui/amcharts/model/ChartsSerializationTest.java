@@ -59,9 +59,9 @@ public class ChartsSerializationTest {
                 .setChartCursor(new Cursor().setCursorPosition(CursorPosition.MOUSE).setPan(true))
                 .setExport(new Export());
 
-        String gson = chart.toString();
+        String json = chart.toString();
         String expected = ChartSampleJsonHelper.readFile("SerialChart.json");
-        Assert.assertEquals(null, expected, gson);
+        Assert.assertEquals(null, expected, json);
     }
 
     @Test
@@ -98,9 +98,9 @@ public class ChartsSerializationTest {
                         new ValueAxis().setAxisAlpha(0.0).setDashLength(1).setTitle("X Axis").setPosition(Position.BOTTOM),
                         new ValueAxis().setAxisAlpha(0.0).setDashLength(1).setTitle("Y Axis").setPosition(Position.LEFT));
 
-        String gson = chart.toString();
+        String json = chart.toString();
         String expected = ChartSampleJsonHelper.readFile("XYChart.json");
-        Assert.assertEquals(null, expected, gson);
+        Assert.assertEquals(null, expected, json);
     }
 
     @Test
@@ -121,9 +121,9 @@ public class ChartsSerializationTest {
                 .setExport(new Export());
 
 
-        String gson = chart.toString();
+        String json = chart.toString();
         String expected = ChartSampleJsonHelper.readFile("PieChart.json");
-        Assert.assertEquals(null, expected, gson);
+        Assert.assertEquals(null, expected, json);
     }
 
     @Test
@@ -200,9 +200,9 @@ public class ChartsSerializationTest {
                         .setValueLineBalloonEnabled(true).setValueLineEnabled(true).setFullWidth(true))
                 .setExport(new Export());
 
-        String gson = chart.toString();
+        String json = chart.toString();
         String expected = ChartSampleJsonHelper.readFile("GanttChart.json");
-        Assert.assertEquals(null, expected, gson);
+        Assert.assertEquals(null, expected, json);
     }
 
     private MapDataItem taskSpan(String category, DataItem... segments) {

@@ -84,9 +84,9 @@ public class StockChartSerializationTest {
                 .setDataSetSelector(new DataSetSelector().setPosition(Position.LEFT))
                 .setExport(new Export());
 
-        String gson = stockChart.toString();
+        String json = stockChart.toString();
         String expected = ChartSampleJsonHelper.readFile("StockChartWithMultipleDataSets.json");
-        Assert.assertEquals(null, expected, gson);
+        Assert.assertEquals(null, expected, json);
     }
 
     @Test
@@ -125,9 +125,9 @@ public class StockChartSerializationTest {
                 .setPanelsSettings(new PanelsSettings().setUsePrefixes(true))
                 .setExport(new Export().setPosition(ExportPosition.BOTTOM_RIGHT));
 
-        String gson = stockChart.toString();
+        String json = stockChart.toString();
         String expected = ChartSampleJsonHelper.readFile("StockChartWithIntradayDatas.json");
-        Assert.assertEquals(null, expected, gson);
+        Assert.assertEquals(null, expected, json);
     }
 
     private void populateDataProvider(DataProvider dataProvider,
