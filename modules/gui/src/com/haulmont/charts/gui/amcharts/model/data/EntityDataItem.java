@@ -25,11 +25,9 @@ public class EntityDataItem implements DataItem {
     private static final long serialVersionUID = -2703129637028051748L;
 
     protected Messages messages = AppBeans.get(Messages.NAME);
-    protected final EntityDataProvider dataProvider;
     protected final Entity item;
 
-    public EntityDataItem(EntityDataProvider dataProvider, Entity item) {
-        this.dataProvider = dataProvider;
+    public EntityDataItem(Entity item) {
         this.item = item;
     }
 
@@ -46,7 +44,7 @@ public class EntityDataItem implements DataItem {
             List<DataItem> items = new ArrayList<>();
 
             for (Object item : (Collection) value) {
-                items.add(new EntityDataItem(dataProvider, (Entity) item));
+                items.add(new EntityDataItem((Entity) item));
             }
             return items;
         }

@@ -59,7 +59,7 @@ public class EntityDataProvider implements DataProvider {
             dataItems = new ArrayList<>(items.size());
             for (Object entityItem : items) {
                 Entity entity = (Entity) entityItem;
-                dataItems.add(new EntityDataItem(this, entity));
+                dataItems.add(new EntityDataItem(entity));
             }
         } else {
             dataItems = Collections.emptyList();
@@ -79,7 +79,7 @@ public class EntityDataProvider implements DataProvider {
         for (Object entityItem : datasource.getItems()) {
             Entity entity = (Entity) entityItem;
 
-            items.add(new EntityDataItem(this, entity));
+            items.add(new EntityDataItem(entity));
         }
         return items;
     }
