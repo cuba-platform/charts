@@ -875,25 +875,25 @@ public class WebChart extends WebAbstractComponent<CubaAmchartsScene> implements
                 }
             }
 
+            CategoryAxis categoryAxis = chart.getCategoryAxis();
+            if (categoryAxis == null) {
+                categoryAxis = new CategoryAxis();
+                chart.setCategoryAxis(categoryAxis);
+            }
+
             if (byDate) {
-                CategoryAxis categoryAxis = chart.getCategoryAxis();
-                if (categoryAxis == null) {
-                    categoryAxis = new CategoryAxis();
-                    chart.setCategoryAxis(categoryAxis);
-                }
-
-                String firstDayOfWeek = messages.getMainMessage("amcharts.firstDayOfWeek");
-                if (categoryAxis.getFirstDayOfWeek() == null) {
-                    categoryAxis.setFirstDayOfWeek(DayOfWeek.valueOf(firstDayOfWeek));
-                }
-
                 if (categoryAxis.getParseDates() == null) {
                     categoryAxis.setParseDates(true);
                 }
+            }
 
-                if (StringUtils.isEmpty(chart.getDataDateFormat())) {
-                    chart.setDataDateFormat(ChartJsonSerializationContext.DEFAULT_JS_DATE_FORMAT);
-                }
+            String firstDayOfWeek = messages.getMainMessage("amcharts.firstDayOfWeek");
+            if (categoryAxis.getFirstDayOfWeek() == null) {
+                categoryAxis.setFirstDayOfWeek(DayOfWeek.valueOf(firstDayOfWeek));
+            }
+
+            if (StringUtils.isEmpty(chart.getDataDateFormat())) {
+                chart.setDataDateFormat(ChartJsonSerializationContext.DEFAULT_JS_DATE_FORMAT);
             }
 
             if (StringUtils.isEmpty(chart.getBalloonDateFormat())) {
