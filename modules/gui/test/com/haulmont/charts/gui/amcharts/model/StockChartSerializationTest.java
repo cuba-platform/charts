@@ -138,7 +138,7 @@ public class StockChartSerializationTest {
         for (int i = 0; i < daysCount; i++) {
             Long value = valueX1 + valueX2 + i;
             Long volume = volumeX1 + volumeX2 + volumeX3 + i;
-            dataProvider.addItem(dateValueVolume(DateUtils.addDays(date, i), value, volume));
+            dataProvider.addItem(dateValueVolume(i, DateUtils.addDays(date, i), value, volume));
         }
     }
 
@@ -149,12 +149,13 @@ public class StockChartSerializationTest {
         for (int i = 0; i < hoursCount; i++) {
             Long value = valueX1 + valueX2 + i;
             Long volume = 100000000L * i;
-            dataProvider.addItem(dateValueVolume(DateUtils.addMinutes(date, i), value, volume));
+            dataProvider.addItem(dateValueVolume(i, DateUtils.addMinutes(date, i), value, volume));
         }
     }
 
-    private MapDataItem dateValueVolume(Date date, Long value, Long volume) {
+    private MapDataItem dateValueVolume(Integer id, Date date, Long value, Long volume) {
         MapDataItem dateValueVolume = new MapDataItem();
+        dateValueVolume.add("id", id);
         dateValueVolume.add("date", date);
         dateValueVolume.add("value", value);
         dateValueVolume.add("volume", volume);
