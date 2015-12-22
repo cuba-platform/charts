@@ -5,6 +5,7 @@
 
 package com.haulmont.charts.web.toolkit.ui.client.amstockcharts;
 
+import com.google.gwt.core.client.JavaScriptObject;
 import com.google.gwt.core.client.Scheduler;
 import com.google.gwt.dom.client.Document;
 import com.google.gwt.user.client.Event;
@@ -142,5 +143,9 @@ public class CubaAmStockChartSceneWidget extends Widget {
                 updateSize();
             }
         });
+    }
+
+    public void updatePoints(JavaScriptObject jsObj) {
+        jsOverlay.updatePoints(jsObj);
     }
 }

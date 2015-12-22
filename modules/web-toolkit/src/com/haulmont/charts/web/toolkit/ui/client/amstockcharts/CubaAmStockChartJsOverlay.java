@@ -31,6 +31,59 @@ public class CubaAmStockChartJsOverlay {
         return new CubaAmStockChartJsOverlay(makeJsChart(placeHolder, json));
     }
 
+    public void updatePoints(JavaScriptObject value) {
+        updatePoints(chart, value);
+    }
+
+    private native void updatePoints(JavaScriptObject chart, JavaScriptObject src) /*-{
+
+        for (var i = 0; i < chart.dataSets.length; i++) {
+            var dataSet = chart.dataSets[i];
+            var dataSetObj = src[dataSet.id];
+            if (dataSetObj != null) {
+
+                (function () {
+                    var opp = 'add';
+                    if (dataSetObj[opp] != null) {
+                        for (var i = 0; i < dataSetObj[opp].length; i++) {
+                            dataSet.dataProvider.push(dataSetObj[opp][i]);
+                        }
+                    }
+                })();
+
+                (function () {
+                    var opp = 'remove';
+                    if (dataSetObj[opp] != null) {
+                        for (var i = 0; i < dataSetObj[opp].length; i++) {
+                            for (var j = 0; j < dataSet.dataProvider.length; j++) {
+                                if (dataSet.dataProvider[j].id == dataSetObj[opp][i].id) {
+                                    dataSet.dataProvider.splice(j, 1);
+                                    break;
+                                }
+                            }
+                        }
+                    }
+                })();
+
+                (function () {
+                    var opp = 'update';
+                    if (dataSetObj[opp] != null) {
+                        for (var i = 0; i < dataSetObj[opp].length; i++) {
+                            for (var j = 0; j < dataSet.dataProvider.length; j++) {
+                                if (dataSet.dataProvider[j].id == dataSetObj[opp][i].id) {
+                                    dataSet.dataProvider[j] = dataSetObj[opp][i];
+                                    break;
+                                }
+                            }
+                        }
+                    }
+                })();
+            }
+        }
+
+        chart.validateData();
+    }-*/;
+
     private static native void handleLoad() /*-{
         $wnd.AmCharts.handleLoad();
     }-*/;

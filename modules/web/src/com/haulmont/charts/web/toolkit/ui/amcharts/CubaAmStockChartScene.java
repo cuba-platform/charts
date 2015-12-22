@@ -5,16 +5,27 @@
 
 package com.haulmont.charts.web.toolkit.ui.amcharts;
 
+import com.google.gson.JsonArray;
+import com.google.gson.JsonObject;
+import com.google.gson.JsonSerializationContext;
+import com.haulmont.charts.gui.amcharts.model.DataSet;
 import com.haulmont.charts.gui.amcharts.model.charts.StockChartGroup;
+import com.haulmont.charts.gui.amcharts.model.data.DataChangeListener;
+import com.haulmont.charts.gui.amcharts.model.data.DataItem;
+import com.haulmont.charts.gui.amcharts.model.data.DataItemsChangeEvent;
+import com.haulmont.charts.gui.amcharts.model.gson.ChartJsonSerializationContext;
+import com.haulmont.charts.gui.amcharts.model.gson.DataItemsSerializer;
 import com.haulmont.charts.web.toolkit.ui.amcharts.events.*;
+import com.haulmont.charts.web.toolkit.ui.client.amstockcharts.CubaAmStockChartSceneClientRpc;
 import com.haulmont.charts.web.toolkit.ui.client.amstockcharts.CubaAmStockChartSceneState;
 import com.haulmont.charts.web.toolkit.ui.client.amstockcharts.CubaAmStockChartServerRpc;
 import com.vaadin.ui.AbstractComponent;
 import com.vaadin.util.ReflectTools;
+import org.apache.commons.collections.CollectionUtils;
 import org.apache.commons.lang.StringUtils;
 
 import java.lang.reflect.Method;
-import java.util.Date;
+import java.util.*;
 
 /**
  * @author gorelov
@@ -77,6 +88,27 @@ public class CubaAmStockChartScene extends AbstractComponent {
 
     private StockChartGroup chart;
 
+    private Map<String, Map<String, List<DataItem>>> changedItems;
+
+    protected JsonSerializationContext serializationContext;
+
+    protected enum Operation {
+        ADD("add"),
+        REMOVE("remove"),
+        UPDATE("update");
+
+        private String id;
+
+        Operation(String id) {
+            this.id = id;
+        }
+
+        @Override
+        public String toString() {
+            return id;
+        }
+    }
+
     public CubaAmStockChartScene() {
         // enable amcharts integration
         CubaAmchartsIntegration.get();
@@ -116,6 +148,33 @@ public class CubaAmStockChartScene extends AbstractComponent {
     public void drawChart(StockChartGroup chart) {
         this.chart = chart;
         forceStateChange();
+    }
+
+    protected void setChangedItems(Map<String, Map<String, List<DataItem>>> changedItems) {
+        this.changedItems = changedItems;
+        markAsDirty();
+    }
+
+    protected void addChangedItems(Operation type, String dataSetId, List<DataItem> items) {
+        if (changedItems == null) {
+            changedItems = new HashMap<>();
+        }
+
+        Map<String, List<DataItem>> dataSetChanges = changedItems.get(dataSetId);
+        if (dataSetChanges == null) {
+            dataSetChanges = new HashMap<>();
+            changedItems.put(dataSetId, dataSetChanges);
+        }
+
+        List<DataItem> existedItems = dataSetChanges.get(type.toString());
+        if (existedItems == null) {
+            existedItems = new ArrayList<>();
+            dataSetChanges.put(type.toString(), existedItems);
+        }
+
+        existedItems.addAll(items);
+
+        markAsDirty();
     }
 
     public void addChartClickListener(StockChartClickListener listener) {
@@ -260,9 +319,44 @@ public class CubaAmStockChartScene extends AbstractComponent {
         if (initial || dirty) {
             if (chart != null) {
                 setupDefaults(chart);
+
+                for (DataSet dataSet : chart.getDataSets()) {
+                    if (dataSet.getDataProvider() != null) {
+                        dataSet.getDataProvider().addChangeListener(new ProxyChangeForwarder(this, dataSet));
+                    }
+                }
+
                 getState().configuration = chart.toString();
             }
             dirty = false;
+        }
+
+        if (changedItems != null && !changedItems.isEmpty()) {
+
+            DataItemsSerializer serializer = new DataItemsSerializer();
+            JsonObject jsonChangedItemsElement = new JsonObject();
+
+            for (Map.Entry<String,  Map<String, List<DataItem>>> dataSetEntry : changedItems.entrySet()) {
+                JsonObject jsonChangedDataSetElement = new JsonObject();
+                for (Map.Entry<String, List<DataItem>> entry : dataSetEntry.getValue().entrySet()) {
+                    JsonArray jsonItemsArray = new JsonArray();
+
+                    if (serializationContext == null) {
+                        serializationContext = new ChartJsonSerializationContext(chart);
+                    }
+
+                    List<JsonObject> jsonObjects = serializer.serialize(entry.getValue(), serializationContext);
+                    for (JsonObject jsonObject : jsonObjects) {
+                        jsonItemsArray.add(jsonObject);
+                    }
+                    jsonChangedDataSetElement.add(entry.getKey(), jsonItemsArray);
+                }
+                jsonChangedItemsElement.add(dataSetEntry.getKey(), jsonChangedDataSetElement);
+            }
+
+            getRpcProxy(CubaAmStockChartSceneClientRpc.class).updatePoints(
+                    StockChartGroup.getSharedGson().toJson(jsonChangedItemsElement));
+            setChangedItems(null);
         }
     }
 
@@ -369,6 +463,41 @@ public class CubaAmStockChartScene extends AbstractComponent {
                                              int x, int y, int absoluteX, int absoluteY) {
             fireEvent(new StockGraphItemRollOverEvent(CubaAmStockChartScene.this, panelId, graphId, itemId, itemIndex,
                     x, y, absoluteX, absoluteY));
+        }
+    }
+
+    protected static class ProxyChangeForwarder implements DataChangeListener {
+
+        private final CubaAmStockChartScene chart;
+        private final DataSet dataSet;
+
+        private ProxyChangeForwarder(CubaAmStockChartScene chart, DataSet dataSet) {
+            this.chart = chart;
+            this.dataSet = dataSet;
+        }
+
+        @Override
+        public void dataItemsChanged(DataItemsChangeEvent e) {
+            Operation operation = null;
+            switch (e.getOperation()) {
+                case ADD:
+                    operation = Operation.ADD;
+                    break;
+                case REMOVE:
+                    operation = Operation.REMOVE;
+                    break;
+                case UPDATE:
+                    operation = Operation.UPDATE;
+                    break;
+                case REFRESH:
+                    dataSet.getDataProvider().removeChangeListener(this);
+                    chart.setChangedItems(null);
+                    chart.drawChart();
+                    break;
+            }
+            if (operation != null && CollectionUtils.isNotEmpty(e.getItems())) {
+                chart.addChangedItems(operation, dataSet.getId(), e.getItems());
+            }
         }
     }
 }

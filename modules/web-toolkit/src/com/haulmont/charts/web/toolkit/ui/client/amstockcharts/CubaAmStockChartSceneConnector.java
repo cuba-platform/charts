@@ -5,8 +5,10 @@
 
 package com.haulmont.charts.web.toolkit.ui.client.amstockcharts;
 
+import com.google.gwt.core.client.JavaScriptObject;
 import com.google.gwt.core.client.Scheduler;
 import com.google.gwt.dom.client.NativeEvent;
+import com.google.gwt.json.client.JSONParser;
 import com.haulmont.charts.web.toolkit.ui.amcharts.CubaAmStockChartScene;
 import com.haulmont.charts.web.toolkit.ui.client.amcharts.MouseHelper;
 import com.haulmont.charts.web.toolkit.ui.client.amstockcharts.events.*;
@@ -29,6 +31,24 @@ public class CubaAmStockChartSceneConnector extends AbstractComponentConnector {
 
     protected CubaAmStockChartServerRpc rpc = RpcProxy.create(CubaAmStockChartServerRpc.class, this);
     protected ElementResizeListener resizeListener;
+
+    public CubaAmStockChartSceneConnector() {
+        registerRpc(CubaAmStockChartSceneClientRpc.class, new CubaAmStockChartSceneClientRpc() {
+            @Override
+            public void updatePoints(final String json) {
+                Scheduler.get().scheduleDeferred(new Scheduler.ScheduledCommand() {
+                    @Override
+                    public void execute() {
+                        getWidget().updatePoints(getJsonAsObject(json));
+                    }
+                });
+            }
+        });
+    }
+
+    protected JavaScriptObject getJsonAsObject(String json) {
+        return JSONParser.parseLenient(json).isObject().getJavaScriptObject();
+    }
 
     @Override
     public CubaAmStockChartSceneState getState() {

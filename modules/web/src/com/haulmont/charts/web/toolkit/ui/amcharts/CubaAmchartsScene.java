@@ -155,18 +155,18 @@ public class CubaAmchartsScene extends AbstractComponent {
         markAsDirty();
     }
 
-    protected void addChangedItems(Operation type, List<DataItem> item) {
+    protected void addChangedItems(Operation type, List<DataItem> items) {
         if (changedItems == null) {
             changedItems = new HashMap<>();
         }
 
-        List<DataItem> items = changedItems.get(type.toString());
-        if (items == null) {
-            items = new ArrayList<>();
-            changedItems.put(type.toString(), items);
+        List<DataItem> existedItems = changedItems.get(type.toString());
+        if (existedItems == null) {
+            existedItems = new ArrayList<>();
+            changedItems.put(type.toString(), existedItems);
         }
 
-        items.addAll(item);
+        existedItems.addAll(items);
 
         markAsDirty();
     }

@@ -66,7 +66,7 @@ public class CubaAmchartsJsOverlay {
                 for (var i = 0; i < src[opp].length; i++) {
                     for (var j = 0; j < chart.dataProvider.length; j++) {
                         if (chart.dataProvider[j].id == src[opp][i].id) {
-                            chart.dataProvider[j] = src[opp][i]
+                            chart.dataProvider[j] = src[opp][i];
                             break;
                         }
                     }
