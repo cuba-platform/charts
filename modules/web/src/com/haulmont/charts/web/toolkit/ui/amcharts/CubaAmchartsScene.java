@@ -461,12 +461,12 @@ public class CubaAmchartsScene extends AbstractComponent {
 
         @Override
         public void onLegendItemHide(String itemId) {
-            fireEvent(new LegendItemShowEvent(CubaAmchartsScene.this, itemId));
+            fireEvent(new LegendItemHideEvent(CubaAmchartsScene.this, itemId));
         }
 
         @Override
         public void onLegendItemShow(String itemId) {
-            fireEvent(new LegendItemHideEvent(CubaAmchartsScene.this, itemId));
+            fireEvent(new LegendItemShowEvent(CubaAmchartsScene.this, itemId));
         }
 
         @Override
