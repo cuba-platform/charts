@@ -28,6 +28,10 @@ public interface Chart extends Component, Component.BelongToFrame, Component.Has
     void setDatasource(CollectionDatasource datasource);
     CollectionDatasource getDatasource();
 
+    /**
+     * Resend all items and properties to client and repaint chart.
+     * Use this method if you change some property of already displayed chart.
+     */
     void repaint();
 
     void addAxisZoomListener(AxisZoomListener zoomListener);
