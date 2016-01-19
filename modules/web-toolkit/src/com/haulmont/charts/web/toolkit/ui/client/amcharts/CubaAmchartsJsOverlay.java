@@ -185,7 +185,9 @@ public class CubaAmchartsJsOverlay {
 
     private static native void addSliceClickHandler(JavaScriptObject chart, SliceClickHandler handler) /*-{
         chart.addListener("clickSlice", $entry(function (event) {
-            handler.@com.haulmont.charts.web.toolkit.ui.client.amcharts.events.SliceClickHandler::onEvent(Lcom/haulmont/charts/web/toolkit/ui/client/amcharts/events/JsSliceClickEvent;)(event);
+            if (event.event.which == 1) {
+                handler.@com.haulmont.charts.web.toolkit.ui.client.amcharts.events.SliceClickHandler::onEvent(Lcom/haulmont/charts/web/toolkit/ui/client/amcharts/events/JsSliceClickEvent;)(event);
+            }
         }));
     }-*/;
 
