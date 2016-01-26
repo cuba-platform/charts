@@ -1049,8 +1049,9 @@ public class WebGoogleMapViewer extends WebAbstractComponent<GoogleMap> implemen
         component.route(((DirectionsRequestDelegate) request).getRequest(), new DirectionsResultCallback() {
             @Override
             public void onCallback(DirectionsResult result, DirectionsStatus status) {
-                callback.onCallback(new DirectionsResultDelegate(result),
-                        com.haulmont.charts.gui.map.model.directions.DirectionsStatus.fromValue(status.value()));
+                com.haulmont.charts.gui.map.model.directions.DirectionsResult cubaResult = result != null
+                        ? new DirectionsResultDelegate(result) : null;
+                callback.onCallback(cubaResult, com.haulmont.charts.gui.map.model.directions.DirectionsStatus.fromValue(status.value()));
             }
         });
     }
