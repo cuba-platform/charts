@@ -995,8 +995,13 @@ public class WebGoogleMapViewer extends WebAbstractComponent<GoogleMap> implemen
     }
 
     @Override
-    public Type getMapType() {
-        return DelegateHelper.toCubaMapType(component.getMapType());
+    public void setMapType(String typeId) {
+        component.setMapType(typeId);
+    }
+
+    @Override
+    public String getMapType() {
+        return component.getMapType();
     }
 
     @Override

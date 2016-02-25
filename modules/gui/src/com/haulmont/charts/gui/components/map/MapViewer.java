@@ -532,9 +532,15 @@ public interface MapViewer extends Component, Component.BelongToFrame, Component
     void setMapType(Type type);
 
     /**
+     * Sets map type by its ID. Useful for setting custom map type
+     * @param typeId map type id
+     */
+    void setMapType(String typeId);
+
+    /**
      * @return map type
      */
-    Type getMapType();
+    String getMapType();
 
     /**
      * Opens given info window
