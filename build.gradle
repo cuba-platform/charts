@@ -171,10 +171,6 @@ configure(chartsWebToolkitModule) {
 }
 
 configure(chartsWebModule) {
-    configurations {
-        webcontent
-    }
-
     dependencies {        
         compile(chartsGlobalModule)
         compile(chartsGuiModule)
@@ -184,25 +180,13 @@ configure(chartsWebModule) {
             exclude(group: 'junit', module: 'junit')
         }
 
-        provided(chartsGuiModule)
         provided(servletApi)
-        provided(cubaWeb)
-
-        webcontent(group: 'com.haulmont.cuba', name: 'cuba-web', version: baseVersion, classifier: 'web', ext: 'zip')        
     }
 
     jar {
-        from sourceSets.main.allJava
-    }
-
-    task webArchive(type: Zip) {
-        from file('web')
-        from file("$buildDir/web")
-        exclude '**/web.xml', '**/app.properties'
-        classifier = 'web'
-    }
-
-    artifacts {
-        archives webArchive
+        with copySpec {
+            from sourceSets.main.allJava
+            include 'com/haulmont/charts/web/toolkit/ui/client/**'
+        }
     }
 }

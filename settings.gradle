@@ -4,7 +4,7 @@
  * Use is subject to license terms.
  */
 
-rootProject.name = 'cuba-charts'
+rootProject.name = 'charts'
 
 include(':charts-global', ':charts-gui', ':charts-web', ':charts-web-toolkit')
 
