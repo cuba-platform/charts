@@ -47,6 +47,8 @@ import com.vaadin.tapio.googlemaps.client.overlays.*;
 import com.vaadin.tapio.googlemaps.client.services.DirectionsResult;
 import com.vaadin.tapio.googlemaps.client.services.DirectionsResultCallback;
 import com.vaadin.tapio.googlemaps.client.services.DirectionsStatus;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 import java.util.ArrayList;
 import java.util.Collection;
@@ -67,6 +69,8 @@ import static com.haulmont.charts.gui.map.model.listeners.overlaycomplete.Polygo
 public class WebGoogleMapViewer extends WebAbstractComponent<GoogleMap> implements MapViewer {
 
     public static final String VENDOR = "google";
+
+    private Logger log = LoggerFactory.getLogger(WebGoogleMapViewer.class);
 
     protected MapConfig mapConfig = AppBeans.get(Configuration.class).getConfig(MapConfig.class);
 
@@ -132,10 +136,11 @@ public class WebGoogleMapViewer extends WebAbstractComponent<GoogleMap> implemen
                 if (mapInitListeners == null) {
                     return;
                 }
-
+                GeoPointDelegate geoPointCenter = center != null ? new GeoPointDelegate(center) : null;
+                GeoPointDelegate geoPointBoundNE = boundsNE != null ? new GeoPointDelegate(boundsNE) : null;
+                GeoPointDelegate geoPointBoundSW = boundsSW != null ? new GeoPointDelegate(boundsSW) : null;
                 for (MapInitListener l : new ArrayList<>(mapInitListeners)) {
-                    l.init(GeoPointDelegate.fromLatLon(center), zoom, GeoPointDelegate.fromLatLon(boundsNE),
-                            GeoPointDelegate.fromLatLon(boundsSW));
+                    l.init(geoPointCenter, zoom, geoPointBoundNE, geoPointBoundSW);
                 }
             }
         };
@@ -542,6 +547,10 @@ public class WebGoogleMapViewer extends WebAbstractComponent<GoogleMap> implemen
             polygonClickHandler = new com.vaadin.tapio.googlemaps.client.events.click.PolygonClickListener() {
                 @Override
                 public void polygonClicked(GoogleMapPolygon polygon) {
+                    if (polygon == null) {
+                        log.warn("Polygon clicked listener have been fired but no polygon received");
+                        return;
+                    }
                     PolygonClickListener.PolygonClickEvent event =
                             new PolygonClickListener.PolygonClickEvent(new PolygonDelegate(polygon));
                     for (PolygonClickListener l : new ArrayList<>(polygonClickListeners)) {
@@ -565,6 +574,10 @@ public class WebGoogleMapViewer extends WebAbstractComponent<GoogleMap> implemen
             markerDragHandler = new com.vaadin.tapio.googlemaps.client.events.MarkerDragListener() {
                 @Override
                 public void markerDragged(GoogleMapMarker marker, LatLon oldPosition) {
+                    if (marker == null) {
+                        log.warn("Marker dragged listener have been fired but no marker received");
+                        return;
+                    }
                     GeoPointDelegate geoPoint = oldPosition != null ? new GeoPointDelegate(oldPosition) : null;
                     MarkerDragEvent event = new MarkerDragEvent(new MarkerDelegate(marker), geoPoint);
 
@@ -603,6 +616,10 @@ public class WebGoogleMapViewer extends WebAbstractComponent<GoogleMap> implemen
 
                 @Override
                 public void markerClicked(GoogleMapMarker marker) {
+                    if (marker == null) {
+                        log.warn("Marker clicked listener have been fired but no marker received");
+                        return;
+                    }
                     MarkerClickEvent event = new MarkerClickEvent(new MarkerDelegate(marker));
                     for (MarkerClickListener l : new ArrayList<>(markerClickListeners)) {
                         l.onClick(event);
@@ -639,6 +656,10 @@ public class WebGoogleMapViewer extends WebAbstractComponent<GoogleMap> implemen
 
                 @Override
                 public void markerDoubleClicked(GoogleMapMarker marker) {
+                    if (marker == null) {
+                        log.warn("Marker double clicked listener have been fired but no marker received");
+                        return;
+                    }
                     MarkerDoubleClickEvent event = new MarkerDoubleClickEvent(new MarkerDelegate(marker));
                     for (MarkerDoubleClickListener l : new ArrayList<>(markerDoubleClickListeners)) {
                         l.onClick(event);
@@ -675,6 +696,10 @@ public class WebGoogleMapViewer extends WebAbstractComponent<GoogleMap> implemen
 
                 @Override
                 public void infoWindowClosed(GoogleMapInfoWindow infoWindow) {
+                    if (infoWindow == null) {
+                        log.warn("InfoWindow close listener have been fired but no info window received");
+                        return;
+                    }
                     InfoWindowCloseEvent event = new InfoWindowCloseEvent(new InfoWindowDelegate(infoWindow));
                     for (InfoWindowClosedListener l : new ArrayList<>(infoWindowClosedListeners)) {
                         l.onClose(event);
@@ -711,6 +736,10 @@ public class WebGoogleMapViewer extends WebAbstractComponent<GoogleMap> implemen
 
                 @Override
                 public void polygonComplete(GoogleMapPolygon polygon) {
+                    if (polygon == null) {
+                        log.warn("Polygon complete listener have been fired but no polygon received");
+                        return;
+                    }
                     PolygonCompleteEvent event = new PolygonCompleteEvent(new PolygonDelegate(polygon));
                     for (PolygonCompleteListener l : new ArrayList<>(polygonCompleteListeners)) {
                         l.onComplete(event);
@@ -747,6 +776,10 @@ public class WebGoogleMapViewer extends WebAbstractComponent<GoogleMap> implemen
 
                 @Override
                 public void polygonEdited(GoogleMapPolygon polygon, ActionType actionType, int idx, LatLon latLon) {
+                    if (polygon == null) {
+                        log.warn("Polygon edited listener have been fired but no polygon received");
+                        return;
+                    }
                     GeoPointDelegate geoPoint = latLon != null ? new GeoPointDelegate(latLon) : null;
                     PolygonEditListener.PolygonEditEvent event =
                             new PolygonEditListener.PolygonEditEvent(new PolygonDelegate(polygon),
@@ -799,8 +832,12 @@ public class WebGoogleMapViewer extends WebAbstractComponent<GoogleMap> implemen
 
             circleClickHandler = new com.vaadin.tapio.googlemaps.client.events.click.CircleClickListener() {
                 @Override
-                public void circleClicked(GoogleMapCircle clickedCircle) {
-                    CircleClickListener.CircleClickEvent event = new CircleClickListener.CircleClickEvent(new CircleDelegate(clickedCircle));
+                public void circleClicked(GoogleMapCircle circle) {
+                    if (circle == null) {
+                        log.warn("Circle clicked listener have been fired but no circle received");
+                        return;
+                    }
+                    CircleClickListener.CircleClickEvent event = new CircleClickListener.CircleClickEvent(new CircleDelegate(circle));
                     for (CircleClickListener l : new ArrayList<>(circleClickListeners)) {
                         l.onClick(event);
                     }
@@ -835,6 +872,10 @@ public class WebGoogleMapViewer extends WebAbstractComponent<GoogleMap> implemen
             circleDoubleClickHandler = new com.vaadin.tapio.googlemaps.client.events.doubleclick.CircleDoubleClickListener() {
                 @Override
                 public void circleDoubleClicked(GoogleMapCircle circle) {
+                    if (circle == null) {
+                        log.warn("Circle double clicked listener have been fired but no circle received");
+                        return;
+                    }
                     CircleDoubleClickListener.CircleDoubleClickEvent event = new CircleDoubleClickListener.CircleDoubleClickEvent(new CircleDelegate(circle));
                     for (CircleDoubleClickListener l : new ArrayList<>(circleDoubleClickListeners)) {
                         l.onDoubleClick(event);
@@ -871,6 +912,10 @@ public class WebGoogleMapViewer extends WebAbstractComponent<GoogleMap> implemen
 
                 @Override
                 public void radiusChange(GoogleMapCircle circle, double oldRadius) {
+                    if (circle == null) {
+                        log.warn("Circle radius changed listener have been fired but no circle received");
+                        return;
+                    }
                     CircleRadiusChangeListener.CircleRadiusChangeEvent event = new CircleRadiusChangeListener.CircleRadiusChangeEvent(new CircleDelegate(circle), oldRadius);
                     for (CircleRadiusChangeListener l : new ArrayList<>(circleRadiusChangeListeners)) {
                         l.onRadiusChange(event);
@@ -906,6 +951,14 @@ public class WebGoogleMapViewer extends WebAbstractComponent<GoogleMap> implemen
             circleCenterChangeHandler = new com.vaadin.tapio.googlemaps.client.events.centerchange.CircleCenterChangeListener() {
                 @Override
                 public void centerChanged(GoogleMapCircle circle, LatLon oldCenter) {
+                    if (circle == null) {
+                        log.warn("Circle center changed listener have been fired but no circle received");
+                        return;
+                    }
+                    if (oldCenter == null) {
+                        log.warn("Circle center changed listener have been fired but old center point is null");
+                        return;
+                    }
                     CircleCenterChangeListener.CircleCenterChangeEvent event =
                             new CircleCenterChangeListener.CircleCenterChangeEvent(new CircleDelegate(circle), new GeoPointDelegate(oldCenter));
                     for (CircleCenterChangeListener l : new ArrayList<>(circleCenterChangeListeners)) {
@@ -942,6 +995,10 @@ public class WebGoogleMapViewer extends WebAbstractComponent<GoogleMap> implemen
             circleCompleteHandler = new com.vaadin.tapio.googlemaps.client.events.overlaycomplete.CircleCompleteListener() {
                 @Override
                 public void circleComplete(GoogleMapCircle circle) {
+                    if (circle == null) {
+                        log.warn("Circle complete listener have been fired but no circle received");
+                        return;
+                    }
                     CircleCompleteListener.CircleCompleteEvent event = new CircleCompleteListener.CircleCompleteEvent(new CircleDelegate(circle));
                     for (CircleCompleteListener l : new ArrayList<>(circleCompleteListeners)) {
                         l.onCircleComplete(event);
