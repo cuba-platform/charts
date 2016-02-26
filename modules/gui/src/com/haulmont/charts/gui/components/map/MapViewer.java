@@ -27,10 +27,12 @@ import com.haulmont.charts.gui.map.model.listeners.drag.MarkerDragListener;
 import com.haulmont.charts.gui.map.model.listeners.overlaycomplete.CircleCompleteListener;
 import com.haulmont.charts.gui.map.model.listeners.overlaycomplete.PolygonCompleteListener;
 import com.haulmont.charts.gui.map.model.listeners.radiuschange.CircleRadiusChangeListener;
+import com.haulmont.charts.gui.map.model.maptype.ImageMapType;
 import com.haulmont.cuba.gui.components.Component;
 
 import java.util.Collection;
 import java.util.List;
+import java.util.Objects;
 
 /**
  * @author korotkov
@@ -48,22 +50,41 @@ public interface MapViewer extends Component, Component.BelongToFrame, Component
         /**
          * Normal street map
          */
-        ROADMAP,
+        ROADMAP("roadmap"),
 
         /**
          * Satellite images
          */
-        SATELLITE,
+        SATELLITE("satellite"),
 
         /**
          * Satellite images with transparent layer of major streets
          */
-        HYBRID,
+        HYBRID("hybrid"),
 
         /**
          * Map with physical features such as terrain and vegetation
          */
-        TERRAIN
+        TERRAIN("terrain");
+
+        private String mapTypeId;
+
+        Type(String mapTypeId) {
+            this.mapTypeId = mapTypeId;
+        }
+
+        public String getMapTypeId() {
+            return mapTypeId;
+        }
+
+        public Type fromId(String id) {
+            for (Type type : Type.values()) {
+                if (type.getMapTypeId().equals(id)) {
+                    return type;
+                }
+            }
+            return null;
+        }
     }
 
     void addMarkerClickListener(MarkerClickListener listener);
@@ -306,6 +327,72 @@ public interface MapViewer extends Component, Component.BelongToFrame, Component
     void removeHeatMapLayer(HeatMapLayer layer);
 
     /**
+     * Create Image Map Type
+     * @param mapTypeId id, used when you add this map in map type controls
+     * @return image map type
+     */
+    ImageMapType createImageMapType(String mapTypeId);
+
+    /**
+     * Create Image Map Type
+     *
+     * Example of tile callback function for retreiving OpenStreet maps tiles:
+     * <pre>
+     *{@code
+     *  f = function f(x, y, zoom) {
+     *          return 'http://tile.openstreetmap.org/' + zoom + '/' + x + '/' + y + '.png';
+     *        }
+     * }
+     * </pre>
+     * @param mapTypeId id, used when you add this map in map type controls
+     * @param tileUrlCallbackJsFunction javascript function providing url of the tile by its coordinates and zoom
+     * @return image map type
+     */
+    ImageMapType createImageMapType(String mapTypeId, String tileUrlCallbackJsFunction);
+
+    /**
+     * Create Image Map Type
+     *
+     * Example of tile callback function for retreiving OpenStreet maps tiles:
+     * <pre>
+     *{@code
+     *  f = function f(x, y, zoom) {
+     *          return 'http://tile.openstreetmap.org/' + zoom + '/' + x + '/' + y + '.png';
+     *        }
+     * }
+     * </pre>
+     * @param mapTypeId id, used when you add this map in map type controls
+     * @param name name, for map type control
+     * @param tileUrlCallbackJsFunction javascript function providing url of the tile by its coordinates and zoom
+     * @return image map type
+     */
+    ImageMapType createImageMapType(String mapTypeId, String name, String tileUrlCallbackJsFunction);
+
+    /**
+     * Adds Map type
+     * @param imageMapType
+     */
+    void addImageMapType(ImageMapType imageMapType);
+
+    /**
+     * Removes Map Type
+     * @param imageMapType
+     */
+    void removeImageMapType(ImageMapType imageMapType);
+
+    /**
+     * Adds image map type as overlay on top of the active map
+     * @param imageMapType
+     */
+    void addOverlayImageMapType(ImageMapType imageMapType);
+
+    /**
+     * Removes overlay map
+     * @param imageMapType
+     */
+    void removeOverlayImageMapType(ImageMapType imageMapType);
+
+    /**
      * Sets map zoom level. Supported values depend on used map service provider.
      * For Google Maps it is from 0 to 20 where 0 corresponds to a map of the Earth fully zoomed out.
      *
@@ -536,6 +623,12 @@ public interface MapViewer extends Component, Component.BelongToFrame, Component
      * @param typeId map type id
      */
     void setMapType(String typeId);
+
+    /**
+     * Sets map types available in map type control. For passing standard map id use {@link Type#getMapTypeId()}
+     * @param mapTypeIds map type ids
+     */
+    void setMapTypes(List<String> mapTypeIds);
 
     /**
      * @return map type

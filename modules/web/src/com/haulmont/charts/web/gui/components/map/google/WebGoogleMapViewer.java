@@ -30,6 +30,7 @@ import com.haulmont.charts.gui.map.model.listeners.drag.MarkerDragListener;
 import com.haulmont.charts.gui.map.model.listeners.overlaycomplete.CircleCompleteListener;
 import com.haulmont.charts.gui.map.model.listeners.overlaycomplete.PolygonCompleteListener;
 import com.haulmont.charts.gui.map.model.listeners.radiuschange.CircleRadiusChangeListener;
+import com.haulmont.charts.gui.map.model.maptype.ImageMapType;
 import com.haulmont.charts.web.gui.components.map.google.base.MarkerImageDelegate;
 import com.haulmont.charts.web.gui.components.map.google.base.PointDelegate;
 import com.haulmont.charts.web.gui.components.map.google.base.SizeDelegate;
@@ -37,6 +38,7 @@ import com.haulmont.charts.web.gui.components.map.google.directions.DirectionsRe
 import com.haulmont.charts.web.gui.components.map.google.directions.DirectionsResultDelegate;
 import com.haulmont.charts.web.gui.components.map.google.directions.DirectionsWaypointDelegate;
 import com.haulmont.charts.web.gui.components.map.google.layer.HeatMapLayerDelegate;
+import com.haulmont.charts.web.gui.components.map.google.maptype.ImageMapTypeDelegate;
 import com.haulmont.cuba.core.global.AppBeans;
 import com.haulmont.cuba.core.global.Configuration;
 import com.haulmont.cuba.web.gui.components.WebAbstractComponent;
@@ -449,6 +451,43 @@ public class WebGoogleMapViewer extends WebAbstractComponent<GoogleMap> implemen
     @Override
     public HeatMapLayer createHeatMapLayer() {
         return new HeatMapLayerDelegate(new GoogleMapHeatMapLayer());
+    }
+
+    @Override
+    public ImageMapType createImageMapType(String mapTypeId) {
+        return new ImageMapTypeDelegate(mapTypeId);
+    }
+
+    @Override
+    public ImageMapType createImageMapType(String mapTypeId, String tileUrlCallbackJsFunction) {
+        return new ImageMapTypeDelegate(mapTypeId, tileUrlCallbackJsFunction);
+    }
+
+    @Override
+    public ImageMapType createImageMapType(String mapTypeId, String name, String tileUrlCallbackJsFunction) {
+        return new ImageMapTypeDelegate(mapTypeId, name, tileUrlCallbackJsFunction);
+    }
+
+    @Override
+    public void addImageMapType(ImageMapType imageMapType) {
+        component.addImageMapType(((ImageMapTypeDelegate)imageMapType).getMapType());
+    }
+
+    @Override
+    public void removeImageMapType(ImageMapType imageMapType) {
+        Preconditions.checkNotNullArgument(imageMapType);
+        component.removeImageMapType(((ImageMapTypeDelegate)imageMapType).getMapType());
+    }
+
+    @Override
+    public void addOverlayImageMapType(ImageMapType imageMapType) {
+        component.addOverlayImageMapType(((ImageMapTypeDelegate)imageMapType).getMapType());
+    }
+
+    @Override
+    public void removeOverlayImageMapType(ImageMapType imageMapType) {
+        Preconditions.checkNotNullArgument(imageMapType);
+        component.removeOverlayImageMapType(((ImageMapTypeDelegate)imageMapType).getMapType());
     }
 
     @Override
@@ -1054,6 +1093,11 @@ public class WebGoogleMapViewer extends WebAbstractComponent<GoogleMap> implemen
     @Override
     public void setMapType(String typeId) {
         component.setMapType(typeId);
+    }
+
+    @Override
+    public void setMapTypes(List<String> mapTypeIds) {
+        component.setMapTypes(mapTypeIds);
     }
 
     @Override
