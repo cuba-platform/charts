@@ -183,10 +183,22 @@ configure(chartsWebModule) {
         provided(servletApi)
     }
 
+
     jar {
         with copySpec {
             from sourceSets.main.allJava
             include 'com/haulmont/charts/web/toolkit/ui/client/**'
         }
+    }
+
+    task webArchive(type: Zip) {
+        from file('web')
+        from file("$buildDir/web")
+        exclude '**/web.xml', '**/app.properties'
+        classifier = 'web'
+    }
+
+    artifacts {
+        archives webArchive
     }
 }
