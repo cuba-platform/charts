@@ -17,43 +17,43 @@ import com.haulmont.cuba.core.config.defaults.DefaultString;
  * @author korotkov
  * @version $Id$
  */
-@Source(type = SourceType.APP)
+@Source(type = SourceType.DATABASE)
 public interface MapConfig extends Config {
 
-    @Property("cuba.charts.map.provider")
+    @Property("charts.map.provider")
     @DefaultString("google")
     String getMapsProvider();
     void setMapsProvider(String key);
 
-    @Property("cuba.charts.map.freeApiKey")
+    @Property("charts.map.freeApiKey")
     String getFreeApiKey();
     void setFreeApiKey(String key);
 
-    @Property("cuba.charts.map.businessApiKey")
+    @Property("charts.map.businessApiKey")
     String getBusinessApiKey();
     void setBusinessApiKey(String key);
 
-    @Property("cuba.charts.map.clientId")
+    @Property("charts.map.clientId")
     String getClientId();
     void setClientId(String id);
 
-    @Property("cuba.charts.map.useBusinessApiKey")
+    @Property("charts.map.useBusinessApiKey")
     @DefaultBoolean(false)
     boolean isUseBusinessApiKey();
     void setUseBusinessApiKey(boolean value);
 
-    @Property("cuba.charts.map.defaultZoom")
+    @Property("charts.map.defaultZoom")
     @DefaultDouble(8.0)
     Double getDefZoom();
     void setDefZoom(Double defZoom);
 
     @DefaultDouble(53.485846)
-    @Property("cuba.charts.map.defaultLatitude")
+    @Property("charts.map.defaultLatitude")
     Double getDefLatitude();
     void setDefLatitude(Double defLatitude);
 
     @DefaultDouble(-2.24248)
-    @Property("cuba.charts.map.defaultLongitude")
+    @Property("charts.map.defaultLongitude")
     Double getDefLongitude();
     void setDefLongitude(Double defLongitude);
 }
