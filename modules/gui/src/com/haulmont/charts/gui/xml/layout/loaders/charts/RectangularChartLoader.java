@@ -1,6 +1,6 @@
 /*
- * Copyright (c) 2008-2014 Haulmont. All rights reserved.
- * Use is subject to license terms, see http://www.cuba-platform.com/license for details.
+ * Copyright (c) 2008-2016 Haulmont. All rights reserved.
+ * Use is subject to license terms, see http://www.cuba-platform.com/commercial-software-license for details.
  */
 
 package com.haulmont.charts.gui.xml.layout.loaders.charts;
@@ -11,8 +11,6 @@ import org.apache.commons.lang.StringUtils;
 import org.dom4j.Element;
 
 /**
- * @author artamonov
- * @version $Id$
  */
 public abstract class RectangularChartLoader<T extends RectangularChart> extends CoordinateChartLoader<T> {
 

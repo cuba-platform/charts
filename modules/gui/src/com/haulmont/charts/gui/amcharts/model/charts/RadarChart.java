@@ -1,6 +1,6 @@
 /*
- * Copyright (c) 2008-2014 Haulmont. All rights reserved.
- * Use is subject to license terms, see http://www.cuba-platform.com/license for details.
+ * Copyright (c) 2008-2016 Haulmont. All rights reserved.
+ * Use is subject to license terms, see http://www.cuba-platform.com/commercial-software-license for details.
  */
 
 package com.haulmont.charts.gui.amcharts.model.charts;
@@ -17,8 +17,6 @@ import java.util.List;
  *
  * <a href="http://docs.amcharts.com/3/javascriptcharts/AmRadarChart">http://docs.amcharts.com/3/javascriptcharts/AmRadarChart</a>
  *
- * @author artamonov
- * @version $Id$
  */
 public class RadarChart extends CoordinateChart<RadarChart> implements HasMargins<RadarChart> {
 

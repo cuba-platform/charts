@@ -1,6 +1,6 @@
 /*
- * Copyright (c) 2008-2014 Haulmont. All rights reserved.
- * Use is subject to license terms, see http://www.cuba-platform.com/license for details.
+ * Copyright (c) 2008-2016 Haulmont. All rights reserved.
+ * Use is subject to license terms, see http://www.cuba-platform.com/commercial-software-license for details.
  */
 
 package com.haulmont.charts.gui.amcharts.model.charts;
@@ -12,8 +12,6 @@ import com.haulmont.charts.gui.amcharts.model.ChartType;
  * <p>
  * <a href="http://docs.amcharts.com/3/javascriptcharts/AmSerialChart">http://docs.amcharts.com/3/javascriptcharts/AmSerialChart</a>
  *
- * @author artamonov
- * @version $Id$
  */
 public class SerialChart extends AbstractSerialChart<SerialChart> {
 

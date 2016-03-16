@@ -1,6 +1,6 @@
 /*
- * Copyright (c) 2008-2015 Haulmont. All rights reserved.
- * Use is subject to license terms, see http://www.cuba-platform.com/license for details.
+ * Copyright (c) 2008-2016 Haulmont. All rights reserved.
+ * Use is subject to license terms, see http://www.cuba-platform.com/commercial-software-license for details.
  */
 
 package com.haulmont.charts.web.gui.components.map.google.base;
@@ -9,8 +9,6 @@ import com.haulmont.bali.util.Preconditions;
 import com.haulmont.charts.gui.map.model.base.Point;
 
 /**
- * @author korotkov
- * @version $Id$
  */
 public class PointDelegate implements Point {
     private com.vaadin.tapio.googlemaps.client.base.Point point;
