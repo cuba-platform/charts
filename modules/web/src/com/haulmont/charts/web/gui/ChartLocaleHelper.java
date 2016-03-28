@@ -65,7 +65,7 @@ public final class ChartLocaleHelper {
         exportLocaleMap.put("menu.label.print", messages.getMainMessage("menu.label.print", locale));
         exportLocaleMap.put("menu.label.undo", messages.getMainMessage("menu.label.undo", locale));
         exportLocaleMap.put("menu.label.redo", messages.getMainMessage("menu.label.redo", locale));
-        exportLocaleMap.put("menu.label.cancel", messages.getMainMessage("menu.label.cancel, locale"));
+        exportLocaleMap.put("menu.label.cancel", messages.getMainMessage("menu.label.cancel", locale));
 
         exportLocaleMap.put("menu.label.save.image", messages.getMainMessage("menu.label.save.image", locale));
         exportLocaleMap.put("menu.label.save.data", messages.getMainMessage("menu.label.save.data", locale));
