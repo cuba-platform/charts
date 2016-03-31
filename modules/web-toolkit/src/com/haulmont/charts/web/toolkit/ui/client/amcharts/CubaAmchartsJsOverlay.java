@@ -8,6 +8,7 @@ package com.haulmont.charts.web.toolkit.ui.client.amcharts;
 import com.google.gwt.core.client.JavaScriptObject;
 import com.google.gwt.dom.client.Element;
 import com.haulmont.charts.web.toolkit.ui.client.amcharts.events.*;
+import com.haulmont.cuba.web.toolkit.ui.client.JsDate;
 
 /**
  */
@@ -315,5 +316,29 @@ public class CubaAmchartsJsOverlay {
                 })();
             }
         }
+    }-*/;
+
+    public void zoomOut() {
+        zoomOut(chart);
+    }
+
+    private native static void zoomOut(JavaScriptObject chart) /*-{
+        chart.zoomOut();
+    }-*/;
+
+    public void zoomToIndexes(int start, int end) {
+        zoomToIndexes(chart, start, end);
+    }
+
+    private native static void zoomToIndexes(JavaScriptObject chart, int start, int end) /*-{
+        chart.zoomToIndexes(start, end);
+    }-*/;
+
+    public void zoomToDates(JsDate start, JsDate end) {
+        zoomToDates(chart, start, end);
+    }
+
+    private native static void zoomToDates(JavaScriptObject chart, JsDate start, JsDate end) /*-{
+        chart.zoomToDates(start, end);
     }-*/;
 }

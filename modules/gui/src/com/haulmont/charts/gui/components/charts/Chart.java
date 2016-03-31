@@ -83,6 +83,10 @@ public interface Chart extends Component, Component.BelongToFrame, Component.Has
     void addZoomListener(ZoomListener zoomListener);
     void removeZoomListener(ZoomListener zoomListener);
 
+    void zoomOut();
+    void zoomToIndexes(int start, int end);
+    void zoomToDates(Date start, Date end);
+
     class AxisZoomEvent {
         private final String axisId;
         private final double startValue;

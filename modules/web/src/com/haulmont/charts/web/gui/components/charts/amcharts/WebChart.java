@@ -198,6 +198,21 @@ public class WebChart extends WebAbstractComponent<CubaAmchartsScene> implements
         component.drawChart();
     }
 
+    @Override
+    public void zoomOut() {
+        component.zoomOut();
+    }
+
+    @Override
+    public void zoomToIndexes(int start, int end) {
+        component.zoomToIndexes(start, end);
+    }
+
+    @Override
+    public void zoomToDates(Date start, Date end) {
+        component.zoomToDates(start, end);
+    }
+
     protected Entity getEventItem(String itemIdString) {
         Entity item = null;
 

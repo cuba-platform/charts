@@ -7,9 +7,17 @@ package com.haulmont.charts.web.toolkit.ui.client.amcharts;
 
 import com.vaadin.shared.communication.ClientRpc;
 
+import java.util.Date;
+
 /**
  */
 public interface CubaAmchartsSceneClientRpc extends ClientRpc {
 
     void updatePoints(String json);
+
+    void zoomOut();
+
+    void zoomToIndexes(int start, int end);
+
+    void zoomToDates(Date start, Date end);
 }

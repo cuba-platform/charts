@@ -19,6 +19,7 @@ import com.vaadin.client.ui.layout.ElementResizeEvent;
 import com.vaadin.client.ui.layout.ElementResizeListener;
 import com.vaadin.shared.ui.Connect;
 
+import java.util.Date;
 import java.util.Set;
 
 /**
@@ -39,6 +40,21 @@ public class CubaAmchartsSceneConnector extends AbstractComponentConnector {
                              getWidget().updatePoints(getJsonAsObject(json));
                          }
                      });
+                 }
+
+                 @Override
+                 public void zoomOut() {
+                     getWidget().zoomOut();
+                 }
+
+                 @Override
+                 public void zoomToIndexes(int start, int end) {
+                     getWidget().zoomToIndexes(start, end);
+                 }
+
+                 @Override
+                 public void zoomToDates(Date start, Date end) {
+                     getWidget().zoomToDates(JsDate.toJs(start), JsDate.toJs(end));
                  }
              });
     }

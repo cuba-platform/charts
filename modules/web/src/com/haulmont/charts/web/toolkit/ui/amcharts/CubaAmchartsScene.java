@@ -395,6 +395,18 @@ public class CubaAmchartsScene extends AbstractComponent {
         getState().version++;
     }
 
+    public void zoomOut() {
+        getRpcProxy(CubaAmchartsSceneClientRpc.class).zoomOut();
+    }
+
+    public void zoomToIndexes(int start, int end) {
+        getRpcProxy(CubaAmchartsSceneClientRpc.class).zoomToIndexes(start, end);
+    }
+
+    public void zoomToDates(Date start, Date end) {
+        getRpcProxy(CubaAmchartsSceneClientRpc.class).zoomToDates(start, end);
+    }
+
     protected class CubaAmchartsServerRpcImpl implements CubaAmchartsServerRpc {
 
         @Override

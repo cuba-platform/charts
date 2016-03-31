@@ -12,6 +12,7 @@ import com.google.gwt.user.client.Event;
 import com.google.gwt.user.client.ui.Widget;
 import com.haulmont.charts.web.toolkit.ui.client.amcharts.events.ChartClickHandler;
 import com.haulmont.charts.web.toolkit.ui.client.amcharts.events.JsChartClickEvent;
+import com.haulmont.cuba.web.toolkit.ui.client.JsDate;
 
 /**
  */
@@ -129,5 +130,44 @@ public class CubaAmchartsSceneWidget extends Widget {
 
     public void updatePoints(JavaScriptObject jsObj) {
         jsOverlay.updatePoints(jsObj);
+    }
+
+    public void zoomOut() {
+        if (jsOverlay != null) {
+            jsOverlay.zoomOut();
+        } else {
+            Scheduler.get().scheduleDeferred(new Scheduler.ScheduledCommand() {
+                @Override
+                public void execute() {
+                    jsOverlay.zoomOut();
+                }
+            });
+        }
+    }
+
+    public void zoomToIndexes(final int start, final int end) {
+        if (jsOverlay != null) {
+            jsOverlay.zoomToIndexes(start, end);
+        } else {
+            Scheduler.get().scheduleDeferred(new Scheduler.ScheduledCommand() {
+                @Override
+                public void execute() {
+                    jsOverlay.zoomToIndexes(start, end);
+                }
+            });
+        }
+    }
+
+    public void zoomToDates(final JsDate start, final JsDate end) {
+        if (jsOverlay != null) {
+            jsOverlay.zoomToDates(start, end);
+        } else {
+            Scheduler.get().scheduleDeferred(new Scheduler.ScheduledCommand() {
+                @Override
+                public void execute() {
+                    jsOverlay.zoomToDates(start, end);
+                }
+            });
+        }
     }
 }
