@@ -165,7 +165,11 @@ public abstract class AbstractSerialChartLoader<T extends AbstractSerialChart> e
 
             String minPeriod = axisElement.attributeValue("minPeriod");
             if (StringUtils.isNotEmpty(minPeriod)) {
-                axis.setMinPeriod(DatePeriod.valueOf(minPeriod));
+                DatePeriod dp = DatePeriod.fromId(minPeriod);
+                if (dp == null) {
+                    dp = DatePeriod.valueOf(minPeriod);
+                }
+                axis.setMinPeriod(dp);
             }
 
             String parseDates = axisElement.attributeValue("parseDates");

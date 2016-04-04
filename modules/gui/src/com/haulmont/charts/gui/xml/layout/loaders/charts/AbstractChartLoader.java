@@ -1137,7 +1137,11 @@ public abstract class AbstractChartLoader<T extends AbstractChart> extends Abstr
     protected void loadDateFormat(DateFormat dateFormat, Element dateFormatElement) {
         String period = dateFormatElement.attributeValue("period");
         if (StringUtils.isNotEmpty(period)) {
-            dateFormat.setPeriod(DatePeriod.valueOf(period));
+            DatePeriod dp = DatePeriod.fromId(period);
+            if (dp == null) {
+                dp = DatePeriod.valueOf(period);
+            }
+            dateFormat.setPeriod(dp);
         }
 
         String format = dateFormatElement.attributeValue("format");

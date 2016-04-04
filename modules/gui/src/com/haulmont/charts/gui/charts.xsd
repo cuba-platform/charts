@@ -234,16 +234,23 @@
     </xs:simpleType>
 
     <xs:simpleType name="datePeriod">
-        <xs:restriction base="xs:string">
-            <xs:enumeration value="MILLISECONDS"/>
-            <xs:enumeration value="SECONDS"/>
-            <xs:enumeration value="MINUTES"/>
-            <xs:enumeration value="HOURS"/>
-            <xs:enumeration value="DAYS"/>
-            <xs:enumeration value="MONTHS"/>
-            <xs:enumeration value="WEEKS"/>
-            <xs:enumeration value="YEARS"/>
-        </xs:restriction>
+        <xs:union>
+            <xs:simpleType>
+                <xs:restriction base="xs:string"/>
+            </xs:simpleType>
+            <xs:simpleType>
+                <xs:restriction base="xs:string">
+                    <xs:enumeration value="MILLISECONDS"/>
+                    <xs:enumeration value="SECONDS"/>
+                    <xs:enumeration value="MINUTES"/>
+                    <xs:enumeration value="HOURS"/>
+                    <xs:enumeration value="DAYS"/>
+                    <xs:enumeration value="MONTHS"/>
+                    <xs:enumeration value="WEEKS"/>
+                    <xs:enumeration value="YEARS"/>
+                </xs:restriction>
+            </xs:simpleType>
+        </xs:union>
     </xs:simpleType>
 
     <xs:simpleType name="duration">
@@ -1456,7 +1463,7 @@
                     <xs:attribute name="endDate" type="xs:date"/>
                     <xs:attribute name="endDateField" type="xs:string"/>
                     <xs:attribute name="endField" type="xs:string"/>
-                    <xs:attribute name="period" type="xs:string"/>
+                    <xs:attribute name="period" type="datePeriod"/>
                     <xs:attribute name="segmentsField" type="xs:string"/>
                     <xs:attribute name="startDate" type="xs:date"/>
                     <xs:attribute name="startDateField" type="xs:string"/>

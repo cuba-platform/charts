@@ -5,6 +5,7 @@
 
 package com.haulmont.charts.gui.xml.layout.loaders.charts;
 
+import com.haulmont.charts.gui.amcharts.model.DatePeriod;
 import com.haulmont.charts.gui.amcharts.model.Graph;
 import com.haulmont.charts.gui.amcharts.model.charts.GanttChart;
 import org.apache.commons.lang.StringUtils;
@@ -77,7 +78,11 @@ public class GanttChartLoader extends AbstractSerialChartLoader<GanttChart> {
 
         String period = element.attributeValue("period");
         if (StringUtils.isNotEmpty(period)) {
-            chart.setPeriod(period);
+            DatePeriod dp = DatePeriod.fromId(period);
+            if (dp == null) {
+                dp = DatePeriod.valueOf(period);
+            }
+            chart.setPeriod(dp.getId());
         }
 
         String segmentsField = element.attributeValue("segmentsField");
