@@ -1118,7 +1118,7 @@
         <xs:attribute name="borderColor" type="color"/>
         <xs:attribute name="classNamePrefix" type="xs:string"/>
         <xs:attribute name="color" type="color"/>
-        <xs:attribute name="creditsPosition" type="xs:string"/>
+        <xs:attribute name="creditsPosition" type="creditsPosition"/>
         <xs:attribute name="decimalSeparator" type="xs:string"/>
         <xs:attribute name="defs" type="xs:string"/>
         <xs:attribute name="fontFamily" type="xs:string"/>
@@ -1575,12 +1575,19 @@
     </xs:simpleType>
 
     <xs:simpleType name="creditsPosition">
-        <xs:restriction base="xs:string">
-            <xs:enumeration value="TOP_LEFT"/>
-            <xs:enumeration value="TOP_RIGHT"/>
-            <xs:enumeration value="BOTTOM_LEFT"/>
-            <xs:enumeration value="BOTTOM_RIGHT"/>
-        </xs:restriction>
+        <xs:union>
+            <xs:simpleType>
+                <xs:restriction base="xs:string"/>
+            </xs:simpleType>
+            <xs:simpleType>
+                <xs:restriction base="xs:string">
+                    <xs:enumeration value="TOP_LEFT"/>
+                    <xs:enumeration value="TOP_RIGHT"/>
+                    <xs:enumeration value="BOTTOM_LEFT"/>
+                    <xs:enumeration value="BOTTOM_RIGHT"/>
+                </xs:restriction>
+            </xs:simpleType>
+        </xs:union>
     </xs:simpleType>
 
     <xs:simpleType name="periodType">

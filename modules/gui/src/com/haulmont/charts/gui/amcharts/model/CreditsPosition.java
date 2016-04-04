@@ -5,6 +5,8 @@
 
 package com.haulmont.charts.gui.amcharts.model;
 
+import javax.annotation.Nullable;
+
 /**
  */
 public enum CreditsPosition implements ChartEnum {
@@ -21,6 +23,16 @@ public enum CreditsPosition implements ChartEnum {
 
     public String getId() {
         return id;
+    }
+
+    @Nullable
+    public static CreditsPosition fromId(String id) {
+        for (CreditsPosition position : values()) {
+            if (position.getId().equals(id)) {
+                return position;
+            }
+        }
+        return null;
     }
 
     @Override

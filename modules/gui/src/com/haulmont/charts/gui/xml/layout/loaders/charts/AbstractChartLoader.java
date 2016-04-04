@@ -755,7 +755,11 @@ public abstract class AbstractChartLoader<T extends AbstractChart> extends Abstr
 
         String creditsPosition = element.attributeValue("creditsPosition");
         if (StringUtils.isNotEmpty(creditsPosition)) {
-            chart.setCreditsPosition(creditsPosition);
+            CreditsPosition cp = CreditsPosition.fromId(creditsPosition);
+            if (cp == null) {
+                cp = CreditsPosition.valueOf(creditsPosition);
+            }
+            chart.setCreditsPosition(cp);
         }
 
         String borderAlpha = element.attributeValue("borderAlpha");

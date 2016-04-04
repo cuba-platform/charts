@@ -53,7 +53,7 @@ public abstract class AbstractChart<T extends AbstractChartObject> extends Chart
 
     private Color color;
 
-    private String creditsPosition;
+    private CreditsPosition creditsPosition;
 
     private DataProvider dataProvider;
 
@@ -288,11 +288,11 @@ public abstract class AbstractChart<T extends AbstractChartObject> extends Chart
         return (T) this;
     }
 
-    public String getCreditsPosition() {
+    public CreditsPosition getCreditsPosition() {
         return creditsPosition;
     }
 
-    public T setCreditsPosition(String creditsPosition) {
+    public T setCreditsPosition(CreditsPosition creditsPosition) {
         this.creditsPosition = creditsPosition;
         return (T) this;
     }
