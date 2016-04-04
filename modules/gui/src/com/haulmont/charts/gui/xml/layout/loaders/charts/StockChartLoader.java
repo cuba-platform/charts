@@ -1173,7 +1173,11 @@ public class StockChartLoader extends AbstractComponentLoader<StockChart> {
 
             String creditsPosition = panelSettingsElement.attributeValue("creditsPosition");
             if (StringUtils.isNotEmpty(creditsPosition)) {
-                panelsSettings.setCreditsPosition(CreditsPosition.valueOf(creditsPosition));
+                CreditsPosition cp = CreditsPosition.fromId(creditsPosition);
+                if (cp == null) {
+                    cp = CreditsPosition.valueOf(creditsPosition);
+                }
+                panelsSettings.setCreditsPosition(cp);
             }
 
             String decimalSeparator = panelSettingsElement.attributeValue("decimalSeparator");
