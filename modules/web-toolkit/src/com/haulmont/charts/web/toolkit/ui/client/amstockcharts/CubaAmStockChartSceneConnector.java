@@ -88,6 +88,16 @@ public class CubaAmStockChartSceneConnector extends AbstractComponentConnector {
         });
     }
 
+    @Override
+    public void onUnregister() {
+        super.onUnregister();
+        resetMouseOver();
+    }
+
+    private static native void resetMouseOver() /*-{
+        $wnd.AmCharts.resetMouseOver();
+    }-*/;
+
     protected AmStockChartEvents createEvents(AmStockChartConfig config) {
         AmStockChartEvents amStockChartEvents = new AmStockChartEvents();
         Set<String> events = getState().registeredEventListeners;
