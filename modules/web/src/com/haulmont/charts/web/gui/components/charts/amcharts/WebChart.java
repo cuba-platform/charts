@@ -166,11 +166,11 @@ public class WebChart extends WebAbstractComponent<CubaAmchartsScene> implements
 
     @Override
     public void setConfiguration(AbstractChart chart) {
-        component.drawChart(chart);
-
         if (chart.getDataProvider() == null && datasource != null) {
             chart.setDataProvider(new EntityDataProvider(datasource));
         }
+
+        component.drawChart(chart);
     }
 
     @Override

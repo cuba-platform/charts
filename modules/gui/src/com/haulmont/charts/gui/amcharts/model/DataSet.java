@@ -8,6 +8,7 @@ package com.haulmont.charts.gui.amcharts.model;
 import com.google.gson.annotations.Expose;
 import com.haulmont.charts.gui.amcharts.model.data.DataProvider;
 import com.haulmont.cuba.core.global.UuidProvider;
+import org.apache.commons.collections.CollectionUtils;
 import org.apache.commons.lang.StringUtils;
 
 import java.util.ArrayList;
@@ -23,6 +24,9 @@ import java.util.List;
 public class DataSet extends AbstractChartObject {
 
     private static final long serialVersionUID = -5376050190482065219L;
+
+    @Expose(serialize = false, deserialize = false)
+    private List<DataProviderChangeListener> dataProviderChangeListeners;
 
     private String id;
 
@@ -90,7 +94,17 @@ public class DataSet extends AbstractChartObject {
 
     public DataSet setDataProvider(DataProvider dataProvider) {
         this.dataProvider = dataProvider;
+        fireDataProviderChanged();
         return this;
+    }
+
+    protected void fireDataProviderChanged() {
+        if (CollectionUtils.isNotEmpty(dataProviderChangeListeners)) {
+            DataProviderChangeEvent event = new DataProviderChangeEvent(this);
+            for (DataProviderChangeListener listener : new ArrayList<>(dataProviderChangeListeners)) {
+                listener.onChange(event);
+            }
+        }
     }
 
     public List<FieldMapping> getFieldMappings() {
@@ -176,5 +190,34 @@ public class DataSet extends AbstractChartObject {
         }
 
         return wiredFields;
+    }
+
+    public void addDataProviderChangeListener(DataProviderChangeListener listener) {
+        if (dataProviderChangeListeners == null) {
+            dataProviderChangeListeners = new ArrayList<>();
+        }
+        dataProviderChangeListeners.add(listener);
+    }
+
+    public void removeDataProviderChangeListener(DataProviderChangeListener listener) {
+        if (dataProviderChangeListeners != null) {
+            dataProviderChangeListeners.remove(listener);
+        }
+    }
+
+    public interface DataProviderChangeListener {
+        void onChange(DataProviderChangeEvent event);
+    }
+
+    public class DataProviderChangeEvent {
+        private final DataSet dataSet;
+
+        public DataProviderChangeEvent(DataSet dataSet) {
+            this.dataSet = dataSet;
+        }
+
+        public DataSet getDataSet() {
+            return dataSet;
+        }
     }
 }

@@ -16,6 +16,7 @@ import org.apache.commons.collections.CollectionUtils;
 
 import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.Collections;
 import java.util.List;
 
 /**
@@ -25,9 +26,14 @@ import java.util.List;
  *
  */
 public class StockChartGroup extends ChartModel
-        implements HasColors<StockChartGroup> {
+        implements HasColors<StockChartGroup>, DataSet.DataProviderChangeListener {
 
     private static final long serialVersionUID = -8514686195948609709L;
+
+    @Expose(serialize = false, deserialize = false)
+    private List<DataSetDataProviderChangeListener> dataSetDataProviderChangeListeners;
+    @Expose(serialize = false, deserialize = false)
+    private List<DataSetsChangeListener> dataSetsChangeListeners;
 
     private Boolean addClassNames;
 
@@ -219,7 +225,20 @@ public class StockChartGroup extends ChartModel
     }
 
     public StockChartGroup setDataSets(List<DataSet> dataSets) {
+        if (CollectionUtils.isNotEmpty(this.dataSets)) {
+            for (DataSet dataSet : this.dataSets) {
+                dataSet.removeDataProviderChangeListener(this);
+            }
+        }
+
+        if (CollectionUtils.isNotEmpty(dataSets)) {
+            for (DataSet dataSet : dataSets) {
+                dataSet.addDataProviderChangeListener(this);
+            }
+        }
+
         this.dataSets = dataSets;
+        fireDataSetsChanged(dataSets, Operation.SET);
         return this;
     }
 
@@ -228,9 +247,25 @@ public class StockChartGroup extends ChartModel
             if (this.dataSets == null) {
                 this.dataSets = new ArrayList<>();
             }
+            List<DataSet> dataSetList = Arrays.asList(dataSets);
+            for (DataSet dataSet : dataSetList) {
+                dataSet.addDataProviderChangeListener(this);
+            }
             this.dataSets.addAll(Arrays.asList(dataSets));
+            fireDataSetsChanged(dataSetList, Operation.ADD);
         }
         return this;
+    }
+
+    protected void fireDataSetsChanged(List<DataSet> dataSets, Operation operation) {
+        if (CollectionUtils.isNotEmpty(dataSetsChangeListeners)) {
+            DataSetsChangeEvent event = new DataSetsChangeEvent(
+                    dataSets != null ? new ArrayList<>(dataSets) : Collections.emptyList(),
+                    operation);
+            for (DataSetsChangeListener listener : new ArrayList<>(dataSetsChangeListeners)) {
+                listener.dataSetsChanged(event);
+            }
+        }
     }
 
     public DataSetSelector getDataSetSelector() {
@@ -461,5 +496,85 @@ public class StockChartGroup extends ChartModel
         }
 
         return chartGson.toJson(jsonTree);
+    }
+
+    @Override
+    public void onChange(DataSet.DataProviderChangeEvent event) {
+        if (CollectionUtils.isNotEmpty(dataSetDataProviderChangeListeners)) {
+            DataSetDataProviderChangeEvent e = new DataSetDataProviderChangeEvent(event.getDataSet());
+            for (DataSetDataProviderChangeListener listener : new ArrayList<>(dataSetDataProviderChangeListeners)) {
+                listener.onChange(e);
+            }
+        }
+    }
+
+    public void addDataSetDataProviderChangeListener(DataSetDataProviderChangeListener listener) {
+        if (dataSetDataProviderChangeListeners == null) {
+            dataSetDataProviderChangeListeners = new ArrayList<>();
+        }
+        dataSetDataProviderChangeListeners.add(listener);
+    }
+
+    public void removeDataSetDataProviderChangeListener(DataSetDataProviderChangeListener listener) {
+        if (dataSetDataProviderChangeListeners != null) {
+            dataSetDataProviderChangeListeners.remove(listener);
+        }
+    }
+
+    public void addDataSetsChangeListener(DataSetsChangeListener listener) {
+        if (dataSetsChangeListeners == null) {
+            dataSetsChangeListeners = new ArrayList<>();
+        }
+        dataSetsChangeListeners.add(listener);
+    }
+
+    public void removeDataSetsChangeListener(DataSetsChangeListener listener) {
+        if (dataSetsChangeListeners != null) {
+            dataSetsChangeListeners.remove(listener);
+        }
+    }
+
+    public interface DataSetDataProviderChangeListener {
+        void onChange(DataSetDataProviderChangeEvent event);
+    }
+
+    public class DataSetDataProviderChangeEvent {
+        private final DataSet dataSet;
+
+        public DataSetDataProviderChangeEvent(DataSet dataSet) {
+            this.dataSet = dataSet;
+        }
+
+        public DataSet getDataSet() {
+            return dataSet;
+        }
+    }
+
+    public interface DataSetsChangeListener {
+        void dataSetsChanged(DataSetsChangeEvent event);
+    }
+
+    public enum Operation {
+        ADD,
+        REMOVE,
+        SET
+    }
+
+    public static class DataSetsChangeEvent {
+        private final List<DataSet> dataSets;
+        private final Operation operation;
+
+        public DataSetsChangeEvent(List<DataSet> dataSets, Operation operation) {
+            this.dataSets = dataSets;
+            this.operation = operation;
+        }
+
+        public Operation getOperation() {
+            return operation;
+        }
+
+        public List<DataSet> getDataSets() {
+            return dataSets;
+        }
     }
 }

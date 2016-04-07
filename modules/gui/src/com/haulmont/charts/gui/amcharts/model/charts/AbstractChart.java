@@ -31,6 +31,9 @@ public abstract class AbstractChart<T extends AbstractChartObject> extends Chart
 
     private static final long serialVersionUID = -7360797549413731632L;
 
+    @Expose(serialize = false, deserialize = false)
+    private List<DataProviderChangeListener> dataProviderChangeListeners;
+
     private Boolean addClassNames;
 
     private List<Label> allLabels;
@@ -230,7 +233,16 @@ public abstract class AbstractChart<T extends AbstractChartObject> extends Chart
 
     public T setDataProvider(DataProvider dataProvider) {
         this.dataProvider = dataProvider;
+        fireDataProviderChanged();
         return (T) this;
+    }
+
+    protected void fireDataProviderChanged() {
+        if (CollectionUtils.isNotEmpty(dataProviderChangeListeners)) {
+            for (DataProviderChangeListener listener : new ArrayList<>(dataProviderChangeListeners)) {
+                listener.onChange();
+            }
+        }
     }
 
     public T addData(DataItem... dataItems) {
@@ -566,5 +578,22 @@ public abstract class AbstractChart<T extends AbstractChartObject> extends Chart
         }
 
         return chartGson.toJson(jsonTree);
+    }
+
+    public void addDataProviderChangeListener(DataProviderChangeListener listener) {
+        if (dataProviderChangeListeners == null) {
+            dataProviderChangeListeners = new ArrayList<>();
+        }
+        dataProviderChangeListeners.add(listener);
+    }
+
+    public void removeDataProviderSetListener(DataProviderChangeListener listener) {
+        if (dataProviderChangeListeners != null) {
+            dataProviderChangeListeners.remove(listener);
+        }
+    }
+
+    public interface DataProviderChangeListener {
+        void onChange();
     }
 }

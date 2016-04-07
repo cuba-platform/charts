@@ -145,6 +145,7 @@ public class CubaAmchartsScene extends AbstractComponent {
 
     public void drawChart(AbstractChart chart) {
         this.chart = chart;
+        this.chart.addDataProviderChangeListener(() -> forceStateChange());
         forceStateChange();
     }
 
