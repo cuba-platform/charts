@@ -103,16 +103,6 @@ public class CubaAmchartsSceneConnector extends AbstractComponentConnector {
         });
     }
 
-    @Override
-    public void onUnregister() {
-        super.onUnregister();
-        resetMouseOver();
-    }
-
-    private static native void resetMouseOver() /*-{
-        $wnd.AmCharts.resetMouseOver();
-    }-*/;
-
     protected AmchartsEvents createEvents(AmchartsConfig config) {
         AmchartsEvents amchartsEvents = new AmchartsEvents();
         Set<String> events = getState().registeredEventListeners;

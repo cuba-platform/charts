@@ -170,4 +170,14 @@ public class CubaAmchartsSceneWidget extends Widget {
             });
         }
     }
+
+    @Override
+    protected void onUnload() {
+        super.onUnload();
+        resetMouseOver();
+    }
+
+    private static native void resetMouseOver() /*-{
+        $wnd.AmCharts.resetMouseOver();
+    }-*/;
 }

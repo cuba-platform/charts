@@ -146,4 +146,14 @@ public class CubaAmStockChartSceneWidget extends Widget {
     public void updatePoints(JavaScriptObject jsObj) {
         jsOverlay.updatePoints(jsObj);
     }
+
+    @Override
+    protected void onUnload() {
+        super.onUnload();
+        resetMouseOver();
+    }
+
+    private static native void resetMouseOver() /*-{
+        $wnd.AmCharts.resetMouseOver();
+    }-*/;
 }
