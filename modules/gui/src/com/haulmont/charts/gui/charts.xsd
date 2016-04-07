@@ -2028,7 +2028,11 @@
                 <xs:element name="colors" minOccurs="0" maxOccurs="1">
                     <xs:complexType>
                         <xs:sequence minOccurs="0" maxOccurs="1">
-                            <xs:element name="color" minOccurs="0" maxOccurs="unbounded" type="color"/>
+                            <xs:element name="color" minOccurs="0" maxOccurs="unbounded">
+                                <xs:complexType>
+                                    <xs:attribute name="value" type="color"/>
+                                </xs:complexType>
+                            </xs:element>
                         </xs:sequence>
                     </xs:complexType>
                 </xs:element>
