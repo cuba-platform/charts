@@ -10,6 +10,7 @@ import com.haulmont.charts.gui.amcharts.model.AbstractChartObject;
 import com.haulmont.charts.gui.amcharts.model.Settings;
 import com.haulmont.charts.web.toolkit.ui.client.amcharts.CubaAmchartsIntegrationState;
 import com.vaadin.annotations.JavaScript;
+import com.vaadin.annotations.StyleSheet;
 import com.vaadin.server.AbstractExtension;
 import com.vaadin.server.Extension;
 import com.vaadin.ui.UI;
@@ -18,9 +19,29 @@ import java.util.*;
 
 /**
  */
-@JavaScript({"vaadin://resources/amcharts/amcharts-all.min.js",
-        "vaadin://resources/amcharts/themes.min.js",
-        "vaadin://resources/amcharts/exporting.min.js"})
+@JavaScript({
+        "vaadin://resources/amcharts/amcharts.js",
+        "vaadin://resources/amcharts/funnel.js",
+        "vaadin://resources/amcharts/gauge.js",
+        "vaadin://resources/amcharts/pie.js",
+        "vaadin://resources/amcharts/radar.js",
+        "vaadin://resources/amcharts/serial.js",
+        "vaadin://resources/amcharts/xy.js",
+        "vaadin://resources/amcharts/gantt.js",
+        "vaadin://resources/amcharts/amstock.js",
+
+        "vaadin://resources/amcharts/themes/black.js",
+        "vaadin://resources/amcharts/themes/chalk.js",
+        "vaadin://resources/amcharts/themes/dark.js",
+        "vaadin://resources/amcharts/themes/light.js",
+        "vaadin://resources/amcharts/themes/patterns.js",
+
+        "vaadin://resources/amcharts/plugins/export/export.js"
+        })
+@StyleSheet({
+        "vaadin://resources/amcharts/style.css",
+        "vaadin://resources/amcharts/plugins/export/export.css"
+})
 public class CubaAmchartsIntegration extends AbstractExtension {
 
     private Settings settings;
