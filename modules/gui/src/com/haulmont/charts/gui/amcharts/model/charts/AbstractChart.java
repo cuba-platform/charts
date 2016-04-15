@@ -34,6 +34,10 @@ public abstract class AbstractChart<T extends AbstractChartObject> extends Chart
     @Expose(serialize = false, deserialize = false)
     private List<DataProviderChangeListener> dataProviderChangeListeners;
 
+    private Boolean accessible;
+
+    private String accessibleTitle;
+
     private Boolean addClassNames;
 
     private List<Label> allLabels;
@@ -87,8 +91,6 @@ public abstract class AbstractChart<T extends AbstractChartObject> extends Chart
 
     private Legend legend;
 
-    private String legendDiv;
-
     private Boolean panEventsEnabled;
 
     private String path = "VAADIN/resources/amcharts/";
@@ -103,6 +105,10 @@ public abstract class AbstractChart<T extends AbstractChartObject> extends Chart
 
     private List<SmallNumberPrefix> prefixesOfSmallNumbers;
 
+    private Integer processCount;
+
+    private Integer processTimeout;
+
     private Boolean svgIcons;
 
     private Boolean tapToActivate;
@@ -112,6 +118,8 @@ public abstract class AbstractChart<T extends AbstractChartObject> extends Chart
     private String thousandsSeparator;
 
     private List<Title> titles;
+
+    private Integer touchClickDuration;
 
     private ChartType type;
 
@@ -197,15 +205,6 @@ public abstract class AbstractChart<T extends AbstractChartObject> extends Chart
 
     public T setDecimalSeparator(String decimalSeparator) {
         this.decimalSeparator = decimalSeparator;
-        return (T) this;
-    }
-
-    public String getLegendDiv() {
-        return legendDiv;
-    }
-
-    public T setLegendDiv(String legendDiv) {
-        this.legendDiv = legendDiv;
         return (T) this;
     }
 
@@ -563,6 +562,51 @@ public abstract class AbstractChart<T extends AbstractChartObject> extends Chart
      */
     public T setDefs(String defs) {
         this.defs = defs;
+        return (T) this;
+    }
+
+    public Boolean getAccessible() {
+        return accessible;
+    }
+
+    public T setAccessible(Boolean accessible) {
+        this.accessible = accessible;
+        return (T) this;
+    }
+
+    public String getAccessibleTitle() {
+        return accessibleTitle;
+    }
+
+    public T setAccessibleTitle(String accessibleTitle) {
+        this.accessibleTitle = accessibleTitle;
+        return (T) this;
+    }
+
+    public Integer getProcessCount() {
+        return processCount;
+    }
+
+    public T setProcessCount(Integer processCount) {
+        this.processCount = processCount;
+        return (T) this;
+    }
+
+    public Integer getProcessTimeout() {
+        return processTimeout;
+    }
+
+    public T setProcessTimeout(Integer processTimeout) {
+        this.processTimeout = processTimeout;
+        return (T) this;
+    }
+
+    public Integer getTouchClickDuration() {
+        return touchClickDuration;
+    }
+
+    public T setTouchClickDuration(Integer touchClickDuration) {
+        this.touchClickDuration = touchClickDuration;
         return (T) this;
     }
 

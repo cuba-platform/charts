@@ -17,15 +17,11 @@ public class CategoryAxis extends AbstractAxis<CategoryAxis> {
 
     private Boolean autoWrap;
 
-    private Boolean boldPeriodBeginning;
-
     private JsFunction categoryFunction;
 
-    private Boolean centerLabelOnFullPeriod;
+    private String classNameField;
 
     private Boolean equalSpacing;
-
-    private DayOfWeek firstDayOfWeek;
 
     private String forceShowField;
 
@@ -34,8 +30,6 @@ public class CategoryAxis extends AbstractAxis<CategoryAxis> {
     private String labelColorField;
 
     private JsFunction labelFunction;
-
-    private Boolean markPeriodChange;
 
     private DatePeriod minPeriod;
 
@@ -58,39 +52,12 @@ public class CategoryAxis extends AbstractAxis<CategoryAxis> {
         return this;
     }
 
-    public Boolean getBoldPeriodBeginning() {
-        return boldPeriodBeginning;
-    }
-
-    public CategoryAxis setBoldPeriodBeginning(Boolean boldPeriodBeginning) {
-        this.boldPeriodBeginning = boldPeriodBeginning;
-        return this;
-    }
-
-    public Boolean getCenterLabelOnFullPeriod() {
-        return centerLabelOnFullPeriod;
-    }
-
-    public CategoryAxis setCenterLabelOnFullPeriod(Boolean centerLabelOnFullPeriod) {
-        this.centerLabelOnFullPeriod = centerLabelOnFullPeriod;
-        return this;
-    }
-
     public Boolean getEqualSpacing() {
         return equalSpacing;
     }
 
     public CategoryAxis setEqualSpacing(Boolean equalSpacing) {
         this.equalSpacing = equalSpacing;
-        return this;
-    }
-
-    public DayOfWeek getFirstDayOfWeek() {
-        return firstDayOfWeek;
-    }
-
-    public CategoryAxis setFirstDayOfWeek(DayOfWeek firstDayOfWeek) {
-        this.firstDayOfWeek = firstDayOfWeek;
         return this;
     }
 
@@ -109,15 +76,6 @@ public class CategoryAxis extends AbstractAxis<CategoryAxis> {
 
     public CategoryAxis setGridPosition(GridPosition gridPosition) {
         this.gridPosition = gridPosition;
-        return this;
-    }
-
-    public Boolean getMarkPeriodChange() {
-        return markPeriodChange;
-    }
-
-    public CategoryAxis setMarkPeriodChange(Boolean markPeriodChange) {
-        this.markPeriodChange = markPeriodChange;
         return this;
     }
 
@@ -198,6 +156,15 @@ public class CategoryAxis extends AbstractAxis<CategoryAxis> {
 
     public CategoryAxis setWidthField(String widthField) {
         this.widthField = widthField;
+        return this;
+    }
+
+    public String getClassNameField() {
+        return classNameField;
+    }
+
+    public CategoryAxis setClassNameField(String classNameField) {
+        this.classNameField = classNameField;
         return this;
     }
 }

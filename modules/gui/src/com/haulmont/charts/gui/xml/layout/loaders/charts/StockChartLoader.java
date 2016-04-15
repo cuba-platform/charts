@@ -11,26 +11,19 @@ import com.haulmont.charts.gui.amcharts.model.charts.StockPanel;
 import com.haulmont.charts.gui.amcharts.model.data.EntityDataProvider;
 import com.haulmont.charts.gui.components.charts.StockChart;
 import com.haulmont.cuba.gui.GuiDevelopmentException;
-import com.haulmont.cuba.gui.components.Component;
 import com.haulmont.cuba.gui.data.CollectionDatasource;
 import com.haulmont.cuba.gui.data.Datasource;
-import com.haulmont.cuba.gui.xml.layout.loaders.AbstractComponentLoader;
 import org.apache.commons.collections.CollectionUtils;
 import org.apache.commons.lang.StringUtils;
 import org.dom4j.Element;
 
-import java.text.ParseException;
-import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Arrays;
-import java.util.Date;
 import java.util.List;
 
 /**
  */
-public class StockChartLoader extends AbstractComponentLoader<StockChart> {
-
-    protected static final String CONFIG_DATE_FORMAT = "yyyy-MM-dd";
+public class StockChartLoader extends ChartModelLoader<StockChartGroup, StockChart> {
 
     @Override
     public void createComponent() {
@@ -52,30 +45,6 @@ public class StockChartLoader extends AbstractComponentLoader<StockChart> {
         StockChartGroup configuration = createConfiguration();
         loadConfiguration(configuration, element);
         resultComponent.setConfiguration(configuration);
-    }
-
-    @Override
-    protected void loadWidth(Component component, Element element) {
-        final String width = element.attributeValue("width");
-        if ("auto".equalsIgnoreCase(width)) {
-            component.setWidth("640px");
-        } else if (!StringUtils.isBlank(width)) {
-            component.setWidth(width);
-        } else {
-            component.setWidth("640px");
-        }
-    }
-
-    @Override
-    protected void loadHeight(Component component, Element element) {
-        final String height = element.attributeValue("height");
-        if ("auto".equalsIgnoreCase(height)) {
-            component.setHeight("480px");
-        } else if (!StringUtils.isBlank(height)) {
-            component.setHeight(height);
-        } else {
-            component.setHeight("480px");
-        }
     }
 
     protected StockChartGroup createConfiguration() {
@@ -167,6 +136,11 @@ public class StockChartLoader extends AbstractComponentLoader<StockChart> {
         String mouseWheelScrollEnabled = element.attributeValue("mouseWheelScrollEnabled");
         if (StringUtils.isNotEmpty(mouseWheelScrollEnabled)) {
             chart.setMouseWheelScrollEnabled(Boolean.valueOf(mouseWheelScrollEnabled));
+        }
+
+        String processTimeout = element.attributeValue("processTimeout");
+        if (StringUtils.isNotEmpty(processTimeout)) {
+            chart.setProcessTimeout(Integer.valueOf(processTimeout));
         }
 
         String theme = element.attributeValue("theme");
@@ -390,33 +364,6 @@ public class StockChartLoader extends AbstractComponentLoader<StockChart> {
         }
     }
 
-    protected List<DateFormat> loadDateFormats(Element dateFormatsElement) {
-        List<DateFormat> dateFormats = new ArrayList<>();
-        for (Object dateFormatItem : dateFormatsElement.elements("dateFormat")) {
-            Element dateFormatElement = (Element) dateFormatItem;
-            DateFormat dateFormat = new DateFormat();
-            loadDateFormat(dateFormat, dateFormatElement);
-            dateFormats.add(dateFormat);
-        }
-        return dateFormats;
-    }
-
-    protected void loadDateFormat(DateFormat dateFormat, Element dateFormatElement) {
-        String period = dateFormatElement.attributeValue("period");
-        if (StringUtils.isNotEmpty(period)) {
-            DatePeriod dp = DatePeriod.fromId(period);
-            if (dp == null) {
-                dp = DatePeriod.valueOf(period);
-            }
-            dateFormat.setPeriod(dp);
-        }
-
-        String format = dateFormatElement.attributeValue("format");
-        if (StringUtils.isNotEmpty(format)) {
-            dateFormat.setFormat(format);
-        }
-    }
-
     protected void loadLegendSettings(StockChartGroup chart, Element element) {
         Element legendSettingsElement = element.element("legendSettings");
         if (legendSettingsElement != null) {
@@ -485,6 +432,11 @@ public class StockChartLoader extends AbstractComponentLoader<StockChart> {
             String markerType = legendSettingsElement.attributeValue("markerType");
             if (StringUtils.isNotEmpty(markerType)) {
                 legendSettings.setMarkerType(MarkerType.valueOf(markerType));
+            }
+
+            String position = legendSettingsElement.attributeValue("position");
+            if (StringUtils.isNotEmpty(position)) {
+                legendSettings.setPosition(LegendSettingsPosition.valueOf(position));
             }
 
             String reversedOrder = legendSettingsElement.attributeValue("reversedOrder");
@@ -599,6 +551,11 @@ public class StockChartLoader extends AbstractComponentLoader<StockChart> {
                 chartCursorSettings.setCategoryBalloonDateFormats(loadDateFormats(categoryBalloonDateFormatsElement));
             }
 
+            String balloonPointerOrientation = settingsElement.attributeValue("balloonPointerOrientation");
+            if (StringUtils.isNotEmpty(balloonPointerOrientation)) {
+                chartCursorSettings.setBalloonPointerOrientation(BalloonPointerOrientation.valueOf(balloonPointerOrientation));
+            }
+
             String bulletsEnabled = settingsElement.attributeValue("bulletsEnabled");
             if (StringUtils.isNotEmpty(bulletsEnabled)) {
                 chartCursorSettings.setBulletsEnabled(Boolean.valueOf(bulletsEnabled));
@@ -627,6 +584,11 @@ public class StockChartLoader extends AbstractComponentLoader<StockChart> {
             String categoryBalloonText = settingsElement.attributeValue("categoryBalloonText");
             if (StringUtils.isNotEmpty(categoryBalloonText)) {
                 chartCursorSettings.setCategoryBalloonText(categoryBalloonText);
+            }
+
+            String color = settingsElement.attributeValue("color");
+            if (StringUtils.isNotEmpty(color)) {
+                chartCursorSettings.setColor(Color.valueOf(color));
             }
 
             String cursorAlpha = settingsElement.attributeValue("cursorAlpha");
@@ -912,6 +874,11 @@ public class StockChartLoader extends AbstractComponentLoader<StockChart> {
                 categoryAxesSettings.setAxisThickness(Integer.valueOf(axiaxisThicknessColor));
             }
 
+            String boldLabels = settingsElement.attributeValue("boldLabels");
+            if (StringUtils.isNotEmpty(boldLabels)) {
+                categoryAxesSettings.setBoldLabels(Boolean.valueOf(boldLabels));
+            }
+
             String boldPeriodBeginning = settingsElement.attributeValue("boldPeriodBeginning");
             if (StringUtils.isNotEmpty(boldPeriodBeginning)) {
                 categoryAxesSettings.setBoldPeriodBeginning(Boolean.valueOf(boldPeriodBeginning));
@@ -1005,6 +972,16 @@ public class StockChartLoader extends AbstractComponentLoader<StockChart> {
             String minHorizontalGap = settingsElement.attributeValue("minHorizontalGap");
             if (StringUtils.isNotEmpty(minHorizontalGap)) {
                 categoryAxesSettings.setMinHorizontalGap(Integer.valueOf(minHorizontalGap));
+            }
+
+            String minorGridAlpha = settingsElement.attributeValue("minorGridAlpha");
+            if (StringUtils.isNotEmpty(minorGridAlpha)) {
+                categoryAxesSettings.setMinorGridAlpha(Double.valueOf(minorGridAlpha));
+            }
+
+            String minorGridEnabled = settingsElement.attributeValue("minorGridEnabled");
+            if (StringUtils.isNotEmpty(minorGridEnabled)) {
+                categoryAxesSettings.setMinorGridEnabled(Boolean.valueOf(minorGridEnabled));
             }
 
             String minPeriod = settingsElement.attributeValue("minPeriod");
@@ -1165,14 +1142,7 @@ public class StockChartLoader extends AbstractComponentLoader<StockChart> {
                 panelsSettings.setColumnWidth(Integer.valueOf(columnWidth));
             }
 
-            String creditsPosition = panelSettingsElement.attributeValue("creditsPosition");
-            if (StringUtils.isNotEmpty(creditsPosition)) {
-                CreditsPosition cp = CreditsPosition.fromId(creditsPosition);
-                if (cp == null) {
-                    cp = CreditsPosition.valueOf(creditsPosition);
-                }
-                panelsSettings.setCreditsPosition(cp);
-            }
+            panelsSettings.setCreditsPosition(loadCreditsPosition(panelSettingsElement));
 
             String decimalSeparator = panelSettingsElement.attributeValue("decimalSeparator");
             if (StringUtils.isNotEmpty(decimalSeparator)) {
@@ -1272,6 +1242,11 @@ public class StockChartLoader extends AbstractComponentLoader<StockChart> {
                 panelsSettings.setUsePrefixes(Boolean.valueOf(usePrefixes));
             }
 
+            String zoomOutAxes = panelSettingsElement.attributeValue("zoomOutAxes");
+            if (StringUtils.isNotEmpty(zoomOutAxes)) {
+                panelsSettings.setZoomOutAxes(Boolean.valueOf(zoomOutAxes));
+            }
+
             chart.setPanelsSettings(panelsSettings);
         }
     }
@@ -1329,6 +1304,11 @@ public class StockChartLoader extends AbstractComponentLoader<StockChart> {
             String gridColor = valueAxesSettingsElement.attributeValue("gridColor");
             if (StringUtils.isNotEmpty(gridColor)) {
                 valueAxesSettings.setGridColor(Color.valueOf(gridColor));
+            }
+
+            String gridCount = valueAxesSettingsElement.attributeValue("gridCount");
+            if (StringUtils.isNotEmpty(gridCount)) {
+                valueAxesSettings.setGridCount(Integer.valueOf(gridCount));
             }
 
             String gridThickness = valueAxesSettingsElement.attributeValue("gridThickness");
@@ -1391,6 +1371,21 @@ public class StockChartLoader extends AbstractComponentLoader<StockChart> {
                 valueAxesSettings.setMinMaxMultiplier(Double.valueOf(minMaxMultiplier));
             }
 
+            String minorGridAlpha = valueAxesSettingsElement.attributeValue("minorGridAlpha");
+            if (StringUtils.isNotEmpty(minorGridAlpha)) {
+                valueAxesSettings.setMinorGridAlpha(Double.valueOf(minorGridAlpha));
+            }
+
+            String minorGridEnabled = valueAxesSettingsElement.attributeValue("minorGridEnabled");
+            if (StringUtils.isNotEmpty(minorGridEnabled)) {
+                valueAxesSettings.setMinorGridEnabled(Boolean.valueOf(minorGridEnabled));
+            }
+
+            String minVerticalGap = valueAxesSettingsElement.attributeValue("minVerticalGap");
+            if (StringUtils.isNotEmpty(minVerticalGap)) {
+                valueAxesSettings.setMinVerticalGap(Integer.valueOf(minVerticalGap));
+            }
+
             String offset = valueAxesSettingsElement.attributeValue("offset");
             if (StringUtils.isNotEmpty(offset)) {
                 valueAxesSettings.setOffset(Integer.valueOf(offset));
@@ -1399,6 +1394,11 @@ public class StockChartLoader extends AbstractComponentLoader<StockChart> {
             String position = valueAxesSettingsElement.attributeValue("position");
             if (StringUtils.isNotEmpty(position)) {
                 valueAxesSettings.setPosition(ValueAxisPosition.valueOf(position));
+            }
+
+            String precision = valueAxesSettingsElement.attributeValue("precision");
+            if (StringUtils.isNotEmpty(precision)) {
+                valueAxesSettings.setPrecision(Integer.valueOf(precision));
             }
 
             String reversed = valueAxesSettingsElement.attributeValue("reversed");
@@ -1419,6 +1419,11 @@ public class StockChartLoader extends AbstractComponentLoader<StockChart> {
             String stackType = valueAxesSettingsElement.attributeValue("stackType");
             if (StringUtils.isNotEmpty(stackType)) {
                 valueAxesSettings.setStackType(StackType.valueOf(stackType));
+            }
+
+            String strictMinMax = valueAxesSettingsElement.attributeValue("strictMinMax");
+            if (StringUtils.isNotEmpty(strictMinMax)) {
+                valueAxesSettings.setStrictMinMax(Boolean.valueOf(strictMinMax));
             }
 
             String tickLength = valueAxesSettingsElement.attributeValue("tickLength");
@@ -1489,278 +1494,19 @@ public class StockChartLoader extends AbstractComponentLoader<StockChart> {
         }
     }
 
+    @Deprecated
     protected void loadBalloon(StockChartGroup chart, Element element) {
         Element balloonElement = element.element("balloon");
         if (balloonElement != null) {
-            Balloon balloon = new Balloon();
-
-            String adjustBorderColor = balloonElement.attributeValue("adjustBorderColor");
-            if (StringUtils.isNotEmpty(adjustBorderColor)) {
-                balloon.setAdjustBorderColor(Boolean.valueOf(adjustBorderColor));
-            }
-
-            String animationDuration = balloonElement.attributeValue("animationDuration");
-            if (StringUtils.isNotEmpty(animationDuration)) {
-                balloon.setAnimationDuration(Double.valueOf(animationDuration));
-            }
-
-            String borderAlpha = balloonElement.attributeValue("borderAlpha");
-            if (StringUtils.isNotEmpty(borderAlpha)) {
-                balloon.setBorderAlpha(Double.valueOf(borderAlpha));
-            }
-
-            String borderColor = balloonElement.attributeValue("borderColor");
-            if (StringUtils.isNotEmpty(borderColor)) {
-                balloon.setBorderColor(Color.valueOf(borderColor));
-            }
-
-            String borderThickness = balloonElement.attributeValue("borderThickness");
-            if (StringUtils.isNotEmpty(borderThickness)) {
-                balloon.setBorderThickness(Integer.valueOf(borderThickness));
-            }
-
-            String color = balloonElement.attributeValue("color");
-            if (StringUtils.isNotEmpty(color)) {
-                balloon.setColor(Color.valueOf(color));
-            }
-
-            String cornerRadius = balloonElement.attributeValue("cornerRadius");
-            if (StringUtils.isNotEmpty(cornerRadius)) {
-                balloon.setCornerRadius(Integer.valueOf(cornerRadius));
-            }
-
-            String disableMouseEvents = balloonElement.attributeValue("disableMouseEvents");
-            if (StringUtils.isNotEmpty(disableMouseEvents)) {
-                balloon.setDisableMouseEvents(Boolean.valueOf(disableMouseEvents));
-            }
-
-            String fadeOutDuration = balloonElement.attributeValue("fadeOutDuration");
-            if (StringUtils.isNotEmpty(fadeOutDuration)) {
-                balloon.setFadeOutDuration(Double.valueOf(fadeOutDuration));
-            }
-
-            String fillAlpha = balloonElement.attributeValue("fillAlpha");
-            if (StringUtils.isNotEmpty(fillAlpha)) {
-                balloon.setFillAlpha(Double.valueOf(fillAlpha));
-            }
-
-            String fillColor = balloonElement.attributeValue("fillColor");
-            if (StringUtils.isNotEmpty(fillColor)) {
-                balloon.setFillColor(Color.valueOf(fillColor));
-            }
-
-            String fixedPosition = balloonElement.attributeValue("fixedPosition");
-            if (StringUtils.isNotEmpty(fixedPosition)) {
-                balloon.setFixedPosition(Boolean.valueOf(fixedPosition));
-            }
-
-            String fontSize = balloonElement.attributeValue("fontSize");
-            if (StringUtils.isNotEmpty(fontSize)) {
-                balloon.setFontSize(Integer.valueOf(fontSize));
-            }
-
-            String horizontalPadding = balloonElement.attributeValue("horizontalPadding");
-            if (StringUtils.isNotEmpty(horizontalPadding)) {
-                balloon.setHorizontalPadding(Integer.valueOf(horizontalPadding));
-            }
-
-            String maxWidth = balloonElement.attributeValue("maxWidth");
-            if (StringUtils.isNotEmpty(maxWidth)) {
-                balloon.setMaxWidth(Integer.valueOf(maxWidth));
-            }
-
-            String offsetX = balloonElement.attributeValue("offsetX");
-            if (StringUtils.isNotEmpty(offsetX)) {
-                balloon.setOffsetX(Integer.valueOf(offsetX));
-            }
-
-            String offsetY = balloonElement.attributeValue("offsetY");
-            if (StringUtils.isNotEmpty(offsetY)) {
-                balloon.setOffsetY(Integer.valueOf(offsetY));
-            }
-
-            String pointerWidth = balloonElement.attributeValue("pointerWidth");
-            if (StringUtils.isNotEmpty(pointerWidth)) {
-                balloon.setPointerWidth(Integer.valueOf(pointerWidth));
-            }
-
-            String shadowAlpha = balloonElement.attributeValue("shadowAlpha");
-            if (StringUtils.isNotEmpty(shadowAlpha)) {
-                balloon.setShadowAlpha(Double.valueOf(shadowAlpha));
-            }
-
-            String shadowColor = balloonElement.attributeValue("shadowColor");
-            if (StringUtils.isNotEmpty(shadowColor)) {
-                balloon.setShadowColor(Color.valueOf(shadowColor));
-            }
-
-            String showBullet = balloonElement.attributeValue("showBullet");
-            if (StringUtils.isNotEmpty(showBullet)) {
-                balloon.setShowBullet(Boolean.valueOf(showBullet));
-            }
-
-            String textAlign = balloonElement.attributeValue("textAlign");
-            if (StringUtils.isNotEmpty(textAlign)) {
-                balloon.setTextAlign(Align.valueOf(textAlign));
-            }
-
-            String verticalPadding = balloonElement.attributeValue("verticalPadding");
-            if (StringUtils.isNotEmpty(verticalPadding)) {
-                balloon.setVerticalPadding(Integer.valueOf(verticalPadding));
-            }
-
-            chart.setBalloon(balloon);
+            chart.setBalloon(loadBalloon(balloonElement));
         }
     }
 
-    protected ExportMenuItem loadExportMenuItem(Element menuItemElement) {
-        ExportMenuItem menuItem = new ExportMenuItem();
-
-        String format = menuItemElement.attributeValue("format");
-        if (StringUtils.isNotBlank(format)) {
-            menuItem.setFormat(ExportFormat.valueOf(format));
-        }
-
-        String title = menuItemElement.attributeValue("title");
-        if (StringUtils.isNotBlank(title)) {
-            menuItem.setTitle(loadResourceString(title));
-        }
-
-        String label = menuItemElement.attributeValue("label");
-        if (StringUtils.isNotBlank(label)) {
-            menuItem.setLabel(loadResourceString(label));
-        }
-
-        return menuItem;
-    }
-
-    protected void loadExportMenu(Export export, Element exportElement) {
-        Element menuElement = exportElement.element("menu");
-        if (menuElement != null) {
-            List<ExportMenuItem> items = new ArrayList<>();
-
-            for (Object menuElementItem : menuElement.elements("item")) {
-                Element menuItemElement = (Element) menuElementItem;
-                items.add(loadExportMenuItem(menuItemElement));
-            }
-
-            export.setMenu(items);
-        }
-    }
-
-    protected void loadExportLibs(ExportLibs libs, Element libsElement) {
-        String path = libsElement.attributeValue("path");
-        if (StringUtils.isNotEmpty(path)) {
-            libs.setPath(path);
-        }
-    }
-
+    @Deprecated
     protected void loadExport(StockChartGroup chart, Element element) {
         Element exportElement = element.element("export");
         if (exportElement != null) {
-            Export export = new Export();
-
-            loadExportMenu(export, exportElement);
-
-            String enabled = exportElement.attributeValue("enabled");
-            if (StringUtils.isNotEmpty(enabled)) {
-                export.setEnabled(Boolean.valueOf(enabled));
-            }
-
-            Element libsElement = exportElement.element("libs");
-            if (libsElement != null) {
-                ExportLibs libs = new ExportLibs();
-                loadExportLibs(libs, libsElement);
-                export.setLibs(libs);
-            }
-
-            String backgroundColor = exportElement.attributeValue("backgroundColor");
-            if (StringUtils.isNotEmpty(backgroundColor)) {
-                export.setBackgroundColor(Color.valueOf(backgroundColor));
-            }
-
-            String fileName = exportElement.attributeValue("fileName");
-            if (StringUtils.isNotEmpty(fileName)) {
-                export.setFileName(fileName);
-            }
-
-            String position = exportElement.attributeValue("position");
-            if (StringUtils.isNotEmpty(position)) {
-                export.setPosition(ExportPosition.valueOf(position));
-            }
-
-            String removeImages = exportElement.attributeValue("removeImages");
-            if (StringUtils.isNotEmpty(removeImages)) {
-                export.setRemoveImages(Boolean.valueOf(removeImages));
-            }
-
-            String exportTitles = exportElement.attributeValue("exportTitles");
-            if (StringUtils.isNotEmpty(exportTitles)) {
-                export.setExportTitles(Boolean.valueOf(exportTitles));
-            }
-
-            String exportSelection = exportElement.attributeValue("exportSelection");
-            if (StringUtils.isNotEmpty(exportSelection)) {
-                export.setExportSelection(Boolean.valueOf(exportSelection));
-            }
-
-            String dataDateFormat = exportElement.attributeValue("dataDateFormat");
-            if (StringUtils.isNotEmpty(dataDateFormat)) {
-                export.setDataDateFormat(dataDateFormat);
-            }
-
-            String dateFormat = exportElement.attributeValue("dateFormat");
-            if (StringUtils.isNotEmpty(dateFormat)) {
-                export.setDateFormat(dateFormat);
-            }
-
-            String keyListener = exportElement.attributeValue("keyListener");
-            if (StringUtils.isNotEmpty(keyListener)) {
-                export.setKeyListener(Boolean.valueOf(keyListener));
-            }
-
-            String fileListener = exportElement.attributeValue("fileListener");
-            if (StringUtils.isNotEmpty(fileListener)) {
-                export.setFileListener(Boolean.valueOf(fileListener));
-            }
-
-            chart.setExport(export);
-        }
-    }
-
-    protected List<Color> loadColors(Element colorsElement) {
-        List<Color> colors = new ArrayList<>();
-
-        for (Object colorItem : colorsElement.elements("color")) {
-            Element colorElement = (Element) colorItem;
-
-            String value = colorElement.attributeValue("value");
-            if (StringUtils.isNotEmpty(value)) {
-                colors.add(Color.valueOf(value));
-            }
-        }
-        return colors;
-    }
-
-    protected void loadMargins(HasMargins hasMargins, Element element) {
-        String marginTop = element.attributeValue("marginTop");
-        if (StringUtils.isNotEmpty(marginTop)) {
-            hasMargins.setMarginTop(Integer.valueOf(marginTop));
-        }
-
-        String marginBottom = element.attributeValue("marginBottom");
-        if (StringUtils.isNotEmpty(marginBottom)) {
-            hasMargins.setMarginBottom(Integer.valueOf(marginBottom));
-        }
-
-        String marginLeft = element.attributeValue("marginLeft");
-        if (StringUtils.isNotEmpty(marginLeft)) {
-            hasMargins.setMarginLeft(Integer.valueOf(marginLeft));
-        }
-
-        String marginRight = element.attributeValue("marginRight");
-        if (StringUtils.isNotEmpty(marginRight)) {
-            hasMargins.setMarginRight(Integer.valueOf(marginRight));
+            chart.setExport(loadExport(exportElement));
         }
     }
 
@@ -1775,15 +1521,4 @@ public class StockChartLoader extends AbstractComponentLoader<StockChart> {
             chart.setStartEffect(AnimationEffect.valueOf(startEffect));
         }
     }
-
-    protected Date loadDate(String value) {
-        SimpleDateFormat df = new SimpleDateFormat(CONFIG_DATE_FORMAT);
-        try {
-            return df.parse(value);
-        } catch (ParseException e) {
-            throw new GuiDevelopmentException("Unable to parse date from XML chart configuration",
-                    context.getCurrentFrameId(), "date", value);
-        }
-    }
-
 }

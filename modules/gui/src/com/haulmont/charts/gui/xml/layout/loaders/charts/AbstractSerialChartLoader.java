@@ -100,6 +100,11 @@ public abstract class AbstractSerialChartLoader<T extends AbstractSerialChart> e
             chart.setRotate(Boolean.valueOf(rotate));
         }
 
+        Element scrollbarElement = element.element("valueScrollbar");
+        if (scrollbarElement != null) {
+            chart.setChartScrollbar(loadScrollbar(scrollbarElement));
+        }
+
         String zoomOutOnDataUpdate = element.attributeValue("zoomOutOnDataUpdate");
         if (StringUtils.isNotEmpty(zoomOutOnDataUpdate)) {
             chart.setZoomOutOnDataUpdate(Boolean.valueOf(zoomOutOnDataUpdate));
@@ -113,9 +118,9 @@ public abstract class AbstractSerialChartLoader<T extends AbstractSerialChart> e
 
             loadAbstractAxis(axis, axisElement);
 
-            String labelFunction = axisElement.elementText("labelFunction");
-            if (StringUtils.isNotBlank(labelFunction)) {
-                axis.setLabelFunction(new JsFunction(labelFunction));
+            String autoWrap = axisElement.attributeValue("autoWrap");
+            if (StringUtils.isNotEmpty(autoWrap)) {
+                axis.setAutoWrap(Boolean.valueOf(autoWrap));
             }
 
             String categoryFunction = axisElement.elementText("categoryFunction");
@@ -123,14 +128,9 @@ public abstract class AbstractSerialChartLoader<T extends AbstractSerialChart> e
                 axis.setCategoryFunction(new JsFunction(categoryFunction));
             }
 
-            String autoWrap = axisElement.attributeValue("autoWrap");
-            if (StringUtils.isNotEmpty(autoWrap)) {
-                axis.setAutoWrap(Boolean.valueOf(autoWrap));
-            }
-
-            String boldPeriodBeginning = axisElement.attributeValue("boldPeriodBeginning");
-            if (StringUtils.isNotEmpty(boldPeriodBeginning)) {
-                axis.setBoldPeriodBeginning(Boolean.valueOf(boldPeriodBeginning));
+            String classNameField = axisElement.attributeValue("classNameField");
+            if (StringUtils.isNotEmpty(classNameField)) {
+                axis.setClassNameField(classNameField);
             }
 
             String centerLabelOnFullPeriod = axisElement.attributeValue("centerLabelOnFullPeriod");
@@ -153,14 +153,14 @@ public abstract class AbstractSerialChartLoader<T extends AbstractSerialChart> e
                 axis.setGridPosition(GridPosition.valueOf(gridPosition));
             }
 
+            String labelFunction = axisElement.elementText("labelFunction");
+            if (StringUtils.isNotBlank(labelFunction)) {
+                axis.setLabelFunction(new JsFunction(labelFunction));
+            }
+
             String labelColorField = axisElement.attributeValue("labelColorField");
             if (StringUtils.isNotEmpty(labelColorField)) {
                 axis.setLabelColorField(labelColorField);
-            }
-
-            String markPeriodChange = axisElement.attributeValue("markPeriodChange");
-            if (StringUtils.isNotEmpty(markPeriodChange)) {
-                axis.setMarkPeriodChange(Boolean.valueOf(markPeriodChange));
             }
 
             String minPeriod = axisElement.attributeValue("minPeriod");

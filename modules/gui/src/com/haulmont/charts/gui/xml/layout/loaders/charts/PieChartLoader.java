@@ -5,6 +5,8 @@
 
 package com.haulmont.charts.gui.xml.layout.loaders.charts;
 
+import com.haulmont.charts.gui.amcharts.model.GradientType;
+import com.haulmont.charts.gui.amcharts.model.JsFunction;
 import com.haulmont.charts.gui.amcharts.model.charts.PieChart;
 import org.apache.commons.lang.StringUtils;
 import org.dom4j.Element;
@@ -36,6 +38,11 @@ public class PieChartLoader extends SlicedChartLoader<PieChart> {
             chart.setAngle(Integer.valueOf(angle));
         }
 
+        String balloonFunction = element.elementText("balloonFunction");
+        if (StringUtils.isNotEmpty(balloonFunction)) {
+            chart.setBalloonFunction(new JsFunction(balloonFunction));
+        }
+
         String balloonText = element.attributeValue("balloonText");
         if (StringUtils.isNotEmpty(balloonText)) {
             chart.setBalloonText(loadResourceString(balloonText));
@@ -44,6 +51,11 @@ public class PieChartLoader extends SlicedChartLoader<PieChart> {
         String depth3D = element.attributeValue("depth3D");
         if (StringUtils.isNotEmpty(depth3D)) {
             chart.setDepth3D(Integer.valueOf(depth3D));
+        }
+
+        String gradientType = element.attributeValue("gradientType");
+        if (StringUtils.isNotEmpty(gradientType)) {
+            chart.setGradientType(GradientType.valueOf("gradientType"));
         }
 
         String innerRadius = element.attributeValue("innerRadius");

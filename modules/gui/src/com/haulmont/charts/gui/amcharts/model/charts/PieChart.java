@@ -6,6 +6,8 @@
 package com.haulmont.charts.gui.amcharts.model.charts;
 
 import com.haulmont.charts.gui.amcharts.model.ChartType;
+import com.haulmont.charts.gui.amcharts.model.GradientType;
+import com.haulmont.charts.gui.amcharts.model.JsFunction;
 import org.apache.commons.lang.StringUtils;
 
 import java.util.ArrayList;
@@ -25,9 +27,13 @@ public class PieChart extends SlicedChart<PieChart> {
 
     private Integer angle;
 
+    private JsFunction balloonFunction;
+
     private String balloonText;
 
     private Integer depth3D;
+
+    private GradientType gradientType;
 
     private String innerRadius;
 
@@ -209,6 +215,24 @@ public class PieChart extends SlicedChart<PieChart> {
 
     public PieChart setAdjustPrecision(Boolean adjustPrecision) {
         this.adjustPrecision = adjustPrecision;
+        return this;
+    }
+
+    public JsFunction getBalloonFunction() {
+        return balloonFunction;
+    }
+
+    public PieChart setBalloonFunction(JsFunction balloonFunction) {
+        this.balloonFunction = balloonFunction;
+        return this;
+    }
+
+    public GradientType getGradientType() {
+        return gradientType;
+    }
+
+    public PieChart setGradientType(GradientType gradientType) {
+        this.gradientType = gradientType;
         return this;
     }
 }

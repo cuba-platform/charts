@@ -17,11 +17,15 @@ public class XYChart extends RectangularChart<XYChart> {
 
     private static final long serialVersionUID = 3259485360498054262L;
 
+    private String dataDateFormat;
+
     private Boolean hideXScrollbar;
 
     private Boolean hideYScrollbar;
 
-    private Integer maxZoomFactor;
+    private Integer maxValue;
+
+    private Integer minValue;
 
     public XYChart() {
         super(ChartType.XY);
@@ -45,12 +49,30 @@ public class XYChart extends RectangularChart<XYChart> {
         return this;
     }
 
-    public Integer getMaxZoomFactor() {
-        return maxZoomFactor;
+    public String getDataDateFormat() {
+        return dataDateFormat;
     }
 
-    public XYChart setMaxZoomFactor(Integer maxZoomFactor) {
-        this.maxZoomFactor = maxZoomFactor;
+    public XYChart setDataDateFormat(String dataDateFormat) {
+        this.dataDateFormat = dataDateFormat;
+        return this;
+    }
+
+    public Integer getMaxValue() {
+        return maxValue;
+    }
+
+    public XYChart setMaxValue(Integer maxValue) {
+        this.maxValue = maxValue;
+        return this;
+    }
+
+    public Integer getMinValue() {
+        return minValue;
+    }
+
+    public XYChart setMinValue(Integer minValue) {
+        this.minValue = minValue;
         return this;
     }
 }

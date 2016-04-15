@@ -49,9 +49,13 @@ public class GaugeAxis extends AbstractChartObject {
 
     private String centerY;
 
+    private Color color;
+
     private Integer endAngle;
 
     private Double endValue;
+
+    private Integer fontSize;
 
     private Integer gridCount;
 
@@ -521,6 +525,24 @@ public class GaugeAxis extends AbstractChartObject {
 
     public GaugeAxis setLabelFunction(JsFunction labelFunction) {
         this.labelFunction = labelFunction;
+        return this;
+    }
+
+    public Color getColor() {
+        return color;
+    }
+
+    public GaugeAxis setColor(Color color) {
+        this.color = color;
+        return this;
+    }
+
+    public Integer getFontSize() {
+        return fontSize;
+    }
+
+    public GaugeAxis setFontSize(Integer fontSize) {
+        this.fontSize = fontSize;
         return this;
     }
 }

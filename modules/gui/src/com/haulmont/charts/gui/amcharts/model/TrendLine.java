@@ -17,6 +17,8 @@ public class TrendLine extends AbstractChartObject {
 
     private static final long serialVersionUID = -6846712713867338160L;
 
+    private String balloonText;
+
     private Integer dashLength;
 
     private String finalCategory;
@@ -52,6 +54,15 @@ public class TrendLine extends AbstractChartObject {
     private String valueAxis;
 
     private String valueAxisX;
+
+    public String getBalloonText() {
+        return balloonText;
+    }
+
+    public TrendLine setBalloonText(String balloonText) {
+        this.balloonText = balloonText;
+        return this;
+    }
 
     public Integer getDashLength() {
         return dashLength;

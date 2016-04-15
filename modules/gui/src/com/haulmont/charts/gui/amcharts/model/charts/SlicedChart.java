@@ -24,6 +24,8 @@ public abstract class SlicedChart<T extends SlicedChart> extends AbstractChart<T
 
     private static final long serialVersionUID = -9176849613764858438L;
 
+    private String accessibleLabel;
+
     private Double alpha;
 
     private String alphaField;
@@ -55,6 +57,8 @@ public abstract class SlicedChart<T extends SlicedChart> extends AbstractChart<T
     private Double hideLabelsPercent;
 
     private Double hoverAlpha;
+
+    private Color labelColorField;
 
     private JsFunction labelFunction;
 
@@ -575,6 +579,24 @@ public abstract class SlicedChart<T extends SlicedChart> extends AbstractChart<T
 
     public T setShowZeroSlices(Boolean showZeroSlices) {
         this.showZeroSlices = showZeroSlices;
+        return (T) this;
+    }
+
+    public String getAccessibleLabel() {
+        return accessibleLabel;
+    }
+
+    public T setAccessibleLabel(String accessibleLabel) {
+        this.accessibleLabel = accessibleLabel;
+        return (T) this;
+    }
+
+    public Color getLabelColorField() {
+        return labelColorField;
+    }
+
+    public T setLabelColorField(Color labelColorField) {
+        this.labelColorField = labelColorField;
         return (T) this;
     }
 }

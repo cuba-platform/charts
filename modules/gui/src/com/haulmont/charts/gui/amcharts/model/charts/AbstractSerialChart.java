@@ -7,6 +7,7 @@ package com.haulmont.charts.gui.amcharts.model.charts;
 
 import com.haulmont.charts.gui.amcharts.model.CategoryAxis;
 import com.haulmont.charts.gui.amcharts.model.ChartType;
+import com.haulmont.charts.gui.amcharts.model.Scrollbar;
 import org.apache.commons.lang.StringUtils;
 
 import java.util.ArrayList;
@@ -48,6 +49,8 @@ public abstract class AbstractSerialChart<T extends AbstractSerialChart> extends
     private Boolean mouseWheelZoomEnabled;
 
     private Boolean rotate;
+
+    private Scrollbar valueScrollbar;
 
     private Boolean zoomOutOnDataUpdate;
 
@@ -178,6 +181,15 @@ public abstract class AbstractSerialChart<T extends AbstractSerialChart> extends
 
     public T setMouseWheelZoomEnabled(Boolean mouseWheelZoomEnabled) {
         this.mouseWheelZoomEnabled = mouseWheelZoomEnabled;
+        return (T) this;
+    }
+
+    public Scrollbar getValueScrollbar() {
+        return valueScrollbar;
+    }
+
+    public T setValueScrollbar(Scrollbar valueScrollbar) {
+        this.valueScrollbar = valueScrollbar;
         return (T) this;
     }
 

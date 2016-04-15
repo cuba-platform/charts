@@ -35,6 +35,8 @@ public class ChartCursorSettings extends AbstractChartObject {
 
     private String categoryBalloonText;
 
+    private Color color;
+
     private Double cursorAlpha;
 
     private Color cursorColor;
@@ -279,6 +281,15 @@ public class ChartCursorSettings extends AbstractChartObject {
 
     public ChartCursorSettings setZoomable(Boolean zoomable) {
         this.zoomable = zoomable;
+        return this;
+    }
+
+    public Color getColor() {
+        return color;
+    }
+
+    public ChartCursorSettings setColor(Color color) {
+        this.color = color;
         return this;
     }
 }

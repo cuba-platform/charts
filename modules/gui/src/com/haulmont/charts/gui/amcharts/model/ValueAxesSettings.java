@@ -35,6 +35,8 @@ public class ValueAxesSettings extends AbstractChartObject {
 
     private Color gridColor;
 
+    private Integer gridCount;
+
     private Integer gridThickness;
 
     private Boolean includeGuidesInMinMax;
@@ -59,9 +61,17 @@ public class ValueAxesSettings extends AbstractChartObject {
 
     private Double minMaxMultiplier;
 
+    private Double minorGridAlpha;
+
+    private Boolean minorGridEnabled;
+
+    private Integer minVerticalGap;
+
     private Integer offset;
 
     private ValueAxisPosition position;
+
+    private Integer precision;
 
     private Boolean reversed;
 
@@ -70,6 +80,8 @@ public class ValueAxesSettings extends AbstractChartObject {
     private Boolean showLastLabel;
 
     private StackType stackType;
+
+    private Boolean strictMinMax;
 
     private Integer tickLength;
 
@@ -353,6 +365,60 @@ public class ValueAxesSettings extends AbstractChartObject {
 
     public ValueAxesSettings setUnitPosition(UnitPosition unitPosition) {
         this.unitPosition = unitPosition;
+        return this;
+    }
+
+    public Integer getGridCount() {
+        return gridCount;
+    }
+
+    public ValueAxesSettings setGridCount(Integer gridCount) {
+        this.gridCount = gridCount;
+        return this;
+    }
+
+    public Double getMinorGridAlpha() {
+        return minorGridAlpha;
+    }
+
+    public ValueAxesSettings setMinorGridAlpha(Double minorGridAlpha) {
+        this.minorGridAlpha = minorGridAlpha;
+        return this;
+    }
+
+    public Boolean getMinorGridEnabled() {
+        return minorGridEnabled;
+    }
+
+    public ValueAxesSettings setMinorGridEnabled(Boolean minorGridEnabled) {
+        this.minorGridEnabled = minorGridEnabled;
+        return this;
+    }
+
+    public Integer getMinVerticalGap() {
+        return minVerticalGap;
+    }
+
+    public ValueAxesSettings setMinVerticalGap(Integer minVerticalGap) {
+        this.minVerticalGap = minVerticalGap;
+        return this;
+    }
+
+    public Integer getPrecision() {
+        return precision;
+    }
+
+    public ValueAxesSettings setPrecision(Integer precision) {
+        this.precision = precision;
+        return this;
+    }
+
+    public Boolean getStrictMinMax() {
+        return strictMinMax;
+    }
+
+    public ValueAxesSettings setStrictMinMax(Boolean strictMinMax) {
+        this.strictMinMax = strictMinMax;
         return this;
     }
 }

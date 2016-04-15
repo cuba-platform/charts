@@ -87,6 +87,8 @@ public class StockChartGroup extends ChartModel
 
     private PeriodSelector periodSelector;
 
+    private Integer processTimeout;
+
     private StockEventsSettings stockEventsSettings;
 
     private ChartTheme theme;
@@ -450,6 +452,15 @@ public class StockChartGroup extends ChartModel
 
     public StockChartGroup setAdditionalFields(List<String> additionalFields) {
         this.additionalFields = additionalFields;
+        return this;
+    }
+
+    public Integer getProcessTimeout() {
+        return processTimeout;
+    }
+
+    public StockChartGroup setProcessTimeout(Integer processTimeout) {
+        this.processTimeout = processTimeout;
         return this;
     }
 

@@ -23,6 +23,10 @@ public class Scrollbar extends AbstractChartObject {
 
     private Color color;
 
+    private String dragCursorDown;
+
+    private String dragCursorHover;
+
     private String dragIcon;
 
     private Integer dragIconHeight;
@@ -375,6 +379,24 @@ public class Scrollbar extends AbstractChartObject {
 
     public Scrollbar setOppositeAxis(Boolean oppositeAxis) {
         this.oppositeAxis = oppositeAxis;
+        return this;
+    }
+
+    public String getDragCursorDown() {
+        return dragCursorDown;
+    }
+
+    public Scrollbar setDragCursorDown(String dragCursorDown) {
+        this.dragCursorDown = dragCursorDown;
+        return this;
+    }
+
+    public String getDragCursorHover() {
+        return dragCursorHover;
+    }
+
+    public Scrollbar setDragCursorHover(String dragCursorHover) {
+        this.dragCursorHover = dragCursorHover;
         return this;
     }
 }

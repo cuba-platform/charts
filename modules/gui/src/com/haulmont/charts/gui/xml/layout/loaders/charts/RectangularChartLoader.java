@@ -49,6 +49,31 @@ public abstract class RectangularChartLoader<T extends RectangularChart> extends
             chart.setMarginsUpdated(Boolean.valueOf(marginsUpdated));
         }
 
+        String maxZoomFactor = element.attributeValue("maxZoomFactor");
+        if (StringUtils.isNotEmpty(maxZoomFactor)) {
+            chart.setMaxZoomFactor(Integer.valueOf(maxZoomFactor));
+        }
+
+        String minMarginBottom = element.attributeValue("minMarginBottom");
+        if (StringUtils.isNotEmpty(minMarginBottom)) {
+            chart.setMinMarginBottom(Integer.valueOf(minMarginBottom));
+        }
+
+        String minMarginLeft = element.attributeValue("minMarginLeft");
+        if (StringUtils.isNotEmpty(minMarginLeft)) {
+            chart.setMinMarginLeft(Integer.valueOf(minMarginLeft));
+        }
+
+        String minMarginRight = element.attributeValue("minMarginRight");
+        if (StringUtils.isNotEmpty(minMarginRight)) {
+            chart.setMinMarginRight(Integer.valueOf(minMarginRight));
+        }
+
+        String minMarginTop = element.attributeValue("minMarginTop");
+        if (StringUtils.isNotEmpty(minMarginTop)) {
+            chart.setMinMarginTop(Integer.valueOf(minMarginTop));
+        }
+
         String plotAreaBorderAlpha = element.attributeValue("plotAreaBorderAlpha");
         if (StringUtils.isNotEmpty(plotAreaBorderAlpha)) {
             chart.setPlotAreaBorderAlpha(Double.valueOf(plotAreaBorderAlpha));
@@ -230,6 +255,11 @@ public abstract class RectangularChartLoader<T extends RectangularChart> extends
                 cursor.setLeaveCursor(Boolean.valueOf(leaveCursor));
             }
 
+            String limitToGraph = cursorElement.attributeValue("limitToGraph");
+            if (StringUtils.isNotEmpty(limitToGraph)) {
+                cursor.setLimitToGraph(limitToGraph);
+            }
+
             String pan = cursorElement.attributeValue("pan");
             if (StringUtils.isNotEmpty(pan)) {
                 cursor.setPan(Boolean.valueOf(pan));
@@ -275,6 +305,11 @@ public abstract class RectangularChartLoader<T extends RectangularChart> extends
                 cursor.setValueLineEnabled(Boolean.valueOf(valueLineEnabled));
             }
 
+            String valueZoomable = cursorElement.attributeValue("valueZoomable");
+            if (StringUtils.isNotEmpty(valueZoomable)) {
+                cursor.setValueZoomable(Boolean.valueOf(valueZoomable));
+            }
+
             String zoomable = cursorElement.attributeValue("zoomable");
             if (StringUtils.isNotEmpty(zoomable)) {
                 cursor.setZoomable(Boolean.valueOf(zoomable));
@@ -289,177 +324,192 @@ public abstract class RectangularChartLoader<T extends RectangularChart> extends
         }
     }
 
+    protected Scrollbar loadScrollbar(Element scrollbarElement) {
+        Scrollbar scrollbar = new Scrollbar();
+
+        String autoGridCount = scrollbarElement.attributeValue("autoGridCount");
+        if (StringUtils.isNotEmpty(autoGridCount)) {
+            scrollbar.setAutoGridCount(Boolean.valueOf(autoGridCount));
+        }
+
+        String backgroundAlpha = scrollbarElement.attributeValue("backgroundAlpha");
+        if (StringUtils.isNotEmpty(backgroundAlpha)) {
+            scrollbar.setBackgroundAlpha(Double.valueOf(backgroundAlpha));
+        }
+
+        String backgroundColor = scrollbarElement.attributeValue("backgroundColor");
+        if (StringUtils.isNotEmpty(backgroundColor)) {
+            scrollbar.setBackgroundColor(Color.valueOf(backgroundColor));
+        }
+
+        String color = scrollbarElement.attributeValue("color");
+        if (StringUtils.isNotEmpty(color)) {
+            scrollbar.setColor(Color.valueOf(color));
+        }
+
+        String dragCursorDown = scrollbarElement.attributeValue("dragCursorDown");
+        if (StringUtils.isNotEmpty(dragCursorDown)) {
+            scrollbar.setDragCursorDown(dragCursorDown);
+        }
+
+        String dragCursorHover = scrollbarElement.attributeValue("dragCursorHover");
+        if (StringUtils.isNotEmpty(dragCursorHover)) {
+            scrollbar.setDragCursorHover(dragCursorHover);
+        }
+
+        String dragIcon = scrollbarElement.attributeValue("dragIcon");
+        if (StringUtils.isNotEmpty(dragIcon)) {
+            scrollbar.setDragIcon(dragIcon);
+        }
+
+        String dragIconHeight = scrollbarElement.attributeValue("dragIconHeight");
+        if (StringUtils.isNotEmpty(dragIconHeight)) {
+            scrollbar.setDragIconHeight(Integer.valueOf(dragIconHeight));
+        }
+
+        String dragIconWidth = scrollbarElement.attributeValue("dragIconWidth");
+        if (StringUtils.isNotEmpty(dragIconWidth)) {
+            scrollbar.setDragIconWidth(Integer.valueOf(dragIconWidth));
+        }
+
+        String enabled = scrollbarElement.attributeValue("enabled");
+        if (StringUtils.isNotEmpty(enabled)) {
+            scrollbar.setEnabled(Boolean.valueOf(enabled));
+        }
+
+        String graph = scrollbarElement.attributeValue("graph");
+        if (StringUtils.isNotEmpty(graph)) {
+            scrollbar.setGraph(graph);
+        }
+
+        String graphFillAlpha = scrollbarElement.attributeValue("graphFillAlpha");
+        if (StringUtils.isNotEmpty(graphFillAlpha)) {
+            scrollbar.setGraphFillAlpha(Double.valueOf(graphFillAlpha));
+        }
+
+        String graphFillColor = scrollbarElement.attributeValue("graphFillColor");
+        if (StringUtils.isNotEmpty(graphFillColor)) {
+            scrollbar.setGraphFillColor(Color.valueOf(graphFillColor));
+        }
+
+        String graphLineAlpha = scrollbarElement.attributeValue("graphLineAlpha");
+        if (StringUtils.isNotEmpty(graphLineAlpha)) {
+            scrollbar.setGraphLineAlpha(Double.valueOf(graphLineAlpha));
+        }
+
+        String graphLineColor = scrollbarElement.attributeValue("graphLineColor");
+        if (StringUtils.isNotEmpty(graphLineColor)) {
+            scrollbar.setGraphLineColor(Color.valueOf(graphLineColor));
+        }
+
+        String graphType = scrollbarElement.attributeValue("graphType");
+        if (StringUtils.isNotEmpty(graphType)) {
+            scrollbar.setGraphType(GraphType.valueOf(graphType));
+        }
+
+        String gridAlpha = scrollbarElement.attributeValue("gridAlpha");
+        if (StringUtils.isNotEmpty(gridAlpha)) {
+            scrollbar.setGridAlpha(Double.valueOf(gridAlpha));
+        }
+
+        String gridColor = scrollbarElement.attributeValue("gridColor");
+        if (StringUtils.isNotEmpty(gridColor)) {
+            scrollbar.setGridColor(Color.valueOf(gridColor));
+        }
+
+        String gridCount = scrollbarElement.attributeValue("gridCount");
+        if (StringUtils.isNotEmpty(gridCount)) {
+            scrollbar.setGridCount(Integer.valueOf(gridCount));
+        }
+
+        String hideResizeGrips = scrollbarElement.attributeValue("hideResizeGrips");
+        if (StringUtils.isNotEmpty(hideResizeGrips)) {
+            scrollbar.setHideResizeGrips(Boolean.valueOf(hideResizeGrips));
+        }
+
+        String ignoreCustomColors = scrollbarElement.attributeValue("ignoreCustomColors");
+        if (StringUtils.isNotEmpty(ignoreCustomColors)) {
+            scrollbar.setIgnoreCustomColors(Boolean.valueOf(ignoreCustomColors));
+        }
+
+        String maximum = scrollbarElement.attributeValue("maximum");
+        if (StringUtils.isNotEmpty(maximum)) {
+            scrollbar.setMaximum(Double.valueOf(maximum));
+        }
+
+        String minimum = scrollbarElement.attributeValue("minimum");
+        if (StringUtils.isNotEmpty(minimum)) {
+            scrollbar.setMinimum(Double.valueOf(minimum));
+        }
+
+        String offset = scrollbarElement.attributeValue("offset");
+        if (StringUtils.isNotEmpty(offset)) {
+            scrollbar.setOffset(Integer.valueOf(offset));
+        }
+
+        String oppositeAxis = scrollbarElement.attributeValue("oppositeAxis");
+        if (StringUtils.isNotEmpty(oppositeAxis)) {
+            scrollbar.setOppositeAxis(Boolean.valueOf(oppositeAxis));
+        }
+
+        String resizeEnabled = scrollbarElement.attributeValue("resizeEnabled");
+        if (StringUtils.isNotEmpty(resizeEnabled)) {
+            scrollbar.setResizeEnabled(Boolean.valueOf(resizeEnabled));
+        }
+
+        String scrollbarHeight = scrollbarElement.attributeValue("scrollbarHeight");
+        if (StringUtils.isNotEmpty(scrollbarHeight)) {
+            scrollbar.setScrollbarHeight(Integer.valueOf(scrollbarHeight));
+        }
+
+        String scrollDuration = scrollbarElement.attributeValue("scrollDuration");
+        if (StringUtils.isNotEmpty(scrollDuration)) {
+            scrollbar.setScrollDuration(Double.valueOf(scrollDuration));
+        }
+
+        String selectedBackgroundAlpha = scrollbarElement.attributeValue("selectedBackgroundAlpha");
+        if (StringUtils.isNotEmpty(selectedBackgroundAlpha)) {
+            scrollbar.setSelectedBackgroundAlpha(Double.valueOf(selectedBackgroundAlpha));
+        }
+
+        String selectedBackgroundColor = scrollbarElement.attributeValue("selectedBackgroundColor");
+        if (StringUtils.isNotEmpty(selectedBackgroundColor)) {
+            scrollbar.setSelectedBackgroundColor(Color.valueOf(selectedBackgroundColor));
+        }
+
+        String selectedGraphFillAlpha = scrollbarElement.attributeValue("selectedGraphFillAlpha");
+        if (StringUtils.isNotEmpty(selectedGraphFillAlpha)) {
+            scrollbar.setSelectedGraphFillAlpha(Double.valueOf(selectedGraphFillAlpha));
+        }
+
+        String selectedGraphFillColor = scrollbarElement.attributeValue("selectedGraphFillColor");
+        if (StringUtils.isNotEmpty(selectedGraphFillColor)) {
+            scrollbar.setSelectedGraphFillColor(Color.valueOf(selectedGraphFillColor));
+        }
+
+        String selectedGraphLineAlpha = scrollbarElement.attributeValue("selectedGraphLineAlpha");
+        if (StringUtils.isNotEmpty(selectedGraphLineAlpha)) {
+            scrollbar.setSelectedGraphLineAlpha(Double.valueOf(selectedGraphLineAlpha));
+        }
+
+        String selectedGraphLineColor = scrollbarElement.attributeValue("selectedGraphLineColor");
+        if (StringUtils.isNotEmpty(selectedGraphLineColor)) {
+            scrollbar.setSelectedGraphLineColor(Color.valueOf(selectedGraphLineColor));
+        }
+
+        String updateOnReleaseOnly = scrollbarElement.attributeValue("updateOnReleaseOnly");
+        if (StringUtils.isNotEmpty(updateOnReleaseOnly)) {
+            scrollbar.setUpdateOnReleaseOnly(Boolean.valueOf(updateOnReleaseOnly));
+        }
+
+        return scrollbar;
+    }
+
+    @Deprecated
     protected void loadScrollbar(T chart, Element element) {
         Element scrollbarElement = element.element("chartScrollbar");
         if (scrollbarElement != null) {
-            Scrollbar scrollbar = new Scrollbar();
-
-            String autoGridCount = scrollbarElement.attributeValue("autoGridCount");
-            if (StringUtils.isNotEmpty(autoGridCount)) {
-                scrollbar.setAutoGridCount(Boolean.valueOf(autoGridCount));
-            }
-
-            String backgroundAlpha = scrollbarElement.attributeValue("backgroundAlpha");
-            if (StringUtils.isNotEmpty(backgroundAlpha)) {
-                scrollbar.setBackgroundAlpha(Double.valueOf(backgroundAlpha));
-            }
-
-            String backgroundColor = scrollbarElement.attributeValue("backgroundColor");
-            if (StringUtils.isNotEmpty(backgroundColor)) {
-                scrollbar.setBackgroundColor(Color.valueOf(backgroundColor));
-            }
-
-            String color = scrollbarElement.attributeValue("color");
-            if (StringUtils.isNotEmpty(color)) {
-                scrollbar.setColor(Color.valueOf(color));
-            }
-
-            String dragIcon = scrollbarElement.attributeValue("dragIcon");
-            if (StringUtils.isNotEmpty(dragIcon)) {
-                scrollbar.setDragIcon(dragIcon);
-            }
-
-            String dragIconHeight = scrollbarElement.attributeValue("dragIconHeight");
-            if (StringUtils.isNotEmpty(dragIconHeight)) {
-                scrollbar.setDragIconHeight(Integer.valueOf(dragIconHeight));
-            }
-
-            String dragIconWidth = scrollbarElement.attributeValue("dragIconWidth");
-            if (StringUtils.isNotEmpty(dragIconWidth)) {
-                scrollbar.setDragIconWidth(Integer.valueOf(dragIconWidth));
-            }
-
-            String enabled = scrollbarElement.attributeValue("enabled");
-            if (StringUtils.isNotEmpty(enabled)) {
-                scrollbar.setEnabled(Boolean.valueOf(enabled));
-            }
-
-            String graph = scrollbarElement.attributeValue("graph");
-            if (StringUtils.isNotEmpty(graph)) {
-                scrollbar.setGraph(graph);
-            }
-
-            String graphFillAlpha = scrollbarElement.attributeValue("graphFillAlpha");
-            if (StringUtils.isNotEmpty(graphFillAlpha)) {
-                scrollbar.setGraphFillAlpha(Double.valueOf(graphFillAlpha));
-            }
-
-            String graphFillColor = scrollbarElement.attributeValue("graphFillColor");
-            if (StringUtils.isNotEmpty(graphFillColor)) {
-                scrollbar.setGraphFillColor(Color.valueOf(graphFillColor));
-            }
-
-            String graphLineAlpha = scrollbarElement.attributeValue("graphLineAlpha");
-            if (StringUtils.isNotEmpty(graphLineAlpha)) {
-                scrollbar.setGraphLineAlpha(Double.valueOf(graphLineAlpha));
-            }
-
-            String graphLineColor = scrollbarElement.attributeValue("graphLineColor");
-            if (StringUtils.isNotEmpty(graphLineColor)) {
-                scrollbar.setGraphLineColor(Color.valueOf(graphLineColor));
-            }
-
-            String graphType = scrollbarElement.attributeValue("graphType");
-            if (StringUtils.isNotEmpty(graphType)) {
-                scrollbar.setGraphType(GraphType.valueOf(graphType));
-            }
-
-            String gridAlpha = scrollbarElement.attributeValue("gridAlpha");
-            if (StringUtils.isNotEmpty(gridAlpha)) {
-                scrollbar.setGridAlpha(Double.valueOf(gridAlpha));
-            }
-
-            String gridColor = scrollbarElement.attributeValue("gridColor");
-            if (StringUtils.isNotEmpty(gridColor)) {
-                scrollbar.setGridColor(Color.valueOf(gridColor));
-            }
-
-            String gridCount = scrollbarElement.attributeValue("gridCount");
-            if (StringUtils.isNotEmpty(gridCount)) {
-                scrollbar.setGridCount(Integer.valueOf(gridCount));
-            }
-
-            String hideResizeGrips = scrollbarElement.attributeValue("hideResizeGrips");
-            if (StringUtils.isNotEmpty(hideResizeGrips)) {
-                scrollbar.setHideResizeGrips(Boolean.valueOf(hideResizeGrips));
-            }
-
-            String ignoreCustomColors = scrollbarElement.attributeValue("ignoreCustomColors");
-            if (StringUtils.isNotEmpty(ignoreCustomColors)) {
-                scrollbar.setIgnoreCustomColors(Boolean.valueOf(ignoreCustomColors));
-            }
-
-            String maximum = scrollbarElement.attributeValue("maximum");
-            if (StringUtils.isNotEmpty(maximum)) {
-                scrollbar.setMaximum(Double.valueOf(maximum));
-            }
-
-            String minimum = scrollbarElement.attributeValue("minimum");
-            if (StringUtils.isNotEmpty(minimum)) {
-                scrollbar.setMinimum(Double.valueOf(minimum));
-            }
-
-            String offset = scrollbarElement.attributeValue("offset");
-            if (StringUtils.isNotEmpty(offset)) {
-                scrollbar.setOffset(Integer.valueOf(offset));
-            }
-
-            String oppositeAxis = scrollbarElement.attributeValue("oppositeAxis");
-            if (StringUtils.isNotEmpty(oppositeAxis)) {
-                scrollbar.setOppositeAxis(Boolean.valueOf(oppositeAxis));
-            }
-
-            String resizeEnabled = scrollbarElement.attributeValue("resizeEnabled");
-            if (StringUtils.isNotEmpty(resizeEnabled)) {
-                scrollbar.setResizeEnabled(Boolean.valueOf(resizeEnabled));
-            }
-
-            String scrollbarHeight = scrollbarElement.attributeValue("scrollbarHeight");
-            if (StringUtils.isNotEmpty(scrollbarHeight)) {
-                scrollbar.setScrollbarHeight(Integer.valueOf(scrollbarHeight));
-            }
-
-            String scrollDuration = scrollbarElement.attributeValue("scrollDuration");
-            if (StringUtils.isNotEmpty(scrollDuration)) {
-                scrollbar.setScrollDuration(Double.valueOf(scrollDuration));
-            }
-
-            String selectedBackgroundAlpha = scrollbarElement.attributeValue("selectedBackgroundAlpha");
-            if (StringUtils.isNotEmpty(selectedBackgroundAlpha)) {
-                scrollbar.setSelectedBackgroundAlpha(Double.valueOf(selectedBackgroundAlpha));
-            }
-
-            String selectedBackgroundColor = scrollbarElement.attributeValue("selectedBackgroundColor");
-            if (StringUtils.isNotEmpty(selectedBackgroundColor)) {
-                scrollbar.setSelectedBackgroundColor(Color.valueOf(selectedBackgroundColor));
-            }
-
-            String selectedGraphFillAlpha = scrollbarElement.attributeValue("selectedGraphFillAlpha");
-            if (StringUtils.isNotEmpty(selectedGraphFillAlpha)) {
-                scrollbar.setSelectedGraphFillAlpha(Double.valueOf(selectedGraphFillAlpha));
-            }
-
-            String selectedGraphFillColor = scrollbarElement.attributeValue("selectedGraphFillColor");
-            if (StringUtils.isNotEmpty(selectedGraphFillColor)) {
-                scrollbar.setSelectedGraphFillColor(Color.valueOf(selectedGraphFillColor));
-            }
-
-            String selectedGraphLineAlpha = scrollbarElement.attributeValue("selectedGraphLineAlpha");
-            if (StringUtils.isNotEmpty(selectedGraphLineAlpha)) {
-                scrollbar.setSelectedGraphLineAlpha(Double.valueOf(selectedGraphLineAlpha));
-            }
-
-            String selectedGraphLineColor = scrollbarElement.attributeValue("selectedGraphLineColor");
-            if (StringUtils.isNotEmpty(selectedGraphLineColor)) {
-                scrollbar.setSelectedGraphLineColor(Color.valueOf(selectedGraphLineColor));
-            }
-
-            String updateOnReleaseOnly = scrollbarElement.attributeValue("updateOnReleaseOnly");
-            if (StringUtils.isNotEmpty(updateOnReleaseOnly)) {
-                scrollbar.setUpdateOnReleaseOnly(Boolean.valueOf(updateOnReleaseOnly));
-            }
-
-            chart.setChartScrollbar(scrollbar);
+            chart.setChartScrollbar(loadScrollbar(scrollbarElement));
         }
     }
 
@@ -471,6 +521,11 @@ public abstract class RectangularChartLoader<T extends RectangularChart> extends
                 Element trendLineElement = (Element) trendLineItem;
 
                 TrendLine trendLine = new TrendLine();
+
+                String balloonText = trendLineElement.attributeValue("balloonText");
+                if (StringUtils.isNotEmpty(balloonText)) {
+                    trendLine.setBalloonText(balloonText);
+                }
 
                 String dashLength = trendLineElement.attributeValue("dashLength");
                 if (StringUtils.isNotEmpty(dashLength)) {

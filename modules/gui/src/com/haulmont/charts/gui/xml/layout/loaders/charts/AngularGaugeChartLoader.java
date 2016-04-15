@@ -7,9 +7,6 @@ package com.haulmont.charts.gui.xml.layout.loaders.charts;
 
 import com.haulmont.charts.gui.amcharts.model.*;
 import com.haulmont.charts.gui.amcharts.model.charts.AngularGaugeChart;
-import com.haulmont.charts.gui.components.charts.Chart;
-import com.haulmont.cuba.gui.components.Component;
-import com.haulmont.cuba.gui.xml.layout.ComponentsFactory;
 import org.apache.commons.lang.StringUtils;
 import org.dom4j.Element;
 
@@ -177,6 +174,11 @@ public class AngularGaugeChartLoader extends AbstractChartLoader<AngularGaugeCha
                     axis.setCenterY(centerY);
                 }
 
+                String color = axisElement.attributeValue("color");
+                if (StringUtils.isNotEmpty(color)) {
+                    axis.setColor(Color.valueOf(color));
+                }
+
                 String endAngle = axisElement.attributeValue("endAngle");
                 if (StringUtils.isNotEmpty(endAngle)) {
                     axis.setEndAngle(Integer.valueOf(endAngle));
@@ -185,6 +187,11 @@ public class AngularGaugeChartLoader extends AbstractChartLoader<AngularGaugeCha
                 String endValue = axisElement.attributeValue("endValue");
                 if (StringUtils.isNotEmpty(endValue)) {
                     axis.setEndValue(Double.valueOf(endValue));
+                }
+
+                String fontSize = axisElement.attributeValue("fontSize");
+                if (StringUtils.isNotEmpty(fontSize)) {
+                    axis.setFontSize(Integer.valueOf(fontSize));
                 }
 
                 String gridCount = axisElement.attributeValue("gridCount");

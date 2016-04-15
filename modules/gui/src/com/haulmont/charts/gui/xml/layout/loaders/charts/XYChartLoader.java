@@ -26,6 +26,11 @@ public class XYChartLoader extends RectangularChartLoader<XYChart> {
     protected void loadConfiguration(XYChart chart, Element element) {
         super.loadConfiguration(chart, element);
 
+        String dataDateFormat = element.attributeValue("dataDateFormat");
+        if (StringUtils.isNotEmpty(dataDateFormat)) {
+            chart.setDataDateFormat(dataDateFormat);
+        }
+
         String hideXScrollbar = element.attributeValue("hideXScrollbar");
         if (StringUtils.isNotEmpty(hideXScrollbar)) {
             chart.setHideXScrollbar(Boolean.valueOf(hideXScrollbar));
@@ -36,9 +41,14 @@ public class XYChartLoader extends RectangularChartLoader<XYChart> {
             chart.setHideYScrollbar(Boolean.valueOf(hideYScrollbar));
         }
 
-        String maxZoomFactor = element.attributeValue("maxZoomFactor");
-        if (StringUtils.isNotEmpty(maxZoomFactor)) {
-            chart.setMaxZoomFactor(Integer.valueOf(maxZoomFactor));
+        String maxValue = element.attributeValue("maxValue");
+        if (StringUtils.isNotEmpty(maxValue)) {
+            chart.setMaxValue(Integer.valueOf(maxValue));
+        }
+
+        String minValue = element.attributeValue("minValue");
+        if (StringUtils.isNotEmpty(minValue)) {
+            chart.setMinValue(Integer.valueOf(minValue));
         }
     }
 }

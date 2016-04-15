@@ -32,7 +32,13 @@ public abstract class AbstractAxis<T extends AbstractAxis> extends AbstractChart
 
     private Integer axisThickness;
 
+    private Balloon balloon;
+
     private Boolean boldLabels;
+
+    private Boolean boldPeriodBeginning;
+
+    private Boolean centerLabelOnFullPeriod;
 
     private Boolean centerLabels;
 
@@ -45,6 +51,8 @@ public abstract class AbstractAxis<T extends AbstractAxis> extends AbstractChart
     private Double fillAlpha;
 
     private Color fillColor;
+
+    private DayOfWeek firstDayOfWeek;
 
     private Integer fontSize;
 
@@ -64,9 +72,13 @@ public abstract class AbstractAxis<T extends AbstractAxis> extends AbstractChart
 
     private Double labelFrequency;
 
+    private Integer labelOffset;
+
     private Integer labelRotation;
 
     private Boolean labelsEnabled;
+
+    private Boolean markPeriodChange;
 
     private Integer minHorizontalGap;
 
@@ -466,6 +478,60 @@ public abstract class AbstractAxis<T extends AbstractAxis> extends AbstractChart
 
     public T setTitleRotation(Integer titleRotation) {
         this.titleRotation = titleRotation;
+        return (T) this;
+    }
+
+    public Balloon getBalloon() {
+        return balloon;
+    }
+
+    public T setBalloon(Balloon balloon) {
+        this.balloon = balloon;
+        return (T) this;
+    }
+
+    public Boolean getBoldPeriodBeginning() {
+        return boldPeriodBeginning;
+    }
+
+    public T setBoldPeriodBeginning(Boolean boldPeriodBeginning) {
+        this.boldPeriodBeginning = boldPeriodBeginning;
+        return (T) this;
+    }
+
+    public Boolean getCenterLabelOnFullPeriod() {
+        return centerLabelOnFullPeriod;
+    }
+
+    public T setCenterLabelOnFullPeriod(Boolean centerLabelOnFullPeriod) {
+        this.centerLabelOnFullPeriod = centerLabelOnFullPeriod;
+        return (T) this;
+    }
+
+    public DayOfWeek getFirstDayOfWeek() {
+        return firstDayOfWeek;
+    }
+
+    public T setFirstDayOfWeek(DayOfWeek firstDayOfWeek) {
+        this.firstDayOfWeek = firstDayOfWeek;
+        return (T) this;
+    }
+
+    public Integer getLabelOffset() {
+        return labelOffset;
+    }
+
+    public T setLabelOffset(Integer labelOffset) {
+        this.labelOffset = labelOffset;
+        return (T) this;
+    }
+
+    public Boolean getMarkPeriodChange() {
+        return markPeriodChange;
+    }
+
+    public T setMarkPeriodChange(Boolean markPeriodChange) {
+        this.markPeriodChange = markPeriodChange;
         return (T) this;
     }
 }

@@ -18,7 +18,11 @@ public class ValueAxis extends AbstractAxis<ValueAxis> {
 
     private static final long serialVersionUID = -8718385614937510600L;
 
+    private Double axisFrequency;
+
     private Integer axisTitleOffset;
+
+    private JsFunction balloonTextFunction;
 
     private Double baseValue;
 
@@ -411,6 +415,24 @@ public class ValueAxis extends AbstractAxis<ValueAxis> {
 
     public ValueAxis setZeroGridAlpha(Double zeroGridAlpha) {
         this.zeroGridAlpha = zeroGridAlpha;
+        return this;
+    }
+
+    public Double getAxisFrequency() {
+        return axisFrequency;
+    }
+
+    public ValueAxis setAxisFrequency(Double axisFrequency) {
+        this.axisFrequency = axisFrequency;
+        return this;
+    }
+
+    public JsFunction getBalloonTextFunction() {
+        return balloonTextFunction;
+    }
+
+    public ValueAxis setBalloonTextFunction(JsFunction balloonTextFunction) {
+        this.balloonTextFunction = balloonTextFunction;
         return this;
     }
 }

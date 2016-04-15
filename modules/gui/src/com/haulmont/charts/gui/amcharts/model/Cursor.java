@@ -59,6 +59,8 @@ public class Cursor extends AbstractChartObject {
 
     private Boolean leaveCursor;
 
+    private String limitToGraph;
+
     private Boolean oneBalloonOnly;
 
     private Boolean pan;
@@ -78,6 +80,8 @@ public class Cursor extends AbstractChartObject {
     private Boolean valueLineBalloonEnabled;
 
     private Boolean valueLineEnabled;
+
+    private Boolean valueZoomable;
 
     private Boolean zoomable;
     
@@ -386,6 +390,24 @@ public class Cursor extends AbstractChartObject {
 
     public Cursor setZooming(Boolean zooming) {
         this.zooming = zooming;
+        return this;
+    }
+
+    public String getLimitToGraph() {
+        return limitToGraph;
+    }
+
+    public Cursor setLimitToGraph(String limitToGraphId) {
+        this.limitToGraph = limitToGraph;
+        return this;
+    }
+
+    public Boolean getValueZoomable() {
+        return valueZoomable;
+    }
+
+    public Cursor setValueZoomable(Boolean valueZoomable) {
+        this.valueZoomable = valueZoomable;
         return this;
     }
 }

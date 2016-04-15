@@ -31,6 +31,8 @@ public class CategoryAxesSettings extends AbstractChartObject {
 
     private Integer axisThickness;
 
+    private Boolean boldLabels;
+
     private Boolean boldPeriodBeginning;
 
     private Color color;
@@ -70,6 +72,10 @@ public class CategoryAxesSettings extends AbstractChartObject {
     private Integer maxSeries;
 
     private Integer minHorizontalGap;
+
+    private Double minorGridAlpha;
+
+    private Boolean minorGridEnabled;
 
     private String minPeriod;
 
@@ -377,6 +383,33 @@ public class CategoryAxesSettings extends AbstractChartObject {
 
     public CategoryAxesSettings setTwoLineMode(Boolean twoLineMode) {
         this.twoLineMode = twoLineMode;
+        return this;
+    }
+
+    public Boolean getBoldLabels() {
+        return boldLabels;
+    }
+
+    public CategoryAxesSettings setBoldLabels(Boolean boldLabels) {
+        this.boldLabels = boldLabels;
+        return this;
+    }
+
+    public Double getMinorGridAlpha() {
+        return minorGridAlpha;
+    }
+
+    public CategoryAxesSettings setMinorGridAlpha(Double minorGridAlpha) {
+        this.minorGridAlpha = minorGridAlpha;
+        return this;
+    }
+
+    public Boolean getMinorGridEnabled() {
+        return minorGridEnabled;
+    }
+
+    public CategoryAxesSettings setMinorGridEnabled(Boolean minorGridEnabled) {
+        this.minorGridEnabled = minorGridEnabled;
         return this;
     }
 }

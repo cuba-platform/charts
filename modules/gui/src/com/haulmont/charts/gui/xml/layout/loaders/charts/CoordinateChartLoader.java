@@ -46,18 +46,11 @@ public abstract class CoordinateChartLoader<T extends CoordinateChart> extends A
         }
     }
 
+    @Deprecated
     protected void loadGuides(T chart, Element element) {
         Element guidesElement = element.element("guides");
         if (guidesElement != null) {
-            for (Object guideItem : guidesElement.elements("guide")) {
-                Element guideElement = (Element) guideItem;
-
-                Guide guide = new Guide();
-
-                loadGuide(guide, guideElement);
-
-                chart.addGuides(guide);
-            }
+            chart.setGuides(loadGuides(guidesElement));
         }
     }
 
@@ -74,31 +67,9 @@ public abstract class CoordinateChartLoader<T extends CoordinateChart> extends A
     }
 
     protected void loadGraph(AbstractGraph graph, Element graphElement) {
-        Element dateFormatElement = graphElement.element("dateFormat");
-        if (dateFormatElement != null) {
-            DateFormat dateFormat = new DateFormat();
-            loadDateFormat(dateFormat, dateFormatElement);
-            graph.setDateFormat(dateFormat);
-        }
-
-        String balloonFunction = graphElement.elementText("balloonFunction");
-        if (StringUtils.isNotEmpty(balloonFunction)) {
-            graph.setBalloonFunction(new JsFunction(balloonFunction));
-        }
-
-        Element patternElement = graphElement.element("pattern");
-        if (patternElement != null) {
-            graph.setPattern(loadPattern(patternElement));
-        }
-
-        String id = graphElement.attributeValue("id");
-        if (StringUtils.isNotEmpty(id)) {
-            graph.setId(id);
-        }
-
-        String type = graphElement.attributeValue("type");
-        if (StringUtils.isNotEmpty(type)) {
-            graph.setType(GraphType.valueOf(type));
+        String accessibleLabel = graphElement.attributeValue("accessibleLabel");
+        if (StringUtils.isNotEmpty(accessibleLabel)) {
+            graph.setAccessibleLabel(accessibleLabel);
         }
 
         String alphaField = graphElement.attributeValue("alphaField");
@@ -111,9 +82,19 @@ public abstract class CoordinateChartLoader<T extends CoordinateChart> extends A
             graph.setAnimationPlayed(Boolean.valueOf(animationPlayed));
         }
 
+        Element balloonElement = graphElement.element("balloon");
+        if (balloonElement != null) {
+            graph.setBalloon(loadBalloon(balloonElement));
+        }
+
         String balloonColor = graphElement.attributeValue("balloonColor");
         if (StringUtils.isNotEmpty(balloonColor)) {
             graph.setBalloonColor(Color.valueOf(balloonColor));
+        }
+
+        String balloonFunction = graphElement.elementText("balloonFunction");
+        if (StringUtils.isNotEmpty(balloonFunction)) {
+            graph.setBalloonFunction(new JsFunction(balloonFunction));
         }
 
         String balloonText = graphElement.attributeValue("balloonText");
@@ -166,6 +147,11 @@ public abstract class CoordinateChartLoader<T extends CoordinateChart> extends A
             graph.setBulletField(bulletField);
         }
 
+        String bulletHitAreaSize = graphElement.attributeValue("bulletHitAreaSize");
+        if (StringUtils.isNotEmpty(bulletHitAreaSize)) {
+            graph.setBulletHitAreaSize(Integer.valueOf(bulletHitAreaSize));
+        }
+
         String bulletOffset = graphElement.attributeValue("bulletOffset");
         if (StringUtils.isNotEmpty(bulletOffset)) {
             graph.setBulletOffset(Integer.valueOf(bulletOffset));
@@ -174,6 +160,11 @@ public abstract class CoordinateChartLoader<T extends CoordinateChart> extends A
         String bulletSize = graphElement.attributeValue("bulletSize");
         if (StringUtils.isNotEmpty(bulletSize)) {
             graph.setBulletSize(Integer.valueOf(bulletSize));
+        }
+
+        String classNameField = graphElement.attributeValue("classNameField");
+        if (StringUtils.isNotEmpty(classNameField)) {
+            graph.setClassNameField(classNameField);
         }
 
         String bulletSizeField = graphElement.attributeValue("bulletSizeField");
@@ -244,6 +235,13 @@ public abstract class CoordinateChartLoader<T extends CoordinateChart> extends A
         String dashLengthField = graphElement.attributeValue("dashLengthField");
         if (StringUtils.isNotEmpty(dashLengthField)) {
             graph.setDashLengthField(dashLengthField);
+        }
+
+        Element dateFormatElement = graphElement.element("dateFormat");
+        if (dateFormatElement != null) {
+            DateFormat dateFormat = new DateFormat();
+            loadDateFormat(dateFormat, dateFormatElement);
+            graph.setDateFormat(dateFormat);
         }
 
         String descriptionField = graphElement.attributeValue("descriptionField");
@@ -319,6 +317,11 @@ public abstract class CoordinateChartLoader<T extends CoordinateChart> extends A
         String highField = graphElement.attributeValue("highField");
         if (StringUtils.isNotEmpty(highField)) {
             graph.setHighField(highField);
+        }
+
+        String id = graphElement.attributeValue("id");
+        if (StringUtils.isNotEmpty(id)) {
+            graph.setId(id);
         }
 
         String includeInMinMax = graphElement.attributeValue("includeInMinMax");
@@ -466,6 +469,11 @@ public abstract class CoordinateChartLoader<T extends CoordinateChart> extends A
             graph.setOpenField(openField);
         }
 
+        Element patternElement = graphElement.element("pattern");
+        if (patternElement != null) {
+            graph.setPattern(loadPattern(patternElement));
+        }
+
         String patternField = graphElement.attributeValue("patternField");
         if (StringUtils.isNotEmpty(patternField)) {
             graph.setPatternField(patternField);
@@ -546,6 +554,11 @@ public abstract class CoordinateChartLoader<T extends CoordinateChart> extends A
             graph.setTopRadius(Integer.valueOf(topRadius));
         }
 
+        String type = graphElement.attributeValue("type");
+        if (StringUtils.isNotEmpty(type)) {
+            graph.setType(GraphType.valueOf(type));
+        }
+
         String urlField = graphElement.attributeValue("urlField");
         if (StringUtils.isNotEmpty(urlField)) {
             graph.setUrlField(urlField);
@@ -617,9 +630,19 @@ public abstract class CoordinateChartLoader<T extends CoordinateChart> extends A
             axis.setLabelFunction(new JsFunction(labelFunction));
         }
 
+        String axisFrequency = valueAxisElement.attributeValue("axisFrequency");
+        if (StringUtils.isNotEmpty(axisFrequency)) {
+            axis.setAxisFrequency(Double.valueOf(axisFrequency));
+        }
+
         String axisTitleOffset = valueAxisElement.attributeValue("axisTitleOffset");
         if (StringUtils.isNotEmpty(axisTitleOffset)) {
             axis.setAxisTitleOffset(Integer.valueOf(axisTitleOffset));
+        }
+
+        String balloonTextFunction = valueAxisElement.elementText("balloonTextFunction");
+        if (StringUtils.isNotBlank(balloonTextFunction)) {
+            axis.setBalloonTextFunction(new JsFunction(balloonTextFunction));
         }
 
         String baseValue = valueAxisElement.attributeValue("baseValue");

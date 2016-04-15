@@ -41,6 +41,8 @@ public class LegendSettings extends AbstractChartObject {
 
     private MarkerType markerType;
 
+    private LegendSettingsPosition position;
+
     private Boolean reversedOrder;
 
     private Color rollOverColor;
@@ -287,6 +289,15 @@ public class LegendSettings extends AbstractChartObject {
 
     public LegendSettings setVerticalGap(Integer verticalGap) {
         this.verticalGap = verticalGap;
+        return this;
+    }
+
+    public LegendSettingsPosition getPosition() {
+        return position;
+    }
+
+    public LegendSettings setPosition(LegendSettingsPosition position) {
+        this.position = position;
         return this;
     }
 }

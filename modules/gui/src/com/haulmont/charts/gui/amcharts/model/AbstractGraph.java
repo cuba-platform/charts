@@ -21,9 +21,13 @@ public class AbstractGraph<T extends AbstractGraph> extends AbstractChartObject 
 
     private static final long serialVersionUID = 3973480345155361978L;
 
+    private String accessibleLabel;
+
     private String alphaField;
 
     private Boolean animationPlayed;
+
+    private Balloon balloon;
 
     private Color balloonColor;
 
@@ -49,11 +53,15 @@ public class AbstractGraph<T extends AbstractGraph> extends AbstractChartObject 
 
     private String bulletField;
 
+    private Integer bulletHitAreaSize;
+
     private Integer bulletOffset;
 
     private Integer bulletSize;
 
     private String bulletSizeField;
+
+    private String classNameField;
 
     private String closeField;
 
@@ -1005,7 +1013,7 @@ public class AbstractGraph<T extends AbstractGraph> extends AbstractChartObject 
         return (T) this;
     }
 
-    public String getFillToT() {
+    public String getFillToGraph() {
         return fillToGraph;
     }
 
@@ -1176,6 +1184,42 @@ public class AbstractGraph<T extends AbstractGraph> extends AbstractChartObject 
         return (T) this;
     }
 
+    public String getAccessibleLabel() {
+        return accessibleLabel;
+    }
+
+    public T setAccessibleLabel(String accessibleLabel) {
+        this.accessibleLabel = accessibleLabel;
+        return (T) this;
+    }
+
+    public Balloon getBalloon() {
+        return balloon;
+    }
+
+    public T setBalloon(Balloon balloon) {
+        this.balloon = balloon;
+        return (T) this;
+    }
+
+    public Integer getBulletHitAreaSize() {
+        return bulletHitAreaSize;
+    }
+
+    public T setBulletHitAreaSize(Integer bulletHitAreaSize) {
+        this.bulletHitAreaSize = bulletHitAreaSize;
+        return (T) this;
+    }
+
+    public String getClassNameField() {
+        return classNameField;
+    }
+
+    public T setClassNameField(String classNameField) {
+        this.classNameField = classNameField;
+        return (T) this;
+    }
+
     public List<String> getWiredFields() {
         List<String> wiredFields = new ArrayList<>();
 
@@ -1261,6 +1305,10 @@ public class AbstractGraph<T extends AbstractGraph> extends AbstractChartObject 
 
         if (StringUtils.isNotEmpty(getYField())) {
             wiredFields.add(getYField());
+        }
+
+        if (StringUtils.isNotEmpty(getClassNameField())) {
+            wiredFields.add(getClassNameField());
         }
 
         return wiredFields;

@@ -434,6 +434,29 @@
         </xs:restriction>
     </xs:simpleType>
 
+    <xs:simpleType name="pointerOrientation">
+        <xs:restriction base="xs:string">
+            <xs:enumeration value="LEFT"/>
+            <xs:enumeration value="RIGHT"/>
+            <xs:enumeration value="UP"/>
+            <xs:enumeration value="DOWN"/>
+        </xs:restriction>
+    </xs:simpleType>
+
+    <xs:simpleType name="legendSettingsPosition">
+        <xs:restriction base="xs:string">
+            <xs:enumeration value="TOP"/>
+            <xs:enumeration value="BOTTOM"/>
+        </xs:restriction>
+    </xs:simpleType>
+
+    <xs:simpleType name="gradientType">
+        <xs:restriction base="xs:string">
+            <xs:enumeration value="LINEAR"/>
+            <xs:enumeration value="RADIAL"/>
+        </xs:restriction>
+    </xs:simpleType>
+
     <!-- Shared attributes -->
 
     <xs:attributeGroup name="hasMargins">
@@ -459,6 +482,8 @@
         <xs:attribute name="color" type="color"/>
         <xs:attribute name="cornerRadius" type="xs:integer"/>
         <xs:attribute name="disableMouseEvents" type="xs:boolean"/>
+        <xs:attribute name="drop" type="xs:boolean"/>
+        <xs:attribute name="enabled" type="xs:boolean"/>
         <xs:attribute name="fadeOutDuration" type="xs:double"/>
         <xs:attribute name="fillAlpha" type="xs:double"/>
         <xs:attribute name="fillColor" type="color"/>
@@ -468,6 +493,7 @@
         <xs:attribute name="maxWidth" type="xs:integer"/>
         <xs:attribute name="offsetX" type="xs:integer"/>
         <xs:attribute name="offsetY" type="xs:integer"/>
+        <xs:attribute name="pointerOrientation" type="pointerOrientation"/>
         <xs:attribute name="pointerWidth" type="xs:integer"/>
         <xs:attribute name="shadowAlpha" type="xs:double"/>
         <xs:attribute name="shadowColor" type="color"/>
@@ -536,8 +562,10 @@
         <xs:attribute name="bottomTextYOffset" type="xs:integer"/>
         <xs:attribute name="centerX" type="xs:string"/>
         <xs:attribute name="centerY" type="xs:string"/>
+        <xs:attribute name="color" type="color"/>
         <xs:attribute name="endAngle" type="xs:integer"/>
         <xs:attribute name="endValue" type="xs:double"/>
+        <xs:attribute name="fontSize" type="xs:integer"/>
         <xs:attribute name="gridCount" type="xs:integer"/>
         <xs:attribute name="gridInside" type="xs:boolean"/>
         <xs:attribute name="id" type="xs:string"/>
@@ -634,6 +662,7 @@
 
     <xs:complexType name="abstractAxis" abstract="true">
         <xs:all>
+            <xs:element name="balloon" minOccurs="0" maxOccurs="1" type="balloon"/>
             <xs:element name="guides" minOccurs="0" maxOccurs="1">
                 <xs:complexType>
                     <xs:sequence minOccurs="0" maxOccurs="1">
@@ -657,6 +686,8 @@
         <xs:attribute name="axisColor" type="color"/>
         <xs:attribute name="axisThickness" type="xs:integer"/>
         <xs:attribute name="boldLabels" type="xs:boolean"/>
+        <xs:attribute name="boldPeriodBeginning" type="xs:boolean"/>
+        <xs:attribute name="centerLabelOnFullPeriod" type="xs:boolean"/>
         <xs:attribute name="centerLabels" type="xs:boolean"/>
         <xs:attribute name="color" type="color"/>
         <xs:attribute name="dashLength" type="xs:integer"/>
@@ -670,8 +701,10 @@
         <xs:attribute name="ignoreAxisWidth" type="xs:boolean"/>
         <xs:attribute name="inside" type="xs:boolean"/>
         <xs:attribute name="labelFrequency" type="xs:double"/>
+        <xs:attribute name="labelOffset" type="xs:integer"/>
         <xs:attribute name="labelRotation" type="xs:integer"/>
         <xs:attribute name="labelsEnabled" type="xs:boolean"/>
+        <xs:attribute name="markPeriodChange" type="xs:boolean"/>
         <xs:attribute name="minHorizontalGap" type="xs:integer"/>
         <xs:attribute name="minorGridAlpha" type="xs:double"/>
         <xs:attribute name="minorGridEnabled" type="xs:boolean"/>
@@ -697,13 +730,12 @@
                 </xs:all>
 
                 <xs:attribute name="autoWrap" type="xs:boolean"/>
-                <xs:attribute name="boldPeriodBeginning" type="xs:boolean"/>
                 <xs:attribute name="centerLabelOnFullPeriod" type="xs:boolean"/>
+                <xs:attribute name="classNameField" type="xs:string"/>
                 <xs:attribute name="equalSpacing" type="xs:boolean"/>
                 <xs:attribute name="forceShowField" type="xs:string"/>
                 <xs:attribute name="gridPosition" type="gridPosition"/>
                 <xs:attribute name="labelColorField" type="xs:string"/>
-                <xs:attribute name="markPeriodChange" type="xs:boolean"/>
                 <xs:attribute name="minPeriod" type="datePeriod"/>
                 <xs:attribute name="parseDates" type="xs:boolean"/>
                 <xs:attribute name="startOnAxis" type="xs:boolean"/>
@@ -832,10 +864,12 @@
             <xs:extension base="abstractAxis">
                 <xs:all>
                     <xs:element name="labelFunction" minOccurs="0" maxOccurs="1"/>
+                    <xs:element name="balloonTextFunction" minOccurs="0" maxOccurs="1"/>
                 </xs:all>
 
                 <xs:attribute name="id" type="xs:string"/>
 
+                <xs:attribute name="axisFrequency" type="xs:double"/>
                 <xs:attribute name="axisTitleOffset" type="xs:integer"/>
                 <xs:attribute name="baseValue" type="xs:double"/>
                 <xs:attribute name="duration" type="duration"/>
@@ -899,6 +933,7 @@
         <xs:attribute name="graphBulletSize" type="xs:double"/>
         <xs:attribute name="leaveAfterTouch" type="xs:boolean"/>
         <xs:attribute name="leaveCursor" type="xs:boolean"/>
+        <xs:attribute name="limitToGraph" type="xs:string"/>
         <xs:attribute name="oneBalloonOnly" type="xs:boolean"/>
         <xs:attribute name="pan" type="xs:boolean"/>
         <xs:attribute name="selectionAlpha" type="xs:double"/>
@@ -909,11 +944,13 @@
         <xs:attribute name="valueLineAxis" type="xs:string"/>
         <xs:attribute name="valueLineBalloonEnabled" type="xs:boolean"/>
         <xs:attribute name="valueLineEnabled" type="xs:boolean"/>
+        <xs:attribute name="valueZoomable" type="xs:boolean"/>
         <xs:attribute name="zoomable" type="xs:boolean"/>
         <xs:attribute name="zooming" type="xs:boolean"/>
     </xs:complexType>
 
     <xs:complexType name="trendLine">
+        <xs:attribute name="balloonText" type="xs:string"/>
         <xs:attribute name="dashLength" type="xs:integer"/>
         <xs:attribute name="finalCategory" type="xs:string"/>
         <xs:attribute name="finalDate" type="xs:date"/>
@@ -939,6 +976,8 @@
         <xs:attribute name="backgroundAlpha" type="xs:double"/>
         <xs:attribute name="backgroundColor" type="color"/>
         <xs:attribute name="color" type="color"/>
+        <xs:attribute name="dragCursorDown" type="xs:string"/>
+        <xs:attribute name="dragCursorHover" type="xs:string"/>
         <xs:attribute name="dragIcon" type="xs:string"/>
         <xs:attribute name="dragIconHeight" type="xs:integer"/>
         <xs:attribute name="dragIconWidth" type="xs:integer"/>
@@ -972,6 +1011,7 @@
 
     <xs:complexType name="chartGraph">
         <xs:all>
+            <xs:element name="balloon" minOccurs="0" maxOccurs="1" type="balloon"/>
             <xs:element name="balloonFunction" minOccurs="0" maxOccurs="1"/>
             <xs:element name="pattern" minOccurs="0" maxOccurs="1" type="pattern"/>
             <xs:element name="labelFunction" minOccurs="0" maxOccurs="1"/>
@@ -980,6 +1020,7 @@
         <xs:attribute name="id" type="xs:string"/>
         <xs:attribute name="type" type="chartGraphType"/>
 
+        <xs:attribute name="accessibleLabel" type="xs:string"/>
         <xs:attribute name="alphaField" type="xs:string"/>
         <xs:attribute name="animationPlayed" type="xs:boolean"/>
         <xs:attribute name="balloonColor" type="color"/>
@@ -993,9 +1034,11 @@
         <xs:attribute name="bulletBorderThickness" type="xs:integer"/>
         <xs:attribute name="bulletColor" type="color"/>
         <xs:attribute name="bulletField" type="xs:string"/>
+        <xs:attribute name="bulletHitAreaSize" type="xs:integer"/>
         <xs:attribute name="bulletOffset" type="xs:integer"/>
         <xs:attribute name="bulletSize" type="xs:integer"/>
         <xs:attribute name="bulletSizeField" type="xs:string"/>
+        <xs:attribute name="classNameField" type="xs:string"/>
         <xs:attribute name="closeField" type="xs:string"/>
         <xs:attribute name="clustered" type="xs:boolean"/>
         <xs:attribute name="color" type="color"/>
@@ -1105,6 +1148,8 @@
             <xs:element name="legend" minOccurs="0" maxOccurs="1" type="legend"/>
         </xs:all>
 
+        <xs:attribute name="accessible" type="xs:boolean"/>
+        <xs:attribute name="accessibleTitle" type="xs:string"/>
         <xs:attribute name="addClassNames" type="xs:boolean"/>
         <xs:attribute name="id" type="xs:string"/>
         <xs:attribute name="datasource" type="xs:string"/>
@@ -1135,14 +1180,16 @@
         <xs:attribute name="handDrawThickness" type="xs:integer"/>
         <xs:attribute name="hideBalloonTime" type="xs:integer"/>
         <xs:attribute name="language" type="xs:string"/>
-        <xs:attribute name="legendDiv" type="xs:string"/>
         <xs:attribute name="panEventsEnabled" type="xs:boolean"/>
         <xs:attribute name="percentPrecision" type="xs:integer"/>
         <xs:attribute name="precision" type="xs:integer"/>
+        <xs:attribute name="processCount" type="xs:integer"/>
+        <xs:attribute name="processTimeout" type="xs:integer"/>
         <xs:attribute name="svgIcons" type="xs:boolean"/>
         <xs:attribute name="tapToActivate" type="xs:boolean"/>
         <xs:attribute name="theme" type="chartTheme"/>
         <xs:attribute name="thousandsSeparator" type="xs:string"/>
+        <xs:attribute name="touchClickDuration" type="xs:integer"/>
         <xs:attribute name="usePrefixes" type="xs:boolean"/>
 
         <xs:anyAttribute namespace="##other" processContents="lax"/>
@@ -1218,6 +1265,11 @@
                 <xs:attributeGroup ref="hasMargins"/>
 
                 <xs:attribute name="marginsUpdated" type="xs:boolean"/>
+                <xs:attribute name="maxZoomFactor" type="xs:integer"/>
+                <xs:attribute name="minMarginBottom" type="xs:integer"/>
+                <xs:attribute name="minMarginLeft" type="xs:integer"/>
+                <xs:attribute name="minMarginRight" type="xs:integer"/>
+                <xs:attribute name="minMarginTop" type="xs:integer"/>
                 <xs:attribute name="plotAreaBorderAlpha" type="xs:double"/>
                 <xs:attribute name="plotAreaBorderColor" type="color"/>
                 <xs:attribute name="plotAreaFillAlphas" type="xs:double"/>
@@ -1263,6 +1315,7 @@
                     <xs:element name="labelFunction" minOccurs="0" maxOccurs="1"/>
                 </xs:all>
 
+                <xs:attribute name="accessibleLabel" type="xs:string"/>
                 <xs:attribute name="alpha" type="xs:double"/>
                 <xs:attribute name="alphaField" type="xs:double"/>
                 <xs:attribute name="baseColor" type="color"/>
@@ -1277,6 +1330,7 @@
                 <xs:attribute name="groupPercent" type="xs:double"/>
                 <xs:attribute name="hideLabelsPercent" type="xs:double"/>
                 <xs:attribute name="hoverAlpha" type="xs:double"/>
+                <xs:attribute name="labelColorField" type="color"/>
                 <xs:attribute name="labelsEnabled" type="xs:boolean"/>
                 <xs:attribute name="labelTickAlpha" type="xs:double"/>
                 <xs:attribute name="labelTickColor" type="color"/>
@@ -1312,6 +1366,7 @@
             <xs:extension base="rectangularChart">
                 <xs:all>
                     <xs:element name="categoryAxis" minOccurs="0" maxOccurs="1" type="categoryAxis"/>
+                    <xs:element name="valueScrollbar" minOccurs="0" maxOccurs="1" type="chartScrollbar"/>
                 </xs:all>
 
                 <xs:attribute name="byDate" type="xs:boolean"/>
@@ -1403,10 +1458,15 @@
         <xs:complexType>
             <xs:complexContent>
                 <xs:extension base="slicedChart">
+                    <xs:all>
+                        <xs:element name="balloonFunction" minOccurs="0" maxOccurs="1"/>
+                    </xs:all>
+
                     <xs:attribute name="adjustPrecision" type="xs:boolean"/>
                     <xs:attribute name="angle" type="xs:integer"/>
                     <xs:attribute name="balloonText" type="xs:string"/>
                     <xs:attribute name="depth3D" type="xs:integer"/>
+                    <xs:attribute name="gradientType" type="gradientType"/>
                     <xs:attribute name="innerRadius" type="xs:string"/>
                     <xs:attribute name="labelRadius" type="xs:integer"/>
                     <xs:attribute name="labelRadiusField" type="xs:string"/>
@@ -1477,9 +1537,11 @@
         <xs:complexType>
             <xs:complexContent>
                 <xs:extension base="rectangularChart">
+                    <xs:attribute name="dataDateFormat" type="xs:string"/>
                     <xs:attribute name="hideXScrollbar" type="xs:boolean"/>
                     <xs:attribute name="hideYScrollbar" type="xs:boolean"/>
-                    <xs:attribute name="maxZoomFactor" type="xs:integer"/>
+                    <xs:attribute name="maxValue" type="xs:integer"/>
+                    <xs:attribute name="minValue" type="xs:integer"/>
                 </xs:extension>
             </xs:complexContent>
         </xs:complexType>
@@ -1637,6 +1699,7 @@
         <xs:attribute name="axisColor" type="color"/>
         <xs:attribute name="axisHeight" type="xs:integer"/>
         <xs:attribute name="axisThickness" type="xs:integer"/>
+        <xs:attribute name="boldLabels" type="xs:boolean"/>
         <xs:attribute name="boldPeriodBeginning" type="xs:boolean"/>
         <xs:attribute name="color" type="color"/>
         <xs:attribute name="dashLength" type="xs:integer"/>
@@ -1656,6 +1719,8 @@
         <xs:attribute name="markPeriodChange" type="xs:boolean"/>
         <xs:attribute name="maxSeries" type="xs:integer"/>
         <xs:attribute name="minHorizontalGap" type="xs:integer"/>
+        <xs:attribute name="minorGridAlpha" type="xs:double"/>
+        <xs:attribute name="minorGridEnabled" type="xs:boolean"/>
         <xs:attribute name="minPeriod" type="xs:string"/>
         <xs:attribute name="position" type="categoryAxesPosition"/>
         <xs:attribute name="startOnAxis" type="xs:boolean"/>
@@ -1681,6 +1746,7 @@
         <xs:attribute name="categoryBalloonColor" type="color"/>
         <xs:attribute name="categoryBalloonEnabled" type="xs:boolean"/>
         <xs:attribute name="categoryBalloonText" type="xs:string"/>
+        <xs:attribute name="color" type="color"/>
         <xs:attribute name="cursorAlpha" type="xs:double"/>
         <xs:attribute name="cursorColor" type="color"/>
         <xs:attribute name="cursorPosition" type="cursorPosition"/>
@@ -1856,6 +1922,7 @@
         <xs:attribute name="markerLabelGap" type="xs:integer"/>
         <xs:attribute name="markerSize" type="xs:integer"/>
         <xs:attribute name="markerType" type="markerType"/>
+        <xs:attribute name="position" type="legendSettingsPosition"/>
         <xs:attribute name="reversedOrder" type="xs:boolean"/>
         <xs:attribute name="rollOverColor" type="color"/>
         <xs:attribute name="rollOverGraphAlpha" type="xs:double"/>
@@ -1908,6 +1975,7 @@
         <xs:attribute name="startEffect" type="animationEffect"/>
         <xs:attribute name="thousandsSeparator" type="xs:string"/>
         <xs:attribute name="usePrefixes" type="xs:boolean"/>
+        <xs:attribute name="zoomOutAxes" type="xs:boolean"/>
     </xs:complexType>
 
     <xs:complexType name="period">
@@ -1960,6 +2028,7 @@
         <xs:attribute name="dashLength" type="xs:integer"/>
         <xs:attribute name="fillAlpha" type="xs:double"/>
         <xs:attribute name="fillColor" type="color"/>
+        <xs:attribute name="gridCount" type="xs:integer"/>
         <xs:attribute name="gridAlpha" type="xs:double"/>
         <xs:attribute name="gridColor" type="color"/>
         <xs:attribute name="gridThickness" type="xs:integer"/>
@@ -1974,12 +2043,17 @@
         <xs:attribute name="maximum" type="xs:double"/>
         <xs:attribute name="minimum" type="xs:double"/>
         <xs:attribute name="minMaxMultiplier" type="xs:double"/>
+        <xs:attribute name="minorGridAlpha" type="xs:double"/>
+        <xs:attribute name="minorGridEnabled" type="xs:boolean"/>
+        <xs:attribute name="minVerticalGap" type="xs:integer"/>
         <xs:attribute name="offset" type="xs:integer"/>
         <xs:attribute name="position" type="valueAxisPosition"/>
+        <xs:attribute name="precision" type="xs:integer"/>
         <xs:attribute name="reversed" type="xs:boolean"/>
         <xs:attribute name="showFirstLabel" type="xs:boolean"/>
         <xs:attribute name="showLastLabel" type="xs:boolean"/>
         <xs:attribute name="stackType" type="stackType"/>
+        <xs:attribute name="strictMinMax" type="xs:boolean"/>
         <xs:attribute name="tickLength" type="xs:integer"/>
         <xs:attribute name="unit" type="xs:string"/>
         <xs:attribute name="unitPosition" type="unitPosition"/>
@@ -2082,6 +2156,7 @@
             <xs:attribute name="language" type="xs:string"/>
             <xs:attribute name="mainDataSet" type="xs:string"/>
             <xs:attribute name="mouseWheelScrollEnabled" type="xs:boolean"/>
+            <xs:attribute name="processTimeout" type="xs:integer"/>
             <xs:attribute name="theme" type="chartTheme"/>
             <xs:attribute name="zoomOutOnDataSetChange" type="xs:boolean"/>
         </xs:complexType>

@@ -86,6 +86,8 @@ public class PanelsSettings extends AbstractChartObject
 
     private Boolean usePrefixes;
 
+    private Boolean zoomOutAxes;
+
     public Integer getAngel() {
         return angel;
     }
@@ -402,6 +404,15 @@ public class PanelsSettings extends AbstractChartObject
 
     public PanelsSettings setUsePrefixes(Boolean usePrefixes) {
         this.usePrefixes = usePrefixes;
+        return this;
+    }
+
+    public Boolean getZoomOutAxes() {
+        return zoomOutAxes;
+    }
+
+    public PanelsSettings setZoomOutAxes(Boolean zoomOutAxes) {
+        this.zoomOutAxes = zoomOutAxes;
         return this;
     }
 }

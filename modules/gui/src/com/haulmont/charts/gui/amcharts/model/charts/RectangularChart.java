@@ -44,6 +44,16 @@ public abstract class RectangularChart<T extends RectangularChart> extends Coord
 
     private Integer marginTop;
 
+    private Integer maxZoomFactor;
+
+    private Integer minMarginBottom;
+
+    private Integer minMarginLeft;
+
+    private Integer minMarginRight;
+
+    private Integer minMarginTop;
+
     private Double plotAreaBorderAlpha;
 
     private Color plotAreaBorderColor;
@@ -305,6 +315,51 @@ public abstract class RectangularChart<T extends RectangularChart> extends Coord
 
     public T setZoomOutText(String zoomOutText) {
         this.zoomOutText = zoomOutText;
+        return (T) this;
+    }
+
+    public Integer getMaxZoomFactor() {
+        return maxZoomFactor;
+    }
+
+    public T setMaxZoomFactor(Integer maxZoomFactor) {
+        this.maxZoomFactor = maxZoomFactor;
+        return (T) this;
+    }
+
+    public Integer getMinMarginBottom() {
+        return minMarginBottom;
+    }
+
+    public T setMinMarginBottom(Integer minMarginBottom) {
+        this.minMarginBottom = minMarginBottom;
+        return (T) this;
+    }
+
+    public Integer getMinMarginLeft() {
+        return minMarginLeft;
+    }
+
+    public T setMinMarginLeft(Integer minMarginLeft) {
+        this.minMarginLeft = minMarginLeft;
+        return (T) this;
+    }
+
+    public Integer getMinMarginRight() {
+        return minMarginRight;
+    }
+
+    public T setMinMarginRight(Integer minMarginRight) {
+        this.minMarginRight = minMarginRight;
+        return (T) this;
+    }
+
+    public Integer getMinMarginTop() {
+        return minMarginTop;
+    }
+
+    public T setMinMarginTop(Integer minMarginTop) {
+        this.minMarginTop = minMarginTop;
         return (T) this;
     }
 }

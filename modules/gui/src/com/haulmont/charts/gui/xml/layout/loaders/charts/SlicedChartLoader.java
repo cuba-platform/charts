@@ -23,6 +23,11 @@ public abstract class SlicedChartLoader<T extends SlicedChart> extends AbstractC
         loadColors(chart, element);
         loadGradientRatios(chart, element);
 
+        String accessibleLabel = element.attributeValue("accessibleLabel");
+        if (StringUtils.isNotEmpty(accessibleLabel)) {
+            chart.setAccessibleLabel(accessibleLabel);
+        }
+
         String alpha = element.attributeValue("alpha");
         if (StringUtils.isNotEmpty(alpha)) {
             chart.setAlpha(Double.valueOf(alpha));
@@ -93,14 +98,19 @@ public abstract class SlicedChartLoader<T extends SlicedChart> extends AbstractC
             chart.setHoverAlpha(Double.valueOf(hoverAlpha));
         }
 
-        String labelsEnabled = element.attributeValue("labelsEnabled");
-        if (StringUtils.isNotEmpty(labelsEnabled)) {
-            chart.setLabelsEnabled(Boolean.valueOf(labelsEnabled));
+        String labelColorField = element.attributeValue("labelColorField");
+        if (StringUtils.isNotEmpty(labelColorField)) {
+            chart.setLabelColorField(Color.valueOf(labelColorField));
         }
 
         String labelFunction = element.elementText("labelFunction");
         if (StringUtils.isNotEmpty(labelFunction)) {
             chart.setLabelFunction(new JsFunction(labelFunction));
+        }
+
+        String labelsEnabled = element.attributeValue("labelsEnabled");
+        if (StringUtils.isNotEmpty(labelsEnabled)) {
+            chart.setLabelsEnabled(Boolean.valueOf(labelsEnabled));
         }
 
         String labelTickAlpha = element.attributeValue("labelTickAlpha");

@@ -31,6 +31,10 @@ public class Balloon extends AbstractChartObject {
 
     private Boolean disableMouseEvents;
 
+    private Boolean drop;
+
+    private Boolean enabled;
+
     private Double fadeOutDuration;
 
     private Double fillAlpha;
@@ -48,6 +52,8 @@ public class Balloon extends AbstractChartObject {
     private Integer offsetX;
 
     private Integer offsetY;
+
+    private PointerOrientation pointerOrientation;
 
     private Integer pointerWidth;
 
@@ -265,6 +271,33 @@ public class Balloon extends AbstractChartObject {
 
     public Balloon setDisableMouseEvents(Boolean disableMouseEvents) {
         this.disableMouseEvents = disableMouseEvents;
+        return this;
+    }
+
+    public Boolean getDrop() {
+        return drop;
+    }
+
+    public Balloon setDrop(Boolean drop) {
+        this.drop = drop;
+        return this;
+    }
+
+    public Boolean getEnabled() {
+        return enabled;
+    }
+
+    public Balloon setEnabled(Boolean enabled) {
+        this.enabled = enabled;
+        return this;
+    }
+
+    public PointerOrientation getPointerOrientation() {
+        return pointerOrientation;
+    }
+
+    public Balloon setPointerOrientation(PointerOrientation pointerOrientation) {
+        this.pointerOrientation = pointerOrientation;
         return this;
     }
 }
