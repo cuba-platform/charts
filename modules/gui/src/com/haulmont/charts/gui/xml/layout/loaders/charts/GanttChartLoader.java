@@ -61,11 +61,6 @@ public class GanttChartLoader extends AbstractSerialChartLoader<GanttChart> {
             chart.setDurationField(durationField);
         }
 
-        String endDate = element.attributeValue("endDate");
-        if (StringUtils.isNotEmpty(endDate)) {
-            chart.setEndDate(loadDate(endDate));
-        }
-
         String endDateField = element.attributeValue("endDateField");
         if (StringUtils.isNotEmpty(endDateField)) {
             chart.setEndDateField(endDateField);

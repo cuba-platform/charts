@@ -20,7 +20,6 @@ public abstract class RectangularChartLoader<T extends RectangularChart> extends
 
         loadTrendLines(chart, element);
         loadCursor(chart, element);
-        loadScrollbar(chart, element);
 
         String angle = element.attributeValue("angle");
         if (StringUtils.isNotEmpty(angle)) {
@@ -35,6 +34,11 @@ public abstract class RectangularChartLoader<T extends RectangularChart> extends
         String autoMargins = element.attributeValue("autoMargins");
         if (StringUtils.isNotEmpty(autoMargins)) {
             chart.setAutoMargins(Boolean.valueOf(autoMargins));
+        }
+
+        Element scrollbarElement = element.element("chartScrollbar");
+        if (scrollbarElement != null) {
+            chart.setChartScrollbar(loadScrollbar(scrollbarElement));
         }
 
         String depth3D = element.attributeValue("depth3D");
@@ -503,14 +507,6 @@ public abstract class RectangularChartLoader<T extends RectangularChart> extends
         }
 
         return scrollbar;
-    }
-
-    @Deprecated
-    protected void loadScrollbar(T chart, Element element) {
-        Element scrollbarElement = element.element("chartScrollbar");
-        if (scrollbarElement != null) {
-            chart.setChartScrollbar(loadScrollbar(scrollbarElement));
-        }
     }
 
     protected void loadTrendLines(T chart, Element element) {

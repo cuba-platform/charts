@@ -23,11 +23,15 @@ public abstract class CoordinateChartLoader<T extends CoordinateChart> extends A
         loadValueAxes(chart, element);
 
         loadStartEffect(chart, element);
-        loadGuides(chart, element);
 
         String gridAboveGraphs = element.attributeValue("gridAboveGraphs");
         if (StringUtils.isNotEmpty(gridAboveGraphs)) {
             chart.setGridAboveGraphs(Boolean.valueOf(gridAboveGraphs));
+        }
+
+        Element guidesElement = element.element("guides");
+        if (guidesElement != null) {
+            chart.setGuides(loadGuides(guidesElement));
         }
 
         String sequencedAnimation = element.attributeValue("sequencedAnimation");
@@ -43,14 +47,6 @@ public abstract class CoordinateChartLoader<T extends CoordinateChart> extends A
         String urlTarget = element.attributeValue("urlTarget");
         if (StringUtils.isNotEmpty(urlTarget)) {
             chart.setUrlTarget(urlTarget);
-        }
-    }
-
-    @Deprecated
-    protected void loadGuides(T chart, Element element) {
-        Element guidesElement = element.element("guides");
-        if (guidesElement != null) {
-            chart.setGuides(loadGuides(guidesElement));
         }
     }
 

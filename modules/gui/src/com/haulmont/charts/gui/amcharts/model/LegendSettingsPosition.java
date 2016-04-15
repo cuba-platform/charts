@@ -5,8 +5,6 @@
 
 package com.haulmont.charts.gui.amcharts.model;
 
-/**
- */
 public enum LegendSettingsPosition implements ChartEnum {
     TOP("top"),
     BOTTOM("bottom");

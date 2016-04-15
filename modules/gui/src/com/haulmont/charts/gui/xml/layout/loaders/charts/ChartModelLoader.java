@@ -20,10 +20,6 @@ import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 
-/**
- * @author gorelov
- * @version $Id$
- */
 public abstract class ChartModelLoader<T extends ChartModel, C extends Component> extends AbstractComponentLoader<C> {
 
     protected static final String CONFIG_DATE_FORMAT = "yyyy-MM-dd";

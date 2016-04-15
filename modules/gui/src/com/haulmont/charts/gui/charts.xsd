@@ -1520,7 +1520,6 @@
                     <xs:attribute name="colorField" type="xs:string"/>
                     <xs:attribute name="columnWidthField" type="xs:string"/>
                     <xs:attribute name="durationField" type="xs:string"/>
-                    <xs:attribute name="endDate" type="xs:date"/>
                     <xs:attribute name="endDateField" type="xs:string"/>
                     <xs:attribute name="endField" type="xs:string"/>
                     <xs:attribute name="period" type="datePeriod"/>

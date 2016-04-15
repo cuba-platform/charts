@@ -168,22 +168,6 @@ public abstract class AbstractChartLoader<T extends AbstractChart> extends Chart
         }
     }
 
-    @Deprecated
-    protected void loadBalloon(T chart, Element element) {
-        Element balloonElement = element.element("balloon");
-        if (balloonElement != null) {
-            chart.setBalloon(loadBalloon(balloonElement));
-        }
-    }
-
-    @Deprecated
-    protected void loadExport(T chart, Element element) {
-        Element exportElement = element.element("export");
-        if (exportElement != null) {
-            chart.setExport(loadExport(exportElement));
-        }
-    }
-
     protected void loadLegend(AbstractLegend legend, Element legendElement) {
         loadLegendItems(legend, legendElement);
 
@@ -461,8 +445,6 @@ public abstract class AbstractChartLoader<T extends AbstractChart> extends Chart
     protected void loadConfiguration(T chart, Element element) {
         loadLabels(chart, element);
         loadTitles(chart, element);
-        loadBalloon(chart, element);
-        loadExport(chart, element);
 
         String accessible = element.attributeValue("accessible");
         if (StringUtils.isNotEmpty(accessible)) {
@@ -504,6 +486,11 @@ public abstract class AbstractChartLoader<T extends AbstractChart> extends Chart
             chart.setBackgroundColor(Color.valueOf(backgroundColor));
         }
 
+        Element balloonElement = element.element("balloon");
+        if (balloonElement != null) {
+            chart.setBalloon(loadBalloon(balloonElement));
+        }
+
         String classNamePrefix = element.attributeValue("classNamePrefix");
         if (StringUtils.isNotEmpty(classNamePrefix)) {
             chart.setClassNamePrefix(classNamePrefix);
@@ -529,6 +516,11 @@ public abstract class AbstractChartLoader<T extends AbstractChart> extends Chart
         String decimalSeparator = element.attributeValue("decimalSeparator");
         if (StringUtils.isNotEmpty(decimalSeparator)) {
             chart.setDecimalSeparator(decimalSeparator);
+        }
+
+        Element exportElement = element.element("export");
+        if (exportElement != null) {
+            chart.setExport(loadExport(exportElement));
         }
 
         String fontFamily = element.attributeValue("fontFamily");
@@ -646,7 +638,6 @@ public abstract class AbstractChartLoader<T extends AbstractChart> extends Chart
         }
     }
 
-    @Deprecated
     protected void loadColors(HasColors chart, Element element) {
         Element colorsElement = element.element("colors");
         if (colorsElement != null) {
@@ -658,9 +649,6 @@ public abstract class AbstractChartLoader<T extends AbstractChart> extends Chart
     }
 
     protected void loadAbstractAxis(AbstractAxis axis, Element element) {
-        loadGuides(axis, element);
-        loadDateFormats(axis, element);
-
         String autoGridCount = element.attributeValue("autoGridCount");
         if (StringUtils.isNotEmpty(autoGridCount)) {
             axis.setAutoGridCount(Boolean.valueOf(autoGridCount));
@@ -726,6 +714,11 @@ public abstract class AbstractChartLoader<T extends AbstractChart> extends Chart
             axis.setDashLength(Integer.valueOf(dashLength));
         }
 
+        Element dateFormatsElement = element.element("dateFormats");
+        if (dateFormatsElement != null) {
+            axis.setDateFormats(loadDateFormats(dateFormatsElement));
+        }
+
         String fillAlpha = element.attributeValue("fillAlpha");
         if (StringUtils.isNotEmpty(fillAlpha)) {
             axis.setFillAlpha(Double.valueOf(fillAlpha));
@@ -759,6 +752,11 @@ public abstract class AbstractChartLoader<T extends AbstractChart> extends Chart
         String gridThickness = element.attributeValue("gridThickness");
         if (StringUtils.isNotEmpty(gridThickness)) {
             axis.setGridThickness(Integer.valueOf(gridThickness));
+        }
+
+        Element guidesElement = element.element("guides");
+        if (guidesElement != null) {
+            axis.setGuides(loadGuides(guidesElement));
         }
 
         String ignoreAxisWidth = element.attributeValue("ignoreAxisWidth");
@@ -869,22 +867,6 @@ public abstract class AbstractChartLoader<T extends AbstractChart> extends Chart
         String titleRotation = element.attributeValue("titleRotation");
         if (StringUtils.isNotEmpty(titleRotation)) {
             axis.setTitleRotation(Integer.valueOf(titleRotation));
-        }
-    }
-
-    @Deprecated
-    protected void loadDateFormats(AbstractAxis axis, Element element) {
-        Element dateFormatsElement = element.element("dateFormats");
-        if (dateFormatsElement != null) {
-            axis.setDateFormats(loadDateFormats(dateFormatsElement));
-        }
-    }
-
-    @Deprecated
-    protected void loadGuides(AbstractAxis axis, Element element) {
-        Element guidesElement = element.element("guides");
-        if (guidesElement != null) {
-            axis.setGuides(loadGuides(guidesElement));
         }
     }
 

@@ -27,13 +27,11 @@ public class GanttChart extends AbstractSerialChart<GanttChart> {
 
     private Integer brightnessStep;
 
-    private String colorField;          // FIXME: gg, this field is still in use?
+    private String colorField;
 
     private String columnWidthField;
 
     private String durationField;
-
-    private Date endDate;               // FIXME: gg, this field is still in use?
 
     private String endDateField;
 
@@ -93,15 +91,6 @@ public class GanttChart extends AbstractSerialChart<GanttChart> {
 
     public GanttChart setDurationField(String durationField) {
         this.durationField = durationField;
-        return this;
-    }
-
-    public Date getEndDate() {
-        return endDate;
-    }
-
-    public GanttChart setEndDate(Date endDate) {
-        this.endDate = endDate;
         return this;
     }
 

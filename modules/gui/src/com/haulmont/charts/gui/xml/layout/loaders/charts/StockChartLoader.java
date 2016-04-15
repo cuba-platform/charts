@@ -52,8 +52,6 @@ public class StockChartLoader extends ChartModelLoader<StockChartGroup, StockCha
     }
 
     protected void loadConfiguration(StockChartGroup chart, Element element) {
-        loadBalloon(chart, element);
-        loadExport(chart, element);
         loadCategoryAxesSettings(chart, element);
         loadChartCursorSettings(chart, element);
         loadChartScrollbarSettings(chart, element);
@@ -78,6 +76,11 @@ public class StockChartLoader extends ChartModelLoader<StockChartGroup, StockCha
         String autoResize = element.attributeValue("autoResize");
         if (StringUtils.isNotEmpty(autoResize)) {
             chart.setAutoResize(Boolean.valueOf(autoResize));
+        }
+
+        Element balloonElement = element.element("balloon");
+        if (balloonElement != null) {
+            chart.setBalloon(loadBalloon(balloonElement));
         }
 
         String classNamePrefix = element.attributeValue("classNamePrefix");
@@ -106,6 +109,11 @@ public class StockChartLoader extends ChartModelLoader<StockChartGroup, StockCha
         Element dataSetsElement = element.element("dataSets");
         if (dataSetsElement != null) {
             chart.setDataSets(loadDataSets(dataSetsElement));
+        }
+
+        Element exportElement = element.element("export");
+        if (exportElement != null) {
+            chart.setExport(loadExport(exportElement));
         }
 
         String extendToFullPeriod = element.attributeValue("extendToFullPeriod");
@@ -1491,22 +1499,6 @@ public class StockChartLoader extends ChartModelLoader<StockChartGroup, StockCha
             }
 
             chart.setStockEventsSettings(stockEventsSettings);
-        }
-    }
-
-    @Deprecated
-    protected void loadBalloon(StockChartGroup chart, Element element) {
-        Element balloonElement = element.element("balloon");
-        if (balloonElement != null) {
-            chart.setBalloon(loadBalloon(balloonElement));
-        }
-    }
-
-    @Deprecated
-    protected void loadExport(StockChartGroup chart, Element element) {
-        Element exportElement = element.element("export");
-        if (exportElement != null) {
-            chart.setExport(loadExport(exportElement));
         }
     }
 
