@@ -9,18 +9,11 @@ import com.haulmont.charts.web.toolkit.ui.amcharts.CubaAmchartsScene;
 
 /**
  */
-public class LegendMarkerClickEvent extends com.vaadin.ui.Component.Event {
+public class LegendMarkerClickEvent extends AbstractLegendItemEvent {
 
     private static final long serialVersionUID = -536343761071370040L;
 
-    private final String itemId;
-
     public LegendMarkerClickEvent(CubaAmchartsScene scene, String itemId) {
-        super(scene);
-        this.itemId = itemId;
-    }
-
-    public String getItemId() {
-        return itemId;
+        super(scene, itemId);
     }
 }

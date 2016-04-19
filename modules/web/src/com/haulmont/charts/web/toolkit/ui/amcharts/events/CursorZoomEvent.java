@@ -9,22 +9,11 @@ import com.haulmont.charts.web.toolkit.ui.amcharts.CubaAmchartsScene;
 
 /**
  */
-public class CursorZoomEvent extends com.vaadin.ui.Component.Event {
+public class CursorZoomEvent extends AbstractCursorEvent {
 
-    private final String start;
-    private final String end;
+    private static final long serialVersionUID = -8030273951329398295L;
 
     public CursorZoomEvent(CubaAmchartsScene source, String start, String end) {
-        super(source);
-        this.start = start;
-        this.end = end;
-    }
-
-    public String getEnd() {
-        return end;
-    }
-
-    public String getStart() {
-        return start;
+        super(source, start, end);
     }
 }

@@ -9,48 +9,22 @@ import com.haulmont.charts.web.toolkit.ui.amcharts.CubaAmchartsScene;
 
 /**
  */
-public class GraphItemRightClickEvent extends com.vaadin.ui.Component.Event {
+public class GraphItemRightClickEvent extends AbstractClickEvent {
 
     private static final long serialVersionUID = 4964415107233336938L;
 
     private final String graphId;
-
-    private final int x;
-    private final int y;
-    private final int absoluteX;
-    private final int absoluteY;
 
     private final int itemIndex;
     private final String itemId;
 
     public GraphItemRightClickEvent(CubaAmchartsScene scene, String graphId, int itemIndex, String itemId,
                                     int x, int y, int absoluteX, int absoluteY) {
-        super(scene);
+        super(scene, x, y, absoluteX, absoluteY);
         this.itemIndex = itemIndex;
-        this.absoluteY = absoluteY;
-        this.absoluteX = absoluteX;
         this.graphId = graphId;
-        this.x = x;
-        this.y = y;
         this.itemId = itemId;
     }
-
-    public int getAbsoluteX() {
-        return absoluteX;
-    }
-
-    public int getAbsoluteY() {
-        return absoluteY;
-    }
-
-    public int getX() {
-        return x;
-    }
-
-    public int getY() {
-        return y;
-    }
-
     public String getGraphId() {
         return graphId;
     }

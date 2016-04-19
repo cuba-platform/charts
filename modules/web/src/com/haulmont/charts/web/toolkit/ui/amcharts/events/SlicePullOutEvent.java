@@ -9,18 +9,11 @@ import com.haulmont.charts.web.toolkit.ui.amcharts.CubaAmchartsScene;
 
 /**
  */
-public class SlicePullOutEvent extends com.vaadin.ui.Component.Event {
+public class SlicePullOutEvent extends AbstractSlicePullEvent {
 
     private static final long serialVersionUID = -536343761071370040L;
 
-    private final String sliceId;
-
     public SlicePullOutEvent(CubaAmchartsScene scene, String sliceId) {
-        super(scene);
-        this.sliceId = sliceId;
-    }
-
-    public String getSliceId() {
-        return sliceId;
+        super(scene, sliceId);
     }
 }

@@ -87,6 +87,66 @@ public interface Chart extends Component, Component.BelongToFrame, Component.Has
     void zoomToIndexes(int start, int end);
     void zoomToDates(Date start, Date end);
 
+    abstract class AbstractItemEvent {
+        private final Entity item;
+
+        public AbstractItemEvent(Entity item) {
+            this.item = item;
+        }
+
+        public Entity getItem() {
+            return item;
+        }
+    }
+
+    abstract class AbstractClickEvent {
+        private final int x;
+        private final int y;
+        private final int absoluteX;
+        private final int absoluteY;
+
+        public AbstractClickEvent(int x, int y, int absoluteX, int absoluteY) {
+            this.x = x;
+            this.y = y;
+            this.absoluteX = absoluteX;
+            this.absoluteY = absoluteY;
+        }
+
+        public int getX() {
+            return x;
+        }
+
+        public int getY() {
+            return y;
+        }
+
+        public int getAbsoluteX() {
+            return absoluteX;
+        }
+
+        public int getAbsoluteY() {
+            return absoluteY;
+        }
+    }
+
+    abstract class AbstractCursorEvent {
+        private final String start;
+        private final String end;
+
+        public AbstractCursorEvent(String start, String end) {
+            this.start = start;
+            this.end = end;
+        }
+
+        public String getStart() {
+            return start;
+        }
+
+        public String getEnd() {
+            return end;
+        }
+    }
+
     class AxisZoomEvent {
         private final String axisId;
         private final double startValue;
@@ -115,42 +175,19 @@ public interface Chart extends Component, Component.BelongToFrame, Component.Has
         void onZoom(AxisZoomEvent event);
     }
 
-    class ChartClickEvent {
+    class ChartClickEvent extends AbstractClickEvent {
 
-        private final int x;
-        private final int y;
-        private final int absoluteX;
-        private final int absoluteY;
         private final double xAxis;
         private final double yAxis;
 
         public ChartClickEvent(int x, int y, int absoluteX, int absoluteY, double xAxis, double yAxis) {
-            this.x = x;
-            this.y = y;
-            this.absoluteX = absoluteX;
-            this.absoluteY = absoluteY;
+            super(x, y, absoluteX, absoluteY);
             this.xAxis = xAxis;
             this.yAxis = yAxis;
         }
 
-        public int getAbsoluteX() {
-            return absoluteX;
-        }
-
-        public int getAbsoluteY() {
-            return absoluteY;
-        }
-
-        public int getX() {
-            return x;
-        }
-
         public double getxAxis() {
             return xAxis;
-        }
-
-        public int getY() {
-            return y;
         }
 
         public double getyAxis() {
@@ -162,22 +199,10 @@ public interface Chart extends Component, Component.BelongToFrame, Component.Has
         void onClick(ChartClickEvent event);
     }
 
-    class CursorPeriodSelectEvent {
-
-        private final String start;
-        private final String end;
+    class CursorPeriodSelectEvent extends AbstractCursorEvent {
 
         public CursorPeriodSelectEvent(String start, String end) {
-            this.start = start;
-            this.end = end;
-        }
-
-        public String getEnd() {
-            return end;
-        }
-
-        public String getStart() {
-            return start;
+            super(start, end);
         }
     }
 
@@ -185,22 +210,9 @@ public interface Chart extends Component, Component.BelongToFrame, Component.Has
         void onSelect(CursorPeriodSelectEvent event);
     }
 
-    class CursorZoomEvent {
-
-        private final String start;
-        private final String end;
-
+    class CursorZoomEvent extends AbstractCursorEvent {
         public CursorZoomEvent(String start, String end) {
-            this.start = start;
-            this.end = end;
-        }
-
-        public String getEnd() {
-            return end;
-        }
-
-        public String getStart() {
-            return start;
+            super(start, end);
         }
     }
 
@@ -208,41 +220,17 @@ public interface Chart extends Component, Component.BelongToFrame, Component.Has
         void onZoom(CursorZoomEvent event);
     }
 
-    class GraphClickEvent {
+    class GraphClickEvent extends AbstractClickEvent {
 
         private final String graphId;
 
-        private final int x;
-        private final int y;
-        private final int absoluteX;
-        private final int absoluteY;
-
         public GraphClickEvent(String graphId, int x, int y, int absoluteX, int absoluteY) {
+            super(x, y, absoluteX, absoluteY);
             this.graphId = graphId;
-            this.x = x;
-            this.y = y;
-            this.absoluteX = absoluteX;
-            this.absoluteY = absoluteY;
-        }
-
-        public int getAbsoluteX() {
-            return absoluteX;
-        }
-
-        public int getAbsoluteY() {
-            return absoluteY;
         }
 
         public String getGraphId() {
             return graphId;
-        }
-
-        public int getX() {
-            return x;
-        }
-
-        public int getY() {
-            return y;
         }
     }
 
@@ -250,33 +238,17 @@ public interface Chart extends Component, Component.BelongToFrame, Component.Has
         void onClick(GraphClickEvent event);
     }
 
-    class GraphItemClickEvent {
+    class GraphItemClickEvent extends AbstractClickEvent{
         private final String graphId;
-
-        private final int x;
-        private final int y;
-        private final int absoluteX;
-        private final int absoluteY;
 
         private final Entity item;
         private final int itemIndex;
 
         public GraphItemClickEvent(String graphId, Entity item, int itemIndex, int x, int y, int absoluteX, int absoluteY) {
+            super(x, y, absoluteX, absoluteY);
             this.item = item;
             this.itemIndex = itemIndex;
-            this.absoluteY = absoluteY;
-            this.absoluteX = absoluteX;
             this.graphId = graphId;
-            this.x = x;
-            this.y = y;
-        }
-
-        public int getAbsoluteX() {
-            return absoluteX;
-        }
-
-        public int getAbsoluteY() {
-            return absoluteY;
         }
 
         public String getGraphId() {
@@ -290,30 +262,15 @@ public interface Chart extends Component, Component.BelongToFrame, Component.Has
         public int getItemIndex() {
             return itemIndex;
         }
-
-        public int getX() {
-            return x;
-        }
-
-        public int getY() {
-            return y;
-        }
     }
 
     interface GraphItemClickListener {
         void onClick(GraphItemClickEvent event);
     }
 
-    class LegendItemHideEvent {
-
-        private final Entity item;
-
+    class LegendItemHideEvent extends AbstractItemEvent {
         public LegendItemHideEvent(Entity item) {
-            this.item = item;
-        }
-
-        public Entity getItem() {
-            return item;
+            super(item);
         }
     }
 
@@ -321,16 +278,9 @@ public interface Chart extends Component, Component.BelongToFrame, Component.Has
         void onHide(LegendItemHideEvent event);
     }
 
-    class LegendItemShowEvent {
-
-        private final Entity item;
-
+    class LegendItemShowEvent extends AbstractItemEvent {
         public LegendItemShowEvent(Entity item) {
-            this.item = item;
-        }
-
-        public Entity getItem() {
-            return item;
+            super(item);
         }
     }
 
@@ -338,16 +288,9 @@ public interface Chart extends Component, Component.BelongToFrame, Component.Has
         void onShow(LegendItemShowEvent event);
     }
 
-    class LegendItemClickEvent {
-
-        private final Entity item;
-
+    class LegendItemClickEvent extends AbstractItemEvent {
         public LegendItemClickEvent(Entity item) {
-            this.item = item;
-        }
-
-        public Entity getItem() {
-            return item;
+            super(item);
         }
     }
 
@@ -355,40 +298,16 @@ public interface Chart extends Component, Component.BelongToFrame, Component.Has
         void onClick(LegendItemClickEvent event);
     }
 
-    class SliceClickEvent {
+    class SliceClickEvent extends AbstractClickEvent {
         private final Entity item;
 
-        private final int x;
-        private final int y;
-        private final int absoluteX;
-        private final int absoluteY;
-
         public SliceClickEvent(Entity item, int x, int y, int absoluteX, int absoluteY) {
+            super(x, y, absoluteX, absoluteY);
             this.item = item;
-            this.x = x;
-            this.y = y;
-            this.absoluteX = absoluteX;
-            this.absoluteY = absoluteY;
-        }
-
-        public int getAbsoluteX() {
-            return absoluteX;
-        }
-
-        public int getAbsoluteY() {
-            return absoluteY;
         }
 
         public Entity getItem() {
             return item;
-        }
-
-        public int getX() {
-            return x;
-        }
-
-        public int getY() {
-            return y;
         }
     }
 
@@ -396,16 +315,9 @@ public interface Chart extends Component, Component.BelongToFrame, Component.Has
         void onClick(SliceClickEvent event);
     }
 
-    class SlicePullInEvent {
-
-        private final Entity item;
-
+    class SlicePullInEvent extends AbstractItemEvent {
         public SlicePullInEvent(Entity item) {
-            this.item = item;
-        }
-
-        public Entity getItem() {
-            return item;
+            super(item);
         }
     }
 
@@ -413,16 +325,9 @@ public interface Chart extends Component, Component.BelongToFrame, Component.Has
         void onPullIn(SlicePullInEvent event);
     }
 
-    class SlicePullOutEvent {
-
-        private final Entity item;
-
+    class SlicePullOutEvent extends AbstractItemEvent {
         public SlicePullOutEvent(Entity item) {
-            this.item = item;
-        }
-
-        public Entity getItem() {
-            return item;
+            super(item);
         }
     }
 

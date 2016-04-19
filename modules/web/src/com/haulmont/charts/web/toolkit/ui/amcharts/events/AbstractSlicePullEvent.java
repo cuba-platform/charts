@@ -7,16 +7,14 @@ package com.haulmont.charts.web.toolkit.ui.amcharts.events;
 
 import com.haulmont.charts.web.toolkit.ui.amcharts.CubaAmchartsScene;
 
-/**
- */
-public class SliceClickEvent extends AbstractClickEvent {
+public abstract class AbstractSlicePullEvent extends com.vaadin.ui.Component.Event {
 
-    private static final long serialVersionUID = -536343761071370040L;
+    private static final long serialVersionUID = -3625204689056222328L;
 
     private final String sliceId;
 
-    public SliceClickEvent(CubaAmchartsScene scene, String sliceId, int x, int y, int absoluteX, int absoluteY) {
-        super(scene, x, y, absoluteX, absoluteY);
+    public AbstractSlicePullEvent(CubaAmchartsScene scene, String sliceId) {
+        super(scene);
         this.sliceId = sliceId;
     }
 
