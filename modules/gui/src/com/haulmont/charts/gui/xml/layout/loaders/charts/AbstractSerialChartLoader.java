@@ -102,7 +102,7 @@ public abstract class AbstractSerialChartLoader<T extends AbstractSerialChart> e
 
         Element scrollbarElement = element.element("valueScrollbar");
         if (scrollbarElement != null) {
-            chart.setChartScrollbar(loadScrollbar(scrollbarElement));
+            chart.setValueScrollbar(loadScrollbar(scrollbarElement));
         }
 
         String zoomOutOnDataUpdate = element.attributeValue("zoomOutOnDataUpdate");
