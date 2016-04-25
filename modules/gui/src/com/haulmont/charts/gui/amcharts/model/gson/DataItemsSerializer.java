@@ -13,6 +13,7 @@ import com.haulmont.charts.gui.amcharts.model.data.DataItem;
 import org.apache.commons.collections.CollectionUtils;
 import org.apache.commons.lang.StringUtils;
 
+import javax.annotation.Nullable;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Collection;
@@ -47,9 +48,14 @@ public class DataItemsSerializer {
                     }
 
                     List<String> fields = new ArrayList<>();
-                    fields.add(chart.getStartField());
-                    fields.add(chart.getDurationField());
-                    fields.add(chart.getColorField());
+
+                    addField(fields, chart.getStartField());
+                    addField(fields, chart.getDurationField());
+                    addField(fields, chart.getColorField());
+                    addField(fields, chart.getEndField());
+                    addField(fields, chart.getColumnWidthField());
+                    addField(fields, chart.getStartDateField());
+                    addField(fields, chart.getEndDateField());
                     if (CollectionUtils.isNotEmpty(chart.getAdditionalSegmentFields())) {
                         fields.addAll(chart.getAdditionalSegmentFields());
                     }
@@ -73,6 +79,12 @@ public class DataItemsSerializer {
         }
 
         return serialized;
+    }
+
+    protected void addField(List<String> fields, @Nullable String field) {
+        if (field != null) {
+            fields.add(field);
+        }
     }
 
     protected void addProperty(JsonObject jsonObject, String property, Object value,
