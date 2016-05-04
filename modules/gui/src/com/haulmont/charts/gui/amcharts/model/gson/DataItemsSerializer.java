@@ -49,6 +49,7 @@ public class DataItemsSerializer {
 
                     List<String> fields = new ArrayList<>();
 
+                    addField(fields, "id");
                     addField(fields, chart.getStartField());
                     addField(fields, chart.getDurationField());
                     addField(fields, chart.getColorField());
@@ -66,7 +67,9 @@ public class DataItemsSerializer {
                         JsonObject segment = new JsonObject();
                         for (String field : fields) {
                             if (StringUtils.isNotEmpty(field)) {
-                                addProperty(segment, field, dataItem.getValue(field), dateFormat, context);
+                                if (dataItem.getValue(field) != null) {
+                                    addProperty(segment, field, dataItem.getValue(field), dateFormat, context);
+                                }
                             }
                         }
                         segments.add(segment);
