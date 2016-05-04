@@ -110,10 +110,13 @@ public class CubaAmchartsSceneConnector extends AbstractComponentConnector {
             bindClickEvents(amchartsEvents, events);
 
             String chartType = config.getChartType();
-            if ("xy".equals(chartType) || "radar".equals(chartType) || "serial".equals(chartType)) {
+            if ("xy".equals(chartType)
+                    || "radar".equals(chartType)
+                    || "serial".equals(chartType)
+                    || "gantt".equals(chartType)) {
                 bindCoordinateChartEvents(amchartsEvents, events);
             }
-            if ("serial".equals(chartType)) {
+            if ("serial".equals(chartType) || "gantt".equals(chartType)) {
                 bindSerialChartEvents(amchartsEvents, events);
             }
             if ("pie".equals(chartType) || "funnel".equals(chartType)) {
@@ -122,7 +125,9 @@ public class CubaAmchartsSceneConnector extends AbstractComponentConnector {
             if (config.hasLegend()) {
                 bindLegendEvents(amchartsEvents, events);
             }
-            if (("xy".equals(chartType) || "serial".equals(chartType)) && config.hasCursor()) {
+            if (("xy".equals(chartType)
+                    || "serial".equals(chartType)
+                    || "gantt".equals(chartType)) && config.hasCursor()) {
                 bindCursorEvents(amchartsEvents, events);
             }
             if ("xy".equals(chartType)) {
