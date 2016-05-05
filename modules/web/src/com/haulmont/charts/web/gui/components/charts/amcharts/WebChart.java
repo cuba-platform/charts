@@ -215,7 +215,7 @@ public class WebChart extends WebAbstractComponent<CubaAmchartsScene> implements
     }
 
     protected Entity getEventItem(String itemIdString) {
-        if (StringUtils.isNotEmpty(itemIdString)) {
+        if (datasource != null && StringUtils.isNotEmpty(itemIdString)) {
             if (component.getChart() instanceof GanttChart) {
                 return getGanttChartEventItem(itemIdString);
             } else {
