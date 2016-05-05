@@ -7,6 +7,7 @@ package com.haulmont.charts.web.gui.components.charts.amcharts;
 
 import com.haulmont.charts.gui.amcharts.model.*;
 import com.haulmont.charts.gui.amcharts.model.charts.AbstractChart;
+import com.haulmont.charts.gui.amcharts.model.charts.GanttChart;
 import com.haulmont.charts.gui.amcharts.model.charts.RectangularChart;
 import com.haulmont.charts.gui.amcharts.model.charts.SerialChart;
 import com.haulmont.charts.gui.amcharts.model.data.EntityDataProvider;
@@ -214,14 +215,38 @@ public class WebChart extends WebAbstractComponent<CubaAmchartsScene> implements
     }
 
     protected Entity getEventItem(String itemIdString) {
-        Entity item = null;
-
         if (StringUtils.isNotEmpty(itemIdString)) {
-            UUID itemId = UUID.fromString(itemIdString);
-            //noinspection unchecked
-            item = datasource.getItem(itemId);
+            if (component.getChart() instanceof GanttChart) {
+                return getGanttChartEventItem(itemIdString);
+            } else {
+                UUID itemId = UUID.fromString(itemIdString);
+                //noinspection unchecked
+                return datasource.getItem(itemId);
+            }
         }
-        return item;
+        return null;
+    }
+
+    protected Entity getGanttChartEventItem(String itemIdString) {
+        GanttChart ganttChart = (GanttChart) component.getChart();
+        String[] ids = itemIdString.split(":");
+        if (ids.length == 2) {
+            UUID categoryId = UUID.fromString(ids[0]);
+            UUID segmentId = UUID.fromString(ids[1]);
+            //noinspection unchecked
+            Entity category = datasource.getItem(categoryId);
+            if (category != null) {
+                Collection segments = category.getValue(ganttChart.getSegmentsField());
+                if (segments != null) {
+                    for (Object segment : segments) {
+                        if (segment instanceof Entity && segmentId.equals(((Entity) segment).getId())) {
+                            return (Entity) segment;
+                        }
+                    }
+                }
+            }
+        }
+        return null;
     }
 
     @Override

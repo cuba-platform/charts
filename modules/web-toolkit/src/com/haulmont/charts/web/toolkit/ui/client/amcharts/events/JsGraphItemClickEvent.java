@@ -31,7 +31,14 @@ public class JsGraphItemClickEvent extends JavaScriptObject {
     }-*/;
 
     public final native String getItemId() /*-{
-        if (this.item && this.item.dataContext) {
+        if (this.chart.type == "gantt") {
+            if (this.graph && this.graph.customData && this.chart.dataProvider[this.index]) {
+                if (!this.graph.customData.id || !this.chart.dataProvider[this.index].id) {
+                    return null;
+                }
+                return this.chart.dataProvider[this.index].id + ":" + this.graph.customData.id;
+            }
+        } else if (this.item && this.item.dataContext) {
             if (!this.item.dataContext.id) {
                 return null;
             }
