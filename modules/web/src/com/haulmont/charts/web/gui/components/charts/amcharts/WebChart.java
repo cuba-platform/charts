@@ -33,6 +33,7 @@ import org.apache.commons.lang.BooleanUtils;
 import org.apache.commons.lang.ObjectUtils;
 import org.apache.commons.lang.StringUtils;
 
+import javax.annotation.Nullable;
 import java.text.DecimalFormatSymbols;
 import java.util.*;
 
@@ -219,9 +220,8 @@ public class WebChart extends WebAbstractComponent<CubaAmchartsScene> implements
             if (component.getChart() instanceof GanttChart) {
                 return getGanttChartEventItem(itemIdString);
             } else {
-                UUID itemId = UUID.fromString(itemIdString);
                 //noinspection unchecked
-                return datasource.getItem(itemId);
+                return datasource.getItem(getItemId(datasource, itemIdString));
             }
         }
         return null;
@@ -229,21 +229,45 @@ public class WebChart extends WebAbstractComponent<CubaAmchartsScene> implements
 
     protected Entity getGanttChartEventItem(String itemIdString) {
         GanttChart ganttChart = (GanttChart) component.getChart();
+
         String[] ids = itemIdString.split(":");
-        if (ids.length == 2) {
-            UUID categoryId = UUID.fromString(ids[0]);
-            UUID segmentId = UUID.fromString(ids[1]);
-            //noinspection unchecked
-            Entity category = datasource.getItem(categoryId);
-            if (category != null) {
-                Collection segments = category.getValue(ganttChart.getSegmentsField());
-                if (segments != null) {
-                    for (Object segment : segments) {
-                        if (segment instanceof Entity && segmentId.equals(((Entity) segment).getId())) {
-                            return (Entity) segment;
-                        }
-                    }
-                }
+        if (ids.length != 2) {
+            return null;
+        }
+
+        Object categoryId = getItemId(datasource, ids[0]);
+        Object segmentId = getItemId(datasource, ids[1]);
+        if (segmentId == null) {
+            return null;
+        }
+
+        //noinspection unchecked
+        Entity category = datasource.getItem(categoryId);
+        if (category == null) {
+            return null;
+        }
+
+        Collection segments = category.getValue(ganttChart.getSegmentsField());
+        if (segments == null) {
+            return null;
+        }
+
+        for (Object segment : segments) {
+            if (segment instanceof Entity && segmentId.equals(((Entity) segment).getId())) {
+                return (Entity) segment;
+            }
+        }
+
+        return null;
+    }
+
+    @Nullable
+    protected Object getItemId(CollectionDatasource datasource, String itemUuidString) {
+        UUID uuid = UUID.fromString(itemUuidString);
+        //noinspection unchecked
+        for (Entity entity : (Collection<Entity>) datasource.getItems()) {
+            if (uuid.equals(entity.getUuid())) {
+                return entity.getId();
             }
         }
         return null;

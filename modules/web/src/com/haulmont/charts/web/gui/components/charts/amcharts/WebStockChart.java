@@ -28,6 +28,7 @@ import org.apache.commons.lang.BooleanUtils;
 import org.apache.commons.lang.ObjectUtils;
 import org.apache.commons.lang.StringUtils;
 
+import javax.annotation.Nullable;
 import java.text.DecimalFormatSymbols;
 import java.util.*;
 
@@ -174,16 +175,27 @@ public class WebStockChart extends WebAbstractComponent<CubaAmStockChartScene> i
 
     protected Entity getEventItem(String itemIdString) {
         if (StringUtils.isNotEmpty(itemIdString)) {
-            UUID itemId = UUID.fromString(itemIdString);
             for (DataSet dataSet : component.getChart().getDataSets()) {
                 CollectionDatasource ds = getDataSetDatasource(dataSet.getId());
                 if (ds != null) {
                     //noinspection unchecked
-                    Entity item = ds.getItem(itemId);
+                    Entity item = ds.getItem(getItemId(ds, itemIdString));
                     if (item != null) {
                         return item;
                     }
                 }
+            }
+        }
+        return null;
+    }
+
+    @Nullable
+    protected Object getItemId(CollectionDatasource datasource, String itemUuidString) {
+        UUID uuid = UUID.fromString(itemUuidString);
+        //noinspection unchecked
+        for (Entity entity : (Collection<Entity>) datasource.getItems()) {
+            if (uuid.equals(entity.getUuid())) {
+                return entity.getId();
             }
         }
         return null;

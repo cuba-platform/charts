@@ -16,10 +16,6 @@ import java.util.ArrayList;
 import java.util.Collection;
 import java.util.List;
 
-/**
-* @author gorelov
-* @version $Id$
-*/
 public class EntityDataItem implements DataItem {
 
     private static final long serialVersionUID = -2703129637028051748L;
@@ -33,6 +29,9 @@ public class EntityDataItem implements DataItem {
 
     @Override
     public Object getValue(String property) {
+        if ("id".equals(property)) {
+            return item.getUuid();
+        }
         Object value = item.getValue(property);
         if (value instanceof Entity) {
             return InstanceUtils.getInstanceName((Instance) value);
