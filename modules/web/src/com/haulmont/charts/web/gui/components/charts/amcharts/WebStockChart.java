@@ -17,6 +17,7 @@ import com.haulmont.charts.web.toolkit.ui.amcharts.CubaAmStockChartScene;
 import com.haulmont.charts.web.toolkit.ui.amcharts.CubaAmchartsIntegration;
 import com.haulmont.chile.core.datatypes.Datatypes;
 import com.haulmont.chile.core.datatypes.FormatStrings;
+import com.haulmont.cuba.core.entity.BaseUuidEntity;
 import com.haulmont.cuba.core.entity.Entity;
 import com.haulmont.cuba.core.global.AppBeans;
 import com.haulmont.cuba.core.global.Messages;
@@ -192,6 +193,9 @@ public class WebStockChart extends WebAbstractComponent<CubaAmStockChartScene> i
     @Nullable
     protected Object getItemId(CollectionDatasource datasource, String itemUuidString) {
         UUID uuid = UUID.fromString(itemUuidString);
+        if (BaseUuidEntity.class.isAssignableFrom(datasource.getMetaClass().getJavaClass())) {
+            return uuid;
+        }
         //noinspection unchecked
         for (Entity entity : (Collection<Entity>) datasource.getItems()) {
             if (uuid.equals(entity.getUuid())) {
