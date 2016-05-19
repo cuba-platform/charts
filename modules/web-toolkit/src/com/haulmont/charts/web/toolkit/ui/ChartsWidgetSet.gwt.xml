@@ -3,12 +3,7 @@
   ~ Copyright (c) 2008-2016 Haulmont. All rights reserved.
   ~ Use is subject to license terms, see http://www.cuba-platform.com/commercial-software-license for details.
   -->
-
-<!DOCTYPE module PUBLIC "-//Google Inc.//DTD Google Web Toolkit 1.7.0//EN"
-        "http://google-web-toolkit.googlecode.com/svn/trunk/distro-source/core/src/gwt-module.dtd">
 <module>
     <inherits name="com.haulmont.cuba.web.toolkit.ui.WidgetSet" />
     <inherits name="com.vaadin.tapio.googlemaps.WidgetSet" />
-    <!--<set-property name="user.agent" value="gecko1_8"/>-->
-    <!--<set-property name="user.agent" value="safari" />-->
 </module>
