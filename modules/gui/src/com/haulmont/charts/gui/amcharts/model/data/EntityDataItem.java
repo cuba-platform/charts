@@ -16,6 +16,9 @@ import java.util.ArrayList;
 import java.util.Collection;
 import java.util.List;
 
+/**
+ * Chart data item, which contains an instance of an {@link com.haulmont.cuba.core.entity.Entity}.
+ */
 public class EntityDataItem implements DataItem {
 
     private static final long serialVersionUID = -2703129637028051748L;
@@ -27,6 +30,20 @@ public class EntityDataItem implements DataItem {
         this.item = item;
     }
 
+    /**
+     * Returns the value of entity property with the specified property name.
+     *
+     * @param property name of entity property
+     * @return the value of entity property with the specified property name.
+     * If property value is an instance of {@link com.haulmont.cuba.core.entity.Entity},
+     * then method returns entity instance name by
+     * {@link InstanceUtils#getInstanceName(com.haulmont.chile.core.model.Instance)}.
+     * If property value is an instance of {@link EnumClass},
+     * then method returns localized value for enum constant.
+     * If property value is an instance of {@link Collection},
+     * then method returns {@link List} of {@link EntityDataItem}.
+     * Otherwise method returns value by {@link Instance#getValue(java.lang.String)}
+     */
     @Override
     public Object getValue(String property) {
         if ("id".equals(property)) {

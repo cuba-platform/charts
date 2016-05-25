@@ -10,6 +10,7 @@ import com.haulmont.charts.gui.amcharts.model.charts.AbstractChart;
 import java.util.*;
 
 /**
+ * Data provider for chart. Contains items which will be shown on chart. All items are stored in {@link List}.
  */
 public class ListDataProvider implements DataProvider {
 

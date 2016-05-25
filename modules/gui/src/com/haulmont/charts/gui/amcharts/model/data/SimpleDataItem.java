@@ -18,6 +18,7 @@ import java.util.*;
 import java.util.concurrent.ConcurrentHashMap;
 
 /**
+ * Chart data item, which contains an instance of any class.
  */
 public class SimpleDataItem implements DataItem {
 
@@ -32,14 +33,39 @@ public class SimpleDataItem implements DataItem {
         this.item = item;
     }
 
+    /**
+     * @return item
+     */
     public Object getItem() {
         return item;
     }
 
+    /**
+     * Sets item.
+     *
+     * @param item item to be set
+     */
     public void setItem(Object item) {
         this.item = item;
     }
 
+    /**
+     * Returns the value of a property with the specified property name.
+     * <p>
+     * <p> Each property in a class which will be used by {@code SimpleDataItem} must have a {@code public} getter method.
+     * Reflection is used to get property values.
+     *
+     * @param property name of property
+     * @return the value of a property with the specified property name.
+     * If property value is an instance of {@link com.haulmont.cuba.core.entity.Entity},
+     * then method returns entity instance name by
+     * {@link InstanceUtils#getInstanceName(com.haulmont.chile.core.model.Instance)}.
+     * If property value is an instance of {@link EnumClass},
+     * then method returns localized value for enum constant.
+     * If property value is an instance of {@link Collection},
+     * then method returns {@link List} of {@link SimpleDataItem}.
+     * Otherwise method returns getter value
+     */
     @Override
     public Object getValue(String property) {
         Object value;

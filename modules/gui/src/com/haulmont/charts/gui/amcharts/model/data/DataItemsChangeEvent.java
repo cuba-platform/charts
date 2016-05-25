@@ -9,6 +9,7 @@ import java.io.Serializable;
 import java.util.List;
 
 /**
+ * Describes data item change event.
  */
 public class DataItemsChangeEvent implements Serializable {
 
@@ -20,10 +21,16 @@ public class DataItemsChangeEvent implements Serializable {
         this.items = items;
     }
 
+    /**
+     * @return operation which caused the data provider change
+     */
     public DataChangeOperation getOperation() {
         return operation;
     }
 
+    /**
+     * @return items which used in operation
+     */
     public List<DataItem> getItems() {
         return items;
     }

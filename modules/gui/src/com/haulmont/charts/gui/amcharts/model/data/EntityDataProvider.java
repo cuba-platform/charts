@@ -16,6 +16,7 @@ import java.util.Collections;
 import java.util.List;
 
 /**
+ * Data provider for chart. Contains {@link CollectionDatasource} with items which will be shown on chart.
  */
 public class EntityDataProvider implements DataProvider {
 
@@ -82,26 +83,53 @@ public class EntityDataProvider implements DataProvider {
         return items;
     }
 
+    /**
+     * Unsupported. Always throws an {@link UnsupportedOperationException}.
+     * Use datasource for changing data items of EntityDataProvider
+     *
+     * @throws UnsupportedOperationException
+     */
     @Override
     public void addItem(DataItem item) {
         throw new UnsupportedOperationException("Use datasource for changing data items of EntityDataProvider");
     }
 
+    /**
+     * Unsupported. Always throws an {@link UnsupportedOperationException}.
+     * Use datasource for changing data items of EntityDataProvider
+     *
+     * @throws UnsupportedOperationException
+     */
     @Override
     public void addItems(Collection<DataItem> items) {
         throw new UnsupportedOperationException("Use datasource for changing data items of EntityDataProvider");
     }
 
+    /**
+     * Unsupported. Always throws an {@link UnsupportedOperationException}.
+     * Use datasource for changing data items of EntityDataProvider
+     *
+     * @throws UnsupportedOperationException
+     */
     @Override
     public void updateItem(DataItem item) {
         throw new UnsupportedOperationException("Use datasource for changing data items of EntityDataProvider");
     }
 
+    /**
+     * Unsupported. Always throws an {@link UnsupportedOperationException}.
+     * Use datasource for changing data items of EntityDataProvider
+     *
+     * @throws UnsupportedOperationException
+     */
     @Override
     public void removeItem(DataItem item) {
         throw new UnsupportedOperationException("Use datasource for changing data items of EntityDataProvider");
     }
 
+    /**
+     * @return datasource instance
+     */
     public CollectionDatasource getDatasource() {
         return datasource;
     }

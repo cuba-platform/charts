@@ -9,9 +9,12 @@ import java.io.Serializable;
 
 /**
  * Chart data item.
- *
  */
 public interface DataItem extends Serializable {
 
+    /**
+     * @param property name of property
+     * @return the value of a property with the specified property name
+     */
     Object getValue(String property);
 }
