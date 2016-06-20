@@ -122,6 +122,14 @@ configure(chartsWebToolkitModule) {
 
 configure(chartsGlobalModule) {
     task enhance(type: CubaEnhancing)
+
+    jar {
+        manifest {
+            attributes('App-Component-Descriptor': 'charts-app-component.xml')
+            attributes('App-Component-Artifact-Group': cuba.artifact.group)
+            attributes('App-Component-Version': cubaVersion)
+        }
+    }
 }
 
 configure(chartsGuiModule) {

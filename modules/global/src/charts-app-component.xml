@@ -1,0 +1,36 @@
+<!--
+  ~ Copyright (c) 2008-2016 Haulmont. All rights reserved.
+  ~ Use is subject to license terms, see http://www.cuba-platform.com/commercial-software-license for details.
+  -->
+
+<app-component xmlns="http://schemas.haulmont.com/cuba/app-component.xsd"
+               id="charts"
+               dependsOn="cuba">
+
+    <module name="global" blocks="*">
+        <artifact name="charts-global" appJar="true"/>
+
+        <property name="cuba.metadataConfig" value="charts-metadata.xml"/>
+        <property name="cuba.creditsConfig" value="charts-credits.xml"/>
+    </module>
+
+    <module name="gui" dependsOn="global" blocks="web">
+        <artifact name="charts-gui" appJar="true"/>
+    </module>
+
+    <module name="web" dependsOn="gui" blocks="web">
+        <artifact name="charts-web" appJar="true"/>
+        <artifact name="charts-web" classifier="web" ext="zip" configuration="webcontent"/>
+        <artifact name="charts-web-toolkit" classifier="web" ext="zip" configuration="webcontent"
+                  skipIfExists="web-toolkit"/>
+
+        <property name="cuba.mainMessagePack" value="com.haulmont.charts.web"/>
+        <property name="cuba.dispatcherSpringContextConfig" value="charts-dispatcher-spring.xml"/>
+        <property name="cuba.windowConfig" value="charts-web-screens.xml"/>
+    </module>
+
+    <module name="web-toolkit" dependsOn="web" blocks="web">
+        <artifact name="charts-web-toolkit"/>
+    </module>
+
+</app-component>
