@@ -9,8 +9,6 @@ import com.haulmont.charts.web.toolkit.ui.amcharts.CubaAmStockChartScene;
 
 import java.util.Date;
 
-/**
- */
 public class StockEventRollOverEvent extends AbstractStockEventEvent {
     private static final long serialVersionUID = 6264694014859141084L;
 

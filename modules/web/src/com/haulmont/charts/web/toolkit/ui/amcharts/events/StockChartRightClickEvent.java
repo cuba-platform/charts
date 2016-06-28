@@ -8,8 +8,6 @@ package com.haulmont.charts.web.toolkit.ui.amcharts.events;
 import com.vaadin.ui.AbstractComponent;
 import com.vaadin.ui.Component;
 
-/**
- */
 public class StockChartRightClickEvent extends Component.Event {
 
     private final int x;

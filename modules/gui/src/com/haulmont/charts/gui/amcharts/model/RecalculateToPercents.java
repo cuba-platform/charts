@@ -5,8 +5,6 @@
 
 package com.haulmont.charts.gui.amcharts.model;
 
-/**
- */
 public enum RecalculateToPercents implements ChartEnum {
     NEVER("never"),
     ALWAYS("always"),

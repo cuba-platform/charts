@@ -8,8 +8,6 @@ package com.haulmont.charts.gui.amcharts.model;
 import java.util.ArrayList;
 import java.util.List;
 
-/**
- */
 public class Export extends AbstractChartObject {
 
     private static final long serialVersionUID = -8908356283007782587L;

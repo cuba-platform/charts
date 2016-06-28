@@ -5,12 +5,9 @@
 
 package com.haulmont.charts.web.gui.components.map.google.directions;
 
-
 import com.haulmont.bali.util.Preconditions;
 import com.haulmont.charts.gui.map.model.directions.Distance;
 
-/**
- */
 public class DistanceDelegate implements Distance {
 
     private com.vaadin.tapio.googlemaps.client.services.Distance distance;

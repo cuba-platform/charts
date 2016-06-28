@@ -5,8 +5,6 @@
 
 package com.haulmont.charts.gui.amcharts.model;
 
-/**
- */
 public enum ValueLabelPosition implements ChartEnum {
     BOTTOM("bottom"),
     TOP("top"),

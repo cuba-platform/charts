@@ -10,8 +10,6 @@ import com.haulmont.charts.gui.amcharts.model.charts.AngularGaugeChart;
 import org.apache.commons.lang.StringUtils;
 import org.dom4j.Element;
 
-/**
- */
 public class AngularGaugeChartLoader extends AbstractChartLoader<AngularGaugeChart> {
     @Override
     public void loadComponent() {

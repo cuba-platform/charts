@@ -5,8 +5,6 @@
 
 package com.haulmont.charts.web.toolkit.ui.amcharts.events;
 
-/**
- */
 public interface GraphItemClickListener {
 
     void onClick(GraphItemClickEvent event);

@@ -33,8 +33,6 @@ import javax.annotation.Nullable;
 import java.text.DecimalFormatSymbols;
 import java.util.*;
 
-/**
- */
 public class WebStockChart extends WebAbstractComponent<CubaAmStockChartScene> implements StockChart {
 
     protected Messages messages = AppBeans.get(Messages.class);

@@ -11,8 +11,6 @@ import com.haulmont.charts.gui.map.model.InfoWindow;
 import com.haulmont.charts.gui.map.model.Marker;
 import com.vaadin.tapio.googlemaps.client.overlays.*;
 
-/**
- */
 public class InfoWindowDelegate implements InfoWindow {
 
     protected GoogleMapInfoWindow infoWindow;

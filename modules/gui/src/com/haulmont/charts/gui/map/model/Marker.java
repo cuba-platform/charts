@@ -7,8 +7,6 @@ package com.haulmont.charts.gui.map.model;
 
 import com.haulmont.charts.gui.map.model.base.MarkerImage;
 
-/**
- */
 public interface Marker {
 
     /**

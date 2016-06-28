@@ -15,8 +15,6 @@ import com.haulmont.cuba.gui.data.CollectionDatasource;
 
 import java.util.Date;
 
-/**
- */
 public interface StockChart extends Component, Component.BelongToFrame, Component.HasXmlDescriptor {
     String NAME = "stockChart";
 

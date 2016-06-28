@@ -5,8 +5,6 @@
 
 package com.haulmont.charts.gui.amcharts.model;
 
-/**
- */
 public enum MarkerType implements ChartEnum {
     NONE("none"),
     CIRCLE("circle"),

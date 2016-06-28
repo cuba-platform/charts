@@ -5,8 +5,6 @@
 
 package com.haulmont.charts.gui.amcharts.model;
 
-/**
- */
 public enum LegendSwitch implements ChartEnum {
     X("x"),
     V("v");

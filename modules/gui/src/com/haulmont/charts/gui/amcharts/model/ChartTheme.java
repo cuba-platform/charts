@@ -5,8 +5,6 @@
 
 package com.haulmont.charts.gui.amcharts.model;
 
-/**
- */
 public enum ChartTheme implements ChartEnum {
     NONE("none"),
     BLACK("black"),

@@ -5,8 +5,6 @@
 
 package com.haulmont.charts.gui.amcharts.model;
 
-/**
- */
 public enum StepDirection implements ChartEnum {
     LEFT("left"),
     RIGHT("right");

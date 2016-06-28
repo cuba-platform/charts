@@ -10,8 +10,6 @@ import com.haulmont.charts.gui.map.model.base.MarkerImage;
 import com.haulmont.charts.gui.map.model.base.Point;
 import com.haulmont.charts.gui.map.model.base.Size;
 
-/**
- */
 public class MarkerImageDelegate implements MarkerImage {
     private com.vaadin.tapio.googlemaps.client.base.MarkerImage markerImage;
 

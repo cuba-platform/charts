@@ -9,8 +9,6 @@ import com.vaadin.shared.communication.ServerRpc;
 
 import java.util.Date;
 
-/**
- */
 public interface CubaAmStockChartServerRpc extends ServerRpc {
 
     void onChartClick(int x, int y, int absoluteX, int absoluteY);

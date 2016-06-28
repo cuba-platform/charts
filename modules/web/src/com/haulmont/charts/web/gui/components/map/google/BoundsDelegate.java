@@ -10,8 +10,6 @@ import com.haulmont.charts.gui.map.model.Bounds;
 import com.haulmont.charts.gui.map.model.GeoPoint;
 import com.vaadin.tapio.googlemaps.client.base.LatLonBounds;
 
-/**
- */
 public class BoundsDelegate implements Bounds {
     private LatLonBounds bounds;
 

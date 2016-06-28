@@ -5,8 +5,6 @@
 
 package com.haulmont.charts.gui.map.model.drawing;
 
-/**
- */
 public enum OverlayType {
     POLYGON,
     CIRCLE

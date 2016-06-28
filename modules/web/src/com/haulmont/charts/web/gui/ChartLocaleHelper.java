@@ -12,8 +12,6 @@ import com.haulmont.cuba.core.global.Messages;
 
 import java.util.*;
 
-/**
- */
 public final class ChartLocaleHelper {
 
     private ChartLocaleHelper() {

@@ -7,8 +7,6 @@ package com.haulmont.charts.gui.amcharts.model;
 
 import javax.annotation.Nullable;
 
-/**
- */
 public enum PeriodType implements ChartEnum {
     SECONDS("ss"),
     MINUTES("mm"),

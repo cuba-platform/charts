@@ -10,8 +10,6 @@ import com.vaadin.ui.Component;
 
 import java.util.Date;
 
-/**
- */
 public class StockPanelZoomEvent extends Component.Event {
 
     private static final long serialVersionUID = -8555462390239325142L;

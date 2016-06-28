@@ -9,46 +9,34 @@ import com.haulmont.charts.gui.map.model.GeoPoint;
 
 import java.util.List;
 
-/**
- */
 public interface DirectionsRequest {
     List<DirectionsWaypoint> getWaypoints();
-
     void setWaypoints(List<DirectionsWaypoint> waypoints);
 
     boolean isAvoidHighways();
-
     void setAvoidHighways(boolean avoidHighways);
 
     boolean isAvoidTolls();
-
     void setAvoidTolls(boolean avoidTolls);
 
     boolean isOptimizeWaypoints();
-
     void setOptimizeWaypoints(boolean optimizeWaypoints);
 
     boolean isProvideRouteAlternatives();
-
     void setProvideRouteAlternatives(boolean provideRouteAlternatives);
 
     GeoPoint getOrigin();
-
     void setOrigin(GeoPoint origin);
 
     GeoPoint getDestination();
-
     void setDestination(GeoPoint destination);
 
     String getRegion();
-
     void setRegion(String region);
 
     TravelMode getTravelMode();
-
     void setTravelMode(TravelMode travelMode);
 
     UnitSystem getUnitSystem();
-
     void setUnitSystem(UnitSystem unitSystem);
 }

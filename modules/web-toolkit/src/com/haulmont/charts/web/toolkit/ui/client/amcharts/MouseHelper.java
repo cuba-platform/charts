@@ -7,8 +7,6 @@ package com.haulmont.charts.web.toolkit.ui.client.amcharts;
 
 import com.google.gwt.dom.client.NativeEvent;
 
-/**
- */
 public class MouseHelper {
 
     public static native int getX(NativeEvent e) /*-{

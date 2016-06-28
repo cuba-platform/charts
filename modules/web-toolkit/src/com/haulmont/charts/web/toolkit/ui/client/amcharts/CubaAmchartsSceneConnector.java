@@ -22,8 +22,6 @@ import com.vaadin.shared.ui.Connect;
 import java.util.Date;
 import java.util.Set;
 
-/**
- */
 @Connect(CubaAmchartsScene.class)
 public class CubaAmchartsSceneConnector extends AbstractComponentConnector {
 

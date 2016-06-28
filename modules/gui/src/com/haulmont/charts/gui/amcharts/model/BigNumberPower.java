@@ -5,8 +5,6 @@
 
 package com.haulmont.charts.gui.amcharts.model;
 
-/**
- */
 public enum BigNumberPower implements ChartEnum {
     KILO("1e+3"),
     MEGA("1e+6"),

@@ -5,8 +5,6 @@
 
 package com.haulmont.charts.gui.amcharts.model;
 
-/**
- */
 public interface HasMargins<T> {
 
     Integer getMarginTop();

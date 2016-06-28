@@ -12,8 +12,6 @@ import java.nio.charset.StandardCharsets;
 import java.nio.file.Files;
 import java.nio.file.Paths;
 
-/**
- */
 public final class ChartSampleJsonHelper {
 
     public static final java.lang.String DATE_FORMAT = "yyyy-MM-dd";

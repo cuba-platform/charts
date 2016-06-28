@@ -13,8 +13,6 @@ import com.haulmont.charts.gui.amcharts.model.ChartEnum;
 
 import java.lang.reflect.Type;
 
-/**
- */
 public class ChartEnumSerializer implements JsonSerializer<ChartEnum> {
 
     @Override

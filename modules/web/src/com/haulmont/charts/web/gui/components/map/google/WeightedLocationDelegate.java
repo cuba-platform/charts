@@ -11,8 +11,6 @@ import com.vaadin.tapio.googlemaps.client.base.WeightedLocation;
 
 import java.util.Objects;
 
-/**
- */
 public class WeightedLocationDelegate implements com.haulmont.charts.gui.map.model.WeightedLocation {
     private WeightedLocation location;
 

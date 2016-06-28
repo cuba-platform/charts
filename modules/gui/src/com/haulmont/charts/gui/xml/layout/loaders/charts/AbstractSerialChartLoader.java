@@ -13,8 +13,6 @@ import com.haulmont.charts.gui.amcharts.model.charts.AbstractSerialChart;
 import org.apache.commons.lang.StringUtils;
 import org.dom4j.Element;
 
-/**
- */
 public abstract class AbstractSerialChartLoader<T extends AbstractSerialChart> extends RectangularChartLoader<T> {
 
     @Override

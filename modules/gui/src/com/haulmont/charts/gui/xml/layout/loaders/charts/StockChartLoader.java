@@ -21,8 +21,6 @@ import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 
-/**
- */
 public class StockChartLoader extends ChartModelLoader<StockChartGroup, StockChart> {
 
     @Override

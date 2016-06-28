@@ -11,8 +11,6 @@ import com.haulmont.charts.gui.amcharts.model.charts.PieChart;
 import org.apache.commons.lang.StringUtils;
 import org.dom4j.Element;
 
-/**
- */
 public class PieChartLoader extends SlicedChartLoader<PieChart> {
 
     @Override

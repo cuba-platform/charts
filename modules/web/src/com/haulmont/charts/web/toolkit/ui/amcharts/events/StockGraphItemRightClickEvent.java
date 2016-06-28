@@ -7,8 +7,6 @@ package com.haulmont.charts.web.toolkit.ui.amcharts.events;
 
 import com.haulmont.charts.web.toolkit.ui.amcharts.CubaAmStockChartScene;
 
-/**
- */
 public class StockGraphItemRightClickEvent extends AbstractStockGraphItemEvent {
     public StockGraphItemRightClickEvent(CubaAmStockChartScene scene, String panelId, String graphId, String itemId,
                                          int itemIndex, int x, int y, int absoluteX, int absoluteY) {

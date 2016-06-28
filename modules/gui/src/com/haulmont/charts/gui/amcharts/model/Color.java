@@ -11,8 +11,6 @@ import java.io.Serializable;
 import java.util.HashMap;
 import java.util.Map;
 
-/**
- */
 @SuppressWarnings("unused")
 public final class Color implements Serializable {
 

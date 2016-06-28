@@ -7,8 +7,6 @@ package com.haulmont.charts.gui.map.model.listeners.click;
 
 import com.haulmont.charts.gui.map.model.Polygon;
 
-/**
- */
 public interface PolygonClickListener {
     class PolygonClickEvent {
         protected Polygon polygon;

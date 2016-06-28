@@ -16,8 +16,6 @@ import com.haulmont.charts.web.gui.components.map.google.GeoPointDelegate;
 
 import java.util.List;
 
-/**
- */
 public class DirectionsStepDelegate implements DirectionsStep {
 
     private com.vaadin.tapio.googlemaps.client.services.DirectionsStep directionsStep;

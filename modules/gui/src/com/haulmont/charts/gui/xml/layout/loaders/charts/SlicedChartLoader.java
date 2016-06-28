@@ -12,8 +12,6 @@ import com.haulmont.charts.gui.amcharts.model.charts.SlicedChart;
 import org.apache.commons.lang.StringUtils;
 import org.dom4j.Element;
 
-/**
- */
 public abstract class SlicedChartLoader<T extends SlicedChart> extends AbstractChartLoader<T> {
 
     @Override

@@ -7,8 +7,6 @@ package com.haulmont.charts.gui.map.model.directions;
 
 import java.util.List;
 
-/**
- */
 public interface DirectionsResult {
     List<DirectionsRoute> getRoutes();
 }

@@ -5,8 +5,6 @@
 
 package com.haulmont.charts.gui.map.model.directions;
 
-/**
- */
 public enum TravelMode {
     /**
      * Specifies a bicycling directions request.
@@ -34,5 +32,4 @@ public enum TravelMode {
     public String toString() {
         return name();
     }
-
 }

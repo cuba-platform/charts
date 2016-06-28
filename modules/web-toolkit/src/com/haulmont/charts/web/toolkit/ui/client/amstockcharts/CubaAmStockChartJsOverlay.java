@@ -9,8 +9,6 @@ import com.google.gwt.core.client.JavaScriptObject;
 import com.google.gwt.dom.client.Element;
 import com.haulmont.charts.web.toolkit.ui.client.amstockcharts.events.*;
 
-/**
- */
 public class CubaAmStockChartJsOverlay {
     private static boolean ready = false;
 

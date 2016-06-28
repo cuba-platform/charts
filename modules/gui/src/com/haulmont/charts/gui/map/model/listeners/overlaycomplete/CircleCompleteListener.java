@@ -7,8 +7,6 @@ package com.haulmont.charts.gui.map.model.listeners.overlaycomplete;
 
 import com.haulmont.charts.gui.map.model.Circle;
 
-/**
- */
 public interface CircleCompleteListener {
     class CircleCompleteEvent {
         private Circle circle;

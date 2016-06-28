@@ -7,8 +7,6 @@ package com.haulmont.charts.gui.map.model;
 
 import java.util.List;
 
-/**
- */
 public interface Polyline {
 
     /**

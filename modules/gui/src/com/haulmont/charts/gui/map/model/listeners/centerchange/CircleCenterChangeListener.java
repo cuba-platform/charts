@@ -8,8 +8,6 @@ package com.haulmont.charts.gui.map.model.listeners.centerchange;
 import com.haulmont.charts.gui.map.model.Circle;
 import com.haulmont.charts.gui.map.model.GeoPoint;
 
-/**
- */
 public interface CircleCenterChangeListener {
 
     class CircleCenterChangeEvent {

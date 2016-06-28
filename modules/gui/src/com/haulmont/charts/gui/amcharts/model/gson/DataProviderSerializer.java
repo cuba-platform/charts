@@ -11,8 +11,6 @@ import com.haulmont.charts.gui.amcharts.model.data.DataProvider;
 import java.lang.reflect.Type;
 import java.util.List;
 
-/**
- */
 public class DataProviderSerializer extends DataItemsSerializer implements JsonSerializer<DataProvider> {
     @Override
     public JsonElement serialize(DataProvider src, Type typeOfSrc, JsonSerializationContext context) {

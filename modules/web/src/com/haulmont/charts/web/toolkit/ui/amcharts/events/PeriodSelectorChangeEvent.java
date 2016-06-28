@@ -10,8 +10,6 @@ import com.vaadin.ui.Component;
 
 import java.util.Date;
 
-/**
- */
 public class PeriodSelectorChangeEvent extends Component.Event {
 
     private static final long serialVersionUID = -8827566480577154901L;

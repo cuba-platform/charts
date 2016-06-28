@@ -9,8 +9,6 @@ import com.vaadin.shared.communication.SharedState;
 
 import java.util.Map;
 
-/**
- */
 public class CubaAmchartsIntegrationState extends SharedState {
 
     public String json;

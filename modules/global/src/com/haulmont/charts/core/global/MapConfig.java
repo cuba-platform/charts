@@ -13,8 +13,6 @@ import com.haulmont.cuba.core.config.defaults.DefaultBoolean;
 import com.haulmont.cuba.core.config.defaults.DefaultDouble;
 import com.haulmont.cuba.core.config.defaults.DefaultString;
 
-/**
- */
 @Source(type = SourceType.DATABASE)
 public interface MapConfig extends Config {
 

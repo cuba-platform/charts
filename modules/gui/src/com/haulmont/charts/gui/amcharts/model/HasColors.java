@@ -7,8 +7,6 @@ package com.haulmont.charts.gui.amcharts.model;
 
 import java.util.List;
 
-/**
- */
 public interface HasColors<T> {
 
     List<Color> getColors();

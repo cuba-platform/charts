@@ -13,8 +13,6 @@ import com.haulmont.charts.gui.amcharts.model.JsFunction;
 
 import java.lang.reflect.Type;
 
-/**
- */
 public class JsFunctionSerializer implements JsonSerializer<JsFunction> {
 
     @Override

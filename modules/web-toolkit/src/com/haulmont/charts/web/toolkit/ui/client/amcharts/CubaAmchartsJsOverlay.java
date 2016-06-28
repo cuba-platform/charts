@@ -10,8 +10,6 @@ import com.google.gwt.dom.client.Element;
 import com.haulmont.charts.web.toolkit.ui.client.amcharts.events.*;
 import com.haulmont.cuba.web.toolkit.ui.client.JsDate;
 
-/**
- */
 public class CubaAmchartsJsOverlay {
 
     private static boolean ready = false;

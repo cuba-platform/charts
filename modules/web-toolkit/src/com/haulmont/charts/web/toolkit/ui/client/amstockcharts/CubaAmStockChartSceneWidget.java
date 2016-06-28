@@ -14,8 +14,6 @@ import com.haulmont.charts.web.toolkit.ui.client.amcharts.MouseHelper;
 import com.haulmont.charts.web.toolkit.ui.client.amstockcharts.events.JsStockChartClickEvent;
 import com.haulmont.charts.web.toolkit.ui.client.amstockcharts.events.StockChartClickHandler;
 
-/**
- */
 public class CubaAmStockChartSceneWidget extends Widget {
 
     protected CubaAmStockChartJsOverlay jsOverlay;

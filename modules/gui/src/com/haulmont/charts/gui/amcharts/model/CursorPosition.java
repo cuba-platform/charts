@@ -5,8 +5,6 @@
 
 package com.haulmont.charts.gui.amcharts.model;
 
-/**
- */
 public enum CursorPosition implements ChartEnum {
     START("start"),
     MIDDLE("middle"),

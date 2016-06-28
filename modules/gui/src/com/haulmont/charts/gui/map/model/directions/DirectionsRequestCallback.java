@@ -5,8 +5,6 @@
 
 package com.haulmont.charts.gui.map.model.directions;
 
-/**
- */
 public interface DirectionsRequestCallback {
     void onCallback(DirectionsResult result, DirectionsStatus status);
 }

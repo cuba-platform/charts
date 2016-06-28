@@ -14,8 +14,6 @@ import java.lang.reflect.Type;
 import java.text.SimpleDateFormat;
 import java.util.Date;
 
-/**
- */
 public class ConfigDateSerializer implements JsonSerializer<Date> {
 
     @Override

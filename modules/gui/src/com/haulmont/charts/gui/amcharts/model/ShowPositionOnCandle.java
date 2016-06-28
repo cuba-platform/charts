@@ -5,8 +5,6 @@
 
 package com.haulmont.charts.gui.amcharts.model;
 
-/**
- */
 public enum ShowPositionOnCandle implements ChartEnum {
     OPEN("open"),
     CLOSE("close"),

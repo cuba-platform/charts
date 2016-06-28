@@ -25,8 +25,6 @@ import org.apache.commons.lang.StringUtils;
 import java.lang.reflect.Method;
 import java.util.*;
 
-/**
- */
 public class CubaAmchartsScene extends AbstractComponent {
 
     private final static Method chartClickMethod =

@@ -5,8 +5,6 @@
 
 package com.haulmont.charts.gui.amcharts.model;
 
-/**
- */
 public class FieldMapping extends AbstractChartObject {
 
     private static final long serialVersionUID = 2656776286364228750L;

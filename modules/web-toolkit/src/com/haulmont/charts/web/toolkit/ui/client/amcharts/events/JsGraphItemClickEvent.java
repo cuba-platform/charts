@@ -8,8 +8,6 @@ package com.haulmont.charts.web.toolkit.ui.client.amcharts.events;
 import com.google.gwt.core.client.JavaScriptObject;
 import com.google.gwt.dom.client.NativeEvent;
 
-/**
- */
 public class JsGraphItemClickEvent extends JavaScriptObject {
 
     protected JsGraphItemClickEvent() {

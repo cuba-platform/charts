@@ -5,8 +5,6 @@
 
 package com.haulmont.charts.gui.amcharts.model;
 
-/**
- */
 public enum FunnelValueRepresentation implements ChartEnum {
     HEIGHT("height"),
     AREA("area");

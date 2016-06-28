@@ -14,8 +14,6 @@ import com.haulmont.charts.gui.amcharts.model.AbstractChartObject;
 
 import java.util.List;
 
-/**
- */
 public abstract class ChartModel extends AbstractChartObject {
 
     protected final static Gson chartGson;

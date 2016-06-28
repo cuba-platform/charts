@@ -7,8 +7,6 @@ package com.haulmont.charts.web.toolkit.ui.client.amstockcharts.events;
 
 import com.google.gwt.core.client.JavaScriptObject;
 
-/**
- */
 public abstract class AbstractJsDataSetSelectorEvent extends JavaScriptObject {
 
     protected AbstractJsDataSetSelectorEvent() {

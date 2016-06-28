@@ -8,8 +8,6 @@ package com.haulmont.charts.web.toolkit.ui.client.amstockcharts.events;
 import com.google.gwt.core.client.JavaScriptObject;
 import com.haulmont.cuba.web.toolkit.ui.client.JsDate;
 
-/**
- */
 public class JsStockPanelZoomEvent extends JavaScriptObject {
 
     protected JsStockPanelZoomEvent() {

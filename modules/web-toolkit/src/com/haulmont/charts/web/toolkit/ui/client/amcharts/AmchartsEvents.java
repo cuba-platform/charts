@@ -7,8 +7,6 @@ package com.haulmont.charts.web.toolkit.ui.client.amcharts;
 
 import com.haulmont.charts.web.toolkit.ui.client.amcharts.events.*;
 
-/**
- */
 public class AmchartsEvents {
 
     private ChartClickHandler chartClickHandler;

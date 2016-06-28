@@ -17,8 +17,6 @@ import com.vaadin.ui.UI;
 
 import java.util.*;
 
-/**
- */
 @JavaScript({
         "vaadin://resources/amcharts/amcharts.js",
         "vaadin://resources/amcharts/funnel.js",

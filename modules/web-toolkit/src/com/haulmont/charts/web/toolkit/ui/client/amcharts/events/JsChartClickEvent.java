@@ -7,8 +7,6 @@ package com.haulmont.charts.web.toolkit.ui.client.amcharts.events;
 
 import com.google.gwt.core.client.JavaScriptObject;
 
-/**
- */
 public class JsChartClickEvent extends JavaScriptObject {
 
     protected JsChartClickEvent() {

@@ -10,30 +10,22 @@ import com.haulmont.charts.gui.map.model.GeoPoint;
 
 import java.util.List;
 
-/**
- */
 public interface DirectionsRoute {
     Bounds getBounds();
-
     void setBounds(Bounds bounds);
 
     String getCopyrights();
-
     void setCopyrights(String copyrights);
 
     List<DirectionsLeg> getLegs();
-
     void setLegs(List<DirectionsLeg> legs);
 
     List<GeoPoint> getOverviewPath();
-
     void setOverviewPath(List<GeoPoint> overviewPath);
 
     String[] getWarnings();
-
     void setWarnings(String[] warnings);
 
     int[] getWaypointOrder();
-
     void setWaypointOrder(int[] waypointOrder);
 }

@@ -7,8 +7,6 @@ package com.haulmont.charts.web.toolkit.ui.amcharts.events;
 
 import com.haulmont.charts.web.toolkit.ui.amcharts.CubaAmchartsScene;
 
-/**
- */
 public class CursorZoomEvent extends AbstractCursorEvent {
 
     private static final long serialVersionUID = -8030273951329398295L;

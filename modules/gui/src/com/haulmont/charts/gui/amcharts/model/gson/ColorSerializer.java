@@ -13,8 +13,6 @@ import com.haulmont.charts.gui.amcharts.model.Color;
 
 import java.lang.reflect.Type;
 
-/**
- */
 public class ColorSerializer implements JsonSerializer<Color> {
 
     @Override

@@ -5,8 +5,6 @@
 
 package com.haulmont.charts.web.toolkit.ui.client.amcharts.events;
 
-/**
- */
 public interface SliceClickHandler {
 
     void onEvent(JsSliceClickEvent event);

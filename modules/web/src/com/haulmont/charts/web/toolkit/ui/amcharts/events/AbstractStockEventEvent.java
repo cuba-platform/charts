@@ -10,8 +10,6 @@ import com.vaadin.ui.Component;
 
 import java.util.Date;
 
-/**
- */
 public abstract class AbstractStockEventEvent extends Component.Event {
 
     private static final long serialVersionUID = 275215935877518123L;

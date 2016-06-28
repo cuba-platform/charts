@@ -5,8 +5,6 @@
 
 package com.haulmont.charts.gui.amcharts.model;
 
-/**
- */
 public enum PointPosition implements ChartEnum {
     START("start"),
     MIDDLE("middle"),

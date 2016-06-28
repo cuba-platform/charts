@@ -8,8 +8,6 @@ package com.haulmont.charts.web.gui.components.map.google.base;
 import com.haulmont.bali.util.Preconditions;
 import com.haulmont.charts.gui.map.model.base.Size;
 
-/**
- */
 public class SizeDelegate implements Size {
     private com.vaadin.tapio.googlemaps.client.base.Size size;
 

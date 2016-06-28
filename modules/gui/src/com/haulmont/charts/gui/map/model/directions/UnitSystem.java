@@ -5,8 +5,6 @@
 
 package com.haulmont.charts.gui.map.model.directions;
 
-/**
- */
 public enum UnitSystem {
     /**
      * Specifies that distances in the DirectionsResult should be expressed in imperial units.
@@ -41,6 +39,7 @@ public enum UnitSystem {
         return u;
     }
 
+    @Override
     public String toString() {
         return name() + "(" + type + ")";
     }

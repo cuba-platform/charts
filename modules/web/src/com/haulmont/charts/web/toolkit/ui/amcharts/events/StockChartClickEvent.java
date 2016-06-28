@@ -8,8 +8,6 @@ package com.haulmont.charts.web.toolkit.ui.amcharts.events;
 import com.haulmont.charts.web.toolkit.ui.amcharts.CubaAmStockChartScene;
 import com.vaadin.ui.Component;
 
-/**
- */
 public class StockChartClickEvent extends Component.Event {
 
     private final int x;

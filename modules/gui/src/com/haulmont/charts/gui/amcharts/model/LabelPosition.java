@@ -5,8 +5,6 @@
 
 package com.haulmont.charts.gui.amcharts.model;
 
-/**
- */
 public enum LabelPosition implements ChartEnum {
     LEFT("left"),
     CENTER("center"),

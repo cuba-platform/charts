@@ -7,8 +7,6 @@ package com.haulmont.charts.web.toolkit.ui.amcharts.events;
 
 import com.haulmont.charts.web.toolkit.ui.amcharts.CubaAmStockChartScene;
 
-/**
- */
 public class DataSetSelectorUnCompareEvent extends AbstractDataSetSelectorEvent {
     public DataSetSelectorUnCompareEvent(CubaAmStockChartScene scene, String dataSetId) {
         super(scene, dataSetId);

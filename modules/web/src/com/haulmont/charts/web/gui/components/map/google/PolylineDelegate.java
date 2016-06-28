@@ -12,8 +12,6 @@ import com.vaadin.tapio.googlemaps.client.overlays.*;
 
 import java.util.List;
 
-/**
- */
 public class PolylineDelegate implements Polyline {
 
     protected GoogleMapPolyline polyline;

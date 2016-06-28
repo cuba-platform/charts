@@ -5,8 +5,6 @@
 
 package com.haulmont.charts.web.toolkit.ui.client.amstockcharts.events;
 
-/**
- */
 public class JsStockGraphItemRightClickEvent extends AbstractJsStockGraphItemEvent {
     protected JsStockGraphItemRightClickEvent() {
     }

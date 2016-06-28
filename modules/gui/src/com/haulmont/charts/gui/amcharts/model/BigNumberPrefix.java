@@ -5,8 +5,6 @@
 
 package com.haulmont.charts.gui.amcharts.model;
 
-/**
- */
 public class BigNumberPrefix extends AbstractChartObject {
 
     private static final long serialVersionUID = -9041838899608052695L;

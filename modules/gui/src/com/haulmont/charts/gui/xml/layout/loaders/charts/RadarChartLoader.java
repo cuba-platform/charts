@@ -9,8 +9,6 @@ import com.haulmont.charts.gui.amcharts.model.charts.RadarChart;
 import org.apache.commons.lang.StringUtils;
 import org.dom4j.Element;
 
-/**
- */
 public class RadarChartLoader extends CoordinateChartLoader<RadarChart> {
 
     @Override

@@ -5,8 +5,6 @@
 
 package com.haulmont.charts.gui.amcharts.model;
 
-/**
- */
 public enum StockEventType implements ChartEnum {
     FLAG("flag"),
     SIGN("sign"),

@@ -9,8 +9,6 @@ import com.google.gwt.core.client.JavaScriptObject;
 import com.google.gwt.dom.client.NativeEvent;
 import com.haulmont.cuba.web.toolkit.ui.client.JsDate;
 
-/**
- */
 public class JsPeriodSelectorChangeEvent extends JavaScriptObject {
 
     protected JsPeriodSelectorChangeEvent() {

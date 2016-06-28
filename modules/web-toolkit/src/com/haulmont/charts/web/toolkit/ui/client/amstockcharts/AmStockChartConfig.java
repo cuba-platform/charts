@@ -9,8 +9,6 @@ import com.google.gwt.core.client.JavaScriptObject;
 import com.google.gwt.json.client.JSONParser;
 import com.vaadin.client.BrowserInfo;
 
-/**
- */
 public class AmStockChartConfig extends JavaScriptObject {
 
     protected AmStockChartConfig() {

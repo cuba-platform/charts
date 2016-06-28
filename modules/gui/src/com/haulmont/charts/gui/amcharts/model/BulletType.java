@@ -5,8 +5,6 @@
 
 package com.haulmont.charts.gui.amcharts.model;
 
-/**
- */
 public enum BulletType implements ChartEnum {
     NONE("none"),
     ROUND("round"),

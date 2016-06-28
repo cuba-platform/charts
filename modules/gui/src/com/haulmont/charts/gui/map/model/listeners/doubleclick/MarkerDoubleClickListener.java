@@ -7,8 +7,6 @@ package com.haulmont.charts.gui.map.model.listeners.doubleclick;
 
 import com.haulmont.charts.gui.map.model.Marker;
 
-/**
- */
 public interface MarkerDoubleClickListener {
     class MarkerDoubleClickEvent {
         private Marker marker;

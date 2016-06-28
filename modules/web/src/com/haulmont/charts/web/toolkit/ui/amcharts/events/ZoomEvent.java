@@ -9,8 +9,6 @@ import com.haulmont.charts.web.toolkit.ui.amcharts.CubaAmchartsScene;
 
 import java.util.Date;
 
-/**
- */
 public class ZoomEvent extends com.vaadin.ui.Component.Event {
 
     private static final long serialVersionUID = 3375717365928857628L;

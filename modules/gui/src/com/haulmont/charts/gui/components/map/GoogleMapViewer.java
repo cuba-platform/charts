@@ -5,8 +5,6 @@
 
 package com.haulmont.charts.gui.components.map;
 
-/**
- */
 public interface GoogleMapViewer extends MapViewer {
     String NAME = "googleMapViewer";
 }

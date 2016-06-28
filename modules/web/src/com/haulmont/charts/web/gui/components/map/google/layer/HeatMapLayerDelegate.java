@@ -14,8 +14,6 @@ import com.vaadin.tapio.googlemaps.client.layers.GoogleMapHeatMapLayer;
 import java.util.ArrayList;
 import java.util.List;
 
-/**
- */
 public class HeatMapLayerDelegate implements HeatMapLayer {
 
     protected GoogleMapHeatMapLayer layer;

@@ -8,8 +8,6 @@ package com.haulmont.charts.web.gui.components.map.google.base;
 import com.haulmont.bali.util.Preconditions;
 import com.haulmont.charts.gui.map.model.base.Point;
 
-/**
- */
 public class PointDelegate implements Point {
     private com.vaadin.tapio.googlemaps.client.base.Point point;
 

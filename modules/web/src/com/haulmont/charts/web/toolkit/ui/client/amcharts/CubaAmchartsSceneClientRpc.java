@@ -9,8 +9,6 @@ import com.vaadin.shared.communication.ClientRpc;
 
 import java.util.Date;
 
-/**
- */
 public interface CubaAmchartsSceneClientRpc extends ClientRpc {
 
     void updatePoints(String json);

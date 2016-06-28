@@ -5,8 +5,6 @@
 
 package com.haulmont.charts.gui.amcharts.model;
 
-/**
- */
 public enum GridPosition implements ChartEnum {
     START("start"),
     MIDDLE("middle");

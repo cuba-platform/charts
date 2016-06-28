@@ -7,8 +7,6 @@ package com.haulmont.charts.web.toolkit.ui.client.amstockcharts.events;
 
 import com.google.gwt.core.client.JavaScriptObject;
 
-/**
- */
 public class JsStockChartClickEvent extends JavaScriptObject {
 
     protected JsStockChartClickEvent() {

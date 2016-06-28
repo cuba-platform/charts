@@ -5,8 +5,6 @@
 
 package com.haulmont.charts.gui.amcharts.model;
 
-/**
- */
 public class ExportMenuItem extends AbstractChartObject {
 
     private static final long serialVersionUID = 7821740492043242236L;

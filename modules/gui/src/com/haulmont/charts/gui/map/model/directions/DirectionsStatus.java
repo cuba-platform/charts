@@ -5,8 +5,6 @@
 
 package com.haulmont.charts.gui.map.model.directions;
 
-/**
- */
 public enum DirectionsStatus {
 
     /**

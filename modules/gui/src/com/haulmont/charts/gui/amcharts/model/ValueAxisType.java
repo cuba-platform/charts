@@ -5,8 +5,6 @@
 
 package com.haulmont.charts.gui.amcharts.model;
 
-/**
- */
 public enum ValueAxisType implements ChartEnum {
     NUMERIC("numeric"),
     DATE("date");

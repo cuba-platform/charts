@@ -10,8 +10,6 @@ import com.haulmont.charts.gui.amcharts.model.charts.RectangularChart;
 import org.apache.commons.lang.StringUtils;
 import org.dom4j.Element;
 
-/**
- */
 public abstract class RectangularChartLoader<T extends RectangularChart> extends CoordinateChartLoader<T> {
 
     @Override

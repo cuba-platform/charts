@@ -7,8 +7,6 @@ package com.haulmont.charts.web.toolkit.ui.client.amstockcharts;
 
 import com.vaadin.shared.communication.ClientRpc;
 
-/**
- */
 public interface CubaAmStockChartSceneClientRpc extends ClientRpc {
 
     void updatePoints(String json);

@@ -5,8 +5,6 @@
 
 package com.haulmont.charts.gui.amcharts.model;
 
-/**
- */
 public enum Align implements ChartEnum {
     LEFT("left"),
     CENTER("center"),

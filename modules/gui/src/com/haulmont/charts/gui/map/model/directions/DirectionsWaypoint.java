@@ -7,8 +7,6 @@ package com.haulmont.charts.gui.map.model.directions;
 
 import com.haulmont.charts.gui.map.model.GeoPoint;
 
-/**
- */
 public interface DirectionsWaypoint {
     boolean isStopOver();
 

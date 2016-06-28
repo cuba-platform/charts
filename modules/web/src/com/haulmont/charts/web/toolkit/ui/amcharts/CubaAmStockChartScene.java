@@ -27,8 +27,6 @@ import org.apache.commons.lang.StringUtils;
 import java.lang.reflect.Method;
 import java.util.*;
 
-/**
- */
 public class CubaAmStockChartScene extends AbstractComponent {
 
     private final static Method chartClickMethod =
@@ -332,7 +330,6 @@ public class CubaAmStockChartScene extends AbstractComponent {
         }
 
         if (changedItems != null && !changedItems.isEmpty()) {
-
             DataItemsSerializer serializer = new DataItemsSerializer();
             JsonObject jsonChangedItemsElement = new JsonObject();
 

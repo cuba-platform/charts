@@ -5,8 +5,6 @@
 
 package com.haulmont.charts.gui.amcharts.model;
 
-/**
- */
 public class Period extends AbstractChartObject {
 
     private static final long serialVersionUID = 1078558318840294205L;

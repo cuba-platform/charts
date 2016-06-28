@@ -5,8 +5,6 @@
 
 package com.haulmont.charts.gui.amcharts.model;
 
-/**
- */
 public enum ExportPosition implements ChartEnum {
     TOP_LEFT("top-left"),
     TOP_RIGHT("top-right"),

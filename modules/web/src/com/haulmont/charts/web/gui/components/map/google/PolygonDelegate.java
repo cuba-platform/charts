@@ -12,8 +12,6 @@ import com.vaadin.tapio.googlemaps.client.overlays.*;
 
 import java.util.List;
 
-/**
- */
 public class PolygonDelegate implements Polygon {
 
     protected GoogleMapPolygon polygon;

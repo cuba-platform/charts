@@ -7,8 +7,6 @@ package com.haulmont.charts.web.toolkit.ui.client.amcharts;
 
 import com.vaadin.shared.AbstractComponentState;
 
-/**
- */
 public class CubaAmchartsSceneState extends AbstractComponentState {
 
     public static final String CHART_CLICK_EVENT = "cc";

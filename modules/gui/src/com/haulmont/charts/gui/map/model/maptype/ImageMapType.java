@@ -5,10 +5,7 @@
 
 package com.haulmont.charts.gui.map.model.maptype;
 
-/**
- */
 public interface ImageMapType {
-
     double getOpacity();
     void setOpacity(double opacity);
 

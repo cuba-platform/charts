@@ -7,8 +7,6 @@ package com.haulmont.charts.web.toolkit.ui.amcharts.events;
 
 import com.haulmont.charts.web.toolkit.ui.amcharts.CubaAmStockChartScene;
 
-/**
- */
 public class StockGraphRollOutEvent extends AbstractStockGraphEvent {
     public StockGraphRollOutEvent(CubaAmStockChartScene scene, String panelId, String graphId,
                                   int x, int y, int absoluteX, int absoluteY) {

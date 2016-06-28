@@ -5,8 +5,6 @@
 
 package com.haulmont.charts.gui.amcharts.model;
 
-/**
- */
 public class LegendItem extends AbstractChartObject {
 
     private static final long serialVersionUID = 8563526782768492986L;

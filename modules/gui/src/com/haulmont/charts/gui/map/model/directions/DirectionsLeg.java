@@ -9,8 +9,6 @@ import com.haulmont.charts.gui.map.model.GeoPoint;
 
 import java.util.List;
 
-/**
- */
 public interface DirectionsLeg {
     Distance getDistance();
 

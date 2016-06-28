@@ -18,7 +18,10 @@ import com.haulmont.charts.gui.map.model.directions.DirectionsWaypoint;
 import com.haulmont.charts.gui.map.model.directions.TravelMode;
 import com.haulmont.charts.gui.map.model.drawing.DrawingOptions;
 import com.haulmont.charts.gui.map.model.layer.HeatMapLayer;
-import com.haulmont.charts.gui.map.model.listeners.*;
+import com.haulmont.charts.gui.map.model.listeners.InfoWindowClosedListener;
+import com.haulmont.charts.gui.map.model.listeners.MapInitListener;
+import com.haulmont.charts.gui.map.model.listeners.MapMoveListener;
+import com.haulmont.charts.gui.map.model.listeners.PolygonEditListener;
 import com.haulmont.charts.gui.map.model.listeners.centerchange.CircleCenterChangeListener;
 import com.haulmont.charts.gui.map.model.listeners.click.CircleClickListener;
 import com.haulmont.charts.gui.map.model.listeners.click.MapClickListener;
@@ -57,15 +60,13 @@ import java.util.Collection;
 import java.util.List;
 
 import static com.haulmont.charts.gui.map.model.listeners.InfoWindowClosedListener.InfoWindowCloseEvent;
-import static com.haulmont.charts.gui.map.model.listeners.click.MapClickListener.MapClickEvent;
 import static com.haulmont.charts.gui.map.model.listeners.MapMoveListener.MapMoveEvent;
+import static com.haulmont.charts.gui.map.model.listeners.click.MapClickListener.MapClickEvent;
 import static com.haulmont.charts.gui.map.model.listeners.click.MarkerClickListener.MarkerClickEvent;
 import static com.haulmont.charts.gui.map.model.listeners.doubleclick.MarkerDoubleClickListener.MarkerDoubleClickEvent;
 import static com.haulmont.charts.gui.map.model.listeners.drag.MarkerDragListener.MarkerDragEvent;
 import static com.haulmont.charts.gui.map.model.listeners.overlaycomplete.PolygonCompleteListener.PolygonCompleteEvent;
 
-/**
- */
 public class WebGoogleMapViewer extends WebAbstractComponent<GoogleMap> implements MapViewer {
 
     public static final String VENDOR = "google";

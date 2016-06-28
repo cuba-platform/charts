@@ -14,8 +14,6 @@ import com.haulmont.cuba.gui.components.Component;
 import com.haulmont.cuba.gui.xml.layout.loaders.AbstractComponentLoader;
 import org.dom4j.Element;
 
-/**
- */
 public class MapViewerLoader extends AbstractComponentLoader<MapViewer> {
 
     @Override

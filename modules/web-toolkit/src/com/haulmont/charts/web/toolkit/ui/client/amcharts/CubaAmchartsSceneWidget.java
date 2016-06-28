@@ -14,8 +14,6 @@ import com.haulmont.charts.web.toolkit.ui.client.amcharts.events.ChartClickHandl
 import com.haulmont.charts.web.toolkit.ui.client.amcharts.events.JsChartClickEvent;
 import com.haulmont.cuba.web.toolkit.ui.client.JsDate;
 
-/**
- */
 public class CubaAmchartsSceneWidget extends Widget {
 
     protected CubaAmchartsJsOverlay jsOverlay;

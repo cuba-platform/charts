@@ -7,8 +7,6 @@ package com.haulmont.charts.gui.map.model.listeners.radiuschange;
 
 import com.haulmont.charts.gui.map.model.Circle;
 
-/**
- */
 public interface CircleRadiusChangeListener {
 
     class CircleRadiusChangeEvent {

@@ -10,8 +10,6 @@ import com.haulmont.charts.gui.amcharts.model.charts.CoordinateChart;
 import org.apache.commons.lang.StringUtils;
 import org.dom4j.Element;
 
-/**
- */
 public abstract class CoordinateChartLoader<T extends CoordinateChart> extends AbstractChartLoader<T> {
 
     @Override

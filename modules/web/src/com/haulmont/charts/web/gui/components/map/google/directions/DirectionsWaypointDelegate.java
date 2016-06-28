@@ -10,8 +10,6 @@ import com.haulmont.charts.gui.map.model.GeoPoint;
 import com.haulmont.charts.gui.map.model.directions.DirectionsWaypoint;
 import com.haulmont.charts.web.gui.components.map.google.GeoPointDelegate;
 
-/**
- */
 public class DirectionsWaypointDelegate implements DirectionsWaypoint {
 
     private com.vaadin.tapio.googlemaps.client.services.DirectionsWaypoint directionsWaypoint;

@@ -5,8 +5,6 @@
 
 package com.haulmont.charts.gui.amcharts.model;
 
-/**
- */
 public enum BalloonPointerOrientation implements ChartEnum {
     VERTICAL("vertical"),
     HORIZONTAL("horizontal");

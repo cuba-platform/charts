@@ -5,8 +5,6 @@
 
 package com.haulmont.charts.gui.amcharts.model;
 
-/**
- */
 public enum SwitchType implements ChartEnum {
     X("x"),
     V("v");

@@ -9,8 +9,6 @@ import com.haulmont.charts.gui.map.model.Circle;
 import com.haulmont.charts.gui.map.model.GeoPoint;
 import com.vaadin.tapio.googlemaps.client.overlays.GoogleMapCircle;
 
-/**
- */
 public class CircleDelegate implements Circle {
 
     protected GoogleMapCircle circle;

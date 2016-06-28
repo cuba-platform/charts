@@ -8,8 +8,6 @@ package com.haulmont.charts.web.toolkit.ui.amcharts.events;
 import com.haulmont.charts.web.toolkit.ui.amcharts.CubaAmchartsScene;
 import com.vaadin.ui.Component;
 
-/**
- */
 public class AxisZoomEvent extends Component.Event {
 
     private final String axisId;

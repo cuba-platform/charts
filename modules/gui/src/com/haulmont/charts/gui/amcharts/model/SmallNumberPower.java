@@ -5,8 +5,6 @@
 
 package com.haulmont.charts.gui.amcharts.model;
 
-/**
- */
 public enum SmallNumberPower implements ChartEnum {
     YOCTO("1e-24"),
     ZEPTO("1e-21"),

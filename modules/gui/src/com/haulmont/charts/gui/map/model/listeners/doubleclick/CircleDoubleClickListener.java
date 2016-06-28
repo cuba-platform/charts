@@ -7,8 +7,6 @@ package com.haulmont.charts.gui.map.model.listeners.doubleclick;
 
 import com.haulmont.charts.gui.map.model.Circle;
 
-/**
- */
 public interface CircleDoubleClickListener {
     class CircleDoubleClickEvent {
         private Circle circle;

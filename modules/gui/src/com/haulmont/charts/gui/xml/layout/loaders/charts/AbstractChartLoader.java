@@ -17,8 +17,6 @@ import org.dom4j.Element;
 
 import java.util.List;
 
-/**
- */
 public abstract class AbstractChartLoader<T extends AbstractChart> extends ChartModelLoader<T, Chart> {
 
     @Override

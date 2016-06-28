@@ -15,8 +15,6 @@ import com.haulmont.cuba.web.gui.components.WebComponentsHelper;
 import javax.inject.Inject;
 import java.util.Map;
 
-/**
- */
 public class JsonChartController extends AbstractFrame {
 
     @WindowParam(required = true)

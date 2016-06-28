@@ -5,8 +5,6 @@
 
 package com.haulmont.charts.gui.amcharts.model.data;
 
-/**
- */
 public enum DataChangeOperation {
     REFRESH,
     ADD,

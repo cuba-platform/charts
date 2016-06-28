@@ -9,8 +9,6 @@ import com.haulmont.charts.gui.map.model.GeoPoint;
 
 import java.io.Serializable;
 
-/**
- */
 public class CircleOptions implements Serializable {
 
     private static final long serialVersionUID = 456182536005952265L;

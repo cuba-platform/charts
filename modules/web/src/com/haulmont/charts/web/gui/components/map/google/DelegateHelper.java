@@ -27,8 +27,6 @@ import java.util.List;
 
 import static com.vaadin.tapio.googlemaps.GoogleMap.MapType.Roadmap;
 
-/**
- */
 public class DelegateHelper {
 
     public static GoogleMap.MapType toGoogleMapType(MapViewer.Type type) {

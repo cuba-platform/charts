@@ -38,8 +38,6 @@ import javax.annotation.Nullable;
 import java.text.DecimalFormatSymbols;
 import java.util.*;
 
-/**
- */
 public class WebChart extends WebAbstractComponent<CubaAmchartsScene> implements Chart {
 
     protected boolean byDate = false;

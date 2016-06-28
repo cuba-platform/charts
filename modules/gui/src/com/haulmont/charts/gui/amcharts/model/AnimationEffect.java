@@ -5,8 +5,6 @@
 
 package com.haulmont.charts.gui.amcharts.model;
 
-/**
- */
 public enum AnimationEffect implements ChartEnum {
     EASE_OUT_SINE("easeOutSine"),
     EASE_IN_SINE("easeInSine"),

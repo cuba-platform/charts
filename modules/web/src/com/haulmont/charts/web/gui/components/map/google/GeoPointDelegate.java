@@ -9,8 +9,6 @@ import com.haulmont.bali.util.Preconditions;
 import com.haulmont.charts.gui.map.model.GeoPoint;
 import com.vaadin.tapio.googlemaps.client.base.LatLon;
 
-/**
- */
 public class GeoPointDelegate implements GeoPoint {
 
     protected LatLon latLon;

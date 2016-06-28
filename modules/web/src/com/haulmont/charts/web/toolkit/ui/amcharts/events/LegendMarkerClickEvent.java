@@ -7,8 +7,6 @@ package com.haulmont.charts.web.toolkit.ui.amcharts.events;
 
 import com.haulmont.charts.web.toolkit.ui.amcharts.CubaAmchartsScene;
 
-/**
- */
 public class LegendMarkerClickEvent extends AbstractLegendItemEvent {
 
     private static final long serialVersionUID = -536343761071370040L;

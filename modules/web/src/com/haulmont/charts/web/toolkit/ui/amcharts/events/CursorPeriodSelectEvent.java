@@ -7,8 +7,6 @@ package com.haulmont.charts.web.toolkit.ui.amcharts.events;
 
 import com.haulmont.charts.web.toolkit.ui.amcharts.CubaAmchartsScene;
 
-/**
- */
 public class CursorPeriodSelectEvent extends AbstractCursorEvent {
 
     private static final long serialVersionUID = 5330376619457440739L;

@@ -7,8 +7,6 @@ package com.haulmont.charts.gui.amcharts.model;
 
 import javax.annotation.Nullable;
 
-/**
- */
 public enum DatePeriod implements ChartEnum {
     MILLISECONDS("fff"),
     SECONDS("ss"),

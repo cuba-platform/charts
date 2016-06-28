@@ -5,8 +5,6 @@
 
 package com.haulmont.charts.gui.amcharts.model;
 
-/**
- */
 public enum StockGraphValue implements ChartEnum {
     OPEN("open"),
     LOW("low"),

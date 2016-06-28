@@ -20,8 +20,6 @@ import java.util.Collection;
 import java.util.Date;
 import java.util.List;
 
-/**
- */
 public class DataItemsSerializer {
 
     public List<JsonObject> serialize(List<DataItem> items, JsonSerializationContext context) {

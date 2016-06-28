@@ -10,8 +10,6 @@ import com.haulmont.charts.gui.amcharts.model.charts.StockPanel;
 import org.apache.commons.lang.StringUtils;
 import org.dom4j.Element;
 
-/**
- */
 public class StockPanelLoader extends AbstractSerialChartLoader<StockPanel> {
 
     @Override

@@ -7,8 +7,6 @@ package com.haulmont.charts.web.toolkit.ui.amcharts.events;
 
 import com.haulmont.charts.web.toolkit.ui.amcharts.CubaAmStockChartScene;
 
-/**
- */
 public abstract class AbstractStockGraphEvent extends com.vaadin.ui.Component.Event {
 
     private final String panelId;

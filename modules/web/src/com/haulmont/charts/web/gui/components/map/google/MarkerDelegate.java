@@ -12,8 +12,6 @@ import com.haulmont.charts.gui.map.model.base.MarkerImage;
 import com.haulmont.charts.web.gui.components.map.google.base.MarkerImageDelegate;
 import com.vaadin.tapio.googlemaps.client.overlays.*;
 
-/**
- */
 public class MarkerDelegate implements Marker {
 
     private GoogleMapMarker marker;

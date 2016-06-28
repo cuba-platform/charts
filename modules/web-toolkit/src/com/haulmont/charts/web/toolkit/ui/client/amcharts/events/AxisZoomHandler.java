@@ -5,8 +5,6 @@
 
 package com.haulmont.charts.web.toolkit.ui.client.amcharts.events;
 
-/**
- */
 public interface AxisZoomHandler {
     void onZoom(JsAxisZoomedEvent event);
 }

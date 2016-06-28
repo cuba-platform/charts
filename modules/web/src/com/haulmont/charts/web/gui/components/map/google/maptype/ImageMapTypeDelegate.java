@@ -9,8 +9,6 @@ import com.haulmont.charts.gui.map.model.maptype.ImageMapType;
 import com.vaadin.tapio.googlemaps.client.base.Size;
 import com.vaadin.tapio.googlemaps.client.maptypes.GoogleImageMapType;
 
-/**
- */
 public class ImageMapTypeDelegate implements ImageMapType {
     protected GoogleImageMapType mapType;
 

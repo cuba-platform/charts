@@ -5,8 +5,6 @@
 
 package com.haulmont.charts.gui.amcharts.model;
 
-/**
- */
 public enum ExportFormat implements ChartEnum {
     JPG("jpg"),
     PNG("png"),

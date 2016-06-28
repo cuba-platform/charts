@@ -15,8 +15,6 @@ import com.haulmont.charts.web.gui.components.map.google.DelegateHelper;
 
 import java.util.List;
 
-/**
- */
 public class DirectionsRouteDelegate implements DirectionsRoute {
 
     private com.vaadin.tapio.googlemaps.client.services.DirectionsRoute directionsRoute;
