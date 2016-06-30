@@ -15,12 +15,14 @@ import com.haulmont.charts.gui.components.charts.StockChart;
 import com.haulmont.charts.web.gui.ChartLocaleHelper;
 import com.haulmont.charts.web.toolkit.ui.amcharts.CubaAmStockChartScene;
 import com.haulmont.charts.web.toolkit.ui.amcharts.CubaAmchartsIntegration;
+import com.haulmont.chile.core.datatypes.Datatype;
 import com.haulmont.chile.core.datatypes.Datatypes;
 import com.haulmont.chile.core.datatypes.FormatStrings;
-import com.haulmont.cuba.core.entity.BaseUuidEntity;
+import com.haulmont.chile.core.model.MetaProperty;
 import com.haulmont.cuba.core.entity.Entity;
 import com.haulmont.cuba.core.global.AppBeans;
 import com.haulmont.cuba.core.global.Messages;
+import com.haulmont.cuba.core.global.Metadata;
 import com.haulmont.cuba.core.global.UserSessionSource;
 import com.haulmont.cuba.gui.data.CollectionDatasource;
 import com.haulmont.cuba.gui.data.impl.CollectionDsHelper;
@@ -31,11 +33,14 @@ import org.apache.commons.lang.StringUtils;
 
 import javax.annotation.Nullable;
 import java.text.DecimalFormatSymbols;
+import java.text.ParseException;
 import java.util.*;
 
 public class WebStockChart extends WebAbstractComponent<CubaAmStockChartScene> implements StockChart {
 
     protected Messages messages = AppBeans.get(Messages.class);
+
+    protected Metadata metadata = AppBeans.get(Metadata.class);
 
     protected UserSessionSource userSessionSource = AppBeans.get(UserSessionSource.class);
 
@@ -189,15 +194,14 @@ public class WebStockChart extends WebAbstractComponent<CubaAmStockChartScene> i
     }
 
     @Nullable
-    protected Object getItemId(CollectionDatasource datasource, String itemUuidString) {
-        UUID uuid = UUID.fromString(itemUuidString);
-        if (BaseUuidEntity.class.isAssignableFrom(datasource.getMetaClass().getJavaClass())) {
-            return uuid;
-        }
-        //noinspection unchecked
-        for (Entity entity : (Collection<Entity>) datasource.getItems()) {
-            if (uuid.equals(entity.getUuid())) {
-                return entity.getId();
+    protected Object getItemId(CollectionDatasource datasource, String itemIdString) {
+        MetaProperty pkProp = metadata.getTools().getPrimaryKeyProperty(datasource.getMetaClass());
+        if (pkProp != null) {
+            Datatype<Object> datatype = pkProp.getRange().asDatatype();
+            try {
+                return datatype.parse(itemIdString);
+            } catch (ParseException e) {
+                throw new RuntimeException("Error parsing item ID", e);
             }
         }
         return null;

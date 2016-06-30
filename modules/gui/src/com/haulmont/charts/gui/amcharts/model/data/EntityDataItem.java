@@ -46,9 +46,6 @@ public class EntityDataItem implements DataItem {
      */
     @Override
     public Object getValue(String property) {
-        if ("id".equals(property)) {
-            return item.getUuid();
-        }
         Object value = item.getValue(property);
         if (value instanceof Entity) {
             return InstanceUtils.getInstanceName((Instance) value);
