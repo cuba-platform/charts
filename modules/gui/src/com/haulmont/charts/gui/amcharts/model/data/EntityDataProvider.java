@@ -8,6 +8,7 @@ package com.haulmont.charts.gui.amcharts.model.data;
 import com.haulmont.charts.gui.amcharts.model.charts.AbstractChart;
 import com.haulmont.cuba.core.entity.Entity;
 import com.haulmont.cuba.gui.data.CollectionDatasource;
+import com.haulmont.cuba.gui.data.impl.WeakCollectionChangeListener;
 import org.apache.commons.collections.CollectionUtils;
 
 import java.util.ArrayList;
@@ -31,7 +32,7 @@ public class EntityDataProvider implements DataProvider {
     public EntityDataProvider(CollectionDatasource datasource) {
         this.datasource = datasource;
 
-        this.datasource.addCollectionChangeListener(e -> {
+        this.datasource.addCollectionChangeListener(new WeakCollectionChangeListener(datasource, e -> {
             DataChangeOperation operation = null;
             switch (e.getOperation()) {
                 case ADD:
@@ -49,7 +50,7 @@ public class EntityDataProvider implements DataProvider {
                     break;
             }
             fireDataChanged(operation, e.getItems());
-        });
+        }));
     }
 
     protected void fireDataChanged(DataChangeOperation operation, List items) {
@@ -65,8 +66,7 @@ public class EntityDataProvider implements DataProvider {
         }
 
         DataItemsChangeEvent event = new DataItemsChangeEvent(operation, dataItems);
-        List<DataChangeListener> changeListeners = new ArrayList<>(this.changeListeners);
-        for (DataChangeListener listener : changeListeners) {
+        for (DataChangeListener listener : new ArrayList<>(this.changeListeners)) {
             listener.dataItemsChanged(event);
         }
     }
@@ -124,6 +124,11 @@ public class EntityDataProvider implements DataProvider {
      */
     @Override
     public void removeItem(DataItem item) {
+        throw new UnsupportedOperationException("Use datasource for changing data items of EntityDataProvider");
+    }
+
+    @Override
+    public void removeAll() {
         throw new UnsupportedOperationException("Use datasource for changing data items of EntityDataProvider");
     }
 

@@ -52,6 +52,11 @@ public interface DataProvider extends Serializable {
     void removeItem(DataItem item);
 
     /**
+     * Removes all items from the data provider.
+     */
+    void removeAll();
+
+    /**
      * Adds listener to the data provider events.
      *
      * @param listener listener to be added

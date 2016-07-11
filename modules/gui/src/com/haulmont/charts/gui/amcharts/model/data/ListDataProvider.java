@@ -16,9 +16,9 @@ public class ListDataProvider implements DataProvider {
 
     private static final long serialVersionUID = -8893186272622531844L;
 
-    protected final ArrayList<DataChangeListener> changeListeners = new ArrayList<>();
     protected AbstractChart chart;
-    private List<DataItem> items = new ArrayList<>();
+    protected final List<DataItem> items = new ArrayList<>();
+    protected final List<DataChangeListener> changeListeners = new ArrayList<>();
 
     public ListDataProvider() {
     }
@@ -65,6 +65,12 @@ public class ListDataProvider implements DataProvider {
     public void removeItem(DataItem item) {
         items.remove(item);
         fireDataChanged(DataChangeOperation.REMOVE, Collections.singletonList(item));
+    }
+
+    @Override
+    public void removeAll() {
+        items.clear();
+        fireDataChanged(DataChangeOperation.REFRESH, Collections.emptyList());
     }
 
     protected void fireDataChanged(DataChangeOperation operation, List<DataItem> items) {
