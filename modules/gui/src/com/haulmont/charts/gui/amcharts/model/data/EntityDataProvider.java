@@ -26,13 +26,14 @@ public class EntityDataProvider implements DataProvider {
     protected AbstractChart chart;
 
     protected final CollectionDatasource datasource;
+    protected final CollectionDatasource.CollectionChangeListener collectionChangeListener;
     protected final List<DataChangeListener> changeListeners = new ArrayList<>();
 
     @SuppressWarnings("unchecked")
     public EntityDataProvider(CollectionDatasource datasource) {
         this.datasource = datasource;
 
-        this.datasource.addCollectionChangeListener(new WeakCollectionChangeListener(datasource, e -> {
+        collectionChangeListener = e -> {
             DataChangeOperation operation = null;
             switch (e.getOperation()) {
                 case ADD:
@@ -50,7 +51,8 @@ public class EntityDataProvider implements DataProvider {
                     break;
             }
             fireDataChanged(operation, e.getItems());
-        }));
+        };
+        this.datasource.addCollectionChangeListener(new WeakCollectionChangeListener(datasource, collectionChangeListener));
     }
 
     protected void fireDataChanged(DataChangeOperation operation, List items) {
