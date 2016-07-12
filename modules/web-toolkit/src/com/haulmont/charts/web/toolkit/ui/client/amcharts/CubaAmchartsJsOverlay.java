@@ -12,9 +12,9 @@ import com.haulmont.cuba.web.toolkit.ui.client.JsDate;
 
 public class CubaAmchartsJsOverlay {
 
-    private static boolean ready = false;
+    protected static boolean ready = false;
 
-    private JavaScriptObject chart;
+    protected JavaScriptObject chart;
 
     public CubaAmchartsJsOverlay(JavaScriptObject chart) {
         this.chart = chart;
@@ -33,22 +33,22 @@ public class CubaAmchartsJsOverlay {
         updatePoints(chart, value);
     }
 
-    private native void updatePoints(JavaScriptObject chart, JavaScriptObject src) /*-{
+    protected native void updatePoints(JavaScriptObject chart, JavaScriptObject src) /*-{
         (function () {
-            var opp = 'add';
-            if (src[opp] != null) {
-                for (var i = 0; i < src[opp].length; i++) {
-                    chart.dataProvider.push(src[opp][i]);
+            var srcAdd = src["add"];
+            if (srcAdd != null) {
+                for (var i = 0; i < srcAdd.length; i++) {
+                    chart.dataProvider.push(srcAdd[i]);
                 }
             }
         })();
 
         (function () {
-            var opp = 'remove';
-            if (src[opp] != null) {
-                for (var i = 0; i < src[opp].length; i++) {
+            var srcRemove = src["remove"];
+            if (srcRemove != null) {
+                for (var i = 0; i < srcRemove.length; i++) {
                     for (var j = 0; j < chart.dataProvider.length; j++) {
-                        if (chart.dataProvider[j].id == src[opp][i].id) {
+                        if (chart.dataProvider[j].id == srcRemove[i].id) {
                             chart.dataProvider.splice(j, 1);
                             break;
                         }
@@ -58,12 +58,12 @@ public class CubaAmchartsJsOverlay {
         })();
 
         (function () {
-            var opp = 'update';
-            if (src[opp] != null) {
-                for (var i = 0; i < src[opp].length; i++) {
+            var srcUpdate = src["update"];
+            if (srcUpdate != null) {
+                for (var i = 0; i < srcUpdate.length; i++) {
                     for (var j = 0; j < chart.dataProvider.length; j++) {
-                        if (chart.dataProvider[j].id == src[opp][i].id) {
-                            chart.dataProvider[j] = src[opp][i];
+                        if (chart.dataProvider[j].id == srcUpdate[i].id) {
+                            chart.dataProvider[j] = srcUpdate[i];
                             break;
                         }
                     }
@@ -71,14 +71,16 @@ public class CubaAmchartsJsOverlay {
             }
         })();
 
+        $wnd.console.log(chart.dataProvider);
+
         chart.validateData();
     }-*/;
 
-    private static native void handleLoad() /*-{
+    protected static native void handleLoad() /*-{
         $wnd.AmCharts.handleLoad();
     }-*/;
 
-    private static native JavaScriptObject makeJsChart(Element placeHolder, JavaScriptObject json) /*-{
+    protected static native JavaScriptObject makeJsChart(Element placeHolder, JavaScriptObject json) /*-{
         var chart = $wnd.AmCharts.makeChart(placeHolder, json);
         // save last cursor position to chart.cursorPosition
         if (("xy" === chart.type || "serial" === chart.type) && chart.chartCursor) {
@@ -93,7 +95,7 @@ public class CubaAmchartsJsOverlay {
         updateSize(chart);
     }
 
-    private static native void updateSize(JavaScriptObject chart) /*-{
+    protected static native void updateSize(JavaScriptObject chart) /*-{
         chart.invalidateSize();
     }-*/;
 
@@ -101,7 +103,7 @@ public class CubaAmchartsJsOverlay {
         destroy(chart);
     }
 
-    private static native void destroy(JavaScriptObject chart) /*-{
+    protected static native void destroy(JavaScriptObject chart) /*-{
         chart.clear();
     }-*/;
 
@@ -109,7 +111,7 @@ public class CubaAmchartsJsOverlay {
         return getClickEvent(chart, x, y, absoluteX, absoluteY);
     }
 
-    private static native JsChartClickEvent getClickEvent(JavaScriptObject chart, int x, int y, int absoluteX, int absoluteY) /*-{
+    protected static native JsChartClickEvent getClickEvent(JavaScriptObject chart, int x, int y, int absoluteX, int absoluteY) /*-{
         var event = {};
         event.x = x;
         event.y = y;
@@ -138,7 +140,7 @@ public class CubaAmchartsJsOverlay {
         addGraphClickHandler(chart, handler);
     }
 
-    private static native void addGraphClickHandler(JavaScriptObject chart, GraphClickHandler handler) /*-{
+    protected static native void addGraphClickHandler(JavaScriptObject chart, GraphClickHandler handler) /*-{
         chart.addListener("clickGraph", $entry(function (event) {
             handler.@com.haulmont.charts.web.toolkit.ui.client.amcharts.events.GraphClickHandler::onClick(Lcom/haulmont/charts/web/toolkit/ui/client/amcharts/events/JsGraphClickEvent;)(event);
         }));
@@ -148,7 +150,7 @@ public class CubaAmchartsJsOverlay {
         addGraphItemClickHandler(chart, handler);
     }
 
-    private static native void addGraphItemClickHandler(JavaScriptObject chart, GraphItemClickHandler handler) /*-{
+    protected static native void addGraphItemClickHandler(JavaScriptObject chart, GraphItemClickHandler handler) /*-{
         chart.addListener("clickGraphItem", $entry(function (event) {
             handler.@com.haulmont.charts.web.toolkit.ui.client.amcharts.events.GraphItemClickHandler::onClick(Lcom/haulmont/charts/web/toolkit/ui/client/amcharts/events/JsGraphItemClickEvent;)(event);
         }));
@@ -158,7 +160,7 @@ public class CubaAmchartsJsOverlay {
         addGraphItemRightClickHandler(chart, handler);
     }
 
-    private static native void addGraphItemRightClickHandler(JavaScriptObject chart, GraphItemClickHandler handler) /*-{
+    protected static native void addGraphItemRightClickHandler(JavaScriptObject chart, GraphItemClickHandler handler) /*-{
         chart.addListener("rightClickGraphItem", $entry(function (event) {
             handler.@com.haulmont.charts.web.toolkit.ui.client.amcharts.events.GraphItemClickHandler::onClick(Lcom/haulmont/charts/web/toolkit/ui/client/amcharts/events/JsGraphItemClickEvent;)(event);
 
@@ -170,7 +172,7 @@ public class CubaAmchartsJsOverlay {
         addZoomHandler(chart, zoomHandler);
     }
 
-    private static native void addZoomHandler(JavaScriptObject chart, ZoomHandler handler) /*-{
+    protected static native void addZoomHandler(JavaScriptObject chart, ZoomHandler handler) /*-{
         chart.addListener("zoomed", $entry(function (event) {
             handler.@com.haulmont.charts.web.toolkit.ui.client.amcharts.events.ZoomHandler::onZoom(Lcom/haulmont/charts/web/toolkit/ui/client/amcharts/events/JsZoomEvent;)(event);
         }));
@@ -180,7 +182,7 @@ public class CubaAmchartsJsOverlay {
         addSliceClickHandler(chart, sliceClickHandler);
     }
 
-    private static native void addSliceClickHandler(JavaScriptObject chart, SliceClickHandler handler) /*-{
+    protected static native void addSliceClickHandler(JavaScriptObject chart, SliceClickHandler handler) /*-{
         chart.addListener("clickSlice", $entry(function (event) {
             if (event.event.which == 1) {
                 handler.@com.haulmont.charts.web.toolkit.ui.client.amcharts.events.SliceClickHandler::onEvent(Lcom/haulmont/charts/web/toolkit/ui/client/amcharts/events/JsSliceClickEvent;)(event);
@@ -192,7 +194,7 @@ public class CubaAmchartsJsOverlay {
         addSliceRightClickHandler(chart, sliceRightClickHandler);
     }
 
-    private static native void addSliceRightClickHandler(JavaScriptObject chart, SliceClickHandler handler) /*-{
+    protected static native void addSliceRightClickHandler(JavaScriptObject chart, SliceClickHandler handler) /*-{
         chart.addListener("rightClickSlice", $entry(function (event) {
             handler.@com.haulmont.charts.web.toolkit.ui.client.amcharts.events.SliceClickHandler::onEvent(Lcom/haulmont/charts/web/toolkit/ui/client/amcharts/events/JsSliceClickEvent;)(event);
 
@@ -204,7 +206,7 @@ public class CubaAmchartsJsOverlay {
         addSlicePullInHandler(chart, slicePullInHandler);
     }
 
-    private static native void addSlicePullInHandler(JavaScriptObject chart, SlicePullHandler handler) /*-{
+    protected static native void addSlicePullInHandler(JavaScriptObject chart, SlicePullHandler handler) /*-{
         chart.addListener("pullInSlice", $entry(function (event) {
             handler.@com.haulmont.charts.web.toolkit.ui.client.amcharts.events.SlicePullHandler::onEvent(Lcom/haulmont/charts/web/toolkit/ui/client/amcharts/events/JsSlicePullEvent;)(event);
         }));
@@ -214,7 +216,7 @@ public class CubaAmchartsJsOverlay {
         addSlicePullOutHandler(chart, slicePullOutHandler);
     }
 
-    private static native void addSlicePullOutHandler(JavaScriptObject chart, SlicePullHandler handler)  /*-{
+    protected static native void addSlicePullOutHandler(JavaScriptObject chart, SlicePullHandler handler)  /*-{
         chart.addListener("pullOutSlice", $entry(function (event) {
             handler.@com.haulmont.charts.web.toolkit.ui.client.amcharts.events.SlicePullHandler::onEvent(Lcom/haulmont/charts/web/toolkit/ui/client/amcharts/events/JsSlicePullEvent;)(event);
         }));
@@ -224,7 +226,7 @@ public class CubaAmchartsJsOverlay {
         addLegendLabelClickHandler(chart, legendLabelClickHandler);
     }
 
-    private native static void addLegendLabelClickHandler(JavaScriptObject chart, LegendEventHandler handler) /*-{
+    protected native static void addLegendLabelClickHandler(JavaScriptObject chart, LegendEventHandler handler) /*-{
         if (chart.legend) {
             chart.legend.addListener("clickLabel", $entry(function (event) {
                 handler.@com.haulmont.charts.web.toolkit.ui.client.amcharts.events.LegendEventHandler::onEvent(Lcom/haulmont/charts/web/toolkit/ui/client/amcharts/events/JsLegendEvent;)(event);
@@ -236,7 +238,7 @@ public class CubaAmchartsJsOverlay {
         addLegendMarkerClickHandler(chart, legendMarkerClickHandler);
     }
 
-    private native static void addLegendMarkerClickHandler(JavaScriptObject chart, LegendEventHandler handler) /*-{
+    protected native static void addLegendMarkerClickHandler(JavaScriptObject chart, LegendEventHandler handler) /*-{
         if (chart.legend) {
             chart.legend.addListener("clickMarker", $entry(function (event) {
                 handler.@com.haulmont.charts.web.toolkit.ui.client.amcharts.events.LegendEventHandler::onEvent(Lcom/haulmont/charts/web/toolkit/ui/client/amcharts/events/JsLegendEvent;)(event);
@@ -248,7 +250,7 @@ public class CubaAmchartsJsOverlay {
         addLegendItemShowHandler(chart, legendItemShowHandler);
     }
 
-    private native static void addLegendItemShowHandler(JavaScriptObject chart, LegendEventHandler handler) /*-{
+    protected native static void addLegendItemShowHandler(JavaScriptObject chart, LegendEventHandler handler) /*-{
         if (chart.legend) {
             chart.legend.addListener("showItem", $entry(function (event) {
                 handler.@com.haulmont.charts.web.toolkit.ui.client.amcharts.events.LegendEventHandler::onEvent(Lcom/haulmont/charts/web/toolkit/ui/client/amcharts/events/JsLegendEvent;)(event);
@@ -260,7 +262,7 @@ public class CubaAmchartsJsOverlay {
         addLegendItemHideHandler(chart, legendItemHideHandler);
     }
 
-    private native static void addLegendItemHideHandler(JavaScriptObject chart, LegendEventHandler handler) /*-{
+    protected native static void addLegendItemHideHandler(JavaScriptObject chart, LegendEventHandler handler) /*-{
         if (chart.legend) {
             chart.legend.addListener("hideItem", $entry(function (event) {
                 handler.@com.haulmont.charts.web.toolkit.ui.client.amcharts.events.LegendEventHandler::onEvent(Lcom/haulmont/charts/web/toolkit/ui/client/amcharts/events/JsLegendEvent;)(event);
@@ -272,7 +274,7 @@ public class CubaAmchartsJsOverlay {
         addCursorPeriodSelectHandler(chart, cursorPeriodSelectHandler);
     }
 
-    private native static void addCursorPeriodSelectHandler(JavaScriptObject chart, CursorEventHandler handler) /*-{
+    protected native static void addCursorPeriodSelectHandler(JavaScriptObject chart, CursorEventHandler handler) /*-{
         if (chart.chartCursor) {
             chart.chartCursor.addListener("selected", $entry(function (event) {
                 handler.@com.haulmont.charts.web.toolkit.ui.client.amcharts.events.CursorEventHandler::onEvent(Lcom/haulmont/charts/web/toolkit/ui/client/amcharts/events/JsCursorEvent;)(event);
@@ -284,7 +286,7 @@ public class CubaAmchartsJsOverlay {
         addCursorZoomHandler(chart, cursorZoomHandler);
     }
 
-    private native static void addCursorZoomHandler(JavaScriptObject chart, CursorEventHandler handler) /*-{
+    protected native static void addCursorZoomHandler(JavaScriptObject chart, CursorEventHandler handler) /*-{
         if (chart.chartCursor) {
             chart.chartCursor.addListener("zoomed", $entry(function (event) {
                 handler.@com.haulmont.charts.web.toolkit.ui.client.amcharts.events.CursorEventHandler::onEvent(Lcom/haulmont/charts/web/toolkit/ui/client/amcharts/events/JsCursorEvent;)(event);
@@ -296,7 +298,7 @@ public class CubaAmchartsJsOverlay {
         addAxisZoomHandler(chart, axisZoomHandler);
     }
 
-    private native static void addAxisZoomHandler(JavaScriptObject chart, AxisZoomHandler handler) /*-{
+    protected native static void addAxisZoomHandler(JavaScriptObject chart, AxisZoomHandler handler) /*-{
         if (chart.valueAxes) {
             for (var i = 0; i < chart.valueAxes.length; i++) {
                 var axis = chart.valueAxes[i];
@@ -320,7 +322,7 @@ public class CubaAmchartsJsOverlay {
         zoomOut(chart);
     }
 
-    private native static void zoomOut(JavaScriptObject chart) /*-{
+    protected native static void zoomOut(JavaScriptObject chart) /*-{
         chart.zoomOut();
     }-*/;
 
@@ -328,7 +330,7 @@ public class CubaAmchartsJsOverlay {
         zoomToIndexes(chart, start, end);
     }
 
-    private native static void zoomToIndexes(JavaScriptObject chart, int start, int end) /*-{
+    protected native static void zoomToIndexes(JavaScriptObject chart, int start, int end) /*-{
         chart.zoomToIndexes(start, end);
     }-*/;
 
@@ -336,7 +338,7 @@ public class CubaAmchartsJsOverlay {
         zoomToDates(chart, start, end);
     }
 
-    private native static void zoomToDates(JavaScriptObject chart, JsDate start, JsDate end) /*-{
+    protected native static void zoomToDates(JavaScriptObject chart, JsDate start, JsDate end) /*-{
         chart.zoomToDates(start, end);
     }-*/;
 }

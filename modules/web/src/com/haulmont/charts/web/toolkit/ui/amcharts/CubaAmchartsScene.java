@@ -5,12 +5,15 @@
 
 package com.haulmont.charts.web.toolkit.ui.amcharts;
 
+import com.google.gson.Gson;
 import com.google.gson.JsonArray;
 import com.google.gson.JsonObject;
 import com.google.gson.JsonSerializationContext;
 import com.haulmont.charts.gui.amcharts.model.AbstractChartObject;
 import com.haulmont.charts.gui.amcharts.model.charts.*;
-import com.haulmont.charts.gui.amcharts.model.data.*;
+import com.haulmont.charts.gui.amcharts.model.data.DataChangeListener;
+import com.haulmont.charts.gui.amcharts.model.data.DataItem;
+import com.haulmont.charts.gui.amcharts.model.data.DataItemsChangeEvent;
 import com.haulmont.charts.gui.amcharts.model.gson.ChartJsonSerializationContext;
 import com.haulmont.charts.gui.amcharts.model.gson.DataItemsSerializer;
 import com.haulmont.charts.web.toolkit.ui.amcharts.events.*;
@@ -18,92 +21,76 @@ import com.haulmont.charts.web.toolkit.ui.client.amcharts.CubaAmchartsSceneClien
 import com.haulmont.charts.web.toolkit.ui.client.amcharts.CubaAmchartsSceneState;
 import com.haulmont.charts.web.toolkit.ui.client.amcharts.CubaAmchartsServerRpc;
 import com.vaadin.ui.AbstractComponent;
-import com.vaadin.util.ReflectTools;
 import org.apache.commons.collections.CollectionUtils;
 import org.apache.commons.lang.StringUtils;
 
 import java.lang.reflect.Method;
 import java.util.*;
 
+import static com.vaadin.util.ReflectTools.findMethod;
+
 public class CubaAmchartsScene extends AbstractComponent {
 
-    private final static Method chartClickMethod =
-            ReflectTools.findMethod(ChartClickListener.class, "onClick", ChartClickEvent.class);
+    protected final static Method chartClickMethod =
+            findMethod(ChartClickListener.class, "onClick", ChartClickEvent.class);
 
-    private final static Method chartRightClickMethod =
-            ReflectTools.findMethod(ChartRightClickListener.class, "onClick", ChartRightClickEvent.class);
+    protected final static Method chartRightClickMethod =
+            findMethod(ChartRightClickListener.class, "onClick", ChartRightClickEvent.class);
 
-    private final static Method graphClickMethod =
-            ReflectTools.findMethod(GraphClickListener.class, "onClick", GraphClickEvent.class);
+    protected final static Method graphClickMethod =
+            findMethod(GraphClickListener.class, "onClick", GraphClickEvent.class);
 
-    private final static Method graphItemClickMethod =
-            ReflectTools.findMethod(GraphItemClickListener.class, "onClick", GraphItemClickEvent.class);
+    protected final static Method graphItemClickMethod =
+            findMethod(GraphItemClickListener.class, "onClick", GraphItemClickEvent.class);
 
-    private final static Method graphItemRightClickMethod =
-            ReflectTools.findMethod(GraphItemRightClickListener.class, "onClick", GraphItemRightClickEvent.class);
+    protected final static Method graphItemRightClickMethod =
+            findMethod(GraphItemRightClickListener.class, "onClick", GraphItemRightClickEvent.class);
 
-    private final static Method zoomMethod =
-            ReflectTools.findMethod(ZoomListener.class, "onZoom", ZoomEvent.class);
+    protected final static Method zoomMethod =
+            findMethod(ZoomListener.class, "onZoom", ZoomEvent.class);
 
-    private final static Method sliceClickMethod =
-            ReflectTools.findMethod(SliceClickListener.class, "onClick", SliceClickEvent.class);
+    protected final static Method sliceClickMethod =
+            findMethod(SliceClickListener.class, "onClick", SliceClickEvent.class);
 
-    private final static Method sliceRightClickMethod =
-            ReflectTools.findMethod(SliceRightClickListener.class, "onClick", SliceRightClickEvent.class);
+    protected final static Method sliceRightClickMethod =
+            findMethod(SliceRightClickListener.class, "onClick", SliceRightClickEvent.class);
 
-    private final static Method slicePullInMethod =
-            ReflectTools.findMethod(SlicePullInListener.class, "onClick", SlicePullInEvent.class);
+    protected final static Method slicePullInMethod =
+            findMethod(SlicePullInListener.class, "onClick", SlicePullInEvent.class);
 
-    private final static Method slicePullOutMethod =
-            ReflectTools.findMethod(SlicePullOutListener.class, "onClick", SlicePullOutEvent.class);
+    protected final static Method slicePullOutMethod =
+            findMethod(SlicePullOutListener.class, "onClick", SlicePullOutEvent.class);
 
-    private final static Method legendLabelClickMethod =
-            ReflectTools.findMethod(LegendLabelClickListener.class, "onClick", LegendLabelClickEvent.class);
+    protected final static Method legendLabelClickMethod =
+            findMethod(LegendLabelClickListener.class, "onClick", LegendLabelClickEvent.class);
 
-    private final static Method legendMarkerClickMethod =
-            ReflectTools.findMethod(LegendMarkerClickListener.class, "onClick", LegendMarkerClickEvent.class);
+    protected final static Method legendMarkerClickMethod =
+            findMethod(LegendMarkerClickListener.class, "onClick", LegendMarkerClickEvent.class);
 
-    private final static Method legendItemShowMethod =
-            ReflectTools.findMethod(LegendItemShowListener.class, "onShow", LegendItemShowEvent.class);
+    protected final static Method legendItemShowMethod =
+            findMethod(LegendItemShowListener.class, "onShow", LegendItemShowEvent.class);
 
-    private final static Method legendItemHideMethod =
-            ReflectTools.findMethod(LegendItemHideListener.class, "onHide", LegendItemHideEvent.class);
+    protected final static Method legendItemHideMethod =
+            findMethod(LegendItemHideListener.class, "onHide", LegendItemHideEvent.class);
 
-    private final static Method cursorZoomMethod =
-            ReflectTools.findMethod(CursorZoomListener.class, "onZoom", CursorZoomEvent.class);
+    protected final static Method cursorZoomMethod =
+            findMethod(CursorZoomListener.class, "onZoom", CursorZoomEvent.class);
 
-    private final static Method cursorPeriodSelectMethod =
-            ReflectTools.findMethod(CursorPeriodSelectListener.class, "onSelect", CursorPeriodSelectEvent.class);
+    protected final static Method cursorPeriodSelectMethod =
+            findMethod(CursorPeriodSelectListener.class, "onSelect", CursorPeriodSelectEvent.class);
 
-    private final static Method axisZoomMethod =
-            ReflectTools.findMethod(AxisZoomListener.class, "onZoom", AxisZoomEvent.class);
+    protected final static Method axisZoomMethod =
+            findMethod(AxisZoomListener.class, "onZoom", AxisZoomEvent.class);
 
     protected final DataChangeListener changeListener = new ProxyChangeForwarder(this);
 
-    private boolean dirty = false;
+    protected boolean dirty = false;
 
-    private AbstractChart chart;
+    protected AbstractChart chart;
 
-    private Map<String, List<DataItem>> changedItems;
+    protected Map<IncrementalUpdateType, List<DataItem>> changedItems;
 
     protected JsonSerializationContext serializationContext;
-
-    protected enum Operation {
-        ADD("add"),
-        REMOVE("remove"),
-        UPDATE("update");
-
-        private String id;
-
-        Operation(String id) {
-            this.id = id;
-        }
-
-        @Override
-        public String toString() {
-            return id;
-        }
-    }
 
     public CubaAmchartsScene() {
         // enable amcharts integration
@@ -126,6 +113,10 @@ public class CubaAmchartsScene extends AbstractComponent {
         return chart;
     }
 
+    public boolean isDirty() {
+        return dirty;
+    }
+
     public void setJson(String json) {
         if (!StringUtils.equals(getJson(), json)) {
             getState().json = json;
@@ -143,24 +134,28 @@ public class CubaAmchartsScene extends AbstractComponent {
 
     public void drawChart(AbstractChart chart) {
         this.chart = chart;
-        this.chart.addDataProviderChangeListener(() -> forceStateChange());
+        this.chart.addDataProviderChangeListener(this::forceStateChange);
         forceStateChange();
     }
 
-    protected void setChangedItems(Map<String, List<DataItem>> changedItems) {
+    protected void setChangedItems(Map<IncrementalUpdateType, List<DataItem>> changedItems) {
         this.changedItems = changedItems;
         markAsDirty();
     }
 
-    protected void addChangedItems(Operation type, List<DataItem> items) {
+    protected void forgetChangedItems() {
+        this.changedItems = null;
+    }
+
+    protected void addChangedItems(IncrementalUpdateType type, List<DataItem> items) {
         if (changedItems == null) {
             changedItems = new HashMap<>();
         }
 
-        List<DataItem> existedItems = changedItems.get(type.toString());
+        List<DataItem> existedItems = changedItems.get(type);
         if (existedItems == null) {
             existedItems = new ArrayList<>();
-            changedItems.put(type.toString(), existedItems);
+            changedItems.put(type, existedItems);
         }
 
         existedItems.addAll(items);
@@ -349,8 +344,11 @@ public class CubaAmchartsScene extends AbstractComponent {
     @Override
     public void beforeClientResponse(boolean initial) {
         super.beforeClientResponse(initial);
+
         if (initial || dirty) {
             if (chart != null) {
+                // Full repaint
+
                 setupDefaults(chart);
 
                 if (chart.getDataProvider() != null) {
@@ -360,13 +358,12 @@ public class CubaAmchartsScene extends AbstractComponent {
                 getState().configuration = chart.toString();
             }
             dirty = false;
-        }
-
-        if (changedItems != null && !changedItems.isEmpty()) {
+        } else if (changedItems != null && !changedItems.isEmpty()) {
+            // Incremental repaint
 
             DataItemsSerializer serializer = new DataItemsSerializer();
             JsonObject jsonChangedItemsElement = new JsonObject();
-            for (Map.Entry<String, List<DataItem>> entry : changedItems.entrySet()) {
+            for (Map.Entry<IncrementalUpdateType, List<DataItem>> entry : changedItems.entrySet()) {
                 JsonArray jsonItemsArray = new JsonArray();
 
                 if (serializationContext == null) {
@@ -377,13 +374,14 @@ public class CubaAmchartsScene extends AbstractComponent {
                 for (JsonObject jsonObject : jsonObjects) {
                     jsonItemsArray.add(jsonObject);
                 }
-                jsonChangedItemsElement.add(entry.getKey(), jsonItemsArray);
+                jsonChangedItemsElement.add(entry.getKey().getId(), jsonItemsArray);
             }
 
-            getRpcProxy(CubaAmchartsSceneClientRpc.class).updatePoints(
-                    AbstractChartObject.getSharedGson().toJson(jsonChangedItemsElement));
-            setChangedItems(null);
+            Gson gson = AbstractChartObject.getSharedGson();
+            getRpcProxy(CubaAmchartsSceneClientRpc.class).updatePoints(gson.toJson(jsonChangedItemsElement));;
         }
+
+        forgetChangedItems();
     }
 
     protected void setupDefaults(AbstractChart chart) {
@@ -391,6 +389,7 @@ public class CubaAmchartsScene extends AbstractComponent {
 
     protected void forceStateChange() {
         this.dirty = true;
+
         getState().version++;
     }
 
@@ -495,25 +494,29 @@ public class CubaAmchartsScene extends AbstractComponent {
     }
 
     protected static class ProxyChangeForwarder implements DataChangeListener {
+        protected final CubaAmchartsScene chart;
 
-        private final CubaAmchartsScene chart;
-
-        private ProxyChangeForwarder(CubaAmchartsScene chart) {
+        public ProxyChangeForwarder(CubaAmchartsScene chart) {
             this.chart = chart;
         }
 
         @Override
         public void dataItemsChanged(DataItemsChangeEvent e) {
-            Operation operation = null;
+            if (chart.isDirty()) {
+                // full repaint required, don't need to send incremental updates
+                return;
+            }
+
+            IncrementalUpdateType updateType = null;
             switch (e.getOperation()) {
                 case ADD:
-                    operation = Operation.ADD;
+                    updateType = IncrementalUpdateType.ADD;
                     break;
                 case REMOVE:
-                    operation = Operation.REMOVE;
+                    updateType = IncrementalUpdateType.REMOVE;
                     break;
                 case UPDATE:
-                    operation = Operation.UPDATE;
+                    updateType = IncrementalUpdateType.UPDATE;
                     break;
                 case REFRESH:
                     chart.getChart().getDataProvider().removeChangeListener(this);
@@ -521,9 +524,29 @@ public class CubaAmchartsScene extends AbstractComponent {
                     chart.drawChart();
                     break;
             }
-            if (operation != null && CollectionUtils.isNotEmpty(e.getItems())) {
-                chart.addChangedItems(operation, e.getItems());
+            if (updateType != null && CollectionUtils.isNotEmpty(e.getItems())) {
+                chart.addChangedItems(updateType, e.getItems());
             }
+        }
+
+        @Override
+        public boolean equals(Object obj) {
+            if (this == obj) {
+                return true;
+            }
+
+            if (obj == null || getClass() != obj.getClass()) {
+                return false;
+            }
+
+            ProxyChangeForwarder that = (ProxyChangeForwarder) obj;
+
+            return this.chart.equals(that.chart);
+        }
+
+        @Override
+        public int hashCode() {
+            return chart.hashCode();
         }
     }
 }
