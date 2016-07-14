@@ -10,6 +10,9 @@ import org.apache.commons.lang.StringUtils;
 import java.io.Serializable;
 import java.util.HashMap;
 import java.util.Map;
+import java.util.Objects;
+
+import static com.haulmont.bali.util.Preconditions.checkNotNullArgument;
 
 @SuppressWarnings("unused")
 public final class Color implements Serializable {
@@ -169,6 +172,8 @@ public final class Color implements Serializable {
     private final String value;
 
     public Color(String value) {
+        checkNotNullArgument(value, "Color value couldn't be null");
+
         this.value = value;
     }
 
@@ -179,6 +184,26 @@ public final class Color implements Serializable {
 
     public String getValue() {
         return value;
+    }
+
+    @Override
+    public boolean equals(Object obj) {
+        if (this == obj) {
+            return true;
+        }
+
+        if (obj == null || getClass() != obj.getClass()) {
+            return false;
+        }
+
+        Color that = (Color) obj;
+
+        return Objects.equals(this.value, that.value);
+    }
+
+    @Override
+    public int hashCode() {
+        return value.hashCode();
     }
 
     @Override
