@@ -23,6 +23,8 @@ import com.vaadin.ui.AbstractComponent;
 import org.apache.commons.collections.CollectionUtils;
 import org.apache.commons.lang.StringUtils;
 import org.apache.commons.lang.builder.HashCodeBuilder;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 import java.lang.reflect.Method;
 import java.util.*;
@@ -30,6 +32,8 @@ import java.util.*;
 import static com.vaadin.util.ReflectTools.findMethod;
 
 public class CubaAmStockChartScene extends AbstractComponent {
+    protected Logger log = LoggerFactory.getLogger(CubaAmStockChartScene.class);
+
     protected final static Method chartClickMethod =
             findMethod(StockChartClickListener.class, "onClick", StockChartClickEvent.class);
 
@@ -315,6 +319,7 @@ public class CubaAmStockChartScene extends AbstractComponent {
                     }
                 }
 
+                log.trace(String.format("Chart full JSON:\n%s", chart.toString()));
                 getState().configuration = chart.toString();
             }
             dirty = false;
@@ -342,8 +347,10 @@ public class CubaAmStockChartScene extends AbstractComponent {
                 jsonChangedItemsElement.add(dataSetEntry.getKey(), jsonChangedDataSetElement);
             }
 
-            getRpcProxy(CubaAmStockChartSceneClientRpc.class).updatePoints(
-                    StockChartGroup.getSharedGson().toJson(jsonChangedItemsElement));
+            String gsonString = StockChartGroup.getSharedGson().toJson(jsonChangedItemsElement);
+
+            log.trace(String.format("Chart update JSON:\n%s", gsonString));
+            getRpcProxy(CubaAmStockChartSceneClientRpc.class).updatePoints(gsonString);
         }
 
         forgetChangedItems();

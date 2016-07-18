@@ -23,6 +23,8 @@ import com.haulmont.charts.web.toolkit.ui.client.amcharts.CubaAmchartsServerRpc;
 import com.vaadin.ui.AbstractComponent;
 import org.apache.commons.collections.CollectionUtils;
 import org.apache.commons.lang.StringUtils;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 import java.lang.reflect.Method;
 import java.util.*;
@@ -30,6 +32,7 @@ import java.util.*;
 import static com.vaadin.util.ReflectTools.findMethod;
 
 public class CubaAmchartsScene extends AbstractComponent {
+    protected Logger log = LoggerFactory.getLogger(CubaAmchartsScene.class);
 
     protected final static Method chartClickMethod =
             findMethod(ChartClickListener.class, "onClick", ChartClickEvent.class);
@@ -355,6 +358,7 @@ public class CubaAmchartsScene extends AbstractComponent {
                     chart.getDataProvider().addChangeListener(changeListener);
                 }
 
+                log.trace(String.format("Chart full JSON:\n%s", chart.toString()));
                 getState().configuration = chart.toString();
             }
             dirty = false;
@@ -378,7 +382,10 @@ public class CubaAmchartsScene extends AbstractComponent {
             }
 
             Gson gson = AbstractChartObject.getSharedGson();
-            getRpcProxy(CubaAmchartsSceneClientRpc.class).updatePoints(gson.toJson(jsonChangedItemsElement));;
+            String gsonString = gson.toJson(jsonChangedItemsElement);
+
+            log.trace(String.format("Chart update JSON:\n%s", gsonString));
+            getRpcProxy(CubaAmchartsSceneClientRpc.class).updatePoints(gsonString);
         }
 
         forgetChangedItems();
