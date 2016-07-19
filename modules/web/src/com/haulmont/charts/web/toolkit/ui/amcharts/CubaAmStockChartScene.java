@@ -319,8 +319,9 @@ public class CubaAmStockChartScene extends AbstractComponent {
                     }
                 }
 
-                log.trace("Chart full JSON:\n{}", chart.toString());
-                getState().configuration = chart.toString();
+                String jsonString = chart.toString();
+                log.trace("Chart full JSON:\n{}", jsonString);
+                getState().configuration = jsonString;
             }
             dirty = false;
         } else if (changedItems != null && !changedItems.isEmpty()) {
