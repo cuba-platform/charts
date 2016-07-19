@@ -32,7 +32,7 @@ import java.util.*;
 import static com.vaadin.util.ReflectTools.findMethod;
 
 public class CubaAmchartsScene extends AbstractComponent {
-    protected Logger log = LoggerFactory.getLogger(CubaAmchartsScene.class);
+    private final Logger log = LoggerFactory.getLogger(CubaAmchartsScene.class);
 
     protected final static Method chartClickMethod =
             findMethod(ChartClickListener.class, "onClick", ChartClickEvent.class);
@@ -358,7 +358,7 @@ public class CubaAmchartsScene extends AbstractComponent {
                     chart.getDataProvider().addChangeListener(changeListener);
                 }
 
-                log.trace(String.format("Chart full JSON:\n%s", chart.toString()));
+                log.trace("Chart full JSON:\n{}", chart.toString());
                 getState().configuration = chart.toString();
             }
             dirty = false;
@@ -384,7 +384,7 @@ public class CubaAmchartsScene extends AbstractComponent {
             Gson gson = AbstractChartObject.getSharedGson();
             String gsonString = gson.toJson(jsonChangedItemsElement);
 
-            log.trace(String.format("Chart update JSON:\n%s", gsonString));
+            log.trace("Chart update JSON:\n{}", gsonString);
             getRpcProxy(CubaAmchartsSceneClientRpc.class).updatePoints(gsonString);
         }
 
