@@ -23,8 +23,8 @@ import java.util.Map;
 
 /**
  * Charts palette
- *
  */
+@Deprecated
 public class ChartComponentPalette implements ComponentPalette {
     @Override
     public Map<String, Class<? extends ComponentLoader>> getLoaders() {
@@ -39,7 +39,6 @@ public class ChartComponentPalette implements ComponentPalette {
         loaders.put("ganttChart", GanttChartLoader.class);
         loaders.put("xyChart", XYChartLoader.class);
         loaders.put("stockChart", StockChartLoader.class);
-        loaders.put("stockPanel", StockPanelLoader.class);
 
         loaders.put(MapViewer.TAG_NAME, MapViewerLoader.class);
 

@@ -1,0 +1,73 @@
+<!--
+  ~ Copyright (c) 2008-2016 Haulmont. All rights reserved.
+  ~ Use is subject to license terms, see http://www.cuba-platform.com/commercial-software-license for details.
+  -->
+
+<components>
+
+    <!-- Charts -->
+
+    <component>
+        <tag>gaugeChart</tag>
+        <name>chart</name>
+        <class>com.haulmont.charts.web.gui.components.charts.amcharts.WebChart</class>
+        <componentLoader>com.haulmont.charts.gui.xml.layout.loaders.charts.AngularGaugeChartLoader</componentLoader>
+    </component>
+    <component>
+        <tag>funnelChart</tag>
+        <name>chart</name>
+        <class>com.haulmont.charts.web.gui.components.charts.amcharts.WebChart</class>
+        <componentLoader>com.haulmont.charts.gui.xml.layout.loaders.charts.FunnelChartLoader</componentLoader>
+    </component>
+    <component>
+        <tag>funnelChart</tag>
+        <name>chart</name>
+        <class>com.haulmont.charts.web.gui.components.charts.amcharts.WebChart</class>
+        <componentLoader>com.haulmont.charts.gui.xml.layout.loaders.charts.FunnelChartLoader</componentLoader>
+    </component>
+    <component>
+        <tag>pieChart</tag>
+        <name>chart</name>
+        <class>com.haulmont.charts.web.gui.components.charts.amcharts.WebChart</class>
+        <componentLoader>com.haulmont.charts.gui.xml.layout.loaders.charts.PieChartLoader</componentLoader>
+    </component>
+    <component>
+        <tag>radarChart</tag>
+        <name>chart</name>
+        <class>com.haulmont.charts.web.gui.components.charts.amcharts.WebChart</class>
+        <componentLoader>com.haulmont.charts.gui.xml.layout.loaders.charts.RadarChartLoader</componentLoader>
+    </component>
+    <component>
+        <tag>serialChart</tag>
+        <name>chart</name>
+        <class>com.haulmont.charts.web.gui.components.charts.amcharts.WebChart</class>
+        <componentLoader>com.haulmont.charts.gui.xml.layout.loaders.charts.SerialChartLoader</componentLoader>
+    </component>
+    <component>
+        <tag>ganttChart</tag>
+        <name>chart</name>
+        <class>com.haulmont.charts.web.gui.components.charts.amcharts.WebChart</class>
+        <componentLoader>com.haulmont.charts.gui.xml.layout.loaders.charts.GanttChartLoader</componentLoader>
+    </component>
+    <component>
+        <tag>xyChart</tag>
+        <name>chart</name>
+        <class>com.haulmont.charts.web.gui.components.charts.amcharts.WebChart</class>
+        <componentLoader>com.haulmont.charts.gui.xml.layout.loaders.charts.XYChartLoader</componentLoader>
+    </component>
+    <component>
+        <tag>stockChart</tag>
+        <name>chart</name>
+        <class>com.haulmont.charts.web.gui.components.charts.amcharts.WebChart</class>
+        <componentLoader>com.haulmont.charts.gui.xml.layout.loaders.charts.StockChartLoader</componentLoader>
+    </component>
+
+    <!-- Maps -->
+
+    <component>
+        <tag>mapViewer</tag>
+        <name>googleMapViewer</name>
+        <class>com.haulmont.charts.web.gui.components.map.google.WebGoogleMapViewer</class>
+        <componentLoader>com.haulmont.charts.gui.xml.layout.loaders.map.MapViewerLoader</componentLoader>
+    </component>
+</components>
