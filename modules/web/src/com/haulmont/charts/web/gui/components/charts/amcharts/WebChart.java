@@ -27,6 +27,7 @@ import com.haulmont.cuba.gui.data.CollectionDatasource;
 import com.haulmont.cuba.gui.data.impl.CollectionDsHelper;
 import com.haulmont.cuba.web.gui.components.WebAbstractComponent;
 import com.vaadin.server.ClientConnector;
+import org.apache.commons.collections.CollectionUtils;
 import org.apache.commons.lang.BooleanUtils;
 import org.apache.commons.lang.ObjectUtils;
 import org.apache.commons.lang.StringUtils;
@@ -235,8 +236,7 @@ public class WebChart extends WebAbstractComponent<CubaAmchartsScene> implements
         }
 
         Object categoryId = getItemId(datasource, ids[0]);
-        Object segmentId = getItemId(datasource, ids[1]);
-        if (segmentId == null) {
+        if (categoryId == null) {
             return null;
         }
 
@@ -248,6 +248,11 @@ public class WebChart extends WebAbstractComponent<CubaAmchartsScene> implements
 
         Collection segments = category.getValue(ganttChart.getSegmentsField());
         if (segments == null) {
+            return null;
+        }
+
+        Object segmentId = getItemId(segments, ids[1]);
+        if (segmentId == null) {
             return null;
         }
 
@@ -269,6 +274,26 @@ public class WebChart extends WebAbstractComponent<CubaAmchartsScene> implements
                 return datatype.parse(itemIdString);
             } catch (ParseException e) {
                 throw new RuntimeException("Error parsing item ID", e);
+            }
+        }
+        return null;
+    }
+
+    @Nullable
+    protected Object getItemId(Collection items, String itemIdString) {
+        if (CollectionUtils.isNotEmpty(items)) {
+            Object obj = items.iterator().hasNext();
+            if (obj instanceof Entity) {
+                Entity entity = (Entity) obj;
+                MetaProperty pkProp = metadata.getTools().getPrimaryKeyProperty(entity.getMetaClass());
+                if (pkProp != null) {
+                    Datatype<Object> datatype = pkProp.getRange().asDatatype();
+                    try {
+                        return datatype.parse(itemIdString);
+                    } catch (ParseException e) {
+                        throw new RuntimeException("Error parsing item ID", e);
+                    }
+                }
             }
         }
         return null;
