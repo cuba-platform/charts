@@ -148,7 +148,6 @@ configure(chartsWebToolkitModule) {
 
     task buildWidgetSet(type: CubaWidgetSetBuilding) {
         widgetSetClass = 'com.haulmont.charts.web.toolkit.ui.ChartsWidgetSet'
-        style = 'PRETTY'
     }
 
     task buildDebugWidgetSet(type: CubaWidgetSetBuilding) {
