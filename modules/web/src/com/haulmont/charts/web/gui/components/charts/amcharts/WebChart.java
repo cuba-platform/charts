@@ -282,7 +282,7 @@ public class WebChart extends WebAbstractComponent<CubaAmchartsScene> implements
     @Nullable
     protected Object getItemId(Collection items, String itemIdString) {
         if (CollectionUtils.isNotEmpty(items)) {
-            Object obj = items.iterator().hasNext();
+            Object obj = items.iterator().next();
             if (obj instanceof Entity) {
                 Entity entity = (Entity) obj;
                 MetaProperty pkProp = metadata.getTools().getPrimaryKeyProperty(entity.getMetaClass());
