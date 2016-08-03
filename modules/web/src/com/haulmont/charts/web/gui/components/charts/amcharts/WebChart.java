@@ -20,6 +20,7 @@ import com.haulmont.charts.web.toolkit.ui.amcharts.events.*;
 import com.haulmont.chile.core.datatypes.Datatype;
 import com.haulmont.chile.core.datatypes.Datatypes;
 import com.haulmont.chile.core.datatypes.FormatStrings;
+import com.haulmont.chile.core.model.MetaClass;
 import com.haulmont.chile.core.model.MetaProperty;
 import com.haulmont.cuba.core.entity.Entity;
 import com.haulmont.cuba.core.global.*;
@@ -267,6 +268,9 @@ public class WebChart extends WebAbstractComponent<CubaAmchartsScene> implements
 
     @Nullable
     protected Object getItemId(CollectionDatasource datasource, String itemIdString) {
+        if (metadata.getTools().isTransient(datasource.getMetaClass())) {
+            return UuidProvider.fromString(itemIdString);
+        }
         MetaProperty pkProp = metadata.getTools().getPrimaryKeyProperty(datasource.getMetaClass());
         if (pkProp != null) {
             Datatype<Object> datatype = pkProp.getRange().asDatatype();
@@ -285,7 +289,11 @@ public class WebChart extends WebAbstractComponent<CubaAmchartsScene> implements
             Object obj = items.iterator().next();
             if (obj instanceof Entity) {
                 Entity entity = (Entity) obj;
-                MetaProperty pkProp = metadata.getTools().getPrimaryKeyProperty(entity.getMetaClass());
+                MetaClass metaClass = metadata.getClassNN(entity.getClass());
+                if (metadata.getTools().isTransient(metaClass)) {
+                    return UuidProvider.fromString(itemIdString);
+                }
+                MetaProperty pkProp = metadata.getTools().getPrimaryKeyProperty(metaClass);
                 if (pkProp != null) {
                     Datatype<Object> datatype = pkProp.getRange().asDatatype();
                     try {
