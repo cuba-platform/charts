@@ -57,8 +57,8 @@
     </component>
     <component>
         <tag>stockChart</tag>
-        <name>chart</name>
-        <class>com.haulmont.charts.web.gui.components.charts.amcharts.WebChart</class>
+        <name>stockChart</name>
+        <class>com.haulmont.charts.web.gui.components.charts.amcharts.WebStockChart</class>
         <componentLoader>com.haulmont.charts.gui.xml.layout.loaders.charts.StockChartLoader</componentLoader>
     </component>
 
