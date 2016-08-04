@@ -90,17 +90,22 @@ public abstract class AbstractChartLoader<T extends AbstractChart> extends Chart
 
                 String rotation = labelElement.attributeValue("rotation");
                 if (StringUtils.isNotEmpty(rotation)) {
-                    label.setRotation(Integer.valueOf(rotation));
+                    label.setRotation(Integer.parseInt(rotation));
                 }
 
                 String size = labelElement.attributeValue("size");
                 if (StringUtils.isNotEmpty(size)) {
-                    label.setSize(Integer.valueOf(size));
+                    label.setSize(Integer.parseInt(size));
                 }
 
                 String text = labelElement.attributeValue("text");
                 if (StringUtils.isNotEmpty(text)) {
                     label.setText(loadResourceString(text));
+                }
+
+                String tabIndex = labelElement.attributeValue("tabIndex");
+                if (StringUtils.isNotEmpty(tabIndex)) {
+                    label.setTabIndex(Integer.parseInt(tabIndex));
                 }
 
                 String url = labelElement.attributeValue("url");
@@ -110,12 +115,12 @@ public abstract class AbstractChartLoader<T extends AbstractChart> extends Chart
 
                 String x = labelElement.attributeValue("x");
                 if (StringUtils.isNotEmpty(x)) {
-                    label.setX(Integer.valueOf(x));
+                    label.setX(Integer.parseInt(x));
                 }
 
                 String y = labelElement.attributeValue("y");
                 if (StringUtils.isNotEmpty(y)) {
-                    label.setY(Integer.valueOf(y));
+                    label.setY(Integer.parseInt(y));
                 }
 
                 chart.addLabels(label);
@@ -153,7 +158,12 @@ public abstract class AbstractChartLoader<T extends AbstractChart> extends Chart
 
                 String size = titleElement.attributeValue("size");
                 if (StringUtils.isNotEmpty(size)) {
-                    title.setSize(Integer.valueOf(size));
+                    title.setSize(Integer.parseInt(size));
+                }
+
+                String tabIndex = titleElement.attributeValue("tabIndex");
+                if (StringUtils.isNotEmpty(tabIndex)) {
+                    title.setTabIndex(Integer.parseInt(tabIndex));
                 }
 
                 String text = titleElement.attributeValue("text");
@@ -168,6 +178,11 @@ public abstract class AbstractChartLoader<T extends AbstractChart> extends Chart
 
     protected void loadLegend(AbstractLegend legend, Element legendElement) {
         loadLegendItems(legend, legendElement);
+
+        String accessibleLabel = legendElement.attributeValue("accessibleLabel");
+        if (StringUtils.isNotEmpty(accessibleLabel)) {
+            legend.setAccessibleLabel(loadResourceString(accessibleLabel));
+        }
 
         String align = legendElement.attributeValue("align");
         if (StringUtils.isNotEmpty(align)) {
@@ -201,7 +216,7 @@ public abstract class AbstractChartLoader<T extends AbstractChart> extends Chart
 
         String bottom = legendElement.attributeValue("bottom");
         if (StringUtils.isNotEmpty(bottom)) {
-            legend.setBottom(Integer.valueOf(bottom));
+            legend.setBottom(Integer.parseInt(bottom));
         }
 
         String color = legendElement.attributeValue("color");
@@ -226,7 +241,7 @@ public abstract class AbstractChartLoader<T extends AbstractChart> extends Chart
 
         String fontSize = legendElement.attributeValue("fontSize");
         if (StringUtils.isNotEmpty(fontSize)) {
-            legend.setFontSize(Integer.valueOf(fontSize));
+            legend.setFontSize(Integer.parseInt(fontSize));
         }
 
         String forceWidth = legendElement.attributeValue("forceWidth");
@@ -236,17 +251,17 @@ public abstract class AbstractChartLoader<T extends AbstractChart> extends Chart
 
         String gradientRotation = legendElement.attributeValue("gradientRotation");
         if (StringUtils.isNotEmpty(gradientRotation)) {
-            legend.setGradientRotation(Integer.valueOf(gradientRotation));
+            legend.setGradientRotation(Integer.parseInt(gradientRotation));
         }
 
         String horizontalGap = legendElement.attributeValue("horizontalGap");
         if (StringUtils.isNotEmpty(horizontalGap)) {
-            legend.setHorizontalGap(Integer.valueOf(horizontalGap));
+            legend.setHorizontalGap(Integer.parseInt(horizontalGap));
         }
 
         String labelWidth = legendElement.attributeValue("labelWidth");
         if (StringUtils.isNotEmpty(labelWidth)) {
-            legend.setLabelWidth(Integer.valueOf(labelWidth));
+            legend.setLabelWidth(Integer.parseInt(labelWidth));
         }
 
         String labelText = legendElement.attributeValue("labelText");
@@ -256,7 +271,7 @@ public abstract class AbstractChartLoader<T extends AbstractChart> extends Chart
 
         String left = legendElement.attributeValue("left");
         if (StringUtils.isNotEmpty(left)) {
-            legend.setLeft(Integer.valueOf(left));
+            legend.setLeft(Integer.parseInt(left));
         }
 
         loadMargins(legend, legendElement);
@@ -273,7 +288,7 @@ public abstract class AbstractChartLoader<T extends AbstractChart> extends Chart
 
         String markerBorderThickness = legendElement.attributeValue("markerBorderThickness");
         if (StringUtils.isNotEmpty(markerBorderThickness)) {
-            legend.setMarkerBorderThickness(Integer.valueOf(markerBorderThickness));
+            legend.setMarkerBorderThickness(Integer.parseInt(markerBorderThickness));
         }
 
         String markerDisabledColor = legendElement.attributeValue("markerDisabledColor");
@@ -283,12 +298,12 @@ public abstract class AbstractChartLoader<T extends AbstractChart> extends Chart
 
         String markerLabelGap = legendElement.attributeValue("markerLabelGap");
         if (StringUtils.isNotEmpty(markerLabelGap)) {
-            legend.setMarkerLabelGap(Integer.valueOf(markerLabelGap));
+            legend.setMarkerLabelGap(Integer.parseInt(markerLabelGap));
         }
 
         String markerSize = legendElement.attributeValue("markerSize");
         if (StringUtils.isNotEmpty(markerSize)) {
-            legend.setMarkerSize(Integer.valueOf(markerSize));
+            legend.setMarkerSize(Integer.parseInt(markerSize));
         }
 
         String markerType = legendElement.attributeValue("markerType");
@@ -298,7 +313,7 @@ public abstract class AbstractChartLoader<T extends AbstractChart> extends Chart
 
         String maxColumns = legendElement.attributeValue("maxColumns");
         if (StringUtils.isNotEmpty(maxColumns)) {
-            legend.setMaxColumns(Integer.valueOf(maxColumns));
+            legend.setMaxColumns(Integer.parseInt(maxColumns));
         }
 
         String periodValueText = legendElement.attributeValue("periodValueText");
@@ -318,7 +333,7 @@ public abstract class AbstractChartLoader<T extends AbstractChart> extends Chart
 
         String right = legendElement.attributeValue("right");
         if (StringUtils.isNotEmpty(right)) {
-            legend.setRight(Integer.valueOf(right));
+            legend.setRight(Integer.parseInt(right));
         }
 
         String rollOverColor = legendElement.attributeValue("rollOverColor");
@@ -338,7 +353,7 @@ public abstract class AbstractChartLoader<T extends AbstractChart> extends Chart
 
         String spacing = legendElement.attributeValue("spacing");
         if (StringUtils.isNotEmpty(spacing)) {
-            legend.setSpacing(Integer.valueOf(spacing));
+            legend.setSpacing(Integer.parseInt(spacing));
         }
 
         String switchable = legendElement.attributeValue("switchable");
@@ -361,9 +376,14 @@ public abstract class AbstractChartLoader<T extends AbstractChart> extends Chart
             legend.setTextClickEnabled(Boolean.valueOf(textClickEnabled));
         }
 
+        String tabIndex = legendElement.attributeValue("tabIndex");
+        if (StringUtils.isNotEmpty(tabIndex)) {
+            legend.setTabIndex(Integer.parseInt(tabIndex));
+        }
+
         String top = legendElement.attributeValue("top");
         if (StringUtils.isNotEmpty(top)) {
-            legend.setTop(Integer.valueOf(top));
+            legend.setTop(Integer.parseInt(top));
         }
 
         String useGraphSettings = legendElement.attributeValue("useGraphSettings");
@@ -398,17 +418,17 @@ public abstract class AbstractChartLoader<T extends AbstractChart> extends Chart
 
         String valueWidth = legendElement.attributeValue("valueWidth");
         if (StringUtils.isNotEmpty(valueWidth)) {
-            legend.setValueWidth(Integer.valueOf(valueWidth));
+            legend.setValueWidth(Integer.parseInt(valueWidth));
         }
 
         String verticalGap = legendElement.attributeValue("verticalGap");
         if (StringUtils.isNotEmpty(verticalGap)) {
-            legend.setVerticalGap(Integer.valueOf(verticalGap));
+            legend.setVerticalGap(Integer.parseInt(verticalGap));
         }
 
         String width = legendElement.attributeValue("width");
         if (StringUtils.isNotEmpty(width)) {
-            legend.setWidth(Integer.valueOf(width));
+            legend.setWidth(Integer.parseInt(width));
         }
     }
 
@@ -474,6 +494,11 @@ public abstract class AbstractChartLoader<T extends AbstractChart> extends Chart
             chart.setAutoResize(Boolean.valueOf(autoResize));
         }
 
+        String autoTransform = element.attributeValue("autoTransform");
+        if (StringUtils.isNotEmpty(autoTransform)) {
+            chart.setAutoTransform(Boolean.valueOf(autoTransform));
+        }
+
         String backgroundAlpha = element.attributeValue("backgroundAlpha");
         if (StringUtils.isNotEmpty(backgroundAlpha)) {
             chart.setBackgroundAlpha(Double.valueOf(backgroundAlpha));
@@ -528,7 +553,7 @@ public abstract class AbstractChartLoader<T extends AbstractChart> extends Chart
 
         String fontSize = element.attributeValue("fontSize");
         if (StringUtils.isNotEmpty(fontSize)) {
-            chart.setFontSize(Integer.valueOf(fontSize));
+            chart.setFontSize(Integer.parseInt(fontSize));
         }
 
         String handDrawn = element.attributeValue("handDrawn");
@@ -538,17 +563,17 @@ public abstract class AbstractChartLoader<T extends AbstractChart> extends Chart
 
         String handDrawScatter = element.attributeValue("handDrawScatter");
         if (StringUtils.isNotEmpty(handDrawScatter)) {
-            chart.setHandDrawScatter(Integer.valueOf(handDrawScatter));
+            chart.setHandDrawScatter(Integer.parseInt(handDrawScatter));
         }
 
         String handDrawThickness = element.attributeValue("handDrawThickness");
         if (StringUtils.isNotEmpty(handDrawThickness)) {
-            chart.setHandDrawThickness(Integer.valueOf(handDrawThickness));
+            chart.setHandDrawThickness(Integer.parseInt(handDrawThickness));
         }
 
         String hideBalloonTime = element.attributeValue("hideBalloonTime");
         if (StringUtils.isNotEmpty(hideBalloonTime)) {
-            chart.setHideBalloonTime(Integer.valueOf(hideBalloonTime));
+            chart.setHideBalloonTime(Integer.parseInt(hideBalloonTime));
         }
 
         String language = element.attributeValue("language");
@@ -570,22 +595,22 @@ public abstract class AbstractChartLoader<T extends AbstractChart> extends Chart
 
         String percentPrecision = element.attributeValue("percentPrecision");
         if (StringUtils.isNotEmpty(percentPrecision)) {
-            chart.setPercentPrecision(Integer.valueOf(percentPrecision));
+            chart.setPercentPrecision(Integer.parseInt(percentPrecision));
         }
 
         String precision = element.attributeValue("precision");
         if (StringUtils.isNotEmpty(precision)) {
-            chart.setPrecision(Integer.valueOf(precision));
+            chart.setPrecision(Integer.parseInt(precision));
         }
 
         String processCount = element.attributeValue("processCount");
         if (StringUtils.isNotEmpty(processCount)) {
-            chart.setProcessCount(Integer.valueOf(processCount));
+            chart.setProcessCount(Integer.parseInt(processCount));
         }
 
         String processTimeout = element.attributeValue("processTimeout");
         if (StringUtils.isNotEmpty(processTimeout)) {
-            chart.setProcessTimeout(Integer.valueOf(processTimeout));
+            chart.setProcessTimeout(Integer.parseInt(processTimeout));
         }
 
         String svgIcons = element.attributeValue("svgIcons");
@@ -615,7 +640,7 @@ public abstract class AbstractChartLoader<T extends AbstractChart> extends Chart
 
         String touchClickDuration = element.attributeValue("touchClickDuration");
         if (StringUtils.isNotEmpty(touchClickDuration)) {
-            chart.setTouchClickDuration(Integer.valueOf(touchClickDuration));
+            chart.setTouchClickDuration(Integer.parseInt(touchClickDuration));
         }
 
         String defs = element.attributeValue("defs");
@@ -627,7 +652,7 @@ public abstract class AbstractChartLoader<T extends AbstractChart> extends Chart
     protected void loadStartEffect(HasStartEffect chart, Element element) {
         String startDuration = element.attributeValue("startDuration");
         if (StringUtils.isNotEmpty(startDuration)) {
-            chart.setStartDuration(Integer.valueOf(startDuration));
+            chart.setStartDuration(Integer.parseInt(startDuration));
         }
 
         String startEffect = element.attributeValue("startEffect");
@@ -654,12 +679,12 @@ public abstract class AbstractChartLoader<T extends AbstractChart> extends Chart
 
         String autoRotateAngle = element.attributeValue("autoRotateAngle");
         if (StringUtils.isNotEmpty(autoRotateAngle)) {
-            axis.setAutoRotateAngle(Integer.valueOf(autoRotateAngle));
+            axis.setAutoRotateAngle(Integer.parseInt(autoRotateAngle));
         }
 
         String autoRotateCount = element.attributeValue("autoRotateCount");
         if (StringUtils.isNotEmpty(autoRotateCount)) {
-            axis.setAutoRotateCount(Integer.valueOf(autoRotateCount));
+            axis.setAutoRotateCount(Integer.parseInt(autoRotateCount));
         }
 
         String axisAlpha = element.attributeValue("axisAlpha");
@@ -674,7 +699,7 @@ public abstract class AbstractChartLoader<T extends AbstractChart> extends Chart
 
         String axisThickness = element.attributeValue("axisThickness");
         if (StringUtils.isNotEmpty(axisThickness)) {
-            axis.setAxisThickness(Integer.valueOf(axisThickness));
+            axis.setAxisThickness(Integer.parseInt(axisThickness));
         }
 
         Element balloonElement = element.element("balloon");
@@ -709,7 +734,7 @@ public abstract class AbstractChartLoader<T extends AbstractChart> extends Chart
 
         String dashLength = element.attributeValue("dashLength");
         if (StringUtils.isNotEmpty(dashLength)) {
-            axis.setDashLength(Integer.valueOf(dashLength));
+            axis.setDashLength(Integer.parseInt(dashLength));
         }
 
         Element dateFormatsElement = element.element("dateFormats");
@@ -729,7 +754,7 @@ public abstract class AbstractChartLoader<T extends AbstractChart> extends Chart
 
         String fontSize = element.attributeValue("fontSize");
         if (StringUtils.isNotEmpty(fontSize)) {
-            axis.setFontSize(Integer.valueOf(fontSize));
+            axis.setFontSize(Integer.parseInt(fontSize));
         }
 
         String gridAlpha = element.attributeValue("gridAlpha");
@@ -744,12 +769,12 @@ public abstract class AbstractChartLoader<T extends AbstractChart> extends Chart
 
         String gridCount = element.attributeValue("gridCount");
         if (StringUtils.isNotEmpty(gridCount)) {
-            axis.setGridCount(Integer.valueOf(gridCount));
+            axis.setGridCount(Integer.parseInt(gridCount));
         }
 
         String gridThickness = element.attributeValue("gridThickness");
         if (StringUtils.isNotEmpty(gridThickness)) {
-            axis.setGridThickness(Integer.valueOf(gridThickness));
+            axis.setGridThickness(Integer.parseInt(gridThickness));
         }
 
         Element guidesElement = element.element("guides");
@@ -774,12 +799,12 @@ public abstract class AbstractChartLoader<T extends AbstractChart> extends Chart
 
         String labelOffset = element.attributeValue("labelOffset");
         if (StringUtils.isNotEmpty(labelOffset)) {
-            axis.setLabelOffset(Integer.valueOf(labelOffset));
+            axis.setLabelOffset(Integer.parseInt(labelOffset));
         }
 
         String labelRotation = element.attributeValue("labelRotation");
         if (StringUtils.isNotEmpty(labelRotation)) {
-            axis.setLabelRotation(Integer.valueOf(labelRotation));
+            axis.setLabelRotation(Integer.parseInt(labelRotation));
         }
 
         String labelsEnabled = element.attributeValue("labelsEnabled");
@@ -794,7 +819,7 @@ public abstract class AbstractChartLoader<T extends AbstractChart> extends Chart
 
         String minHorizontalGap = element.attributeValue("minHorizontalGap");
         if (StringUtils.isNotEmpty(minHorizontalGap)) {
-            axis.setMinHorizontalGap(Integer.valueOf(minHorizontalGap));
+            axis.setMinHorizontalGap(Integer.parseInt(minHorizontalGap));
         }
 
         String minorGridAlpha = element.attributeValue("minorGridAlpha");
@@ -809,17 +834,17 @@ public abstract class AbstractChartLoader<T extends AbstractChart> extends Chart
 
         String minVerticalGap = element.attributeValue("minVerticalGap");
         if (StringUtils.isNotEmpty(minVerticalGap)) {
-            axis.setMinVerticalGap(Integer.valueOf(minVerticalGap));
+            axis.setMinVerticalGap(Integer.parseInt(minVerticalGap));
         }
 
         String minorTickLength = element.attributeValue("minorTickLength");
         if (StringUtils.isNotEmpty(minorTickLength)) {
-            axis.setMinorTickLength(Integer.valueOf(minorTickLength));
+            axis.setMinorTickLength(Integer.parseInt(minorTickLength));
         }
 
         String offset = element.attributeValue("offset");
         if (StringUtils.isNotEmpty(offset)) {
-            axis.setOffset(Integer.valueOf(offset));
+            axis.setOffset(Integer.parseInt(offset));
         }
 
         String position = element.attributeValue("position");
@@ -839,7 +864,7 @@ public abstract class AbstractChartLoader<T extends AbstractChart> extends Chart
 
         String tickLength = element.attributeValue("tickLength");
         if (StringUtils.isNotEmpty(tickLength)) {
-            axis.setTickLength(Integer.valueOf(tickLength));
+            axis.setTickLength(Integer.parseInt(tickLength));
         }
 
         String title = element.attributeValue("title");
@@ -859,12 +884,12 @@ public abstract class AbstractChartLoader<T extends AbstractChart> extends Chart
 
         String titleFontSize = element.attributeValue("titleFontSize");
         if (StringUtils.isNotEmpty(titleFontSize)) {
-            axis.setTitleFontSize(Integer.valueOf(titleFontSize));
+            axis.setTitleFontSize(Integer.parseInt(titleFontSize));
         }
 
         String titleRotation = element.attributeValue("titleRotation");
         if (StringUtils.isNotEmpty(titleRotation)) {
-            axis.setTitleRotation(Integer.valueOf(titleRotation));
+            axis.setTitleRotation(Integer.parseInt(titleRotation));
         }
     }
 
@@ -878,12 +903,12 @@ public abstract class AbstractChartLoader<T extends AbstractChart> extends Chart
 
         String width = element.attributeValue("width");
         if (StringUtils.isNotEmpty(width)) {
-            pattern.setWidth(Integer.valueOf(width));
+            pattern.setWidth(Integer.parseInt(width));
         }
 
         String height = element.attributeValue("height");
         if (StringUtils.isNotEmpty(height)) {
-            pattern.setHeight(Integer.valueOf(height));
+            pattern.setHeight(Integer.parseInt(height));
         }
 
         return pattern;
@@ -909,17 +934,17 @@ public abstract class AbstractChartLoader<T extends AbstractChart> extends Chart
 
         String height = element.attributeValue("height");
         if (StringUtils.isNotEmpty(height)) {
-            image.setHeight(Integer.valueOf(height));
+            image.setHeight(Integer.parseInt(height));
         }
 
         String offsetX = element.attributeValue("offsetX");
         if (StringUtils.isNotEmpty(offsetX)) {
-            image.setOffsetX(Integer.valueOf(offsetX));
+            image.setOffsetX(Integer.parseInt(offsetX));
         }
 
         String offsetY = element.attributeValue("offsetY");
         if (StringUtils.isNotEmpty(offsetY)) {
-            image.setOffsetY(Integer.valueOf(offsetY));
+            image.setOffsetY(Integer.parseInt(offsetY));
         }
 
         String outlineColor = element.attributeValue("outlineColor");
@@ -929,7 +954,7 @@ public abstract class AbstractChartLoader<T extends AbstractChart> extends Chart
 
         String rotation = element.attributeValue("rotation");
         if (StringUtils.isNotEmpty(rotation)) {
-            image.setRotation(Integer.valueOf(rotation));
+            image.setRotation(Integer.parseInt(rotation));
         }
 
         String svgPath = element.attributeValue("svgPath");
@@ -944,7 +969,7 @@ public abstract class AbstractChartLoader<T extends AbstractChart> extends Chart
 
         String width = element.attributeValue("width");
         if (StringUtils.isNotEmpty(width)) {
-            image.setWidth(Integer.valueOf(width));
+            image.setWidth(Integer.parseInt(width));
         }
 
         return image;

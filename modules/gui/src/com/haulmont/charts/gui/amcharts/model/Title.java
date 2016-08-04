@@ -25,6 +25,8 @@ public class Title extends AbstractChartObject {
 
     private Integer size;
 
+    private Integer tabIndex;
+
     private String text;
 
     public Double getAlpha() {
@@ -78,6 +80,15 @@ public class Title extends AbstractChartObject {
 
     public Title setId(String id) {
         this.id = id;
+        return this;
+    }
+
+    public Integer getTabIndex() {
+        return tabIndex;
+    }
+
+    public Title setTabIndex(Integer tabIndex) {
+        this.tabIndex = tabIndex;
         return this;
     }
 }

@@ -188,6 +188,20 @@
         </xs:restriction>
     </xs:simpleType>
 
+    <xs:simpleType name="resourceString">
+        <xs:union>
+            <xs:simpleType>
+                <xs:restriction base="xs:string"/>
+            </xs:simpleType>
+            <xs:simpleType>
+                <xs:restriction base="xs:string">
+                    <xs:enumeration value="msg://"/>
+                    <xs:enumeration value="mainMsg://"/>
+                </xs:restriction>
+            </xs:simpleType>
+        </xs:union>
+    </xs:simpleType>
+
     <xs:simpleType name="showPositionOnCandle">
         <xs:restriction base="xs:string">
             <xs:enumeration value="OPEN"/>
@@ -552,6 +566,7 @@
         <xs:attribute name="axisColor" type="color"/>
         <xs:attribute name="axisThickness" type="xs:integer"/>
         <xs:attribute name="bandAlpha" type="xs:double"/>
+        <xs:attribute name="bandGradientRatio" type="xs:string"/>
         <xs:attribute name="bandOutlineAlpha" type="xs:double"/>
         <xs:attribute name="bandOutlineColor" type="color"/>
         <xs:attribute name="bandOutlineThickness" type="xs:integer"/>
@@ -600,6 +615,7 @@
         <xs:attribute name="balloonText" type="xs:string"/>
         <xs:attribute name="color" type="color"/>
         <xs:attribute name="endValue" type="xs:double"/>
+        <xs:attribute name="gradientRatio" type="xs:string"/>
         <xs:attribute name="id" type="xs:string"/>
         <xs:attribute name="innerRadius" type="xs:string"/>
         <xs:attribute name="radius" type="xs:string"/>
@@ -778,6 +794,7 @@
             <xs:element name="valueFunction" minOccurs="0" maxOccurs="1"/>
         </xs:all>
 
+        <xs:attribute name="accessibleLabel" type="resourceString"/>
         <xs:attribute name="align" type="align"/>
         <xs:attribute name="autoMargins" type="xs:boolean"/>
         <xs:attribute name="backgroundAlpha" type="xs:double"/>
@@ -819,6 +836,7 @@
         <xs:attribute name="switchColor" type="color"/>
         <xs:attribute name="switchType" type="legendSwitch"/>
         <xs:attribute name="textClickEnabled" type="xs:boolean"/>
+        <xs:attribute name="tabIndex" type="xs:integer"/>
         <xs:attribute name="top" type="xs:integer"/>
         <xs:attribute name="useGraphSettings" type="xs:boolean"/>
         <xs:attribute name="useMarkerColorForLabels" type="xs:boolean"/>
@@ -838,6 +856,7 @@
         <xs:attribute name="id" type="xs:string"/>
         <xs:attribute name="rotation" type="xs:integer"/>
         <xs:attribute name="size" type="xs:integer"/>
+        <xs:attribute name="tabIndex" type="xs:integer"/>
         <xs:attribute name="text" type="xs:string"/>
         <xs:attribute name="url" type="xs:string"/>
         <xs:attribute name="x" type="xs:integer"/>
@@ -850,6 +869,7 @@
         <xs:attribute name="color" type="color"/>
         <xs:attribute name="id" type="xs:string"/>
         <xs:attribute name="size" type="xs:integer"/>
+        <xs:attribute name="tabIndex" type="xs:integer"/>
         <xs:attribute name="text" type="xs:string"/>
     </xs:complexType>
 
@@ -939,6 +959,7 @@
         <xs:attribute name="selectionAlpha" type="xs:double"/>
         <xs:attribute name="selectWithoutZooming" type="xs:boolean"/>
         <xs:attribute name="showNextAvailable" type="xs:boolean"/>
+        <xs:attribute name="tabIndex" type="xs:integer"/>
         <xs:attribute name="valueBalloonsEnabled" type="xs:boolean"/>
         <xs:attribute name="valueLineAlpha" type="xs:double"/>
         <xs:attribute name="valueLineAxis" type="xs:string"/>
@@ -972,6 +993,7 @@
     </xs:complexType>
 
     <xs:complexType name="chartScrollbar">
+        <xs:attribute name="accessibleLabel" type="resourceString"/>
         <xs:attribute name="autoGridCount" type="xs:boolean"/>
         <xs:attribute name="backgroundAlpha" type="xs:double"/>
         <xs:attribute name="backgroundColor" type="color"/>
@@ -1006,6 +1028,7 @@
         <xs:attribute name="selectedGraphFillColor" type="color"/>
         <xs:attribute name="selectedGraphLineAlpha" type="xs:double"/>
         <xs:attribute name="selectedGraphLineColor" type="color"/>
+        <xs:attribute name="tabIndex" type="xs:integer"/>
         <xs:attribute name="updateOnReleaseOnly" type="xs:boolean"/>
     </xs:complexType>
 
@@ -1015,12 +1038,13 @@
             <xs:element name="balloonFunction" minOccurs="0" maxOccurs="1"/>
             <xs:element name="pattern" minOccurs="0" maxOccurs="1" type="pattern"/>
             <xs:element name="labelFunction" minOccurs="0" maxOccurs="1"/>
+            <xs:element name="legendColorFunction" minOccurs="0" maxOccurs="1"/>
         </xs:all>
 
         <xs:attribute name="id" type="xs:string"/>
         <xs:attribute name="type" type="chartGraphType"/>
 
-        <xs:attribute name="accessibleLabel" type="xs:string"/>
+        <xs:attribute name="accessibleLabel" type="resourceString"/>
         <xs:attribute name="alphaField" type="xs:string"/>
         <xs:attribute name="animationPlayed" type="xs:boolean"/>
         <xs:attribute name="balloonColor" type="color"/>
@@ -1043,6 +1067,7 @@
         <xs:attribute name="clustered" type="xs:boolean"/>
         <xs:attribute name="color" type="color"/>
         <xs:attribute name="colorField" type="xs:string"/>
+        <xs:attribute name="columnIndexField" type="xs:string"/>
         <xs:attribute name="columnWidth" type="xs:string"/>
         <xs:attribute name="connect" type="xs:boolean"/>
         <xs:attribute name="cornerRadiusTop" type="xs:integer"/>
@@ -1110,6 +1135,7 @@
         <xs:attribute name="stackable" type="xs:boolean"/>
         <xs:attribute name="stepDirection" type="stepDirection"/>
         <xs:attribute name="switchable" type="xs:boolean"/>
+        <xs:attribute name="tabIndex" type="xs:integer"/>
         <xs:attribute name="title" type="xs:string"/>
         <xs:attribute name="topRadius" type="xs:integer"/>
         <xs:attribute name="urlField" type="xs:string"/>
@@ -1164,6 +1190,7 @@
         <xs:attribute name="additionalFields" type="xs:string"/>
         <xs:attribute name="autoDisplay" type="xs:boolean"/>
         <xs:attribute name="autoResize" type="xs:boolean"/>
+        <xs:attribute name="autoTransform" type="xs:boolean"/>
         <xs:attribute name="backgroundAlpha" type="xs:double"/>
         <xs:attribute name="backgroundColor" type="color"/>
         <xs:attribute name="borderAlpha" type="xs:double"/>
@@ -1281,6 +1308,7 @@
                 <xs:attribute name="zoomOutButtonImageSize" type="xs:integer"/>
                 <xs:attribute name="zoomOutButtonPadding" type="xs:integer"/>
                 <xs:attribute name="zoomOutButtonRollOverAlpha" type="xs:double"/>
+                <xs:attribute name="zoomOutButtonTabIndex" type="xs:integer"/>
                 <xs:attribute name="zoomOutText" type="xs:string"/>
             </xs:extension>
         </xs:complexContent>
@@ -1315,7 +1343,7 @@
                     <xs:element name="labelFunction" minOccurs="0" maxOccurs="1"/>
                 </xs:all>
 
-                <xs:attribute name="accessibleLabel" type="xs:string"/>
+                <xs:attribute name="accessibleLabel" type="resourceString"/>
                 <xs:attribute name="alpha" type="xs:double"/>
                 <xs:attribute name="alphaField" type="xs:double"/>
                 <xs:attribute name="baseColor" type="color"/>
@@ -1352,6 +1380,7 @@
 
                 <xs:attributeGroup ref="hasStartEffect"/>
 
+                <xs:attribute name="tabIndex" type="xs:integer"/>
                 <xs:attribute name="titleField" type="xs:string"/>
                 <xs:attribute name="urlField" type="xs:string"/>
                 <xs:attribute name="urlTarget" type="xs:string"/>
@@ -1383,6 +1412,7 @@
                 <xs:attribute name="mouseWheelScrollEnabled" type="xs:boolean"/>
                 <xs:attribute name="mouseWheelZoomEnabled" type="xs:boolean"/>
                 <xs:attribute name="rotate" type="xs:boolean"/>
+                <xs:attribute name="synchronizeGrid" type="xs:boolean"/>
                 <xs:attribute name="zoomOutOnDataUpdate" type="xs:boolean"/>
             </xs:extension>
         </xs:complexContent>

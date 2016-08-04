@@ -183,6 +183,11 @@ public abstract class SlicedChartLoader<T extends SlicedChart> extends AbstractC
             chart.setStartAlpha(Double.valueOf(startAlpha));
         }
 
+        String tabIndex = element.attributeValue("tabIndex");
+        if (StringUtils.isNotEmpty(tabIndex)) {
+            chart.setTabIndex(Integer.valueOf(tabIndex));
+        }
+
         loadStartEffect(chart, element);
 
         String titleField = element.attributeValue("titleField");

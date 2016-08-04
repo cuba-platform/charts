@@ -5,6 +5,8 @@
 
 package com.haulmont.charts.gui.amcharts.model;
 
+import java.util.List;
+
 /**
  * See documentation for properties of GaugeBand JS Object. <br/>
  *
@@ -16,6 +18,8 @@ public class GaugeBand extends AbstractChartObject {
     private static final long serialVersionUID = 6480625092225201700L;
 
     private Double alpha;
+
+    private List<Float> gradientRatio;
 
     private String balloonText;
 
@@ -32,6 +36,9 @@ public class GaugeBand extends AbstractChartObject {
     private Double startValue;
 
     private String url;
+
+    public GaugeBand() {
+    }
 
     public Double getAlpha() {
         return alpha;
@@ -111,6 +118,15 @@ public class GaugeBand extends AbstractChartObject {
 
     public GaugeBand setUrl(String url) {
         this.url = url;
+        return this;
+    }
+
+    public List<Float> getGradientRatio() {
+        return gradientRatio;
+    }
+
+    public GaugeBand setGradientRatio(List<Float> gradientRatio) {
+        this.gradientRatio = gradientRatio;
         return this;
     }
 }

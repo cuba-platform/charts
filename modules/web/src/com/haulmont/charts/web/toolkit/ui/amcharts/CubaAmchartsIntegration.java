@@ -34,7 +34,7 @@ import java.util.*;
         "vaadin://resources/amcharts/themes/light.js",
         "vaadin://resources/amcharts/themes/patterns.js",
 
-        "vaadin://resources/amcharts/plugins/export/export.js"
+        "vaadin://resources/amcharts/plugins/export/export.min.js"
         })
 @StyleSheet({
         "vaadin://resources/amcharts/style.css",

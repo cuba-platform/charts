@@ -27,6 +27,8 @@ public class GaugeAxis extends AbstractChartObject {
 
     private Double bandAlpha;
 
+    private List<Float> bandGradientRatio;
+
     private Double bandOutlineAlpha;
 
     private Color bandOutlineColor;
@@ -543,6 +545,15 @@ public class GaugeAxis extends AbstractChartObject {
 
     public GaugeAxis setFontSize(Integer fontSize) {
         this.fontSize = fontSize;
+        return this;
+    }
+
+    public List<Float> getBandGradientRatio() {
+        return bandGradientRatio;
+    }
+
+    public GaugeAxis setBandGradientRatio(List<Float> bandGradientRatio) {
+        this.bandGradientRatio = bandGradientRatio;
         return this;
     }
 }

@@ -104,6 +104,8 @@ public abstract class SlicedChart<T extends SlicedChart> extends AbstractChart<T
 
     private AnimationEffect startEffect;
 
+    private Integer tabIndex;
+
     private String titleField;
 
     private String urlField;
@@ -597,6 +599,15 @@ public abstract class SlicedChart<T extends SlicedChart> extends AbstractChart<T
 
     public T setLabelColorField(Color labelColorField) {
         this.labelColorField = labelColorField;
+        return (T) this;
+    }
+
+    public Integer getTabIndex() {
+        return tabIndex;
+    }
+
+    public T setTabIndex(Integer tabIndex) {
+        this.tabIndex = tabIndex;
         return (T) this;
     }
 }

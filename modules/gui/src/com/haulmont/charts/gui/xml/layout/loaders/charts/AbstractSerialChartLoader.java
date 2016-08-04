@@ -98,6 +98,11 @@ public abstract class AbstractSerialChartLoader<T extends AbstractSerialChart> e
             chart.setRotate(Boolean.valueOf(rotate));
         }
 
+        String synchronizeGrid = element.attributeValue("synchronizeGrid");
+        if (StringUtils.isNotEmpty(synchronizeGrid)) {
+            chart.setSynchronizeGrid(Boolean.parseBoolean(synchronizeGrid));
+        }
+
         Element scrollbarElement = element.element("valueScrollbar");
         if (scrollbarElement != null) {
             chart.setValueScrollbar(loadScrollbar(scrollbarElement));

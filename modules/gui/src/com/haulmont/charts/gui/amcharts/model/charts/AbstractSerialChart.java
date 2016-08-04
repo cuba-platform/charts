@@ -50,6 +50,8 @@ public abstract class AbstractSerialChart<T extends AbstractSerialChart> extends
 
     private Boolean rotate;
 
+    private Boolean synchronizeGrid;
+
     private Scrollbar valueScrollbar;
 
     private Boolean zoomOutOnDataUpdate;
@@ -210,5 +212,14 @@ public abstract class AbstractSerialChart<T extends AbstractSerialChart> extends
         }
 
         return wiredFields;
+    }
+
+    public Boolean getSynchronizeGrid() {
+        return synchronizeGrid;
+    }
+
+    public T setSynchronizeGrid(Boolean synchronizeGrid) {
+        this.synchronizeGrid = synchronizeGrid;
+        return (T) this;
     }
 }

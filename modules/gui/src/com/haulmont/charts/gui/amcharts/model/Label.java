@@ -29,6 +29,8 @@ public class Label extends AbstractChartObject {
 
     private Integer size;
 
+    private Integer tabIndex;
+
     private String text;
 
     private String url;
@@ -133,6 +135,15 @@ public class Label extends AbstractChartObject {
 
     public Label setId(String id) {
         this.id = id;
+        return this;
+    }
+
+    public Integer getTabIndex() {
+        return tabIndex;
+    }
+
+    public Label setTabIndex(Integer tabIndex) {
+        this.tabIndex = tabIndex;
         return this;
     }
 }

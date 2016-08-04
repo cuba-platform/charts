@@ -46,6 +46,8 @@ public abstract class AbstractChart<T extends AbstractChartObject> extends Chart
 
     private Boolean autoResize;
 
+    private Boolean autoTransform;
+
     private Double backgroundAlpha;
 
     private Color backgroundColor;
@@ -635,6 +637,15 @@ public abstract class AbstractChart<T extends AbstractChartObject> extends Chart
         if (dataProviderChangeListeners != null) {
             dataProviderChangeListeners.remove(listener);
         }
+    }
+
+    public Boolean getAutoTransform() {
+        return autoTransform;
+    }
+
+    public T setAutoTransform(Boolean autoTransform) {
+        this.autoTransform = autoTransform;
+        return (T) this;
     }
 
     public interface DataProviderChangeListener {

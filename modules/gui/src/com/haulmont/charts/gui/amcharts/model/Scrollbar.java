@@ -15,6 +15,8 @@ public class Scrollbar extends AbstractChartObject {
 
     private static final long serialVersionUID = 6850646494521513508L;
 
+    private String accessibleLabel;
+
     private Boolean autoGridCount;
 
     private Double backgroundAlpha;
@@ -82,6 +84,8 @@ public class Scrollbar extends AbstractChartObject {
     private Double selectedGraphLineAlpha;
 
     private Color selectedGraphLineColor;
+
+    private Integer tabIndex;
 
     private Boolean updateOnReleaseOnly;
 
@@ -397,6 +401,24 @@ public class Scrollbar extends AbstractChartObject {
 
     public Scrollbar setDragCursorHover(String dragCursorHover) {
         this.dragCursorHover = dragCursorHover;
+        return this;
+    }
+
+    public Integer getTabIndex() {
+        return tabIndex;
+    }
+
+    public Scrollbar setTabIndex(Integer tabIndex) {
+        this.tabIndex = tabIndex;
+        return this;
+    }
+
+    public String getAccessibleLabel() {
+        return accessibleLabel;
+    }
+
+    public Scrollbar setAccessibleLabel(String accessibleLabel) {
+        this.accessibleLabel = accessibleLabel;
         return this;
     }
 }

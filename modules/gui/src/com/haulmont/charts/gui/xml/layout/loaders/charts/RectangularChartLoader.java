@@ -131,6 +131,11 @@ public abstract class RectangularChartLoader<T extends RectangularChart> extends
             chart.setZoomOutButtonRollOverAlpha(Double.valueOf(zoomOutButtonRollOverAlpha));
         }
 
+        String zoomOutButtonTabIndex = element.attributeValue("zoomOutButtonTabIndex");
+        if (StringUtils.isNotEmpty(zoomOutButtonTabIndex)) {
+            chart.setZoomOutButtonTabIndex(Integer.valueOf(zoomOutButtonTabIndex));
+        }
+
         String zoomOutText = element.attributeValue("zoomOutText");
         if (StringUtils.isNotEmpty(zoomOutText)) {
             chart.setZoomOutText(loadResourceString(zoomOutText));
@@ -329,6 +334,11 @@ public abstract class RectangularChartLoader<T extends RectangularChart> extends
     protected Scrollbar loadScrollbar(Element scrollbarElement) {
         Scrollbar scrollbar = new Scrollbar();
 
+        String accessibleLabel = scrollbarElement.attributeValue("accessibleLabel");
+        if (StringUtils.isNotEmpty(accessibleLabel)) {
+            scrollbar.setAccessibleLabel(loadResourceString(accessibleLabel));
+        }
+
         String autoGridCount = scrollbarElement.attributeValue("autoGridCount");
         if (StringUtils.isNotEmpty(autoGridCount)) {
             scrollbar.setAutoGridCount(Boolean.valueOf(autoGridCount));
@@ -497,6 +507,11 @@ public abstract class RectangularChartLoader<T extends RectangularChart> extends
         String selectedGraphLineColor = scrollbarElement.attributeValue("selectedGraphLineColor");
         if (StringUtils.isNotEmpty(selectedGraphLineColor)) {
             scrollbar.setSelectedGraphLineColor(Color.valueOf(selectedGraphLineColor));
+        }
+
+        String tabIndex = scrollbarElement.attributeValue("tabIndex");
+        if (StringUtils.isNotEmpty(tabIndex)) {
+            scrollbar.setTabIndex(Integer.valueOf(tabIndex));
         }
 
         String updateOnReleaseOnly = scrollbarElement.attributeValue("updateOnReleaseOnly");

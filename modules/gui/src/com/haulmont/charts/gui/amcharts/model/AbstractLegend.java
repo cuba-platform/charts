@@ -20,6 +20,8 @@ public class AbstractLegend<T extends AbstractLegend> extends AbstractChartObjec
 
     private static final long serialVersionUID = -8561508956306637129L;
 
+    private String accessibleLabel;
+
     private Align align;
 
     private Boolean autoMargins;
@@ -103,6 +105,8 @@ public class AbstractLegend<T extends AbstractLegend> extends AbstractChartObjec
     private Color switchColor;
 
     private LegendSwitch switchType;
+
+    private Integer tabIndex;
 
     private Boolean textClickEnabled;
 
@@ -618,6 +622,24 @@ public class AbstractLegend<T extends AbstractLegend> extends AbstractChartObjec
 
     public T setGradientRotation(Integer gradientRotation) {
         this.gradientRotation = gradientRotation;
+        return (T) this;
+    }
+
+    public Integer getTabIndex() {
+        return tabIndex;
+    }
+
+    public T setTabIndex(Integer tabIndex) {
+        this.tabIndex = tabIndex;
+        return (T) this;
+    }
+
+    public String getAccessibleLabel() {
+        return accessibleLabel;
+    }
+
+    public T setAccessibleLabel(String accessibleLabel) {
+        this.accessibleLabel = accessibleLabel;
         return (T) this;
     }
 }

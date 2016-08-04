@@ -10,7 +10,16 @@ import com.haulmont.charts.gui.amcharts.model.charts.AngularGaugeChart;
 import org.apache.commons.lang.StringUtils;
 import org.dom4j.Element;
 
+import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.HashSet;
+import java.util.List;
+import java.util.regex.*;
+
 public class AngularGaugeChartLoader extends AbstractChartLoader<AngularGaugeChart> {
+
+    protected static final java.util.regex.Pattern GRADIENT_RATIO_PATTERN = java.util.regex.Pattern.compile("\\s*,\\s*");
+
     @Override
     public void loadComponent() {
         super.loadComponent();
@@ -120,6 +129,14 @@ public class AngularGaugeChartLoader extends AbstractChartLoader<AngularGaugeCha
                 String bandAlpha = axisElement.attributeValue("bandAlpha");
                 if (StringUtils.isNotEmpty(bandAlpha)) {
                     axis.setBandAlpha(Double.valueOf(bandAlpha));
+                }
+
+                String bandGradientRatio = axisElement.attributeValue("bandGradientRatio");
+                if (StringUtils.isNotEmpty(bandGradientRatio)) {
+                    List<Float> bandGradientRatioList = new ArrayList();
+                    for (String s : GRADIENT_RATIO_PATTERN.split(bandGradientRatio))
+                        bandGradientRatioList.add(Float.valueOf(s));
+                    axis.setBandGradientRatio(bandGradientRatioList);
                 }
 
                 String bandOutlineAlpha = axisElement.attributeValue("bandOutlineAlpha");
@@ -343,6 +360,14 @@ public class AngularGaugeChartLoader extends AbstractChartLoader<AngularGaugeCha
                 String alpha = bandElement.attributeValue("alpha");
                 if (StringUtils.isNotEmpty(alpha)) {
                     band.setAlpha(Double.valueOf(alpha));
+                }
+
+                String gradientRatio = axisElement.attributeValue("gradientRatio");
+                if (StringUtils.isNotEmpty(gradientRatio)) {
+                    List<Float> gradientRatioList = new ArrayList();
+                    for (String s : GRADIENT_RATIO_PATTERN.split(gradientRatio))
+                        gradientRatioList.add(Float.valueOf(s));
+                    band.setGradientRatio(gradientRatioList);
                 }
 
                 String balloonText = bandElement.attributeValue("balloonText");

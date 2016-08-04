@@ -78,6 +78,8 @@ public abstract class RectangularChart<T extends RectangularChart> extends Coord
 
     private Double zoomOutButtonRollOverAlpha;
 
+    private Integer zoomOutButtonTabIndex;
+
     private String zoomOutText;
 
     public RectangularChart(ChartType type) {
@@ -360,6 +362,15 @@ public abstract class RectangularChart<T extends RectangularChart> extends Coord
 
     public T setMinMarginTop(Integer minMarginTop) {
         this.minMarginTop = minMarginTop;
+        return (T) this;
+    }
+
+    public Integer getZoomOutButtonTabIndex() {
+        return zoomOutButtonTabIndex;
+    }
+
+    public T setZoomOutButtonTabIndex(Integer zoomOutButtonTabIndex) {
+        this.zoomOutButtonTabIndex = zoomOutButtonTabIndex;
         return (T) this;
     }
 }

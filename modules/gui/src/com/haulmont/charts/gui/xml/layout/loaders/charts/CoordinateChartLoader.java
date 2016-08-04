@@ -63,7 +63,7 @@ public abstract class CoordinateChartLoader<T extends CoordinateChart> extends A
     protected void loadGraph(AbstractGraph graph, Element graphElement) {
         String accessibleLabel = graphElement.attributeValue("accessibleLabel");
         if (StringUtils.isNotEmpty(accessibleLabel)) {
-            graph.setAccessibleLabel(accessibleLabel);
+            graph.setAccessibleLabel(loadResourceString(accessibleLabel));
         }
 
         String alphaField = graphElement.attributeValue("alphaField");
@@ -184,6 +184,11 @@ public abstract class CoordinateChartLoader<T extends CoordinateChart> extends A
         String colorField = graphElement.attributeValue("colorField");
         if (StringUtils.isNotEmpty(colorField)) {
             graph.setColorField(colorField);
+        }
+
+        String columnIndexField = graphElement.attributeValue("columnIndexField");
+        if (StringUtils.isNotEmpty(columnIndexField)) {
+            graph.setColumnIndexField(columnIndexField);
         }
 
         String columnWidth = graphElement.attributeValue("columnWidth");
@@ -368,6 +373,11 @@ public abstract class CoordinateChartLoader<T extends CoordinateChart> extends A
             graph.setLegendColor(Color.valueOf(legendColor));
         }
 
+        String legendColorFunction = graphElement.elementText("legendColorFunction");
+        if (StringUtils.isNotBlank(legendColorFunction)) {
+            graph.setLegendColorFunction(new JsFunction(legendColorFunction));
+        }
+
         String legendPeriodValueText = graphElement.attributeValue("legendPeriodValueText");
         if (StringUtils.isNotEmpty(legendPeriodValueText)) {
             graph.setLegendPeriodValueText(loadResourceString(legendPeriodValueText));
@@ -536,6 +546,11 @@ public abstract class CoordinateChartLoader<T extends CoordinateChart> extends A
         String switchable = graphElement.attributeValue("switchable");
         if (StringUtils.isNotEmpty(switchable)) {
             graph.setSwitchable(Boolean.valueOf(switchable));
+        }
+
+        String tabIndex = graphElement.attributeValue("tabIndex");
+        if (StringUtils.isNotEmpty(tabIndex)) {
+            graph.setTabIndex(Integer.valueOf(tabIndex));
         }
 
         String title = graphElement.attributeValue("title");

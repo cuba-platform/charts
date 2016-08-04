@@ -71,6 +71,8 @@ public class AbstractGraph<T extends AbstractGraph> extends AbstractChartObject 
 
     private String colorField;
 
+    private String columnIndexField;
+
     private Double columnWidth;
 
     private Boolean connect;
@@ -143,6 +145,8 @@ public class AbstractGraph<T extends AbstractGraph> extends AbstractChartObject 
 
     private Color legendColor;
 
+    private JsFunction legendColorFunction;
+
     private String legendPeriodValueText;
 
     private String legendValueText;
@@ -210,6 +214,8 @@ public class AbstractGraph<T extends AbstractGraph> extends AbstractChartObject 
     private StepDirection stepDirection;
 
     private Boolean switchable;
+
+    private Integer tabIndex;
 
     private String title;
 
@@ -1312,5 +1318,32 @@ public class AbstractGraph<T extends AbstractGraph> extends AbstractChartObject 
         }
 
         return wiredFields;
+    }
+
+    public JsFunction getLegendColorFunction() {
+        return legendColorFunction;
+    }
+
+    public T setLegendColorFunction(JsFunction legendColorFunction) {
+        this.legendColorFunction = legendColorFunction;
+        return (T) this;
+    }
+
+    public Integer getTabIndex() {
+        return tabIndex;
+    }
+
+    public T setTabIndex(Integer tabIndex) {
+        this.tabIndex = tabIndex;
+        return (T) this;
+    }
+
+    public String getColumnIndexField() {
+        return columnIndexField;
+    }
+
+    public T setColumnIndexField(String columnIndexField) {
+        this.columnIndexField = columnIndexField;
+        return (T) this;
     }
 }
