@@ -361,7 +361,7 @@ public class AngularGaugeChartLoader extends AbstractChartLoader<AngularGaugeCha
 
                 String gradientRatio = axisElement.attributeValue("gradientRatio");
                 if (StringUtils.isNotEmpty(gradientRatio)) {
-                    List<Float> gradientRatioList = new ArrayList();
+                    List<Float> gradientRatioList = new ArrayList<>();
                     for (String s : GRADIENT_RATIO_PATTERN.split(gradientRatio))
                         gradientRatioList.add(Float.valueOf(s));
                     band.setGradientRatio(gradientRatioList);
