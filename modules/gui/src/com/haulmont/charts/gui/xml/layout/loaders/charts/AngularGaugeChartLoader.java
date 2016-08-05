@@ -11,10 +11,7 @@ import org.apache.commons.lang.StringUtils;
 import org.dom4j.Element;
 
 import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.HashSet;
 import java.util.List;
-import java.util.regex.*;
 
 public class AngularGaugeChartLoader extends AbstractChartLoader<AngularGaugeChart> {
 
@@ -133,7 +130,7 @@ public class AngularGaugeChartLoader extends AbstractChartLoader<AngularGaugeCha
 
                 String bandGradientRatio = axisElement.attributeValue("bandGradientRatio");
                 if (StringUtils.isNotEmpty(bandGradientRatio)) {
-                    List<Float> bandGradientRatioList = new ArrayList();
+                    List<Float> bandGradientRatioList = new ArrayList<>();
                     for (String s : GRADIENT_RATIO_PATTERN.split(bandGradientRatio))
                         bandGradientRatioList.add(Float.valueOf(s));
                     axis.setBandGradientRatio(bandGradientRatioList);
