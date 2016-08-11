@@ -174,6 +174,12 @@ public class WebChart extends WebAbstractComponent<CubaAmchartsScene> implements
         }
 
         component.drawChart(chart);
+
+        if (component.getChart() != null &&
+                component.getChart().getResponsive() != null &&
+                BooleanUtils.isTrue(component.getChart().getResponsive().isEnabled())) {
+            component.activateResponsivePlugin();
+        }
     }
 
     @Override
@@ -869,6 +875,33 @@ public class WebChart extends WebAbstractComponent<CubaAmchartsScene> implements
                 zoomListeners = null;
             }
         }
+    }
+
+    @Override
+    public void setResponsive(boolean responsive) {
+        if (component.getChart() == null) {
+            throw new IllegalStateException("Chart configuration is not set");
+        }
+
+        component.activateResponsivePlugin();
+        if (component.getChart().getResponsive() == null) {
+            component.getChart().setResponsive(new Responsive());
+        }
+
+        component.getChart().getResponsive().setEnabled(responsive);
+    }
+
+    @Override
+    public boolean isResponsive() {
+        if (component.getChart() == null) {
+            throw new IllegalStateException("Chart configuration is not set");
+        }
+
+        if (component.getChart().getResponsive() == null ||
+                component.getChart().getResponsive().isEnabled() == null) {
+            return false;
+        }
+        return component.getChart().getResponsive().isEnabled();
     }
 
     protected class CubaAmchartsSceneExt extends CubaAmchartsScene {

@@ -166,6 +166,10 @@ public class CubaAmchartsScene extends AbstractComponent {
         markAsDirty();
     }
 
+    public void activateResponsivePlugin() {
+        CubaAmchartsResponsiveIntegration.get();
+    }
+
     public AngularGaugeChart gaugeChart() {
         AngularGaugeChart gaugeChart = new AngularGaugeChart();
         drawChart(gaugeChart);

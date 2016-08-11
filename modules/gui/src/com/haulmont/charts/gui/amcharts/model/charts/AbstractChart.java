@@ -5,7 +5,7 @@
 
 package com.haulmont.charts.gui.amcharts.model.charts;
 
-import com.google.gson.*;
+import com.google.gson.JsonElement;
 import com.google.gson.annotations.Expose;
 import com.haulmont.charts.gui.amcharts.model.*;
 import com.haulmont.charts.gui.amcharts.model.data.DataItem;
@@ -126,6 +126,8 @@ public abstract class AbstractChart<T extends AbstractChartObject> extends Chart
     private ChartType type;
 
     private Boolean usePrefixes;
+
+    private Responsive responsive;
 
     @Expose(serialize = false, deserialize = false)
     private List<String> additionalFields;
@@ -578,6 +580,15 @@ public abstract class AbstractChart<T extends AbstractChartObject> extends Chart
 
     public String getAccessibleTitle() {
         return accessibleTitle;
+    }
+
+    public T setResponsive(Responsive responsive) {
+        this.responsive = responsive;
+        return (T) this;
+    }
+
+    public Responsive getResponsive() {
+        return responsive;
     }
 
     public T setAccessibleTitle(String accessibleTitle) {

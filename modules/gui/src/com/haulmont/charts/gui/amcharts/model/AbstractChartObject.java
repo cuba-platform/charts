@@ -60,6 +60,7 @@ public abstract class AbstractChartObject implements Serializable {
         builder.registerTypeHierarchyAdapter(Color.class, new ColorSerializer());
         builder.registerTypeHierarchyAdapter(JsFunction.class, new JsFunctionSerializer());
         builder.registerTypeHierarchyAdapter(Date.class, new ConfigDateSerializer());
+        builder.registerTypeHierarchyAdapter(Rule.class, new ResponsiveRuleSerializer());
     }
 
     @Override

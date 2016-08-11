@@ -100,6 +100,15 @@ public interface Chart extends Component, Component.BelongToFrame, Component.Has
     void removeZoomListener(ZoomListener zoomListener);
 
     /**
+     * Set responsive option for chart.
+     */
+    void setResponsive(boolean value);
+    /**
+     * @return true if chart has responsive rules.
+     */
+    boolean isResponsive();
+
+    /**
      * Zooms out, charts shows all available data.
      */
     void zoomOut();

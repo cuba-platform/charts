@@ -782,6 +782,27 @@
         <xs:attribute name="markerType" type="markerType"/>
     </xs:complexType>
 
+    <xs:complexType name="responsive">
+        <xs:all>
+            <xs:element name="rules" maxOccurs="1">
+                <xs:complexType>
+                    <xs:sequence minOccurs="0" maxOccurs="1">
+                        <xs:element name="rule" minOccurs="0" maxOccurs="unbounded">
+                            <xs:complexType mixed="true">
+                                <xs:attribute name="minWidth" type="xs:integer"/>
+                                <xs:attribute name="maxWidth" type="xs:integer"/>
+                                <xs:attribute name="minHeight" type="xs:integer"/>
+                                <xs:attribute name="maxHeight" type="xs:integer"/>
+                            </xs:complexType>
+                        </xs:element>
+                    </xs:sequence>
+                </xs:complexType>
+            </xs:element>
+        </xs:all>
+
+        <xs:attribute name="enabled" type="xs:boolean"/>
+    </xs:complexType>
+
     <xs:complexType name="legend">
         <xs:all>
             <xs:element name="data" minOccurs="0" maxOccurs="1">
@@ -1172,6 +1193,7 @@
             </xs:element>
             <xs:element name="balloon" minOccurs="0" maxOccurs="1" type="balloon"/>
             <xs:element name="legend" minOccurs="0" maxOccurs="1" type="legend"/>
+            <xs:element name="responsive" minOccurs="0" maxOccurs="1" type="responsive"/>
         </xs:all>
 
         <xs:attribute name="accessible" type="xs:boolean"/>

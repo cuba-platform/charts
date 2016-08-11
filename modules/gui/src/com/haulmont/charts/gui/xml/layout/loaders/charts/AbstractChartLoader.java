@@ -5,6 +5,7 @@
 
 package com.haulmont.charts.gui.xml.layout.loaders.charts;
 
+import com.haulmont.bali.util.Dom4j;
 import com.haulmont.charts.gui.amcharts.model.*;
 import com.haulmont.charts.gui.amcharts.model.charts.AbstractChart;
 import com.haulmont.charts.gui.components.charts.Chart;
@@ -646,6 +647,54 @@ public abstract class AbstractChartLoader<T extends AbstractChart> extends Chart
         String defs = element.attributeValue("defs");
         if (StringUtils.isNotEmpty(defs)) {
             chart.setDefs(defs);
+        }
+
+        Element responsiveElement = element.element("responsive");
+        if (responsiveElement != null) {
+            Responsive responsive = new Responsive();
+            loadResponsive(responsive, responsiveElement);
+            chart.setResponsive(responsive);
+        }
+    }
+
+    protected void loadResponsive(Responsive responsive, Element responsiveElement) {
+        loadRules(responsive, responsiveElement);
+
+        String responsiveValue = responsiveElement.attributeValue("enabled");
+        if (StringUtils.isNotEmpty(responsiveValue)) {
+            responsive.setEnabled(Boolean.parseBoolean(responsiveValue));
+        }
+    }
+
+    protected void loadRules(Responsive responsive, Element responsiveElement) {
+        Element rulesElement = responsiveElement.element("rules");
+        if (rulesElement != null) {
+            for (Element ruleElement : Dom4j.elements(rulesElement, "rule")) {
+                Rule rule = new Rule();
+
+                String maxHeight = ruleElement.attributeValue("maxHeight");
+                if (StringUtils.isNotEmpty(maxHeight)) {
+                    rule.setMaxHeight(Integer.parseInt(maxHeight));
+                }
+
+                String minHeight = ruleElement.attributeValue("minHeight");
+                if (StringUtils.isNotEmpty(minHeight)) {
+                    rule.setMinHeight(Integer.parseInt(minHeight));
+                }
+
+                String maxWidth = ruleElement.attributeValue("maxWidth");
+                if (StringUtils.isNotEmpty(maxWidth)) {
+                    rule.setMaxWidth(Integer.parseInt(maxWidth));
+                }
+
+                String minWidth = ruleElement.attributeValue("minWidth");
+                if (StringUtils.isNotEmpty(minWidth)) {
+                    rule.setMinWidth(Integer.parseInt(minWidth));
+                }
+
+                rule.setRawOverridesJson(ruleElement.getTextTrim());
+                responsive.addRule(rule);
+            }
         }
     }
 
