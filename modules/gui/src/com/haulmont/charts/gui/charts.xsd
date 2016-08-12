@@ -1187,7 +1187,7 @@
             <xs:element name="titles" minOccurs="0" maxOccurs="1">
                 <xs:complexType>
                     <xs:sequence minOccurs="0" maxOccurs="1">
-                        <xs:element name="label" minOccurs="0" maxOccurs="unbounded" type="title"/>
+                        <xs:element name="title" minOccurs="0" maxOccurs="unbounded" type="title"/>
                     </xs:sequence>
                 </xs:complexType>
             </xs:element>
