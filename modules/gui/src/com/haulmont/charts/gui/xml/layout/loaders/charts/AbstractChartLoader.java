@@ -5,6 +5,8 @@
 
 package com.haulmont.charts.gui.xml.layout.loaders.charts;
 
+import com.google.gson.JsonParser;
+import com.google.gson.JsonSyntaxException;
 import com.haulmont.bali.util.Dom4j;
 import com.haulmont.charts.gui.amcharts.model.*;
 import com.haulmont.charts.gui.amcharts.model.charts.AbstractChart;
@@ -654,6 +656,19 @@ public abstract class AbstractChartLoader<T extends AbstractChart> extends Chart
             Responsive responsive = new Responsive();
             loadResponsive(responsive, responsiveElement);
             chart.setResponsive(responsive);
+        }
+
+        Element customJson = element.element("customJson");
+        if (customJson != null) {
+            String customJsonString = customJson.getTextTrim();
+            try {
+                JsonParser parser = new JsonParser();
+                parser.parse(customJsonString);
+            } catch (JsonSyntaxException e) {
+                throw new GuiDevelopmentException("Unable to parse JSON from XML chart configuration", context.getFullFrameId());
+            }
+
+            resultComponent.setCustomJson(customJsonString);
         }
     }
 

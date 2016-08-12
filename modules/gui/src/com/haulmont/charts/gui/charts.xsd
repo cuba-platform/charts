@@ -1194,6 +1194,7 @@
             <xs:element name="balloon" minOccurs="0" maxOccurs="1" type="balloon"/>
             <xs:element name="legend" minOccurs="0" maxOccurs="1" type="legend"/>
             <xs:element name="responsive" minOccurs="0" maxOccurs="1" type="responsive"/>
+            <xs:element name="customJson" minOccurs="0" maxOccurs="1"/>
         </xs:all>
 
         <xs:attribute name="accessible" type="xs:boolean"/>

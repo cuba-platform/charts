@@ -904,6 +904,16 @@ public class WebChart extends WebAbstractComponent<CubaAmchartsScene> implements
         return component.getChart().getResponsive().isEnabled();
     }
 
+    @Override
+    public void setCustomJson(String json) {
+        component.setJson(json);
+    }
+
+    @Override
+    public String getCustomJson() {
+        return component.getJson();
+    }
+
     protected class CubaAmchartsSceneExt extends CubaAmchartsScene {
 
         private static final long serialVersionUID = 4357940484867437795L;
