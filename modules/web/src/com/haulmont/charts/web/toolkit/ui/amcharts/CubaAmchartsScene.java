@@ -5,10 +5,7 @@
 
 package com.haulmont.charts.web.toolkit.ui.amcharts;
 
-import com.google.gson.Gson;
-import com.google.gson.JsonArray;
-import com.google.gson.JsonObject;
-import com.google.gson.JsonSerializationContext;
+import com.google.gson.*;
 import com.haulmont.charts.gui.amcharts.model.AbstractChartObject;
 import com.haulmont.charts.gui.amcharts.model.charts.*;
 import com.haulmont.charts.gui.amcharts.model.data.DataChangeListener;
@@ -122,6 +119,13 @@ public class CubaAmchartsScene extends AbstractComponent {
 
     public void setJson(String json) {
         if (!StringUtils.equals(getJson(), json)) {
+            try {
+                JsonParser parser = new JsonParser();
+                parser.parse(json);
+            } catch (JsonSyntaxException e) {
+                throw new IllegalStateException("Unable to parse JSON chart configuration");
+            }
+
             getState().json = json;
             forceStateChange();
         }
