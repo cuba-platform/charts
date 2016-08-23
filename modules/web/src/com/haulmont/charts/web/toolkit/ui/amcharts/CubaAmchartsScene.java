@@ -119,11 +119,13 @@ public class CubaAmchartsScene extends AbstractComponent {
 
     public void setJson(String json) {
         if (!StringUtils.equals(getJson(), json)) {
-            try {
-                JsonParser parser = new JsonParser();
-                parser.parse(json);
-            } catch (JsonSyntaxException e) {
-                throw new IllegalStateException("Unable to parse JSON chart configuration");
+            if (json != null) {
+                try {
+                    JsonParser parser = new JsonParser();
+                    parser.parse(json);
+                } catch (JsonSyntaxException e) {
+                    throw new IllegalStateException("Unable to parse JSON chart configuration");
+                }
             }
 
             getState().json = json;
