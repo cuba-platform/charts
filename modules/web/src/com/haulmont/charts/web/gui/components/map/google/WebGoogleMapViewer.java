@@ -121,12 +121,9 @@ public class WebGoogleMapViewer extends WebAbstractComponent<GoogleMap> implemen
     public WebGoogleMapViewer() {
         super();
 
-        String apiOrClientId;
-        if (mapConfig.isUseBusinessApiKey()) {
-            apiOrClientId = mapConfig.getBusinessApiKey();
-        } else {
-            apiOrClientId = mapConfig.getClientId();
-        }
+        String clientId = mapConfig.getClientId();
+        String key = mapConfig.getApiKey();
+        String lang = mapConfig.getLanguage();
 
         mapInitHandler = (center, zoom, boundsNE, boundsSW) -> {
             if (mapInitListeners == null) {
@@ -141,7 +138,7 @@ public class WebGoogleMapViewer extends WebAbstractComponent<GoogleMap> implemen
         };
 
         component = new GoogleMap(new LatLon(mapConfig.getDefLatitude(), mapConfig.getDefLongitude()),
-                mapConfig.getDefZoom().intValue(), apiOrClientId, mapInitHandler);
+                mapConfig.getDefZoom().intValue(), key, clientId, lang, mapInitHandler);
     }
 
     @Override

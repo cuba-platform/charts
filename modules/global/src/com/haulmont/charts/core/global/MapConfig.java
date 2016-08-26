@@ -21,22 +21,17 @@ public interface MapConfig extends Config {
     String getMapsProvider();
     void setMapsProvider(String key);
 
-    @Property("charts.map.freeApiKey")
-    String getFreeApiKey();
-    void setFreeApiKey(String key);
-
-    @Property("charts.map.businessApiKey")
-    String getBusinessApiKey();
-    void setBusinessApiKey(String key);
+    @Property("charts.map.apiKey")
+    String getApiKey();
+    void setApiKey(String key);
 
     @Property("charts.map.clientId")
     String getClientId();
     void setClientId(String id);
 
-    @Property("charts.map.useBusinessApiKey")
-    @DefaultBoolean(false)
-    boolean isUseBusinessApiKey();
-    void setUseBusinessApiKey(boolean value);
+    @Property("charts.map.language")
+    String getLanguage();
+    void setLanguage(String id);
 
     @Property("charts.map.defaultZoom")
     @DefaultDouble(8.0)
