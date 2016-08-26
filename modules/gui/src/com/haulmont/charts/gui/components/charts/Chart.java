@@ -109,14 +109,14 @@ public interface Chart extends Component, Component.BelongToFrame, Component.Has
     boolean isResponsive();
 
     /**
-     * Set custom JSON config as a string additionaly to existing JSON.
-     * This JSON can override configs from XML.
+     * Set additional JSON configuration as a string.
+     * This JSON can override configuration loaded from XML and from Component API.
      */
-    void setCustomJson(String json);
+    void setNativeJson(String json);
     /**
-     * @return custom JSON as string.
+     * @return additional JSON configuration as a string.
      */
-    String getCustomJson();
+    String getNativeJson();
 
     /**
      * Zooms out, charts shows all available data.

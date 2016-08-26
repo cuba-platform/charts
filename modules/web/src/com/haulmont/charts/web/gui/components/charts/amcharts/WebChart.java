@@ -905,12 +905,12 @@ public class WebChart extends WebAbstractComponent<CubaAmchartsScene> implements
     }
 
     @Override
-    public void setCustomJson(String json) {
+    public void setNativeJson(String json) {
         component.setJson(json);
     }
 
     @Override
-    public String getCustomJson() {
+    public String getNativeJson() {
         return component.getJson();
     }
 

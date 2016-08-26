@@ -658,17 +658,17 @@ public abstract class AbstractChartLoader<T extends AbstractChart> extends Chart
             chart.setResponsive(responsive);
         }
 
-        Element customJson = element.element("customJson");
-        if (customJson != null) {
-            String customJsonString = customJson.getTextTrim();
+        Element nativeJson = element.element("nativeJson");
+        if (nativeJson != null) {
+            String nativeJsonString = nativeJson.getTextTrim();
             try {
                 JsonParser parser = new JsonParser();
-                parser.parse(customJsonString);
+                parser.parse(nativeJsonString);
             } catch (JsonSyntaxException e) {
                 throw new GuiDevelopmentException("Unable to parse JSON from XML chart configuration", context.getFullFrameId());
             }
 
-            resultComponent.setCustomJson(customJsonString);
+            resultComponent.setNativeJson(nativeJsonString);
         }
     }
 
