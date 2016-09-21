@@ -6,10 +6,7 @@
 package com.haulmont.charts.web.gui.components.charts.amcharts;
 
 import com.haulmont.charts.gui.amcharts.model.*;
-import com.haulmont.charts.gui.amcharts.model.charts.AbstractChart;
-import com.haulmont.charts.gui.amcharts.model.charts.GanttChart;
-import com.haulmont.charts.gui.amcharts.model.charts.RectangularChart;
-import com.haulmont.charts.gui.amcharts.model.charts.SerialChart;
+import com.haulmont.charts.gui.amcharts.model.charts.*;
 import com.haulmont.charts.gui.amcharts.model.data.EntityDataProvider;
 import com.haulmont.charts.gui.amcharts.model.gson.ChartJsonSerializationContext;
 import com.haulmont.charts.gui.components.charts.Chart;
@@ -927,8 +924,8 @@ public class WebChart extends WebAbstractComponent<CubaAmchartsScene> implements
             if (chart instanceof RectangularChart) {
                 setupRectangularChartDefaults((RectangularChart) chart);
             }
-            if (chart instanceof SerialChart) {
-                setupSerialChartDefaults((SerialChart) chart);
+            if (chart instanceof AbstractSerialChart) {
+                setupSerialChartDefaults((AbstractSerialChart) chart);
             }
         }
 
@@ -1000,7 +997,7 @@ public class WebChart extends WebAbstractComponent<CubaAmchartsScene> implements
             }
         }
 
-        protected void setupSerialChartDefaults(SerialChart chart) {
+        protected void setupSerialChartDefaults(AbstractSerialChart chart) {
             boolean byDate = WebChart.this.byDate;
 
             if (datasource != null && StringUtils.isNotEmpty(chart.getCategoryField())) {
