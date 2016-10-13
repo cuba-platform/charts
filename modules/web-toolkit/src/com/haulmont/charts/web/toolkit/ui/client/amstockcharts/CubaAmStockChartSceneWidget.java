@@ -23,6 +23,7 @@ public class CubaAmStockChartSceneWidget extends Widget {
 
     public CubaAmStockChartSceneWidget() {
         setElement(Document.get().createDivElement());
+        setStyleName("c-amcharts-stockchart");
 
         sinkEvents(Event.ONCONTEXTMENU | Event.ONCLICK);
     }

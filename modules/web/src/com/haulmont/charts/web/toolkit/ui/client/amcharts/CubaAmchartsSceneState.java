@@ -8,6 +8,9 @@ package com.haulmont.charts.web.toolkit.ui.client.amcharts;
 import com.vaadin.shared.AbstractComponentState;
 
 public class CubaAmchartsSceneState extends AbstractComponentState {
+    {
+        primaryStyleName = "c-amcharts-chart";
+    }
 
     public static final String CHART_CLICK_EVENT = "cc";
     public static final String CHART_RIGHT_CLICK_EVENT = "crc";

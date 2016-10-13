@@ -23,6 +23,7 @@ public class CubaAmchartsSceneWidget extends Widget {
 
     public CubaAmchartsSceneWidget() {
         setElement(Document.get().createDivElement());
+        setStyleName("c-amcharts-chart");
 
         sinkEvents(Event.ONCONTEXTMENU | Event.ONCLICK);
     }
