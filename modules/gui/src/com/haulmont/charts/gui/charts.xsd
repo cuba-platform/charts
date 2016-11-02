@@ -1281,6 +1281,7 @@
                             </xs:sequence>
                         </xs:complexType>
                     </xs:element>
+                    <xs:element name="data" minOccurs="0" maxOccurs="1" type="dataSetValues"/>
                 </xs:all>
 
                 <xs:attributeGroup ref="hasStartEffect"/>
@@ -1364,6 +1365,7 @@
                         </xs:complexType>
                     </xs:element>
                     <xs:element name="labelFunction" minOccurs="0" maxOccurs="1"/>
+                    <xs:element name="data" minOccurs="0" maxOccurs="1" type="dataSetValues"/>
                 </xs:all>
 
                 <xs:attribute name="accessibleLabel" type="resourceString"/>
@@ -1566,6 +1568,7 @@
                     <xs:all>
                         <xs:element name="valueAxis" minOccurs="0" maxOccurs="1" type="valueAxis"/>
                         <xs:element name="graph" minOccurs="0" maxOccurs="1" type="chartGraph"/>
+                        <xs:element name="data" minOccurs="0" maxOccurs="1" type="ganttDataSet"/>
                     </xs:all>
 
                     <xs:attribute name="additionalSegmentFields" type="xs:string"/>
@@ -2179,6 +2182,7 @@
                     </xs:complexType>
                 </xs:element>
 
+                <xs:element name="data" minOccurs="0" maxOccurs="1" type="data"/>
                 <xs:element name="export" minOccurs="0" maxOccurs="1" type="amExport"/>
                 <xs:element name="balloon" minOccurs="0" maxOccurs="1" type="balloon"/>
                 <xs:element name="categoryAxesSettings" minOccurs="0" maxOccurs="1" type="categoryAxesSettings"/>
@@ -2213,5 +2217,83 @@
             <xs:attribute name="zoomOutOnDataSetChange" type="xs:boolean"/>
         </xs:complexType>
     </xs:element>
+
+    <xs:complexType name="item">
+        <xs:sequence minOccurs="1" maxOccurs="unbounded">
+            <xs:element name="property">
+                <xs:complexType>
+                    <xs:attribute name="name" type="xs:string" use="required"/>
+                    <xs:attribute name="value" type="xs:string" use="required"/>
+                    <xs:attribute name="type" type="dataItemType"/>
+                </xs:complexType>
+            </xs:element>
+        </xs:sequence>
+    </xs:complexType>
+
+    <xs:complexType name="dataSetValues">
+        <xs:sequence>
+            <xs:element name="item" type="item" minOccurs="1" maxOccurs="unbounded"/>
+        </xs:sequence>
+    </xs:complexType>
+
+    <xs:complexType name="dataSetStockValues">
+        <xs:sequence>
+            <xs:element name="item" type="item" minOccurs="1" maxOccurs="unbounded"/>
+        </xs:sequence>
+
+        <xs:attribute name="id" type="xs:string" use="required"/>
+    </xs:complexType>
+
+    <xs:complexType name="data">
+        <xs:sequence minOccurs="0">
+            <xs:element name="dataSet" type="dataSetStockValues" minOccurs="0" maxOccurs="unbounded"/>
+        </xs:sequence>
+    </xs:complexType>
+
+    <xs:complexType name="ganttDataSet">
+        <xs:all>
+            <xs:element name="item" minOccurs="1">
+                <xs:complexType>
+                    <xs:all minOccurs="1">
+                        <xs:element name="property" type="ganttChartProperty"/>
+                    </xs:all>
+                </xs:complexType>
+            </xs:element>
+        </xs:all>
+    </xs:complexType>
+
+    <xs:simpleType name="dataItemType">
+        <xs:restriction base="xs:string">
+            <xs:enumeration value="string"/>
+            <xs:enumeration value="date"/>
+            <xs:enumeration value="datetime"/>
+            <xs:enumeration value="int"/>
+            <xs:enumeration value="long"/>
+            <xs:enumeration value="double"/>
+            <xs:enumeration value="decimal"/>
+            <xs:enumeration value="uuid"/>
+            <xs:enumeration value="double"/>
+            <xs:enumeration value="boolean"/>
+        </xs:restriction>
+    </xs:simpleType>
+
+    <xs:complexType name="ganttChartProperty">
+        <xs:element name="item">
+            <xs:complexType>
+                <xs:sequence minOccurs="1" maxOccurs="unbounded">
+                    <xs:element name="property">
+                        <xs:complexType>
+                            <xs:attribute name="name" type="xs:string" use="required"/>
+                            <xs:attribute name="value" type="xs:string" use="required"/>
+                            <xs:attribute name="type" type="dataItemType"/>
+                        </xs:complexType>
+                    </xs:element>
+                </xs:sequence>
+            </xs:complexType>
+        </xs:element>
+        <xs:attribute name="name" type="xs:string" use="required"/>
+        <xs:attribute name="value" type="xs:string"/>
+        <xs:attribute name="type" type="dataItemType"/>
+    </xs:complexType>
 
 </xs:schema>

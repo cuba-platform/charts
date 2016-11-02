@@ -8,14 +8,57 @@ package com.haulmont.charts.gui.xml.layout.loaders.charts;
 import com.haulmont.charts.gui.amcharts.model.DatePeriod;
 import com.haulmont.charts.gui.amcharts.model.Graph;
 import com.haulmont.charts.gui.amcharts.model.charts.GanttChart;
+import com.haulmont.charts.gui.amcharts.model.data.ListDataProvider;
+import com.haulmont.charts.gui.amcharts.model.data.MapDataItem;
 import org.apache.commons.lang.StringUtils;
 import org.dom4j.Element;
+
+import java.util.ArrayList;
+import java.util.List;
 
 public class GanttChartLoader extends AbstractSerialChartLoader<GanttChart> {
 
     @Override
     protected GanttChart createConfiguration() {
         return new GanttChart();
+    }
+
+    @Override
+    protected void loadChartData(GanttChart chart, Element element) {
+        Element dataSet = element.element("data");
+        if (dataSet != null) {
+            ListDataProvider listDataProvider = new ListDataProvider();
+
+            for (Object item : dataSet.elements("item")) {
+                Element itemElement = (Element) item;
+                MapDataItem dataItem = new MapDataItem();
+
+                for (Element property : (List<Element>) itemElement.elements("property")) {
+
+                    if (property.elements().size() > 0) {
+                        List<MapDataItem> innerItems = new ArrayList<>();
+
+                        for (Object innerItem : property.elements("item")) {
+                            Element innerItemElement = (Element) innerItem;
+                            MapDataItem innerDataItem = new MapDataItem();
+
+                            for (Element innerProperty : (List<Element>) innerItemElement.elements("property")) {
+                                innerDataItem = loadDataItem(innerProperty, innerDataItem);
+                            }
+
+                            innerItems.add(innerDataItem);
+                        }
+
+                        dataItem.add(property.attributeValue("name"), innerItems);
+                    } else {
+                        dataItem = loadDataItem(property, dataItem);
+                    }
+                }
+
+                listDataProvider.addItem(dataItem);
+                chart.setDataProvider(listDataProvider);
+            }
+        }
     }
 
     @Override

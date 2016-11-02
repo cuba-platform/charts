@@ -16,7 +16,10 @@ public abstract class SlicedChartLoader<T extends SlicedChart> extends AbstractC
 
     @Override
     protected void loadConfiguration(T chart, Element element) {
+        checkDatasource(element);
         super.loadConfiguration(chart, element);
+
+        loadChartData(chart, element);
 
         loadColors(chart, element);
         loadGradientRatios(chart, element);

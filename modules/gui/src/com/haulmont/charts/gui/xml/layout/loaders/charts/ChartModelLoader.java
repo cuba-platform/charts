@@ -7,6 +7,7 @@ package com.haulmont.charts.gui.xml.layout.loaders.charts;
 
 import com.haulmont.charts.gui.amcharts.model.*;
 import com.haulmont.charts.gui.amcharts.model.charts.ChartModel;
+import com.haulmont.charts.gui.amcharts.model.data.MapDataItem;
 import com.haulmont.cuba.gui.GuiDevelopmentException;
 import com.haulmont.cuba.gui.components.Component;
 import com.haulmont.cuba.gui.xml.layout.loaders.AbstractComponentLoader;
@@ -14,15 +15,18 @@ import org.apache.commons.lang.StringUtils;
 import org.dom4j.Element;
 
 import javax.annotation.Nullable;
+import java.math.BigDecimal;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
+import java.util.UUID;
 
 public abstract class ChartModelLoader<T extends ChartModel, C extends Component> extends AbstractComponentLoader<C> {
 
     protected static final String CONFIG_DATE_FORMAT = "yyyy-MM-dd";
+    protected static final String CONFIG_DATETIME_FORMAT = "yyyy-MM-dd HH:mm";
 
     @Override
     protected void loadWidth(Component component, Element element) {
@@ -45,6 +49,87 @@ public abstract class ChartModelLoader<T extends ChartModel, C extends Component
             component.setHeight(height);
         } else {
             component.setHeight("480px");
+        }
+    }
+
+
+    protected MapDataItem loadDataItem(Element property, MapDataItem dataItem) {
+        String name = property.attributeValue("name");
+        String value = property.attributeValue("value");
+        String type = property.attributeValue("type");
+
+        if (StringUtils.isEmpty(name)) {
+            throw new GuiDevelopmentException(
+                    "'name' attribute does not exist",
+                    context.getFullFrameId(), "Chart ID", resultComponent.getId());
+        }
+        if (StringUtils.isEmpty(value)) {
+            throw new GuiDevelopmentException(
+                    "'value' attribute does not exist",
+                    context.getFullFrameId(), "Chart ID", resultComponent.getId());
+        }
+
+        switch (type) {
+            case "int":
+                dataItem.add(name, Integer.parseInt(value));
+                break;
+            case "double":
+                dataItem.add(name, Double.parseDouble(value));
+                break;
+            case "date":
+                dataItem.add(name, parseDate(value));
+                break;
+            case "datetime":
+                dataItem.add(name, parseDateTime(value));
+                break;
+            case "string":
+                dataItem.add(name, value);
+                break;
+            case "long":
+                dataItem.add(name, Long.parseLong(value));
+                break;
+            case "boolean":
+                dataItem.add(name, Boolean.valueOf(value));
+                break;
+            case "uuid":
+                dataItem.add(name, UUID.fromString(value));
+                break;
+            case "decimal":
+                dataItem.add(name, new BigDecimal(value));
+                break;
+            default:
+                dataItem.add(name, value);
+                break;
+        }
+
+        return dataItem;
+    }
+
+    protected Date parseDateTime(String value) {
+        SimpleDateFormat rangeDF;
+        if (value.length() == 10) {
+            rangeDF = new SimpleDateFormat(CONFIG_DATE_FORMAT);
+        } else {
+            rangeDF = new SimpleDateFormat(CONFIG_DATETIME_FORMAT);
+        }
+        try {
+            return rangeDF.parse(value);
+        } catch (ParseException e) {
+            throw new GuiDevelopmentException(
+                    "'value' parsing error for chart: " +
+                            value, context.getFullFrameId(), "Chart ID", resultComponent.getId());
+        }
+    }
+
+    protected Date parseDate(String value) {
+        SimpleDateFormat rangeDF = new SimpleDateFormat(CONFIG_DATE_FORMAT);
+
+        try {
+            return rangeDF.parse(value);
+        } catch (ParseException e) {
+            throw new GuiDevelopmentException(
+                    "'value' parsing error for chart: " +
+                            value, context.getFullFrameId(), "Chart ID", resultComponent.getId());
         }
     }
 

@@ -14,8 +14,10 @@ public abstract class CoordinateChartLoader<T extends CoordinateChart> extends A
 
     @Override
     protected void loadConfiguration(T chart, Element element) {
+        checkDatasource(element);
         super.loadConfiguration(chart, element);
 
+        loadChartData(chart, element);
         loadColors(chart, element);
         loadGraphs(chart, element);
         loadValueAxes(chart, element);

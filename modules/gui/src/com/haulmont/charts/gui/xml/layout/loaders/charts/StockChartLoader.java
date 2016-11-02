@@ -9,6 +9,8 @@ import com.haulmont.charts.gui.amcharts.model.*;
 import com.haulmont.charts.gui.amcharts.model.charts.StockChartGroup;
 import com.haulmont.charts.gui.amcharts.model.charts.StockPanel;
 import com.haulmont.charts.gui.amcharts.model.data.EntityDataProvider;
+import com.haulmont.charts.gui.amcharts.model.data.ListDataProvider;
+import com.haulmont.charts.gui.amcharts.model.data.MapDataItem;
 import com.haulmont.charts.gui.components.charts.StockChart;
 import com.haulmont.cuba.gui.GuiDevelopmentException;
 import com.haulmont.cuba.gui.data.CollectionDatasource;
@@ -42,6 +44,7 @@ public class StockChartLoader extends ChartModelLoader<StockChartGroup, StockCha
 
         StockChartGroup configuration = createConfiguration();
         loadConfiguration(configuration, element);
+        loadChartData(configuration, element);
         resultComponent.setConfiguration(configuration);
     }
 
@@ -160,6 +163,34 @@ public class StockChartLoader extends ChartModelLoader<StockChartGroup, StockCha
         }
     }
 
+    protected void loadChartData(StockChartGroup chart, Element element) {
+        Element dataProvider = element.element("data");
+        if (dataProvider != null) {
+            for (Object data : dataProvider.elements("dataSet")) {
+                Element dataElement = (Element) data;
+
+                String dataSetId = dataElement.attributeValue("id");
+                if (StringUtils.isNotEmpty(dataSetId)) {
+                    ListDataProvider listDataProvider = new ListDataProvider();
+
+                    for (Object item : dataElement.elements("item")) {
+                        Element itemElement = (Element) item;
+                        MapDataItem mapDataItem = new MapDataItem();
+
+                        for (Element property : (List<Element>) itemElement.elements("property")) {
+                            mapDataItem = loadDataItem(property, mapDataItem);
+                        }
+
+                        listDataProvider.addItem(mapDataItem);
+                    }
+
+                    chart.getDataSet(dataSetId).setDataProvider(listDataProvider);
+                }
+
+            }
+        }
+    }
+
     protected void loadPanels(StockChartGroup chart, Element element) {
         Element panelsElement = element.element("panels");
         if (panelsElement != null) {
@@ -213,6 +244,17 @@ public class StockChartLoader extends ChartModelLoader<StockChartGroup, StockCha
 
         String datasource = dataSetElement.attributeValue("datasource");
         if (StringUtils.isNotEmpty(datasource)) {
+            if (element.element("data") != null) {
+                throw new GuiDevelopmentException(
+                        String.format(
+                                "You cannot use chart '%s' with both data element and datasource property defined. " +
+                                        "Datasource ID: '%s'",
+                                resultComponent.getId(), datasource
+                        ),
+                        context.getCurrentFrameId()
+                );
+            }
+
             Datasource ds = context.getDsContext().get(datasource);
             if (ds == null) {
                 throw new GuiDevelopmentException("Can't find datasource by name: " + datasource, context.getCurrentFrameId());

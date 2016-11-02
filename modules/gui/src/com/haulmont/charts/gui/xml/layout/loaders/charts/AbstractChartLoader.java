@@ -10,6 +10,8 @@ import com.google.gson.JsonSyntaxException;
 import com.haulmont.bali.util.Dom4j;
 import com.haulmont.charts.gui.amcharts.model.*;
 import com.haulmont.charts.gui.amcharts.model.charts.AbstractChart;
+import com.haulmont.charts.gui.amcharts.model.data.ListDataProvider;
+import com.haulmont.charts.gui.amcharts.model.data.MapDataItem;
 import com.haulmont.charts.gui.components.charts.Chart;
 import com.haulmont.cuba.gui.GuiDevelopmentException;
 import com.haulmont.cuba.gui.data.CollectionDatasource;
@@ -55,6 +57,37 @@ public abstract class AbstractChartLoader<T extends AbstractChart> extends Chart
             }
 
             chart.setDatasource((CollectionDatasource) ds);
+        }
+    }
+
+    protected void loadChartData(T chart, Element element) {
+        Element dataElement = element.element("data");
+        if (dataElement != null) {
+            ListDataProvider listDataProvider = new ListDataProvider();
+
+            for (Object item : dataElement.elements("item")) {
+                Element itemElement = (Element) item;
+                MapDataItem dataItem = new MapDataItem();
+
+                for (Element property : (List<Element>) itemElement.elements("property")) {
+                    loadDataItem(property, dataItem);
+                }
+
+                listDataProvider.addItem(dataItem);
+                chart.setDataProvider(listDataProvider);
+            }
+        }
+    }
+
+    protected void checkDatasource(Element element) {
+        String datasource = element.attributeValue("datasource");
+        Element dataSetElement = element.element("dataSet");
+        if (dataSetElement != null && StringUtils.isNotEmpty(datasource)) {
+            throw new GuiDevelopmentException(
+                    String.format("You cannot use chart '%s' with both data element and datasource property defined",
+                            resultComponent.getId()),
+                    context.getCurrentFrameId()
+            );
         }
     }
 
