@@ -77,7 +77,7 @@ public abstract class ChartModelLoader<T extends ChartModel, C extends Component
                 dataItem.add(name, Double.parseDouble(value));
                 break;
             case "date":
-                dataItem.add(name, parseDate(value));
+                dataItem.add(name, loadDate(value));
                 break;
             case "datetime":
                 dataItem.add(name, parseDateTime(value));
@@ -112,18 +112,6 @@ public abstract class ChartModelLoader<T extends ChartModel, C extends Component
         } else {
             rangeDF = new SimpleDateFormat(CONFIG_DATETIME_FORMAT);
         }
-        try {
-            return rangeDF.parse(value);
-        } catch (ParseException e) {
-            throw new GuiDevelopmentException(
-                    "'value' parsing error for chart: " +
-                            value, context.getFullFrameId(), "Chart ID", resultComponent.getId());
-        }
-    }
-
-    protected Date parseDate(String value) {
-        SimpleDateFormat rangeDF = new SimpleDateFormat(CONFIG_DATE_FORMAT);
-
         try {
             return rangeDF.parse(value);
         } catch (ParseException e) {
