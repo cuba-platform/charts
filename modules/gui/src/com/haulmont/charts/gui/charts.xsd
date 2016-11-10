@@ -2278,19 +2278,21 @@
     </xs:simpleType>
 
     <xs:complexType name="ganttChartProperty">
-        <xs:element name="item">
-            <xs:complexType>
-                <xs:sequence minOccurs="1" maxOccurs="unbounded">
-                    <xs:element name="property">
-                        <xs:complexType>
-                            <xs:attribute name="name" type="xs:string" use="required"/>
-                            <xs:attribute name="value" type="xs:string" use="required"/>
-                            <xs:attribute name="type" type="dataItemType"/>
-                        </xs:complexType>
-                    </xs:element>
-                </xs:sequence>
-            </xs:complexType>
-        </xs:element>
+        <xs:sequence>
+            <xs:element name="item">
+                <xs:complexType>
+                    <xs:sequence minOccurs="1" maxOccurs="unbounded">
+                        <xs:element name="property">
+                            <xs:complexType>
+                                <xs:attribute name="name" type="xs:string" use="required"/>
+                                <xs:attribute name="value" type="xs:string" use="required"/>
+                                <xs:attribute name="type" type="dataItemType"/>
+                            </xs:complexType>
+                        </xs:element>
+                    </xs:sequence>
+                </xs:complexType>
+            </xs:element>
+        </xs:sequence>
         <xs:attribute name="name" type="xs:string" use="required"/>
         <xs:attribute name="value" type="xs:string"/>
         <xs:attribute name="type" type="dataItemType"/>
