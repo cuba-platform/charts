@@ -20,8 +20,8 @@ import com.haulmont.charts.web.toolkit.ui.client.amstockcharts.CubaAmStockChartS
 import com.haulmont.charts.web.toolkit.ui.client.amstockcharts.CubaAmStockChartSceneState;
 import com.haulmont.charts.web.toolkit.ui.client.amstockcharts.CubaAmStockChartServerRpc;
 import com.vaadin.ui.AbstractComponent;
+import elemental.json.Json;
 import org.apache.commons.collections.CollectionUtils;
-import org.apache.commons.lang.StringUtils;
 import org.apache.commons.lang.builder.HashCodeBuilder;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -114,14 +114,15 @@ public class CubaAmStockChartScene extends AbstractComponent {
         return chart;
     }
 
-    public void setJson(String json) {
-        if (!StringUtils.equals(getJson(), json)) {
+    public void setJson(elemental.json.JsonObject json) {
+        if (!Objects.equals(getJson(), json)) {
             getState().json = json;
+
             forceStateChange();
         }
     }
 
-    public String getJson() {
+    public elemental.json.JsonObject getJson() {
         return getState(false).json;
     }
 
@@ -321,7 +322,7 @@ public class CubaAmStockChartScene extends AbstractComponent {
 
                 String jsonString = chart.toString();
                 log.trace("Chart full JSON:\n{}", jsonString);
-                getState().configuration = jsonString;
+                getState().configuration = Json.parse(jsonString);
             }
             dirty = false;
         } else if (changedItems != null && !changedItems.isEmpty()) {
@@ -351,7 +352,7 @@ public class CubaAmStockChartScene extends AbstractComponent {
             String gsonString = StockChartGroup.getSharedGson().toJson(jsonChangedItemsElement);
 
             log.trace("Chart update JSON:\n{}", gsonString);
-            getRpcProxy(CubaAmStockChartSceneClientRpc.class).updatePoints(gsonString);
+            getRpcProxy(CubaAmStockChartSceneClientRpc.class).updatePoints(Json.parse(gsonString));
         }
 
         forgetChangedItems();

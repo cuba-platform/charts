@@ -11,6 +11,7 @@ import com.haulmont.cuba.gui.WindowParam;
 import com.haulmont.cuba.gui.components.AbstractFrame;
 import com.haulmont.cuba.gui.xml.layout.ComponentsFactory;
 import com.haulmont.cuba.web.gui.components.WebComponentsHelper;
+import elemental.json.Json;
 
 import javax.inject.Inject;
 import java.util.Map;
@@ -33,7 +34,7 @@ public class JsonChartController extends AbstractFrame {
 
         CubaAmchartsScene cubaAmchartsScene = (CubaAmchartsScene) WebComponentsHelper.unwrap(chart);
         cubaAmchartsScene.drawChart(new CustomChart());
-        cubaAmchartsScene.setJson(chartJson);
+        cubaAmchartsScene.setJson(Json.parse(chartJson));
 
         add(chart);
     }

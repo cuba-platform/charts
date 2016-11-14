@@ -6,6 +6,7 @@
 package com.haulmont.charts.web.toolkit.ui.client.amcharts;
 
 import com.vaadin.shared.AbstractComponentState;
+import elemental.json.JsonObject;
 
 public class CubaAmchartsSceneState extends AbstractComponentState {
     {
@@ -30,8 +31,8 @@ public class CubaAmchartsSceneState extends AbstractComponentState {
     public static final String CURSOR_PERIOD_SELECT_EVENT = "cps";
     public static final String VALUE_AXIS_ZOOM_EVENT = "vaz";
 
-    public String json;
-    public String configuration;
+    public JsonObject json;
+    public JsonObject configuration;
 
     // Force state change on client
     public int version = 0;

@@ -8,17 +8,21 @@ package com.haulmont.charts.web.toolkit.ui.client.amcharts;
 import com.google.gwt.core.client.JavaScriptObject;
 import com.google.gwt.json.client.JSONParser;
 import com.vaadin.client.BrowserInfo;
+import elemental.json.Json;
+import elemental.json.JsonObject;
 
 public class AmchartsConfig extends JavaScriptObject {
 
     protected AmchartsConfig() {
     }
 
-    public static AmchartsConfig fromServerConfig(String config, String json) {
-        String configJson = config != null ? config : "{}";
-        AmchartsConfig configObject = (AmchartsConfig) JSONParser.parseLenient(configJson).isObject().getJavaScriptObject();
+    public static AmchartsConfig fromServerConfig(JsonObject config, JsonObject json) {
+        JsonObject configJson = config != null ? config : Json.createObject();
+        JsonObject customJson = json != null ? json : Json.createObject();
+
+        AmchartsConfig configObject = (AmchartsConfig) configJson.toNative();
         parseDefs(configObject);
-        applyCustomJson(configObject, json);
+        applyCustomJson(configObject, (JavaScriptObject)customJson.toNative());
         activateFunctions(configObject);
         parseConfigDateProperties(configObject);
         if (BrowserInfo.get().isIE() && BrowserInfo.get().getIEVersion() < 10) {
@@ -108,7 +112,7 @@ public class AmchartsConfig extends JavaScriptObject {
         })();
     }-*/;
 
-    private static native void applyCustomJson(JavaScriptObject config, String manualOptions) /*-{
+    private static native void applyCustomJson(JavaScriptObject config, JavaScriptObject manualOptions) /*-{
         var merge = function (dst, src) {
             for (var property in src) {
                 if (src.hasOwnProperty(property)) {
@@ -124,8 +128,7 @@ public class AmchartsConfig extends JavaScriptObject {
                 }
             }
         };
-        var cfg = $wnd.eval("(" + manualOptions + ")");
-        merge(config, cfg);
+        merge(config, manualOptions);
     }-*/;
 
     private static native void activateFunctions(JavaScriptObject config) /*-{

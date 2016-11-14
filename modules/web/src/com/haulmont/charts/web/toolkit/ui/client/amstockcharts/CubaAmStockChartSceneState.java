@@ -6,6 +6,7 @@
 package com.haulmont.charts.web.toolkit.ui.client.amstockcharts;
 
 import com.vaadin.shared.AbstractComponentState;
+import elemental.json.JsonObject;
 
 public class CubaAmStockChartSceneState extends AbstractComponentState {
     {
@@ -30,8 +31,8 @@ public class CubaAmStockChartSceneState extends AbstractComponentState {
     public static final String STOCK_GRAPH_ITEM_ROLL_OUT_EVENT = "sgirout";
     public static final String STOCK_GRAPH_ITEM_ROLL_OVER_EVENT = "sgiro";
 
-    public String json;
-    public String configuration;
+    public JsonObject json;
+    public JsonObject configuration;
 
     // Force state change on client
     public int version = 0;

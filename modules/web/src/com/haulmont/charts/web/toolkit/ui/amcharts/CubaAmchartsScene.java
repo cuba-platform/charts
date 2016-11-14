@@ -5,7 +5,10 @@
 
 package com.haulmont.charts.web.toolkit.ui.amcharts;
 
-import com.google.gson.*;
+import com.google.gson.Gson;
+import com.google.gson.JsonArray;
+import com.google.gson.JsonObject;
+import com.google.gson.JsonSerializationContext;
 import com.haulmont.charts.gui.amcharts.model.AbstractChartObject;
 import com.haulmont.charts.gui.amcharts.model.charts.*;
 import com.haulmont.charts.gui.amcharts.model.data.DataChangeListener;
@@ -18,8 +21,8 @@ import com.haulmont.charts.web.toolkit.ui.client.amcharts.CubaAmchartsSceneClien
 import com.haulmont.charts.web.toolkit.ui.client.amcharts.CubaAmchartsSceneState;
 import com.haulmont.charts.web.toolkit.ui.client.amcharts.CubaAmchartsServerRpc;
 import com.vaadin.ui.AbstractComponent;
+import elemental.json.Json;
 import org.apache.commons.collections.CollectionUtils;
-import org.apache.commons.lang.StringUtils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -117,23 +120,14 @@ public class CubaAmchartsScene extends AbstractComponent {
         return dirty;
     }
 
-    public void setJson(String json) {
-        if (!StringUtils.equals(getJson(), json)) {
-            if (json != null) {
-                try {
-                    JsonParser parser = new JsonParser();
-                    parser.parse(json);
-                } catch (JsonSyntaxException e) {
-                    throw new IllegalStateException("Unable to parse JSON chart configuration");
-                }
-            }
-
+    public void setJson(elemental.json.JsonObject json) {
+        if (!Objects.equals(getJson(), json)) {
             getState().json = json;
             forceStateChange();
         }
     }
 
-    public String getJson() {
+    public elemental.json.JsonObject getJson() {
         return getState(false).json;
     }
 
@@ -370,7 +364,8 @@ public class CubaAmchartsScene extends AbstractComponent {
 
                 String jsonString = chart.toString();
                 log.trace("Chart full JSON:\n{}", jsonString);
-                getState().configuration = jsonString;
+
+                getState().configuration = Json.parse(jsonString);
             }
             dirty = false;
         } else if (changedItems != null && !changedItems.isEmpty()) {
@@ -396,7 +391,7 @@ public class CubaAmchartsScene extends AbstractComponent {
             String gsonString = gson.toJson(jsonChangedItemsElement);
 
             log.trace("Chart update JSON:\n{}", gsonString);
-            getRpcProxy(CubaAmchartsSceneClientRpc.class).updatePoints(gsonString);
+            getRpcProxy(CubaAmchartsSceneClientRpc.class).updatePoints(Json.parse(gsonString));
         }
 
         forgetChangedItems();
