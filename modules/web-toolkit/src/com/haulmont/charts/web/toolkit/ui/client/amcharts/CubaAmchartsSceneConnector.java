@@ -8,6 +8,7 @@ package com.haulmont.charts.web.toolkit.ui.client.amcharts;
 import com.google.gwt.core.client.JavaScriptObject;
 import com.google.gwt.core.client.Scheduler;
 import com.google.gwt.dom.client.NativeEvent;
+import com.google.gwt.json.client.JSONParser;
 import com.haulmont.charts.web.toolkit.ui.amcharts.CubaAmchartsScene;
 import com.haulmont.charts.web.toolkit.ui.client.amcharts.events.*;
 import com.haulmont.cuba.web.toolkit.ui.client.JsDate;
@@ -17,7 +18,6 @@ import com.vaadin.client.ui.AbstractComponentConnector;
 import com.vaadin.client.ui.layout.ElementResizeEvent;
 import com.vaadin.client.ui.layout.ElementResizeListener;
 import com.vaadin.shared.ui.Connect;
-import elemental.json.JsonObject;
 
 import java.util.Date;
 import java.util.Set;
@@ -31,11 +31,11 @@ public class CubaAmchartsSceneConnector extends AbstractComponentConnector {
     public CubaAmchartsSceneConnector() {
              registerRpc(CubaAmchartsSceneClientRpc.class, new CubaAmchartsSceneClientRpc() {
                  @Override
-                 public void updatePoints(final JsonObject json) {
+                 public void updatePoints(final String json) {
                      Scheduler.get().scheduleDeferred(new Scheduler.ScheduledCommand() {
                          @Override
                          public void execute() {
-                             getWidget().updatePoints((JavaScriptObject) json.toNative());
+                             getWidget().updatePoints(getJsonAsObject(json));
                          }
                      });
                  }
@@ -57,6 +57,10 @@ public class CubaAmchartsSceneConnector extends AbstractComponentConnector {
              });
     }
 
+    protected JavaScriptObject getJsonAsObject(String json) {
+        return JSONParser.parseLenient(json).isObject().getJavaScriptObject();
+    }
+
     @Override
     public CubaAmchartsSceneState getState() {
         return (CubaAmchartsSceneState) super.getState();
@@ -71,8 +75,7 @@ public class CubaAmchartsSceneConnector extends AbstractComponentConnector {
     public void onStateChanged(StateChangeEvent stateChangeEvent) {
         super.onStateChanged(stateChangeEvent);
 
-        JsonObject configurationJson = getState().configuration;
-        final AmchartsConfig config = AmchartsConfig.fromServerConfig(configurationJson, getState().json);
+        final AmchartsConfig config = AmchartsConfig.fromServerConfig(getState().configuration, getState().json);
         final AmchartsEvents amchartsEvents = createEvents(config);
 
         Scheduler.get().scheduleDeferred(new Scheduler.ScheduledCommand() {

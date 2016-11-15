@@ -6,10 +6,7 @@
 package com.haulmont.charts.web.gui.components.charts.amcharts;
 
 import com.haulmont.charts.gui.amcharts.model.*;
-import com.haulmont.charts.gui.amcharts.model.charts.AbstractChart;
-import com.haulmont.charts.gui.amcharts.model.charts.AbstractSerialChart;
-import com.haulmont.charts.gui.amcharts.model.charts.GanttChart;
-import com.haulmont.charts.gui.amcharts.model.charts.RectangularChart;
+import com.haulmont.charts.gui.amcharts.model.charts.*;
 import com.haulmont.charts.gui.amcharts.model.data.EntityDataProvider;
 import com.haulmont.charts.gui.amcharts.model.gson.ChartJsonSerializationContext;
 import com.haulmont.charts.gui.components.charts.Chart;
@@ -28,8 +25,6 @@ import com.haulmont.cuba.gui.data.CollectionDatasource;
 import com.haulmont.cuba.gui.data.impl.CollectionDsHelper;
 import com.haulmont.cuba.web.gui.components.WebAbstractComponent;
 import com.vaadin.server.ClientConnector;
-import elemental.json.Json;
-import elemental.json.JsonObject;
 import org.apache.commons.collections.CollectionUtils;
 import org.apache.commons.lang.BooleanUtils;
 import org.apache.commons.lang.ObjectUtils;
@@ -908,21 +903,12 @@ public class WebChart extends WebAbstractComponent<CubaAmchartsScene> implements
 
     @Override
     public void setNativeJson(String json) {
-        if (json != null) {
-            component.setJson(Json.parse(json));
-        } else {
-            component.setJson(null);
-        }
+        component.setJson(json);
     }
 
     @Override
     public String getNativeJson() {
-        JsonObject json = component.getJson();
-        if (json == null) {
-            return null;
-        }
-
-        return json.toJson();
+        return component.getJson();
     }
 
     protected class CubaAmchartsSceneExt extends CubaAmchartsScene {
