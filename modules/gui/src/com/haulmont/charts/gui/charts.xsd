@@ -2194,6 +2194,7 @@
                 <xs:element name="periodSelector" minOccurs="0" maxOccurs="1" type="periodSelector"/>
                 <xs:element name="stockEventsSettings" minOccurs="0" maxOccurs="1" type="stockEventsSettings"/>
                 <xs:element name="valueAxesSettings" minOccurs="0" maxOccurs="1" type="valueAxesSettings"/>
+                <xs:element name="nativeJson" minOccurs="0" maxOccurs="1"/>
             </xs:all>
 
             <xs:attribute name="id" type="xs:string"/>

@@ -735,6 +735,16 @@ public class WebStockChart extends WebAbstractComponent<CubaAmStockChartScene> i
         }
     }
 
+    @Override
+    public void setNativeJson(String json) {
+        component.setJson(json);
+    }
+
+    @Override
+    public String getNativeJson() {
+        return component.getJson();
+    }
+
     protected class CubaAmStockChartSceneExt extends CubaAmStockChartScene {
         private static final long serialVersionUID = 3782372417182270572L;
 

@@ -104,6 +104,16 @@ public interface StockChart extends Component, Component.BelongToFrame, Componen
     void removeStockGraphItemRollOverListener(StockGraphItemRollOverListener rollOverListener);
 
     /**
+     * Set additional JSON configuration as a string.
+     * This JSON can override configuration loaded from XML and from Component API.
+     */
+    void setNativeJson(String json);
+    /**
+     * @return additional JSON configuration as a string.
+     */
+    String getNativeJson();
+
+    /**
      * Describes stock chart click event.
      */
     class StockChartClickEvent {

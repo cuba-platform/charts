@@ -5,6 +5,8 @@
 
 package com.haulmont.charts.gui.xml.layout.loaders.charts;
 
+import com.google.gson.JsonParser;
+import com.google.gson.JsonSyntaxException;
 import com.haulmont.charts.gui.amcharts.model.*;
 import com.haulmont.charts.gui.amcharts.model.charts.StockChartGroup;
 import com.haulmont.charts.gui.amcharts.model.charts.StockPanel;
@@ -160,6 +162,19 @@ public class StockChartLoader extends ChartModelLoader<StockChartGroup, StockCha
         String zoomOutOnDataSetChange = element.attributeValue("zoomOutOnDataSetChange");
         if (StringUtils.isNotEmpty(zoomOutOnDataSetChange)) {
             chart.setZoomOutOnDataSetChange(Boolean.valueOf(zoomOutOnDataSetChange));
+        }
+
+        Element nativeJson = element.element("nativeJson");
+        if (nativeJson != null) {
+            String nativeJsonString = nativeJson.getTextTrim();
+            try {
+                JsonParser parser = new JsonParser();
+                parser.parse(nativeJsonString);
+            } catch (JsonSyntaxException e) {
+                throw new GuiDevelopmentException("Unable to parse JSON from XML chart configuration", context.getFullFrameId());
+            }
+
+            resultComponent.setNativeJson(nativeJsonString);
         }
     }
 
