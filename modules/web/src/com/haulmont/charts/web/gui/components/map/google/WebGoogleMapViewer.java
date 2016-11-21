@@ -1105,6 +1105,26 @@ public class WebGoogleMapViewer extends WebAbstractComponent<GoogleMap> implemen
     }
 
     @Override
+    public String getCaption() {
+        return component.getCaption();
+    }
+
+    @Override
+    public void setCaption(String caption) {
+        component.setCaption(caption);
+    }
+
+    @Override
+    public String getDescription() {
+        return component.getDescription();
+    }
+
+    @Override
+    public void setDescription(String description) {
+        component.setDescription(description);
+    }
+
+    @Override
     public Size createSize(double width, double height) {
         return new SizeDelegate(new com.vaadin.tapio.googlemaps.client.base.Size(width, height));
     }

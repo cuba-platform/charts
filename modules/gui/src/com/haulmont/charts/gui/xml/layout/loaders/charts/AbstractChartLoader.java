@@ -41,6 +41,10 @@ public abstract class AbstractChartLoader<T extends AbstractChart> extends Chart
         loadEnable(resultComponent, element);
         loadStyleName(resultComponent, element);
 
+        loadIcon(resultComponent, element);
+        loadCaption(resultComponent, element);
+        loadDescription(resultComponent, element);
+
         loadDatasource(resultComponent, element);
     }
 

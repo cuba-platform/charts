@@ -15,7 +15,10 @@ import com.haulmont.charts.gui.map.model.directions.DirectionsWaypoint;
 import com.haulmont.charts.gui.map.model.directions.TravelMode;
 import com.haulmont.charts.gui.map.model.drawing.DrawingOptions;
 import com.haulmont.charts.gui.map.model.layer.HeatMapLayer;
-import com.haulmont.charts.gui.map.model.listeners.*;
+import com.haulmont.charts.gui.map.model.listeners.InfoWindowClosedListener;
+import com.haulmont.charts.gui.map.model.listeners.MapInitListener;
+import com.haulmont.charts.gui.map.model.listeners.MapMoveListener;
+import com.haulmont.charts.gui.map.model.listeners.PolygonEditListener;
 import com.haulmont.charts.gui.map.model.listeners.centerchange.CircleCenterChangeListener;
 import com.haulmont.charts.gui.map.model.listeners.click.CircleClickListener;
 import com.haulmont.charts.gui.map.model.listeners.click.MapClickListener;
@@ -32,9 +35,9 @@ import com.haulmont.cuba.gui.components.Component;
 
 import java.util.Collection;
 import java.util.List;
-import java.util.Objects;
 
-public interface MapViewer extends Component, Component.BelongToFrame, Component.HasXmlDescriptor {
+public interface MapViewer extends Component, Component.BelongToFrame, Component.HasXmlDescriptor, Component.HasIcon,
+                                   Component.HasCaption {
 
     /** Tag name for XML loader, for component name see {@link com.haulmont.charts.gui.components.map.GoogleMapViewer#NAME} */
     String TAG_NAME = "mapViewer";

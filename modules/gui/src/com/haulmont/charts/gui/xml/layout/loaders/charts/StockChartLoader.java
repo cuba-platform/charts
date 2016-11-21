@@ -44,6 +44,10 @@ public class StockChartLoader extends ChartModelLoader<StockChartGroup, StockCha
         loadEnable(resultComponent, element);
         loadStyleName(resultComponent, element);
 
+        loadIcon(resultComponent, element);
+        loadCaption(resultComponent, element);
+        loadDescription(resultComponent, element);
+
         StockChartGroup configuration = createConfiguration();
         loadConfiguration(configuration, element);
         loadChartData(configuration, element);

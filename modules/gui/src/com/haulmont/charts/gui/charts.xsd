@@ -10,6 +10,15 @@
            elementFormDefault="qualified"
            attributeFormDefault="unqualified">
 
+    <xs:attributeGroup name="hasIcon">
+        <xs:attribute name="icon" type="xs:string"/>
+    </xs:attributeGroup>
+
+    <xs:attributeGroup name="hasCaption">
+        <xs:attribute name="caption" type="resourceString"/>
+        <xs:attribute name="description" type="resourceString"/>
+    </xs:attributeGroup>
+
     <!-- Enums -->
 
     <xs:simpleType name="color">
@@ -1207,6 +1216,9 @@
         <xs:attribute name="height" type="xs:string"/>
         <xs:attribute name="stylename" type="xs:string"/>
 
+        <xs:attributeGroup ref="hasIcon"/>
+        <xs:attributeGroup ref="hasCaption"/>
+
         <xs:attribute name="visible" type="xs:boolean"/>
         <xs:attribute name="enable" type="xs:boolean"/>
 
@@ -1615,6 +1627,9 @@
 
             <xs:attribute name="visible" type="xs:boolean"/>
             <xs:attribute name="enable" type="xs:boolean"/>
+
+            <xs:attributeGroup ref="hasIcon"/>
+            <xs:attributeGroup ref="hasCaption"/>
         </xs:complexType>
     </xs:element>
 
@@ -2200,6 +2215,9 @@
             <xs:attribute name="id" type="xs:string"/>
             <xs:attribute name="width" type="xs:string"/>
             <xs:attribute name="height" type="xs:string"/>
+
+            <xs:attributeGroup ref="hasIcon"/>
+            <xs:attributeGroup ref="hasCaption"/>
 
             <xs:attribute name="addClassNames" type="xs:boolean"/>
             <xs:attribute name="animationPlayed" type="xs:boolean"/>
