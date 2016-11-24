@@ -914,27 +914,6 @@ public class WebChart extends WebAbstractComponent<CubaAmchartsScene> implements
         return component.getJson();
     }
 
-
-    @Override
-    public String getCaption() {
-        return component.getCaption();
-    }
-
-    @Override
-    public void setCaption(String caption) {
-        component.setCaption(caption);
-    }
-
-    @Override
-    public String getDescription() {
-        return component.getDescription();
-    }
-
-    @Override
-    public void setDescription(String description) {
-        component.setDescription(description);
-    }
-
     protected class CubaAmchartsSceneExt extends CubaAmchartsScene {
 
         private static final long serialVersionUID = 4357940484867437795L;
