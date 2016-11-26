@@ -10,13 +10,67 @@
            elementFormDefault="qualified"
            attributeFormDefault="unqualified">
 
-    <xs:attributeGroup name="hasIcon">
-        <xs:attribute name="icon" type="xs:string"/>
+    <!-- BaseComponent -->
+    <xs:complexType name="baseComponent">
+        <xs:attributeGroup ref="hasId"/>
+        <xs:attributeGroup ref="hasCaption"/>
+        <xs:attributeGroup ref="hasIcon"/>
+        <xs:attributeGroup ref="hasSize"/>
+        <xs:attributeGroup ref="hasStyle"/>
+        <xs:attributeGroup ref="hasVisibility"/>
+        <xs:attributeGroup ref="hasAlign"/>
+        <xs:attributeGroup ref="hasEnableProp"/>
+    </xs:complexType>
+
+    <xs:attributeGroup name="hasId">
+        <xs:attribute name="id" type="xs:string"/>
+        <xs:anyAttribute namespace="##other" processContents="lax"/>
     </xs:attributeGroup>
 
     <xs:attributeGroup name="hasCaption">
         <xs:attribute name="caption" type="resourceString"/>
         <xs:attribute name="description" type="resourceString"/>
+    </xs:attributeGroup>
+
+    <xs:attributeGroup name="hasIcon">
+        <xs:attribute name="icon" type="xs:string"/>
+    </xs:attributeGroup>
+
+    <xs:attributeGroup name="hasSize">
+        <xs:attribute name="width" type="componentSize"/>
+        <xs:attribute name="height" type="componentSize"/>
+        <xs:attribute name="colspan" type="xs:integer"/>
+        <xs:attribute name="rowspan" type="xs:integer"/>
+    </xs:attributeGroup>
+
+    <xs:simpleType name="componentSize">
+        <xs:union>
+            <xs:simpleType>
+                <xs:restriction base="xs:string"/>
+            </xs:simpleType>
+            <xs:simpleType>
+                <xs:restriction base="xs:string">
+                    <xs:enumeration value="AUTO"/>
+                    <xs:enumeration value="100%"/>
+                </xs:restriction>
+            </xs:simpleType>
+        </xs:union>
+    </xs:simpleType>
+
+    <xs:attributeGroup name="hasStyle">
+        <xs:attribute name="stylename" type="xs:string"/>
+    </xs:attributeGroup>
+
+    <xs:attributeGroup name="hasVisibility">
+        <xs:attribute name="visible" type="xs:boolean"/>
+    </xs:attributeGroup>
+
+    <xs:attributeGroup name="hasAlign">
+        <xs:attribute name="align" type="align"/>
+    </xs:attributeGroup>
+
+    <xs:attributeGroup name="hasEnableProp">
+        <xs:attribute name="enable" type="xs:boolean"/>
     </xs:attributeGroup>
 
     <!-- Enums -->
@@ -1206,21 +1260,14 @@
             <xs:element name="nativeJson" minOccurs="0" maxOccurs="1"/>
         </xs:all>
 
+        <xs:complexContent>
+            <xs:extension base="baseComponent"/>
+        </xs:complexContent>
+
         <xs:attribute name="accessible" type="xs:boolean"/>
         <xs:attribute name="accessibleTitle" type="xs:string"/>
         <xs:attribute name="addClassNames" type="xs:boolean"/>
-        <xs:attribute name="id" type="xs:string"/>
         <xs:attribute name="datasource" type="xs:string"/>
-
-        <xs:attribute name="width" type="xs:string"/>
-        <xs:attribute name="height" type="xs:string"/>
-        <xs:attribute name="stylename" type="xs:string"/>
-
-        <xs:attributeGroup ref="hasIcon"/>
-        <xs:attributeGroup ref="hasCaption"/>
-
-        <xs:attribute name="visible" type="xs:boolean"/>
-        <xs:attribute name="enable" type="xs:boolean"/>
 
         <xs:attribute name="additionalFields" type="xs:string"/>
         <xs:attribute name="autoDisplay" type="xs:boolean"/>
@@ -1617,19 +1664,12 @@
     <!-- Maps -->
     <xs:element name="mapViewer">
         <xs:complexType>
-            <xs:attribute name="id" type="xs:string"/>
+            <xs:complexContent>
+                <xs:extension base="baseComponent"/>
+            </xs:complexContent>
+
             <xs:attribute name="vendor" type="mapVendorType" default="google"/>
             <xs:attribute name="mapType" type="mapTypeType" default="roadmap"/>
-
-            <xs:attribute name="width" type="xs:string"/>
-            <xs:attribute name="height" type="xs:string"/>
-            <xs:attribute name="stylename" type="xs:string"/>
-
-            <xs:attribute name="visible" type="xs:boolean"/>
-            <xs:attribute name="enable" type="xs:boolean"/>
-
-            <xs:attributeGroup ref="hasIcon"/>
-            <xs:attributeGroup ref="hasCaption"/>
         </xs:complexType>
     </xs:element>
 
@@ -2212,12 +2252,9 @@
                 <xs:element name="nativeJson" minOccurs="0" maxOccurs="1"/>
             </xs:all>
 
-            <xs:attribute name="id" type="xs:string"/>
-            <xs:attribute name="width" type="xs:string"/>
-            <xs:attribute name="height" type="xs:string"/>
-
-            <xs:attributeGroup ref="hasIcon"/>
-            <xs:attributeGroup ref="hasCaption"/>
+            <xs:complexContent>
+                <xs:extension base="baseComponent"/>
+            </xs:complexContent>
 
             <xs:attribute name="addClassNames" type="xs:boolean"/>
             <xs:attribute name="animationPlayed" type="xs:boolean"/>
