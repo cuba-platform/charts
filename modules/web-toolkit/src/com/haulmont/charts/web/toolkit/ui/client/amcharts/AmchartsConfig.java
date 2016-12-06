@@ -7,6 +7,7 @@ package com.haulmont.charts.web.toolkit.ui.client.amcharts;
 
 import com.google.gwt.core.client.JavaScriptObject;
 import com.google.gwt.json.client.JSONParser;
+import com.haulmont.charts.web.toolkit.ui.client.utils.JsUtils;
 import com.vaadin.client.BrowserInfo;
 
 public class AmchartsConfig extends JavaScriptObject {
@@ -18,8 +19,8 @@ public class AmchartsConfig extends JavaScriptObject {
         String configJson = config != null ? config : "{}";
         AmchartsConfig configObject = (AmchartsConfig) JSONParser.parseLenient(configJson).isObject().getJavaScriptObject();
         parseDefs(configObject);
-        applyCustomJson(configObject, json);
-        activateFunctions(configObject);
+        JsUtils.applyCustomJson(configObject, json);
+        JsUtils.activateFunctions(configObject, false);
         parseConfigDateProperties(configObject);
         if (BrowserInfo.get().isIE() && BrowserInfo.get().getIEVersion() < 10) {
             disableExportFeatures(configObject);
@@ -106,43 +107,6 @@ public class AmchartsConfig extends JavaScriptObject {
                 config.endDate = $wnd.AmCharts.stringToDate(config.endDate, DEFAULT_JS_DATE_FORMAT);
             }
         })();
-    }-*/;
-
-    private static native void applyCustomJson(JavaScriptObject config, String manualOptions) /*-{
-        var merge = function (dst, src) {
-            for (var property in src) {
-                if (src.hasOwnProperty(property)) {
-                    if (src[property] && typeof src[property] === "object") {
-                        if (!dst[property]) {
-                            dst[property] = src[property];
-                        } else {
-                            arguments.callee(dst[property], src[property]);
-                        }
-                    } else {
-                        dst[property] = src[property];
-                    }
-                }
-            }
-        };
-        var cfg = $wnd.eval("(" + manualOptions + ")");
-        merge(config, cfg);
-    }-*/;
-
-    private static native void activateFunctions(JavaScriptObject config) /*-{
-        // function property names ends with 'Function'
-        var reFunction = /Function$/;
-        var active = function (obj) {
-            for (var prop in obj) {
-                if (obj.hasOwnProperty(prop)) {
-                    if (prop.match(reFunction)) {
-                        obj[prop] = $wnd.eval("(" + obj[prop] + ")");
-                    } else if (typeof obj[prop] === "object") {
-                        arguments.callee(obj[prop]);
-                    }
-                }
-            }
-        };
-        active(config);
     }-*/;
 
     public final native String getChartType() /*-{

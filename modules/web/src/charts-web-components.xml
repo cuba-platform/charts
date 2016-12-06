@@ -61,6 +61,12 @@
         <class>com.haulmont.charts.web.gui.components.charts.amcharts.WebStockChart</class>
         <componentLoader>com.haulmont.charts.gui.xml.layout.loaders.charts.StockChartLoader</componentLoader>
     </component>
+    <component>
+        <tag>pivotTable</tag>
+        <name>pivotTable</name>
+        <class>com.haulmont.charts.web.gui.components.pivottable.WebPivotTable</class>
+        <componentLoader>com.haulmont.charts.gui.xml.layout.loaders.pivottable.PivotTableLoader</componentLoader>
+    </component>
 
     <!-- Maps -->
 

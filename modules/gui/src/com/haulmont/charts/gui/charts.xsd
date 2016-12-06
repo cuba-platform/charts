@@ -2354,4 +2354,230 @@
         <xs:attribute name="type" type="dataItemType"/>
     </xs:complexType>
 
+    <!-- Pivot Table -->
+
+    <xs:attributeGroup name="hasEditState">
+        <xs:attribute name="editable" type="xs:boolean"/>
+        <xs:attribute name="enable" type="xs:boolean"/>
+    </xs:attributeGroup>
+
+    <xs:simpleType name="renderer">
+        <xs:restriction base="xs:string">
+            <xs:enumeration value="TABLE"/>
+            <xs:enumeration value="TABLE_BAR_CHART"/>
+            <xs:enumeration value="HEATMAP"/>
+            <xs:enumeration value="ROW_HEATMAP"/>
+            <xs:enumeration value="COL_HEATMAP"/>
+            <xs:enumeration value="LINE_CHART"/>
+            <xs:enumeration value="BAR_CHART"/>
+            <xs:enumeration value="STACKED_BAR_CHART"/>
+            <xs:enumeration value="AREA_CHART"/>
+            <xs:enumeration value="SCATTER_CHART"/>
+            <xs:enumeration value="TREEMAP"/>
+            <xs:enumeration value="TSV_EXPORT"/>
+        </xs:restriction>
+    </xs:simpleType>
+
+    <xs:simpleType name="aggregationMode">
+        <xs:restriction base="xs:string">
+            <xs:enumeration value="COUNT"/>
+            <xs:enumeration value="COUNT_UNIQUE_VALUES"/>
+            <xs:enumeration value="LIST_UNIQUE_VALUES"/>
+            <xs:enumeration value="SUM"/>
+            <xs:enumeration value="INTEGER_SUM"/>
+            <xs:enumeration value="AVERAGE"/>
+            <xs:enumeration value="MINIMUM"/>
+            <xs:enumeration value="MAXIMUM"/>
+            <xs:enumeration value="SUM_OVER_SUM"/>
+            <xs:enumeration value="UPPER_BOUND_80"/>
+            <xs:enumeration value="LOWER_BOUND_80"/>
+            <xs:enumeration value="SUM_AS_FRACTION_OF_TOTAL"/>
+            <xs:enumeration value="SUM_AS_FRACTION_OF_ROWS"/>
+            <xs:enumeration value="SUM_AS_FRACTION_OF_COLUMNS"/>
+            <xs:enumeration value="COUNT_AS_FRACTION_OF_TOTAL"/>
+            <xs:enumeration value="COUNT_AS_FRACTION_OF_TOTAL"/>
+            <xs:enumeration value="COUNT_AS_FRACTION_OF_TOTAL"/>
+        </xs:restriction>
+    </xs:simpleType>
+
+    <xs:complexType name="propertiesWithValueListsType">
+        <xs:sequence>
+            <xs:element name="property" minOccurs="0" maxOccurs="unbounded">
+                <xs:complexType>
+                    <xs:sequence>
+                        <xs:element name="value" minOccurs="0" maxOccurs="unbounded">
+                            <xs:complexType>
+                                <xs:attribute name="value" type="xs:string"/>
+                            </xs:complexType>
+                        </xs:element>
+                    </xs:sequence>
+                    <xs:attribute name="name" type="resourceString"/>
+                </xs:complexType>
+            </xs:element>
+        </xs:sequence>
+    </xs:complexType>
+
+    <xs:complexType name="propertiesListType">
+        <xs:sequence>
+            <xs:element name="property" minOccurs="0" maxOccurs="unbounded">
+                <xs:complexType>
+                    <xs:attribute name="name" type="resourceString" use="required"/>
+                </xs:complexType>
+            </xs:element>
+        </xs:sequence>
+    </xs:complexType>
+
+    <xs:element name="pivotTable">
+        <xs:complexType>
+            <xs:all>
+                <xs:element name="rows" minOccurs="0" maxOccurs="1">
+                    <xs:complexType>
+                        <xs:sequence>
+                            <xs:element name="row" minOccurs="0" maxOccurs="unbounded">
+                                <xs:complexType>
+                                    <xs:attribute name="value" type="resourceString"/>
+                                </xs:complexType>
+                            </xs:element>
+                        </xs:sequence>
+                    </xs:complexType>
+                </xs:element>
+
+                <xs:element name="columns" minOccurs="0" maxOccurs="1">
+                    <xs:complexType>
+                        <xs:sequence>
+                            <xs:element name="column" minOccurs="0" maxOccurs="unbounded">
+                                <xs:complexType>
+                                    <xs:attribute name="value" type="resourceString"/>
+                                </xs:complexType>
+                            </xs:element>
+                        </xs:sequence>
+                    </xs:complexType>
+                </xs:element>
+
+                <xs:element name="renderers" minOccurs="0" maxOccurs="1">
+                    <xs:complexType>
+                        <xs:sequence>
+                            <xs:element name="renderer" minOccurs="0" maxOccurs="unbounded">
+                                <xs:complexType>
+                                    <xs:attribute name="type" type="renderer"/>
+                                </xs:complexType>
+                            </xs:element>
+                        </xs:sequence>
+                        <xs:attribute name="default" type="renderer"/>
+                    </xs:complexType>
+                </xs:element>
+
+                <xs:element name="aggregation" minOccurs="0" maxOccurs="1">
+                    <xs:complexType>
+                        <xs:sequence>
+                            <xs:element name="property" minOccurs="0" maxOccurs="unbounded">
+                                <xs:complexType>
+                                    <xs:attribute name="name" type="resourceString"/>
+                                </xs:complexType>
+                            </xs:element>
+                            <xs:element name="function" minOccurs="0" maxOccurs="1"/>
+                        </xs:sequence>
+
+                        <xs:attribute name="mode" type="aggregationMode"/>
+                        <xs:attribute name="caption" type="resourceString"/>
+                        <xs:attribute name="custom" type="xs:boolean"/>
+                    </xs:complexType>
+                </xs:element>
+
+                <xs:element name="aggregations" minOccurs="0" maxOccurs="1">
+                    <xs:complexType>
+                        <xs:sequence>
+                            <xs:element name="aggregation" minOccurs="0" maxOccurs="unbounded">
+                                <xs:complexType>
+                                    <xs:sequence>
+                                        <xs:element name="function" minOccurs="0" maxOccurs="1"/>
+                                    </xs:sequence>
+
+                                    <xs:attribute name="caption" type="resourceString"/>
+                                    <xs:attribute name="mode" type="aggregationMode"/>
+                                    <xs:attribute name="custom" type="xs:boolean"/>
+                                </xs:complexType>
+                            </xs:element>
+                        </xs:sequence>
+
+                        <xs:attribute name="default" type="aggregationMode"/>
+                    </xs:complexType>
+                </xs:element>
+
+                <xs:element name="rendererOptions" minOccurs="0" maxOccurs="1">
+                    <xs:complexType>
+                        <xs:sequence>
+                            <xs:element name="heatmap" minOccurs="0" maxOccurs="1">
+                                <xs:complexType>
+                                    <xs:sequence>
+                                        <xs:element name="colorScaleGeneratorFunction" minOccurs="0" maxOccurs="1"/>
+                                    </xs:sequence>
+                                </xs:complexType>
+                            </xs:element>
+                            <xs:element name="c3" minOccurs="0" maxOccurs="1">
+                                <xs:complexType>
+                                    <xs:sequence>
+                                        <xs:element name="size" minOccurs="0" maxOccurs="1">
+                                            <xs:complexType>
+                                                <xs:attribute name="width" type="xs:double"/>
+                                                <xs:attribute name="height" type="xs:double"/>
+                                            </xs:complexType>
+                                        </xs:element>
+                                    </xs:sequence>
+                                </xs:complexType>
+                            </xs:element>
+                        </xs:sequence>
+                    </xs:complexType>
+                </xs:element>
+
+                <xs:element name="derivedProperties" minOccurs="0" maxOccurs="1">
+                    <xs:complexType>
+                        <xs:sequence>
+                            <xs:element name="derivedProperty" minOccurs="0" maxOccurs="unbounded">
+                                <xs:complexType>
+                                    <xs:sequence minOccurs="1" maxOccurs="1">
+                                        <xs:element name="function"/>
+                                    </xs:sequence>
+                                    <xs:attribute name="caption" type="resourceString" use="required"/>
+                                </xs:complexType>
+                            </xs:element>
+                        </xs:sequence>
+                    </xs:complexType>
+                </xs:element>
+
+                <xs:element name="properties" minOccurs="1" maxOccurs="1">
+                    <xs:complexType>
+                        <xs:sequence>
+                            <xs:element name="property" minOccurs="0" maxOccurs="unbounded">
+                                <xs:complexType>
+                                    <xs:attribute name="name" type="xs:string" use="required"/>
+                                    <xs:attribute name="localizedName" type="resourceString"/>
+                                </xs:complexType>
+                            </xs:element>
+                        </xs:sequence>
+                    </xs:complexType>
+                </xs:element>
+
+                <xs:element name="aggregationProperties" minOccurs="0" maxOccurs="1" type="propertiesListType"/>
+                <xs:element name="hiddenProperties" minOccurs="0" maxOccurs="1" type="propertiesListType"/>
+                <xs:element name="inclusions" minOccurs="0" maxOccurs="1" type="propertiesWithValueListsType"/>
+                <xs:element name="exclusions" minOccurs="0" maxOccurs="1" type="propertiesWithValueListsType"/>
+                <xs:element name="filterFunction" minOccurs="0" maxOccurs="1"/>
+                <xs:element name="sortersFunction" minOccurs="0" maxOccurs="1"/>
+            </xs:all>
+
+            <xs:attribute name="datasource" type="xs:string"/>
+            <xs:attribute name="renderer" type="renderer"/>
+            <xs:attribute name="menuLimit" type="xs:integer"/>
+            <xs:attribute name="autoSortUnusedProperties" type="xs:boolean"/>
+            <xs:attribute name="unusedPropertiesVertical" type="xs:string"/>
+
+            <xs:attributeGroup ref="hasId"/>
+            <xs:attributeGroup ref="hasSize"/>
+            <xs:attributeGroup ref="hasStyle"/>
+            <xs:attributeGroup ref="hasVisibility"/>
+            <xs:attributeGroup ref="hasEditState"/>
+        </xs:complexType>
+    </xs:element>
+
 </xs:schema>

@@ -9,11 +9,14 @@ import com.haulmont.charts.gui.components.charts.Chart;
 import com.haulmont.charts.gui.components.charts.StockChart;
 import com.haulmont.charts.gui.components.map.GoogleMapViewer;
 import com.haulmont.charts.gui.components.map.MapViewer;
+import com.haulmont.charts.gui.components.pivot.PivotTable;
 import com.haulmont.charts.gui.xml.layout.loaders.charts.*;
 import com.haulmont.charts.gui.xml.layout.loaders.map.MapViewerLoader;
+import com.haulmont.charts.gui.xml.layout.loaders.pivottable.PivotTableLoader;
 import com.haulmont.charts.web.gui.components.charts.amcharts.WebChart;
 import com.haulmont.charts.web.gui.components.charts.amcharts.WebStockChart;
 import com.haulmont.charts.web.gui.components.map.google.WebGoogleMapViewer;
+import com.haulmont.charts.web.gui.components.pivottable.WebPivotTable;
 import com.haulmont.cuba.gui.ComponentPalette;
 import com.haulmont.cuba.gui.components.Component;
 import com.haulmont.cuba.gui.xml.layout.ComponentLoader;
@@ -42,6 +45,8 @@ public class ChartComponentPalette implements ComponentPalette {
 
         loaders.put(MapViewer.TAG_NAME, MapViewerLoader.class);
 
+        loaders.put(PivotTable.NAME, PivotTableLoader.class);
+
         return loaders;
     }
 
@@ -53,6 +58,9 @@ public class ChartComponentPalette implements ComponentPalette {
         components.put(StockChart.NAME, WebStockChart.class);
 
         components.put(GoogleMapViewer.NAME, WebGoogleMapViewer.class);
+
+        components.put(PivotTable.NAME, WebPivotTable.class);
+
         return components;
     }
 }
