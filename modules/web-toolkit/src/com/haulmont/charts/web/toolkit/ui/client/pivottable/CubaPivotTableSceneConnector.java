@@ -7,11 +7,13 @@ package com.haulmont.charts.web.toolkit.ui.client.pivottable;
 
 import com.google.gwt.core.client.JavaScriptObject;
 import com.google.gwt.core.client.Scheduler;
+import com.google.gwt.dom.client.Element;
 import com.google.gwt.json.client.JSONParser;
 import com.haulmont.charts.web.toolkit.ui.pivottable.CubaPivotTableScene;
 import com.vaadin.client.communication.RpcProxy;
 import com.vaadin.client.communication.StateChangeEvent;
 import com.vaadin.client.ui.AbstractComponentConnector;
+import com.vaadin.client.ui.layout.ElementResizeListener;
 import com.vaadin.shared.ui.Connect;
 
 import java.util.Map;
@@ -23,6 +25,8 @@ public class CubaPivotTableSceneConnector extends AbstractComponentConnector {
     private static final long serialVersionUID = -6263118673027033933L;
 
     protected CubaPivotTableServerRpc rpc = RpcProxy.create(CubaPivotTableServerRpc.class, this);
+
+    protected ElementResizeListener tableResizeListener = e -> getLayoutManager().setNeedsMeasure(this);
 
     public CubaPivotTableSceneConnector() {
     }
@@ -57,8 +61,23 @@ public class CubaPivotTableSceneConnector extends AbstractComponentConnector {
                 getState().options, getState().json);
         PivotTableEvents events = createEvents();
 
-        Scheduler.get().scheduleDeferred(() ->
-                getWidget().init(config, events));
+        Scheduler.get().scheduleDeferred(() -> {
+            getWidget().init(config, events);
+
+            getLayoutManager().setNeedsMeasure(this);
+
+            Element tableElement = getWidget().getElement().getFirstChildElement();
+            getLayoutManager().removeElementResizeListener(tableElement, tableResizeListener);
+            getLayoutManager().addElementResizeListener(tableElement, tableResizeListener);
+        });
+    }
+
+    @Override
+    public void onUnregister() {
+        super.onUnregister();
+
+        getLayoutManager().removeElementResizeListener(getWidget().getElement().getFirstChildElement(),
+                tableResizeListener);
     }
 
     private native void addPivotTableMessages(String localeCode, JavaScriptObject pivotLocalization) /*-{
