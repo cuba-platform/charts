@@ -6,7 +6,7 @@
 package com.haulmont.charts.gui.amcharts.model;
 
 import com.google.gson.annotations.Expose;
-import com.haulmont.charts.gui.amcharts.model.data.DataProvider;
+import com.haulmont.charts.gui.data.DataProvider;
 import com.haulmont.cuba.core.global.UuidProvider;
 import org.apache.commons.collections.CollectionUtils;
 import org.apache.commons.lang.StringUtils;

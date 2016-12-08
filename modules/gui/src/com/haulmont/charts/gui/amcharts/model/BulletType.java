@@ -5,7 +5,9 @@
 
 package com.haulmont.charts.gui.amcharts.model;
 
-public enum BulletType implements ChartEnum {
+import com.haulmont.charts.gui.model.JsonEnum;
+
+public enum BulletType implements JsonEnum {
     NONE("none"),
     ROUND("round"),
     SQUARE("square"),

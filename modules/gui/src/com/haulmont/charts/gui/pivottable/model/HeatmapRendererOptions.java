@@ -5,15 +5,19 @@
 
 package com.haulmont.charts.gui.pivottable.model;
 
+import com.haulmont.charts.gui.model.JsFunction;
+
 public class HeatmapRendererOptions extends AbstractPivotObject {
 
-    private PivotJsFunction colorScaleGeneratorFunction;
+    private static final long serialVersionUID = 4082501420650191687L;
 
-    public PivotJsFunction getColorScaleGeneratorFunction() {
+    private JsFunction colorScaleGeneratorFunction;
+
+    public JsFunction getColorScaleGeneratorFunction() {
         return colorScaleGeneratorFunction;
     }
 
-    public HeatmapRendererOptions setColorScaleGeneratorFunction(PivotJsFunction colorScaleGeneratorFunction) {
+    public HeatmapRendererOptions setColorScaleGeneratorFunction(JsFunction colorScaleGeneratorFunction) {
         this.colorScaleGeneratorFunction = colorScaleGeneratorFunction;
         return this;
     }

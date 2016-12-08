@@ -5,7 +5,9 @@
 
 package com.haulmont.charts.gui.amcharts.model;
 
-public enum GradientType implements ChartEnum {
+import com.haulmont.charts.gui.model.JsonEnum;
+
+public enum GradientType implements JsonEnum {
     LINEAR("linear"),
     RADIAL("radial");
 

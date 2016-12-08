@@ -5,7 +5,9 @@
 
 package com.haulmont.charts.gui.amcharts.model;
 
-public enum ShowPositionOnCandle implements ChartEnum {
+import com.haulmont.charts.gui.model.JsonEnum;
+
+public enum ShowPositionOnCandle implements JsonEnum {
     OPEN("open"),
     CLOSE("close"),
     HIGH("high"),

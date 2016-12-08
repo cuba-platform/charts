@@ -3,10 +3,8 @@
  * Use is subject to license terms, see http://www.cuba-platform.com/commercial-software-license for details.
  */
 
-package com.haulmont.charts.gui.pivottable.model.data;
+package com.haulmont.charts.gui.data;
 
-import com.haulmont.charts.gui.amcharts.model.data.DataItem;
-import com.haulmont.charts.gui.amcharts.model.data.EntityDataItem;
 import com.haulmont.chile.core.datatypes.impl.EnumClass;
 import com.haulmont.chile.core.model.Instance;
 import com.haulmont.chile.core.model.utils.InstanceUtils;
@@ -19,16 +17,16 @@ import java.util.Collection;
 import java.util.List;
 
 /**
- * Pivot data item, which contains an instance of an {@link com.haulmont.cuba.core.entity.Entity}.
+ * Chart data item, which contains an instance of an {@link com.haulmont.cuba.core.entity.Entity}.
  */
-public class EntityPivotDataItem implements PivotDataItem {
+public class EntityDataItem implements DataItem {
 
-    private static final long serialVersionUID = 3433429446006044821L;
+    private static final long serialVersionUID = -2703129637028051748L;
 
     protected Messages messages = AppBeans.get(Messages.NAME);
     protected final Entity item;
 
-    public EntityPivotDataItem(Entity item) {
+    public EntityDataItem(Entity item) {
         this.item = item;
     }
 

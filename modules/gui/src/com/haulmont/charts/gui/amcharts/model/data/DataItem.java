@@ -5,16 +5,11 @@
 
 package com.haulmont.charts.gui.amcharts.model.data;
 
-import java.io.Serializable;
-
 /**
  * Chart data item.
+ *
+ * @deprecated use {@link com.haulmont.charts.gui.data.DataItem} instead
  */
-public interface DataItem extends Serializable {
-
-    /**
-     * @param property name of property
-     * @return the value of a property with the specified property name
-     */
-    Object getValue(String property);
+@Deprecated
+public interface DataItem extends com.haulmont.charts.gui.data.DataItem {
 }

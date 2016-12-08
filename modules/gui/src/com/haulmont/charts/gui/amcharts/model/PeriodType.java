@@ -5,9 +5,11 @@
 
 package com.haulmont.charts.gui.amcharts.model;
 
+import com.haulmont.charts.gui.model.JsonEnum;
+
 import javax.annotation.Nullable;
 
-public enum PeriodType implements ChartEnum {
+public enum PeriodType implements JsonEnum {
     SECONDS("ss"),
     MINUTES("mm"),
     HOURS("hh"),

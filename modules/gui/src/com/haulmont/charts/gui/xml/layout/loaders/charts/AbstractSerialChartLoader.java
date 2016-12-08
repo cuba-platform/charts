@@ -8,7 +8,7 @@ package com.haulmont.charts.gui.xml.layout.loaders.charts;
 import com.haulmont.charts.gui.amcharts.model.CategoryAxis;
 import com.haulmont.charts.gui.amcharts.model.DatePeriod;
 import com.haulmont.charts.gui.amcharts.model.GridPosition;
-import com.haulmont.charts.gui.amcharts.model.JsFunction;
+import com.haulmont.charts.gui.model.JsFunction;
 import com.haulmont.charts.gui.amcharts.model.charts.AbstractSerialChart;
 import org.apache.commons.lang.StringUtils;
 import org.dom4j.Element;

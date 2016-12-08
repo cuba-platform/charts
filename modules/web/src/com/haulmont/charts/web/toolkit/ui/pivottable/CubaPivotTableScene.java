@@ -40,7 +40,6 @@ import static com.vaadin.util.ReflectTools.findMethod;
         "vaadin://resources/pivottable/pivot.min.css",
         "vaadin://resources/pivottable/plugins/c3/c3.min.css"
 })
-@SuppressWarnings({"WeakerAccess", "unused"})
 public class CubaPivotTableScene extends AbstractComponent {
     private static final long serialVersionUID = 3250758720037122580L;
 
@@ -136,7 +135,7 @@ public class CubaPivotTableScene extends AbstractComponent {
 
     protected void forceStateChange() {
         this.dirty = true;
-        getState().version++;
+        getState(true);
     }
 
     public void addRefreshListener(RefreshListener listener) {
@@ -167,8 +166,8 @@ public class CubaPivotTableScene extends AbstractComponent {
     }
 
     public void setPivotTableMessages(String localeCode, Map<String, Object> localeMap) {
-        if (getState(false).pivotTableMessages == null) {
-            getState().pivotTableMessages = new HashMap<>();
+        if (getState(false).localeMap == null) {
+            getState().localeMap = new HashMap<>();
         }
 
         JsonObject jsonLocaleMap = new JsonObject();
@@ -183,7 +182,7 @@ public class CubaPivotTableScene extends AbstractComponent {
             jsonLocaleMap.add(localeEntry.getKey(), element);
         }
 
-        getState().pivotTableMessages.put(localeCode, AbstractPivotObject.getSharedGson().toJson(localeMap));
+        getState().localeMap.put(localeCode, AbstractPivotObject.getSharedGson().toJson(localeMap));
     }
 
     protected class CubaPivotTableServerRpcImpl implements CubaPivotTableServerRpc {

@@ -5,7 +5,9 @@
 
 package com.haulmont.charts.gui.amcharts.model;
 
-public enum BigNumberPower implements ChartEnum {
+import com.haulmont.charts.gui.model.JsonEnum;
+
+public enum BigNumberPower implements JsonEnum {
     KILO("1e+3"),
     MEGA("1e+6"),
     GIGA("1e+9"),

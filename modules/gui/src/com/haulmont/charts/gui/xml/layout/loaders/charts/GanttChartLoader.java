@@ -8,8 +8,8 @@ package com.haulmont.charts.gui.xml.layout.loaders.charts;
 import com.haulmont.charts.gui.amcharts.model.DatePeriod;
 import com.haulmont.charts.gui.amcharts.model.Graph;
 import com.haulmont.charts.gui.amcharts.model.charts.GanttChart;
-import com.haulmont.charts.gui.amcharts.model.data.ListDataProvider;
 import com.haulmont.charts.gui.amcharts.model.data.MapDataItem;
+import com.haulmont.charts.gui.data.ListDataProvider;
 import org.apache.commons.lang.StringUtils;
 import org.dom4j.Element;
 

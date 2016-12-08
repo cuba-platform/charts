@@ -5,7 +5,9 @@
 
 package com.haulmont.charts.gui.amcharts.model;
 
-public enum AnimationEffect implements ChartEnum {
+import com.haulmont.charts.gui.model.JsonEnum;
+
+public enum AnimationEffect implements JsonEnum {
     EASE_OUT_SINE("easeOutSine"),
     EASE_IN_SINE("easeInSine"),
     ELASTIC("elastic"),

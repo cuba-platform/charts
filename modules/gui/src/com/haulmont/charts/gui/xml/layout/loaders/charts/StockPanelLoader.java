@@ -7,6 +7,7 @@ package com.haulmont.charts.gui.xml.layout.loaders.charts;
 
 import com.haulmont.charts.gui.amcharts.model.*;
 import com.haulmont.charts.gui.amcharts.model.charts.StockPanel;
+import com.haulmont.charts.gui.model.JsFunction;
 import org.apache.commons.lang.StringUtils;
 import org.dom4j.Element;
 

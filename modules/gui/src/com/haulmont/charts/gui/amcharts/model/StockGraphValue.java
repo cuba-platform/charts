@@ -5,7 +5,9 @@
 
 package com.haulmont.charts.gui.amcharts.model;
 
-public enum StockGraphValue implements ChartEnum {
+import com.haulmont.charts.gui.model.JsonEnum;
+
+public enum StockGraphValue implements JsonEnum {
     OPEN("open"),
     LOW("low"),
     HIGH("high"),

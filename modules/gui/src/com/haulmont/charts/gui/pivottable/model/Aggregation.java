@@ -5,6 +5,8 @@
 
 package com.haulmont.charts.gui.pivottable.model;
 
+import com.haulmont.charts.gui.model.JsFunction;
+
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
@@ -45,7 +47,7 @@ public class Aggregation extends AbstractPivotObject {
      * <p>
      * Applies only when {@code custom=true}.
      */
-    private PivotJsFunction function;
+    private JsFunction function;
 
     /**
      * A collection of property names to pass as parameters to selected aggregation.
@@ -81,11 +83,11 @@ public class Aggregation extends AbstractPivotObject {
         return this;
     }
 
-    public PivotJsFunction getFunction() {
+    public JsFunction getFunction() {
         return function;
     }
 
-    public Aggregation setFunction(PivotJsFunction function) {
+    public Aggregation setFunction(JsFunction function) {
         this.function = function;
         return this;
     }

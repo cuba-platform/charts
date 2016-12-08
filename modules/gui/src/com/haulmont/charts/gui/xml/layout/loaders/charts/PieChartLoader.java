@@ -6,7 +6,7 @@
 package com.haulmont.charts.gui.xml.layout.loaders.charts;
 
 import com.haulmont.charts.gui.amcharts.model.GradientType;
-import com.haulmont.charts.gui.amcharts.model.JsFunction;
+import com.haulmont.charts.gui.model.JsFunction;
 import com.haulmont.charts.gui.amcharts.model.charts.PieChart;
 import org.apache.commons.lang.StringUtils;
 import org.dom4j.Element;

@@ -5,7 +5,9 @@
 
 package com.haulmont.charts.gui.amcharts.model;
 
-public enum RecalculateToPercents implements ChartEnum {
+import com.haulmont.charts.gui.model.JsonEnum;
+
+public enum RecalculateToPercents implements JsonEnum {
     NEVER("never"),
     ALWAYS("always"),
     WHEN_COMPARING("whenComparing");

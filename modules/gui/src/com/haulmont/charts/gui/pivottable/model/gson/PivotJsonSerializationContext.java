@@ -17,7 +17,6 @@ import java.util.LinkedHashSet;
 import java.util.List;
 import java.util.Map;
 
-@SuppressWarnings("WeakerAccess")
 public class PivotJsonSerializationContext implements JsonSerializationContext {
 
     protected PivotTableModel pivotTableModel;

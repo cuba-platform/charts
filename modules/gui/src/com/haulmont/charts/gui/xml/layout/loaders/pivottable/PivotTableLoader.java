@@ -6,6 +6,7 @@
 package com.haulmont.charts.gui.xml.layout.loaders.pivottable;
 
 import com.haulmont.charts.gui.components.pivot.PivotTable;
+import com.haulmont.charts.gui.model.JsFunction;
 import com.haulmont.charts.gui.pivottable.model.*;
 import com.haulmont.chile.core.model.MetaClass;
 import com.haulmont.cuba.gui.GuiDevelopmentException;
@@ -22,7 +23,6 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
-@SuppressWarnings("WeakerAccess")
 public class PivotTableLoader extends AbstractComponentLoader<PivotTable> {
 
     @Override
@@ -122,12 +122,12 @@ public class PivotTableLoader extends AbstractComponentLoader<PivotTable> {
 
         String filter = element.elementText("filterFunction");
         if (StringUtils.isNotBlank(filter)) {
-            pivot.setFilterFunction(new PivotJsFunction(filter));
+            pivot.setFilterFunction(new JsFunction(filter));
         }
 
         String sorters = element.elementText("sortersFunction");
         if (StringUtils.isNotBlank(sorters)) {
-            pivot.setSortersFunction(new PivotJsFunction(sorters));
+            pivot.setSortersFunction(new JsFunction(sorters));
         }
     }
 
@@ -235,7 +235,7 @@ public class PivotTableLoader extends AbstractComponentLoader<PivotTable> {
 
         String function = aggregationElement.elementText("function");
         if (StringUtils.isNotEmpty(function)) {
-            aggregation.setFunction(new PivotJsFunction(function));
+            aggregation.setFunction(new JsFunction(function));
         }
 
         String mode = aggregationElement.attributeValue("mode");
@@ -297,7 +297,7 @@ public class PivotTableLoader extends AbstractComponentLoader<PivotTable> {
             HeatmapRendererOptions heatmap = new HeatmapRendererOptions();
             String colorScaleGeneratorFunction = heatmapElement.elementText("colorScaleGeneratorFunction");
             if (StringUtils.isNotBlank(colorScaleGeneratorFunction)) {
-                heatmap.setColorScaleGeneratorFunction(new PivotJsFunction(colorScaleGeneratorFunction));
+                heatmap.setColorScaleGeneratorFunction(new JsFunction(colorScaleGeneratorFunction));
             }
             rendererOptions.setHeatmap(heatmap);
         }
@@ -375,7 +375,7 @@ public class PivotTableLoader extends AbstractComponentLoader<PivotTable> {
                 if (StringUtils.isNotEmpty(caption)) {
                     String code = derivedAttributeElement.elementText("function");
                     if (StringUtils.isNotEmpty(code)) {
-                        derivedProperties.addAttribute(loadResourceString(caption), new PivotJsFunction(code));
+                        derivedProperties.addAttribute(loadResourceString(caption), new JsFunction(code));
                     }
                 }
             }

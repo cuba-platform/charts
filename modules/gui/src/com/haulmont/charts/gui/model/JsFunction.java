@@ -3,7 +3,7 @@
  * Use is subject to license terms, see http://www.cuba-platform.com/commercial-software-license for details.
  */
 
-package com.haulmont.charts.gui.pivottable.model;
+package com.haulmont.charts.gui.model;
 
 import java.io.Serializable;
 
@@ -12,13 +12,13 @@ import java.io.Serializable;
  * Code example: <code>new JsFunction("function (event) { alert(event); }");</code>
  *
  */
-public class PivotJsFunction implements Serializable {
+public class JsFunction implements Serializable {
 
-    private static final long serialVersionUID = -6420221017693315595L;
+    private static final long serialVersionUID = 7614774685832973416L;
 
     private String code;
 
-    public PivotJsFunction(String code) {
+    public JsFunction(String code) {
         this.code = code;
     }
 

@@ -5,7 +5,9 @@
 
 package com.haulmont.charts.gui.amcharts.model;
 
-public enum GradientOrientation implements ChartEnum {
+import com.haulmont.charts.gui.model.JsonEnum;
+
+public enum GradientOrientation implements JsonEnum {
     VERTICAL("vertical"),
     HORIZONTAL("horizontal");
 

@@ -5,6 +5,8 @@
 
 package com.haulmont.charts.gui.amcharts.model;
 
+import com.haulmont.charts.gui.model.JsFunction;
+
 import java.util.Date;
 import java.util.Map;
 

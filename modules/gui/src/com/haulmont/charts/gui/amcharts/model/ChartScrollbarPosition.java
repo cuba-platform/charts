@@ -5,7 +5,9 @@
 
 package com.haulmont.charts.gui.amcharts.model;
 
-public enum ChartScrollbarPosition implements ChartEnum {
+import com.haulmont.charts.gui.model.JsonEnum;
+
+public enum ChartScrollbarPosition implements JsonEnum {
     TOP("top"),
     BOTTOM("bottom");
 

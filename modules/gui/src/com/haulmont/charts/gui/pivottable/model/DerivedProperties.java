@@ -5,6 +5,8 @@
 
 package com.haulmont.charts.gui.pivottable.model;
 
+import com.haulmont.charts.gui.model.JsFunction;
+
 import java.util.HashMap;
 import java.util.Map;
 
@@ -15,18 +17,18 @@ import java.util.Map;
 public class DerivedProperties extends AbstractPivotObject {
     private static final long serialVersionUID = -2113616038227536186L;
 
-    private Map<String, PivotJsFunction> properties;
+    private Map<String, JsFunction> properties;
 
-    public Map<String, PivotJsFunction> getProperties() {
+    public Map<String, JsFunction> getProperties() {
         return properties;
     }
 
-    public DerivedProperties setProperties(Map<String, PivotJsFunction> derivedProperties) {
+    public DerivedProperties setProperties(Map<String, JsFunction> derivedProperties) {
         this.properties = derivedProperties;
         return this;
     }
 
-    public DerivedProperties addAttributes(Map<String, PivotJsFunction> derivedProperties) {
+    public DerivedProperties addAttributes(Map<String, JsFunction> derivedProperties) {
         if (this.properties == null) {
             this.properties = new HashMap<>();
         }
@@ -34,7 +36,7 @@ public class DerivedProperties extends AbstractPivotObject {
         return this;
     }
 
-    public DerivedProperties addAttribute(String caption, PivotJsFunction function) {
+    public DerivedProperties addAttribute(String caption, JsFunction function) {
         if (this.properties == null) {
             this.properties = new HashMap<>();
         }

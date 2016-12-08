@@ -5,7 +5,9 @@
 
 package com.haulmont.charts.gui.amcharts.model;
 
-public enum FunnelValueRepresentation implements ChartEnum {
+import com.haulmont.charts.gui.model.JsonEnum;
+
+public enum FunnelValueRepresentation implements JsonEnum {
     HEIGHT("height"),
     AREA("area");
 

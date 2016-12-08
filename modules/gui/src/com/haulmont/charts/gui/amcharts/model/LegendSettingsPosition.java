@@ -5,7 +5,9 @@
 
 package com.haulmont.charts.gui.amcharts.model;
 
-public enum LegendSettingsPosition implements ChartEnum {
+import com.haulmont.charts.gui.model.JsonEnum;
+
+public enum LegendSettingsPosition implements JsonEnum {
     TOP("top"),
     BOTTOM("bottom");
 

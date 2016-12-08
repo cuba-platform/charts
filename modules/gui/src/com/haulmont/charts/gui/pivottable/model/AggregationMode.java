@@ -5,10 +5,12 @@
 
 package com.haulmont.charts.gui.pivottable.model;
 
+import com.haulmont.charts.gui.model.JsonEnum;
+
 /**
  * An enum with predefined aggregations.
  */
-public enum AggregationMode implements PivotEnum {
+public enum AggregationMode implements JsonEnum {
     COUNT("count"),
     COUNT_UNIQUE_VALUES("countUniqueValues"),
     LIST_UNIQUE_VALUES("listUniqueValues"),

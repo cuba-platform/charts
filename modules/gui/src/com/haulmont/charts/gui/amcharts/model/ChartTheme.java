@@ -5,7 +5,9 @@
 
 package com.haulmont.charts.gui.amcharts.model;
 
-public enum ChartTheme implements ChartEnum {
+import com.haulmont.charts.gui.model.JsonEnum;
+
+public enum ChartTheme implements JsonEnum {
     NONE("none"),
     BLACK("black"),
     CHALK("chalk"),

@@ -10,7 +10,7 @@ import com.haulmont.charts.gui.amcharts.model.charts.AbstractChart;
 import com.haulmont.charts.gui.amcharts.model.charts.AbstractSerialChart;
 import com.haulmont.charts.gui.amcharts.model.charts.GanttChart;
 import com.haulmont.charts.gui.amcharts.model.charts.RectangularChart;
-import com.haulmont.charts.gui.amcharts.model.data.EntityDataProvider;
+import com.haulmont.charts.gui.data.EntityDataProvider;
 import com.haulmont.charts.gui.amcharts.model.gson.ChartJsonSerializationContext;
 import com.haulmont.charts.gui.components.charts.Chart;
 import com.haulmont.charts.web.gui.ChartLocaleHelper;

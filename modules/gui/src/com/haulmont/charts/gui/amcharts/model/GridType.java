@@ -5,7 +5,9 @@
 
 package com.haulmont.charts.gui.amcharts.model;
 
-public enum GridType implements ChartEnum {
+import com.haulmont.charts.gui.model.JsonEnum;
+
+public enum GridType implements JsonEnum {
     POLYGONS("polygons"),
     CIRCLES("circles");
 

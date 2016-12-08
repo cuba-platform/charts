@@ -6,10 +6,11 @@
 package com.haulmont.charts.web.gui.components.pivottable;
 
 import com.haulmont.charts.gui.components.pivot.PivotTable;
+import com.haulmont.charts.gui.data.DataItem;
+import com.haulmont.charts.gui.data.DataProvider;
+import com.haulmont.charts.gui.data.EntityDataProvider;
+import com.haulmont.charts.gui.model.JsFunction;
 import com.haulmont.charts.gui.pivottable.model.*;
-import com.haulmont.charts.gui.pivottable.model.data.EntityPivotDataProvider;
-import com.haulmont.charts.gui.pivottable.model.data.PivotDataItem;
-import com.haulmont.charts.gui.pivottable.model.data.PivotDataProvider;
 import com.haulmont.charts.web.gui.PivotTableLocaleHelper;
 import com.haulmont.charts.web.toolkit.ui.pivottable.CubaPivotTableScene;
 import com.haulmont.cuba.core.global.AppBeans;
@@ -25,7 +26,6 @@ import java.util.List;
 import java.util.Locale;
 import java.util.Map;
 
-@SuppressWarnings("WeakerAccess")
 public class WebPivotTable extends WebAbstractComponent<CubaPivotTableScene> implements PivotTable {
 
     protected Messages messages = AppBeans.get(Messages.class);
@@ -69,9 +69,7 @@ public class WebPivotTable extends WebAbstractComponent<CubaPivotTableScene> imp
             CollectionDsHelper.autoRefreshInvalid(datasource, true);
         }
 
-        if (component.getPivotTable() != null) {
-            component.getPivotTable().setDataProvider(new EntityPivotDataProvider(datasource));
-        }
+        component.getPivotTable().setDataProvider(new EntityDataProvider(datasource));
     }
 
     @Override
@@ -240,37 +238,37 @@ public class WebPivotTable extends WebAbstractComponent<CubaPivotTableScene> imp
     }
 
     @Override
-    public PivotDataProvider getDataProvider() {
+    public DataProvider getDataProvider() {
         return component.getPivotTable().getDataProvider();
     }
 
     @Override
-    public void setDataProvider(PivotDataProvider dataProvider) {
+    public void setDataProvider(DataProvider dataProvider) {
         component.getPivotTable().setDataProvider(dataProvider);
     }
 
     @Override
-    public void addData(PivotDataItem... dataItems) {
+    public void addData(DataItem... dataItems) {
         component.getPivotTable().addData(dataItems);
     }
 
     @Override
-    public PivotJsFunction getFilterFunction() {
+    public JsFunction getFilterFunction() {
         return component.getPivotTable().getFilterFunction();
     }
 
     @Override
-    public void setFilterFunction(PivotJsFunction filter) {
+    public void setFilterFunction(JsFunction filter) {
         component.getPivotTable().setFilterFunction(filter);
     }
 
     @Override
-    public PivotJsFunction getSortersFunction() {
+    public JsFunction getSortersFunction() {
         return component.getPivotTable().getSortersFunction();
     }
 
     @Override
-    public void setSortersFunction(PivotJsFunction sorters) {
+    public void setSortersFunction(JsFunction sorters) {
         component.getPivotTable().setSortersFunction(sorters);
     }
 
@@ -359,6 +357,10 @@ public class WebPivotTable extends WebAbstractComponent<CubaPivotTableScene> imp
     @Override
     public void removeRefreshListener(RefreshListener refreshListener) {
         getEventRouter().removeListener(RefreshListener.class, refreshListener);
+        if (!getEventRouter().hasListeners(RefreshListener.class)) {
+            component.removeRefreshListener(refreshHandler);
+            refreshHandler = null;
+        }
     }
 
     protected class CubaPivotTableSceneExt extends CubaPivotTableScene {

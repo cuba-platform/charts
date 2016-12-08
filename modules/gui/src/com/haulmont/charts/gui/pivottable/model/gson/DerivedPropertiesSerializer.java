@@ -9,8 +9,8 @@ import com.google.gson.JsonElement;
 import com.google.gson.JsonObject;
 import com.google.gson.JsonSerializationContext;
 import com.google.gson.JsonSerializer;
+import com.haulmont.charts.gui.model.JsFunction;
 import com.haulmont.charts.gui.pivottable.model.DerivedProperties;
-import com.haulmont.charts.gui.pivottable.model.PivotJsFunction;
 
 import java.lang.reflect.Type;
 import java.util.Map;
@@ -22,7 +22,7 @@ public class DerivedPropertiesSerializer implements JsonSerializer<DerivedProper
     @Override
     public JsonElement serialize(DerivedProperties src, Type typeOfSrc, JsonSerializationContext context) {
         JsonObject derivedAttributes = new JsonObject();
-        for (Map.Entry<String, PivotJsFunction> entry : src.getProperties().entrySet()) {
+        for (Map.Entry<String, JsFunction> entry : src.getProperties().entrySet()) {
             derivedAttributes.add(entry.getKey() + SUFFIX, context.serialize(entry.getValue()));
         }
         return derivedAttributes;

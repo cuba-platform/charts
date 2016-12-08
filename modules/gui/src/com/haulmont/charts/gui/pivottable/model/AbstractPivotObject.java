@@ -7,11 +7,14 @@ package com.haulmont.charts.gui.pivottable.model;
 
 import com.google.gson.*;
 import com.google.gson.annotations.Expose;
+import com.haulmont.charts.gui.model.JsFunction;
+import com.haulmont.charts.gui.model.JsonEnum;
+import com.haulmont.charts.gui.serialization.JsFunctionSerializer;
+import com.haulmont.charts.gui.serialization.JsonEnumSerializer;
 import com.haulmont.charts.gui.pivottable.model.gson.*;
 
 import java.io.Serializable;
 
-@SuppressWarnings({"WeakerAccess", "serial"})
 public abstract class AbstractPivotObject implements Serializable {
 
     protected final static Gson gson;
@@ -49,8 +52,8 @@ public abstract class AbstractPivotObject implements Serializable {
     protected static void setDefaultProperties(GsonBuilder builder) {
         // uncomment if you wish to debug generated json
         // builder.setPrettyPrinting();
-        builder.registerTypeHierarchyAdapter(PivotEnum.class, new PivotEnumSerializer());
-        builder.registerTypeHierarchyAdapter(PivotJsFunction.class, new PivotJsFunctionSerializer());
+        builder.registerTypeHierarchyAdapter(JsonEnum.class, new JsonEnumSerializer());
+        builder.registerTypeHierarchyAdapter(JsFunction.class, new JsFunctionSerializer());
         builder.registerTypeHierarchyAdapter(DerivedProperties.class, new DerivedPropertiesSerializer());
         builder.registerTypeHierarchyAdapter(UnusedPropertiesVertical.class, new UnusedPropertiesVerticalSerializer());
     }

@@ -7,8 +7,8 @@ package com.haulmont.charts.gui.pivottable.model.gson;
 
 import com.google.gson.JsonObject;
 import com.google.gson.JsonSerializationContext;
-import com.haulmont.charts.gui.pivottable.model.data.EntityPivotDataItem;
-import com.haulmont.charts.gui.pivottable.model.data.PivotDataItem;
+import com.haulmont.charts.gui.data.DataItem;
+import com.haulmont.charts.gui.data.EntityDataItem;
 import com.haulmont.chile.core.datatypes.Datatypes;
 import com.haulmont.chile.core.datatypes.impl.DateDatatype;
 import com.haulmont.chile.core.datatypes.impl.TimeDatatype;
@@ -23,18 +23,17 @@ import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 
-@SuppressWarnings("WeakerAccess")
 public class PivotDataItemsSerializer {
 
     protected Messages messages = AppBeans.get(Messages.class);
     protected Metadata metadata = AppBeans.get(Metadata.class);
 
-    public List<JsonObject> serialize(List<PivotDataItem> items, JsonSerializationContext context) {
+    public List<JsonObject> serialize(List<DataItem> items, JsonSerializationContext context) {
         List<JsonObject> serialized = new ArrayList<>();
 
         if (context instanceof PivotJsonSerializationContext) {
             PivotJsonSerializationContext pivotContext = (PivotJsonSerializationContext) context;
-            for (PivotDataItem item : items) {
+            for (DataItem item : items) {
                 JsonObject itemElement = new JsonObject();
                 for (String property : pivotContext.getProperties()) {
                     Object value = item.getValue(property);
@@ -49,11 +48,11 @@ public class PivotDataItemsSerializer {
     }
 
     protected void addProperty(JsonObject jsonObject, String property, Object value,
-                               PivotJsonSerializationContext context, PivotDataItem item) {
+                               PivotJsonSerializationContext context, DataItem item) {
         if (value instanceof Date) {
             String formatStr;
-            if (item instanceof EntityPivotDataItem) {
-                EntityPivotDataItem entityItem = (EntityPivotDataItem) item;
+            if (item instanceof EntityDataItem) {
+                EntityDataItem entityItem = (EntityDataItem) item;
                 MetaClass metaClass = metadata.getClassNN(entityItem.getItem().getClass());
                 MetaProperty metaProperty = metaClass.getPropertyNN(property);
 

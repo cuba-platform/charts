@@ -5,7 +5,9 @@
 
 package com.haulmont.charts.gui.amcharts.model;
 
-public enum StepDirection implements ChartEnum {
+import com.haulmont.charts.gui.model.JsonEnum;
+
+public enum StepDirection implements JsonEnum {
     LEFT("left"),
     RIGHT("right");
 

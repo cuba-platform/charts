@@ -5,7 +5,9 @@
 
 package com.haulmont.charts.gui.amcharts.model;
 
-public enum ExportFormat implements ChartEnum {
+import com.haulmont.charts.gui.model.JsonEnum;
+
+public enum ExportFormat implements JsonEnum {
     JPG("jpg"),
     PNG("png"),
     SVG("svg"),

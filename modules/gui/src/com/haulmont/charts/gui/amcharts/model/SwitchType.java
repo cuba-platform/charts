@@ -5,7 +5,9 @@
 
 package com.haulmont.charts.gui.amcharts.model;
 
-public enum SwitchType implements ChartEnum {
+import com.haulmont.charts.gui.model.JsonEnum;
+
+public enum SwitchType implements JsonEnum {
     X("x"),
     V("v");
 

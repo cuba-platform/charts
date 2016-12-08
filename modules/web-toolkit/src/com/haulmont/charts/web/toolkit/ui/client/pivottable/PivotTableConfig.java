@@ -9,7 +9,6 @@ import com.google.gwt.core.client.JavaScriptObject;
 import com.google.gwt.json.client.JSONParser;
 import com.haulmont.charts.web.toolkit.ui.client.utils.JsUtils;
 
-@SuppressWarnings("WeakerAccess")
 public class PivotTableConfig extends JavaScriptObject {
 
     protected PivotTableConfig() {

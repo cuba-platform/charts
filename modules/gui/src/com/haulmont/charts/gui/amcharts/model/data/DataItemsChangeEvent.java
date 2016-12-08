@@ -5,33 +5,21 @@
 
 package com.haulmont.charts.gui.amcharts.model.data;
 
-import java.io.Serializable;
+import com.haulmont.charts.gui.data.DataItem;
+
 import java.util.List;
 
 /**
  * Describes data item change event.
+ *
+ * @deprecated use {@link com.haulmont.charts.gui.data.DataItemsChangeEvent} instead
  */
-public class DataItemsChangeEvent implements Serializable {
+@Deprecated
+public class DataItemsChangeEvent extends com.haulmont.charts.gui.data.DataItemsChangeEvent {
 
-    private final DataChangeOperation operation;
-    private final List<DataItem> items;
+    private static final long serialVersionUID = -9206509789273675564L;
 
-    public DataItemsChangeEvent(DataChangeOperation operation, List<DataItem> items) {
-        this.operation = operation;
-        this.items = items;
-    }
-
-    /**
-     * @return operation which caused the data provider change
-     */
-    public DataChangeOperation getOperation() {
-        return operation;
-    }
-
-    /**
-     * @return items which used in operation
-     */
-    public List<DataItem> getItems() {
-        return items;
+    public DataItemsChangeEvent(com.haulmont.charts.gui.data.DataChangeOperation operation, List<DataItem> items) {
+        super(operation, items);
     }
 }

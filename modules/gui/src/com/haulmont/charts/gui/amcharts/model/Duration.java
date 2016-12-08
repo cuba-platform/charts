@@ -5,7 +5,9 @@
 
 package com.haulmont.charts.gui.amcharts.model;
 
-public enum Duration implements ChartEnum {
+import com.haulmont.charts.gui.model.JsonEnum;
+
+public enum Duration implements JsonEnum {
 
     SECONDS("ss"),
     MINUTES("mm"),

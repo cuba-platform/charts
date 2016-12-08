@@ -6,6 +6,7 @@
 package com.haulmont.charts.gui.amcharts.model.charts;
 
 import com.haulmont.charts.gui.amcharts.model.*;
+import com.haulmont.charts.gui.model.JsFunction;
 import org.apache.commons.lang.StringUtils;
 
 import java.util.ArrayList;

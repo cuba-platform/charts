@@ -5,11 +5,13 @@
 
 package com.haulmont.charts.gui.amcharts.model;
 
+import com.haulmont.charts.gui.model.JsonEnum;
+
 /**
  * The default series type for the chart.
  *
  */
-public enum ChartType implements ChartEnum {
+public enum ChartType implements JsonEnum {
     SERIAL("serial"),
     PIE("pie"),
     XY("xy"),

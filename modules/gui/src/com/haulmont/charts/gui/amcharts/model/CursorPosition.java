@@ -5,7 +5,9 @@
 
 package com.haulmont.charts.gui.amcharts.model;
 
-public enum CursorPosition implements ChartEnum {
+import com.haulmont.charts.gui.model.JsonEnum;
+
+public enum CursorPosition implements JsonEnum {
     START("start"),
     MIDDLE("middle"),
     MOUSE("mouse");

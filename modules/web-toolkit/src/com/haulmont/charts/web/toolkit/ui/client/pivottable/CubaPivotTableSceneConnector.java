@@ -17,7 +17,6 @@ import com.vaadin.shared.ui.Connect;
 import java.util.Map;
 import java.util.Set;
 
-@SuppressWarnings("WeakerAccess")
 @Connect(CubaPivotTableScene.class)
 public class CubaPivotTableSceneConnector extends AbstractComponentConnector {
 
@@ -46,8 +45,8 @@ public class CubaPivotTableSceneConnector extends AbstractComponentConnector {
     public void onStateChanged(StateChangeEvent stateChangeEvent) {
         super.onStateChanged(stateChangeEvent);
 
-        if (stateChangeEvent.hasPropertyChanged("pivotTableMessages") && getState().pivotTableMessages != null) {
-            Map<String, String> chartMessages = getState().pivotTableMessages;
+        if (stateChangeEvent.hasPropertyChanged("localeMap") && getState().localeMap != null) {
+            Map<String, String> chartMessages = getState().localeMap;
             for (final Map.Entry<String, String> entry : chartMessages.entrySet()) {
                 JavaScriptObject pivotLocalization = getJsonAsObject(entry.getValue());
                 addPivotTableMessages(entry.getKey(), pivotLocalization);
@@ -58,7 +57,8 @@ public class CubaPivotTableSceneConnector extends AbstractComponentConnector {
                 getState().options, getState().json);
         PivotTableEvents events = createEvents();
 
-        Scheduler.get().scheduleDeferred(() -> getWidget().init(config, events));
+        Scheduler.get().scheduleDeferred(() ->
+                getWidget().init(config, events));
     }
 
     private native void addPivotTableMessages(String localeCode, JavaScriptObject pivotLocalization) /*-{

@@ -3,10 +3,11 @@
  * Use is subject to license terms, see http://www.cuba-platform.com/commercial-software-license for details.
  */
 
-package com.haulmont.charts.gui.pivottable.model;
+package com.haulmont.charts.gui.data;
 
-/**
- * Marker interface for enums supporting JSON serialization.
- */
-public interface PivotEnum {
+public enum DataChangeOperation {
+    REFRESH,
+    ADD,
+    REMOVE,
+    UPDATE
 }

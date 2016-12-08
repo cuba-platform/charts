@@ -3,7 +3,7 @@
  * Use is subject to license terms, see http://www.cuba-platform.com/commercial-software-license for details.
  */
 
-package com.haulmont.charts.gui.pivottable.model.data;
+package com.haulmont.charts.gui.data;
 
 import com.haulmont.chile.core.datatypes.impl.EnumClass;
 import com.haulmont.chile.core.model.Instance;
@@ -13,16 +13,13 @@ import com.haulmont.cuba.core.entity.Entity;
 import com.haulmont.cuba.core.global.AppBeans;
 import com.haulmont.cuba.core.global.Messages;
 
-import java.util.ArrayList;
-import java.util.Collection;
-import java.util.List;
-import java.util.Map;
+import java.util.*;
 import java.util.concurrent.ConcurrentHashMap;
 
 /**
- * Pivot data item, which contains an instance of any class.
+ * Data item, which contains an instance of any class.
  */
-public class SimplePivotDataItem implements PivotDataItem {
+public class SimpleDataItem implements DataItem {
 
     private static final long serialVersionUID = -283289357315588981L;
 
@@ -31,7 +28,7 @@ public class SimplePivotDataItem implements PivotDataItem {
     protected Messages messages = AppBeans.get(Messages.NAME);
     protected Object item;
 
-    public SimplePivotDataItem(Object item) {
+    public SimpleDataItem(Object item) {
         this.item = item;
     }
 
@@ -65,7 +62,7 @@ public class SimplePivotDataItem implements PivotDataItem {
      * If property value is an instance of {@link EnumClass},
      * then method returns localized value for enum constant.
      * If property value is an instance of {@link Collection},
-     * then method returns {@link List} of {@link SimplePivotDataItem}.
+     * then method returns {@link List} of {@link SimpleDataItem}.
      * Otherwise method returns getter value
      */
     @Override
@@ -79,10 +76,10 @@ public class SimplePivotDataItem implements PivotDataItem {
             return messages.getMessage((Enum) value);
         }
         if (value instanceof Collection) {
-            List<PivotDataItem> items = new ArrayList<>();
+            List<DataItem> items = new ArrayList<>();
 
             for (Object item : (Collection) value) {
-                items.add(new SimplePivotDataItem(item));
+                items.add(new SimpleDataItem(item));
             }
             return items;
         }
@@ -91,11 +88,6 @@ public class SimplePivotDataItem implements PivotDataItem {
 
     protected MethodsCache getMethodsCache() {
         Class cls = item.getClass();
-        MethodsCache cache = methodCacheMap.get(cls);
-        if (cache == null) {
-            cache = new MethodsCache(cls);
-            methodCacheMap.put(cls, cache);
-        }
-        return cache;
+        return methodCacheMap.computeIfAbsent(cls, k -> new MethodsCache(cls));
     }
 }

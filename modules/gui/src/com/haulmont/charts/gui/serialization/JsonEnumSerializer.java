@@ -3,20 +3,20 @@
  * Use is subject to license terms, see http://www.cuba-platform.com/commercial-software-license for details.
  */
 
-package com.haulmont.charts.gui.amcharts.model.gson;
+package com.haulmont.charts.gui.serialization;
 
 import com.google.gson.JsonElement;
 import com.google.gson.JsonPrimitive;
 import com.google.gson.JsonSerializationContext;
 import com.google.gson.JsonSerializer;
-import com.haulmont.charts.gui.amcharts.model.JsFunction;
+import com.haulmont.charts.gui.model.JsonEnum;
 
 import java.lang.reflect.Type;
 
-public class JsFunctionSerializer implements JsonSerializer<JsFunction> {
+public class JsonEnumSerializer implements JsonSerializer<JsonEnum> {
 
     @Override
-    public JsonElement serialize(JsFunction src, Type typeOfSrc, JsonSerializationContext context) {
-        return new JsonPrimitive(src.getCode());
+    public JsonElement serialize(JsonEnum src, Type typeOfSrc, JsonSerializationContext context) {
+        return new JsonPrimitive(src.toString());
     }
 }

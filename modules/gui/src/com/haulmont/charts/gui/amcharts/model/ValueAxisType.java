@@ -5,7 +5,9 @@
 
 package com.haulmont.charts.gui.amcharts.model;
 
-public enum ValueAxisType implements ChartEnum {
+import com.haulmont.charts.gui.model.JsonEnum;
+
+public enum ValueAxisType implements JsonEnum {
     NUMERIC("numeric"),
     DATE("date");
 

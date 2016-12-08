@@ -5,9 +5,11 @@
 
 package com.haulmont.charts.gui.amcharts.model;
 
+import com.haulmont.charts.gui.model.JsonEnum;
+
 import javax.annotation.Nullable;
 
-public enum CreditsPosition implements ChartEnum {
+public enum CreditsPosition implements JsonEnum {
     TOP_LEFT("top-left"),
     TOP_RIGHT("top-right"),
     BOTTOM_LEFT("bottom-left"),

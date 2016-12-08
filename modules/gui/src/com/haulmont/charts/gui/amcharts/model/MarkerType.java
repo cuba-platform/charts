@@ -5,7 +5,9 @@
 
 package com.haulmont.charts.gui.amcharts.model;
 
-public enum MarkerType implements ChartEnum {
+import com.haulmont.charts.gui.model.JsonEnum;
+
+public enum MarkerType implements JsonEnum {
     NONE("none"),
     CIRCLE("circle"),
     SQUARE("square"),

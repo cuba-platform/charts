@@ -5,7 +5,9 @@
 
 package com.haulmont.charts.gui.amcharts.model;
 
-public enum PointerOrientation implements ChartEnum {
+import com.haulmont.charts.gui.model.JsonEnum;
+
+public enum PointerOrientation implements JsonEnum {
     LEFT("left"),
     RIGHT("right"),
     UP("up"),

@@ -5,7 +5,9 @@
 
 package com.haulmont.charts.gui.amcharts.model;
 
-public enum BalloonPointerOrientation implements ChartEnum {
+import com.haulmont.charts.gui.model.JsonEnum;
+
+public enum BalloonPointerOrientation implements JsonEnum {
     VERTICAL("vertical"),
     HORIZONTAL("horizontal");
 

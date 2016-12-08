@@ -7,8 +7,8 @@ package com.haulmont.charts.gui.amcharts.model;
 
 import com.haulmont.charts.gui.amcharts.model.charts.StockChartGroup;
 import com.haulmont.charts.gui.amcharts.model.charts.StockPanel;
-import com.haulmont.charts.gui.amcharts.model.data.DataProvider;
-import com.haulmont.charts.gui.amcharts.model.data.ListDataProvider;
+import com.haulmont.charts.gui.data.DataProvider;
+import com.haulmont.charts.gui.data.ListDataProvider;
 import com.haulmont.charts.gui.amcharts.model.data.MapDataItem;
 import org.apache.commons.lang.time.DateUtils;
 import org.junit.Assert;

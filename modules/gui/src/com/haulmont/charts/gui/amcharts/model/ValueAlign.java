@@ -5,7 +5,9 @@
 
 package com.haulmont.charts.gui.amcharts.model;
 
-public enum ValueAlign implements ChartEnum {
+import com.haulmont.charts.gui.model.JsonEnum;
+
+public enum ValueAlign implements JsonEnum {
     LEFT("left"),
     RIGHT("right");
 

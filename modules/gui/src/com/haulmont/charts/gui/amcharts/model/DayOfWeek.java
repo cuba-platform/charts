@@ -5,7 +5,9 @@
 
 package com.haulmont.charts.gui.amcharts.model;
 
-public enum DayOfWeek implements ChartEnum {
+import com.haulmont.charts.gui.model.JsonEnum;
+
+public enum DayOfWeek implements JsonEnum {
     SUNDAY(0),
     MONDAY(1),
     TUESDAY(2),

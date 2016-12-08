@@ -6,16 +6,16 @@
 package com.haulmont.charts.gui.pivottable.model.gson;
 
 import com.google.gson.*;
-import com.haulmont.charts.gui.pivottable.model.data.PivotDataProvider;
+import com.haulmont.charts.gui.data.DataProvider;
 
 import java.lang.reflect.Type;
 import java.util.List;
 
 public class PivotDataProviderSerializer extends PivotDataItemsSerializer
-        implements JsonSerializer<PivotDataProvider> {
+        implements JsonSerializer<DataProvider> {
 
     @Override
-    public JsonElement serialize(PivotDataProvider src, Type typeOfSrc, JsonSerializationContext context) {
+    public JsonElement serialize(DataProvider src, Type typeOfSrc, JsonSerializationContext context) {
         JsonArray dataProviderElement = new JsonArray();
         List<JsonObject> jsonObjects = serialize(src.getItems(), context);
         for (JsonObject jsonObject : jsonObjects) {

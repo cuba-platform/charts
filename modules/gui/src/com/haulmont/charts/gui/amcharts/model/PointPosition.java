@@ -5,7 +5,9 @@
 
 package com.haulmont.charts.gui.amcharts.model;
 
-public enum PointPosition implements ChartEnum {
+import com.haulmont.charts.gui.model.JsonEnum;
+
+public enum PointPosition implements JsonEnum {
     START("start"),
     MIDDLE("middle"),
     END("end");

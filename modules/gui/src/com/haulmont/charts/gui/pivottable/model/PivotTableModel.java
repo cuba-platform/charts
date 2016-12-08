@@ -7,9 +7,10 @@ package com.haulmont.charts.gui.pivottable.model;
 
 import com.google.gson.JsonElement;
 import com.google.gson.annotations.Expose;
-import com.haulmont.charts.gui.pivottable.model.data.ListPivotDataProvider;
-import com.haulmont.charts.gui.pivottable.model.data.PivotDataItem;
-import com.haulmont.charts.gui.pivottable.model.data.PivotDataProvider;
+import com.haulmont.charts.gui.data.DataItem;
+import com.haulmont.charts.gui.data.DataProvider;
+import com.haulmont.charts.gui.data.ListDataProvider;
+import com.haulmont.charts.gui.model.JsFunction;
 import com.haulmont.charts.gui.pivottable.model.gson.PivotDataProviderSerializer;
 import com.haulmont.charts.gui.pivottable.model.gson.PivotJsonSerializationContext;
 import com.haulmont.charts.gui.pivottable.model.gson.PivotTableModelSerializer;
@@ -24,7 +25,6 @@ import java.util.*;
  * See documentation for properties of Pivot() and PivotUI() functions.<br/>
  * <a href="https://github.com/nicolaskruchten/pivottable/wiki/Parameters">https://github.com/nicolaskruchten/pivottable/wiki/Parameters</a>
  */
-@SuppressWarnings({"unused", "WeakerAccess"})
 public class PivotTableModel extends AbstractPivotObject {
     private static final long serialVersionUID = -1569394634634321813L;
 
@@ -32,7 +32,7 @@ public class PivotTableModel extends AbstractPivotObject {
      * If {@code editable=false} then {@code pivot()} function
      * will be called to generate PivotTable, {@code pivotUI()} otherwise.
      */
-    private Boolean editable = false;                           // Haulmont API
+    private boolean editable = false;                           // Haulmont API
 
     /**
      * Properties to serialize
@@ -137,7 +137,7 @@ public class PivotTableModel extends AbstractPivotObject {
      * Called on each record, returns {@code false} if the record
      * is to be excluded from the input before rendering or {@code true} otherwise.
      */
-    private PivotJsFunction filterFunction;                     // pivot() and pivotUI()
+    private JsFunction filterFunction;                     // pivot() and pivotUI()
 
     /**
      * Origin property name: {@code sorters}.
@@ -147,7 +147,7 @@ public class PivotTableModel extends AbstractPivotObject {
      * is returned, the default sorting mechanism is a built-in "natural sort"
      * implementation. Useful for sorting attributes like month names.
      */
-    private PivotJsFunction sortersFunction;                    // pivot() and pivotUI()
+    private JsFunction sortersFunction;                    // pivot() and pivotUI()
 
     /**
      * Object passed through to renderer as options.
@@ -193,7 +193,7 @@ public class PivotTableModel extends AbstractPivotObject {
      * Data provider for PivotTable. Contains items which will be shown on PivotTable.
      */
     @Expose(serialize = false, deserialize = false)
-    private PivotDataProvider dataProvider;                     // Haulmont API - object to be serialized as input data
+    private DataProvider dataProvider;                     // Haulmont API - object to be serialized as input data
 
     public PivotTableModel() {
     }
@@ -374,39 +374,39 @@ public class PivotTableModel extends AbstractPivotObject {
         return this;
     }
 
-    public PivotDataProvider getDataProvider() {
+    public DataProvider getDataProvider() {
         return dataProvider;
     }
 
-    public PivotTableModel setDataProvider(PivotDataProvider dataProvider) {
+    public PivotTableModel setDataProvider(DataProvider dataProvider) {
         this.dataProvider = dataProvider;
         return this;
     }
 
-    public PivotTableModel addData(PivotDataItem... dataItems) {
+    public PivotTableModel addData(DataItem... dataItems) {
         if (dataItems != null) {
             if (this.dataProvider == null) {
-                this.dataProvider = new ListPivotDataProvider();
+                this.dataProvider = new ListDataProvider();
             }
             this.dataProvider.addItems(Arrays.asList(dataItems));
         }
         return this;
     }
 
-    public PivotJsFunction getFilterFunction() {
+    public JsFunction getFilterFunction() {
         return filterFunction;
     }
 
-    public PivotTableModel setFilterFunction(PivotJsFunction filter) {
+    public PivotTableModel setFilterFunction(JsFunction filter) {
         this.filterFunction = filter;
         return this;
     }
 
-    public PivotJsFunction getSortersFunction() {
+    public JsFunction getSortersFunction() {
         return sortersFunction;
     }
 
-    public PivotTableModel setSortersFunction(PivotJsFunction sorters) {
+    public PivotTableModel setSortersFunction(JsFunction sorters) {
         this.sortersFunction = sorters;
         return this;
     }

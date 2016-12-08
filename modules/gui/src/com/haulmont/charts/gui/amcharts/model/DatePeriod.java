@@ -5,9 +5,11 @@
 
 package com.haulmont.charts.gui.amcharts.model;
 
+import com.haulmont.charts.gui.model.JsonEnum;
+
 import javax.annotation.Nullable;
 
-public enum DatePeriod implements ChartEnum {
+public enum DatePeriod implements JsonEnum {
     MILLISECONDS("fff"),
     SECONDS("ss"),
     MINUTES("mm"),

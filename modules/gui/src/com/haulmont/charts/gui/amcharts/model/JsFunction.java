@@ -5,24 +5,17 @@
 
 package com.haulmont.charts.gui.amcharts.model;
 
-import java.io.Serializable;
-
 /**
  * JavaScript function definition. <br/>
  * Code example: <code>new JsFunction("function (event) { alert(event); }");</code>
  *
+ * @deprecated use {@link com.haulmont.charts.gui.model.JsFunction} instead
  */
-public class JsFunction implements Serializable {
-
+@Deprecated
+public class JsFunction extends com.haulmont.charts.gui.model.JsFunction {
     private static final long serialVersionUID = 7614774685832973416L;
 
-    private String code;
-
     public JsFunction(String code) {
-        this.code = code;
-    }
-
-    public String getCode() {
-        return code;
+        super(code);
     }
 }

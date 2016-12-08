@@ -3,25 +3,24 @@
  * Use is subject to license terms, see http://www.cuba-platform.com/commercial-software-license for details.
  */
 
-package com.haulmont.charts.gui.pivottable.model.data;
+package com.haulmont.charts.gui.data;
 
 import java.util.HashMap;
 import java.util.Map;
 
 /**
- * Pivot data item, which is a set of key-value pairs.
+ * Data item, which is a set of key-value pairs.
  */
-public class MapPivotDataItem implements PivotDataItem {
+public class MapDataItem implements DataItem {
 
-    private static final long serialVersionUID = 9092600506624197172L;
+    private static final long serialVersionUID = -6115531750392377539L;
 
-    private Map<String, Object> properties = new HashMap<>();
+    protected Map<String, Object> properties = new HashMap<>();
 
-    public MapPivotDataItem() {
+    public MapDataItem() {
     }
 
-    public MapPivotDataItem(Map<String, Object> properties) {
-        this();
+    public MapDataItem(Map<String, Object> properties) {
         this.properties.putAll(properties);
     }
 
@@ -41,19 +40,17 @@ public class MapPivotDataItem implements PivotDataItem {
      * @param value property value
      * @return this {@code MapDataItem}
      */
-    public MapPivotDataItem add(String key, Object value) {
+    public MapDataItem add(String key, Object value) {
         properties.put(key, value);
         return this;
     }
 
     /**
-     * Removes property from this {@code MapPivotDataItem}
+     * Removes property from this {@code MapDataItem}
      *
      * @param key name of property
-     * @return this {@code MapDataItem}
      */
-    public MapPivotDataItem remove(String key) {
+    public void remove(String key) {
         properties.remove(key);
-        return this;
     }
 }

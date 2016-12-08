@@ -7,8 +7,8 @@ package com.haulmont.charts.gui.amcharts.model;
 
 import com.haulmont.bali.util.ParamsMap;
 import com.haulmont.charts.gui.amcharts.model.charts.*;
-import com.haulmont.charts.gui.amcharts.model.data.DataItem;
-import com.haulmont.charts.gui.amcharts.model.data.ListDataProvider;
+import com.haulmont.charts.gui.data.DataItem;
+import com.haulmont.charts.gui.data.ListDataProvider;
 import com.haulmont.charts.gui.amcharts.model.data.MapDataItem;
 import org.apache.commons.lang.StringUtils;
 import org.junit.Assert;
@@ -202,11 +202,11 @@ public class ChartsSerializationTest {
         Assert.assertEquals(null, expected, json);
     }
 
-    private MapDataItem taskSpan(String id, String category, DataItem... segments) {
+    private DataItem taskSpan(String id, String category, DataItem... segments) {
         return new MapDataItem(ParamsMap.of("id", id, "category", category, "segments", Arrays.asList(segments)));
     }
 
-    private MapDataItem segment(String id, Integer start, Integer duration, String color, String task) {
+    private DataItem segment(String id, Integer start, Integer duration, String color, String task) {
         Map<String, Object> segment = new HashMap<>(4);
         if (StringUtils.isNotEmpty(id)) {
             segment.put("id", id);

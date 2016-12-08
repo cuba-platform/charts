@@ -5,7 +5,9 @@
 
 package com.haulmont.charts.gui.amcharts.model;
 
-public enum StockEventType implements ChartEnum {
+import com.haulmont.charts.gui.model.JsonEnum;
+
+public enum StockEventType implements JsonEnum {
     FLAG("flag"),
     SIGN("sign"),
     PIN("pin"),

@@ -5,16 +5,16 @@
 
 package com.haulmont.charts.gui.components.pivot;
 
+import com.haulmont.charts.gui.data.DataItem;
+import com.haulmont.charts.gui.data.DataProvider;
+import com.haulmont.charts.gui.model.JsFunction;
 import com.haulmont.charts.gui.pivottable.model.*;
-import com.haulmont.charts.gui.pivottable.model.data.PivotDataItem;
-import com.haulmont.charts.gui.pivottable.model.data.PivotDataProvider;
 import com.haulmont.cuba.gui.components.Component;
 import com.haulmont.cuba.gui.data.CollectionDatasource;
 
 import java.util.List;
 import java.util.Map;
 
-@SuppressWarnings("unused")
 public interface PivotTable extends Component,
         Component.BelongToFrame, Component.HasXmlDescriptor, Component.Editable {
 
@@ -31,13 +31,13 @@ public interface PivotTable extends Component,
     void repaint();
 
     /**
-     * @return the map whose keys are {@link PivotDataItem} property names to use as pivot table data
+     * @return the map whose keys are {@link DataItem} property names to use as pivot table data
      * and values they localized names
      */
     Map<String, String> getProperties();
 
     /**
-     * Sets the map whose keys are {@link PivotDataItem} property names to use as pivot table data
+     * Sets the map whose keys are {@link DataItem} property names to use as pivot table data
      * and values they localized names.
      *
      * @param properties a map of properties names with localized values
@@ -45,7 +45,7 @@ public interface PivotTable extends Component,
     void setProperties(Map<String, String> properties);
 
     /**
-     * Adds a map whose keys are {@link PivotDataItem} property names to use as pivot table data
+     * Adds a map whose keys are {@link DataItem} property names to use as pivot table data
      * and values they localized names.
      *
      * @param properties a map of properties names with localized values
@@ -259,57 +259,57 @@ public interface PivotTable extends Component,
     /**
      * @return data provider for PivotTable. Contains items which will be shown on PivotTable.
      */
-    PivotDataProvider getDataProvider();
+    DataProvider getDataProvider();
 
     /**
      * Sets data provider for PivotTable. Contains items which will be shown on PivotTable.
      *
      * @param dataProvider a data provider
      */
-    void setDataProvider(PivotDataProvider dataProvider);
+    void setDataProvider(DataProvider dataProvider);
 
     /**
      * Adds a data item to data provider.
      *
      * @param dataItems a data item to add
      */
-    void addData(PivotDataItem... dataItems);
+    void addData(DataItem... dataItems);
 
     /**
-     * @return the {@link PivotJsFunction} which defines a javascript code
+     * @return the {@link JsFunction} which defines a javascript code
      * called on each record, returns {@code false} if the record is to be
      * excluded from the input before rendering or {@code true} otherwise
      */
-    PivotJsFunction getFilterFunction();
+    JsFunction getFilterFunction();
 
     /**
-     * Sets the {@link PivotJsFunction} which defines a javascript code
+     * Sets the {@link JsFunction} which defines a javascript code
      * called on each record, returns {@code false} if the record is to be
      * excluded from the input before rendering or {@code true} otherwise
      *
-     * @param filter a {@link PivotJsFunction} to use as a filter
+     * @param filter a {@link JsFunction} to use as a filter
      */
-    void setFilterFunction(PivotJsFunction filter);
+    void setFilterFunction(JsFunction filter);
 
     /**
-     * @return the {@link PivotJsFunction} which defines a javascript code
+     * @return the {@link JsFunction} which defines a javascript code
      * called with an property name and can return a function which can be used
      * as an argument to {@code Array.sort} for output purposes. If no function
      * is returned, the default sorting mechanism is a built-in "natural sort"
      * implementation. Useful for sorting attributes like month names
      */
-    PivotJsFunction getSortersFunction();
+    JsFunction getSortersFunction();
 
     /**
-     * Sets the {@link PivotJsFunction} which defines a javascript code
+     * Sets the {@link JsFunction} which defines a javascript code
      * called with an property name and can return a function which can be used
      * as an argument to {@code Array.sort} for output purposes. If no function
      * is returned, the default sorting mechanism is a built-in "natural sort"
      * implementation. Useful for sorting attributes like month names
      *
-     * @param sorters a {@link PivotJsFunction} to use as a sorters
+     * @param sorters a {@link JsFunction} to use as a sorters
      */
-    void setSortersFunction(PivotJsFunction sorters);
+    void setSortersFunction(JsFunction sorters);
 
     /**
      * @return the object passed through to renderer as options

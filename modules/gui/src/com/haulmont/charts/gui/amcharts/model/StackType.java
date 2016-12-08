@@ -5,7 +5,9 @@
 
 package com.haulmont.charts.gui.amcharts.model;
 
-public enum StackType implements ChartEnum {
+import com.haulmont.charts.gui.model.JsonEnum;
+
+public enum StackType implements JsonEnum {
 
     NONE("none"),
     REGULAR("regular"),

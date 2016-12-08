@@ -5,7 +5,9 @@
 
 package com.haulmont.charts.gui.amcharts.model;
 
-public enum SmallNumberPower implements ChartEnum {
+import com.haulmont.charts.gui.model.JsonEnum;
+
+public enum SmallNumberPower implements JsonEnum {
     YOCTO("1e-24"),
     ZEPTO("1e-21"),
     ATTO("1e-18"),

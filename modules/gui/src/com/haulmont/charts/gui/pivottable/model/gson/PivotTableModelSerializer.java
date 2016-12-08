@@ -11,7 +11,6 @@ import com.haulmont.charts.gui.pivottable.model.PivotTableModel;
 import java.lang.reflect.Type;
 import java.util.Map;
 
-@SuppressWarnings("WeakerAccess")
 public class PivotTableModelSerializer implements JsonSerializer<PivotTableModel> {
 
     @Override

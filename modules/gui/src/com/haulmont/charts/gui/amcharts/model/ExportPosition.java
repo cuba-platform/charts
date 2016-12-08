@@ -5,7 +5,9 @@
 
 package com.haulmont.charts.gui.amcharts.model;
 
-public enum ExportPosition implements ChartEnum {
+import com.haulmont.charts.gui.model.JsonEnum;
+
+public enum ExportPosition implements JsonEnum {
     TOP_LEFT("top-left"),
     TOP_RIGHT("top-right"),
     BOTTOM_LEFT("bottom-left"),

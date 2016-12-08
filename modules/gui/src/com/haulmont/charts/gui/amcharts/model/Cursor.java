@@ -5,6 +5,8 @@
 
 package com.haulmont.charts.gui.amcharts.model;
 
+import com.haulmont.charts.gui.model.JsFunction;
+
 /**
  * See documentation for properties of ChartCursor JS Object. <br/>
  *

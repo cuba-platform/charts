@@ -22,8 +22,5 @@ public class CubaPivotTableSceneState extends AbstractComponentState {
     public String json;
 
     // key: language; value: messagesMap as json
-    public Map<String, String> pivotTableMessages;
-
-    // Force state change on client
-    public int version = 0;
+    public Map<String, String> localeMap;
 }

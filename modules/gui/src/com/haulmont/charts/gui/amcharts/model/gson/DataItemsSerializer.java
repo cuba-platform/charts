@@ -9,7 +9,7 @@ import com.google.gson.JsonArray;
 import com.google.gson.JsonObject;
 import com.google.gson.JsonSerializationContext;
 import com.haulmont.charts.gui.amcharts.model.charts.GanttChart;
-import com.haulmont.charts.gui.amcharts.model.data.DataItem;
+import com.haulmont.charts.gui.data.DataItem;
 import org.apache.commons.collections.CollectionUtils;
 import org.apache.commons.lang.StringUtils;
 

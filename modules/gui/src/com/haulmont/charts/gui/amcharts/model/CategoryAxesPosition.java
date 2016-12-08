@@ -5,7 +5,9 @@
 
 package com.haulmont.charts.gui.amcharts.model;
 
-public enum CategoryAxesPosition implements ChartEnum {
+import com.haulmont.charts.gui.model.JsonEnum;
+
+public enum CategoryAxesPosition implements JsonEnum {
     TOP("top"),
     BOTTOM("bottom");
 

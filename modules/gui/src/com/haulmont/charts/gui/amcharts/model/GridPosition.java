@@ -5,7 +5,9 @@
 
 package com.haulmont.charts.gui.amcharts.model;
 
-public enum GridPosition implements ChartEnum {
+import com.haulmont.charts.gui.model.JsonEnum;
+
+public enum GridPosition implements JsonEnum {
     START("start"),
     MIDDLE("middle");
 

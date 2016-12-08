@@ -5,6 +5,10 @@
 
 package com.haulmont.charts.gui.amcharts.model.data;
 
+/**
+ * use {@link com.haulmont.charts.gui.data.DataChangeOperation} instead
+ */
+@Deprecated
 public enum DataChangeOperation {
     REFRESH,
     ADD,

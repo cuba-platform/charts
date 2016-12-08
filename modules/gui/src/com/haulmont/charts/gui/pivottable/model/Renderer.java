@@ -5,10 +5,12 @@
 
 package com.haulmont.charts.gui.pivottable.model;
 
+import com.haulmont.charts.gui.model.JsonEnum;
+
 /**
  * An enum with predefined renderers.
  */
-public enum Renderer implements PivotEnum {
+public enum Renderer implements JsonEnum {
     // standard
     TABLE("table"),
     TABLE_BAR_CHART("tableBarchart"),

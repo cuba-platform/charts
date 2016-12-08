@@ -6,7 +6,7 @@
 package com.haulmont.charts.gui.amcharts.model.gson;
 
 import com.google.gson.*;
-import com.haulmont.charts.gui.amcharts.model.data.DataProvider;
+import com.haulmont.charts.gui.data.DataProvider;
 
 import java.lang.reflect.Type;
 import java.util.List;

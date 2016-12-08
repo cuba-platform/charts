@@ -5,7 +5,9 @@
 
 package com.haulmont.charts.gui.amcharts.model;
 
-public enum LabelPosition implements ChartEnum {
+import com.haulmont.charts.gui.model.JsonEnum;
+
+public enum LabelPosition implements JsonEnum {
     LEFT("left"),
     CENTER("center"),
     RIGHT("right");

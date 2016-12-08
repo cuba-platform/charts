@@ -5,7 +5,9 @@
 
 package com.haulmont.charts.gui.amcharts.model;
 
-public enum GraphType implements ChartEnum {
+import com.haulmont.charts.gui.model.JsonEnum;
+
+public enum GraphType implements JsonEnum {
     LINE("line"),
     COLUMN("column"),
     STEP("step"),

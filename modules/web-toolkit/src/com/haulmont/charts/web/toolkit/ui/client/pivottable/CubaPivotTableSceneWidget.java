@@ -8,7 +8,6 @@ package com.haulmont.charts.web.toolkit.ui.client.pivottable;
 import com.google.gwt.dom.client.Document;
 import com.google.gwt.user.client.ui.Widget;
 
-@SuppressWarnings("WeakerAccess")
 public class CubaPivotTableSceneWidget extends Widget {
 
     protected CubaPivotTableJsOverlay jsOverlay;
