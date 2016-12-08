@@ -125,17 +125,17 @@ public class WebPivotTable extends WebAbstractComponent<CubaPivotTableScene> imp
     }
 
     @Override
-    public List<String> getCols() {
+    public List<String> getColumns() {
         return component.getPivotTable().getCols();
     }
 
     @Override
-    public void setCols(List<String> cols) {
+    public void setColumns(List<String> cols) {
         component.getPivotTable().setCols(cols);
     }
 
     @Override
-    public void addCols(String... cols) {
+    public void addColumns(String... cols) {
         component.getPivotTable().addCols(cols);
     }
 

@@ -173,7 +173,7 @@ public class PivotTableLoader extends AbstractComponentLoader<PivotTable> {
         if (columnsElement != null) {
             List<String> columns = loadListOfStrings(columnsElement, "column", "value", true);
             if (CollectionUtils.isNotEmpty(columns)) {
-                pivot.setCols(columns);
+                pivot.setColumns(columns);
             }
         }
     }

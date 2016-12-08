@@ -82,21 +82,21 @@ public interface PivotTable extends Component,
     /**
      * @return the list of property names to use as columns.
      */
-    List<String> getCols();
+    List<String> getColumns();
 
     /**
      * Sets the list of property names to use as columns.
      *
      * @param cols a list of properties names
      */
-    void setCols(List<String> cols);
+    void setColumns(List<String> cols);
 
     /**
      * Adds an array of property names to use as columns.
      *
      * @param cols an array of properties names
      */
-    void addCols(String... cols);
+    void addColumns(String... cols);
 
     /**
      * @return the aggregation object which defines how pivot table
