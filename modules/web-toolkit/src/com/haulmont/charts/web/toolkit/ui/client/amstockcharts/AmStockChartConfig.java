@@ -51,6 +51,12 @@ public class AmStockChartConfig extends JavaScriptObject {
     private static native void parseConfigDateProperties(JavaScriptObject config) /*-{
         var DEFAULT_JS_DATE_FORMAT = "YYYY-MM-DD JJ:NN:SS:QQQ";
 
+        var convertStringToDate = function (object, property) {
+            if (typeof object[property] == "string") {
+                object[property] = $wnd.AmCharts.stringToDate(object[property], DEFAULT_JS_DATE_FORMAT);
+            }
+        };
+
         (function () {
             if (config.dataSets) {
                 for (var dataSetIndex = 0; dataSetIndex < config.dataSets.length; dataSetIndex++) {
@@ -58,9 +64,7 @@ public class AmStockChartConfig extends JavaScriptObject {
                     if (dataSet.stockEvents) {
                         for (var stockEventIndex = 0; stockEventIndex < dataSet.stockEvents.length; stockEventIndex++) {
                             var stockEvent = dataSet.stockEvents[stockEventIndex];
-                            if (typeof stockEvent.date == "string") {
-                                stockEvent.date = $wnd.AmCharts.stringToDate(stockEvent.date, DEFAULT_JS_DATE_FORMAT);
-                            }
+                            convertStringToDate(stockEvent, "date");
                         }
                     }
                 }
@@ -70,12 +74,8 @@ public class AmStockChartConfig extends JavaScriptObject {
         var parseGuides = function (guides) {
             for (var i = 0; i < guides.length; i++) {
                 var guide = guides[i];
-                if (typeof guide.date == "string") {
-                    guide.date = $wnd.AmCharts.stringToDate(guide.date, DEFAULT_JS_DATE_FORMAT);
-                }
-                if (typeof guide.toDate == "string") {
-                    guide.toDate = $wnd.AmCharts.stringToDate(guide.toDate, DEFAULT_JS_DATE_FORMAT);
-                }
+                convertStringToDate(guide, "date");
+                convertStringToDate(guide, "toDate");
             }
         };
 
@@ -88,22 +88,14 @@ public class AmStockChartConfig extends JavaScriptObject {
         var parseTrendLines = function (trendLines) {
             for (var i = 0; i < trendLines.length; i++) {
                 var trendLine = trendLines[i];
-                if (typeof trendLine.finalDate == "string") {
-                    trendLine.finalDate = $wnd.AmCharts.stringToDate(trendLine.finalDate, DEFAULT_JS_DATE_FORMAT);
-                }
-                if (typeof trendLine.initialDate == "string") {
-                    trendLine.initialDate = $wnd.AmCharts.stringToDate(trendLine.initialDate, DEFAULT_JS_DATE_FORMAT);
-                }
+                convertStringToDate(trendLine, "finalDate");
+                convertStringToDate(trendLine, "initialDate");
             }
         };
 
         var parseValueAxis = function (valueAxis) {
-            if (typeof valueAxis.minimumDate == "string") {
-                valueAxis.minimumDate = $wnd.AmCharts.stringToDate(valueAxis.minimumDate, DEFAULT_JS_DATE_FORMAT);
-            }
-            if (typeof valueAxis.maximumDate == "string") {
-                valueAxis.maximumDate = $wnd.AmCharts.stringToDate(valueAxis.maximumDate, DEFAULT_JS_DATE_FORMAT);
-            }
+            convertStringToDate(valueAxis, "maximumDate");
+            convertStringToDate(valueAxis, "minimumDate");
             if (valueAxis.guides) {
                 parseGuides(valueAxis.guides);
             }
@@ -120,11 +112,10 @@ public class AmStockChartConfig extends JavaScriptObject {
             if (config.panels) {
                 for (var panelIndex = 0; panelIndex < config.panels.length; panelIndex++) {
                     var panel = config.panels[panelIndex];
-                    if (typeof panel.recalculateFromDate == "string") {
-                        panel.recalculateFromDate = $wnd.AmCharts.stringToDate(panel.recalculateFromDate, DEFAULT_JS_DATE_FORMAT);
-                    }
-                    if (panel.valueAxis) {
-                        parseValueAxis(panel.valueAxis);
+
+                    convertStringToDate(panel, "recalculateFromDate");
+                    if (panel.drawOnAxis) {
+                        parseValueAxis(panel.drawOnAxis);
                     }
                     if (panel.categoryAxis) {
                         parseCategoryAxis(panel.categoryAxis);

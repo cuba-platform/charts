@@ -50,18 +50,32 @@ public class AmchartsConfig extends JavaScriptObject {
     private static native void parseConfigDateProperties(JavaScriptObject config) /*-{
         var DEFAULT_JS_DATE_FORMAT = "YYYY-MM-DD JJ:NN:SS:QQQ";
 
+        var convertStringToDate = function (object, property) {
+            if (typeof object[property] == "string") {
+                object[property] = $wnd.AmCharts.stringToDate(object[property], DEFAULT_JS_DATE_FORMAT);
+            }
+        };
+
+        var parseGuides = function (guides) {
+            for (var i = 0; i < guides.length; i++) {
+                var guide = guides[i];
+                convertStringToDate(guide, "date");
+                convertStringToDate(guide, "toDate");
+            }
+        };
+
+        (function () {
+            if (config.guides) {
+                if (config.guides) {
+                    parseGuides(config.guides);
+                }
+            }
+        })();
+
         (function () {
             if (config.categoryAxis) {
                 if (config.categoryAxis.guides) {
-                    for (var i = 0; i < config.categoryAxis.guides.length; i++) {
-                        var guide = config.categoryAxis.guides[i];
-                        if (typeof guide.date == "string") {
-                            guide.date = $wnd.AmCharts.stringToDate(guide.date, DEFAULT_JS_DATE_FORMAT);
-                        }
-                        if (typeof guide.toDate == "string") {
-                            guide.toDate = $wnd.AmCharts.stringToDate(guide.toDate, DEFAULT_JS_DATE_FORMAT);
-                        }
-                    }
+                    parseGuides(config.categoryAxis.guides);
                 }
             }
         })();
@@ -70,32 +84,36 @@ public class AmchartsConfig extends JavaScriptObject {
             if (config.trendLines) {
                 for (var i = 0; i < config.trendLines.length; i++) {
                     var trendLine = config.trendLines[i];
-                    if (typeof trendLine.finalDate == "string") {
-                        trendLine.finalDate = $wnd.AmCharts.stringToDate(trendLine.finalDate, DEFAULT_JS_DATE_FORMAT);
-                    }
-                    if (typeof trendLine.initialDate == "string") {
-                        trendLine.initialDate = $wnd.AmCharts.stringToDate(trendLine.initialDate, DEFAULT_JS_DATE_FORMAT);
-                    }
+                    convertStringToDate(trendLine, "finalDate");
+                    convertStringToDate(trendLine, "initialDate");
                 }
             }
         })();
 
+        var parseValueAxis = function (valueAxis) {
+            convertStringToDate(valueAxis, "maximumDate");
+            convertStringToDate(valueAxis, "minimumDate");
+            if (valueAxis.guides) {
+                parseGuides(valueAxis.guides);
+            }
+        };
+
+        var parseValueAxes = function (valueAxes) {
+            for (var i = 0; i < valueAxes.length; i++) {
+                var valueAxis = valueAxes[i];
+                parseValueAxis(valueAxis);
+            }
+        };
+
         (function () {
             if (config.valueAxes) {
-                for (var i = 0; i < config.valueAxes.length; i++) {
-                    var valueAxis = config.valueAxes[i];
-                    if (valueAxis.guides) {
-                        for (var j = 0; j < valueAxis.guides.length; j++) {
-                            var guide = valueAxis.guides[j];
-                            if (typeof guide.date == "string") {
-                                guide.date = $wnd.AmCharts.stringToDate(guide.date, DEFAULT_JS_DATE_FORMAT);
-                            }
-                            if (typeof guide.toDate == "string") {
-                                guide.toDate = $wnd.AmCharts.stringToDate(guide.toDate, DEFAULT_JS_DATE_FORMAT);
-                            }
-                        }
-                    }
-                }
+                parseValueAxes(config.valueAxes);
+            }
+        })();
+
+        (function () {
+            if (config.valueAxis) {
+                parseValueAxis(config.valueAxis);
             }
         })();
 
