@@ -62,12 +62,16 @@ public class CubaPivotTableSceneConnector extends AbstractComponentConnector {
         PivotTableEvents events = createEvents();
 
         Scheduler.get().scheduleDeferred(() -> {
+            Element tableElement = getWidget().getElement().getFirstChildElement();
+            if (tableElement != null) {
+                getLayoutManager().removeElementResizeListener(tableElement, tableResizeListener);
+            }
+
             getWidget().init(config, events);
 
             getLayoutManager().setNeedsMeasure(this);
 
-            Element tableElement = getWidget().getElement().getFirstChildElement();
-            getLayoutManager().removeElementResizeListener(tableElement, tableResizeListener);
+            tableElement = getWidget().getElement().getFirstChildElement();
             getLayoutManager().addElementResizeListener(tableElement, tableResizeListener);
         });
     }
