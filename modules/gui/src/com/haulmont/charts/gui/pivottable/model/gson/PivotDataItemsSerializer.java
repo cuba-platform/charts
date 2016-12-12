@@ -17,6 +17,7 @@ import com.haulmont.chile.core.model.MetaProperty;
 import com.haulmont.cuba.core.global.AppBeans;
 import com.haulmont.cuba.core.global.Messages;
 import com.haulmont.cuba.core.global.Metadata;
+import org.apache.commons.lang.BooleanUtils;
 
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
@@ -68,6 +69,10 @@ public class PivotDataItemsSerializer {
             }
             SimpleDateFormat dateFormat = new SimpleDateFormat(formatStr);
             value = dateFormat.format((Date) value);
+        } else if (value instanceof Boolean) {
+            value = BooleanUtils.isTrue((Boolean) value)
+                    ? messages.getMainMessage("boolean.yes")
+                    : messages.getMainMessage("boolean.no");
         }
         jsonObject.add(context.getLocalizedPropertyName(property), context.serialize(value));
     }
