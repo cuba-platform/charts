@@ -54,6 +54,41 @@ public class CubaAmchartsSceneConnector extends AbstractComponentConnector {
                  public void zoomToDates(Date start, Date end) {
                      getWidget().zoomToDates(JsDate.toJs(start), JsDate.toJs(end));
                  }
+
+                 @Override
+                 public void zoomOutValueAxes() {
+                     getWidget().zoomOutValueAxes();
+                 }
+
+                 @Override
+                 public void zoomOutValueAxisById(String id) {
+                     getWidget().zoomOutValueAxis(id);
+                 }
+
+                 @Override
+                 public void zoomOutValueAxisByIndex(int index) {
+                     getWidget().zoomOutValueAxis(index);
+                 }
+
+                 @Override
+                 public void zoomValueAxisToValuesById(String id, String startValue, String endValue) {
+                     getWidget().zoomValueAxisToValues(id, startValue, endValue);
+                 }
+
+                 @Override
+                 public void zoomValueAxisToValuesByIndex(int index, String startValue, String endValue) {
+                     getWidget().zoomValueAxisToValues(index, startValue, endValue);
+                 }
+
+                 @Override
+                 public void zoomValueAxisToDatesById(String id, Date start, Date end) {
+                     getWidget().zoomValueAxisToValues(id, JsDate.toJs(start), JsDate.toJs(end));
+                 }
+
+                 @Override
+                 public void zoomValueAxisToDatesByIndex(int index, Date start, Date end) {
+                     getWidget().zoomValueAxisToValues(index, JsDate.toJs(start), JsDate.toJs(end));
+                 }
              });
     }
 

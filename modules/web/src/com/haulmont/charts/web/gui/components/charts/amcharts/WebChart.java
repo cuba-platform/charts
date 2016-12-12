@@ -222,6 +222,31 @@ public class WebChart extends WebAbstractComponent<CubaAmchartsScene> implements
         component.zoomToDates(start, end);
     }
 
+    @Override
+    public void zoomOutValueAxes() {
+        component.zoomOutValueAxes();
+    }
+
+    @Override
+    public void zoomOutValueAxis(String id) {
+        component.zoomOutValueAxis(id);
+    }
+
+    @Override
+    public void zoomOutValueAxis(int index) {
+        component.zoomOutValueAxis(index);
+    }
+
+    @Override
+    public void zoomValueAxisToValues(String id, Object startValue, Object endValue) {
+        component.zoomValueAxisToValues(id, startValue, endValue);
+    }
+
+    @Override
+    public void zoomValueAxisToValues(int index, Object startValue, Object endValue) {
+        component.zoomValueAxisToValues(index, startValue, endValue);
+    }
+
     protected Entity getEventItem(String itemIdString) {
         if (datasource != null && StringUtils.isNotEmpty(itemIdString)) {
             if (component.getChart() instanceof GanttChart) {

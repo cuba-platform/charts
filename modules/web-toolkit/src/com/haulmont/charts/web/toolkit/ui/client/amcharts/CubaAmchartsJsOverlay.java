@@ -322,8 +322,8 @@ public class CubaAmchartsJsOverlay {
         zoomOut(chart);
     }
 
-    protected native static void zoomOut(JavaScriptObject chart) /*-{
-        chart.zoomOut();
+    protected native static void zoomOut(JavaScriptObject object) /*-{
+        object.zoomOut();
     }-*/;
 
     public void zoomToIndexes(int start, int end) {
@@ -340,5 +340,88 @@ public class CubaAmchartsJsOverlay {
 
     protected native static void zoomToDates(JavaScriptObject chart, JsDate start, JsDate end) /*-{
         chart.zoomToDates(start, end);
+    }-*/;
+
+    public void zoomOutValueAxes() {
+        zoomOutValueAxes(chart);
+    }
+
+    protected static native void zoomOutValueAxes(JavaScriptObject chart) /*-{
+        chart.zoomOutValueAxes();
+    }-*/;
+
+    public void zoomOutValueAxis(String id) {
+        JavaScriptObject axis = getValueAxis(chart, id);
+        if (axis != null) {
+            zoomOut(axis);
+        }
+    }
+
+    public void zoomOutValueAxis(int index) {
+        JavaScriptObject axis = getValueAxis(chart, index);
+        if (axis != null) {
+            zoomOut(axis);
+        }
+    }
+
+    public void zoomValueAxisToValues(String id, String startValue, String endValue) {
+        JavaScriptObject axis = getValueAxis(chart, id);
+        if (axis != null) {
+            zoomValueAxisToValues(axis, startValue, endValue);
+        }
+    }
+
+    public void zoomValueAxisToValues(int index, String startValue, String endValue) {
+        JavaScriptObject axis = getValueAxis(chart, index);
+        if (axis != null) {
+            zoomValueAxisToValues(axis, startValue, endValue);
+        }
+    }
+
+    protected static native void zoomValueAxisToValues(JavaScriptObject axis, String startValue, String endValue) /*-{
+        axis.zoomToValues(startValue, endValue);
+    }-*/;
+
+    public void zoomValueAxisToValues(String id, JsDate start, JsDate end) {
+        JavaScriptObject axis = getValueAxis(chart, id);
+        if (axis != null) {
+            zoomValueAxisToValues(axis, start, end);
+        }
+    }
+
+    public void zoomValueAxisToValues(int index, JsDate start, JsDate end) {
+        JavaScriptObject axis = getValueAxis(chart, index);
+        if (axis != null) {
+            zoomValueAxisToValues(axis, start, end);
+        }
+    }
+
+    protected static native void zoomValueAxisToValues(JavaScriptObject axis, JsDate startValue, JsDate endValue) /*-{
+        axis.zoomToValues(startValue, endValue);
+    }-*/;
+
+    protected static native JavaScriptObject getValueAxis(JavaScriptObject chart, String id) /*-{
+        if (chart.valueAxis) {
+            if (chart.valueAxis.id == id) {
+                return chart.valueAxis;
+            }
+        }
+
+        if (chart.valueAxes) {
+            for (var i = 0; i < chart.valueAxes.length; i++) {
+                if (chart.valueAxes[i].id == id) {
+                    return chart.valueAxes[i];
+                }
+            }
+        }
+
+        return null;
+    }-*/;
+
+    protected native static JavaScriptObject getValueAxis(JavaScriptObject chart, int index) /*-{
+        if (chart.valueAxes) {
+            return chart.valueAxes[index];
+        }
+        return null;
     }-*/;
 }

@@ -423,6 +423,48 @@ public class CubaAmchartsScene extends AbstractComponent {
         getRpcProxy(CubaAmchartsSceneClientRpc.class).zoomToDates(start, end);
     }
 
+    public void zoomOutValueAxes() {
+        getRpcProxy(CubaAmchartsSceneClientRpc.class).zoomOutValueAxes();
+    }
+
+    public void zoomOutValueAxis(String id) {
+        getRpcProxy(CubaAmchartsSceneClientRpc.class).zoomOutValueAxisById(id);
+    }
+
+    public void zoomOutValueAxis(int index) {
+        getRpcProxy(CubaAmchartsSceneClientRpc.class).zoomOutValueAxisByIndex(index);
+    }
+
+    protected String convertObjectToString(Object value) {
+        return AbstractChartObject.getSharedGson().toJson(value);
+    }
+
+    public void zoomValueAxisToValues(String id, Object startValue, Object endValue) {
+        if (startValue == null || endValue == null) {
+            throw new IllegalArgumentException("startValue or endValue cannot be null");
+        }
+
+        CubaAmchartsSceneClientRpc rpc = getRpcProxy(CubaAmchartsSceneClientRpc.class);
+        if (startValue instanceof Date) {
+            rpc.zoomValueAxisToDatesById(id, (Date) startValue, (Date) endValue);
+        } else {
+            rpc.zoomValueAxisToValuesById(id, convertObjectToString(startValue), convertObjectToString(endValue));
+        }
+    }
+
+    public void zoomValueAxisToValues(int index, Object startValue, Object endValue) {
+        if (startValue == null || endValue == null) {
+            throw new IllegalArgumentException("startValue or endValue cannot be null");
+        }
+
+        CubaAmchartsSceneClientRpc rpc = getRpcProxy(CubaAmchartsSceneClientRpc.class);
+        if (startValue instanceof Date) {
+            rpc.zoomValueAxisToDatesByIndex(index, (Date) startValue, (Date) endValue);
+        } else {
+            rpc.zoomValueAxisToValuesByIndex(index, convertObjectToString(startValue), convertObjectToString(endValue));
+        }
+    }
+
     protected class CubaAmchartsServerRpcImpl implements CubaAmchartsServerRpc {
 
         @Override

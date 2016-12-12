@@ -18,4 +18,18 @@ public interface CubaAmchartsSceneClientRpc extends ClientRpc {
     void zoomToIndexes(int start, int end);
 
     void zoomToDates(Date start, Date end);
+
+    void zoomOutValueAxes();
+
+    void zoomOutValueAxisById(String id);
+
+    void zoomOutValueAxisByIndex(int index);
+
+    void zoomValueAxisToValuesById(String id, String startValue, String endValue);
+
+    void zoomValueAxisToValuesByIndex(int index, String startValue, String endValue);
+
+    void zoomValueAxisToDatesById(String id, Date start, Date end);
+
+    void zoomValueAxisToDatesByIndex(int index, Date start, Date end);
 }

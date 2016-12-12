@@ -140,6 +140,43 @@ public interface Chart extends Component, Component.BelongToFrame, Component.Has
      */
     void zoomToDates(Date start, Date end);
 
+    /**
+     * Zooms out value axes, value axes shows all available data.
+     */
+    void zoomOutValueAxes();
+
+    /**
+     * Zooms out value axis, value axis shows all available data.
+     *
+     * @param id id of value axis
+     */
+    void zoomOutValueAxis(String id);
+
+    /**
+     * Zooms out value axis, value axis shows all available data.
+     *
+     * @param index index of value axis
+     */
+    void zoomOutValueAxis(int index);
+
+    /**
+     * Zooms-in an axis to the provided values.
+     *
+     * @param id         id of value axis
+     * @param startValue start value
+     * @param endValue   end value
+     */
+    void zoomValueAxisToValues(String id, Object startValue, Object endValue);
+
+    /**
+     * Zooms-in an axis to the provided values.
+     *
+     * @param index      index of value axis
+     * @param startValue start value
+     * @param endValue   end value
+     */
+    void zoomValueAxisToValues(int index, Object startValue, Object endValue);
+
     abstract class AbstractItemEvent {
         private final Entity item;
 
