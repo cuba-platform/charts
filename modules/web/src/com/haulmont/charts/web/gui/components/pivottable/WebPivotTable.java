@@ -15,7 +15,6 @@ import com.haulmont.charts.web.gui.PivotTableLocaleHelper;
 import com.haulmont.charts.web.toolkit.ui.pivottable.CubaPivotTableScene;
 import com.haulmont.cuba.core.global.AppBeans;
 import com.haulmont.cuba.core.global.Messages;
-import com.haulmont.cuba.core.global.Metadata;
 import com.haulmont.cuba.core.global.UserSessionSource;
 import com.haulmont.cuba.gui.data.CollectionDatasource;
 import com.haulmont.cuba.gui.data.impl.CollectionDsHelper;
@@ -28,12 +27,6 @@ import java.util.Map;
 
 public class WebPivotTable extends WebAbstractComponent<CubaPivotTableScene> implements PivotTable {
 
-    protected Messages messages = AppBeans.get(Messages.class);
-
-    protected Metadata metadata = AppBeans.get(Metadata.class);
-
-    protected UserSessionSource userSessionSource = AppBeans.get(UserSessionSource.class);
-
     protected CollectionDatasource datasource;
 
     protected com.haulmont.charts.web.toolkit.ui.pivottable.events.RefreshListener refreshHandler;
@@ -43,10 +36,12 @@ public class WebPivotTable extends WebAbstractComponent<CubaPivotTableScene> imp
         initLocale();
     }
 
-    private void initLocale() {
+    protected void initLocale() {
+        UserSessionSource userSessionSource = AppBeans.get(UserSessionSource.class);
         Locale locale = userSessionSource.getLocale();
 
         if (!ObjectUtils.equals(userSessionSource.getLocale(), component.getLocale())) {
+            Messages messages = AppBeans.get(Messages.class);
             String localeString = messages.getTools().localeToString(locale);
             component.setPivotTableMessages(localeString, PivotTableLocaleHelper.getPivotTableLocaleMap(locale));
 
@@ -344,6 +339,7 @@ public class WebPivotTable extends WebAbstractComponent<CubaPivotTableScene> imp
 
     @Override
     public void addRefreshListener(RefreshListener refreshListener) {
+        getEventRouter().addListener(RefreshListener.class, refreshListener);
         if (refreshHandler == null) {
             refreshHandler = e -> {
                 RefreshEvent event = new RefreshEvent(WebPivotTable.this);
@@ -351,13 +347,12 @@ public class WebPivotTable extends WebAbstractComponent<CubaPivotTableScene> imp
             };
             component.addRefreshListener(refreshHandler);
         }
-        getEventRouter().addListener(RefreshListener.class, refreshListener);
     }
 
     @Override
     public void removeRefreshListener(RefreshListener refreshListener) {
         getEventRouter().removeListener(RefreshListener.class, refreshListener);
-        if (!getEventRouter().hasListeners(RefreshListener.class)) {
+        if (refreshHandler != null && !getEventRouter().hasListeners(RefreshListener.class)) {
             component.removeRefreshListener(refreshHandler);
             refreshHandler = null;
         }
@@ -371,6 +366,8 @@ public class WebPivotTable extends WebAbstractComponent<CubaPivotTableScene> imp
         protected void setupDefaults(PivotTableModel pivotTable) {
             super.setupDefaults(pivotTable);
 
+            Messages messages = AppBeans.get(Messages.class);
+            UserSessionSource userSessionSource = AppBeans.get(UserSessionSource.class);
             pivotTable.setLocaleCode(messages.getTools().localeToString(userSessionSource.getLocale()));
         }
     }

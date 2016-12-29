@@ -13,7 +13,6 @@ import java.util.Date;
 
 public interface Chart extends Component, Component.BelongToFrame, Component.HasXmlDescriptor, Component.HasIcon,
                                Component.HasCaption {
-
     String NAME = "chart";
 
     /**
@@ -49,56 +48,56 @@ public interface Chart extends Component, Component.BelongToFrame, Component.Has
      */
     void repaint();
 
-    void addAxisZoomListener(AxisZoomListener zoomListener);
-    void removeAxisZoomListener(AxisZoomListener zoomListener);
+    void addAxisZoomListener(AxisZoomListener listener);
+    void removeAxisZoomListener(AxisZoomListener listener);
 
-    void addClickListener(ChartClickListener clickListener);
-    void removeClickListener(ChartClickListener clickListener);
+    void addClickListener(ChartClickListener listener);
+    void removeClickListener(ChartClickListener listener);
 
-    void addRightClickListener(ChartClickListener clickListener);
-    void removeRightClickListener(ChartClickListener clickListener);
+    void addRightClickListener(ChartRightClickListener clickListener);
+    void removeRightClickListener(ChartRightClickListener clickListener);
 
-    void addCursorPeriodSelectListener(CursorPeriodSelectListener selectListener);
-    void removeCursorPeriodSelectListener(CursorPeriodSelectListener selectListener);
+    void addCursorPeriodSelectListener(CursorPeriodSelectListener listener);
+    void removeCursorPeriodSelectListener(CursorPeriodSelectListener listener);
 
-    void addCursorZoomListener(CursorZoomListener zoomListener);
-    void removeCursorZoomListener(CursorZoomListener zoomListener);
+    void addCursorZoomListener(CursorZoomListener listener);
+    void removeCursorZoomListener(CursorZoomListener listener);
 
-    void addGraphClickListener(GraphClickListener clickListener);
-    void removeGraphClickListener(GraphClickListener clickListener);
+    void addGraphClickListener(GraphClickListener listener);
+    void removeGraphClickListener(GraphClickListener listener);
 
-    void addGraphItemClickListener(GraphItemClickListener clickListener);
-    void removeGraphItemClickListener(GraphItemClickListener clickListener);
+    void addGraphItemClickListener(GraphItemClickListener listener);
+    void removeGraphItemClickListener(GraphItemClickListener listener);
 
-    void addGraphItemRightClickListener(GraphItemClickListener clickListener);
-    void removeGraphItemRightClickListener(GraphItemClickListener clickListener);
+    void addGraphItemRightClickListener(GraphItemRightClickListener clickListener);
+    void removeGraphItemRightClickListener(GraphItemRightClickListener clickListener);
 
-    void addLegendItemHideListener(LegendItemHideListener itemHideListener);
-    void removeLegendItemHideListener(LegendItemHideListener itemHideListener);
+    void addLegendItemHideListener(LegendItemHideListener listener);
+    void removeLegendItemHideListener(LegendItemHideListener listener);
 
-    void addLegendItemShowListener(LegendItemShowListener itemShowListener);
-    void removeLegendItemShowListener(LegendItemShowListener itemShowListener);
+    void addLegendItemShowListener(LegendItemShowListener listener);
+    void removeLegendItemShowListener(LegendItemShowListener listener);
 
-    void addLegendLabelClickListener(LegendItemClickListener clickListener);
-    void removeLegendLabelClickListener(LegendItemClickListener clickListener);
+    void addLegendLabelClickListener(LegendItemClickListener listener);
+    void removeLegendLabelClickListener(LegendItemClickListener listener);
 
-    void addLegendMarkerClickListener(LegendItemClickListener clickListener);
-    void removeLegendMarkerClickListener(LegendItemClickListener clickListener);
+    void addLegendMarkerClickListener(LegendMarkerClickListener listener);
+    void removeLegendMarkerClickListener(LegendMarkerClickListener listener);
 
-    void addSliceClickListener(SliceClickListener clickListener);
-    void removeSliceClickListener(SliceClickListener clickListener);
+    void addSliceClickListener(SliceClickListener listener);
+    void removeSliceClickListener(SliceClickListener listener);
 
-    void addSliceRightClickListener(SliceClickListener clickListener);
-    void removeSliceRightClickListener(SliceClickListener clickListener);
+    void addSliceRightClickListener(SliceRightClickListener listener);
+    void removeSliceRightClickListener(SliceRightClickListener listener);
 
-    void addSlicePullInListener(SlicePullInListener pullInListener);
-    void removeSlicePullInListener(SlicePullInListener pullInListener);
+    void addSlicePullInListener(SlicePullInListener listener);
+    void removeSlicePullInListener(SlicePullInListener listener);
 
-    void addSlicePullOutListener(SlicePullOutListener pullOutListener);
-    void removeSlicePullOutListener(SlicePullOutListener pullOutListener);
+    void addSlicePullOutListener(SlicePullOutListener listener);
+    void removeSlicePullOutListener(SlicePullOutListener listener);
 
-    void addZoomListener(ZoomListener zoomListener);
-    void removeZoomListener(ZoomListener zoomListener);
+    void addZoomListener(ZoomListener listener);
+    void removeZoomListener(ZoomListener listener);
 
     /**
      * Set responsive option for chart.
@@ -348,6 +347,46 @@ public interface Chart extends Component, Component.BelongToFrame, Component.Has
     }
 
     /**
+     * Describes chart click event.
+     */
+    class ChartRightClickEvent extends AbstractClickEvent {
+        private final double xAxis;
+        private final double yAxis;
+
+        public ChartRightClickEvent(int x, int y, int absoluteX, int absoluteY, double xAxis, double yAxis) {
+            super(x, y, absoluteX, absoluteY);
+            this.xAxis = xAxis;
+            this.yAxis = yAxis;
+        }
+
+        /**
+         * @return value of the X axis corresponding to mouse pointer
+         */
+        public double getxAxis() {
+            return xAxis;
+        }
+
+        /**
+         * @return value of the Y axis corresponding to mouse pointer
+         */
+        public double getyAxis() {
+            return yAxis;
+        }
+    }
+
+    /**
+     * Listener to the chart right click events.
+     */
+    interface ChartRightClickListener {
+        /**
+         * Called when user clicks on the chart.
+         *
+         * @param event event object
+         */
+        void onRightClick(ChartRightClickEvent event);
+    }
+
+    /**
      * Describes cursor period select event.
      */
     class CursorPeriodSelectEvent extends AbstractCursorEvent {
@@ -425,7 +464,7 @@ public interface Chart extends Component, Component.BelongToFrame, Component.Has
     /**
      * Describes graph item click event.
      */
-    class GraphItemClickEvent extends AbstractClickEvent{
+    class GraphItemClickEvent extends AbstractClickEvent {
         private final String graphId;
 
         private final Entity item;
@@ -470,6 +509,56 @@ public interface Chart extends Component, Component.BelongToFrame, Component.Has
          * @param event event object
          */
         void onClick(GraphItemClickEvent event);
+    }
+
+    /**
+     * Describes graph item click event.
+     */
+    class GraphItemRightClickEvent extends AbstractClickEvent {
+        private final String graphId;
+
+        private final Entity item;
+        private final int itemIndex;
+
+        public GraphItemRightClickEvent(String graphId, Entity item, int itemIndex, int x, int y, int absoluteX, int absoluteY) {
+            super(x, y, absoluteX, absoluteY);
+            this.item = item;
+            this.itemIndex = itemIndex;
+            this.graphId = graphId;
+        }
+
+        /**
+         * @return graph id
+         */
+        public String getGraphId() {
+            return graphId;
+        }
+
+        /**
+         * @return an item corresponding to the graph item
+         */
+        public Entity getItem() {
+            return item;
+        }
+
+        /**
+         * @return item index
+         */
+        public int getItemIndex() {
+            return itemIndex;
+        }
+    }
+
+    /**
+     * Listener to the graph item click events.
+     */
+    interface GraphItemRightClickListener {
+        /**
+         * Called when user clicks on the graph item.
+         *
+         * @param event event object
+         */
+        void onRightClick(GraphItemRightClickEvent event);
     }
 
     /**
@@ -536,6 +625,27 @@ public interface Chart extends Component, Component.BelongToFrame, Component.Has
     }
 
     /**
+     * Describes legend marker click event.
+     */
+    class LegendMarkerClickEvent extends AbstractItemEvent {
+        public LegendMarkerClickEvent(Entity item) {
+            super(item);
+        }
+    }
+
+    /**
+     * Listener to the legend item click events.
+     */
+    interface LegendMarkerClickListener {
+        /**
+         * Called when user clicks on the legend marker.
+         *
+         * @param event event object
+         */
+        void onMarkerClick(LegendMarkerClickEvent event);
+    }
+
+    /**
      * Describes slice click event.
      */
     class SliceClickEvent extends AbstractClickEvent {
@@ -564,6 +674,37 @@ public interface Chart extends Component, Component.BelongToFrame, Component.Has
          * @param event event object
          */
         void onClick(SliceClickEvent event);
+    }
+
+    /**
+     * Describes slice click event.
+     */
+    class SliceRightClickEvent extends AbstractClickEvent {
+        private final Entity item;
+
+        public SliceRightClickEvent(Entity item, int x, int y, int absoluteX, int absoluteY) {
+            super(x, y, absoluteX, absoluteY);
+            this.item = item;
+        }
+
+        /**
+         * @return an item corresponding to the slice
+         */
+        public Entity getItem() {
+            return item;
+        }
+    }
+
+    /**
+     * Listener to the slice click events.
+     */
+    interface SliceRightClickListener {
+        /**
+         * Called when user clicks on the slice.
+         *
+         * @param event event object
+         */
+        void onRightClick(SliceRightClickEvent event);
     }
 
     /**
@@ -612,7 +753,6 @@ public interface Chart extends Component, Component.BelongToFrame, Component.Has
      * Describes zoom event.
      */
     class ZoomEvent {
-
         private final int startIndex;
         private final int endIndex;
         private final Date startDate;
