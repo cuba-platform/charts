@@ -664,6 +664,8 @@ public class WebChart extends WebAbstractComponent<CubaAmchartsScene> implements
 
     @Override
     public void setResponsive(boolean responsive) {
+        super.setResponsive(responsive);
+
         if (component.getChart() == null) {
             throw new IllegalStateException("Chart configuration is not set");
         }
@@ -678,15 +680,7 @@ public class WebChart extends WebAbstractComponent<CubaAmchartsScene> implements
 
     @Override
     public boolean isResponsive() {
-        if (component.getChart() == null) {
-            throw new IllegalStateException("Chart configuration is not set");
-        }
-
-        if (component.getChart().getResponsive() == null ||
-                component.getChart().getResponsive().isEnabled() == null) {
-            return false;
-        }
-        return component.getChart().getResponsive().isEnabled();
+        return super.isResponsive();
     }
 
     @Override
