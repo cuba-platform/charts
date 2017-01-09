@@ -12,6 +12,8 @@ import com.haulmont.charts.web.toolkit.ui.client.pivottable.CubaPivotTableSceneS
 import com.haulmont.charts.web.toolkit.ui.client.pivottable.CubaPivotTableServerRpc;
 import com.haulmont.charts.web.toolkit.ui.pivottable.events.RefreshEvent;
 import com.haulmont.charts.web.toolkit.ui.pivottable.events.RefreshListener;
+import com.haulmont.cuba.core.global.AppBeans;
+import com.haulmont.cuba.core.global.Messages;
 import com.vaadin.annotations.JavaScript;
 import com.vaadin.annotations.StyleSheet;
 import com.vaadin.ui.AbstractComponent;
@@ -40,10 +42,10 @@ import static com.vaadin.util.ReflectTools.findMethod;
         "vaadin://resources/pivottable/pivot.min.css",
         "vaadin://resources/pivottable/plugins/c3/c3.min.css"
 })
-public class CubaPivotTableScene extends AbstractComponent {
+public class CubaPivotTable extends AbstractComponent {
     private static final long serialVersionUID = 3250758720037122580L;
 
-    private final Logger log = LoggerFactory.getLogger(CubaPivotTableScene.class);
+    private final Logger log = LoggerFactory.getLogger(CubaPivotTable.class);
 
     protected static final Method refreshMethod =
             findMethod(RefreshListener.class, "onRefresh", RefreshEvent.class);
@@ -54,9 +56,8 @@ public class CubaPivotTableScene extends AbstractComponent {
 
     protected Locale locale;
 
-    public CubaPivotTableScene() {
+    public CubaPivotTable() {
         pivotTable = new PivotTableModel();
-        setupDefaults(pivotTable);
         registerRpc(new CubaPivotTableServerRpcImpl(), CubaPivotTableServerRpc.class);
     }
 
@@ -98,7 +99,7 @@ public class CubaPivotTableScene extends AbstractComponent {
         return getState(false).json;
     }
 
-    public void drawPivotTable() {
+    public void repaint() {
         forceStateChange();
     }
 
@@ -123,9 +124,6 @@ public class CubaPivotTableScene extends AbstractComponent {
         }
     }
 
-    protected void setupDefaults(PivotTableModel pivotTable) {
-    }
-
     protected void forceStateChange() {
         this.dirty = true;
         getState(true);
@@ -147,6 +145,8 @@ public class CubaPivotTableScene extends AbstractComponent {
     @Override
     public void setLocale(Locale locale) {
         this.locale = locale;
+        Messages messages = AppBeans.get(Messages.class);
+        pivotTable.setLocaleCode(messages.getTools().localeToString(locale));
     }
 
     protected JsonObject convertMapToJsonObject(Map<String, String> localeMap) {
@@ -184,7 +184,7 @@ public class CubaPivotTableScene extends AbstractComponent {
 
         @Override
         public void onRefresh() {
-            fireEvent(new RefreshEvent(CubaPivotTableScene.this));
+            fireEvent(new RefreshEvent(CubaPivotTable.this));
         }
     }
 }

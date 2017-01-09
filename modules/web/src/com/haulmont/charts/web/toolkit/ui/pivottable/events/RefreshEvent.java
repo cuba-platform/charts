@@ -5,13 +5,13 @@
 
 package com.haulmont.charts.web.toolkit.ui.pivottable.events;
 
-import com.haulmont.charts.web.toolkit.ui.pivottable.CubaPivotTableScene;
+import com.haulmont.charts.web.toolkit.ui.pivottable.CubaPivotTable;
 
 public class RefreshEvent extends com.vaadin.ui.Component.Event {
 
     private static final long serialVersionUID = -5007279701639243292L;
 
-    public RefreshEvent(CubaPivotTableScene source) {
+    public RefreshEvent(CubaPivotTable source) {
         super(source);
     }
 }

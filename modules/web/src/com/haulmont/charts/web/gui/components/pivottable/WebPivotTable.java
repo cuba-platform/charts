@@ -12,7 +12,7 @@ import com.haulmont.charts.gui.data.EntityDataProvider;
 import com.haulmont.charts.gui.model.JsFunction;
 import com.haulmont.charts.gui.pivottable.model.*;
 import com.haulmont.charts.web.gui.PivotTableLocaleHelper;
-import com.haulmont.charts.web.toolkit.ui.pivottable.CubaPivotTableScene;
+import com.haulmont.charts.web.toolkit.ui.pivottable.CubaPivotTable;
 import com.haulmont.cuba.core.global.AppBeans;
 import com.haulmont.cuba.core.global.Messages;
 import com.haulmont.cuba.core.global.UserSessionSource;
@@ -25,14 +25,14 @@ import java.util.List;
 import java.util.Locale;
 import java.util.Map;
 
-public class WebPivotTable extends WebAbstractComponent<CubaPivotTableScene> implements PivotTable {
+public class WebPivotTable extends WebAbstractComponent<CubaPivotTable> implements PivotTable {
 
     protected CollectionDatasource datasource;
 
     protected com.haulmont.charts.web.toolkit.ui.pivottable.events.RefreshListener refreshHandler;
 
     public WebPivotTable() {
-        component = new CubaPivotTableSceneExt();
+        component = new CubaPivotTable();
         initLocale();
     }
 
@@ -69,7 +69,7 @@ public class WebPivotTable extends WebAbstractComponent<CubaPivotTableScene> imp
 
     @Override
     public void repaint() {
-        component.drawPivotTable();
+        component.repaint();
     }
 
     @Override
@@ -355,20 +355,6 @@ public class WebPivotTable extends WebAbstractComponent<CubaPivotTableScene> imp
         if (refreshHandler != null && !getEventRouter().hasListeners(RefreshListener.class)) {
             component.removeRefreshListener(refreshHandler);
             refreshHandler = null;
-        }
-    }
-
-    protected class CubaPivotTableSceneExt extends CubaPivotTableScene {
-
-        private static final long serialVersionUID = 4458537600231552573L;
-
-        @Override
-        protected void setupDefaults(PivotTableModel pivotTable) {
-            super.setupDefaults(pivotTable);
-
-            Messages messages = AppBeans.get(Messages.class);
-            UserSessionSource userSessionSource = AppBeans.get(UserSessionSource.class);
-            pivotTable.setLocaleCode(messages.getTools().localeToString(userSessionSource.getLocale()));
         }
     }
 }

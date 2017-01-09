@@ -9,7 +9,7 @@ import com.google.gwt.core.client.JavaScriptObject;
 import com.google.gwt.core.client.Scheduler;
 import com.google.gwt.dom.client.Element;
 import com.google.gwt.json.client.JSONParser;
-import com.haulmont.charts.web.toolkit.ui.pivottable.CubaPivotTableScene;
+import com.haulmont.charts.web.toolkit.ui.pivottable.CubaPivotTable;
 import com.vaadin.client.communication.RpcProxy;
 import com.vaadin.client.communication.StateChangeEvent;
 import com.vaadin.client.ui.AbstractComponentConnector;
@@ -19,7 +19,7 @@ import com.vaadin.shared.ui.Connect;
 import java.util.Map;
 import java.util.Set;
 
-@Connect(CubaPivotTableScene.class)
+@Connect(CubaPivotTable.class)
 public class CubaPivotTableSceneConnector extends AbstractComponentConnector {
 
     private static final long serialVersionUID = -6263118673027033933L;
