@@ -233,6 +233,64 @@ public interface Chart extends Component, Component.BelongToFrame, Component.Has
         }
     }
 
+    abstract class AbstractChartClickEvent extends AbstractClickEvent {
+        private final double xAxis;
+        private final double yAxis;
+
+        public AbstractChartClickEvent(int x, int y, int absoluteX, int absoluteY, double xAxis, double yAxis) {
+            super(x, y, absoluteX, absoluteY);
+            this.xAxis = xAxis;
+            this.yAxis = yAxis;
+        }
+
+        public double getxAxis() {
+            return xAxis;
+        }
+
+        public double getyAxis() {
+            return yAxis;
+        }
+    }
+
+    abstract class AbstractGraphItemClickEvent extends AbstractClickEvent {
+        private final String graphId;
+
+        private final Entity item;
+        private final int itemIndex;
+
+        public AbstractGraphItemClickEvent(String graphId, Entity item, int itemIndex, int x, int y, int absoluteX, int absoluteY) {
+            super(x, y, absoluteX, absoluteY);
+            this.item = item;
+            this.itemIndex = itemIndex;
+            this.graphId = graphId;
+        }
+
+        public String getGraphId() {
+            return graphId;
+        }
+
+        public Entity getItem() {
+            return item;
+        }
+
+        public int getItemIndex() {
+            return itemIndex;
+        }
+    }
+
+    abstract class AbstractSliceClickEvent extends AbstractClickEvent {
+        private final Entity item;
+
+        public AbstractSliceClickEvent(Entity item, int x, int y, int absoluteX, int absoluteY) {
+            super(x, y, absoluteX, absoluteY);
+            this.item = item;
+        }
+
+        public Entity getItem() {
+            return item;
+        }
+    }
+
     abstract class AbstractCursorEvent {
         private final String start;
         private final String end;
@@ -308,29 +366,9 @@ public interface Chart extends Component, Component.BelongToFrame, Component.Has
     /**
      * Describes chart click event.
      */
-    class ChartClickEvent extends AbstractClickEvent {
-
-        private final double xAxis;
-        private final double yAxis;
-
+    class ChartClickEvent extends AbstractChartClickEvent {
         public ChartClickEvent(int x, int y, int absoluteX, int absoluteY, double xAxis, double yAxis) {
-            super(x, y, absoluteX, absoluteY);
-            this.xAxis = xAxis;
-            this.yAxis = yAxis;
-        }
-
-        /**
-         * @return value of the X axis corresponding to mouse pointer
-         */
-        public double getxAxis() {
-            return xAxis;
-        }
-
-        /**
-         * @return value of the Y axis corresponding to mouse pointer
-         */
-        public double getyAxis() {
-            return yAxis;
+            super(x, y, absoluteX, absoluteY, xAxis, yAxis);
         }
     }
 
@@ -349,28 +387,9 @@ public interface Chart extends Component, Component.BelongToFrame, Component.Has
     /**
      * Describes chart click event.
      */
-    class ChartRightClickEvent extends AbstractClickEvent {
-        private final double xAxis;
-        private final double yAxis;
-
+    class ChartRightClickEvent extends AbstractChartClickEvent {
         public ChartRightClickEvent(int x, int y, int absoluteX, int absoluteY, double xAxis, double yAxis) {
-            super(x, y, absoluteX, absoluteY);
-            this.xAxis = xAxis;
-            this.yAxis = yAxis;
-        }
-
-        /**
-         * @return value of the X axis corresponding to mouse pointer
-         */
-        public double getxAxis() {
-            return xAxis;
-        }
-
-        /**
-         * @return value of the Y axis corresponding to mouse pointer
-         */
-        public double getyAxis() {
-            return yAxis;
+            super(x, y, absoluteX, absoluteY, xAxis, yAxis);
         }
     }
 
@@ -464,38 +483,9 @@ public interface Chart extends Component, Component.BelongToFrame, Component.Has
     /**
      * Describes graph item click event.
      */
-    class GraphItemClickEvent extends AbstractClickEvent {
-        private final String graphId;
-
-        private final Entity item;
-        private final int itemIndex;
-
+    class GraphItemClickEvent extends AbstractGraphItemClickEvent {
         public GraphItemClickEvent(String graphId, Entity item, int itemIndex, int x, int y, int absoluteX, int absoluteY) {
-            super(x, y, absoluteX, absoluteY);
-            this.item = item;
-            this.itemIndex = itemIndex;
-            this.graphId = graphId;
-        }
-
-        /**
-         * @return graph id
-         */
-        public String getGraphId() {
-            return graphId;
-        }
-
-        /**
-         * @return an item corresponding to the graph item
-         */
-        public Entity getItem() {
-            return item;
-        }
-
-        /**
-         * @return item index
-         */
-        public int getItemIndex() {
-            return itemIndex;
+            super(graphId, item, itemIndex, x, y, absoluteX, absoluteY);
         }
     }
 
@@ -514,38 +504,9 @@ public interface Chart extends Component, Component.BelongToFrame, Component.Has
     /**
      * Describes graph item click event.
      */
-    class GraphItemRightClickEvent extends AbstractClickEvent {
-        private final String graphId;
-
-        private final Entity item;
-        private final int itemIndex;
-
+    class GraphItemRightClickEvent extends AbstractGraphItemClickEvent {
         public GraphItemRightClickEvent(String graphId, Entity item, int itemIndex, int x, int y, int absoluteX, int absoluteY) {
-            super(x, y, absoluteX, absoluteY);
-            this.item = item;
-            this.itemIndex = itemIndex;
-            this.graphId = graphId;
-        }
-
-        /**
-         * @return graph id
-         */
-        public String getGraphId() {
-            return graphId;
-        }
-
-        /**
-         * @return an item corresponding to the graph item
-         */
-        public Entity getItem() {
-            return item;
-        }
-
-        /**
-         * @return item index
-         */
-        public int getItemIndex() {
-            return itemIndex;
+            super(graphId, item, itemIndex, x, y, absoluteX, absoluteY);
         }
     }
 
@@ -648,19 +609,9 @@ public interface Chart extends Component, Component.BelongToFrame, Component.Has
     /**
      * Describes slice click event.
      */
-    class SliceClickEvent extends AbstractClickEvent {
-        private final Entity item;
-
+    class SliceClickEvent extends AbstractSliceClickEvent {
         public SliceClickEvent(Entity item, int x, int y, int absoluteX, int absoluteY) {
-            super(x, y, absoluteX, absoluteY);
-            this.item = item;
-        }
-
-        /**
-         * @return an item corresponding to the slice
-         */
-        public Entity getItem() {
-            return item;
+            super(item, x, y, absoluteX, absoluteY);
         }
     }
 
@@ -679,19 +630,9 @@ public interface Chart extends Component, Component.BelongToFrame, Component.Has
     /**
      * Describes slice click event.
      */
-    class SliceRightClickEvent extends AbstractClickEvent {
-        private final Entity item;
-
+    class SliceRightClickEvent extends AbstractSliceClickEvent {
         public SliceRightClickEvent(Entity item, int x, int y, int absoluteX, int absoluteY) {
-            super(x, y, absoluteX, absoluteY);
-            this.item = item;
-        }
-
-        /**
-         * @return an item corresponding to the slice
-         */
-        public Entity getItem() {
-            return item;
+            super(item, x, y, absoluteX, absoluteY);
         }
     }
 
