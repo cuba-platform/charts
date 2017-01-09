@@ -56,7 +56,7 @@ public class CubaPivotTableScene extends AbstractComponent {
 
     public CubaPivotTableScene() {
         pivotTable = new PivotTableModel();
-
+        setupDefaults(pivotTable);
         registerRpc(new CubaPivotTableServerRpcImpl(), CubaPivotTableServerRpc.class);
     }
 
@@ -104,6 +104,7 @@ public class CubaPivotTableScene extends AbstractComponent {
 
     public void drawPivotTable(PivotTableModel pivotTable) {
         this.pivotTable = pivotTable;
+        setupDefaults(pivotTable);
         forceStateChange();
     }
 
@@ -111,11 +112,9 @@ public class CubaPivotTableScene extends AbstractComponent {
     public void beforeClientResponse(boolean initial) {
         super.beforeClientResponse(initial);
 
-        if (initial || dirty) {
+        if (initial || isDirty()) {
             if (pivotTable != null) {
                 // Full repaint
-
-                setupDefaults(pivotTable);
 
                 String dataJsonSting = pivotTable.dataToString();
                 log.trace("pivotTable data JSON:\n{}", dataJsonSting);
