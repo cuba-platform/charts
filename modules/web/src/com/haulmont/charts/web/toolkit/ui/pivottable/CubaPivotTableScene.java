@@ -102,12 +102,6 @@ public class CubaPivotTableScene extends AbstractComponent {
         forceStateChange();
     }
 
-    public void drawPivotTable(PivotTableModel pivotTable) {
-        this.pivotTable = pivotTable;
-        setupDefaults(pivotTable);
-        forceStateChange();
-    }
-
     @Override
     public void beforeClientResponse(boolean initial) {
         super.beforeClientResponse(initial);
