@@ -30,9 +30,6 @@ public class CubaAmchartsSceneState extends AbstractComponentState {
     public static final String CURSOR_PERIOD_SELECT_EVENT = "cps";
     public static final String VALUE_AXIS_ZOOM_EVENT = "vaz";
 
+    // Custom JSON chart configuration
     public String json;
-    public String configuration;
-
-    // Force state change on client
-    public int version = 0;
 }

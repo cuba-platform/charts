@@ -13,9 +13,7 @@ import com.haulmont.charts.web.toolkit.ui.amcharts.CubaAmchartsScene;
 import com.haulmont.charts.web.toolkit.ui.client.amcharts.events.*;
 import com.haulmont.cuba.web.toolkit.ui.client.JsDate;
 import com.vaadin.client.communication.RpcProxy;
-import com.vaadin.client.communication.StateChangeEvent;
 import com.vaadin.client.ui.AbstractComponentConnector;
-import com.vaadin.client.ui.layout.ElementResizeEvent;
 import com.vaadin.client.ui.layout.ElementResizeListener;
 import com.vaadin.shared.ui.Connect;
 
@@ -29,67 +27,91 @@ public class CubaAmchartsSceneConnector extends AbstractComponentConnector {
     protected ElementResizeListener resizeListener;
 
     public CubaAmchartsSceneConnector() {
-             registerRpc(CubaAmchartsSceneClientRpc.class, new CubaAmchartsSceneClientRpc() {
-                 @Override
-                 public void updatePoints(final String json) {
-                     Scheduler.get().scheduleDeferred(new Scheduler.ScheduledCommand() {
-                         @Override
-                         public void execute() {
-                             getWidget().updatePoints(getJsonAsObject(json));
-                         }
-                     });
-                 }
+        registerRpc(CubaAmchartsSceneClientRpc.class, new CubaAmchartsSceneClientRpc() {
+            @Override
+            public void draw(String chartJson) {
+                drawChart(chartJson);
+            }
 
-                 @Override
-                 public void zoomOut() {
-                     getWidget().zoomOut();
-                 }
+            @Override
+            public void updatePoints(final String json) {
+                updateChart(json);
+            }
 
-                 @Override
-                 public void zoomToIndexes(int start, int end) {
-                     getWidget().zoomToIndexes(start, end);
-                 }
+            @Override
+            public void zoomOut() {
+                getWidget().zoomOut();
+            }
 
-                 @Override
-                 public void zoomToDates(Date start, Date end) {
-                     getWidget().zoomToDates(JsDate.toJs(start), JsDate.toJs(end));
-                 }
+            @Override
+            public void zoomToIndexes(int start, int end) {
+                getWidget().zoomToIndexes(start, end);
+            }
 
-                 @Override
-                 public void zoomOutValueAxes() {
-                     getWidget().zoomOutValueAxes();
-                 }
+            @Override
+            public void zoomToDates(Date start, Date end) {
+                getWidget().zoomToDates(JsDate.toJs(start), JsDate.toJs(end));
+            }
 
-                 @Override
-                 public void zoomOutValueAxisById(String id) {
-                     getWidget().zoomOutValueAxis(id);
-                 }
+            @Override
+            public void zoomOutValueAxes() {
+                getWidget().zoomOutValueAxes();
+            }
 
-                 @Override
-                 public void zoomOutValueAxisByIndex(int index) {
-                     getWidget().zoomOutValueAxis(index);
-                 }
+            @Override
+            public void zoomOutValueAxisById(String id) {
+                getWidget().zoomOutValueAxis(id);
+            }
 
-                 @Override
-                 public void zoomValueAxisToValuesById(String id, String startValue, String endValue) {
-                     getWidget().zoomValueAxisToValues(id, startValue, endValue);
-                 }
+            @Override
+            public void zoomOutValueAxisByIndex(int index) {
+                getWidget().zoomOutValueAxis(index);
+            }
 
-                 @Override
-                 public void zoomValueAxisToValuesByIndex(int index, String startValue, String endValue) {
-                     getWidget().zoomValueAxisToValues(index, startValue, endValue);
-                 }
+            @Override
+            public void zoomValueAxisToValuesById(String id, String startValue, String endValue) {
+                getWidget().zoomValueAxisToValues(id, startValue, endValue);
+            }
 
-                 @Override
-                 public void zoomValueAxisToDatesById(String id, Date start, Date end) {
-                     getWidget().zoomValueAxisToValues(id, JsDate.toJs(start), JsDate.toJs(end));
-                 }
+            @Override
+            public void zoomValueAxisToValuesByIndex(int index, String startValue, String endValue) {
+                getWidget().zoomValueAxisToValues(index, startValue, endValue);
+            }
 
-                 @Override
-                 public void zoomValueAxisToDatesByIndex(int index, Date start, Date end) {
-                     getWidget().zoomValueAxisToValues(index, JsDate.toJs(start), JsDate.toJs(end));
-                 }
-             });
+            @Override
+            public void zoomValueAxisToDatesById(String id, Date start, Date end) {
+                getWidget().zoomValueAxisToValues(id, JsDate.toJs(start), JsDate.toJs(end));
+            }
+
+            @Override
+            public void zoomValueAxisToDatesByIndex(int index, Date start, Date end) {
+                getWidget().zoomValueAxisToValues(index, JsDate.toJs(start), JsDate.toJs(end));
+            }
+        });
+    }
+
+    protected void updateChart(String json) {
+        Scheduler.get().scheduleDeferred(() ->
+                getWidget().updatePoints(getJsonAsObject(json))
+        );
+    }
+
+    protected void drawChart(String chartJson) {
+        AmchartsConfig config = AmchartsConfig.fromServerConfig(chartJson, getState().json);
+        AmchartsEvents amchartsEvents = createEvents(config);
+
+        Scheduler.get().scheduleDeferred(() -> {
+            getWidget().init(config, amchartsEvents);
+
+            // Add resize listener lazily here.
+            // If done in init like in examples it will be called way too early,
+            // like before the widget is not even rendered yet
+            if (resizeListener == null) {
+                resizeListener = e -> getWidget().updateSize();
+
+                getLayoutManager().addElementResizeListener(getWidget().getElement(), resizeListener);
+            }
+        });
     }
 
     protected JavaScriptObject getJsonAsObject(String json) {
@@ -104,36 +126,6 @@ public class CubaAmchartsSceneConnector extends AbstractComponentConnector {
     @Override
     public CubaAmchartsSceneWidget getWidget() {
         return (CubaAmchartsSceneWidget) super.getWidget();
-    }
-
-    @Override
-    public void onStateChanged(StateChangeEvent stateChangeEvent) {
-        super.onStateChanged(stateChangeEvent);
-
-        final AmchartsConfig config = AmchartsConfig.fromServerConfig(getState().configuration, getState().json);
-        final AmchartsEvents amchartsEvents = createEvents(config);
-
-        Scheduler.get().scheduleDeferred(new Scheduler.ScheduledCommand() {
-            @Override
-            public void execute() {
-                getWidget().init(config, amchartsEvents);
-
-                // Add resize listener lazily here.
-                // If done in init like in examples it will be called way too early,
-                // like before the widget is not even rendered yet
-                if (resizeListener == null) {
-                    resizeListener = new ElementResizeListener() {
-
-                        @Override
-                        public void onElementResize(ElementResizeEvent e) {
-                            getWidget().updateSize();
-                        }
-                    };
-
-                    getLayoutManager().addElementResizeListener(getWidget().getElement(), resizeListener);
-                }
-            }
-        });
     }
 
     protected AmchartsEvents createEvents(AmchartsConfig config) {

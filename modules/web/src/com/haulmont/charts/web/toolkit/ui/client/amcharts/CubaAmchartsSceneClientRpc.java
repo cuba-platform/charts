@@ -6,10 +6,13 @@
 package com.haulmont.charts.web.toolkit.ui.client.amcharts;
 
 import com.vaadin.shared.communication.ClientRpc;
+import elemental.json.JsonObject;
 
 import java.util.Date;
 
 public interface CubaAmchartsSceneClientRpc extends ClientRpc {
+
+    void draw(String chartJson);
 
     void updatePoints(String json);
 

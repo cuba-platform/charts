@@ -361,7 +361,6 @@ public class CubaAmchartsScene extends AbstractComponent {
         if (initial || dirty) {
             if (chart != null) {
                 // Full repaint
-
                 setupDefaults(chart);
 
                 if (chart.getDataProvider() != null) {
@@ -370,7 +369,8 @@ public class CubaAmchartsScene extends AbstractComponent {
 
                 String jsonString = chart.toString();
                 log.trace("Chart full JSON:\n{}", jsonString);
-                getState().configuration = jsonString;
+
+                getRpcProxy(CubaAmchartsSceneClientRpc.class).draw(jsonString);
             }
             dirty = false;
         } else if (changedItems != null && !changedItems.isEmpty()) {
@@ -393,10 +393,10 @@ public class CubaAmchartsScene extends AbstractComponent {
             }
 
             Gson gson = AbstractChartObject.getSharedGson();
-            String gsonString = gson.toJson(jsonChangedItemsElement);
+            String jsonString = gson.toJson(jsonChangedItemsElement);
 
-            log.trace("Chart update JSON:\n{}", gsonString);
-            getRpcProxy(CubaAmchartsSceneClientRpc.class).updatePoints(gsonString);
+            log.trace("Chart update JSON:\n{}", jsonString);
+            getRpcProxy(CubaAmchartsSceneClientRpc.class).updatePoints(jsonString);
         }
 
         forgetChangedItems();
@@ -407,8 +407,7 @@ public class CubaAmchartsScene extends AbstractComponent {
 
     protected void forceStateChange() {
         this.dirty = true;
-
-        getState().version++;
+        markAsDirty();
     }
 
     public void zoomOut() {
