@@ -31,8 +31,4 @@ public class CubaAmStockChartSceneState extends AbstractComponentState {
     public static final String STOCK_GRAPH_ITEM_ROLL_OVER_EVENT = "sgiro";
 
     public String json;
-    public String configuration;
-
-    // Force state change on client
-    public int version = 0;
 }

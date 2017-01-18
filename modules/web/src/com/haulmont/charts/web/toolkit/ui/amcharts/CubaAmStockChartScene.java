@@ -310,7 +310,6 @@ public class CubaAmStockChartScene extends AbstractComponent {
         if (initial || dirty) {
             if (chart != null) {
                 // Full repaint
-
                 setupDefaults(chart);
 
                 for (DataSet dataSet : chart.getDataSets()) {
@@ -321,7 +320,8 @@ public class CubaAmStockChartScene extends AbstractComponent {
 
                 String jsonString = chart.toString();
                 log.trace("Chart full JSON:\n{}", jsonString);
-                getState().configuration = jsonString;
+
+                getRpcProxy(CubaAmStockChartSceneClientRpc.class).draw(jsonString);
             }
             dirty = false;
         } else if (changedItems != null && !changedItems.isEmpty()) {
@@ -348,10 +348,10 @@ public class CubaAmStockChartScene extends AbstractComponent {
                 jsonChangedItemsElement.add(dataSetEntry.getKey(), jsonChangedDataSetElement);
             }
 
-            String gsonString = StockChartGroup.getSharedGson().toJson(jsonChangedItemsElement);
+            String jsonString = StockChartGroup.getSharedGson().toJson(jsonChangedItemsElement);
 
-            log.trace("Chart update JSON:\n{}", gsonString);
-            getRpcProxy(CubaAmStockChartSceneClientRpc.class).updatePoints(gsonString);
+            log.trace("Chart update JSON:\n{}", jsonString);
+            getRpcProxy(CubaAmStockChartSceneClientRpc.class).updatePoints(jsonString);
         }
 
         forgetChangedItems();
@@ -362,7 +362,7 @@ public class CubaAmStockChartScene extends AbstractComponent {
 
     protected void forceStateChange() {
         this.dirty = true;
-        getState().version++;
+        markAsDirty();
     }
 
     public boolean isDirty() {

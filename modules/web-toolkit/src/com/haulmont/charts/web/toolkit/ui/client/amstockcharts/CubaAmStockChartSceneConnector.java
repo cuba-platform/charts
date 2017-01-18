@@ -14,9 +14,7 @@ import com.haulmont.charts.web.toolkit.ui.client.amcharts.MouseHelper;
 import com.haulmont.charts.web.toolkit.ui.client.amstockcharts.events.*;
 import com.haulmont.cuba.web.toolkit.ui.client.JsDate;
 import com.vaadin.client.communication.RpcProxy;
-import com.vaadin.client.communication.StateChangeEvent;
 import com.vaadin.client.ui.AbstractComponentConnector;
-import com.vaadin.client.ui.layout.ElementResizeEvent;
 import com.vaadin.client.ui.layout.ElementResizeListener;
 import com.vaadin.shared.ui.Connect;
 
@@ -31,15 +29,38 @@ public class CubaAmStockChartSceneConnector extends AbstractComponentConnector {
     public CubaAmStockChartSceneConnector() {
         registerRpc(CubaAmStockChartSceneClientRpc.class, new CubaAmStockChartSceneClientRpc() {
             @Override
+            public void draw(String chartJson) {
+                drawChart(chartJson);
+            }
+
+            @Override
             public void updatePoints(final String json) {
-                Scheduler.get().scheduleDeferred(new Scheduler.ScheduledCommand() {
-                    @Override
-                    public void execute() {
-                        getWidget().updatePoints(getJsonAsObject(json));
-                    }
-                });
+                updateChart(json);
             }
         });
+    }
+
+    protected void drawChart(String chartJson) {
+        final AmStockChartConfig config = AmStockChartConfig.fromServerConfig(chartJson, getState().json);
+        final AmStockChartEvents amStockChartEvents = createEvents(config);
+
+        Scheduler.get().scheduleDeferred(() -> {
+            getWidget().init(config, amStockChartEvents);
+
+            // Add resize listener lazily here.
+            // If done in init like in examples it will be called way too early,
+            // like before the widget is not even rendered yet
+            if (resizeListener == null) {
+                resizeListener = e -> getWidget().updateSize();
+
+                getLayoutManager().addElementResizeListener(getWidget().getElement(), resizeListener);
+            }
+        });
+    }
+
+    protected void updateChart(String json) {
+        Scheduler.get().scheduleDeferred(() ->
+                getWidget().updatePoints(getJsonAsObject(json)));
     }
 
     protected JavaScriptObject getJsonAsObject(String json) {
@@ -54,36 +75,6 @@ public class CubaAmStockChartSceneConnector extends AbstractComponentConnector {
     @Override
     public CubaAmStockChartSceneWidget getWidget() {
         return (CubaAmStockChartSceneWidget) super.getWidget();
-    }
-
-    @Override
-    public void onStateChanged(StateChangeEvent stateChangeEvent) {
-        super.onStateChanged(stateChangeEvent);
-
-        final AmStockChartConfig config = AmStockChartConfig.fromServerConfig(getState().configuration, getState().json);
-        final AmStockChartEvents amStockChartEvents = createEvents(config);
-
-        Scheduler.get().scheduleDeferred(new Scheduler.ScheduledCommand() {
-            @Override
-            public void execute() {
-                getWidget().init(config, amStockChartEvents);
-
-                // Add resize listener lazily here.
-                // If done in init like in examples it will be called way too early,
-                // like before the widget is not even rendered yet
-                if (resizeListener == null) {
-                    resizeListener = new ElementResizeListener() {
-
-                        @Override
-                        public void onElementResize(ElementResizeEvent e) {
-                            getWidget().updateSize();
-                        }
-                    };
-
-                    getLayoutManager().addElementResizeListener(getWidget().getElement(), resizeListener);
-                }
-            }
-        });
     }
 
     protected AmStockChartEvents createEvents(AmStockChartConfig config) {

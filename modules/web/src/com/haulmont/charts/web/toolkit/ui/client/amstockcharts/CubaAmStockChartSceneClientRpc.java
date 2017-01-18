@@ -9,5 +9,7 @@ import com.vaadin.shared.communication.ClientRpc;
 
 public interface CubaAmStockChartSceneClientRpc extends ClientRpc {
 
+    void draw(String chartJson);
+
     void updatePoints(String json);
 }
