@@ -202,11 +202,6 @@ public class WebGoogleMapViewer extends WebAbstractComponent<GoogleMap> implemen
     }
 
     @Override
-    public void setSizeFull() {
-        component.setSizeFull();
-    }
-
-    @Override
     public void setSizeUndefined() {
         component.setSizeUndefined();
     }

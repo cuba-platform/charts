@@ -443,13 +443,11 @@ public interface MapViewer extends Component, Component.BelongToFrame, Component
     Collection<Marker> getMarkers();
 
     /**
-     * Sets the size to 100% x 100%
-     */
-    void setSizeFull();
-
-    /**
      * Clears any size settings.
+     *
+     * @deprecated Use {@link #setSizeAuto()}
      */
+    @Deprecated
     void setSizeUndefined();
 
     /**

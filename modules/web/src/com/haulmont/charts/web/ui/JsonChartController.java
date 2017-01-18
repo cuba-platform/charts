@@ -28,8 +28,7 @@ public class JsonChartController extends AbstractFrame {
         super.init(params);
 
         Chart chart = (Chart) componentsFactory.createComponent(Chart.NAME);
-        chart.setHeight("100%");
-        chart.setWidth("100%");
+        chart.setSizeFull();
 
         CubaAmchartsScene cubaAmchartsScene = (CubaAmchartsScene) WebComponentsHelper.unwrap(chart);
         cubaAmchartsScene.drawChart(new CustomChart());
