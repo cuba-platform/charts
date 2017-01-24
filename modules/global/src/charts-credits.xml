@@ -28,5 +28,7 @@ If you would like to use charts without this link, or you appreciate the softwar
         </item>
 
         <item name="Gson" web="https://code.google.com/p/google-gson" license="apache-2.0"/>
+
+        <item name="PivotTable.js" web="https://github.com/nicolaskruchten/pivottable" license="mit"/>
     </items>
 </credits>
