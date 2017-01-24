@@ -1074,9 +1074,14 @@ public class WebGoogleMapViewer extends WebAbstractComponent<GoogleMap> implemen
     public DirectionsRequest createDirectionsRequest(GeoPoint origin, GeoPoint destination, TravelMode travelMode) {
         Preconditions.checkNotNullArgument(origin);
         Preconditions.checkNotNullArgument(destination);
-        Preconditions.checkNotNullArgument(travelMode);
 
-        return new DirectionsRequestDelegate(new com.vaadin.tapio.googlemaps.client.services.DirectionsRequest());
+        com.vaadin.tapio.googlemaps.client.services.DirectionsRequest googleDirectionsRequest = new com.vaadin.tapio.googlemaps.client.services.DirectionsRequest(
+                ((GeoPointDelegate) origin).getLatLon(),
+                ((GeoPointDelegate) destination).getLatLon(),
+                travelMode != null ? com.vaadin.tapio.googlemaps.client.services.TravelMode.fromValue(travelMode.value()) : null
+        );
+
+        return new DirectionsRequestDelegate(googleDirectionsRequest);
     }
 
     @Override
