@@ -1238,70 +1238,70 @@
     <!-- Abstract charts -->
 
     <xs:complexType name="abstractChart" abstract="true">
-        <xs:all>
-            <xs:element name="allLabels" minOccurs="0" maxOccurs="1">
-                <xs:complexType>
-                    <xs:sequence minOccurs="0" maxOccurs="1">
-                        <xs:element name="label" minOccurs="0" maxOccurs="unbounded" type="label"/>
-                    </xs:sequence>
-                </xs:complexType>
-            </xs:element>
-            <xs:element name="export" minOccurs="0" maxOccurs="1" type="amExport"/>
-            <xs:element name="titles" minOccurs="0" maxOccurs="1">
-                <xs:complexType>
-                    <xs:sequence minOccurs="0" maxOccurs="1">
-                        <xs:element name="title" minOccurs="0" maxOccurs="unbounded" type="title"/>
-                    </xs:sequence>
-                </xs:complexType>
-            </xs:element>
-            <xs:element name="balloon" minOccurs="0" maxOccurs="1" type="balloon"/>
-            <xs:element name="legend" minOccurs="0" maxOccurs="1" type="legend"/>
-            <xs:element name="responsive" minOccurs="0" maxOccurs="1" type="responsive"/>
-            <xs:element name="nativeJson" minOccurs="0" maxOccurs="1"/>
-        </xs:all>
-
         <xs:complexContent>
-            <xs:extension base="baseComponent"/>
+            <xs:extension base="baseComponent">
+                <xs:all>
+                    <xs:element name="allLabels" minOccurs="0" maxOccurs="1">
+                        <xs:complexType>
+                            <xs:sequence minOccurs="0" maxOccurs="1">
+                                <xs:element name="label" minOccurs="0" maxOccurs="unbounded" type="label"/>
+                            </xs:sequence>
+                        </xs:complexType>
+                    </xs:element>
+                    <xs:element name="export" minOccurs="0" maxOccurs="1" type="amExport"/>
+                    <xs:element name="titles" minOccurs="0" maxOccurs="1">
+                        <xs:complexType>
+                            <xs:sequence minOccurs="0" maxOccurs="1">
+                                <xs:element name="title" minOccurs="0" maxOccurs="unbounded" type="title"/>
+                            </xs:sequence>
+                        </xs:complexType>
+                    </xs:element>
+                    <xs:element name="balloon" minOccurs="0" maxOccurs="1" type="balloon"/>
+                    <xs:element name="legend" minOccurs="0" maxOccurs="1" type="legend"/>
+                    <xs:element name="responsive" minOccurs="0" maxOccurs="1" type="responsive"/>
+                    <xs:element name="nativeJson" minOccurs="0" maxOccurs="1"/>
+                </xs:all>
+
+                <xs:attribute name="accessible" type="xs:boolean"/>
+                <xs:attribute name="accessibleTitle" type="xs:string"/>
+                <xs:attribute name="addClassNames" type="xs:boolean"/>
+                <xs:attribute name="datasource" type="xs:string"/>
+
+                <xs:attribute name="additionalFields" type="xs:string"/>
+                <xs:attribute name="autoDisplay" type="xs:boolean"/>
+                <xs:attribute name="autoResize" type="xs:boolean"/>
+                <xs:attribute name="autoTransform" type="xs:boolean"/>
+                <xs:attribute name="backgroundAlpha" type="xs:double"/>
+                <xs:attribute name="backgroundColor" type="color"/>
+                <xs:attribute name="borderAlpha" type="xs:double"/>
+                <xs:attribute name="borderColor" type="color"/>
+                <xs:attribute name="classNamePrefix" type="xs:string"/>
+                <xs:attribute name="color" type="color"/>
+                <xs:attribute name="creditsPosition" type="creditsPosition"/>
+                <xs:attribute name="decimalSeparator" type="xs:string"/>
+                <xs:attribute name="defs" type="xs:string"/>
+                <xs:attribute name="fontFamily" type="xs:string"/>
+                <xs:attribute name="fontSize" type="xs:integer"/>
+                <xs:attribute name="handDrawn" type="xs:boolean"/>
+                <xs:attribute name="handDrawScatter" type="xs:integer"/>
+                <xs:attribute name="handDrawThickness" type="xs:integer"/>
+                <xs:attribute name="hideBalloonTime" type="xs:integer"/>
+                <xs:attribute name="language" type="xs:string"/>
+                <xs:attribute name="panEventsEnabled" type="xs:boolean"/>
+                <xs:attribute name="percentPrecision" type="xs:integer"/>
+                <xs:attribute name="precision" type="xs:integer"/>
+                <xs:attribute name="processCount" type="xs:integer"/>
+                <xs:attribute name="processTimeout" type="xs:integer"/>
+                <xs:attribute name="svgIcons" type="xs:boolean"/>
+                <xs:attribute name="tapToActivate" type="xs:boolean"/>
+                <xs:attribute name="theme" type="chartTheme"/>
+                <xs:attribute name="thousandsSeparator" type="xs:string"/>
+                <xs:attribute name="touchClickDuration" type="xs:integer"/>
+                <xs:attribute name="usePrefixes" type="xs:boolean"/>
+
+                <xs:anyAttribute namespace="##other" processContents="lax"/>
+            </xs:extension>
         </xs:complexContent>
-
-        <xs:attribute name="accessible" type="xs:boolean"/>
-        <xs:attribute name="accessibleTitle" type="xs:string"/>
-        <xs:attribute name="addClassNames" type="xs:boolean"/>
-        <xs:attribute name="datasource" type="xs:string"/>
-
-        <xs:attribute name="additionalFields" type="xs:string"/>
-        <xs:attribute name="autoDisplay" type="xs:boolean"/>
-        <xs:attribute name="autoResize" type="xs:boolean"/>
-        <xs:attribute name="autoTransform" type="xs:boolean"/>
-        <xs:attribute name="backgroundAlpha" type="xs:double"/>
-        <xs:attribute name="backgroundColor" type="color"/>
-        <xs:attribute name="borderAlpha" type="xs:double"/>
-        <xs:attribute name="borderColor" type="color"/>
-        <xs:attribute name="classNamePrefix" type="xs:string"/>
-        <xs:attribute name="color" type="color"/>
-        <xs:attribute name="creditsPosition" type="creditsPosition"/>
-        <xs:attribute name="decimalSeparator" type="xs:string"/>
-        <xs:attribute name="defs" type="xs:string"/>
-        <xs:attribute name="fontFamily" type="xs:string"/>
-        <xs:attribute name="fontSize" type="xs:integer"/>
-        <xs:attribute name="handDrawn" type="xs:boolean"/>
-        <xs:attribute name="handDrawScatter" type="xs:integer"/>
-        <xs:attribute name="handDrawThickness" type="xs:integer"/>
-        <xs:attribute name="hideBalloonTime" type="xs:integer"/>
-        <xs:attribute name="language" type="xs:string"/>
-        <xs:attribute name="panEventsEnabled" type="xs:boolean"/>
-        <xs:attribute name="percentPrecision" type="xs:integer"/>
-        <xs:attribute name="precision" type="xs:integer"/>
-        <xs:attribute name="processCount" type="xs:integer"/>
-        <xs:attribute name="processTimeout" type="xs:integer"/>
-        <xs:attribute name="svgIcons" type="xs:boolean"/>
-        <xs:attribute name="tapToActivate" type="xs:boolean"/>
-        <xs:attribute name="theme" type="chartTheme"/>
-        <xs:attribute name="thousandsSeparator" type="xs:string"/>
-        <xs:attribute name="touchClickDuration" type="xs:integer"/>
-        <xs:attribute name="usePrefixes" type="xs:boolean"/>
-
-        <xs:anyAttribute namespace="##other" processContents="lax"/>
     </xs:complexType>
 
     <xs:complexType name="coordinateChart" abstract="true">
@@ -1665,11 +1665,11 @@
     <xs:element name="mapViewer">
         <xs:complexType>
             <xs:complexContent>
-                <xs:extension base="baseComponent"/>
+                <xs:extension base="baseComponent">
+                    <xs:attribute name="vendor" type="mapVendorType" default="google"/>
+                    <xs:attribute name="mapType" type="mapTypeType" default="roadmap"/>
+                </xs:extension>
             </xs:complexContent>
-
-            <xs:attribute name="vendor" type="mapVendorType" default="google"/>
-            <xs:attribute name="mapType" type="mapTypeType" default="roadmap"/>
         </xs:complexType>
     </xs:element>
 
@@ -2208,69 +2208,71 @@
 
     <xs:element name="stockChart">
         <xs:complexType>
-            <xs:all>
-                <xs:element name="colors" minOccurs="0" maxOccurs="1">
-                    <xs:complexType>
-                        <xs:sequence minOccurs="0" maxOccurs="1">
-                            <xs:element name="color" minOccurs="0" maxOccurs="unbounded">
-                                <xs:complexType>
-                                    <xs:attribute name="value" type="color"/>
-                                </xs:complexType>
-                            </xs:element>
-                        </xs:sequence>
-                    </xs:complexType>
-                </xs:element>
-
-                <xs:element name="dataSets" minOccurs="0" maxOccurs="1">
-                    <xs:complexType>
-                        <xs:sequence minOccurs="0" maxOccurs="1">
-                            <xs:element name="dataSet" minOccurs="0" maxOccurs="unbounded" type="dataSet"/>
-                        </xs:sequence>
-                    </xs:complexType>
-                </xs:element>
-
-                <xs:element name="panels" minOccurs="0" maxOccurs="1">
-                    <xs:complexType>
-                        <xs:sequence minOccurs="0" maxOccurs="1">
-                            <xs:element name="panel" minOccurs="0" maxOccurs="unbounded" type="stockPanelType"/>
-                        </xs:sequence>
-                    </xs:complexType>
-                </xs:element>
-
-                <xs:element name="data" minOccurs="0" maxOccurs="1" type="data"/>
-                <xs:element name="export" minOccurs="0" maxOccurs="1" type="amExport"/>
-                <xs:element name="balloon" minOccurs="0" maxOccurs="1" type="balloon"/>
-                <xs:element name="categoryAxesSettings" minOccurs="0" maxOccurs="1" type="categoryAxesSettings"/>
-                <xs:element name="chartCursorSettings" minOccurs="0" maxOccurs="1" type="chartCursorSettings"/>
-                <xs:element name="chartScrollbarSettings" minOccurs="0" maxOccurs="1" type="chartScrollbarSettings"/>
-                <xs:element name="dataSetSelector" minOccurs="0" maxOccurs="1" type="dataSetSelector"/>
-                <xs:element name="legendSettings" minOccurs="0" maxOccurs="1" type="legendSettings"/>
-                <xs:element name="panelsSettings" minOccurs="0" maxOccurs="1" type="panelsSettings"/>
-                <xs:element name="periodSelector" minOccurs="0" maxOccurs="1" type="periodSelector"/>
-                <xs:element name="stockEventsSettings" minOccurs="0" maxOccurs="1" type="stockEventsSettings"/>
-                <xs:element name="valueAxesSettings" minOccurs="0" maxOccurs="1" type="valueAxesSettings"/>
-                <xs:element name="nativeJson" minOccurs="0" maxOccurs="1"/>
-            </xs:all>
-
             <xs:complexContent>
-                <xs:extension base="baseComponent"/>
-            </xs:complexContent>
+                <xs:extension base="baseComponent">
+                    <xs:all>
+                        <xs:element name="colors" minOccurs="0" maxOccurs="1">
+                            <xs:complexType>
+                                <xs:sequence minOccurs="0" maxOccurs="1">
+                                    <xs:element name="color" minOccurs="0" maxOccurs="unbounded">
+                                        <xs:complexType>
+                                            <xs:attribute name="value" type="color"/>
+                                        </xs:complexType>
+                                    </xs:element>
+                                </xs:sequence>
+                            </xs:complexType>
+                        </xs:element>
 
-            <xs:attribute name="addClassNames" type="xs:boolean"/>
-            <xs:attribute name="animationPlayed" type="xs:boolean"/>
-            <xs:attribute name="autoResize" type="xs:boolean"/>
-            <xs:attribute name="classNamePrefix" type="xs:string"/>
-            <xs:attribute name="comparedDataSets" type="xs:string"/>
-            <xs:attribute name="dataDateFormat" type="xs:string"/>
-            <xs:attribute name="extendToFullPeriod" type="xs:boolean"/>
-            <xs:attribute name="firstDayOfWeek" type="xs:integer"/>
-            <xs:attribute name="glueToTheEnd" type="xs:boolean"/>
-            <xs:attribute name="language" type="xs:string"/>
-            <xs:attribute name="mainDataSet" type="xs:string"/>
-            <xs:attribute name="mouseWheelScrollEnabled" type="xs:boolean"/>
-            <xs:attribute name="processTimeout" type="xs:integer"/>
-            <xs:attribute name="theme" type="chartTheme"/>
-            <xs:attribute name="zoomOutOnDataSetChange" type="xs:boolean"/>
+                        <xs:element name="dataSets" minOccurs="0" maxOccurs="1">
+                            <xs:complexType>
+                                <xs:sequence minOccurs="0" maxOccurs="1">
+                                    <xs:element name="dataSet" minOccurs="0" maxOccurs="unbounded" type="dataSet"/>
+                                </xs:sequence>
+                            </xs:complexType>
+                        </xs:element>
+
+                        <xs:element name="panels" minOccurs="0" maxOccurs="1">
+                            <xs:complexType>
+                                <xs:sequence minOccurs="0" maxOccurs="1">
+                                    <xs:element name="panel" minOccurs="0" maxOccurs="unbounded" type="stockPanelType"/>
+                                </xs:sequence>
+                            </xs:complexType>
+                        </xs:element>
+
+                        <xs:element name="data" minOccurs="0" maxOccurs="1" type="data"/>
+                        <xs:element name="export" minOccurs="0" maxOccurs="1" type="amExport"/>
+                        <xs:element name="balloon" minOccurs="0" maxOccurs="1" type="balloon"/>
+                        <xs:element name="categoryAxesSettings" minOccurs="0" maxOccurs="1"
+                                    type="categoryAxesSettings"/>
+                        <xs:element name="chartCursorSettings" minOccurs="0" maxOccurs="1" type="chartCursorSettings"/>
+                        <xs:element name="chartScrollbarSettings" minOccurs="0" maxOccurs="1"
+                                    type="chartScrollbarSettings"/>
+                        <xs:element name="dataSetSelector" minOccurs="0" maxOccurs="1" type="dataSetSelector"/>
+                        <xs:element name="legendSettings" minOccurs="0" maxOccurs="1" type="legendSettings"/>
+                        <xs:element name="panelsSettings" minOccurs="0" maxOccurs="1" type="panelsSettings"/>
+                        <xs:element name="periodSelector" minOccurs="0" maxOccurs="1" type="periodSelector"/>
+                        <xs:element name="stockEventsSettings" minOccurs="0" maxOccurs="1" type="stockEventsSettings"/>
+                        <xs:element name="valueAxesSettings" minOccurs="0" maxOccurs="1" type="valueAxesSettings"/>
+                        <xs:element name="nativeJson" minOccurs="0" maxOccurs="1"/>
+                    </xs:all>
+
+                    <xs:attribute name="addClassNames" type="xs:boolean"/>
+                    <xs:attribute name="animationPlayed" type="xs:boolean"/>
+                    <xs:attribute name="autoResize" type="xs:boolean"/>
+                    <xs:attribute name="classNamePrefix" type="xs:string"/>
+                    <xs:attribute name="comparedDataSets" type="xs:string"/>
+                    <xs:attribute name="dataDateFormat" type="xs:string"/>
+                    <xs:attribute name="extendToFullPeriod" type="xs:boolean"/>
+                    <xs:attribute name="firstDayOfWeek" type="xs:integer"/>
+                    <xs:attribute name="glueToTheEnd" type="xs:boolean"/>
+                    <xs:attribute name="language" type="xs:string"/>
+                    <xs:attribute name="mainDataSet" type="xs:string"/>
+                    <xs:attribute name="mouseWheelScrollEnabled" type="xs:boolean"/>
+                    <xs:attribute name="processTimeout" type="xs:integer"/>
+                    <xs:attribute name="theme" type="chartTheme"/>
+                    <xs:attribute name="zoomOutOnDataSetChange" type="xs:boolean"/>
+                </xs:extension>
+            </xs:complexContent>
         </xs:complexType>
     </xs:element>
 
