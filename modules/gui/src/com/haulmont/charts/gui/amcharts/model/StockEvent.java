@@ -11,10 +11,9 @@ import java.util.Date;
 import java.util.UUID;
 
 /**
- * See documentation for properties of StockEvent JS object. <br/>
- * <p>
- * <a href="http://docs.amcharts.com/3/javascriptstockchart/StockEvent">http://docs.amcharts.com/3/javascriptstockchart/StockEvent</a>
+ * See documentation for properties of StockEvent JS object. <br>
  *
+ * <a href="http://docs.amcharts.com/3/javascriptstockchart/StockEvent">http://docs.amcharts.com/3/javascriptstockchart/StockEvent</a>
  */
 public class StockEvent extends AbstractChartObject {
 

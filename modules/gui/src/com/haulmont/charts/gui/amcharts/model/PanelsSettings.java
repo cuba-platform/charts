@@ -10,10 +10,9 @@ import java.util.Arrays;
 import java.util.List;
 
 /**
- * See documentation for properties of PanelsSettings JS object. <br/>
+ * See documentation for properties of PanelsSettings JS object. <br>
  *
  * <a href="http://docs.amcharts.com/3/javascriptstockchart/PanelsSettings">http://docs.amcharts.com/3/javascriptstockchart/PanelsSettings</a>
- *
  */
 public class PanelsSettings extends AbstractChartObject
         implements HasMargins<PanelsSettings>, HasStartEffect<PanelsSettings> {

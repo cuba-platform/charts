@@ -12,10 +12,9 @@ import java.util.Arrays;
 import java.util.List;
 
 /**
- * See documentation for properties of AmCoordinateChart JS object. <br/>
- * <p>
- * <a href="http://docs.amcharts.com/3/javascriptcharts/AmCoordinateChart">http://docs.amcharts.com/3/javascriptcharts/AmCoordinateChart</a>
+ * See documentation for properties of AmCoordinateChart JS object. <br>
  *
+ * <a href="http://docs.amcharts.com/3/javascriptcharts/AmCoordinateChart">http://docs.amcharts.com/3/javascriptcharts/AmCoordinateChart</a>
  */
 @SuppressWarnings("unchecked")
 public abstract class CoordinateChart<T extends CoordinateChart> extends AbstractChart<T>

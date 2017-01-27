@@ -6,10 +6,9 @@
 package com.haulmont.charts.gui.amcharts.model;
 
 /**
- * See documentation for properties of DataSetSelector JS object. <br/>
+ * See documentation for properties of DataSetSelector JS object. <br>
  *
  * <a href="http://docs.amcharts.com/3/javascriptstockchart/DataSetSelector">http://docs.amcharts.com/3/javascriptstockchart/DataSetSelector</a>
- *
  */
 public class DataSetSelector extends AbstractChartObject {
 

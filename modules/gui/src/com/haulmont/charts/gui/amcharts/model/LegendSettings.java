@@ -6,10 +6,9 @@
 package com.haulmont.charts.gui.amcharts.model;
 
 /**
- * See documentation for properties of LegendSettings JS object. <br/>
+ * See documentation for properties of LegendSettings JS object. <br>
  *
  * <a href="http://docs.amcharts.com/3/javascriptstockchart/LegendSettings">http://docs.amcharts.com/3/javascriptstockchart/LegendSettings</a>
- *
  */
 public class LegendSettings extends AbstractChartObject {
 

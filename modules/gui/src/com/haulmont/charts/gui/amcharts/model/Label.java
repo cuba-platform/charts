@@ -6,10 +6,9 @@
 package com.haulmont.charts.gui.amcharts.model;
 
 /**
- * See documentation for properties of Label JS Object. <br/>
+ * See documentation for properties of Label JS Object. <br>
  *
  * <a href="http://docs.amcharts.com/3/javascriptcharts/Label">http://docs.amcharts.com/3/javascriptcharts/Label</a>
- *
  */
 public class Label extends AbstractChartObject {
 

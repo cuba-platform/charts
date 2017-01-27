@@ -6,10 +6,9 @@
 package com.haulmont.charts.gui.amcharts.model;
 
 /**
- * See documentation for properties of ValueAxesSettings JS object. <br/>
- * <p>
- * <a href="http://docs.amcharts.com/3/javascriptstockchart/ValueAxesSettings">http://docs.amcharts.com/3/javascriptstockchart/ValueAxesSettings</a>
+ * See documentation for properties of ValueAxesSettings JS object. <br>
  *
+ * <a href="http://docs.amcharts.com/3/javascriptstockchart/ValueAxesSettings">http://docs.amcharts.com/3/javascriptstockchart/ValueAxesSettings</a>
  */
 public class ValueAxesSettings extends AbstractChartObject {
 

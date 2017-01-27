@@ -6,10 +6,9 @@
 package com.haulmont.charts.gui.amcharts.model;
 
 /**
- * See documentation for properties of Title JS Object. <br/>
+ * See documentation for properties of Title JS Object. <br>
  *
  * <a href="http://docs.amcharts.com/3/javascriptcharts/Title">http://docs.amcharts.com/3/javascriptcharts/Title</a>
- *
  */
 public class Title extends AbstractChartObject {
 

@@ -12,10 +12,9 @@ import java.util.Arrays;
 import java.util.List;
 
 /**
- * See documentation for properties of AmAngularGauge JS object. <br/>
+ * See documentation for properties of AmAngularGauge JS object. <br>
  *
  * <a href="http://docs.amcharts.com/3/javascriptcharts/AmAngularGauge">http://docs.amcharts.com/3/javascriptcharts/AmAngularGauge</a>
- *
  */
 public class AngularGaugeChart extends AbstractChart<AngularGaugeChart>
         implements HasMargins<AngularGaugeChart>, HasStartEffect<AngularGaugeChart> {

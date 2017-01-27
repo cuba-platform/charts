@@ -8,10 +8,9 @@ package com.haulmont.charts.gui.amcharts.model;
 import java.util.Date;
 
 /**
- * See documentation for properties of TrendLine JS Object. <br/>
+ * See documentation for properties of TrendLine JS Object. <br>
  *
  * <a href="http://docs.amcharts.com/3/javascriptcharts/TrendLine">http://docs.amcharts.com/3/javascriptcharts/TrendLine</a>
- *
  */
 public class TrendLine extends AbstractChartObject {
 

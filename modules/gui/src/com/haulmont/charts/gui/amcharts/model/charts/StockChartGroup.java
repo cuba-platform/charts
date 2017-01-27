@@ -20,10 +20,9 @@ import java.util.Collections;
 import java.util.List;
 
 /**
- * See documentation for properties of AmStockChart JS object. <br/>
+ * See documentation for properties of AmStockChart JS object. <br>
  *
  * <a href="http://docs.amcharts.com/3/javascriptstockchart/AmStockChart">http://docs.amcharts.com/3/javascriptstockchart/AmStockChart</a>
- *
  */
 public class StockChartGroup extends ChartModel
         implements HasColors<StockChartGroup>, DataSet.DataProviderChangeListener {

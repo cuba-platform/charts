@@ -12,10 +12,9 @@ import java.util.Arrays;
 import java.util.List;
 
 /**
- * See documentation for properties of AmLegend JS Object. <br/>
+ * See documentation for properties of AmLegend JS Object. <br>
  *
  * <a href="http://docs.amcharts.com/3/javascriptcharts/AmLegend">http://docs.amcharts.com/3/javascriptcharts/AmLegend</a>
- *
  */
 @SuppressWarnings("unchecked")
 public class AbstractLegend<T extends AbstractLegend> extends AbstractChartObject implements HasMargins<AbstractLegend> {

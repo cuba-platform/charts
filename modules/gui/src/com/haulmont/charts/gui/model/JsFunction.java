@@ -8,9 +8,8 @@ package com.haulmont.charts.gui.model;
 import java.io.Serializable;
 
 /**
- * JavaScript function definition. <br/>
- * Code example: <code>new JsFunction("function (event) { alert(event); }");</code>
- *
+ * JavaScript function definition. <br>
+ * Code example: {@code new JsFunction("function (event) { alert(event); }");}
  */
 public class JsFunction implements Serializable {
 

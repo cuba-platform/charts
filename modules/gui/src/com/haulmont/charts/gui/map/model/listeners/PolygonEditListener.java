@@ -10,16 +10,15 @@ import com.haulmont.charts.gui.map.model.Polygon;
 
 /**
  * Listener to be fired up when user adds/removes/moves polygon vertex.
- *
  */
 public interface PolygonEditListener {
 
     /**
      * Polygon edit action type
      *
-     * <p/> {@link #INSERT} - vertex have been inserted into polygon
-     * <p/> {@link #REMOVE} - vertex have been removed from polygon
-     * <p/> {@link #SET} - vertex coordinates have been changed
+     * <br> {@link #INSERT} - vertex have been inserted into polygon
+     * <br> {@link #REMOVE} - vertex have been removed from polygon
+     * <br> {@link #SET} - vertex coordinates have been changed
      */
     enum ActionType {
         INSERT,

@@ -8,10 +8,9 @@ package com.haulmont.charts.gui.amcharts.model;
 import com.haulmont.charts.gui.model.JsFunction;
 
 /**
- * See documentation for properties of CategoryAxis JS Object. <br/>
+ * See documentation for properties of CategoryAxis JS Object. <br>
  *
  * <a href="http://docs.amcharts.com/3/javascriptcharts/CategoryAxis">http://docs.amcharts.com/3/javascriptcharts/CategoryAxis</a>
- *
  */
 public class CategoryAxis extends AbstractAxis<CategoryAxis> {
 

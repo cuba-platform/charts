@@ -19,10 +19,10 @@ import org.apache.commons.collections.MapUtils;
 import java.util.*;
 
 /**
- * Description of PivotTable configuration. <br/>
+ * Description of PivotTable configuration. <br>
  * <a href="https://github.com/nicolaskruchten/pivottable/">https://github.com/nicolaskruchten/pivottable/</a>
- * <p>
- * See documentation for properties of Pivot() and PivotUI() functions.<br/>
+ * <br>
+ * See documentation for properties of Pivot() and PivotUI() functions.<br>
  * <a href="https://github.com/nicolaskruchten/pivottable/wiki/Parameters">https://github.com/nicolaskruchten/pivottable/wiki/Parameters</a>
  */
 public class PivotTableModel extends AbstractPivotObject {

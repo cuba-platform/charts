@@ -12,10 +12,9 @@ import java.util.ArrayList;
 import java.util.List;
 
 /**
- * See documentation for properties of AmGraph JS Object. <br/>
- * <p>
- * <a href="http://docs.amcharts.com/3/javascriptcharts/AmGraph">http://docs.amcharts.com/3/javascriptcharts/AmGraph</a>
+ * See documentation for properties of AmGraph JS Object. <br>
  *
+ * <a href="http://docs.amcharts.com/3/javascriptcharts/AmGraph">http://docs.amcharts.com/3/javascriptcharts/AmGraph</a>
  */
 @SuppressWarnings("unchecked")
 public class AbstractGraph<T extends AbstractGraph> extends AbstractChartObject {

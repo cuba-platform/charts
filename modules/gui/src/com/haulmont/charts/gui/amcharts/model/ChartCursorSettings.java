@@ -10,10 +10,9 @@ import java.util.Arrays;
 import java.util.List;
 
 /**
- * See documentation for properties of ChartCursorSettings JS object. <br/>
+ * See documentation for properties of ChartCursorSettings JS object. <br>
  *
  * <a href="http://docs.amcharts.com/3/javascriptstockchart/ChartCursorSettings">http://docs.amcharts.com/3/javascriptstockchart/ChartCursorSettings</a>
- *
  */
 public class ChartCursorSettings extends AbstractChartObject {
 

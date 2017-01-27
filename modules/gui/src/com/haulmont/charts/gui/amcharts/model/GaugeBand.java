@@ -8,10 +8,9 @@ package com.haulmont.charts.gui.amcharts.model;
 import java.util.List;
 
 /**
- * See documentation for properties of GaugeBand JS Object. <br/>
+ * See documentation for properties of GaugeBand JS Object. <br>
  *
  * <a href="http://docs.amcharts.com/3/javascriptcharts/GaugeBand">http://docs.amcharts.com/3/javascriptcharts/GaugeBand</a>
- *
  */
 public class GaugeBand extends AbstractChartObject {
 

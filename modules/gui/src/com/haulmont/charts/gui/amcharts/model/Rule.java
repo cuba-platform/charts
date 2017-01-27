@@ -9,7 +9,8 @@ import com.google.gson.JsonElement;
 import com.google.gson.JsonParser;
 
 /**
- * Responsive rule for chart. See documentation for responsive plugin.<br/>
+ * Responsive rule for chart. See documentation for responsive plugin.<br>
+ *
  * <a href="https://github.com/amcharts/responsive">https://github.com/amcharts/responsive</a>
  */
 public class Rule extends AbstractChartObject {

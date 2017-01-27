@@ -10,10 +10,9 @@ import com.haulmont.charts.gui.amcharts.model.FunnelValueRepresentation;
 import com.haulmont.charts.gui.amcharts.model.LabelPosition;
 
 /**
- * See documentation for properties of AmFunnelChart JS object. <br/>
+ * See documentation for properties of AmFunnelChart JS object. <br>
  *
  * <a href="http://docs.amcharts.com/3/javascriptcharts/AmFunnelChart">http://docs.amcharts.com/3/javascriptcharts/AmFunnelChart</a>
- *
  */
 public class FunnelChart extends SlicedChart<FunnelChart> {
 

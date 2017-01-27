@@ -10,10 +10,9 @@ import java.util.Arrays;
 import java.util.List;
 
 /**
- * See documentation for properties of AxisBase JS Object. <br/>
+ * See documentation for properties of AxisBase JS Object. <br>
  *
  * <a href="http://docs.amcharts.com/3/javascriptcharts/AxisBase">http://docs.amcharts.com/3/javascriptcharts/AxisBase</a>
- *
  */
 @SuppressWarnings("unchecked")
 public abstract class AbstractAxis<T extends AbstractAxis> extends AbstractChartObject {

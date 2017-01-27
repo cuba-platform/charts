@@ -14,10 +14,9 @@ import java.util.Date;
 import java.util.List;
 
 /**
- * See documentation for properties of StockPanel JS object. <br/>
+ * See documentation for properties of StockPanel JS object. <br>
  *
  * <a href="http://docs.amcharts.com/3/javascriptstockchart/StockPanel">http://docs.amcharts.com/3/javascriptstockchart/StockPanel</a>
- *
  */
 public class StockPanel extends AbstractSerialChart<StockPanel> {
 

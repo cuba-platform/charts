@@ -6,10 +6,9 @@
 package com.haulmont.charts.gui.amcharts.model;
 
 /**
- * See documentation for properties of ChartScrollbarSettings JS object. <br/>
+ * See documentation for properties of ChartScrollbarSettings JS object. <br>
  *
  * <a href="http://docs.amcharts.com/3/javascriptstockchart/ChartScrollbarSettings">http://docs.amcharts.com/3/javascriptstockchart/ChartScrollbarSettings</a>
- *
  */
 public class ChartScrollbarSettings extends AbstractChartObject {
 

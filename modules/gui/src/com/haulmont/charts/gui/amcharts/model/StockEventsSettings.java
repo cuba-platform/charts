@@ -6,10 +6,9 @@
 package com.haulmont.charts.gui.amcharts.model;
 
 /**
- * See documentation for properties of StockEventsSettings JS object. <br/>
+ * See documentation for properties of StockEventsSettings JS object. <br>
  *
  * <a href="http://docs.amcharts.com/3/javascriptstockchart/StockEventsSettings">http://docs.amcharts.com/3/javascriptstockchart/StockEventsSettings</a>
- *
  */
 public class StockEventsSettings extends AbstractChartObject {
 

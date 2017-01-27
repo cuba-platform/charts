@@ -14,10 +14,9 @@ import java.util.ArrayList;
 import java.util.List;
 
 /**
- * See documentation for properties of AmPieChart JS object. <br/>
+ * See documentation for properties of AmPieChart JS object. <br>
  *
  * <a href="http://docs.amcharts.com/3/javascriptcharts/AmPieChart">http://docs.amcharts.com/3/javascriptcharts/AmPieChart</a>
- *
  */
 public class PieChart extends SlicedChart<PieChart> {
 

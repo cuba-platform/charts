@@ -102,6 +102,11 @@ configure([chartsGlobalModule, chartsGuiModule, chartsWebModule]) {
             attributes("Implementation-Version": cubaVersion)
         }
     }
+
+    javadoc {
+        // move to plugin ?
+        options.addStringOption("sourcepath", "")
+    }
 }
 
 configure(chartsWebToolkitModule) {
@@ -117,6 +122,11 @@ configure(chartsWebToolkitModule) {
 
     artifacts {
         archives sourceJar
+    }
+
+    javadoc {
+        // move to plugin ?
+        options.addStringOption("sourcepath", "")
     }
 }
 

@@ -8,10 +8,9 @@ package com.haulmont.charts.gui.amcharts.model;
 import com.haulmont.charts.gui.model.JsFunction;
 
 /**
- * See documentation for properties of ChartCursor JS Object. <br/>
+ * See documentation for properties of ChartCursor JS Object. <br>
  *
  * <a href="http://docs.amcharts.com/3/javascriptcharts/ChartCursor">http://docs.amcharts.com/3/javascriptcharts/ChartCursor</a>
- *
  */
 public class Cursor extends AbstractChartObject {
 

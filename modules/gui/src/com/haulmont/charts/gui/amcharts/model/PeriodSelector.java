@@ -10,10 +10,9 @@ import java.util.Arrays;
 import java.util.List;
 
 /**
- * See documentation for properties of PeriodSelector JS object. <br/>
+ * See documentation for properties of PeriodSelector JS object. <br>
  *
  * <a href="http://docs.amcharts.com/3/javascriptstockchart/PeriodSelector">http://docs.amcharts.com/3/javascriptstockchart/PeriodSelector</a>
- *
  */
 public class PeriodSelector extends AbstractChartObject {
 

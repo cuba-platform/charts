@@ -16,10 +16,9 @@ import java.util.Arrays;
 import java.util.List;
 
 /**
- * See documentation for properties of DataSet JS object. <br/>
+ * See documentation for properties of DataSet JS object. <br>
  *
  * <a href="http://docs.amcharts.com/3/javascriptstockchart/DataSet">http://docs.amcharts.com/3/javascriptstockchart/DataSet</a>
- *
  */
 public class DataSet extends AbstractChartObject {
 

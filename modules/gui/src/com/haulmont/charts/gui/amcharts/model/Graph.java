@@ -6,10 +6,9 @@
 package com.haulmont.charts.gui.amcharts.model;
 
 /**
- * See documentation for properties of AmGraph JS Object. <br/>
+ * See documentation for properties of AmGraph JS Object. <br>
  *
  * <a href="http://docs.amcharts.com/3/javascriptcharts/AmGraph">http://docs.amcharts.com/3/javascriptcharts/AmGraph</a>
- *
  */
 public class Graph extends AbstractGraph<Graph> {
 

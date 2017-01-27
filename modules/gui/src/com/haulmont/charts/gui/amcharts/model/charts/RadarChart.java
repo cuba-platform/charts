@@ -13,10 +13,9 @@ import java.util.ArrayList;
 import java.util.List;
 
 /**
- * See documentation for properties of AmRadarChart JS object. <br/>
+ * See documentation for properties of AmRadarChart JS object. <br>
  *
  * <a href="http://docs.amcharts.com/3/javascriptcharts/AmRadarChart">http://docs.amcharts.com/3/javascriptcharts/AmRadarChart</a>
- *
  */
 public class RadarChart extends CoordinateChart<RadarChart> implements HasMargins<RadarChart> {
 

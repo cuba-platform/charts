@@ -6,10 +6,9 @@
 package com.haulmont.charts.gui.amcharts.model;
 
 /**
- * See documentation for properties of GaugeArrow JS Object. <br/>
+ * See documentation for properties of GaugeArrow JS Object. <br>
  *
  * <a href="http://docs.amcharts.com/3/javascriptcharts/GaugeArrow">http://docs.amcharts.com/3/javascriptcharts/GaugeArrow</a>
- *
  */
 public class GaugeArrow extends AbstractChartObject {
 

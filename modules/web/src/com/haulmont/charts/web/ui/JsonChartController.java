@@ -39,7 +39,7 @@ public class JsonChartController extends AbstractFrame {
 
     /**
      * Used for default initialization in
-     * {@link com.haulmont.charts.web.gui.components.charts.amcharts.WebChart.CubaAmchartsSceneExt#setupDefaults(AbstractChart)}}
+     * WebChart.CubaAmchartsSceneExt#setupDefaults(AbstractChart)
      */
     protected static class CustomChart extends AbstractChart {
     }

@@ -6,10 +6,9 @@
 package com.haulmont.charts.gui.amcharts.model;
 
 /**
- * See documentation for properties of AmLegend JS Object. <br/>
- * <p>
- * <a href="http://docs.amcharts.com/3/javascriptcharts/AmLegend">http://docs.amcharts.com/3/javascriptcharts/AmLegend</a>
+ * See documentation for properties of AmLegend JS Object. <br>
  *
+ * <a href="http://docs.amcharts.com/3/javascriptcharts/AmLegend">http://docs.amcharts.com/3/javascriptcharts/AmLegend</a>
  */
 public class Legend extends AbstractLegend<Legend> {
 

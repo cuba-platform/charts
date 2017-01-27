@@ -11,10 +11,9 @@ import java.util.Date;
 import java.util.Map;
 
 /**
- * See documentation for properties of ValueAxis JS Object. <br/>
+ * See documentation for properties of ValueAxis JS Object. <br>
  *
  * <a href="http://docs.amcharts.com/3/javascriptcharts/ValueAxis">http://docs.amcharts.com/3/javascriptcharts/ValueAxis</a>
- *
  */
 public class ValueAxis extends AbstractAxis<ValueAxis> {
 

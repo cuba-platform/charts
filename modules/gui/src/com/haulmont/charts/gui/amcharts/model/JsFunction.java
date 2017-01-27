@@ -6,8 +6,8 @@
 package com.haulmont.charts.gui.amcharts.model;
 
 /**
- * JavaScript function definition. <br/>
- * Code example: <code>new JsFunction("function (event) { alert(event); }");</code>
+ * JavaScript function definition. <br>
+ * Code example: {@code new JsFunction("function (event) { alert(event); }");}
  *
  * @deprecated use {@link com.haulmont.charts.gui.model.JsFunction} instead
  */

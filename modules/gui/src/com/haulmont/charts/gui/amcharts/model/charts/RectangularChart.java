@@ -12,10 +12,9 @@ import java.util.Arrays;
 import java.util.List;
 
 /**
- * See documentation for properties of AmRectangularChart JS object. <br/>
+ * See documentation for properties of AmRectangularChart JS object. <br>
  *
  * <a href="http://docs.amcharts.com/3/javascriptcharts/AmRectangularChart">http://docs.amcharts.com/3/javascriptcharts/AmRectangularChart</a>
- *
  */
 @SuppressWarnings("unchecked")
 public abstract class RectangularChart<T extends RectangularChart> extends CoordinateChart<T> implements HasMargins<T> {

@@ -10,7 +10,8 @@ import java.util.Arrays;
 import java.util.List;
 
 /**
- * Responsive setting for chart. See documentation for responsive plugin.<br/>
+ * Responsive setting for chart. See documentation for responsive plugin.<br>
+ *
  * <a href="https://github.com/amcharts/responsive">https://github.com/amcharts/responsive</a>
  */
 public class Responsive extends AbstractChartObject {

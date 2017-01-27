@@ -6,10 +6,9 @@
 package com.haulmont.charts.gui.amcharts.model;
 
 /**
- * See documentation for properties of StockLegend JS object. <br/>
+ * See documentation for properties of StockLegend JS object. <br>
  *
  * <a href="http://docs.amcharts.com/3/javascriptstockchart/StockLegend">http://docs.amcharts.com/3/javascriptstockchart/StockLegend</a>
- *
  */
 public class StockLegend extends AbstractLegend<StockLegend> {
 

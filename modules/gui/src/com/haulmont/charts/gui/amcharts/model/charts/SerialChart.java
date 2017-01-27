@@ -8,10 +8,9 @@ package com.haulmont.charts.gui.amcharts.model.charts;
 import com.haulmont.charts.gui.amcharts.model.ChartType;
 
 /**
- * See documentation for properties of AmSerialChart JS object. <br/>
- * <p>
- * <a href="http://docs.amcharts.com/3/javascriptcharts/AmSerialChart">http://docs.amcharts.com/3/javascriptcharts/AmSerialChart</a>
+ * See documentation for properties of AmSerialChart JS object. <br>
  *
+ * <a href="http://docs.amcharts.com/3/javascriptcharts/AmSerialChart">http://docs.amcharts.com/3/javascriptcharts/AmSerialChart</a>
  */
 public class SerialChart extends AbstractSerialChart<SerialChart> {
 

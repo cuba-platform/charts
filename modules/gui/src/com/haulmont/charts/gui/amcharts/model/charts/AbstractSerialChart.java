@@ -14,10 +14,9 @@ import java.util.ArrayList;
 import java.util.List;
 
 /**
- * See documentation for properties of AmSerialChart JS object. <br/>
+ * See documentation for properties of AmSerialChart JS object. <br>
  *
  * <a href="http://docs.amcharts.com/3/javascriptcharts/AmSerialChart">http://docs.amcharts.com/3/javascriptcharts/AmSerialChart</a>
- *
  */
 @SuppressWarnings("unchecked")
 public abstract class AbstractSerialChart<T extends AbstractSerialChart> extends RectangularChart<T> {

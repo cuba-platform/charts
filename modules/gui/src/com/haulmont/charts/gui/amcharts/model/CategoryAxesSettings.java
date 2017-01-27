@@ -10,10 +10,9 @@ import java.util.Arrays;
 import java.util.List;
 
 /**
- * See documentation for properties of CategoryAxesSettings JS object. <br/>
+ * See documentation for properties of CategoryAxesSettings JS object. <br>
  *
  * <a href="http://docs.amcharts.com/3/javascriptstockchart/CategoryAxesSettings">http://docs.amcharts.com/3/javascriptstockchart/CategoryAxesSettings</a>
- *
  */
 public class CategoryAxesSettings extends AbstractChartObject {
 

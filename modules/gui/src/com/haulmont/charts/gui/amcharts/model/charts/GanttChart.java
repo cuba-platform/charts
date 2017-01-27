@@ -16,10 +16,9 @@ import java.util.Date;
 import java.util.List;
 
 /**
- * See documentation for properties of AmGanttChart JS object. <br/>
+ * See documentation for properties of AmGanttChart JS object. <br>
  *
  * <a href="http://docs.amcharts.com/3/javascriptcharts/AmGanttChart">http://docs.amcharts.com/3/javascriptcharts/AmGanttChart</a>
- *
  */
 public class GanttChart extends AbstractSerialChart<GanttChart> {
 

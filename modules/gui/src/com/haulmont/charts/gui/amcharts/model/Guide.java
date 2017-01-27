@@ -8,10 +8,9 @@ package com.haulmont.charts.gui.amcharts.model;
 import java.util.Date;
 
 /**
- * See documentation for properties of Guide JS Object. <br/>
+ * See documentation for properties of Guide JS Object. <br>
  *
  * <a href="http://docs.amcharts.com/3/javascriptcharts/Guide">http://docs.amcharts.com/3/javascriptcharts/Guide</a>
- *
  */
 public class Guide extends AbstractChartObject {
 

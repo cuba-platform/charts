@@ -8,10 +8,9 @@ package com.haulmont.charts.gui.amcharts.model;
 import java.util.List;
 
 /**
- * See documentation for properties of AmCharts JS Object. <br/>
+ * See documentation for properties of AmCharts JS Object. <br>
  *
  * <a href="http://docs.amcharts.com/3/javascriptcharts/AmCharts">http://docs.amcharts.com/3/javascriptcharts/AmCharts</a>
- *
  */
 public class Settings extends AbstractChartObject {
 
