@@ -7,6 +7,7 @@ package com.haulmont.charts.gui.amcharts.model.charts;
 
 import com.google.gson.annotations.Expose;
 import com.haulmont.charts.gui.amcharts.model.ChartType;
+import com.haulmont.charts.gui.amcharts.model.DatePeriod;
 import com.haulmont.charts.gui.amcharts.model.Graph;
 import com.haulmont.charts.gui.amcharts.model.ValueAxis;
 
@@ -38,7 +39,7 @@ public class GanttChart extends AbstractSerialChart<GanttChart> {
 
     private Graph graph;
 
-    private String period;
+    private DatePeriod period;
 
     private String segmentsField;
 
@@ -120,11 +121,11 @@ public class GanttChart extends AbstractSerialChart<GanttChart> {
         return this;
     }
 
-    public String getPeriod() {
+    public DatePeriod getPeriod() {
         return period;
     }
 
-    public GanttChart setPeriod(String period) {
+    public GanttChart setPeriod(DatePeriod period) {
         this.period = period;
         return this;
     }

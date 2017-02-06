@@ -118,7 +118,7 @@ public class GanttChartLoader extends AbstractSerialChartLoader<GanttChart> {
             if (dp == null) {
                 dp = DatePeriod.valueOf(period);
             }
-            chart.setPeriod(dp.getId());
+            chart.setPeriod(dp);
         }
 
         String segmentsField = element.attributeValue("segmentsField");

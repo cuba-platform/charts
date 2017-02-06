@@ -186,7 +186,7 @@ public class ChartsSerializationTest {
                 segment("s40", 17, 4, "#FFE4C4", "Task #4")));
 
         AbstractChart chart = new GanttChart().setDataProvider(dataProvider).setTheme(ChartTheme.LIGHT)
-                .setMarginRight(70).setPeriod("hh").setBalloonDateFormat("JJ:NN").setColumnWidth(0.5)
+                .setMarginRight(70).setPeriod(DatePeriod.HOURS).setBalloonDateFormat("JJ:NN").setColumnWidth(0.5)
                 .setBrightnessStep(10).setRotate(true).setCategoryField("category").setSegmentsField("segments")
                 .setStartDate(df.parse("2015-01-01")).setColorField("color").setStartField("start").setEndField("end")
                 .setDurationField("duration").addAdditionalSegmentFields("task")
