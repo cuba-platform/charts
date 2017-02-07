@@ -17,12 +17,12 @@ public class CubaPivotTableJsOverlay {
     }
 
     public static CubaPivotTableJsOverlay makePivot(Element placeHolder, JavaScriptObject configObject,
-                                                    RefreshHandler refreshHandler) {
-        return new CubaPivotTableJsOverlay(makeJsPivotTable(placeHolder, configObject, refreshHandler));
+                                                    RefreshHandler refreshHandler, boolean enabled) {
+        return new CubaPivotTableJsOverlay(makeJsPivotTable(placeHolder, configObject, refreshHandler, enabled));
     }
 
     protected static native JavaScriptObject makeJsPivotTable(Element placeHolder, JavaScriptObject configObject,
-                                                              RefreshHandler handler) /*-{
+                                                              RefreshHandler handler, boolean enabled) /*-{
         if (handler) {
             configObject.options["onRefresh"] = $entry(function () {
                 handler.@com.haulmont.charts.web.toolkit.ui.client.pivottable.events.RefreshHandler::onRefresh()();
@@ -31,7 +31,13 @@ public class CubaPivotTableJsOverlay {
 
         var localeCode = configObject.options.localeCode;
         if (configObject.options.editable) {
-            return $wnd.jQuery(placeHolder).pivotUI(configObject.data, configObject.options, false, localeCode);
+            var pivot = $wnd.jQuery(placeHolder).pivotUI(configObject.data, configObject.options, false, localeCode);
+
+            if (!enabled) {
+                pivot.find("select").attr('disabled', 'disabled');
+            }
+
+            return pivot;
         } else {
             return $wnd.jQuery(placeHolder).pivot(configObject.data, configObject.options);
         }

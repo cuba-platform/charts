@@ -57,6 +57,10 @@ public class CubaPivotTableSceneConnector extends AbstractComponentConnector {
             }
         }
 
+        if (stateChangeEvent.hasPropertyChanged("enabled")) {
+            getWidget().setEnabled(getState().enabled);
+        }
+
         final PivotTableConfig config = PivotTableConfig.fromServerConfig(getState().data,
                 getState().options, getState().json);
         PivotTableEvents events = createEvents();
