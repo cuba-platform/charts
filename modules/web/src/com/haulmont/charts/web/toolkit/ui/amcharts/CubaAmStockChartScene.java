@@ -19,6 +19,8 @@ import com.haulmont.charts.web.toolkit.ui.amcharts.events.*;
 import com.haulmont.charts.web.toolkit.ui.client.amstockcharts.CubaAmStockChartSceneClientRpc;
 import com.haulmont.charts.web.toolkit.ui.client.amstockcharts.CubaAmStockChartSceneState;
 import com.haulmont.charts.web.toolkit.ui.client.amstockcharts.CubaAmStockChartServerRpc;
+import com.vaadin.annotations.JavaScript;
+import com.vaadin.annotations.StyleSheet;
 import com.vaadin.ui.AbstractComponent;
 import org.apache.commons.collections.CollectionUtils;
 import org.apache.commons.lang.StringUtils;
@@ -31,6 +33,8 @@ import java.util.*;
 
 import static com.vaadin.util.ReflectTools.findMethod;
 
+@JavaScript("vaadin://resources/amcharts/amstock.js")
+@StyleSheet("vaadin://resources/amcharts/style.css")
 public class CubaAmStockChartScene extends AbstractComponent {
     private final Logger log = LoggerFactory.getLogger(CubaAmStockChartScene.class);
 

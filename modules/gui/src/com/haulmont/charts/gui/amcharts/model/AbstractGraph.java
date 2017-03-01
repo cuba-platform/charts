@@ -111,6 +111,8 @@ public class AbstractGraph<T extends AbstractGraph> extends AbstractChartObject 
 
     private Integer fontSize;
 
+    private Boolean forceGap;
+
     private String gapField;
 
     private Double gapPeriod;
@@ -593,6 +595,15 @@ public class AbstractGraph<T extends AbstractGraph> extends AbstractChartObject 
 
     public T setFontSize(Integer fontSize) {
         this.fontSize = fontSize;
+        return (T) this;
+    }
+
+    public Boolean getForceGap() {
+        return forceGap;
+    }
+
+    public T setForceGap(Boolean forceGap) {
+        this.forceGap = forceGap;
         return (T) this;
     }
 

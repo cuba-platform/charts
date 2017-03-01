@@ -1171,6 +1171,7 @@
         <xs:attribute name="fillToGraph" type="xs:string"/>
         <xs:attribute name="fixedColumnWidth" type="xs:integer"/>
         <xs:attribute name="fontSize" type="xs:integer"/>
+        <xs:attribute name="forceGap" type="xs:boolean"/>
         <xs:attribute name="gapField" type="xs:string"/>
         <xs:attribute name="gapPeriod" type="xs:double"/>
         <xs:attribute name="gradientOrientation" type="gradientOrientation"/>

@@ -10,7 +10,6 @@ import com.google.gwt.core.client.Scheduler;
 import com.google.gwt.dom.client.NativeEvent;
 import com.google.gwt.json.client.JSONParser;
 import com.haulmont.charts.web.toolkit.ui.amcharts.CubaAmchartsScene;
-import com.haulmont.charts.web.toolkit.ui.client.amcharts.events.*;
 import com.haulmont.cuba.web.toolkit.ui.client.JsDate;
 import com.vaadin.client.communication.RpcProxy;
 import com.vaadin.client.ui.AbstractComponentConnector;
@@ -164,178 +163,123 @@ public class CubaAmchartsSceneConnector extends AbstractComponentConnector {
 
     protected void bindClickEvents(AmchartsEvents amchartsEvents, Set<String> events) {
         if (events.contains(CubaAmchartsSceneState.CHART_CLICK_EVENT)) {
-            amchartsEvents.setChartClickHandler(new ChartClickHandler() {
-                @Override
-                public void onClick(JsChartClickEvent event) {
+            amchartsEvents.setChartClickHandler(event ->
                     rpc.onChartClick(event.getX(), event.getY(),
-                            event.getAbsoluteX(), event.getAbsoluteY(), event.getXAxis(), event.getYAxis());
-                }
-            });
+                            event.getAbsoluteX(), event.getAbsoluteY(), event.getXAxis(), event.getYAxis())
+            );
         }
         if (events.contains(CubaAmchartsSceneState.CHART_RIGHT_CLICK_EVENT)) {
-            amchartsEvents.setChartRightClickHandler(new ChartClickHandler() {
-                @Override
-                public void onClick(JsChartClickEvent event) {
+            amchartsEvents.setChartRightClickHandler(event ->
                     rpc.onChartRightClick(event.getX(), event.getY(),
-                            event.getAbsoluteX(), event.getAbsoluteY(), event.getXAxis(), event.getYAxis());
-                }
-            });
+                            event.getAbsoluteX(), event.getAbsoluteY(), event.getXAxis(), event.getYAxis())
+            );
         }
     }
 
     protected void bindXYChartEvents(AmchartsEvents amchartsEvents, Set<String> events) {
         if (events.contains(CubaAmchartsSceneState.VALUE_AXIS_ZOOM_EVENT)) {
-            amchartsEvents.setAxisZoomHandler(new AxisZoomHandler() {
-                @Override
-                public void onZoom(JsAxisZoomedEvent event) {
-                    rpc.onValueAxisZoom(event.getAxisId(), event.getStartValue(), event.getEndValue());
-                }
-            });
+            amchartsEvents.setAxisZoomHandler(event ->
+                    rpc.onValueAxisZoom(event.getAxisId(), event.getStartValue(), event.getEndValue())
+            );
         }
     }
 
     protected void bindCursorEvents(AmchartsEvents amchartsEvents, Set<String> events) {
         if (events.contains(CubaAmchartsSceneState.CURSOR_ZOOM_EVENT)) {
-            amchartsEvents.setCursorZoomHandler(new CursorEventHandler() {
-                @Override
-                public void onEvent(JsCursorEvent event) {
-                    rpc.onCursorZoom(event.getStart(), event.getEnd());
-                }
-            });
+            amchartsEvents.setCursorZoomHandler(event ->
+                    rpc.onCursorZoom(event.getStart(), event.getEnd())
+            );
         }
         if (events.contains(CubaAmchartsSceneState.CURSOR_PERIOD_SELECT_EVENT)) {
-            amchartsEvents.setCursorPeriodSelectHandler(new CursorEventHandler() {
-                @Override
-                public void onEvent(JsCursorEvent event) {
-                    rpc.onCursorPeriodSelect(event.getStart(), event.getEnd());
-                }
-            });
+            amchartsEvents.setCursorPeriodSelectHandler(event ->
+                    rpc.onCursorPeriodSelect(event.getStart(), event.getEnd())
+            );
         }
     }
 
     protected void bindLegendEvents(AmchartsEvents amchartsEvents, Set<String> events) {
         if (events.contains(CubaAmchartsSceneState.LEGEND_LABEL_CLICK_EVENT)) {
-            amchartsEvents.setLegendLabelClickHandler(new LegendEventHandler() {
-                @Override
-                public void onEvent(JsLegendEvent event) {
-                    rpc.onLegendLabelClick(event.getItemId());
-                }
-            });
+            amchartsEvents.setLegendLabelClickHandler(event ->
+                    rpc.onLegendLabelClick(event.getItemId())
+            );
         }
         if (events.contains(CubaAmchartsSceneState.LEGEND_MARKER_CLICK_EVENT)) {
-            amchartsEvents.setLegendMarkerClickHandler(new LegendEventHandler() {
-                @Override
-                public void onEvent(JsLegendEvent event) {
-                    rpc.onLegendMarkerClick(event.getItemId());
-                }
-            });
+            amchartsEvents.setLegendMarkerClickHandler(event ->
+                    rpc.onLegendMarkerClick(event.getItemId())
+            );
         }
         if (events.contains(CubaAmchartsSceneState.LEGEND_ITEM_SHOW_EVENT)) {
-            amchartsEvents.setLegendItemShowHandler(new LegendEventHandler() {
-                @Override
-                public void onEvent(JsLegendEvent event) {
-                    rpc.onLegendItemShow(event.getItemId());
-                }
-            });
+            amchartsEvents.setLegendItemShowHandler(event ->
+                    rpc.onLegendItemShow(event.getItemId())
+            );
         }
         if (events.contains(CubaAmchartsSceneState.LEGEND_ITEM_HIDE_EVENT)) {
-            amchartsEvents.setLegendItemHideHandler(new LegendEventHandler() {
-                @Override
-                public void onEvent(JsLegendEvent event) {
-                    rpc.onLegendItemHide(event.getItemId());
-                }
-            });
+            amchartsEvents.setLegendItemHideHandler(event ->
+                    rpc.onLegendItemHide(event.getItemId())
+            );
         }
     }
 
     protected void bindSlicedChartEvents(AmchartsEvents amchartsEvents, Set<String> events) {
         if (events.contains(CubaAmchartsSceneState.SLICE_CLICK_EVENT)) {
-            amchartsEvents.setSliceClickHandler(new SliceClickHandler() {
-                @Override
-                public void onEvent(JsSliceClickEvent event) {
-                    NativeEvent me = event.getMouseEvent();
+            amchartsEvents.setSliceClickHandler(event -> {
+                NativeEvent me = event.getMouseEvent();
 
-                    rpc.onSliceClick(event.getSliceId(), MouseHelper.getX(me), MouseHelper.getY(me),
-                            me.getClientX(), me.getClientY());
-                }
+                rpc.onSliceClick(event.getSliceId(), MouseHelper.getX(me), MouseHelper.getY(me),
+                        me.getClientX(), me.getClientY());
             });
         }
         if (events.contains(CubaAmchartsSceneState.SLICE_RIGHT_CLICK_EVENT)) {
-            amchartsEvents.setSliceRightClickHandler(new SliceClickHandler() {
-                @Override
-                public void onEvent(JsSliceClickEvent event) {
-                    NativeEvent me = event.getMouseEvent();
+            amchartsEvents.setSliceRightClickHandler(event -> {
+                NativeEvent me = event.getMouseEvent();
 
-                    rpc.onSliceRightClick(event.getSliceId(), MouseHelper.getX(me), MouseHelper.getY(me),
-                            me.getClientX(), me.getClientY());
-                }
+                rpc.onSliceRightClick(event.getSliceId(), MouseHelper.getX(me), MouseHelper.getY(me),
+                        me.getClientX(), me.getClientY());
             });
         }
         if (events.contains(CubaAmchartsSceneState.SLICE_PULL_IN_EVENT)) {
-            amchartsEvents.setSlicePullInHandler(new SlicePullHandler() {
-                @Override
-                public void onEvent(JsSlicePullEvent event) {
-                    rpc.onSlicePullIn(event.getSliceId());
-                }
-            });
+            amchartsEvents.setSlicePullInHandler(event -> rpc.onSlicePullIn(event.getSliceId()));
         }
         if (events.contains(CubaAmchartsSceneState.SLICE_PULL_OUT_EVENT)) {
-            amchartsEvents.setSlicePullOutHandler(new SlicePullHandler() {
-                @Override
-                public void onEvent(JsSlicePullEvent event) {
-                    rpc.onSlicePullOut(event.getSliceId());
-                }
-            });
+            amchartsEvents.setSlicePullOutHandler(event -> rpc.onSlicePullOut(event.getSliceId()));
         }
     }
 
     protected void bindSerialChartEvents(AmchartsEvents amchartsEvents, Set<String> events) {
         if (events.contains(CubaAmchartsSceneState.ZOOM_EVENT)) {
-            amchartsEvents.setZoomHandler(new ZoomHandler() {
-                @Override
-                public void onZoom(JsZoomEvent event) {
+            amchartsEvents.setZoomHandler(event ->
                     rpc.onZoom(event.getStartIndex(), event.getEndIndex(),
-                            JsDate.toJava(event.getStartDate()), JsDate.toJava(event.getEndDate()),
-                            event.getStartValue(), event.getEndValue());
-                }
-            });
+                    JsDate.toJava(event.getStartDate()), JsDate.toJava(event.getEndDate()),
+                    event.getStartValue(), event.getEndValue())
+            );
         }
     }
 
     protected void bindCoordinateChartEvents(AmchartsEvents amchartsEvents, Set<String> events) {
         if (events.contains(CubaAmchartsSceneState.GRAPH_CLICK_EVENT)) {
-            amchartsEvents.setGraphClickHandler(new GraphClickHandler() {
-                @Override
-                public void onClick(JsGraphClickEvent event) {
-                    NativeEvent me = event.getMouseEvent();
+            amchartsEvents.setGraphClickHandler(event -> {
+                NativeEvent me = event.getMouseEvent();
 
-                    rpc.onGraphClick(event.getGraphId(), MouseHelper.getX(me), MouseHelper.getY(me),
-                            me.getClientX(), me.getClientY());
-                }
+                rpc.onGraphClick(event.getGraphId(), MouseHelper.getX(me), MouseHelper.getY(me),
+                        me.getClientX(), me.getClientY());
             });
         }
         if (events.contains(CubaAmchartsSceneState.GRAPH_ITEM_CLICK_EVENT)) {
-            amchartsEvents.setGraphItemClickHandler(new GraphItemClickHandler() {
-                @Override
-                public void onClick(JsGraphItemClickEvent event) {
-                    NativeEvent me = event.getMouseEvent();
+            amchartsEvents.setGraphItemClickHandler(event -> {
+                NativeEvent me = event.getMouseEvent();
 
-                    rpc.onGraphItemClick(event.getGraphId(), event.getIndex(), event.getItemId(),
-                            MouseHelper.getX(me), MouseHelper.getY(me),
-                            me.getClientX(), me.getClientY());
-                }
+                rpc.onGraphItemClick(event.getGraphId(), event.getIndex(), event.getItemId(),
+                        MouseHelper.getX(me), MouseHelper.getY(me),
+                        me.getClientX(), me.getClientY());
             });
         }
         if (events.contains(CubaAmchartsSceneState.GRAPH_ITEM_RIGHT_CLICK_EVENT)) {
-            amchartsEvents.setGraphItemRightClickHandler(new GraphItemClickHandler() {
-                @Override
-                public void onClick(JsGraphItemClickEvent event) {
-                    NativeEvent me = event.getMouseEvent();
+            amchartsEvents.setGraphItemRightClickHandler(event -> {
+                NativeEvent me = event.getMouseEvent();
 
-                    rpc.onGraphItemRightClick(event.getGraphId(), event.getIndex(), event.getItemId(),
-                            MouseHelper.getX(me), MouseHelper.getY(me),
-                            me.getClientX(), me.getClientY());
-                }
+                rpc.onGraphItemRightClick(event.getGraphId(), event.getIndex(), event.getItemId(),
+                        MouseHelper.getX(me), MouseHelper.getY(me),
+                        me.getClientX(), me.getClientY());
             });
         }
     }

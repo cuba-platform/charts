@@ -10,16 +10,17 @@ import com.google.gwt.core.client.Scheduler;
 import com.google.gwt.dom.client.Document;
 import com.google.gwt.user.client.Event;
 import com.google.gwt.user.client.ui.Widget;
-import com.haulmont.charts.web.toolkit.ui.client.amcharts.events.ChartClickHandler;
 import com.haulmont.charts.web.toolkit.ui.client.amcharts.events.JsChartClickEvent;
 import com.haulmont.cuba.web.toolkit.ui.client.JsDate;
+
+import java.util.function.Consumer;
 
 public class CubaAmchartsSceneWidget extends Widget {
 
     protected CubaAmchartsJsOverlay jsOverlay;
 
-    protected ChartClickHandler chartClickHandler;
-    protected ChartClickHandler chartRightClickHandler;
+    protected Consumer<JsChartClickEvent> chartClickHandler;
+    protected Consumer<JsChartClickEvent> chartRightClickHandler;
 
     public CubaAmchartsSceneWidget() {
         setElement(Document.get().createDivElement());
@@ -36,7 +37,7 @@ public class CubaAmchartsSceneWidget extends Widget {
                 int y = MouseHelper.getY(event);
 
                 JsChartClickEvent clickEvent = jsOverlay.getClickEvent(x, y, event.getClientX(), event.getClientY());
-                chartRightClickHandler.onClick(clickEvent);
+                chartRightClickHandler.accept(clickEvent);
             }
 
             event.preventDefault();
@@ -46,7 +47,7 @@ public class CubaAmchartsSceneWidget extends Widget {
             int y = MouseHelper.getY(event);
 
             JsChartClickEvent clickEvent = jsOverlay.getClickEvent(x, y, event.getClientX(), event.getClientY());
-            chartClickHandler.onClick(clickEvent);
+            chartClickHandler.accept(clickEvent);
 
             event.preventDefault();
         }
@@ -119,12 +120,7 @@ public class CubaAmchartsSceneWidget extends Widget {
             jsOverlay.addAxisZoomHandler(amchartsEvents.getAxisZoomHandler());
         }
 
-        Scheduler.get().scheduleDeferred(new Scheduler.ScheduledCommand() {
-            @Override
-            public void execute() {
-                updateSize();
-            }
-        });
+        Scheduler.get().scheduleDeferred(this::updateSize);
     }
 
     public void updatePoints(JavaScriptObject jsObj) {
@@ -135,12 +131,9 @@ public class CubaAmchartsSceneWidget extends Widget {
         if (jsOverlay != null) {
             jsOverlay.zoomOut();
         } else {
-            Scheduler.get().scheduleDeferred(new Scheduler.ScheduledCommand() {
-                @Override
-                public void execute() {
-                    jsOverlay.zoomOut();
-                }
-            });
+            Scheduler.get().scheduleDeferred(
+                    () -> jsOverlay.zoomOut()
+            );
         }
     }
 
@@ -148,12 +141,9 @@ public class CubaAmchartsSceneWidget extends Widget {
         if (jsOverlay != null) {
             jsOverlay.zoomToIndexes(start, end);
         } else {
-            Scheduler.get().scheduleDeferred(new Scheduler.ScheduledCommand() {
-                @Override
-                public void execute() {
-                    jsOverlay.zoomToIndexes(start, end);
-                }
-            });
+            Scheduler.get().scheduleDeferred(
+                    () -> jsOverlay.zoomToIndexes(start, end)
+            );
         }
     }
 
@@ -161,12 +151,9 @@ public class CubaAmchartsSceneWidget extends Widget {
         if (jsOverlay != null) {
             jsOverlay.zoomToDates(start, end);
         } else {
-            Scheduler.get().scheduleDeferred(new Scheduler.ScheduledCommand() {
-                @Override
-                public void execute() {
-                    jsOverlay.zoomToDates(start, end);
-                }
-            });
+            Scheduler.get().scheduleDeferred(
+                    () -> jsOverlay.zoomToDates(start, end)
+            );
         }
     }
 
@@ -174,12 +161,9 @@ public class CubaAmchartsSceneWidget extends Widget {
         if (jsOverlay != null) {
             jsOverlay.zoomOutValueAxes();
         } else {
-            Scheduler.get().scheduleDeferred(new Scheduler.ScheduledCommand() {
-                @Override
-                public void execute() {
-                    jsOverlay.zoomOutValueAxes();
-                }
-            });
+            Scheduler.get().scheduleDeferred(
+                    () -> jsOverlay.zoomOutValueAxes()
+            );
         }
     }
 
@@ -187,12 +171,9 @@ public class CubaAmchartsSceneWidget extends Widget {
         if (jsOverlay != null) {
             jsOverlay.zoomOutValueAxis(id);
         } else {
-            Scheduler.get().scheduleDeferred(new Scheduler.ScheduledCommand() {
-                @Override
-                public void execute() {
-                    jsOverlay.zoomOutValueAxis(id);
-                }
-            });
+            Scheduler.get().scheduleDeferred(
+                    () -> jsOverlay.zoomOutValueAxis(id)
+            );
         }
     }
 
@@ -200,12 +181,9 @@ public class CubaAmchartsSceneWidget extends Widget {
         if (jsOverlay != null) {
             jsOverlay.zoomOutValueAxis(index);
         } else {
-            Scheduler.get().scheduleDeferred(new Scheduler.ScheduledCommand() {
-                @Override
-                public void execute() {
-                    jsOverlay.zoomOutValueAxis(index);
-                }
-            });
+            Scheduler.get().scheduleDeferred(
+                    () -> jsOverlay.zoomOutValueAxis(index)
+            );
         }
     }
 
@@ -213,12 +191,9 @@ public class CubaAmchartsSceneWidget extends Widget {
         if (jsOverlay != null) {
             jsOverlay.zoomValueAxisToValues(id, startValue, endValue);
         } else {
-            Scheduler.get().scheduleDeferred(new Scheduler.ScheduledCommand() {
-                @Override
-                public void execute() {
-                    jsOverlay.zoomValueAxisToValues(id, startValue, endValue);
-                }
-            });
+            Scheduler.get().scheduleDeferred(
+                    () -> jsOverlay.zoomValueAxisToValues(id, startValue, endValue)
+            );
         }
     }
 
@@ -226,12 +201,9 @@ public class CubaAmchartsSceneWidget extends Widget {
         if (jsOverlay != null) {
             jsOverlay.zoomValueAxisToValues(index, startValue, endValue);
         } else {
-            Scheduler.get().scheduleDeferred(new Scheduler.ScheduledCommand() {
-                @Override
-                public void execute() {
-                    jsOverlay.zoomValueAxisToValues(index, startValue, endValue);
-                }
-            });
+            Scheduler.get().scheduleDeferred(
+                    () -> jsOverlay.zoomValueAxisToValues(index, startValue, endValue)
+            );
         }
     }
 
@@ -239,12 +211,9 @@ public class CubaAmchartsSceneWidget extends Widget {
         if (jsOverlay != null) {
             jsOverlay.zoomValueAxisToValues(id, start, end);
         } else {
-            Scheduler.get().scheduleDeferred(new Scheduler.ScheduledCommand() {
-                @Override
-                public void execute() {
-                    jsOverlay.zoomValueAxisToValues(id, start, end);
-                }
-            });
+            Scheduler.get().scheduleDeferred(
+                    () -> jsOverlay.zoomValueAxisToValues(id, start, end)
+            );
         }
     }
 
@@ -252,12 +221,9 @@ public class CubaAmchartsSceneWidget extends Widget {
         if (jsOverlay != null) {
             jsOverlay.zoomValueAxisToValues(index, start, end);
         } else {
-            Scheduler.get().scheduleDeferred(new Scheduler.ScheduledCommand() {
-                @Override
-                public void execute() {
-                    jsOverlay.zoomValueAxisToValues(index, start, end);
-                }
-            });
+            Scheduler.get().scheduleDeferred(
+                    () -> jsOverlay.zoomValueAxisToValues(index, start, end)
+            );
         }
     }
 

@@ -10,6 +10,8 @@ import com.google.gwt.dom.client.Element;
 import com.haulmont.charts.web.toolkit.ui.client.amcharts.events.*;
 import com.haulmont.cuba.web.toolkit.ui.client.JsDate;
 
+import java.util.function.Consumer;
+
 public class CubaAmchartsJsOverlay {
 
     protected static boolean ready = false;
@@ -136,169 +138,169 @@ public class CubaAmchartsJsOverlay {
         return event;
     }-*/;
 
-    public void addGraphClickHandler(GraphClickHandler handler) {
+    public void addGraphClickHandler(Consumer<JsGraphClickEvent> handler) {
         addGraphClickHandler(chart, handler);
     }
 
-    protected static native void addGraphClickHandler(JavaScriptObject chart, GraphClickHandler handler) /*-{
+    protected static native void addGraphClickHandler(JavaScriptObject chart, Consumer<JsGraphClickEvent> handler) /*-{
         chart.addListener("clickGraph", $entry(function (event) {
-            handler.@com.haulmont.charts.web.toolkit.ui.client.amcharts.events.GraphClickHandler::onClick(Lcom/haulmont/charts/web/toolkit/ui/client/amcharts/events/JsGraphClickEvent;)(event);
+            handler.@java.util.function.Consumer::accept(*)(event);
         }));
     }-*/;
 
-    public void addGraphItemClickHandler(GraphItemClickHandler handler) {
+    public void addGraphItemClickHandler(Consumer<JsGraphItemClickEvent> handler) {
         addGraphItemClickHandler(chart, handler);
     }
 
-    protected static native void addGraphItemClickHandler(JavaScriptObject chart, GraphItemClickHandler handler) /*-{
+    protected static native void addGraphItemClickHandler(JavaScriptObject chart, Consumer<JsGraphItemClickEvent> handler) /*-{
         chart.addListener("clickGraphItem", $entry(function (event) {
-            handler.@com.haulmont.charts.web.toolkit.ui.client.amcharts.events.GraphItemClickHandler::onClick(Lcom/haulmont/charts/web/toolkit/ui/client/amcharts/events/JsGraphItemClickEvent;)(event);
+            handler.@java.util.function.Consumer::accept(*)(event);
         }));
     }-*/;
 
-    public void addGraphItemRightClickHandler(GraphItemClickHandler handler) {
+    public void addGraphItemRightClickHandler(Consumer<JsGraphItemClickEvent> handler) {
         addGraphItemRightClickHandler(chart, handler);
     }
 
-    protected static native void addGraphItemRightClickHandler(JavaScriptObject chart, GraphItemClickHandler handler) /*-{
+    protected static native void addGraphItemRightClickHandler(JavaScriptObject chart, Consumer<JsGraphItemClickEvent> handler) /*-{
         chart.addListener("rightClickGraphItem", $entry(function (event) {
-            handler.@com.haulmont.charts.web.toolkit.ui.client.amcharts.events.GraphItemClickHandler::onClick(Lcom/haulmont/charts/web/toolkit/ui/client/amcharts/events/JsGraphItemClickEvent;)(event);
+            handler.@java.util.function.Consumer::accept(*)(event);
 
             event.event.preventDefault();
         }));
     }-*/;
 
-    public void addZoomHandler(ZoomHandler zoomHandler) {
+    public void addZoomHandler(Consumer<JsZoomEvent> zoomHandler) {
         addZoomHandler(chart, zoomHandler);
     }
 
-    protected static native void addZoomHandler(JavaScriptObject chart, ZoomHandler handler) /*-{
+    protected static native void addZoomHandler(JavaScriptObject chart, Consumer<JsZoomEvent> handler) /*-{
         chart.addListener("zoomed", $entry(function (event) {
-            handler.@com.haulmont.charts.web.toolkit.ui.client.amcharts.events.ZoomHandler::onZoom(Lcom/haulmont/charts/web/toolkit/ui/client/amcharts/events/JsZoomEvent;)(event);
+            handler.@java.util.function.Consumer::accept(*)(event);
         }));
     }-*/;
 
-    public void addSliceClickHandler(SliceClickHandler sliceClickHandler) {
+    public void addSliceClickHandler(Consumer<JsSliceClickEvent> sliceClickHandler) {
         addSliceClickHandler(chart, sliceClickHandler);
     }
 
-    protected static native void addSliceClickHandler(JavaScriptObject chart, SliceClickHandler handler) /*-{
+    protected static native void addSliceClickHandler(JavaScriptObject chart, Consumer<JsSliceClickEvent> handler) /*-{
         chart.addListener("clickSlice", $entry(function (event) {
             if (event.event.which == 1) {
-                handler.@com.haulmont.charts.web.toolkit.ui.client.amcharts.events.SliceClickHandler::onEvent(Lcom/haulmont/charts/web/toolkit/ui/client/amcharts/events/JsSliceClickEvent;)(event);
+                handler.@java.util.function.Consumer::accept(*)(event);
             }
         }));
     }-*/;
 
-    public void addSliceRightClickHandler(SliceClickHandler sliceRightClickHandler) {
+    public void addSliceRightClickHandler(Consumer<JsSliceClickEvent> sliceRightClickHandler) {
         addSliceRightClickHandler(chart, sliceRightClickHandler);
     }
 
-    protected static native void addSliceRightClickHandler(JavaScriptObject chart, SliceClickHandler handler) /*-{
+    protected static native void addSliceRightClickHandler(JavaScriptObject chart, Consumer<JsSliceClickEvent> handler) /*-{
         chart.addListener("rightClickSlice", $entry(function (event) {
-            handler.@com.haulmont.charts.web.toolkit.ui.client.amcharts.events.SliceClickHandler::onEvent(Lcom/haulmont/charts/web/toolkit/ui/client/amcharts/events/JsSliceClickEvent;)(event);
+            handler.@java.util.function.Consumer::accept(*)(event);
 
             event.event.preventDefault();
         }));
     }-*/;
 
-    public void addSlicePullInHandler(SlicePullHandler slicePullInHandler) {
+    public void addSlicePullInHandler(Consumer<JsSlicePullEvent> slicePullInHandler) {
         addSlicePullInHandler(chart, slicePullInHandler);
     }
 
-    protected static native void addSlicePullInHandler(JavaScriptObject chart, SlicePullHandler handler) /*-{
+    protected static native void addSlicePullInHandler(JavaScriptObject chart, Consumer<JsSlicePullEvent> handler) /*-{
         chart.addListener("pullInSlice", $entry(function (event) {
-            handler.@com.haulmont.charts.web.toolkit.ui.client.amcharts.events.SlicePullHandler::onEvent(Lcom/haulmont/charts/web/toolkit/ui/client/amcharts/events/JsSlicePullEvent;)(event);
+            handler.@java.util.function.Consumer::accept(*)(event);
         }));
     }-*/;
 
-    public void addSlicePullOutHandler(SlicePullHandler slicePullOutHandler) {
+    public void addSlicePullOutHandler(Consumer<JsSlicePullEvent> slicePullOutHandler) {
         addSlicePullOutHandler(chart, slicePullOutHandler);
     }
 
-    protected static native void addSlicePullOutHandler(JavaScriptObject chart, SlicePullHandler handler)  /*-{
+    protected static native void addSlicePullOutHandler(JavaScriptObject chart, Consumer<JsSlicePullEvent> handler)  /*-{
         chart.addListener("pullOutSlice", $entry(function (event) {
-            handler.@com.haulmont.charts.web.toolkit.ui.client.amcharts.events.SlicePullHandler::onEvent(Lcom/haulmont/charts/web/toolkit/ui/client/amcharts/events/JsSlicePullEvent;)(event);
+            handler.@java.util.function.Consumer::accept(*)(event);
         }));
     }-*/;
 
-    public void addLegendLabelClickHandler(LegendEventHandler legendLabelClickHandler) {
+    public void addLegendLabelClickHandler(Consumer<JsLegendEvent> legendLabelClickHandler) {
         addLegendLabelClickHandler(chart, legendLabelClickHandler);
     }
 
-    protected native static void addLegendLabelClickHandler(JavaScriptObject chart, LegendEventHandler handler) /*-{
+    protected native static void addLegendLabelClickHandler(JavaScriptObject chart, Consumer<JsLegendEvent> handler) /*-{
         if (chart.legend) {
             chart.legend.addListener("clickLabel", $entry(function (event) {
-                handler.@com.haulmont.charts.web.toolkit.ui.client.amcharts.events.LegendEventHandler::onEvent(Lcom/haulmont/charts/web/toolkit/ui/client/amcharts/events/JsLegendEvent;)(event);
+                handler.@java.util.function.Consumer::accept(*)(event);
             }));
         }
     }-*/;
 
-    public void addLegendMarkerClickHandler(LegendEventHandler legendMarkerClickHandler) {
+    public void addLegendMarkerClickHandler(Consumer<JsLegendEvent> legendMarkerClickHandler) {
         addLegendMarkerClickHandler(chart, legendMarkerClickHandler);
     }
 
-    protected native static void addLegendMarkerClickHandler(JavaScriptObject chart, LegendEventHandler handler) /*-{
+    protected native static void addLegendMarkerClickHandler(JavaScriptObject chart, Consumer<JsLegendEvent> handler) /*-{
         if (chart.legend) {
             chart.legend.addListener("clickMarker", $entry(function (event) {
-                handler.@com.haulmont.charts.web.toolkit.ui.client.amcharts.events.LegendEventHandler::onEvent(Lcom/haulmont/charts/web/toolkit/ui/client/amcharts/events/JsLegendEvent;)(event);
+                handler.@java.util.function.Consumer::accept(*)(event);
             }));
         }
     }-*/;
 
-    public void addLegendItemShowHandler(LegendEventHandler legendItemShowHandler) {
+    public void addLegendItemShowHandler(Consumer<JsLegendEvent> legendItemShowHandler) {
         addLegendItemShowHandler(chart, legendItemShowHandler);
     }
 
-    protected native static void addLegendItemShowHandler(JavaScriptObject chart, LegendEventHandler handler) /*-{
+    protected native static void addLegendItemShowHandler(JavaScriptObject chart, Consumer<JsLegendEvent> handler) /*-{
         if (chart.legend) {
             chart.legend.addListener("showItem", $entry(function (event) {
-                handler.@com.haulmont.charts.web.toolkit.ui.client.amcharts.events.LegendEventHandler::onEvent(Lcom/haulmont/charts/web/toolkit/ui/client/amcharts/events/JsLegendEvent;)(event);
+                handler.@java.util.function.Consumer::accept(*)(event);
             }));
         }
     }-*/;
 
-    public void addLegendItemHideHandler(LegendEventHandler legendItemHideHandler) {
+    public void addLegendItemHideHandler(Consumer<JsLegendEvent> legendItemHideHandler) {
         addLegendItemHideHandler(chart, legendItemHideHandler);
     }
 
-    protected native static void addLegendItemHideHandler(JavaScriptObject chart, LegendEventHandler handler) /*-{
+    protected native static void addLegendItemHideHandler(JavaScriptObject chart, Consumer<JsLegendEvent> handler) /*-{
         if (chart.legend) {
             chart.legend.addListener("hideItem", $entry(function (event) {
-                handler.@com.haulmont.charts.web.toolkit.ui.client.amcharts.events.LegendEventHandler::onEvent(Lcom/haulmont/charts/web/toolkit/ui/client/amcharts/events/JsLegendEvent;)(event);
+                handler.@java.util.function.Consumer::accept(*)(event);
             }));
         }
     }-*/;
 
-    public void addCursorPeriodSelectHandler(CursorEventHandler cursorPeriodSelectHandler) {
+    public void addCursorPeriodSelectHandler(Consumer<JsCursorEvent> cursorPeriodSelectHandler) {
         addCursorPeriodSelectHandler(chart, cursorPeriodSelectHandler);
     }
 
-    protected native static void addCursorPeriodSelectHandler(JavaScriptObject chart, CursorEventHandler handler) /*-{
+    protected native static void addCursorPeriodSelectHandler(JavaScriptObject chart, Consumer<JsCursorEvent> handler) /*-{
         if (chart.chartCursor) {
             chart.chartCursor.addListener("selected", $entry(function (event) {
-                handler.@com.haulmont.charts.web.toolkit.ui.client.amcharts.events.CursorEventHandler::onEvent(Lcom/haulmont/charts/web/toolkit/ui/client/amcharts/events/JsCursorEvent;)(event);
+                handler.@java.util.function.Consumer::accept(*)(event);
             }));
         }
     }-*/;
 
-    public void addCursorZoomHandler(CursorEventHandler cursorZoomHandler) {
+    public void addCursorZoomHandler(Consumer<JsCursorEvent> cursorZoomHandler) {
         addCursorZoomHandler(chart, cursorZoomHandler);
     }
 
-    protected native static void addCursorZoomHandler(JavaScriptObject chart, CursorEventHandler handler) /*-{
+    protected native static void addCursorZoomHandler(JavaScriptObject chart, Consumer<JsCursorEvent> handler) /*-{
         if (chart.chartCursor) {
             chart.chartCursor.addListener("zoomed", $entry(function (event) {
-                handler.@com.haulmont.charts.web.toolkit.ui.client.amcharts.events.CursorEventHandler::onEvent(Lcom/haulmont/charts/web/toolkit/ui/client/amcharts/events/JsCursorEvent;)(event);
+                handler.@java.util.function.Consumer::accept(*)(event);
             }));
         }
     }-*/;
 
-    public void addAxisZoomHandler(AxisZoomHandler axisZoomHandler) {
+    public void addAxisZoomHandler(Consumer<JsAxisZoomedEvent> axisZoomHandler) {
         addAxisZoomHandler(chart, axisZoomHandler);
     }
 
-    protected native static void addAxisZoomHandler(JavaScriptObject chart, AxisZoomHandler handler) /*-{
+    protected native static void addAxisZoomHandler(JavaScriptObject chart, Consumer<JsAxisZoomedEvent> handler) /*-{
         if (chart.valueAxes) {
             for (var i = 0; i < chart.valueAxes.length; i++) {
                 var axis = chart.valueAxes[i];
@@ -311,7 +313,7 @@ public class CubaAmchartsJsOverlay {
                         axisEvent.endValue = event.endValue;
                         axisEvent.axisId = axisId;
 
-                        handler.@com.haulmont.charts.web.toolkit.ui.client.amcharts.events.AxisZoomHandler::onZoom(Lcom/haulmont/charts/web/toolkit/ui/client/amcharts/events/JsAxisZoomedEvent;)(axisEvent);
+                        handler.@java.util.function.Consumer::accept(*)(axisEvent);
                     }));
                 })();
             }

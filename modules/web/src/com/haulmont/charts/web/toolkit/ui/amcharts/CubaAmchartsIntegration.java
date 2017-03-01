@@ -35,9 +35,8 @@ import java.util.*;
         "vaadin://resources/amcharts/themes/patterns.js",
 
         "vaadin://resources/amcharts/plugins/export/export.min.js"
-        })
+})
 @StyleSheet({
-        "vaadin://resources/amcharts/style.css",
         "vaadin://resources/amcharts/plugins/export/export.css"
 })
 public class CubaAmchartsIntegration extends AbstractExtension {

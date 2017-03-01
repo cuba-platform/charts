@@ -1535,6 +1535,11 @@ public abstract class ChartModelLoader<C extends Component> extends AbstractComp
             graph.setFontSize(Integer.valueOf(fontSize));
         }
 
+        String forceGap = graphElement.attributeValue("forceGap");
+        if (StringUtils.isNotEmpty(forceGap)) {
+            graph.setForceGap(Boolean.valueOf(forceGap));
+        }
+
         String gapField = graphElement.attributeValue("gapField");
         if (StringUtils.isNotEmpty(gapField)) {
             graph.setGapField(gapField);

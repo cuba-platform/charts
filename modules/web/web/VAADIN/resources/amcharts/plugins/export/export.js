@@ -2,7 +2,7 @@
 Plugin Name: amCharts Export
 Description: Adds export capabilities to amCharts products
 Author: Benjamin Maertz, amCharts
-Version: 1.4.33
+Version: 1.4.56
 Author URI: http://www.amcharts.com/
 
 Copyright 2016 amCharts
@@ -68,22 +68,24 @@ if ( !AmCharts.translations[ "export" ][ "en" ] ) {
  */
 ( function() {
 	AmCharts[ "export" ] = function( chart, config ) {
+		var _timer;
 		var _this = {
 			name: "export",
-			version: "1.4.33",
+			version: "1.4.56",
 			libs: {
 				async: true,
 				autoLoad: true,
 				reload: false,
-				resources: [ "fabric.js/fabric.min.js", "FileSaver.js/FileSaver.min.js", "jszip/jszip.min.js", "xlsx/xlsx.min.js", {
+				resources: [ "fabric.js/fabric.min.js", "FileSaver.js/FileSaver.min.js", {
+					"jszip/jszip.min.js": [ "xlsx/xlsx.min.js" ],
 					"pdfmake/pdfmake.min.js": [ "pdfmake/vfs_fonts.js" ]
 				} ],
 				namespaces: {
-					"pdfmake.js": "pdfMake",
-					"jszip.js": "JSZip",
-					"xlsx.js": "XLSX",
-					"fabric.js": "fabric",
-					"FileSaver.js": "saveAs"
+					"pdfmake.min.js": "pdfMake",
+					"jszip.min.js": "JSZip",
+					"xlsx.min.js": "XLSX",
+					"fabric.min.js": "fabric",
+					"FileSaver.min.js": "saveAs"
 				},
 				loadTimeout: 10000
 			},
@@ -93,7 +95,8 @@ if ( !AmCharts.translations[ "export" ][ "en" ] ) {
 				hasBlob: false,
 				wrapper: false,
 				isIE: !!window.document.documentMode,
-				IEversion: window.document.documentMode
+				IEversion: window.document.documentMode,
+				hasTouch: typeof window.Touch == "object"
 			},
 			drawing: {
 				enabled: false,
@@ -206,6 +209,9 @@ if ( !AmCharts.translations[ "export" ][ "en" ] ) {
 								cfg.left = _this.setup.fabric.width / 2;
 							}
 
+							// SET DRAWING FLAG
+							_this.drawing.buffer.isDrawing = true;
+
 							group.set( {
 								originX: "center",
 								originY: "center",
@@ -230,7 +236,13 @@ if ( !AmCharts.translations[ "export" ][ "en" ] ) {
 						}
 						if ( cfg.width ) {
 							_this.drawing.width = cfg.width;
-							_this.drawing.fontSize = cfg.width * 3;
+							_this.drawing.fontSize = cfg.fontSize = cfg.width * 3;
+
+							// BACK TO DEFAULT
+							if ( _this.drawing.width == 1 ) {
+								_this.drawing.fontSize = cfg.fontSize = _this.defaults.fabric.drawing.fontSize;
+							}
+
 						}
 						if ( cfg.fontSize ) {
 							_this.drawing.fontSize = cfg.fontSize;
@@ -259,7 +271,7 @@ if ( !AmCharts.translations[ "export" ][ "en" ] ) {
 								cfg.color = cfg.color || state.color;
 								cfg.width = cfg.width || state.width;
 								cfg.opacity = cfg.opacity || state.opacity;
-								cfg.fontSize = cfg.fontSize || cfg.width * 3;
+								cfg.fontSize = cfg.fontSize || state.fontSize;
 
 								rgba = _this.getRGBA( cfg.color );
 								rgba.pop();
@@ -344,6 +356,9 @@ if ( !AmCharts.translations[ "export" ][ "en" ] ) {
 
 						var text = new fabric.IText( cfg.text, cfg );
 
+						// SET DRAWING FLAG
+						_this.drawing.buffer.isDrawing = true;
+
 						_this.setup.fabric.add( text );
 						_this.setup.fabric.setActiveObject( text );
 
@@ -401,6 +416,9 @@ if ( !AmCharts.translations[ "export" ][ "en" ] ) {
 							cfg.group.push( arrow );
 						}
 
+						// SET DRAWING FLAG
+						_this.drawing.buffer.isDrawing = true;
+
 						if ( cfg.action != "config" ) {
 							if ( cfg.arrow ) {
 								var group = new fabric.Group( cfg.group );
@@ -422,7 +440,6 @@ if ( !AmCharts.translations[ "export" ][ "en" ] ) {
 							}
 						} else {
 							for ( i1 = 0; i1 < cfg.group.length; i1++ ) {
-								cfg.group[ i1 ].noUndo = true;
 								_this.setup.fabric.add( cfg.group[ i1 ] );
 							}
 						}
@@ -566,14 +583,16 @@ if ( !AmCharts.translations[ "export" ][ "en" ] ) {
 				menuWalker: null,
 				fallback: true,
 				keyListener: true,
-				fileListener: true
+				fileListener: true,
+				compress: true,
+				debug: false
 			},
 
 			/**
 			 * Returns translated message, takes english as default
 			 */
 			i18l: function( key, language ) {
-				var lang = language ? langugage : _this.setup.chart.language ? _this.setup.chart.language : "en";
+				var lang = language ? language : _this.setup.chart.language ? _this.setup.chart.language : "en";
 				var catalog = AmCharts.translations[ _this.name ][ lang ] || AmCharts.translations[ _this.name ][ "en" ];
 
 				return catalog[ key ] || key;
@@ -715,6 +734,9 @@ if ( !AmCharts.translations[ "export" ][ "en" ] ) {
 
 				if ( !exist || _this.libs.reload ) {
 					node.addEventListener( "load", loadCallback );
+					node.addEventListener( "error", function() {
+						_this.handleLog( [ "amCharts[export]: Loading error on ", this.src || this.href ].join( "" ) );
+					} );
 					document.head.appendChild( node );
 
 					if ( !_this.listenersToRemove ) {
@@ -765,21 +787,48 @@ if ( !AmCharts.translations[ "export" ][ "en" ] ) {
 			},
 
 			/**
+			 * Referenceless copy of object type variables
+			 */
+			cloneObject: function( o ) {
+				var clone, v, k, isObject, isDate;
+				clone = Array.isArray( o ) ? [] : {};
+
+				// Walkthrough values
+				for ( k in o ) {
+					v = o[ k ];
+					isObject = typeof v === "object";
+					isDate = v instanceof Date;
+
+					// Set value; call recursivly if value is an object
+					clone[ k ] = isObject && !isDate ? _this.cloneObject( v ) : v;
+				}
+				return clone;
+			},
+
+			/**
 			 * Recursive method to merge the given objects together
 			 * Overwrite flag replaces the value instead to crawl through
 			 */
 			deepMerge: function( a, b, overwrite ) {
 				var i1, v, type = b instanceof Array ? "array" : "object";
 
+				// SKIP; OBJECTS AND ARRAYS ONLY
+				if ( !( a instanceof Object || a instanceof Array ) ) {
+					return a;
+				}
+
+				// WALKTHOUGH SOURCE
 				for ( i1 in b ) {
+
 					// PREVENT METHODS
 					if ( type == "array" && isNaN( i1 ) ) {
 						continue;
 					}
 
+					// ASSIGN VALUE
 					v = b[ i1 ];
 
-					// NEW
+					// NEW INSTANCE
 					if ( a[ i1 ] == undefined || overwrite ) {
 						if ( v instanceof Array ) {
 							a[ i1 ] = new Array();
@@ -796,13 +845,16 @@ if ( !AmCharts.translations[ "export" ][ "en" ] ) {
 						}
 					}
 
+					// WALKTHROUGH RECURSIVLY
 					if (
-						( a instanceof Object || a instanceof Array ) &&
 						( v instanceof Object || v instanceof Array ) &&
 						!( v instanceof Function || v instanceof Date || _this.isElement( v ) ) &&
-						i1 != "chart"
+						i1 != "chart" &&
+						i1 != "scope"
 					) {
 						_this.deepMerge( a[ i1 ], v, overwrite );
+
+						// ASSIGN
 					} else {
 						if ( a instanceof Array && !overwrite ) {
 							a.push( v );
@@ -1064,9 +1116,10 @@ if ( !AmCharts.translations[ "export" ][ "en" ] ) {
 							var attr = attrs[ i2 ];
 							var attrVal = childNode.getAttribute( attr );
 							var attrRGBA = _this.getRGBA( attrVal );
+							var isHashbanged = _this.isHashbanged( attrVal );
 
 							// VALIDATE AND RESET UNKNOWN COLORS (avoids fabric to crash)
-							if ( attrVal && !attrRGBA ) {
+							if ( attrVal && !attrRGBA && !isHashbanged ) {
 								childNode.setAttribute( attr, "none" );
 								childNode.setAttribute( attr + "-opacity", "0" );
 							}
@@ -1134,7 +1187,14 @@ if ( !AmCharts.translations[ "export" ][ "en" ] ) {
 					}
 					var gradientId = instanceFillValue.slice( instanceFillValue.indexOf( "#" ) + 1, instanceFillValue.length - 1 );
 					if ( fabric.gradientDefs[ this.svgUid ][ gradientId ] ) {
-						obj.set( property, fabric.Gradient.fromElement( fabric.gradientDefs[ this.svgUid ][ gradientId ], obj ) );
+						var tmp = fabric.Gradient.fromElement( fabric.gradientDefs[ this.svgUid ][ gradientId ], obj );
+
+						// WORKAROUND FOR VERTICAL GRADIENT ISSUE; FOR NONE PIE CHARTS
+						if ( tmp.coords.y1 && _this.setup.chart.type != "pie" ) {
+							tmp.coords.y2 = tmp.coords.y1 * -1;
+							tmp.coords.y1 = 0;
+						}
+						obj.set( property, tmp );
 					}
 				};
 
@@ -1233,12 +1293,30 @@ if ( !AmCharts.translations[ "export" ][ "en" ] ) {
 					y: 0,
 					pX: 0,
 					pY: 0,
+					lX: 0,
+					lY: 0,
 					width: _this.setup.chart.divRealWidth,
 					height: _this.setup.chart.divRealHeight
 				};
 				var images = {
 					loaded: 0,
 					included: 0
+				}
+				var legends = {
+					items: [],
+					width: 0,
+					height: 0,
+					maxWidth: 0,
+					maxHeight: 0
+				}
+
+				// NAMESPACE CHECK
+				if ( !_this.handleNamespace( "fabric", {
+						scope: this,
+						cb: _this.capture,
+						args: arguments
+					} ) ) {
+					return false;
 				}
 
 				// MODIFY FABRIC UNTIL IT'S OFFICIALLY SUPPORTED
@@ -1259,8 +1337,18 @@ if ( !AmCharts.translations[ "export" ][ "en" ] ) {
 							y: 0
 						},
 						patterns: {},
-						clippings: {}
+						clippings: {},
+						has: {
+							legend: false,
+							panel: false,
+							scrollbar: false
+						}
 					}
+
+					// CHECK IT'S SURROUNDINGS
+					group.has.legend = _this.gatherClassName( group.parent, _this.setup.chart.classNamePrefix + "-legend-div", 1 );
+					group.has.panel = _this.gatherClassName( group.parent, _this.setup.chart.classNamePrefix + "-stock-panel-div" );
+					group.has.scrollbar = _this.gatherClassName( group.parent, _this.setup.chart.classNamePrefix + "-scrollbar-chart-div" );
 
 					// GATHER ELEMENTS
 					group = _this.gatherElements( group, cfg, images );
@@ -1270,38 +1358,77 @@ if ( !AmCharts.translations[ "export" ][ "en" ] ) {
 				}
 
 				// GATHER EXTERNAL LEGEND
-				if ( _this.config.legend && _this.setup.chart.legend && _this.setup.chart.legend.divId ) {
-					var group = {
-						svg: _this.setup.chart.legend.container.container,
-						parent: _this.setup.chart.legend.container.container.parentNode,
-						children: _this.setup.chart.legend.container.container.getElementsByTagName( "*" ),
-						offset: {
-							x: 0,
-							y: 0
-						},
-						legend: {
-							type: [ "top", "left" ].indexOf( _this.config.legend.position ) != -1 ? "unshift" : "push",
-							position: _this.config.legend.position,
-							width: _this.config.legend.width ? _this.config.legend.width : _this.setup.chart.legend.container.width,
-							height: _this.config.legend.height ? _this.config.legend.height : _this.setup.chart.legend.container.height
-						},
-						patterns: {},
-						clippings: {}
+				if ( _this.config.legend ) {
+
+					// STOCK
+					if ( _this.setup.chart.type == "stock" ) {
+						for ( i1 = 0; i1 < _this.setup.chart.panels.length; i1++ ) {
+							if ( _this.setup.chart.panels[ i1 ].stockLegend && _this.setup.chart.panels[ i1 ].stockLegend.divId ) {
+								legends.items.push( _this.setup.chart.panels[ i1 ].stockLegend );
+							}
+						}
+
+						// NORMAL
+					} else if ( _this.setup.chart.legend && _this.setup.chart.legend.divId ) {
+						legends.items.push( _this.setup.chart.legend );
 					}
 
-					// ADAPT CANVAS DIMENSIONS
-					if ( [ "left", "right" ].indexOf( group.legend.position ) != -1 ) {
-						offset.width += group.legend.width;
-						offset.height = group.legend.height > offset.height ? group.legend.height : offset.height;
-					} else if ( [ "top", "bottom" ].indexOf( group.legend.position ) != -1 ) {
-						offset.height += group.legend.height;
+					// WALKTHROUGH
+					for ( i1 = 0; i1 < legends.items.length; i1++ ) {
+						var legend = legends.items[ i1 ];
+						var group = {
+							svg: legend.container.container,
+							parent: legend.container.container.parentNode,
+							children: legend.container.container.getElementsByTagName( "*" ),
+							offset: {
+								x: 0,
+								y: 0
+							},
+							legend: {
+								id: i1,
+								type: [ "top", "left" ].indexOf( _this.config.legend.position ) != -1 ? "unshift" : "push",
+								position: _this.config.legend.position,
+								width: _this.config.legend.width ? _this.config.legend.width : legend.container.div.offsetWidth,
+								height: _this.config.legend.height ? _this.config.legend.height : legend.container.div.offsetHeight
+							},
+							patterns: {},
+							clippings: {},
+							has: {
+								legend: false,
+								panel: false,
+								scrollbar: false
+							}
+						}
+
+						// GATHER DIMENSIONS
+						legends.width += group.legend.width;
+						legends.height += group.legend.height;
+						legends.maxWidth = group.legend.width > legends.maxWidth ? group.legend.width : legends.maxWidth;
+						legends.maxHeight = group.legend.height > legends.maxHeight ? group.legend.height : legends.maxHeight;
+
+						// GATHER ELEMENTS
+						group = _this.gatherElements( group, cfg, images );
+
+						// PRE/APPEND SVG
+						groups[ group.legend.type ]( group );
 					}
 
-					// GATHER ELEMENTS
-					group = _this.gatherElements( group, cfg, images );
+					// ADAPT WIDTH IF NEEDED; EXPAND HEIGHT
+					if ( [ "top", "bottom" ].indexOf( _this.config.legend.position ) != -1 ) {
+						offset.width = legends.maxWidth > offset.width ? legends.maxWidth : offset.width;
+						offset.height += legends.height;
 
-					// PRE/APPEND SVG
-					groups[ group.legend.type ]( group );
+						// EXPAND WIDTH; ADAPT HEIGHT IF NEEDED
+					} else if ( [ "left", "right" ].indexOf( _this.config.legend.position ) != -1 ) {
+						offset.width += legends.maxWidth;
+						offset.height = legends.height > offset.height ? legends.height : offset.height;
+
+						// SIMPLY EXPAND CANVAS
+					} else {
+						offset.height += legends.height;
+						offset.width += legends.maxWidth;
+					}
+
 				}
 
 				// CLEAR IF EXIST
@@ -1368,17 +1495,35 @@ if ( !AmCharts.translations[ "export" ][ "en" ] ) {
 					var p = _this.gatherPosition( e.e, 1 );
 					_this.drawing.buffer.pressedTS = Number( new Date() );
 					_this.isPressed( e.e );
+
+					// FLAG ISDRAWING
+					_this.drawing.buffer.isDrawing = false;
+					_this.drawing.buffer.isDrawingTimer = setTimeout( function() {
+						if ( !_this.drawing.buffer.isSelected ) {
+							_this.drawing.buffer.isDrawing = true;
+						}
+					}, 200 );
 				} );
 				_this.setup.fabric.on( "mouse:move", function( e ) {
 					var p = _this.gatherPosition( e.e, 2 );
 					_this.isPressed( e.e );
 
-					// CREATE INITIAL LINE / ARROW; JUST ON LEFT CLICK
-					if ( _this.drawing.buffer.isPressed && !_this.drawing.buffer.line ) {
-						if ( !_this.drawing.buffer.isSelected && _this.drawing.mode != "pencil" && ( p.xD > 5 || p.xD > 5 ) ) {
-							_this.drawing.buffer.hasLine = true;
+					// IS PRESSED BUT UNSELECTED
+					if ( _this.drawing.buffer.isPressed && !_this.drawing.buffer.isSelected ) {
+
+						// FLAG ISDRAWING
+						_this.drawing.buffer.isDrawing = true;
+
+						// CREATE INITIAL LINE / ARROW; JUST ON LEFT CLICK
+						if ( !_this.drawing.buffer.line && _this.drawing.mode != "pencil" && ( p.xD > 5 || p.yD > 5 ) ) {
+
+							// FORCE FABRIC TO DISABLE DRAWING MODE WHILE PRESSED / MOVEING MOUSE INPUT
 							_this.setup.fabric.isDrawingMode = false;
-							_this.setup.fabric._onMouseUpInDrawingMode( e );
+							_this.setup.fabric._isCurrentlyDrawing = false;
+							_this.setup.fabric.freeDrawingBrush.onMouseUp();
+							_this.setup.fabric.remove( _this.setup.fabric._objects.pop() );
+
+							// INITIAL POINT
 							_this.drawing.buffer.line = _this.drawing.handler.line( {
 								x1: p.x1,
 								y1: p.y1,
@@ -1390,6 +1535,10 @@ if ( !AmCharts.translations[ "export" ][ "en" ] ) {
 						}
 					}
 
+					if ( _this.drawing.buffer.isSelected ) {
+						_this.setup.fabric.isDrawingMode = false;
+					}
+
 					// UPDATE LINE / ARROW
 					if ( _this.drawing.buffer.line ) {
 						var obj, top, left;
@@ -1397,6 +1546,11 @@ if ( !AmCharts.translations[ "export" ][ "en" ] ) {
 
 						l.x2 = p.x2;
 						l.y2 = p.y2;
+
+						// // RESET INTERNAL FLAGS	
+						// _this.drawing.buffer.isDrawing = true;
+						// _this.drawing.buffer.isPressed = true;
+						// _this.drawing.buffer.hasLine = true;
 
 						for ( i1 = 0; i1 < l.group.length; i1++ ) {
 							obj = l.group[ i1 ];
@@ -1432,7 +1586,7 @@ if ( !AmCharts.translations[ "export" ][ "en" ] ) {
 				} );
 				_this.setup.fabric.on( "mouse:up", function( e ) {
 					// SELECT TARGET
-					if ( Number( new Date() ) - _this.drawing.buffer.pressedTS < 200 ) {
+					if ( !_this.drawing.buffer.isDrawing ) {
 						var target = _this.setup.fabric.findTarget( e.e );
 						if ( target && target.selectable ) {
 							_this.setup.fabric.setActiveObject( target );
@@ -1451,6 +1605,10 @@ if ( !AmCharts.translations[ "export" ][ "en" ] ) {
 					_this.drawing.buffer.line = false;
 					_this.drawing.buffer.hasLine = false;
 					_this.drawing.buffer.isPressed = false;
+
+					// RESET ISDRAWING FLAG
+					clearTimeout( _this.drawing.buffer.isDrawingTimer );
+					_this.drawing.buffer.isDrawing = false;
 				} );
 
 				// OBSERVE OBJECT SELECTION
@@ -1460,25 +1618,19 @@ if ( !AmCharts.translations[ "export" ][ "en" ] ) {
 					_this.setup.fabric.isDrawingMode = false;
 				} );
 				_this.setup.fabric.on( "selection:cleared", function( e ) {
-					_this.drawing.buffer.onMouseDown = _this.setup.fabric.freeDrawingBrush.onMouseDown;
 					_this.drawing.buffer.target = false;
 
 					// FREEHAND WORKAROUND
 					if ( _this.drawing.buffer.isSelected ) {
 						_this.setup.fabric._isCurrentlyDrawing = false;
-						_this.setup.fabric.freeDrawingBrush.onMouseDown = function() {};
 					}
 
-					// DELAYED DESELECTION TO PREVENT DRAWING
-					setTimeout( function() {
-						_this.drawing.buffer.isSelected = false;
-						_this.setup.fabric.isDrawingMode = true;
-						_this.setup.fabric.freeDrawingBrush.onMouseDown = _this.drawing.buffer.onMouseDown;
-					}, 10 );
+					_this.drawing.buffer.isSelected = false;
+					_this.setup.fabric.isDrawingMode = true;
 				} );
 				_this.setup.fabric.on( "path:created", function( e ) {
 					var item = e.path;
-					if ( Number( new Date() ) - _this.drawing.buffer.pressedTS < 200 || _this.drawing.buffer.hasLine ) {
+					if ( !_this.drawing.buffer.isDrawing || _this.drawing.buffer.hasLine ) {
 						_this.setup.fabric.remove( item );
 						_this.setup.fabric.renderAll();
 						return;
@@ -1497,16 +1649,10 @@ if ( !AmCharts.translations[ "export" ][ "en" ] ) {
 						}
 					} );
 
-					if ( Number( new Date() ) - _this.drawing.buffer.pressedTS < 200 && !item.noUndo ) {
-						_this.setup.fabric.remove( item );
-						_this.setup.fabric.renderAll();
-						return;
-					}
-
 					state = JSON.stringify( state );
 					item.recentState = state;
 
-					if ( item.selectable && !item.known && !item.noUndo ) {
+					if ( item.selectable && !item.known ) {
 						item.isAnnotation = true;
 						_this.drawing.undos.push( {
 							action: "added",
@@ -1572,11 +1718,8 @@ if ( !AmCharts.translations[ "export" ][ "en" ] ) {
 
 				for ( i1 = 0; i1 < groups.length; i1++ ) {
 					var group = groups[ i1 ];
-					var isLegend = _this.gatherClassName( group.parent, _this.setup.chart.classNamePrefix + "-legend-div", 1 );
-					var isPanel = _this.gatherClassName( group.parent, _this.setup.chart.classNamePrefix + "-stock-panel-div" );
-					var isScrollbar = _this.gatherClassName( group.parent, _this.setup.chart.classNamePrefix + "-scrollbar-chart-div" );
 
-					// STOCK CHART; SVG OFFSET;; SVG OFFSET
+					// STOCK CHART; SVG OFFSET; SVG OFFSET
 					if ( _this.setup.chart.type == "stock" && _this.setup.chart.legendSettings.position ) {
 
 						// TOP / BOTTOM
@@ -1594,12 +1737,12 @@ if ( !AmCharts.translations[ "export" ][ "en" ] ) {
 								offset.y += _this.pxToNumber( group.parent.style.height );
 
 								// LEGEND; OFFSET
-								if ( isPanel ) {
-									offset.pY = _this.pxToNumber( isPanel.style.marginTop );
+								if ( group.has.panel ) {
+									offset.pY = _this.pxToNumber( group.has.panel.style.marginTop );
 									group.offset.y += offset.pY;
 
 									// SCROLLBAR; OFFSET
-								} else if ( isScrollbar ) {
+								} else if ( group.has.scrollbar ) {
 									group.offset.y += offset.pY;
 								}
 							}
@@ -1610,17 +1753,18 @@ if ( !AmCharts.translations[ "export" ][ "en" ] ) {
 							group.offset.x = _this.pxToNumber( group.parent.style.left ) + offset.pX;
 
 							// LEGEND; OFFSET
-							if ( isLegend ) {
-								offset.pY += _this.pxToNumber( isPanel.style.height ) + _this.setup.chart.panelsSettings.panelSpacing;
+							if ( group.has.legend ) {
+								offset.pY += _this.pxToNumber( group.has.panel.style.height ) + _this.setup.chart.panelsSettings.panelSpacing;
 
 								// SCROLLBAR; OFFSET
-							} else if ( isScrollbar ) {
+							} else if ( group.has.scrollbar ) {
 								group.offset.y -= _this.setup.chart.panelsSettings.panelSpacing;
 							}
 						}
 
 						// REGULAR CHARTS; SVG OFFSET
 					} else {
+
 						// POSITION; ABSOLUTE
 						if ( group.parent.style.position == "absolute" ) {
 							group.offset.absolute = true;
@@ -1642,14 +1786,18 @@ if ( !AmCharts.translations[ "export" ][ "en" ] ) {
 							// EXTERNAL LEGEND
 							if ( group.legend ) {
 								if ( group.legend.position == "left" ) {
-									offset.x += group.legend.width;
+									offset.x = legends.maxWidth;
 								} else if ( group.legend.position == "right" ) {
-									group.offset.x += offset.width - group.legend.width;
+									group.offset.x = offset.width - legends.maxWidth;
 								} else if ( group.legend.position == "top" ) {
 									offset.y += group.legend.height;
 								} else if ( group.legend.position == "bottom" ) {
-									group.offset.y += offset.height - group.legend.height; // OFFSET.Y
+									group.offset.y = offset.height - legends.height;
 								}
+
+								// STACK LEGENDS
+								group.offset.y += offset.lY;
+								offset.lY += group.legend.height;
 
 								// NORMAL
 							} else {
@@ -1660,9 +1808,9 @@ if ( !AmCharts.translations[ "export" ][ "en" ] ) {
 						}
 
 						// PANEL OFFSET (STOCK CHARTS)
-						if ( isLegend && isPanel && isPanel.style.marginTop ) {
-							offset.y += _this.pxToNumber( isPanel.style.marginTop );
-							group.offset.y += _this.pxToNumber( isPanel.style.marginTop );
+						if ( group.has.legend && group.has.panel && group.has.panel.style.marginTop ) {
+							offset.y += _this.pxToNumber( group.has.panel.style.marginTop );
+							group.offset.y += _this.pxToNumber( group.has.panel.style.marginTop );
 
 							// GENERAL LEFT / RIGHT POSITION
 						} else if ( _this.setup.chart.legend && [ "left", "right" ].indexOf( _this.setup.chart.legend.position ) != -1 ) {
@@ -1840,6 +1988,10 @@ if ( !AmCharts.translations[ "export" ][ "en" ] ) {
 							// REPLACE WITH WHITELIST
 							g.paths = paths;
 
+							// CANCEL HALFPIXEL OFFSET ON CANVAS, KEEPS THE DECIMALS ON INDIVIDUAL PATHS
+							tmp.top += 0.5;
+							tmp.left += 0.5;
+
 							// SET PROPS
 							g.set( tmp );
 
@@ -1886,7 +2038,9 @@ if ( !AmCharts.translations[ "export" ][ "en" ] ) {
 									isCoreElement: true
 								} );
 
-								_this.setup.fabric.add( fabric_label );
+								if ( !group.has.scrollbar ) {
+									_this.setup.fabric.add( fabric_label );
+								}
 							}
 
 							groups.pop();
@@ -1921,27 +2075,26 @@ if ( !AmCharts.translations[ "export" ][ "en" ] ) {
 						obj.clipPath = clipPath;
 						obj.svg = svg;
 
-						// HIDE HIDDEN ELEMENTS; TODO: FIND A BETTER WAY TO HANDLE THAT
-						if ( visibility == "hidden" ) {
-							obj.opacity = 0;
+						// TRANSPORT FILL/STROKE OPACITY
+						var attrs = [ "fill", "stroke" ];
+						for ( i1 = 0; i1 < attrs.length; i1++ ) {
+							var attr = attrs[ i1 ]
+							var attrVal = String( svg.getAttribute( attr ) || "none" );
+							var attrOpacity = Number( svg.getAttribute( attr + "-opacity" ) || "1" );
+							var attrRGBA = _this.getRGBA( attrVal );
 
-							// WALKTHROUGH ELEMENTS
-						} else {
+							// HIDE HIDDEN ELEMENTS; TODO: FIND A BETTER WAY TO HANDLE THAT
+							if ( visibility == "hidden" ) {
+								obj.opacity = 0;
+								attrOpacity = 0;
+							}
 
-							// TRANSPORT FILL/STROKE OPACITY
-							var attrs = [ "fill", "stroke" ];
-							for ( i1 = 0; i1 < attrs.length; i1++ ) {
-								var attr = attrs[ i1 ]
-								var attrVal = String( svg.getAttribute( attr ) || "none" );
-								var attrOpacity = Number( svg.getAttribute( attr + "-opacity" ) || "1" );
-								var attrRGBA = _this.getRGBA( attrVal );
-
-								if ( attrRGBA ) {
-									attrRGBA.pop();
-									attrRGBA.push( attrOpacity )
-									obj[ attr ] = "rgba(" + attrRGBA.join() + ")";
-									obj[ attr + _this.capitalize( "opacity" ) ] = attrOpacity;
-								}
+							// SET COLOR
+							if ( attrRGBA ) {
+								attrRGBA.pop();
+								attrRGBA.push( attrOpacity )
+								obj[ attr ] = "rgba(" + attrRGBA.join() + ")";
+								obj[ attr + _this.capitalize( "opacity" ) ] = attrOpacity;
 							}
 						}
 
@@ -1960,6 +2113,7 @@ if ( !AmCharts.translations[ "export" ][ "en" ] ) {
 				}, options || {} );
 				var data = _this.setup.canvas;
 
+				// TRIGGER CALLBACK
 				_this.handleCallback( callback, data, cfg );
 
 				return data;
@@ -1976,6 +2130,15 @@ if ( !AmCharts.translations[ "export" ][ "en" ] ) {
 				}, options || {} );
 				var data = cfg.data;
 				var img = document.createElement( "img" );
+
+				// NAMESPACE CHECK
+				if ( !_this.handleNamespace( "fabric", {
+						scope: this,
+						cb: _this.toImage,
+						args: arguments
+					} ) ) {
+					return false;
+				}
 
 				if ( !cfg.data ) {
 					if ( cfg.lossless || cfg.format == "svg" ) {
@@ -2022,6 +2185,7 @@ if ( !AmCharts.translations[ "export" ][ "en" ] ) {
 					} );
 				}
 
+				// TRIGGER CALLBACK
 				_this.handleCallback( callback, data, cfg );
 
 				return data;
@@ -2037,8 +2201,21 @@ if ( !AmCharts.translations[ "export" ][ "en" ] ) {
 					multiplier: _this.config.multiplier
 				}, options || {} );
 				cfg.format = cfg.format.toLowerCase();
-				var data = _this.setup.fabric.toDataURL( cfg );
+				var data;
 
+				// NAMESPACE CHECK
+				if ( !_this.handleNamespace( "fabric", {
+						scope: this,
+						cb: _this.toJPG,
+						args: arguments
+					} ) ) {
+					return false;
+				}
+
+				// Get data context from fabric
+				data = _this.setup.fabric.toDataURL( cfg );
+
+				// TRIGGER CALLBACK
 				_this.handleCallback( callback, data, cfg );
 
 				return data;
@@ -2053,8 +2230,21 @@ if ( !AmCharts.translations[ "export" ][ "en" ] ) {
 					quality: 1,
 					multiplier: _this.config.multiplier
 				}, options || {} );
-				var data = _this.setup.fabric.toDataURL( cfg );
+				var data;
 
+				// NAMESPACE CHECK
+				if ( !_this.handleNamespace( "fabric", {
+						scope: this,
+						cb: _this.toPNG,
+						args: arguments
+					} ) ) {
+					return false;
+				}
+
+				// Get data context from fabric
+				data = _this.setup.fabric.toDataURL( cfg );
+
+				// TRIGGER CALLBACK
 				_this.handleCallback( callback, data, cfg );
 
 				return data;
@@ -2065,7 +2255,9 @@ if ( !AmCharts.translations[ "export" ][ "en" ] ) {
 			 */
 			toSVG: function( options, callback ) {
 				var clipPaths = [];
+				var clipPathIds = [];
 				var cfg = _this.deepMerge( {
+					compress: _this.config.compress,
 					reviver: function( string, clipPath ) {
 						var matcher = new RegExp( /\bstyle=(['"])(.*?)\1/ );
 						var match = matcher.exec( string )[ 0 ].slice( 7, -1 );
@@ -2098,28 +2290,45 @@ if ( !AmCharts.translations[ "export" ][ "en" ] ) {
 						string = string.replace( match, replacement.join( ";" ) );
 
 						// TODO: WAIT UNTIL FABRICJS HANDLES CLIPPATH FOR SVG OUTPUT
-						if ( clipPath ) {
-							var sliceOffset = 2;
-							var end = string.slice( -sliceOffset );
+						if ( clipPath && clipPath.svg ) {
+							var clipPathId = clipPath.svg.id;
+							if ( clipPathIds.indexOf( clipPathId ) == -1 ) {
+								var sliceOffset = 2;
+								var end = string.slice( -sliceOffset );
 
-							if ( end != "/>" ) {
-								sliceOffset = 3;
-								end = string.slice( -sliceOffset );
+								clipPathIds.push( clipPath.svg.id );
+
+								if ( end != "/>" ) {
+									sliceOffset = 3;
+									end = string.slice( -sliceOffset );
+								}
+
+								var start = string.slice( 0, string.length - sliceOffset );
+								var clipPathAttr = " clip-path=\"url(#" + clipPath.svg.id + ")\" ";
+								var clipPathString = new XMLSerializer().serializeToString( clipPath.svg );
+
+								string = start + clipPathAttr + end;
+
+								clipPaths.push( clipPathString );
 							}
-
-							var start = string.slice( 0, string.length - sliceOffset );
-							var clipPathAttr = " clip-path=\"url(#" + clipPath.svg.id + ")\" ";
-							var clipPathString = new XMLSerializer().serializeToString( clipPath.svg );
-
-							string = start + clipPathAttr + end;
-
-							clipPaths.push( clipPathString );
 						}
 
 						return string;
 					}
 				}, options || {} );
-				var data = _this.setup.fabric.toSVG( cfg, cfg.reviver );
+				var data;
+
+				// NAMESPACE CHECK
+				if ( !_this.handleNamespace( "fabric", {
+						scope: this,
+						cb: _this.toSVG,
+						args: arguments
+					} ) ) {
+					return false;
+				}
+
+				// Get SVG context from fabric
+				data = _this.setup.fabric.toSVG( cfg, cfg.reviver );
 
 				// TODO: WAIT UNTIL FABRICJS HANDLES CLIPPATH FOR SVG OUTPUT
 				if ( clipPaths.length ) {
@@ -2128,10 +2337,16 @@ if ( !AmCharts.translations[ "export" ][ "en" ] ) {
 					data = start + clipPaths.join( "" ) + end;
 				}
 
+				// SOLVES #21840
+				if ( cfg.compress ) {
+					data = data.replace( /[\t\r\n]+/g, "" );
+				}
+
 				if ( cfg.getBase64 ) {
 					data = "data:image/svg+xml;base64," + btoa( data );
 				}
 
+				// TRIGGER CALLBACK
 				_this.handleCallback( callback, data, cfg );
 
 				return data;
@@ -2145,7 +2360,19 @@ if ( !AmCharts.translations[ "export" ][ "en" ] ) {
 					multiplier: _this.config.multiplier || 2,
 					pageOrigin: _this.config.pageOrigin === undefined ? true : false
 				}, _this.config.pdfMake ), options || {}, true );
-				var data = new pdfMake.createPdf( cfg );
+				var data;
+
+				// NAMESPACE CHECK
+				if ( !_this.handleNamespace( "pdfMake", {
+						scope: this,
+						cb: _this.toPDF,
+						args: arguments
+					} ) ) {
+					return false;
+				}
+
+				// Create PDF instance
+				data = new pdfMake.createPdf( cfg );
 
 				// Get image data
 				cfg.images.reference = _this.toPNG( cfg );
@@ -2243,12 +2470,13 @@ if ( !AmCharts.translations[ "export" ][ "en" ] ) {
 			toPRINT: function( options, callback ) {
 				var i1;
 				var cfg = _this.deepMerge( {
-					delay: 1,
+					delay: 0.01,
 					lossless: false
 				}, options || {} );
 				var data = _this.toImage( cfg );
 				var states = [];
 				var items = document.body.childNodes;
+				var scroll = document.documentElement.scrollTop || document.body.scrollTop;
 
 				data.setAttribute( "style", "width: 100%; max-height: 100%;" );
 
@@ -2262,6 +2490,15 @@ if ( !AmCharts.translations[ "export" ][ "en" ] ) {
 				document.body.appendChild( data );
 				window.print();
 
+				// CONVERT TO SECONDS
+				cfg.delay *= 1000;
+
+				// IOS EXCEPTION DELAY MIN. 1 SECOND
+				var isIOS = /iPad|iPhone|iPod/.test( navigator.userAgent ) && !window.MSStream;
+				if ( isIOS && cfg.delay < 1000 ) {
+					cfg.delay = 1000;
+				}
+
 				setTimeout( function() {
 					for ( i1 = 0; i1 < items.length; i1++ ) {
 						if ( _this.isElement( items[ i1 ] ) ) {
@@ -2269,6 +2506,9 @@ if ( !AmCharts.translations[ "export" ][ "en" ] ) {
 						}
 					}
 					document.body.removeChild( data );
+					document.documentElement.scrollTop = document.body.scrollTop = scroll;
+
+					// TRIGGER CALLBACK
 					_this.handleCallback( callback, data, cfg );
 				}, cfg.delay );
 
@@ -2280,11 +2520,26 @@ if ( !AmCharts.translations[ "export" ][ "en" ] ) {
 			 */
 			toJSON: function( options, callback ) {
 				var cfg = _this.deepMerge( {
-					dateFormat: _this.config.dateFormat || "dateObject",
+					dateFormat: _this.config.dateFormat || "dateObject"
 				}, options || {}, true );
-				cfg.data = cfg.data ? cfg.data : _this.getChartData( cfg );
-				var data = JSON.stringify( cfg.data, undefined, "\t" );
+				var data = {};
 
+				// NAMESPACE CHECK
+				if ( !_this.handleNamespace( "JSON", {
+						scope: this,
+						cb: _this.toJSON,
+						args: arguments
+					} ) ) {
+					return false;
+				}
+
+				// GATHER DATA
+				cfg.data = cfg.data !== undefined ? cfg.data : _this.getChartData( cfg );
+
+				// STRINGIFY DATA
+				data = JSON.stringify( cfg.data, undefined, "\t" );
+
+				// TRIGGER CALLBACK
 				_this.handleCallback( callback, data, cfg );
 
 				return data;
@@ -2296,56 +2551,25 @@ if ( !AmCharts.translations[ "export" ][ "en" ] ) {
 			toCSV: function( options, callback ) {
 				var row, col;
 				var cfg = _this.deepMerge( {
-					data: _this.getChartData( options ),
 					delimiter: ",",
 					quotes: true,
 					escape: true,
 					withHeader: true
 				}, options || {}, true );
-				var data = "";
-				var cols = [];
 				var buffer = [];
+				var data = "";
 
-				function enchant( value, column ) {
+				// GATHER DATA
+				buffer = _this.toArray( cfg );
 
-					// WRAP IN QUOTES
-					if ( typeof value === "string" ) {
-						if ( cfg.escape ) {
-							value = value.replace( '"', '""' );
-						}
-						if ( cfg.quotes ) {
-							value = [ '"', value, '"' ].join( "" );
-						}
-					}
-
-					return value;
-				}
-
-				// HEADER
-				for ( value in cfg.data[ 0 ] ) {
-					buffer.push( enchant( value ) );
-					cols.push( value );
-				}
-				if ( cfg.withHeader ) {
-					data += buffer.join( cfg.delimiter ) + "\n";
-				}
-
-				// BODY
-				for ( row in cfg.data ) {
-					buffer = [];
+				// MERGE
+				for ( row in buffer ) {
 					if ( !isNaN( row ) ) {
-						for ( col in cols ) {
-							if ( !isNaN( col ) ) {
-								var column = cols[ col ];
-								var value = cfg.data[ row ][ column ];
-
-								buffer.push( enchant( value, column ) );
-							}
-						}
-						data += buffer.join( cfg.delimiter ) + "\n";
+						data += buffer[ row ].join( cfg.delimiter ) + "\n";
 					}
 				}
 
+				// TRIGGER CALLBACK
 				_this.handleCallback( callback, data, cfg );
 
 				return data;
@@ -2361,13 +2585,24 @@ if ( !AmCharts.translations[ "export" ][ "en" ] ) {
 					withHeader: true,
 					stringify: false
 				}, options || {}, true );
+				var buffer = [];
 				var data = "";
 				var wb = {
 					SheetNames: [],
 					Sheets: {}
 				}
 
-				cfg.data = cfg.data ? cfg.data : _this.getChartData( cfg );
+				// NAMESPACE CHECK
+				if ( !_this.handleNamespace( "XLSX", {
+						scope: this,
+						cb: _this.toXLSX,
+						args: arguments
+					} ) ) {
+					return false;
+				}
+
+				// GATHER DATA
+				buffer = _this.toArray( cfg );
 
 				function datenum( v, date1904 ) {
 					if ( date1904 ) v += 1462;
@@ -2403,13 +2638,20 @@ if ( !AmCharts.translations[ "export" ][ "en" ] ) {
 								r: R
 							} );
 
-							if ( typeof cell.v === "number" ) cell.t = "n";
-							else if ( typeof cell.v === "boolean" ) cell.t = "b";
-							else if ( cell.v instanceof Date ) {
+							if ( typeof cell.v === "number" ) {
+								cell.t = "n";
+							} else if ( typeof cell.v === "boolean" ) {
+								cell.t = "b";
+							} else if ( cell.v instanceof Date ) {
 								cell.t = "n";
 								cell.z = XLSX.SSF._table[ 14 ];
 								cell.v = datenum( cell.v );
-							} else cell.t = "s";
+							} else if ( cell.v instanceof Object ) {
+								cell.t = "s";
+								cell.v = JSON.stringify( cell.v );
+							} else {
+								cell.t = "s";
+							}
 
 							ws[ cell_ref ] = cell;
 						}
@@ -2419,7 +2661,7 @@ if ( !AmCharts.translations[ "export" ][ "en" ] ) {
 				}
 
 				wb.SheetNames.push( cfg.name );
-				wb.Sheets[ cfg.name ] = sheet_from_array_of_arrays( _this.toArray( cfg ) );
+				wb.Sheets[ cfg.name ] = sheet_from_array_of_arrays( buffer );
 
 				data = XLSX.write( wb, {
 					bookType: "xlsx",
@@ -2429,6 +2671,7 @@ if ( !AmCharts.translations[ "export" ][ "en" ] ) {
 
 				data = "data:application/vnd.openxmlformats-officedocument.spreadsheetml.sheet;base64," + data;
 
+				// TRIGGER CALLBACK
 				_this.handleCallback( callback, data, cfg );
 
 				return data;
@@ -2440,24 +2683,69 @@ if ( !AmCharts.translations[ "export" ][ "en" ] ) {
 			toArray: function( options, callback ) {
 				var row, col;
 				var cfg = _this.deepMerge( {
-					data: _this.getChartData( options ),
 					withHeader: false,
-					stringify: true
+					stringify: true,
+					escape: false,
+					quotes: false
 				}, options || {}, true );
 				var data = [];
 				var cols = [];
+				var buffer = [];
+				var _processData = _this.config.processData;
+
+				// RETRIEVES RIGHT FIELD ORDER OF TRANSLATED FIELDS
+				function processData( data, cfg ) {
+					var fields = cfg.exportFields || Object.keys( cfg.dataFieldsMap );
+
+					// WALKTHROUGH FIELDS
+					for ( col = 0; col < fields.length; col++ ) {
+						var key = fields[ col ];
+						var field = cfg.dataFieldsTitlesMap[ key ];
+						cols.push( field );
+					}
+
+					// TRIGGER GIVEN CALLBACK
+					if ( _processData ) {
+						return _this.handleCallback( _processData, data, cfg );
+					}
+					return data;
+				}
+
+				// STRING PROCESSOR
+				function enchant( value ) {
+
+					if ( typeof value === "string" ) {
+						if ( cfg.escape ) {
+							value = value.replace( '"', '""' );
+						}
+						if ( cfg.quotes ) {
+							value = [ '"', value, '"' ].join( "" );
+						}
+					}
+
+					return value;
+				}
+
+				// INVOKE PROCESS DATA
+				cfg.processData = processData;
+
+				// GET DATA
+				cfg.data = cfg.data !== undefined ? _this.processData( cfg ) : _this.getChartData( cfg );
 
 				// HEADER
-				for ( col in cfg.data[ 0 ] ) {
-					cols.push( col );
-				}
 				if ( cfg.withHeader ) {
-					data.push( cols );
+					buffer = [];
+					for ( col in cols ) {
+						if ( !isNaN( col ) ) {
+							buffer.push( enchant( cols[ col ] ) );
+						}
+					}
+					data.push( buffer );
 				}
 
 				// BODY
 				for ( row in cfg.data ) {
-					var buffer = [];
+					buffer = [];
 					if ( !isNaN( row ) ) {
 						for ( col in cols ) {
 							if ( !isNaN( col ) ) {
@@ -2470,13 +2758,14 @@ if ( !AmCharts.translations[ "export" ][ "en" ] ) {
 								} else {
 									value = value;
 								}
-								buffer.push( value );
+								buffer.push( enchant( value ) );
 							}
 						}
 						data.push( buffer );
 					}
 				}
 
+				// TRIGGER CALLBACK
 				_this.handleCallback( callback, data, cfg );
 
 				return data;
@@ -2559,6 +2848,7 @@ if ( !AmCharts.translations[ "export" ][ "en" ] ) {
 					return arr
 				}
 
+				// TRIGGER CALLBACK
 				_this.handleCallback( callback, data, cfg );
 
 				return data;
@@ -2577,6 +2867,64 @@ if ( !AmCharts.translations[ "export" ][ "en" ] ) {
 					}
 					return callback.apply( _this, data );
 				}
+			},
+
+			/**
+			 * Logger
+			 */
+			handleLog: function( msg ) {
+				if ( _this.config.debug === true ) {
+					console.log(msg);
+				}
+			},
+
+			/**
+			 * Namespace checker; delays given callback until the dependency is available
+			 */
+			handleNamespace: function( namespace, opts ) {
+				var scope = _this.config.scope || window;
+				var exists = false;
+				var startTS = Number( new Date() );
+				var timer;
+
+				// SIMPLE CHECK
+				exists = !!( namespace in scope );
+
+				// RESURSIVE DEPENDENCY CHECK
+				function waitForIt() {
+					var tmpTS = Number( new Date() );
+
+					// SIMPLE CHECK
+					exists = !!( namespace in scope );
+
+					// PDFMAKE EXCEPTION; WAIT ADDITIONALLY FOR FONTS
+					if ( namespace == "pdfMake" && exists ) {
+						exists = scope.pdfMake.vfs;
+					}
+
+					// FOUND TRIGGER GIVEN CALLBACK
+					if ( exists ) {
+						clearTimeout( timer );
+						opts.cb.apply( opts.scope, opts.args );
+						_this.handleLog( [ "AmCharts [export]: Namespace \"", namespace, "\" showed up in: ", String( scope ) ].join( "" ) );
+
+						// NOT FOUND SCHEDULE RECHECK
+					} else if ( tmpTS - startTS < _this.libs.loadTimeout ) {
+						timer = setTimeout( waitForIt, 250 );
+
+						// LIBS TIMEOUT REACHED
+					} else {
+						_this.handleLog( [ "AmCharts [export]: Gave up waiting for \"", namespace, "\" in: ", String( scope ) ].join( "" ) );
+					}
+				}
+
+				// THROW MESSAGE IF IT DOESNT EXIST
+				if ( !exists ) {
+					_this.handleLog( [ "AmCharts [export]: Could not find \"", namespace, "\" in: ", String( scope ) ].join( "" ) );
+					waitForIt();
+				}
+
+				return exists;
 			},
 
 			/**
@@ -2676,6 +3024,7 @@ if ( !AmCharts.translations[ "export" ][ "en" ] ) {
 				}, options || {}, true );
 				var uid, i1, i2, i3;
 				var lookupFields = [ "valueField", "openField", "closeField", "highField", "lowField", "xField", "yField" ];
+				var buffer;
 
 				// HANDLE FIELDS
 				function addField( field, title, type ) {
@@ -2696,9 +3045,10 @@ if ( !AmCharts.translations[ "export" ][ "en" ] ) {
 				}
 
 				if ( cfg.data.length == 0 ) {
+
 					// STOCK DATA; GATHER COMPARED GRAPHS
 					if ( _this.setup.chart.type == "stock" ) {
-						cfg.data = _this.setup.chart.mainDataSet.dataProvider;
+						cfg.data = _this.cloneObject( _this.setup.chart.mainDataSet.dataProvider );
 
 						// CATEGORY AXIS
 						addField( _this.setup.chart.mainDataSet.categoryField );
@@ -2721,19 +3071,35 @@ if ( !AmCharts.translations[ "export" ][ "en" ] ) {
 							}
 						}
 
-						// WALKTHROUGH COMPARISON AND MERGE IT'S DATA
-						for ( i1 = 0; i1 < _this.setup.chart.comparedGraphs.length; i1++ ) {
-							var graph = _this.setup.chart.comparedGraphs[ i1 ];
-							for ( i2 = 0; i2 < graph.dataSet.dataProvider.length; i2++ ) {
-								for ( i3 = 0; i3 < graph.dataSet.fieldMappings.length; i3++ ) {
-									var fieldMap = graph.dataSet.fieldMappings[ i3 ];
-									var uid = graph.dataSet.id + "_" + fieldMap.toField;
+						// MERGE DATA OF COMPARED GRAPHS IN RIGHT PLACE
+						if ( _this.setup.chart.comparedGraphs.length ) {
 
-									if ( i2 < cfg.data.length ) {
-										cfg.data[ i2 ][ uid ] = graph.dataSet.dataProvider[ i2 ][ fieldMap.fromField ];
+							// BUFFER DATES FROM MAIN DATA SET
+							buffer = [];
+							for ( i1 = 0; i1 < cfg.data.length; i1++ ) {
+								buffer.push( cfg.data[ i1 ][ _this.setup.chart.mainDataSet.categoryField ] );
+							}
 
-										if ( !cfg.titles[ uid ] ) {
-											addField( uid, graph.dataSet.title )
+							// WALKTHROUGH COMPARISON AND MERGE IT'S DATA
+							for ( i1 = 0; i1 < _this.setup.chart.comparedGraphs.length; i1++ ) {
+								var graph = _this.setup.chart.comparedGraphs[ i1 ];
+								for ( i2 = 0; i2 < graph.dataSet.dataProvider.length; i2++ ) {
+									var categoryField = graph.dataSet.categoryField;
+									var categoryValue = graph.dataSet.dataProvider[ i2 ][ categoryField ];
+									var comparedIndex = buffer.indexOf( categoryValue );
+
+									// PLACE IN RIGHT PLACE
+									if ( comparedIndex != -1 ) {
+										for ( i3 = 0; i3 < graph.dataSet.fieldMappings.length; i3++ ) {
+											var fieldMap = graph.dataSet.fieldMappings[ i3 ];
+											var uid = graph.dataSet.id + "_" + fieldMap.toField;
+
+											cfg.data[ comparedIndex ][ uid ] = graph.dataSet.dataProvider[ i2 ][ fieldMap.fromField ];
+
+											// UNIQUE TITLE
+											if ( !cfg.titles[ uid ] ) {
+												addField( uid, graph.dataSet.title )
+											}
 										}
 									}
 								}
@@ -2874,6 +3240,7 @@ if ( !AmCharts.translations[ "export" ][ "en" ] ) {
 					dateFields: [],
 					dataFields: [],
 					dataFieldsMap: {},
+					dataFieldsTitlesMap: {},
 					dataDateFormat: _this.setup.chart.dataDateFormat,
 					dateFormat: _this.config.dateFormat || _this.setup.chart.dataDateFormat || "YYYY-MM-DD",
 					exportTitles: _this.config.exportTitles,
@@ -2897,8 +3264,8 @@ if ( !AmCharts.translations[ "export" ][ "en" ] ) {
 
 					// REMOVE FIELDS SELECTIVELY
 					if ( cfg.exportFields !== undefined ) {
-						cfg.dataFields = cfg.dataFields.filter( function( n ) {
-							return cfg.exportFields.indexOf( n ) != -1;
+						cfg.dataFields = cfg.exportFields.filter( function( n ) {
+							return cfg.dataFields.indexOf( n ) != -1;
 						} );
 					}
 
@@ -2912,6 +3279,8 @@ if ( !AmCharts.translations[ "export" ][ "en" ] ) {
 							var dataField = cfg.dataFieldsMap[ uniqueField ];
 							var title = ( cfg.columnNames && cfg.columnNames[ uniqueField ] ) || cfg.titles[ uniqueField ] || uniqueField;
 							var value = cfg.data[ i1 ][ dataField ];
+
+							// SKIP NULL ONES
 							if ( value == null ) {
 								value = undefined;
 							}
@@ -2953,6 +3322,8 @@ if ( !AmCharts.translations[ "export" ][ "en" ] ) {
 								}
 							}
 
+							cfg.dataFieldsTitlesMap[ dataField ] = title;
+
 							tmp[ title ] = value;
 						}
 						if ( !skip ) {
@@ -2981,6 +3352,7 @@ if ( !AmCharts.translations[ "export" ][ "en" ] ) {
 			 */
 			createMenu: function( list, container ) {
 				var div;
+				var buffer = [];
 
 				function buildList( list, container ) {
 					var i1, i2, ul = document.createElement( "ul" );
@@ -3125,9 +3497,7 @@ if ( !AmCharts.translations[ "export" ][ "en" ] ) {
 									return function() {
 										if ( item.capture || item.action == "print" || item.format == "PRINT" ) {
 											this.capture( item, function() {
-												if ( this.config.drawing.autoClose ) {
-													this.drawing.handler.done();
-												}
+												this.drawing.handler.done();
 												this[ "to" + item.format ]( item, function( data ) {
 													if ( item.action == "download" ) {
 														this.download( data, item.mimeType, [ item.fileName, item.extension ].join( "." ) );
@@ -3161,8 +3531,10 @@ if ( !AmCharts.translations[ "export" ][ "en" ] ) {
 
 								// DELAYED
 								if ( ( item.action == "draw" || item.format == "PRINT" || ( item.format != "UNDEFINED" && item.capture ) ) && !_this.drawing.enabled ) {
-									item.delay = item.delay ? item.delay : _this.config.delay;
-									if ( item.delay ) {
+
+									// VALIDATE DELAY
+									if ( !isNaN( item.delay ) || !isNaN( _this.config.delay ) ) {
+										item.delay = !isNaN( item.delay ) ? item.delay : _this.config.delay;
 										_this.delay( item, callback );
 										return;
 									}
@@ -3173,6 +3545,87 @@ if ( !AmCharts.translations[ "export" ][ "en" ] ) {
 						} )( item.click || function( e ) {
 							e.preventDefault();
 						}, item ) );
+
+						// ENABLE MANUAL ACTIVE STATE ON TOUCH DEVICES
+						if ( _this.setup.hasTouch && li.classList ) {
+							a.addEventListener( "click", ( function( item ) {
+								return function( e ) {
+									e.preventDefault();
+									var li = item.elements.li;
+									var parentIsActive = hasActiveParent( li );
+									var siblingIsActive = hasActiveSibling( li );
+									var childHasSubmenu = hasSubmenu( li );
+
+									// CHECK IF PARENT IS ACTIVE
+									function hasActiveParent( elm ) {
+										var parentNode = elm.parentNode.parentNode;
+										var classList = parentNode.classList;
+
+										if ( parentNode.tagName == "LI" && classList.contains( "active" ) ) {
+											return true;
+										}
+										return false;
+									}
+
+									// CHECK IF ANY SIBLING IS ACTIVE
+									function hasActiveSibling( elm ) {
+										var siblings = elm.parentNode.children;
+
+										for ( i1 = 0; i1 < siblings.length; i1++ ) {
+											var sibling = siblings[ i1 ];
+											var classList = sibling.classList;
+											if ( sibling !== elm && classList.contains( "active" ) ) {
+												classList.remove( "active" );
+												return true;
+											}
+										}
+
+										return false;
+									}
+
+									// CHECK IF SUBEMNU EXIST
+									function hasSubmenu( elm ) {
+										return elm.getElementsByTagName( "ul" ).length > 0;
+									}
+
+									// CHECK FOR ROOT ITEMS
+									function isRoot( elm ) {
+										return elm.classList.contains( "export-main" ) || elm.classList.contains( "export-drawing" );
+									}
+
+									// TOGGLE MAIN MENU
+									if ( isRoot( li ) || !childHasSubmenu ) {
+										_this.setup.menu.classList.toggle( "active" );
+									}
+
+									// UNTOGGLE BUFFERED ITEMS
+									if ( !parentIsActive || !childHasSubmenu ) {
+										while ( buffer.length ) {
+											var tmp = buffer.pop();
+											var tmpRoot = isRoot( tmp );
+											var tmpOdd = tmp !== li;
+
+											if ( tmpRoot ) {
+												if ( !childHasSubmenu ) {
+													tmp.classList.remove( "active" );
+												}
+											} else if ( tmpOdd ) {
+												tmp.classList.remove( "active" );
+											}
+										}
+									}
+
+									// BUFFER ITEMS
+									buffer.push( li );
+
+									// TOGGLE CLASS
+									if ( childHasSubmenu ) {
+										li.classList.toggle( "active" );
+									}
+								}
+							} )( item ) );
+						}
+
 						li.appendChild( a );
 
 						// ADD LABEL
@@ -3388,7 +3841,15 @@ if ( !AmCharts.translations[ "export" ][ "en" ] ) {
 							// ESCAPE DRAWIN MODE; key: escape
 						} else if ( e.keyCode == 27 && _this.drawing.enabled ) {
 							e.preventDefault();
-							_this.drawing.handler.done();
+
+							// DESELECT ACTIVE OBJECTS
+							if ( _this.drawing.buffer.isSelected ) {
+								_this.setup.fabric.discardActiveObject();
+
+								// QUIT DRAWING MODE
+							} else {
+								_this.drawing.handler.done();
+							}
 
 							// COPY; key: C
 						} else if ( e.keyCode == 67 && ( e.metaKey || e.ctrlKey ) && current ) {
@@ -3433,11 +3894,11 @@ if ( !AmCharts.translations[ "export" ][ "en" ] ) {
 			 * Initiate export menu; waits for chart container to place menu
 			 */
 			init: function() {
-				clearTimeout( _this.timer );
+				clearTimeout( _timer );
 
-				_this.timer = setInterval( function() {
+				_timer = setInterval( function() {
 					if ( _this.setup.chart.containerDiv ) {
-						clearTimeout( _this.timer );
+						clearTimeout( _timer );
 
 						if ( _this.config.enabled ) {
 							// CREATE REFERENCE

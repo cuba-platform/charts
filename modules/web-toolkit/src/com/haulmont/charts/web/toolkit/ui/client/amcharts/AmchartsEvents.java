@@ -7,164 +7,165 @@ package com.haulmont.charts.web.toolkit.ui.client.amcharts;
 
 import com.haulmont.charts.web.toolkit.ui.client.amcharts.events.*;
 
+import java.util.function.Consumer;
+
 public class AmchartsEvents {
+    private Consumer<JsChartClickEvent> chartClickHandler;
+    private Consumer<JsChartClickEvent> chartRightClickHandler;
 
-    private ChartClickHandler chartClickHandler;
-    private ChartClickHandler chartRightClickHandler;
+    private Consumer<JsGraphClickEvent> graphClickHandler;
+    private Consumer<JsGraphItemClickEvent> graphItemClickHandler;
+    private Consumer<JsGraphItemClickEvent> graphItemRightClickHandler;
 
-    private GraphClickHandler graphClickHandler;
-    private GraphItemClickHandler graphItemClickHandler;
-    private GraphItemClickHandler graphItemRightClickHandler;
+    private Consumer<JsZoomEvent> zoomHandler;
 
-    private ZoomHandler zoomHandler;
+    private Consumer<JsSliceClickEvent> sliceClickHandler;
+    private Consumer<JsSliceClickEvent> sliceRightClickHandler;
+    private Consumer<JsSlicePullEvent> slicePullInHandler;
+    private Consumer<JsSlicePullEvent> slicePullOutHandler;
 
-    private SliceClickHandler sliceClickHandler;
-    private SliceClickHandler sliceRightClickHandler;
-    private SlicePullHandler slicePullInHandler;
-    private SlicePullHandler slicePullOutHandler;
+    private Consumer<JsLegendEvent> legendLabelClickHandler;
+    private Consumer<JsLegendEvent> legendMarkerClickHandler;
+    private Consumer<JsLegendEvent> legendItemShowHandler;
+    private Consumer<JsLegendEvent> legendItemHideHandler;
 
-    private LegendEventHandler legendLabelClickHandler;
-    private LegendEventHandler legendMarkerClickHandler;
-    private LegendEventHandler legendItemShowHandler;
-    private LegendEventHandler legendItemHideHandler;
+    private Consumer<JsCursorEvent> cursorPeriodSelectHandler;
+    private Consumer<JsCursorEvent> cursorZoomHandler;
+    private Consumer<JsAxisZoomedEvent> axisZoomHandler;
 
-    private CursorEventHandler cursorPeriodSelectHandler;
-    private CursorEventHandler cursorZoomHandler;
-    private AxisZoomHandler axisZoomHandler;
-
-    public ChartClickHandler getChartClickHandler() {
+    public Consumer<JsChartClickEvent> getChartClickHandler() {
         return chartClickHandler;
     }
 
-    public void setChartClickHandler(ChartClickHandler chartClickHandler) {
+    public void setChartClickHandler(Consumer<JsChartClickEvent> chartClickHandler) {
         this.chartClickHandler = chartClickHandler;
     }
 
-    public GraphClickHandler getGraphClickHandler() {
+    public Consumer<JsGraphClickEvent> getGraphClickHandler() {
         return graphClickHandler;
     }
 
-    public ChartClickHandler getChartRightClickHandler() {
-        return chartRightClickHandler;
-    }
-
-    public void setChartRightClickHandler(ChartClickHandler chartRightClickHandler) {
-        this.chartRightClickHandler = chartRightClickHandler;
-    }
-
-    public void setGraphClickHandler(GraphClickHandler graphClickHandler) {
+    public void setGraphClickHandler(Consumer<JsGraphClickEvent> graphClickHandler) {
         this.graphClickHandler = graphClickHandler;
     }
 
-    public GraphItemClickHandler getGraphItemClickHandler() {
+    public Consumer<JsChartClickEvent> getChartRightClickHandler() {
+        return chartRightClickHandler;
+    }
+
+    public void setChartRightClickHandler(Consumer<JsChartClickEvent> chartRightClickHandler) {
+        this.chartRightClickHandler = chartRightClickHandler;
+    }
+
+    public Consumer<JsGraphItemClickEvent> getGraphItemClickHandler() {
         return graphItemClickHandler;
     }
 
-    public void setGraphItemClickHandler(GraphItemClickHandler graphItemClickHandler) {
+    public void setGraphItemClickHandler(Consumer<JsGraphItemClickEvent> graphItemClickHandler) {
         this.graphItemClickHandler = graphItemClickHandler;
     }
 
-    public GraphItemClickHandler getGraphItemRightClickHandler() {
+    public Consumer<JsGraphItemClickEvent> getGraphItemRightClickHandler() {
         return graphItemRightClickHandler;
     }
 
-    public void setGraphItemRightClickHandler(GraphItemClickHandler graphItemRightClickHandler) {
+    public void setGraphItemRightClickHandler(Consumer<JsGraphItemClickEvent> graphItemRightClickHandler) {
         this.graphItemRightClickHandler = graphItemRightClickHandler;
     }
 
-    public ZoomHandler getZoomHandler() {
+    public Consumer<JsZoomEvent> getZoomHandler() {
         return zoomHandler;
     }
 
-    public void setZoomHandler(ZoomHandler zoomHandler) {
+    public void setZoomHandler(Consumer<JsZoomEvent> zoomHandler) {
         this.zoomHandler = zoomHandler;
     }
 
-    public SliceClickHandler getSliceClickHandler() {
+    public Consumer<JsSliceClickEvent> getSliceClickHandler() {
         return sliceClickHandler;
     }
 
-    public void setSliceClickHandler(SliceClickHandler sliceClickHandler) {
+    public void setSliceClickHandler(Consumer<JsSliceClickEvent> sliceClickHandler) {
         this.sliceClickHandler = sliceClickHandler;
     }
 
-    public SlicePullHandler getSlicePullInHandler() {
+    public Consumer<JsSlicePullEvent> getSlicePullInHandler() {
         return slicePullInHandler;
     }
 
-    public void setSlicePullInHandler(SlicePullHandler slicePullInHandler) {
+    public void setSlicePullInHandler(Consumer<JsSlicePullEvent> slicePullInHandler) {
         this.slicePullInHandler = slicePullInHandler;
     }
 
-    public SlicePullHandler getSlicePullOutHandler() {
+    public Consumer<JsSlicePullEvent> getSlicePullOutHandler() {
         return slicePullOutHandler;
     }
 
-    public void setSlicePullOutHandler(SlicePullHandler slicePullOutHandler) {
+    public void setSlicePullOutHandler(Consumer<JsSlicePullEvent> slicePullOutHandler) {
         this.slicePullOutHandler = slicePullOutHandler;
     }
 
-    public SliceClickHandler getSliceRightClickHandler() {
+    public Consumer<JsSliceClickEvent> getSliceRightClickHandler() {
         return sliceRightClickHandler;
     }
 
-    public void setSliceRightClickHandler(SliceClickHandler sliceRightClickHandler) {
+    public void setSliceRightClickHandler(Consumer<JsSliceClickEvent> sliceRightClickHandler) {
         this.sliceRightClickHandler = sliceRightClickHandler;
     }
 
-    public LegendEventHandler getLegendItemHideHandler() {
+    public Consumer<JsLegendEvent> getLegendItemHideHandler() {
         return legendItemHideHandler;
     }
 
-    public void setLegendItemHideHandler(LegendEventHandler legendItemHideHandler) {
+    public void setLegendItemHideHandler(Consumer<JsLegendEvent> legendItemHideHandler) {
         this.legendItemHideHandler = legendItemHideHandler;
     }
 
-    public LegendEventHandler getLegendItemShowHandler() {
+    public Consumer<JsLegendEvent> getLegendItemShowHandler() {
         return legendItemShowHandler;
     }
 
-    public void setLegendItemShowHandler(LegendEventHandler legendItemShowHandler) {
+    public void setLegendItemShowHandler(Consumer<JsLegendEvent> legendItemShowHandler) {
         this.legendItemShowHandler = legendItemShowHandler;
     }
 
-    public LegendEventHandler getLegendLabelClickHandler() {
+    public Consumer<JsLegendEvent> getLegendLabelClickHandler() {
         return legendLabelClickHandler;
     }
 
-    public void setLegendLabelClickHandler(LegendEventHandler legendLabelClickHandler) {
+    public void setLegendLabelClickHandler(Consumer<JsLegendEvent> legendLabelClickHandler) {
         this.legendLabelClickHandler = legendLabelClickHandler;
     }
 
-    public LegendEventHandler getLegendMarkerClickHandler() {
+    public Consumer<JsLegendEvent> getLegendMarkerClickHandler() {
         return legendMarkerClickHandler;
     }
 
-    public void setLegendMarkerClickHandler(LegendEventHandler legendMarkerClickHandler) {
+    public void setLegendMarkerClickHandler(Consumer<JsLegendEvent> legendMarkerClickHandler) {
         this.legendMarkerClickHandler = legendMarkerClickHandler;
     }
 
-    public CursorEventHandler getCursorPeriodSelectHandler() {
+    public Consumer<JsCursorEvent> getCursorPeriodSelectHandler() {
         return cursorPeriodSelectHandler;
     }
 
-    public void setCursorPeriodSelectHandler(CursorEventHandler cursorPeriodSelectHandler) {
+    public void setCursorPeriodSelectHandler(Consumer<JsCursorEvent> cursorPeriodSelectHandler) {
         this.cursorPeriodSelectHandler = cursorPeriodSelectHandler;
     }
 
-    public CursorEventHandler getCursorZoomHandler() {
+    public Consumer<JsCursorEvent> getCursorZoomHandler() {
         return cursorZoomHandler;
     }
 
-    public void setCursorZoomHandler(CursorEventHandler cursorZoomHandler) {
+    public void setCursorZoomHandler(Consumer<JsCursorEvent> cursorZoomHandler) {
         this.cursorZoomHandler = cursorZoomHandler;
     }
 
-    public AxisZoomHandler getAxisZoomHandler() {
+    public Consumer<JsAxisZoomedEvent> getAxisZoomHandler() {
         return axisZoomHandler;
     }
 
-    public void setAxisZoomHandler(AxisZoomHandler axisZoomHandler) {
+    public void setAxisZoomHandler(Consumer<JsAxisZoomedEvent> axisZoomHandler) {
         this.axisZoomHandler = axisZoomHandler;
     }
 }

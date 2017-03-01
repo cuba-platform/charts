@@ -8,11 +8,11 @@ package com.haulmont.charts.web.toolkit.ui.amcharts;
 import com.google.gson.*;
 import com.haulmont.charts.gui.amcharts.model.AbstractChartObject;
 import com.haulmont.charts.gui.amcharts.model.charts.*;
+import com.haulmont.charts.gui.amcharts.model.gson.ChartJsonSerializationContext;
+import com.haulmont.charts.gui.amcharts.model.gson.DataItemsSerializer;
 import com.haulmont.charts.gui.data.DataChangeListener;
 import com.haulmont.charts.gui.data.DataItem;
 import com.haulmont.charts.gui.data.DataItemsChangeEvent;
-import com.haulmont.charts.gui.amcharts.model.gson.ChartJsonSerializationContext;
-import com.haulmont.charts.gui.amcharts.model.gson.DataItemsSerializer;
 import com.haulmont.charts.web.toolkit.ui.amcharts.events.*;
 import com.haulmont.charts.web.toolkit.ui.client.amcharts.CubaAmchartsSceneClientRpc;
 import com.haulmont.charts.web.toolkit.ui.client.amcharts.CubaAmchartsSceneState;
@@ -60,7 +60,6 @@ public class CubaAmchartsScene extends AbstractComponent {
 
     protected final static Method slicePullOutMethod =
             findMethod(SlicePullOutListener.class, "onClick", SlicePullOutEvent.class);
-
     protected final static Method legendLabelClickMethod =
             findMethod(LegendLabelClickListener.class, "onClick", LegendLabelClickEvent.class);
 
