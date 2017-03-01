@@ -14,8 +14,8 @@ import java.util.List;
  *
  * <a href="http://docs.amcharts.com/3/javascriptstockchart/PanelsSettings">http://docs.amcharts.com/3/javascriptstockchart/PanelsSettings</a>
  */
-public class PanelsSettings extends AbstractChartObject
-        implements HasMargins<PanelsSettings>, HasStartEffect<PanelsSettings> {
+public class PanelsSettings extends AbstractChartObject implements HasMargins<PanelsSettings>,
+                                                                   HasStartEffect<PanelsSettings> {
 
     private static final long serialVersionUID = -4296426800291941801L;
     

@@ -18,7 +18,7 @@ import java.util.List;
  */
 @SuppressWarnings("unchecked")
 public abstract class CoordinateChart<T extends CoordinateChart> extends AbstractChart<T>
-        implements HasStartEffect<T>, HasColors<T> {
+        implements CoordinateChartModel<T> {
 
     private static final long serialVersionUID = -8779874684644002376L;
 
@@ -57,6 +57,7 @@ public abstract class CoordinateChart<T extends CoordinateChart> extends Abstrac
         return (T) this;
     }
 
+    @Override
     public T addColors(Color... colors) {
         if (colors != null) {
             if (this.colors == null) {
@@ -67,15 +68,18 @@ public abstract class CoordinateChart<T extends CoordinateChart> extends Abstrac
         return (T) this;
     }
 
+    @Override
     public List<Graph> getGraphs() {
         return graphs;
     }
 
+    @Override
     public T setGraphs(List<Graph> graphs) {
         this.graphs = graphs;
         return (T) this;
     }
 
+    @Override
     public T addGraphs(Graph... graphs) {
         if (graphs != null) {
             if (this.graphs == null) {
@@ -108,15 +112,18 @@ public abstract class CoordinateChart<T extends CoordinateChart> extends Abstrac
         return (T) this;
     }
 
+    @Override
     public List<ValueAxis> getValueAxes() {
         return valueAxes;
     }
 
+    @Override
     public T setValueAxes(List<ValueAxis> valueAxes) {
         this.valueAxes = valueAxes;
         return (T) this;
     }
 
+    @Override
     public T addValueAxes(ValueAxis... valueAxes) {
         if (valueAxes != null) {
             if (this.valueAxes == null) {
@@ -127,15 +134,18 @@ public abstract class CoordinateChart<T extends CoordinateChart> extends Abstrac
         return (T) this;
     }
 
+    @Override
     public List<Guide> getGuides() {
         return guides;
     }
 
+    @Override
     public T setGuides(List<Guide> guides) {
         this.guides = guides;
         return (T) this;
     }
 
+    @Override
     public T addGuides(Guide... guides) {
         if (guides != null) {
             if (this.guides == null) {
@@ -146,37 +156,45 @@ public abstract class CoordinateChart<T extends CoordinateChart> extends Abstrac
         return (T) this;
     }
 
+    @Override
     public Boolean getGridAboveGraphs() {
         return gridAboveGraphs;
     }
 
+    @Override
     public T setGridAboveGraphs(Boolean gridAboveGraphs) {
         this.gridAboveGraphs = gridAboveGraphs;
         return (T) this;
     }
 
+    @Override
     public Boolean getSequencedAnimation() {
         return sequencedAnimation;
     }
 
+    @Override
     public T setSequencedAnimation(Boolean sequencedAnimation) {
         this.sequencedAnimation = sequencedAnimation;
         return (T) this;
     }
 
+    @Override
     public Double getStartAlpha() {
         return startAlpha;
     }
 
+    @Override
     public T setStartAlpha(Double startAlpha) {
         this.startAlpha = startAlpha;
         return (T) this;
     }
 
+    @Override
     public String getUrlTarget() {
         return urlTarget;
     }
 
+    @Override
     public T setUrlTarget(String urlTarget) {
         this.urlTarget = urlTarget;
         return (T) this;

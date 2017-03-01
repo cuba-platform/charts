@@ -8,7 +8,7 @@ package com.haulmont.charts.gui.amcharts.model.gson;
 import com.google.gson.JsonElement;
 import com.google.gson.JsonSerializationContext;
 import com.haulmont.charts.gui.amcharts.model.AbstractChartObject;
-import com.haulmont.charts.gui.amcharts.model.charts.ChartModel;
+import com.haulmont.charts.gui.amcharts.model.charts.ChartModelImpl;
 
 import java.lang.reflect.Type;
 import java.util.ArrayList;
@@ -21,9 +21,9 @@ public class ChartJsonSerializationContext implements JsonSerializationContext {
 
     public static final String DEFAULT_DATE_FORMAT = "yyyy-MM-dd HH:mm:ss:S";
 
-    protected ChartModel chartModel;
+    protected ChartModelImpl chartModel;
 
-    public ChartJsonSerializationContext(ChartModel chartModel) {
+    public ChartJsonSerializationContext(ChartModelImpl chartModel) {
         this.chartModel = chartModel;
     }
 
@@ -37,7 +37,7 @@ public class ChartJsonSerializationContext implements JsonSerializationContext {
         return AbstractChartObject.getSharedGson().toJsonTree(src, typeOfSrc);
     }
 
-    public ChartModel getChartModel() {
+    public ChartModelImpl getChartModel() {
         return chartModel;
     }
 

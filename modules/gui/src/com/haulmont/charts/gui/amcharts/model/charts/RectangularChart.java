@@ -17,7 +17,8 @@ import java.util.List;
  * <a href="http://docs.amcharts.com/3/javascriptcharts/AmRectangularChart">http://docs.amcharts.com/3/javascriptcharts/AmRectangularChart</a>
  */
 @SuppressWarnings("unchecked")
-public abstract class RectangularChart<T extends RectangularChart> extends CoordinateChart<T> implements HasMargins<T> {
+public abstract class RectangularChart<T extends RectangularChart> extends CoordinateChart<T>
+        implements RectangularChartModel<T> {
 
     private static final long serialVersionUID = -5847502638455406714L;
 
@@ -85,33 +86,40 @@ public abstract class RectangularChart<T extends RectangularChart> extends Coord
         super(type);
     }
 
+    @Override
     public Cursor getChartCursor() {
         return chartCursor;
     }
 
+    @Override
     public T setChartCursor(Cursor chartCursor) {
         this.chartCursor = chartCursor;
         return (T) this;
     }
 
+    @Override
     public Scrollbar getChartScrollbar() {
         return chartScrollbar;
     }
 
+    @Override
     public T setChartScrollbar(Scrollbar chartScrollbar) {
         this.chartScrollbar = chartScrollbar;
         return (T) this;
     }
 
+    @Override
     public List<TrendLine> getTrendLines() {
         return trendLines;
     }
 
+    @Override
     public T setTrendLines(List<TrendLine> trendLines) {
         this.trendLines = trendLines;
         return (T) this;
     }
 
+    @Override
     public T addTrendLines(TrendLine... trendLines) {
         if (trendLines != null) {
             if (this.trendLines == null) {
@@ -122,37 +130,45 @@ public abstract class RectangularChart<T extends RectangularChart> extends Coord
         return (T) this;
     }
 
+    @Override
     public Integer getAngle() {
         return angle;
     }
 
+    @Override
     public T setAngle(Integer angle) {
         this.angle = angle;
         return (T) this;
     }
 
+    @Override
     public Integer getAutoMarginOffset() {
         return autoMarginOffset;
     }
 
+    @Override
     public T setAutoMarginOffset(Integer autoMarginOffset) {
         this.autoMarginOffset = autoMarginOffset;
         return (T) this;
     }
 
+    @Override
     public Boolean getAutoMargins() {
         return autoMargins;
     }
 
+    @Override
     public T setAutoMargins(Boolean autoMargins) {
         this.autoMargins = autoMargins;
         return (T) this;
     }
 
+    @Override
     public Integer getDepth3D() {
         return depth3D;
     }
 
+    @Override
     public T setDepth3D(Integer depth3D) {
         this.depth3D = depth3D;
         return (T) this;
@@ -202,172 +218,210 @@ public abstract class RectangularChart<T extends RectangularChart> extends Coord
         return (T) this;
     }
 
+    @Override
     public Boolean getMarginsUpdated() {
         return marginsUpdated;
     }
 
+    @Override
     public T setMarginsUpdated(Boolean marginsUpdated) {
         this.marginsUpdated = marginsUpdated;
         return (T) this;
     }
 
+    @Override
     public Double getPlotAreaBorderAlpha() {
         return plotAreaBorderAlpha;
     }
 
+    @Override
     public T setPlotAreaBorderAlpha(Double plotAreaBorderAlpha) {
         this.plotAreaBorderAlpha = plotAreaBorderAlpha;
         return (T) this;
     }
 
+    @Override
     public Color getPlotAreaBorderColor() {
         return plotAreaBorderColor;
     }
 
+    @Override
     public T setPlotAreaBorderColor(Color plotAreaBorderColor) {
         this.plotAreaBorderColor = plotAreaBorderColor;
         return (T) this;
     }
 
+    @Override
     public Double getPlotAreaFillAlphas() {
         return plotAreaFillAlphas;
     }
 
+    @Override
     public T setPlotAreaFillAlphas(Double plotAreaFillAlphas) {
         this.plotAreaFillAlphas = plotAreaFillAlphas;
         return (T) this;
     }
 
+    @Override
     public Color getPlotAreaFillColors() {
         return plotAreaFillColors;
     }
 
+    @Override
     public T setPlotAreaFillColors(Color plotAreaFillColors) {
         this.plotAreaFillColors = plotAreaFillColors;
         return (T) this;
     }
 
+    @Override
     public Integer getPlotAreaGradientAngle() {
         return plotAreaGradientAngle;
     }
 
+    @Override
     public T setPlotAreaGradientAngle(Integer plotAreaGradientAngle) {
         this.plotAreaGradientAngle = plotAreaGradientAngle;
         return (T) this;
     }
 
+    @Override
     public Double getZoomOutButtonAlpha() {
         return zoomOutButtonAlpha;
     }
 
+    @Override
     public T setZoomOutButtonAlpha(Double zoomOutButtonAlpha) {
         this.zoomOutButtonAlpha = zoomOutButtonAlpha;
         return (T) this;
     }
 
+    @Override
     public Color getZoomOutButtonColor() {
         return zoomOutButtonColor;
     }
 
+    @Override
     public T setZoomOutButtonColor(Color zoomOutButtonColor) {
         this.zoomOutButtonColor = zoomOutButtonColor;
         return (T) this;
     }
 
+    @Override
     public String getZoomOutButtonImage() {
         return zoomOutButtonImage;
     }
 
+    @Override
     public T setZoomOutButtonImage(String zoomOutButtonImage) {
         this.zoomOutButtonImage = zoomOutButtonImage;
         return (T) this;
     }
 
+    @Override
     public Integer getZoomOutButtonImageSize() {
         return zoomOutButtonImageSize;
     }
 
+    @Override
     public T setZoomOutButtonImageSize(Integer zoomOutButtonImageSize) {
         this.zoomOutButtonImageSize = zoomOutButtonImageSize;
         return (T) this;
     }
 
+    @Override
     public Integer getZoomOutButtonPadding() {
         return zoomOutButtonPadding;
     }
 
+    @Override
     public T setZoomOutButtonPadding(Integer zoomOutButtonPadding) {
         this.zoomOutButtonPadding = zoomOutButtonPadding;
         return (T) this;
     }
 
+    @Override
     public Double getZoomOutButtonRollOverAlpha() {
         return zoomOutButtonRollOverAlpha;
     }
 
+    @Override
     public T setZoomOutButtonRollOverAlpha(Double zoomOutButtonRollOverAlpha) {
         this.zoomOutButtonRollOverAlpha = zoomOutButtonRollOverAlpha;
         return (T) this;
     }
 
+    @Override
     public String getZoomOutText() {
         return zoomOutText;
     }
 
+    @Override
     public T setZoomOutText(String zoomOutText) {
         this.zoomOutText = zoomOutText;
         return (T) this;
     }
 
+    @Override
     public Integer getMaxZoomFactor() {
         return maxZoomFactor;
     }
 
+    @Override
     public T setMaxZoomFactor(Integer maxZoomFactor) {
         this.maxZoomFactor = maxZoomFactor;
         return (T) this;
     }
 
+    @Override
     public Integer getMinMarginBottom() {
         return minMarginBottom;
     }
 
+    @Override
     public T setMinMarginBottom(Integer minMarginBottom) {
         this.minMarginBottom = minMarginBottom;
         return (T) this;
     }
 
+    @Override
     public Integer getMinMarginLeft() {
         return minMarginLeft;
     }
 
+    @Override
     public T setMinMarginLeft(Integer minMarginLeft) {
         this.minMarginLeft = minMarginLeft;
         return (T) this;
     }
 
+    @Override
     public Integer getMinMarginRight() {
         return minMarginRight;
     }
 
+    @Override
     public T setMinMarginRight(Integer minMarginRight) {
         this.minMarginRight = minMarginRight;
         return (T) this;
     }
 
+    @Override
     public Integer getMinMarginTop() {
         return minMarginTop;
     }
 
+    @Override
     public T setMinMarginTop(Integer minMarginTop) {
         this.minMarginTop = minMarginTop;
         return (T) this;
     }
 
+    @Override
     public Integer getZoomOutButtonTabIndex() {
         return zoomOutButtonTabIndex;
     }
 
+    @Override
     public T setZoomOutButtonTabIndex(Integer zoomOutButtonTabIndex) {
         this.zoomOutButtonTabIndex = zoomOutButtonTabIndex;
         return (T) this;

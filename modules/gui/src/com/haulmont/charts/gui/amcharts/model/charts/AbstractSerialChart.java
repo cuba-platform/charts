@@ -19,7 +19,8 @@ import java.util.List;
  * <a href="http://docs.amcharts.com/3/javascriptcharts/AmSerialChart">http://docs.amcharts.com/3/javascriptcharts/AmSerialChart</a>
  */
 @SuppressWarnings("unchecked")
-public abstract class AbstractSerialChart<T extends AbstractSerialChart> extends RectangularChart<T> {
+public abstract class AbstractSerialChart<T extends AbstractSerialChart> extends RectangularChart<T>
+        implements SeriesBasedChartModel<T> {
 
     private static final long serialVersionUID = 4097450050182930159L;
 
@@ -59,138 +60,179 @@ public abstract class AbstractSerialChart<T extends AbstractSerialChart> extends
         super(type);
     }
 
+    @Override
     public CategoryAxis getCategoryAxis() {
         return categoryAxis;
     }
 
+    @Override
     public T setCategoryAxis(CategoryAxis categoryAxis) {
         this.categoryAxis = categoryAxis;
         return (T) this;
     }
 
+    @Override
     public String getCategoryField() {
         return categoryField;
     }
 
+    @Override
     public T setCategoryField(String categoryField) {
         this.categoryField = categoryField;
         return (T) this;
     }
 
+    @Override
     public String getBalloonDateFormat() {
         return balloonDateFormat;
     }
 
+    @Override
     public T setBalloonDateFormat(String balloonDateFormat) {
         this.balloonDateFormat = balloonDateFormat;
         return (T) this;
     }
 
+    @Override
     public Integer getColumnSpacing3D() {
         return columnSpacing3D;
     }
 
+    @Override
     public T setColumnSpacing3D(Integer columnSpacing3D) {
         this.columnSpacing3D = columnSpacing3D;
         return (T) this;
     }
 
+    @Override
     public Integer getColumnSpacing() {
         return columnSpacing;
     }
 
+    @Override
     public T setColumnSpacing(Integer columnSpacing) {
         this.columnSpacing = columnSpacing;
         return (T) this;
     }
 
+    @Override
     public Double getColumnWidth() {
         return columnWidth;
     }
 
+    @Override
     public T setColumnWidth(Double columnWidth) {
         this.columnWidth = columnWidth;
         return (T) this;
     }
 
+    @Override
     public String getDataDateFormat() {
         return dataDateFormat;
     }
 
+    @Override
     public T setDataDateFormat(String dataDateFormat) {
         this.dataDateFormat = dataDateFormat;
         return (T) this;
     }
 
+    @Override
     public Integer getMaxSelectedSeries() {
         return maxSelectedSeries;
     }
 
+    @Override
     public T setMaxSelectedSeries(Integer maxSelectedSeries) {
         this.maxSelectedSeries = maxSelectedSeries;
         return (T) this;
     }
 
+    @Override
     public Long getMaxSelectedTime() {
         return maxSelectedTime;
     }
 
+    @Override
     public T setMaxSelectedTime(Long maxSelectedTime) {
         this.maxSelectedTime = maxSelectedTime;
         return (T) this;
     }
 
+    @Override
     public Long getMinSelectedTime() {
         return minSelectedTime;
     }
 
+    @Override
     public T setMinSelectedTime(Long minSelectedTime) {
         this.minSelectedTime = minSelectedTime;
         return (T) this;
     }
 
+    @Override
     public Boolean getMouseWheelScrollEnabled() {
         return mouseWheelScrollEnabled;
     }
 
+    @Override
     public T setMouseWheelScrollEnabled(Boolean mouseWheelScrollEnabled) {
         this.mouseWheelScrollEnabled = mouseWheelScrollEnabled;
         return (T) this;
     }
 
+    @Override
     public Boolean getRotate() {
         return rotate;
     }
 
+    @Override
     public T setRotate(Boolean rotate) {
         this.rotate = rotate;
         return (T) this;
     }
 
+    @Override
     public Boolean getZoomOutOnDataUpdate() {
         return zoomOutOnDataUpdate;
     }
 
+    @Override
     public T setZoomOutOnDataUpdate(Boolean zoomOutOnDataUpdate) {
         this.zoomOutOnDataUpdate = zoomOutOnDataUpdate;
         return (T) this;
     }
 
+    @Override
     public Boolean getMouseWheelZoomEnabled() {
         return mouseWheelZoomEnabled;
     }
 
+    @Override
     public T setMouseWheelZoomEnabled(Boolean mouseWheelZoomEnabled) {
         this.mouseWheelZoomEnabled = mouseWheelZoomEnabled;
         return (T) this;
     }
 
+    @Override
     public Scrollbar getValueScrollbar() {
         return valueScrollbar;
     }
 
+    @Override
     public T setValueScrollbar(Scrollbar valueScrollbar) {
         this.valueScrollbar = valueScrollbar;
+        return (T) this;
+    }
+
+    @Override
+    public Boolean getSynchronizeGrid() {
+        return synchronizeGrid;
+    }
+
+    @Override
+    public T setSynchronizeGrid(Boolean synchronizeGrid) {
+        this.synchronizeGrid = synchronizeGrid;
         return (T) this;
     }
 
@@ -211,14 +253,5 @@ public abstract class AbstractSerialChart<T extends AbstractSerialChart> extends
         }
 
         return wiredFields;
-    }
-
-    public Boolean getSynchronizeGrid() {
-        return synchronizeGrid;
-    }
-
-    public T setSynchronizeGrid(Boolean synchronizeGrid) {
-        this.synchronizeGrid = synchronizeGrid;
-        return (T) this;
     }
 }

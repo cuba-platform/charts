@@ -6,7 +6,6 @@
 package com.haulmont.charts.gui.amcharts.model.charts;
 
 import com.haulmont.charts.gui.amcharts.model.ChartType;
-import com.haulmont.charts.gui.amcharts.model.HasMargins;
 import org.apache.commons.lang.StringUtils;
 
 import java.util.ArrayList;
@@ -17,7 +16,7 @@ import java.util.List;
  *
  * <a href="http://docs.amcharts.com/3/javascriptcharts/AmRadarChart">http://docs.amcharts.com/3/javascriptcharts/AmRadarChart</a>
  */
-public class RadarChart extends CoordinateChart<RadarChart> implements HasMargins<RadarChart> {
+public class RadarChart extends CoordinateChart<RadarChart> implements RadarChartModel<RadarChart> {
 
     private static final long serialVersionUID = 7721119324768771106L;
 
@@ -37,10 +36,12 @@ public class RadarChart extends CoordinateChart<RadarChart> implements HasMargin
         super(ChartType.RADAR);
     }
 
+    @Override
     public String getCategoryField() {
         return categoryField;
     }
 
+    @Override
     public RadarChart setCategoryField(String categoryField) {
         this.categoryField = categoryField;
         return this;
@@ -90,10 +91,12 @@ public class RadarChart extends CoordinateChart<RadarChart> implements HasMargin
         return this;
     }
 
+    @Override
     public String getRadius() {
         return radius;
     }
 
+    @Override
     public RadarChart setRadius(String radius) {
         this.radius = radius;
         return this;

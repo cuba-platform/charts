@@ -5,10 +5,13 @@
   -->
 
 <window xmlns="http://schemas.haulmont.com/cuba/window.xsd"
+        xmlns:chart="http://schemas.haulmont.com/charts/charts.xsd"
         caption="msg://screenCaption"
         class="com.haulmont.charts.web.ui.JsonChartController"
-        messagesPack="com.haulmont.charts.web.ui"
-        >
+        messagesPack="com.haulmont.charts.web.ui">
     <layout height="100%">
+        <chart:customChart id="reportJsonChart"
+                           width="100%"
+                           height="100%"/>
     </layout>
 </window>

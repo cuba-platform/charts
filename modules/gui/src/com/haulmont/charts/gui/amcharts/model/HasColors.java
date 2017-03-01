@@ -11,4 +11,5 @@ public interface HasColors<T> {
 
     List<Color> getColors();
     T setColors(List<Color> colors);
+    T addColors(Color... colors);
 }

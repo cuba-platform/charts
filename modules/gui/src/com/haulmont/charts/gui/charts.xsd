@@ -1661,6 +1661,18 @@
         </xs:complexType>
     </xs:element>
 
+    <xs:element name="customChart">
+        <xs:complexType>
+            <xs:complexContent>
+                <xs:extension base="baseComponent">
+                    <xs:sequence>
+                        <xs:element name="nativeJson" minOccurs="0" maxOccurs="1"/>
+                    </xs:sequence>
+                </xs:extension>
+            </xs:complexContent>
+        </xs:complexType>
+    </xs:element>
+
     <!-- Maps -->
     <xs:element name="mapViewer">
         <xs:complexType>

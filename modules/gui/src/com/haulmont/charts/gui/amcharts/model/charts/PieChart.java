@@ -18,7 +18,7 @@ import java.util.List;
  *
  * <a href="http://docs.amcharts.com/3/javascriptcharts/AmPieChart">http://docs.amcharts.com/3/javascriptcharts/AmPieChart</a>
  */
-public class PieChart extends SlicedChart<PieChart> {
+public class PieChart extends SlicedChart<PieChart> implements PieChartModel<PieChart> {
 
     private static final long serialVersionUID = 7721119324768771106L;
 
@@ -62,138 +62,201 @@ public class PieChart extends SlicedChart<PieChart> {
         super(ChartType.PIE);
     }
 
+    @Override
     public Integer getAngle() {
         return angle;
     }
 
+    @Override
     public PieChart setAngle(Integer angle) {
         this.angle = angle;
         return this;
     }
 
+    @Override
     public String getBalloonText() {
         return balloonText;
     }
 
+    @Override
     public PieChart setBalloonText(String balloonText) {
         this.balloonText = balloonText;
         return this;
     }
 
+    @Override
     public Integer getDepth3D() {
         return depth3D;
     }
 
+    @Override
     public PieChart setDepth3D(Integer depth3D) {
         this.depth3D = depth3D;
         return this;
     }
 
+    @Override
     public String getInnerRadius() {
         return innerRadius;
     }
 
+    @Override
     public PieChart setInnerRadius(String innerRadius) {
         this.innerRadius = innerRadius;
         return this;
     }
 
+    @Override
     public Integer getLabelRadius() {
         return labelRadius;
     }
 
+    @Override
     public PieChart setLabelRadius(Integer labelRadius) {
         this.labelRadius = labelRadius;
         return this;
     }
 
+    @Override
     public String getLabelRadiusField() {
         return labelRadiusField;
     }
 
+    @Override
     public PieChart setLabelRadiusField(String labelRadiusField) {
         this.labelRadiusField = labelRadiusField;
         return this;
     }
 
+    @Override
     public String getLabelText() {
         return labelText;
     }
 
+    @Override
     public PieChart setLabelText(String labelText) {
         this.labelText = labelText;
         return this;
     }
 
+    @Override
     public Integer getMinRadius() {
         return minRadius;
     }
 
+    @Override
     public PieChart setMinRadius(Integer minRadius) {
         this.minRadius = minRadius;
         return this;
     }
 
+    @Override
     public Double getPieAlpha() {
         return pieAlpha;
     }
 
+    @Override
     public PieChart setPieAlpha(Double pieAlpha) {
         this.pieAlpha = pieAlpha;
         return this;
     }
 
+    @Override
     public String getPieX() {
         return pieX;
     }
 
+    @Override
     public PieChart setPieX(String pieX) {
         this.pieX = pieX;
         return this;
     }
 
+    @Override
     public String getPieY() {
         return pieY;
     }
 
+    @Override
     public PieChart setPieY(String pieY) {
         this.pieY = pieY;
         return this;
     }
 
+    @Override
     public String getPullOutRadius() {
         return pullOutRadius;
     }
 
+    @Override
     public PieChart setPullOutRadius(String pullOutRadius) {
         this.pullOutRadius = pullOutRadius;
         return this;
     }
 
+    @Override
     public String getRadius() {
         return radius;
     }
 
+    @Override
     public PieChart setRadius(String radius) {
         this.radius = radius;
         return this;
     }
 
+    @Override
     public Integer getStartAngle() {
         return startAngle;
     }
 
+    @Override
     public PieChart setStartAngle(Integer startAngle) {
         this.startAngle = startAngle;
         return this;
     }
 
+    @Override
     public String getStartRadius() {
         return startRadius;
     }
 
+    @Override
     public PieChart setStartRadius(String startRadius) {
         this.startRadius = startRadius;
+        return this;
+    }
+
+    @Override
+    public Boolean getAdjustPrecision() {
+        return adjustPrecision;
+    }
+
+    @Override
+    public PieChart setAdjustPrecision(Boolean adjustPrecision) {
+        this.adjustPrecision = adjustPrecision;
+        return this;
+    }
+
+    @Override
+    public JsFunction getBalloonFunction() {
+        return balloonFunction;
+    }
+
+    @Override
+    public PieChart setBalloonFunction(JsFunction balloonFunction) {
+        this.balloonFunction = balloonFunction;
+        return this;
+    }
+
+    @Override
+    public GradientType getGradientType() {
+        return gradientType;
+    }
+
+    @Override
+    public PieChart setGradientType(GradientType gradientType) {
+        this.gradientType = gradientType;
         return this;
     }
 
@@ -206,32 +269,5 @@ public class PieChart extends SlicedChart<PieChart> {
         }
 
         return wiredFields;
-    }
-
-    public Boolean getAdjustPrecision() {
-        return adjustPrecision;
-    }
-
-    public PieChart setAdjustPrecision(Boolean adjustPrecision) {
-        this.adjustPrecision = adjustPrecision;
-        return this;
-    }
-
-    public JsFunction getBalloonFunction() {
-        return balloonFunction;
-    }
-
-    public PieChart setBalloonFunction(JsFunction balloonFunction) {
-        this.balloonFunction = balloonFunction;
-        return this;
-    }
-
-    public GradientType getGradientType() {
-        return gradientType;
-    }
-
-    public PieChart setGradientType(GradientType gradientType) {
-        this.gradientType = gradientType;
-        return this;
     }
 }

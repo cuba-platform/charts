@@ -5,12 +5,13 @@
 
 package com.haulmont.charts.gui.xml.layout.loaders.charts;
 
-import com.haulmont.charts.gui.amcharts.model.charts.SerialChart;
+import com.haulmont.charts.gui.components.charts.SerialChart;
 
 public class SerialChartLoader extends AbstractSerialChartLoader<SerialChart> {
 
     @Override
-    protected SerialChart createConfiguration() {
-        return new SerialChart();
+    public void createComponent() {
+        resultComponent = factory.createComponent(SerialChart.class);
+        loadId(resultComponent, element);
     }
 }

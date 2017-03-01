@@ -6,20 +6,24 @@
 package com.haulmont.charts.gui.xml.layout.loaders.charts;
 
 import com.haulmont.charts.gui.amcharts.model.GradientType;
+import com.haulmont.charts.gui.components.charts.PieChart;
 import com.haulmont.charts.gui.model.JsFunction;
-import com.haulmont.charts.gui.amcharts.model.charts.PieChart;
 import org.apache.commons.lang.StringUtils;
 import org.dom4j.Element;
 
 public class PieChartLoader extends SlicedChartLoader<PieChart> {
 
     @Override
+    public void createComponent() {
+        resultComponent = factory.createComponent(PieChart.class);
+        loadId(resultComponent, element);
+    }
+
+    @Override
     public void loadComponent() {
         super.loadComponent();
 
-        PieChart configuration = new PieChart();
-        loadConfiguration(configuration, element);
-        resultComponent.setConfiguration(configuration);
+        loadConfiguration(resultComponent, element);
     }
 
     @Override

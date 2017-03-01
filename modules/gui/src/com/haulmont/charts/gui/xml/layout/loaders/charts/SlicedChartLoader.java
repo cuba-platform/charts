@@ -7,8 +7,8 @@ package com.haulmont.charts.gui.xml.layout.loaders.charts;
 
 import com.haulmont.charts.gui.amcharts.model.AnimationEffect;
 import com.haulmont.charts.gui.amcharts.model.Color;
+import com.haulmont.charts.gui.components.charts.SlicedChart;
 import com.haulmont.charts.gui.model.JsFunction;
-import com.haulmont.charts.gui.amcharts.model.charts.SlicedChart;
 import org.apache.commons.lang.StringUtils;
 import org.dom4j.Element;
 

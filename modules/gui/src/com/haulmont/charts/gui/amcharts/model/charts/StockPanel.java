@@ -15,15 +15,15 @@ import java.util.List;
 
 /**
  * See documentation for properties of StockPanel JS object. <br>
- *
+ * <br>
  * <a href="http://docs.amcharts.com/3/javascriptstockchart/StockPanel">http://docs.amcharts.com/3/javascriptstockchart/StockPanel</a>
  */
-public class StockPanel extends AbstractSerialChart<StockPanel> {
+public class StockPanel extends AbstractSerialChart<StockPanel> implements SeriesBasedChartModel<StockPanel> {
 
     private static final long serialVersionUID = 3129940127141352054L;
 
     private String id;
-    
+
     private Boolean allowTurningOff;
 
     private Boolean drawingIconsEnabled;
@@ -59,7 +59,7 @@ public class StockPanel extends AbstractSerialChart<StockPanel> {
     private Integer trendLineThickness;
 
     public StockPanel() {
-        super(null);
+        super(ChartType.SERIAL);
         this.id = UuidProvider.createUuid().toString();
     }
 

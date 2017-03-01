@@ -6,7 +6,7 @@
 package com.haulmont.charts.gui.xml.layout.loaders.charts;
 
 import com.haulmont.charts.gui.amcharts.model.*;
-import com.haulmont.charts.gui.amcharts.model.charts.AngularGaugeChart;
+import com.haulmont.charts.gui.components.charts.AngularGaugeChart;
 import com.haulmont.charts.gui.model.JsFunction;
 import org.apache.commons.lang.StringUtils;
 import org.dom4j.Element;
@@ -19,12 +19,16 @@ public class AngularGaugeChartLoader extends AbstractChartLoader<AngularGaugeCha
     protected static final java.util.regex.Pattern GRADIENT_RATIO_PATTERN = java.util.regex.Pattern.compile("\\s*,\\s*");
 
     @Override
+    public void createComponent() {
+        resultComponent = factory.createComponent(AngularGaugeChart.class);
+        loadId(resultComponent, element);
+    }
+
+    @Override
     public void loadComponent() {
         super.loadComponent();
 
-        AngularGaugeChart configuration = new AngularGaugeChart();
-        loadConfiguration(configuration, element);
-        resultComponent.setConfiguration(configuration);
+        loadConfiguration(resultComponent, element);
     }
 
     @Override

@@ -7,19 +7,23 @@ package com.haulmont.charts.gui.xml.layout.loaders.charts;
 
 import com.haulmont.charts.gui.amcharts.model.FunnelValueRepresentation;
 import com.haulmont.charts.gui.amcharts.model.LabelPosition;
-import com.haulmont.charts.gui.amcharts.model.charts.FunnelChart;
+import com.haulmont.charts.gui.components.charts.FunnelChart;
 import org.apache.commons.lang.StringUtils;
 import org.dom4j.Element;
 
 public class FunnelChartLoader extends SlicedChartLoader<FunnelChart> {
 
     @Override
+    public void createComponent() {
+        resultComponent = factory.createComponent(FunnelChart.class);
+        loadId(resultComponent, element);
+    }
+
+    @Override
     public void loadComponent() {
         super.loadComponent();
 
-        FunnelChart configuration = new FunnelChart();
-        loadConfiguration(configuration, element);
-        resultComponent.setConfiguration(configuration);
+        loadConfiguration(resultComponent, element);
     }
 
     @Override

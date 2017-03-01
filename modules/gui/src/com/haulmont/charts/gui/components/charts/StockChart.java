@@ -9,27 +9,28 @@ import com.haulmont.charts.gui.amcharts.model.DatePeriod;
 import com.haulmont.charts.gui.amcharts.model.PeriodType;
 import com.haulmont.charts.gui.amcharts.model.StockEvent;
 import com.haulmont.charts.gui.amcharts.model.charts.StockChartGroup;
+import com.haulmont.charts.gui.amcharts.model.charts.StockChartModel;
 import com.haulmont.cuba.core.entity.Entity;
 import com.haulmont.cuba.gui.components.Component;
 import com.haulmont.cuba.gui.data.CollectionDatasource;
 
 import java.util.Date;
 
-public interface StockChart extends Component, Component.BelongToFrame, Component.HasXmlDescriptor, Component.HasIcon,
-                                    Component.HasCaption {
+/**
+ * See documentation for properties of AmStockChart JS object.
+ * <br>
+ * <a href="http://docs.amcharts.com/3/javascriptstockchart/AmStockChart">http://docs.amcharts.com/3/javascriptstockchart/AmStockChart</a>
+ */
+public interface StockChart extends Component, StockChartModel<StockChart>, Component.BelongToFrame,
+                                    Component.HasXmlDescriptor, Component.HasIcon, Component.HasCaption {
     String NAME = "stockChart";
 
     /**
+     * @deprecated Use properties of StockChart directly
      * @return client-specific implementation of chart
      */
+    @Deprecated
     StockChartGroup getConfiguration();
-
-    /**
-     * Sets client-specific implementation of chart.
-     *
-     * @param chart client-specific implementation of chart
-     */
-    void setConfiguration(StockChartGroup chart);
 
     /**
      * Bind dataset with given datasource.
@@ -56,8 +57,8 @@ public interface StockChart extends Component, Component.BelongToFrame, Componen
     void addClickListener(StockChartClickListener clickListener);
     void removeClickListener(StockChartClickListener clickListener);
 
-    void addRightClickListener(StockChartClickListener clickListener);
-    void removeRightClickListener(StockChartClickListener clickListener);
+    void addRightClickListener(StockChartRightClickListener clickListener);
+    void removeRightClickListener(StockChartRightClickListener clickListener);
 
     void addStockEventClickListener(StockEventClickListener clickListener);
     void removeStockEventClickListener(StockEventClickListener clickListener);
@@ -95,8 +96,8 @@ public interface StockChart extends Component, Component.BelongToFrame, Componen
     void addStockGraphItemClickListener(StockGraphItemClickListener clickListener);
     void removeStockGraphItemClickListener(StockGraphItemClickListener clickListener);
 
-    void addStockGraphItemRightClickListener(StockGraphItemClickListener clickListener);
-    void removeStockGraphItemRightClickListener(StockGraphItemClickListener clickListener);
+    void addStockGraphItemRightClickListener(StockGraphItemRightClickListener clickListener);
+    void removeStockGraphItemRightClickListener(StockGraphItemRightClickListener clickListener);
 
     void addStockGraphItemRollOutListener(StockGraphItemRollOutListener rollOutListener);
     void removeStockGraphItemRollOutListener(StockGraphItemRollOutListener rollOutListener);
@@ -114,17 +115,13 @@ public interface StockChart extends Component, Component.BelongToFrame, Componen
      */
     String getNativeJson();
 
-    /**
-     * Describes stock chart click event.
-     */
-    class StockChartClickEvent {
-
+    abstract class AbstractStockChartClickEvent {
         private final int x;
         private final int y;
         private final int absoluteX;
         private final int absoluteY;
 
-        public StockChartClickEvent(int x, int y, int absoluteX, int absoluteY) {
+        public AbstractStockChartClickEvent(int x, int y, int absoluteX, int absoluteY) {
             this.x = x;
             this.y = y;
             this.absoluteX = absoluteX;
@@ -161,6 +158,15 @@ public interface StockChart extends Component, Component.BelongToFrame, Componen
     }
 
     /**
+     * Describes stock chart click event.
+     */
+    class StockChartClickEvent extends AbstractStockChartClickEvent {
+        public StockChartClickEvent(int x, int y, int absoluteX, int absoluteY) {
+            super(x, y, absoluteX, absoluteY);
+        }
+    }
+
+    /**
      * Listener to the stock chart click events.
      */
     interface StockChartClickListener {
@@ -170,6 +176,27 @@ public interface StockChart extends Component, Component.BelongToFrame, Componen
          * @param event event object
          */
         void onClick(StockChartClickEvent event);
+    }
+
+    /**
+     * Describes stock chart right click event.
+     */
+    class StockChartRightClickEvent extends AbstractStockChartClickEvent {
+        public StockChartRightClickEvent(int x, int y, int absoluteX, int absoluteY) {
+            super(x, y, absoluteX, absoluteY);
+        }
+    }
+
+    /**
+     * Listener to the stock chart right click events.
+     */
+    interface StockChartRightClickListener {
+        /**
+         * Called when user clicks on the stock chart.
+         *
+         * @param event event object
+         */
+        void onRightClick(StockChartRightClickEvent event);
     }
 
     /**
@@ -719,6 +746,28 @@ public interface StockChart extends Component, Component.BelongToFrame, Componen
          * @param event event object
          */
         void onClick(StockGraphItemClickEvent event);
+    }
+
+    /**
+     * Describes stock graph item click event.
+     */
+    class StockGraphItemRightClickEvent extends AbstractStockGraphItemEvent {
+        public StockGraphItemRightClickEvent(String panelId, String graphId, Entity item, int itemIndex,
+                                             int x, int y, int absoluteX, int absoluteY) {
+            super(panelId, graphId, item, itemIndex, x, y, absoluteX, absoluteY);
+        }
+    }
+
+    /**
+     * Listener to the stock graph item right click events.
+     */
+    interface StockGraphItemRightClickListener {
+        /**
+         * Called when user clicks on the stock graph item.
+         *
+         * @param event event object
+         */
+        void onClick(StockGraphItemRightClickEvent event);
     }
 
     /**

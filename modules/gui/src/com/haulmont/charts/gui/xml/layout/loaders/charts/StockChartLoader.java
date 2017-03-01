@@ -7,13 +7,13 @@ package com.haulmont.charts.gui.xml.layout.loaders.charts;
 
 import com.google.gson.JsonParser;
 import com.google.gson.JsonSyntaxException;
+import com.haulmont.bali.util.Dom4j;
 import com.haulmont.charts.gui.amcharts.model.*;
-import com.haulmont.charts.gui.amcharts.model.charts.StockChartGroup;
 import com.haulmont.charts.gui.amcharts.model.charts.StockPanel;
 import com.haulmont.charts.gui.amcharts.model.data.MapDataItem;
+import com.haulmont.charts.gui.components.charts.StockChart;
 import com.haulmont.charts.gui.data.EntityDataProvider;
 import com.haulmont.charts.gui.data.ListDataProvider;
-import com.haulmont.charts.gui.components.charts.StockChart;
 import com.haulmont.cuba.gui.GuiDevelopmentException;
 import com.haulmont.cuba.gui.data.CollectionDatasource;
 import com.haulmont.cuba.gui.data.Datasource;
@@ -25,7 +25,7 @@ import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 
-public class StockChartLoader extends ChartModelLoader<StockChartGroup, StockChart> {
+public class StockChartLoader extends ChartModelLoader<StockChart> {
 
     @Override
     public void createComponent() {
@@ -48,17 +48,11 @@ public class StockChartLoader extends ChartModelLoader<StockChartGroup, StockCha
         loadCaption(resultComponent, element);
         loadDescription(resultComponent, element);
 
-        StockChartGroup configuration = createConfiguration();
-        loadConfiguration(configuration, element);
-        loadChartData(configuration, element);
-        resultComponent.setConfiguration(configuration);
+        loadConfiguration(resultComponent, element);
+        loadChartData(resultComponent, element);
     }
 
-    protected StockChartGroup createConfiguration() {
-        return new StockChartGroup();
-    }
-
-    protected void loadConfiguration(StockChartGroup chart, Element element) {
+    protected void loadConfiguration(StockChart chart, Element element) {
         loadCategoryAxesSettings(chart, element);
         loadChartCursorSettings(chart, element);
         loadChartScrollbarSettings(chart, element);
@@ -182,7 +176,7 @@ public class StockChartLoader extends ChartModelLoader<StockChartGroup, StockCha
         }
     }
 
-    protected void loadChartData(StockChartGroup chart, Element element) {
+    protected void loadChartData(StockChart chart, Element element) {
         Element dataProvider = element.element("data");
         if (dataProvider != null) {
             for (Object data : dataProvider.elements("dataSet")) {
@@ -196,7 +190,7 @@ public class StockChartLoader extends ChartModelLoader<StockChartGroup, StockCha
                         Element itemElement = (Element) item;
                         MapDataItem mapDataItem = new MapDataItem();
 
-                        for (Element property : (List<Element>) itemElement.elements("property")) {
+                        for (Element property : Dom4j.elements(itemElement, "property")) {
                             mapDataItem = loadDataItem(property, mapDataItem);
                         }
 
@@ -210,14 +204,13 @@ public class StockChartLoader extends ChartModelLoader<StockChartGroup, StockCha
         }
     }
 
-    protected void loadPanels(StockChartGroup chart, Element element) {
+    protected void loadPanels(StockChart chart, Element element) {
         Element panelsElement = element.element("panels");
         if (panelsElement != null) {
             for (Object panelItem : panelsElement.elements("panel")) {
                 Element panelElement = (Element) panelItem;
-                StockPanelLoader panelLoader = new StockPanelLoader();
                 StockPanel stockPanel = new StockPanel();
-                panelLoader.loadConfiguration(stockPanel, panelElement);
+                loadStockPanel(stockPanel, panelElement);
                 chart.addPanels(stockPanel);
             }
         }
@@ -431,7 +424,7 @@ public class StockChartLoader extends ChartModelLoader<StockChartGroup, StockCha
         }
     }
 
-    protected void loadLegendSettings(StockChartGroup chart, Element element) {
+    protected void loadLegendSettings(StockChart chart, Element element) {
         Element legendSettingsElement = element.element("legendSettings");
         if (legendSettingsElement != null) {
             LegendSettings legendSettings = new LegendSettings();
@@ -570,7 +563,7 @@ public class StockChartLoader extends ChartModelLoader<StockChartGroup, StockCha
         }
     }
 
-    protected void loadDataSetSelector(StockChartGroup chart, Element element) {
+    protected void loadDataSetSelector(StockChart chart, Element element) {
         Element dataSetSelectorElement = element.element("dataSetSelector");
         if (dataSetSelectorElement != null) {
             DataSetSelector dataSetSelector = new DataSetSelector();
@@ -608,7 +601,7 @@ public class StockChartLoader extends ChartModelLoader<StockChartGroup, StockCha
         }
     }
 
-    protected void loadChartCursorSettings(StockChartGroup chart, Element element) {
+    protected void loadChartCursorSettings(StockChart chart, Element element) {
         Element settingsElement = element.element("chartCursorSettings");
         if (settingsElement != null) {
             ChartCursorSettings chartCursorSettings = new ChartCursorSettings();
@@ -742,7 +735,7 @@ public class StockChartLoader extends ChartModelLoader<StockChartGroup, StockCha
         }
     }
 
-    protected void loadChartScrollbarSettings(StockChartGroup chart, Element element) {
+    protected void loadChartScrollbarSettings(StockChart chart, Element element) {
         Element settingsElement = element.element("chartScrollbarSettings");
         if (settingsElement != null) {
             ChartScrollbarSettings chartScrollbarSettings = new ChartScrollbarSettings();
@@ -906,7 +899,7 @@ public class StockChartLoader extends ChartModelLoader<StockChartGroup, StockCha
         }
     }
 
-    protected void loadCategoryAxesSettings(StockChartGroup chart, Element element) {
+    protected void loadCategoryAxesSettings(StockChart chart, Element element) {
         Element settingsElement = element.element("categoryAxesSettings");
         if (settingsElement != null) {
             CategoryAxesSettings categoryAxesSettings = new CategoryAxesSettings();
@@ -1085,7 +1078,7 @@ public class StockChartLoader extends ChartModelLoader<StockChartGroup, StockCha
         }
     }
 
-    protected void loadPeriodSelector(StockChartGroup chart, Element element) {
+    protected void loadPeriodSelector(StockChart chart, Element element) {
         Element periodSelectorElement = element.element("periodSelector");
         if (periodSelectorElement != null) {
 
@@ -1181,7 +1174,7 @@ public class StockChartLoader extends ChartModelLoader<StockChartGroup, StockCha
         }
     }
 
-    protected void loadPanelsSettings(StockChartGroup chart, Element element) {
+    protected void loadPanelsSettings(StockChart chart, Element element) {
         Element panelSettingsElement = element.element("panelsSettings");
         if (panelSettingsElement != null) {
             PanelsSettings panelsSettings = new PanelsSettings();
@@ -1323,7 +1316,7 @@ public class StockChartLoader extends ChartModelLoader<StockChartGroup, StockCha
         }
     }
 
-    protected void loadValueAxesSettings(StockChartGroup chart, Element element) {
+    protected void loadValueAxesSettings(StockChart chart, Element element) {
         Element valueAxesSettingsElement = element.element("valueAxesSettings");
         if (valueAxesSettingsElement != null) {
             ValueAxesSettings valueAxesSettings = new ValueAxesSettings();
@@ -1517,7 +1510,7 @@ public class StockChartLoader extends ChartModelLoader<StockChartGroup, StockCha
         }
     }
 
-    protected void loadStockEventsSettings(StockChartGroup chart, Element element) {
+    protected void loadStockEventsSettings(StockChart chart, Element element) {
         Element stockEventsSettingsElement = element.element("stockEventsSettings");
         if (stockEventsSettingsElement != null) {
             StockEventsSettings stockEventsSettings = new StockEventsSettings();
@@ -1575,6 +1568,269 @@ public class StockChartLoader extends ChartModelLoader<StockChartGroup, StockCha
         String startEffect = element.attributeValue("startEffect");
         if (StringUtils.isNotEmpty(startEffect)) {
             chart.setStartEffect(AnimationEffect.valueOf(startEffect));
+        }
+    }
+
+    protected void loadStockPanel(StockPanel chart, Element element) {
+        loadStockGraphs(chart, element);
+        loadStockLegend(chart, element);
+
+        String id = element.attributeValue("id");
+        if (StringUtils.isNotEmpty(id)) {
+            chart.setId(id);
+        }
+
+        String allowTurningOff = element.attributeValue("allowTurningOff");
+        if (StringUtils.isNotEmpty(allowTurningOff)) {
+            chart.setAllowTurningOff(Boolean.valueOf(allowTurningOff));
+        }
+
+        String drawingIconsEnabled = element.attributeValue("drawingIconsEnabled");
+        if (StringUtils.isNotEmpty(drawingIconsEnabled)) {
+            chart.setDrawingIconsEnabled(Boolean.valueOf(drawingIconsEnabled));
+        }
+
+        Element drawOnAxisElement = element.element("drawOnAxis");
+        if (drawOnAxisElement != null) {
+            chart.setDrawOnAxis(loadValueAxis(drawOnAxisElement));
+        }
+
+        String eraseAll = element.attributeValue("eraseAll");
+        if (StringUtils.isNotEmpty(eraseAll)) {
+            chart.setEraseAll(Boolean.valueOf(eraseAll));
+        }
+
+        String iconSize = element.attributeValue("iconSize");
+        if (StringUtils.isNotEmpty(iconSize)) {
+            chart.setIconSize(Integer.valueOf(iconSize));
+        }
+
+        String percentHeight = element.attributeValue("percentHeight");
+        if (StringUtils.isNotEmpty(percentHeight)) {
+            chart.setPercentHeight(Integer.valueOf(percentHeight));
+        }
+
+        String recalculateFromDate = element.attributeValue("recalculateFromDate");
+        if (StringUtils.isNotEmpty(recalculateFromDate)) {
+            chart.setRecalculateFromDate(loadDate(recalculateFromDate));
+        }
+
+        String recalculateToPercents = element.attributeValue("recalculateToPercents");
+        if (StringUtils.isNotEmpty(recalculateToPercents)) {
+            chart.setRecalculateToPercents(recalculateToPercents);
+        }
+
+        String showCategoryAxis = element.attributeValue("showCategoryAxis");
+        if (StringUtils.isNotEmpty(showCategoryAxis)) {
+            chart.setShowCategoryAxis(Boolean.valueOf(showCategoryAxis));
+        }
+
+        String showComparedOnTop = element.attributeValue("showComparedOnTop");
+        if (StringUtils.isNotEmpty(showComparedOnTop)) {
+            chart.setShowComparedOnTop(Boolean.valueOf(showComparedOnTop));
+        }
+
+        String title = element.attributeValue("title");
+        if (StringUtils.isNotEmpty(title)) {
+            chart.setTitle(title);
+        }
+
+        String trendLineAlpha = element.attributeValue("trendLineAlpha");
+        if (StringUtils.isNotEmpty(trendLineAlpha)) {
+            chart.setTrendLineAlpha(Double.valueOf(trendLineAlpha));
+        }
+
+        String trendLineColor = element.attributeValue("trendLineColor");
+        if (StringUtils.isNotEmpty(trendLineColor)) {
+            chart.setTrendLineColor(Color.valueOf(trendLineColor));
+        }
+
+        String trendLineDashLength = element.attributeValue("trendLineDashLength");
+        if (StringUtils.isNotEmpty(trendLineDashLength)) {
+            chart.setTrendLineDashLength(Integer.valueOf(trendLineDashLength));
+        }
+
+        String trendLineThickness = element.attributeValue("trendLineThickness");
+        if (StringUtils.isNotEmpty(trendLineThickness)) {
+            chart.setTrendLineThickness(Integer.valueOf(trendLineThickness));
+        }
+    }
+
+    protected void loadStockLegend(StockPanel chart, Element element) {
+        Element stockLegendElement = element.element("stockLegend");
+        if (stockLegendElement != null) {
+            StockLegend stockLegend = new StockLegend();
+            loadLegend(stockLegend, stockLegendElement);
+
+            String periodValueTextComparing = stockLegendElement.attributeValue("periodValueTextComparing");
+            if (StringUtils.isNotEmpty(periodValueTextComparing)) {
+                stockLegend.setPeriodValueTextComparing(periodValueTextComparing);
+            }
+
+            String periodValueTextRegular = stockLegendElement.attributeValue("periodValueTextRegular");
+            if (StringUtils.isNotEmpty(periodValueTextRegular)) {
+                stockLegend.setPeriodValueTextRegular(periodValueTextRegular);
+            }
+
+            String valueTextComparing = stockLegendElement.attributeValue("valueTextComparing");
+            if (StringUtils.isNotEmpty(valueTextComparing)) {
+                stockLegend.setValueTextComparing(valueTextComparing);
+            }
+
+            String valueTextRegular = stockLegendElement.attributeValue("valueTextRegular");
+            if (StringUtils.isNotEmpty(valueTextRegular)) {
+                stockLegend.setValueTextRegular(valueTextRegular);
+            }
+
+            chart.setStockLegend(stockLegend);
+        }
+    }
+
+    protected void loadStockGraphs(StockPanel chart, Element element) {
+        Element stockGraphsElement = element.element("stockGraphs");
+        if (stockGraphsElement != null) {
+            for (Object stockGraphItem : stockGraphsElement.elements("stockGraph")) {
+                Element stockGraphElement = (Element) stockGraphItem;
+                StockGraph stockGraph = new StockGraph();
+                loadStockGraph(stockGraph, stockGraphElement);
+                chart.addStockGraphs(stockGraph);
+            }
+        }
+    }
+
+    protected void loadStockGraph(StockGraph stockGraph, Element stockGraphElement) {
+        loadGraph(stockGraph, stockGraphElement);
+
+        String comparable = stockGraphElement.attributeValue("comparable");
+        if (StringUtils.isNotEmpty(comparable)) {
+            stockGraph.setComparable(Boolean.valueOf(comparable));
+        }
+
+        String compareField = stockGraphElement.attributeValue("compareField");
+        if (StringUtils.isNotEmpty(compareField)) {
+            stockGraph.setCompareField(compareField);
+        }
+
+        String compareFromStart = stockGraphElement.attributeValue("compareFromStart");
+        if (StringUtils.isNotEmpty(compareFromStart)) {
+            stockGraph.setCompareFromStart(Boolean.valueOf(compareFromStart));
+        }
+
+        Element compareGraphElement = stockGraphElement.element("compareGraph");
+        if (compareGraphElement != null) {
+            Graph compareGraph = new Graph();
+            loadGraph(compareGraph, compareGraphElement);
+            stockGraph.setCompareGraph(compareGraph);
+        }
+
+        String compareGraphBalloonColor = stockGraphElement.attributeValue("compareGraphBalloonColor");
+        if (StringUtils.isNotEmpty(compareGraphBalloonColor)) {
+            stockGraph.setCompareGraphBalloonColor(Color.valueOf(compareGraphBalloonColor));
+        }
+
+        String compareGraphBalloonFunction = stockGraphElement.elementText("compareGraphBalloonFunction");
+        if (StringUtils.isNotBlank(compareGraphBalloonFunction)) {
+            stockGraph.setCompareGraphBalloonFunction(new com.haulmont.charts.gui.model.JsFunction(compareGraphBalloonFunction));
+        }
+
+        String compareGraphBalloonText = stockGraphElement.attributeValue("compareGraphBalloonText");
+        if (StringUtils.isNotEmpty(compareGraphBalloonText)) {
+            stockGraph.setCompareGraphBalloonText(compareGraphBalloonText);
+        }
+
+        String compareGraphBullet = stockGraphElement.attributeValue("compareGraphBullet");
+        if (StringUtils.isNotEmpty(compareGraphBullet)) {
+            stockGraph.setCompareGraphBullet(compareGraphBullet);
+        }
+
+        String compareGraphBulletBorderAlpha = stockGraphElement.attributeValue("compareGraphBulletBorderAlpha");
+        if (StringUtils.isNotEmpty(compareGraphBulletBorderAlpha)) {
+            stockGraph.setCompareGraphBulletBorderAlpha(Double.valueOf(compareGraphBulletBorderAlpha));
+        }
+
+        String compareGraphBulletBorderColor = stockGraphElement.attributeValue("compareGraphBulletBorderColor");
+        if (StringUtils.isNotEmpty(compareGraphBulletBorderColor)) {
+            stockGraph.setCompareGraphBulletBorderColor(Color.valueOf(compareGraphBulletBorderColor));
+        }
+
+        String compareGraphBulletBorderThickness = stockGraphElement.attributeValue("compareGraphBulletBorderThickness");
+        if (StringUtils.isNotEmpty(compareGraphBulletBorderThickness)) {
+            stockGraph.setCompareGraphBulletBorderThickness(Integer.valueOf(compareGraphBulletBorderThickness));
+        }
+
+        String compareGraphBulletColor = stockGraphElement.attributeValue("compareGraphBulletColor");
+        if (StringUtils.isNotEmpty(compareGraphBulletColor)) {
+            stockGraph.setCompareGraphBulletColor(Color.valueOf(compareGraphBulletColor));
+        }
+
+        String compareGraphBulletSize = stockGraphElement.attributeValue("compareGraphBulletSize");
+        if (StringUtils.isNotEmpty(compareGraphBulletSize)) {
+            stockGraph.setCompareGraphBulletSize(Integer.valueOf(compareGraphBulletSize));
+        }
+
+        String compareGraphCornerRadiusTop = stockGraphElement.attributeValue("compareGraphCornerRadiusTop");
+        if (StringUtils.isNotEmpty(compareGraphCornerRadiusTop)) {
+            stockGraph.setCompareGraphCornerRadiusTop(Integer.valueOf(compareGraphCornerRadiusTop));
+        }
+
+        String compareGraphDashLength = stockGraphElement.attributeValue("compareGraphDashLength");
+        if (StringUtils.isNotEmpty(compareGraphDashLength)) {
+            stockGraph.setCompareGraphDashLength(Integer.valueOf(compareGraphDashLength));
+        }
+
+        String compareGraphFillAlphas = stockGraphElement.attributeValue("compareGraphFillAlphas");
+        if (StringUtils.isNotEmpty(compareGraphFillAlphas)) {
+            stockGraph.setCompareGraphFillAlphas(Double.valueOf(compareGraphFillAlphas));
+        }
+
+        String compareGraphFillColors = stockGraphElement.attributeValue("compareGraphFillColors");
+        if (StringUtils.isNotEmpty(compareGraphFillColors)) {
+            stockGraph.setCompareGraphFillColors(Color.valueOf(compareGraphFillColors));
+        }
+
+        String compareGraphLineAlpha = stockGraphElement.attributeValue("compareGraphLineAlpha");
+        if (StringUtils.isNotEmpty(compareGraphLineAlpha)) {
+            stockGraph.setCompareGraphLineAlpha(Double.valueOf(compareGraphLineAlpha));
+        }
+
+        String compareGraphLineColor = stockGraphElement.attributeValue("compareGraphLineColor");
+        if (StringUtils.isNotEmpty(compareGraphLineColor)) {
+            stockGraph.setCompareGraphLineColor(Color.valueOf(compareGraphLineColor));
+        }
+
+        String compareGraphLineThickness = stockGraphElement.attributeValue("compareGraphLineThickness");
+        if (StringUtils.isNotEmpty(compareGraphLineThickness)) {
+            stockGraph.setCompareGraphLineThickness(Integer.valueOf(compareGraphLineThickness));
+        }
+
+        String compareGraphType = stockGraphElement.attributeValue("compareGraphType");
+        if (StringUtils.isNotEmpty(compareGraphType)) {
+            stockGraph.setCompareGraphType(GraphType.valueOf(compareGraphType));
+        }
+
+        String compareGraphVisibleInLegend = stockGraphElement.attributeValue("compareGraphVisibleInLegend");
+        if (StringUtils.isNotEmpty(compareGraphVisibleInLegend)) {
+            stockGraph.setCompareGraphVisibleInLegend(Boolean.valueOf(compareGraphVisibleInLegend));
+        }
+
+        String periodValue = stockGraphElement.attributeValue("periodValue");
+        if (StringUtils.isNotEmpty(periodValue)) {
+            stockGraph.setPeriodValue(StockGraphValue.valueOf(periodValue));
+        }
+
+        String recalculateValue = stockGraphElement.attributeValue("recalculateValue");
+        if (StringUtils.isNotEmpty(recalculateValue)) {
+            stockGraph.setRecalculateValue(StockGraphValue.valueOf(recalculateValue));
+        }
+
+        String showEventsOnComparedGraphs = stockGraphElement.attributeValue("showEventsOnComparedGraphs");
+        if (StringUtils.isNotEmpty(showEventsOnComparedGraphs)) {
+            stockGraph.setShowEventsOnComparedGraphs(Boolean.valueOf(showEventsOnComparedGraphs));
+        }
+
+        String useDataSetColors = stockGraphElement.attributeValue("useDataSetColors");
+        if (StringUtils.isNotEmpty(useDataSetColors)) {
+            stockGraph.setUseDataSetColors(Boolean.valueOf(useDataSetColors));
         }
     }
 }

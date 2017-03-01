@@ -19,8 +19,7 @@ import java.util.List;
  * <a href="http://docs.amcharts.com/3/javascriptcharts/AmSlicedChart">http://docs.amcharts.com/3/javascriptcharts/AmSlicedChart</a>
  */
 @SuppressWarnings("unchecked")
-public abstract class SlicedChart<T extends SlicedChart> extends AbstractChart<T>
-        implements HasMargins<T>, HasStartEffect<T>, HasColors<T> {
+public abstract class SlicedChart<T extends SlicedChart> extends AbstractChart<T> implements SlicedChartModel<T> {
 
     private static final long serialVersionUID = -9176849613764858438L;
 
@@ -120,37 +119,45 @@ public abstract class SlicedChart<T extends SlicedChart> extends AbstractChart<T
         super(type);
     }
 
+    @Override
     public Double getAlpha() {
         return alpha;
     }
 
+    @Override
     public T setAlpha(Double alpha) {
         this.alpha = alpha;
         return (T) this;
     }
 
+    @Override
     public String getAlphaField() {
         return alphaField;
     }
 
+    @Override
     public T setAlphaField(String alphaField) {
         this.alphaField = alphaField;
         return (T) this;
     }
 
+    @Override
     public Color getBaseColor() {
         return baseColor;
     }
 
+    @Override
     public T setBaseColor(Color baseColor) {
         this.baseColor = baseColor;
         return (T) this;
     }
 
+    @Override
     public String getColorField() {
         return colorField;
     }
 
+    @Override
     public T setColorField(String colorField) {
         this.colorField = colorField;
         return (T) this;
@@ -167,6 +174,7 @@ public abstract class SlicedChart<T extends SlicedChart> extends AbstractChart<T
         return (T) this;
     }
 
+    @Override
     public T addColors(Color... colors) {
         if (colors != null) {
             if (this.colors == null) {
@@ -177,26 +185,31 @@ public abstract class SlicedChart<T extends SlicedChart> extends AbstractChart<T
         return (T) this;
     }
 
+    @Override
     public String getDescriptionField() {
         return descriptionField;
     }
 
+    @Override
     public T setDescriptionField(String descriptionField) {
         this.descriptionField = descriptionField;
         return (T) this;
     }
 
+    @Override
     public List<Double> getGradientRatio() {
         return gradientRatio;
     }
 
+    @Override
     public T setGradientRatio(List<Double> gradientRatio) {
         this.gradientRatio = gradientRatio;
         return (T) this;
     }
 
+    @Override
     public T addGradientRatio(Double... ratios) {
-        if (gradientRatio != null) {
+        if (ratios != null) {
             if (this.gradientRatio == null) {
                 this.gradientRatio = new ArrayList<>();
             }
@@ -205,100 +218,122 @@ public abstract class SlicedChart<T extends SlicedChart> extends AbstractChart<T
         return (T) this;
     }
 
+    @Override
     public Double getGroupedAlpha() {
         return groupedAlpha;
     }
 
+    @Override
     public T setGroupedAlpha(Double groupedAlpha) {
         this.groupedAlpha = groupedAlpha;
         return (T) this;
     }
 
+    @Override
     public Color getGroupedColor() {
         return groupedColor;
     }
 
+    @Override
     public T setGroupedColor(Color groupedColor) {
         this.groupedColor = groupedColor;
         return (T) this;
     }
 
+    @Override
     public String getGroupedDescription() {
         return groupedDescription;
     }
 
+    @Override
     public T setGroupedDescription(String groupedDescription) {
         this.groupedDescription = groupedDescription;
         return (T) this;
     }
 
+    @Override
     public Boolean getGroupedPulled() {
         return groupedPulled;
     }
 
+    @Override
     public T setGroupedPulled(Boolean groupedPulled) {
         this.groupedPulled = groupedPulled;
         return (T) this;
     }
 
+    @Override
     public String getGroupedTitle() {
         return groupedTitle;
     }
 
+    @Override
     public T setGroupedTitle(String groupedTitle) {
         this.groupedTitle = groupedTitle;
         return (T) this;
     }
 
+    @Override
     public Double getGroupPercent() {
         return groupPercent;
     }
 
+    @Override
     public T setGroupPercent(Double groupPercent) {
         this.groupPercent = groupPercent;
         return (T) this;
     }
 
+    @Override
     public Double getHideLabelsPercent() {
         return hideLabelsPercent;
     }
 
+    @Override
     public T setHideLabelsPercent(Double hideLabelsPercent) {
         this.hideLabelsPercent = hideLabelsPercent;
         return (T) this;
     }
 
+    @Override
     public Double getHoverAlpha() {
         return hoverAlpha;
     }
 
+    @Override
     public T setHoverAlpha(Double hoverAlpha) {
         this.hoverAlpha = hoverAlpha;
         return (T) this;
     }
 
+    @Override
     public Boolean getLabelsEnabled() {
         return labelsEnabled;
     }
 
+    @Override
     public T setLabelsEnabled(Boolean labelsEnabled) {
         this.labelsEnabled = labelsEnabled;
         return (T) this;
     }
 
+    @Override
     public Double getLabelTickAlpha() {
         return labelTickAlpha;
     }
 
+    @Override
     public T setLabelTickAlpha(Double labelTickAlpha) {
         this.labelTickAlpha = labelTickAlpha;
         return (T) this;
     }
 
+    @Override
     public Color getLabelTickColor() {
         return labelTickColor;
     }
 
+    @Override
     public T setLabelTickColor(Color labelTickColor) {
         this.labelTickColor = labelTickColor;
         return (T) this;
@@ -348,91 +383,111 @@ public abstract class SlicedChart<T extends SlicedChart> extends AbstractChart<T
         return (T) this;
     }
 
+    @Override
     public Double getOutlineAlpha() {
         return outlineAlpha;
     }
 
+    @Override
     public T setOutlineAlpha(Double outlineAlpha) {
         this.outlineAlpha = outlineAlpha;
         return (T) this;
     }
 
+    @Override
     public Color getOutlineColor() {
         return outlineColor;
     }
 
+    @Override
     public T setOutlineColor(Color outlineColor) {
         this.outlineColor = outlineColor;
         return (T) this;
     }
 
+    @Override
     public Integer getOutlineThickness() {
         return outlineThickness;
     }
 
+    @Override
     public T setOutlineThickness(Integer outlineThickness) {
         this.outlineThickness = outlineThickness;
         return (T) this;
     }
 
+    @Override
     public String getPatternField() {
         return patternField;
     }
 
+    @Override
     public T setPatternField(String patternField) {
         this.patternField = patternField;
         return (T) this;
     }
 
+    @Override
     public String getPulledField() {
         return pulledField;
     }
 
+    @Override
     public T setPulledField(String pulledField) {
         this.pulledField = pulledField;
         return (T) this;
     }
 
+    @Override
     public Integer getPullOutDuration() {
         return pullOutDuration;
     }
 
+    @Override
     public T setPullOutDuration(Integer pullOutDuration) {
         this.pullOutDuration = pullOutDuration;
         return (T) this;
     }
 
+    @Override
     public AnimationEffect getPullOutEffect() {
         return pullOutEffect;
     }
 
+    @Override
     public T setPullOutEffect(AnimationEffect pullOutEffect) {
         this.pullOutEffect = pullOutEffect;
         return (T) this;
     }
 
+    @Override
     public Boolean getPullOutOnlyOne() {
         return pullOutOnlyOne;
     }
 
+    @Override
     public T setPullOutOnlyOne(Boolean pullOutOnlyOne) {
         this.pullOutOnlyOne = pullOutOnlyOne;
         return (T) this;
     }
 
+    @Override
     public Boolean getSequencedAnimation() {
         return sequencedAnimation;
     }
 
+    @Override
     public T setSequencedAnimation(Boolean sequencedAnimation) {
         this.sequencedAnimation = sequencedAnimation;
         return (T) this;
     }
 
+    @Override
     public Double getStartAlpha() {
         return startAlpha;
     }
 
+    @Override
     public T setStartAlpha(Double startAlpha) {
         this.startAlpha = startAlpha;
         return (T) this;
@@ -460,66 +515,135 @@ public abstract class SlicedChart<T extends SlicedChart> extends AbstractChart<T
         return (T) this;
     }
 
+    @Override
     public String getTitleField() {
         return titleField;
     }
 
+    @Override
     public T setTitleField(String titleField) {
         this.titleField = titleField;
         return (T) this;
     }
 
+    @Override
     public String getUrlField() {
         return urlField;
     }
 
+    @Override
     public T setUrlField(String urlField) {
         this.urlField = urlField;
         return (T) this;
     }
 
+    @Override
     public String getUrlTarget() {
         return urlTarget;
     }
 
+    @Override
     public T setUrlTarget(String urlTarget) {
         this.urlTarget = urlTarget;
         return (T) this;
     }
 
+    @Override
     public String getValueField() {
         return valueField;
     }
 
+    @Override
     public T setValueField(String valueField) {
         this.valueField = valueField;
         return (T) this;
     }
 
+    @Override
     public String getVisibleInLegendField() {
         return visibleInLegendField;
     }
 
+    @Override
     public T setVisibleInLegendField(String visibleInLegendField) {
         this.visibleInLegendField = visibleInLegendField;
         return (T) this;
     }
 
+    @Override
     public JsFunction getLabelFunction() {
         return labelFunction;
     }
 
+    @Override
     public T setLabelFunction(JsFunction labelFunction) {
         this.labelFunction = labelFunction;
         return (T) this;
     }
 
+    @Override
     public Integer getMaxLabelWidth() {
         return maxLabelWidth;
     }
 
+    @Override
     public T setMaxLabelWidth(Integer maxLabelWidth) {
         this.maxLabelWidth = maxLabelWidth;
+        return (T) this;
+    }
+
+    @Override
+    public String getClassNameField() {
+        return classNameField;
+    }
+
+    @Override
+    public T setClassNameField(String classNameField) {
+        this.classNameField = classNameField;
+        return (T) this;
+    }
+
+    @Override
+    public Boolean getShowZeroSlices() {
+        return showZeroSlices;
+    }
+
+    @Override
+    public T setShowZeroSlices(Boolean showZeroSlices) {
+        this.showZeroSlices = showZeroSlices;
+        return (T) this;
+    }
+
+    @Override
+    public String getAccessibleLabel() {
+        return accessibleLabel;
+    }
+
+    @Override
+    public T setAccessibleLabel(String accessibleLabel) {
+        this.accessibleLabel = accessibleLabel;
+        return (T) this;
+    }
+
+    @Override
+    public Color getLabelColorField() {
+        return labelColorField;
+    }
+
+    @Override
+    public T setLabelColorField(Color labelColorField) {
+        this.labelColorField = labelColorField;
+        return (T) this;
+    }
+
+    @Override
+    public Integer getTabIndex() {
+        return tabIndex;
+    }
+
+    @Override
+    public T setTabIndex(Integer tabIndex) {
+        this.tabIndex = tabIndex;
         return (T) this;
     }
 
@@ -564,50 +688,5 @@ public abstract class SlicedChart<T extends SlicedChart> extends AbstractChart<T
         }
 
         return wiredFields;
-    }
-
-    public String getClassNameField() {
-        return classNameField;
-    }
-
-    public T setClassNameField(String classNameField) {
-        this.classNameField = classNameField;
-        return (T) this;
-    }
-
-    public Boolean getShowZeroSlices() {
-        return showZeroSlices;
-    }
-
-    public T setShowZeroSlices(Boolean showZeroSlices) {
-        this.showZeroSlices = showZeroSlices;
-        return (T) this;
-    }
-
-    public String getAccessibleLabel() {
-        return accessibleLabel;
-    }
-
-    public T setAccessibleLabel(String accessibleLabel) {
-        this.accessibleLabel = accessibleLabel;
-        return (T) this;
-    }
-
-    public Color getLabelColorField() {
-        return labelColorField;
-    }
-
-    public T setLabelColorField(Color labelColorField) {
-        this.labelColorField = labelColorField;
-        return (T) this;
-    }
-
-    public Integer getTabIndex() {
-        return tabIndex;
-    }
-
-    public T setTabIndex(Integer tabIndex) {
-        this.tabIndex = tabIndex;
-        return (T) this;
     }
 }

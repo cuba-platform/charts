@@ -5,16 +5,14 @@
 
 package com.haulmont.charts.web.gui;
 
-import com.haulmont.charts.gui.components.charts.Chart;
-import com.haulmont.charts.gui.components.charts.StockChart;
+import com.haulmont.charts.gui.components.charts.*;
 import com.haulmont.charts.gui.components.map.GoogleMapViewer;
 import com.haulmont.charts.gui.components.map.MapViewer;
 import com.haulmont.charts.gui.components.pivot.PivotTable;
 import com.haulmont.charts.gui.xml.layout.loaders.charts.*;
 import com.haulmont.charts.gui.xml.layout.loaders.map.MapViewerLoader;
 import com.haulmont.charts.gui.xml.layout.loaders.pivottable.PivotTableLoader;
-import com.haulmont.charts.web.gui.components.charts.amcharts.WebChart;
-import com.haulmont.charts.web.gui.components.charts.amcharts.WebStockChart;
+import com.haulmont.charts.web.gui.components.charts.amcharts.*;
 import com.haulmont.charts.web.gui.components.map.google.WebGoogleMapViewer;
 import com.haulmont.charts.web.gui.components.pivottable.WebPivotTable;
 import com.haulmont.cuba.gui.ComponentPalette;
@@ -54,7 +52,14 @@ public class ChartComponentPalette implements ComponentPalette {
     public Map<String, Class<? extends Component>> getComponents() {
         Map<String, Class<? extends Component>> components = new HashMap<>();
 
-        components.put(Chart.NAME, WebChart.class);
+        components.put(PieChart.NAME, WebPieChart.class);
+        components.put(FunnelChart.NAME, WebFunnelChart.class);
+        components.put(AngularGaugeChart.NAME, WebAngularGaugeChart.class);
+        components.put(RadarChart.NAME, WebRadarChart.class);
+        components.put(SerialChart.NAME, WebSerialChart.class);
+        components.put(GanttChart.NAME, WebGanttChart.class);
+        components.put(XYChart.NAME, WebXYChart.class);
+
         components.put(StockChart.NAME, WebStockChart.class);
 
         components.put(GoogleMapViewer.NAME, WebGoogleMapViewer.class);

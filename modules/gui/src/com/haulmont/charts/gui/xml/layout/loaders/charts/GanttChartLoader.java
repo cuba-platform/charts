@@ -5,10 +5,11 @@
 
 package com.haulmont.charts.gui.xml.layout.loaders.charts;
 
+import com.haulmont.bali.util.Dom4j;
 import com.haulmont.charts.gui.amcharts.model.DatePeriod;
 import com.haulmont.charts.gui.amcharts.model.Graph;
-import com.haulmont.charts.gui.amcharts.model.charts.GanttChart;
 import com.haulmont.charts.gui.amcharts.model.data.MapDataItem;
+import com.haulmont.charts.gui.components.charts.GanttChart;
 import com.haulmont.charts.gui.data.ListDataProvider;
 import org.apache.commons.lang.StringUtils;
 import org.dom4j.Element;
@@ -19,8 +20,9 @@ import java.util.List;
 public class GanttChartLoader extends AbstractSerialChartLoader<GanttChart> {
 
     @Override
-    protected GanttChart createConfiguration() {
-        return new GanttChart();
+    public void createComponent() {
+        resultComponent = factory.createComponent(GanttChart.class);
+        loadId(resultComponent, element);
     }
 
     @Override
@@ -33,8 +35,7 @@ public class GanttChartLoader extends AbstractSerialChartLoader<GanttChart> {
                 Element itemElement = (Element) item;
                 MapDataItem dataItem = new MapDataItem();
 
-                for (Element property : (List<Element>) itemElement.elements("property")) {
-
+                for (Element property : Dom4j.elements(itemElement, "property")) {
                     if (property.elements().size() > 0) {
                         List<MapDataItem> innerItems = new ArrayList<>();
 
@@ -42,7 +43,7 @@ public class GanttChartLoader extends AbstractSerialChartLoader<GanttChart> {
                             Element innerItemElement = (Element) innerItem;
                             MapDataItem innerDataItem = new MapDataItem();
 
-                            for (Element innerProperty : (List<Element>) innerItemElement.elements("property")) {
+                            for (Element innerProperty : Dom4j.elements(innerItemElement, "property")) {
                                 innerDataItem = loadDataItem(innerProperty, innerDataItem);
                             }
 

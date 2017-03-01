@@ -5,42 +5,36 @@
 package com.haulmont.charts.gui.components.charts;
 
 import com.haulmont.charts.gui.amcharts.model.charts.AbstractChart;
+import com.haulmont.charts.gui.amcharts.model.charts.ChartModel;
 import com.haulmont.cuba.core.entity.Entity;
 import com.haulmont.cuba.gui.components.Component;
 import com.haulmont.cuba.gui.data.CollectionDatasource;
 
 import java.util.Date;
 
-public interface Chart extends Component, Component.BelongToFrame, Component.HasXmlDescriptor, Component.HasIcon,
-                               Component.HasCaption {
+/**
+ * Base interface for all *Chart components.
+ *
+ * @param <T> type of builder methods
+ */
+public interface Chart<T extends Chart> extends Component, ChartModel<T>, Component.BelongToFrame, Component.HasXmlDescriptor, Component.HasIcon,
+                                                Component.HasCaption {
+
+    /**
+     * @deprecated Do not create this Component programmatically. Use concrete Chart implementation.
+     */
+    @Deprecated
     String NAME = "chart";
 
     /**
      * @return client-specific implementation of the chart
+     * @deprecated Use concrete Chart implementation.
      */
+    @Deprecated
     AbstractChart getConfiguration();
 
-    /**
-     * Sets client-specific implementation of the chart.
-     *
-     * @param chart client-specific implementation of the chart
-     */
-    void setConfiguration(AbstractChart chart);
-
-    /**
-     * @return if {@code CategoryAxis} parses dates
-     */
-    boolean isByDate();
-
-    /**
-     * Sets value of {@link com.haulmont.charts.gui.amcharts.model.CategoryAxis#setParseDates(Boolean)}
-     *
-     * @param byDate is parse dates
-     */
-    void setByDate(boolean byDate);
-
-    void setDatasource(CollectionDatasource datasource);
     CollectionDatasource getDatasource();
+    void setDatasource(CollectionDatasource datasource);
 
     /**
      * Resend all items and properties to client and repaint chart.
@@ -48,29 +42,11 @@ public interface Chart extends Component, Component.BelongToFrame, Component.Has
      */
     void repaint();
 
-    void addAxisZoomListener(AxisZoomListener listener);
-    void removeAxisZoomListener(AxisZoomListener listener);
-
     void addClickListener(ChartClickListener listener);
     void removeClickListener(ChartClickListener listener);
 
     void addRightClickListener(ChartRightClickListener clickListener);
     void removeRightClickListener(ChartRightClickListener clickListener);
-
-    void addCursorPeriodSelectListener(CursorPeriodSelectListener listener);
-    void removeCursorPeriodSelectListener(CursorPeriodSelectListener listener);
-
-    void addCursorZoomListener(CursorZoomListener listener);
-    void removeCursorZoomListener(CursorZoomListener listener);
-
-    void addGraphClickListener(GraphClickListener listener);
-    void removeGraphClickListener(GraphClickListener listener);
-
-    void addGraphItemClickListener(GraphItemClickListener listener);
-    void removeGraphItemClickListener(GraphItemClickListener listener);
-
-    void addGraphItemRightClickListener(GraphItemRightClickListener clickListener);
-    void removeGraphItemRightClickListener(GraphItemRightClickListener clickListener);
 
     void addLegendItemHideListener(LegendItemHideListener listener);
     void removeLegendItemHideListener(LegendItemHideListener listener);
@@ -84,30 +60,6 @@ public interface Chart extends Component, Component.BelongToFrame, Component.Has
     void addLegendMarkerClickListener(LegendMarkerClickListener listener);
     void removeLegendMarkerClickListener(LegendMarkerClickListener listener);
 
-    void addSliceClickListener(SliceClickListener listener);
-    void removeSliceClickListener(SliceClickListener listener);
-
-    void addSliceRightClickListener(SliceRightClickListener listener);
-    void removeSliceRightClickListener(SliceRightClickListener listener);
-
-    void addSlicePullInListener(SlicePullInListener listener);
-    void removeSlicePullInListener(SlicePullInListener listener);
-
-    void addSlicePullOutListener(SlicePullOutListener listener);
-    void removeSlicePullOutListener(SlicePullOutListener listener);
-
-    void addZoomListener(ZoomListener listener);
-    void removeZoomListener(ZoomListener listener);
-
-    /**
-     * Set responsive option for chart.
-     */
-    void setResponsive(boolean value);
-    /**
-     * @return true if chart has responsive rules.
-     */
-    boolean isResponsive();
-
     /**
      * Set additional JSON configuration as a string.
      * This JSON can override configuration loaded from XML and from Component API.
@@ -117,64 +69,6 @@ public interface Chart extends Component, Component.BelongToFrame, Component.Has
      * @return additional JSON configuration as a string.
      */
     String getNativeJson();
-
-    /**
-     * Zooms out, charts shows all available data.
-     */
-    void zoomOut();
-
-    /**
-     * Zooms the chart by the index of the category.
-     *
-     * @param start start index
-     * @param end   end index
-     */
-    void zoomToIndexes(int start, int end);
-
-    /**
-     * Zooms the chart from one date to another.
-     *
-     * @param start start date
-     * @param end   end date
-     */
-    void zoomToDates(Date start, Date end);
-
-    /**
-     * Zooms out value axes, value axes shows all available data.
-     */
-    void zoomOutValueAxes();
-
-    /**
-     * Zooms out value axis, value axis shows all available data.
-     *
-     * @param id id of value axis
-     */
-    void zoomOutValueAxis(String id);
-
-    /**
-     * Zooms out value axis, value axis shows all available data.
-     *
-     * @param index index of value axis
-     */
-    void zoomOutValueAxis(int index);
-
-    /**
-     * Zooms-in an axis to the provided values.
-     *
-     * @param id         id of value axis
-     * @param startValue start value
-     * @param endValue   end value
-     */
-    void zoomValueAxisToValues(String id, Object startValue, Object endValue);
-
-    /**
-     * Zooms-in an axis to the provided values.
-     *
-     * @param index      index of value axis
-     * @param startValue start value
-     * @param endValue   end value
-     */
-    void zoomValueAxisToValues(int index, Object startValue, Object endValue);
 
     abstract class AbstractItemEvent {
         private final Entity item;

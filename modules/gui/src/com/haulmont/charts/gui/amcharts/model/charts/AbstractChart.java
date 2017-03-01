@@ -26,7 +26,8 @@ import java.util.List;
  * <a href="http://docs.amcharts.com/3/javascriptcharts/AmChart">http://docs.amcharts.com/3/javascriptcharts/AmChart</a>
  */
 @SuppressWarnings("unchecked")
-public abstract class AbstractChart<T extends AbstractChartObject> extends ChartModel {
+public abstract class AbstractChart<T extends AbstractChartObject & ChartModel> extends ChartModelImpl
+        implements ChartModel<T> {
 
     private static final long serialVersionUID = -7360797549413731632L;
 
@@ -138,24 +139,29 @@ public abstract class AbstractChart<T extends AbstractChartObject> extends Chart
     protected AbstractChart() {
     }
 
+    @Override
     public Boolean getAddClassNames() {
         return addClassNames;
     }
 
+    @Override
     public T setAddClassNames(Boolean addClassNames) {
         this.addClassNames = addClassNames;
         return (T) this;
     }
 
+    @Override
     public List<Label> getAllLabels() {
         return allLabels;
     }
 
+    @Override
     public T setAllLabels(List<Label> allLabels) {
         this.allLabels = allLabels;
         return (T) this;
     }
 
+    @Override
     public T addLabels(Label... allLabels) {
         if (allLabels != null) {
             if (this.allLabels == null) {
@@ -166,73 +172,89 @@ public abstract class AbstractChart<T extends AbstractChartObject> extends Chart
         return (T) this;
     }
 
+    @Override
     public Export getExport() {
         return export;
     }
 
+    @Override
     public T setExport(Export amExport) {
         this.export = amExport;
         return (T) this;
     }
 
+    @Override
     public Color getBackgroundColor() {
         return backgroundColor;
     }
 
+    @Override
     public T setBackgroundColor(Color backgroundColor) {
         this.backgroundColor = backgroundColor;
         return (T) this;
     }
 
+    @Override
     public Balloon getBalloon() {
         return balloon;
     }
 
+    @Override
     public T setBalloon(Balloon balloon) {
         this.balloon = balloon;
         return (T) this;
     }
 
+    @Override
     public Legend getLegend() {
         return legend;
     }
 
+    @Override
     public T setLegend(Legend legend) {
         this.legend = legend;
         return (T) this;
     }
 
+    @Override
     public String getDecimalSeparator() {
         return decimalSeparator;
     }
 
+    @Override
     public T setDecimalSeparator(String decimalSeparator) {
         this.decimalSeparator = decimalSeparator;
         return (T) this;
     }
 
+    @Override
     public Integer getPercentPrecision() {
         return percentPrecision;
     }
 
+    @Override
     public T setPercentPrecision(Integer percentPrecision) {
         this.percentPrecision = percentPrecision;
         return (T) this;
     }
 
+    @Override
     public Integer getPrecision() {
         return precision;
     }
 
+    @Override
     public T setPrecision(Integer precision) {
         this.precision = precision;
         return (T) this;
     }
 
+    @Override
     public DataProvider getDataProvider() {
         return dataProvider;
     }
 
+    @Override
     public T setDataProvider(DataProvider dataProvider) {
         this.dataProvider = dataProvider;
         fireDataProviderChanged();
@@ -247,6 +269,7 @@ public abstract class AbstractChart<T extends AbstractChartObject> extends Chart
         }
     }
 
+    @Override
     public T addData(DataItem... dataItems) {
         if (dataItems != null) {
             if (this.dataProvider == null) {
@@ -257,141 +280,172 @@ public abstract class AbstractChart<T extends AbstractChartObject> extends Chart
         return (T) this;
     }
 
+    @Override
     public String getPathToImages() {
         return pathToImages;
     }
 
+    @Override
     public T setPathToImages(String pathToImages) {
         this.pathToImages = pathToImages;
         return (T) this;
     }
 
+    @Override
     public ChartTheme getTheme() {
         return theme;
     }
 
+    @Override
     public T setTheme(ChartTheme theme) {
         this.theme = theme;
         return (T) this;
     }
 
+    @Override
     public Double getBorderAlpha() {
         return borderAlpha;
     }
 
+    @Override
     public T setBorderAlpha(Double borderAlpha) {
         this.borderAlpha = borderAlpha;
         return (T) this;
     }
 
+    @Override
     public Color getBorderColor() {
         return borderColor;
     }
 
+    @Override
     public T setBorderColor(Color borderColor) {
         this.borderColor = borderColor;
         return (T) this;
     }
 
+    @Override
     public String getClassNamePrefix() {
         return classNamePrefix;
     }
 
+    @Override
     public T setClassNamePrefix(String classNamePrefix) {
         this.classNamePrefix = classNamePrefix;
         return (T) this;
     }
 
+    @Override
     public CreditsPosition getCreditsPosition() {
         return creditsPosition;
     }
 
+    @Override
     public T setCreditsPosition(CreditsPosition creditsPosition) {
         this.creditsPosition = creditsPosition;
         return (T) this;
     }
 
+    @Override
     public Color getColor() {
         return color;
     }
 
+    @Override
     public T setColor(Color color) {
         this.color = color;
         return (T) this;
     }
 
+    @Override
     public String getFontFamily() {
         return fontFamily;
     }
 
+    @Override
     public T setFontFamily(String fontFamily) {
         this.fontFamily = fontFamily;
         return (T) this;
     }
 
+    @Override
     public Integer getFontSize() {
         return fontSize;
     }
 
+    @Override
     public T setFontSize(Integer fontSize) {
         this.fontSize = fontSize;
         return (T) this;
     }
 
+    @Override
     public Boolean getHandDrawn() {
         return handDrawn;
     }
 
+    @Override
     public T setHandDrawn(Boolean handDrawn) {
         this.handDrawn = handDrawn;
         return (T) this;
     }
 
+    @Override
     public Integer getHandDrawScatter() {
         return handDrawScatter;
     }
 
+    @Override
     public T setHandDrawScatter(Integer handDrawScatter) {
         this.handDrawScatter = handDrawScatter;
         return (T) this;
     }
 
+    @Override
     public Integer getHandDrawThickness() {
         return handDrawThickness;
     }
 
+    @Override
     public T setHandDrawThickness(Integer handDrawThickness) {
         this.handDrawThickness = handDrawThickness;
         return (T) this;
     }
 
+    @Override
     public Integer getHideBalloonTime() {
         return hideBalloonTime;
     }
 
+    @Override
     public T setHideBalloonTime(Integer hideBalloonTime) {
         this.hideBalloonTime = hideBalloonTime;
         return (T) this;
     }
 
+    @Override
     public Boolean getPanEventsEnabled() {
         return panEventsEnabled;
     }
 
+    @Override
     public T setPanEventsEnabled(Boolean panEventsEnabled) {
         this.panEventsEnabled = panEventsEnabled;
         return (T) this;
     }
 
+    @Override
     public List<BigNumberPrefix> getPrefixesOfBigNumbers() {
         return prefixesOfBigNumbers;
     }
 
+    @Override
     public T setPrefixesOfBigNumbers(List<BigNumberPrefix> prefixesOfBigNumbers) {
         this.prefixesOfBigNumbers = prefixesOfBigNumbers;
         return (T) this;
     }
 
+    @Override
     public T addPrefixesOfBigNumbers(BigNumberPrefix... prefixesOfBigNumbers) {
         if (prefixesOfBigNumbers != null) {
             if (this.prefixesOfBigNumbers == null) {
@@ -402,15 +456,18 @@ public abstract class AbstractChart<T extends AbstractChartObject> extends Chart
         return (T) this;
     }
 
+    @Override
     public List<SmallNumberPrefix> getPrefixesOfSmallNumbers() {
         return prefixesOfSmallNumbers;
     }
 
+    @Override
     public T setPrefixesOfSmallNumbers(List<SmallNumberPrefix> prefixesOfSmallNumbers) {
         this.prefixesOfSmallNumbers = prefixesOfSmallNumbers;
         return (T) this;
     }
 
+    @Override
     public T addPrefixesOfSmallNumbers(SmallNumberPrefix... prefixesOfSmallNumbers) {
         if (prefixesOfSmallNumbers != null) {
             if (this.prefixesOfSmallNumbers == null) {
@@ -421,24 +478,29 @@ public abstract class AbstractChart<T extends AbstractChartObject> extends Chart
         return (T) this;
     }
 
+    @Override
     public String getThousandsSeparator() {
         return thousandsSeparator;
     }
 
+    @Override
     public T setThousandsSeparator(String thousandsSeparator) {
         this.thousandsSeparator = thousandsSeparator;
         return (T) this;
     }
 
+    @Override
     public List<Title> getTitles() {
         return titles;
     }
 
+    @Override
     public T setTitles(List<Title> titles) {
         this.titles = titles;
         return (T) this;
     }
 
+    @Override
     public T addTitles(Title... titles) {
         if (titles != null) {
             if (this.titles == null) {
@@ -449,10 +511,12 @@ public abstract class AbstractChart<T extends AbstractChartObject> extends Chart
         return (T) this;
     }
 
+    @Override
     public Boolean getUsePrefixes() {
         return usePrefixes;
     }
 
+    @Override
     public T setUsePrefixes(Boolean usePrefixes) {
         this.usePrefixes = usePrefixes;
         return (T) this;
@@ -467,15 +531,18 @@ public abstract class AbstractChart<T extends AbstractChartObject> extends Chart
         return fields;
     }
 
+    @Override
     public List<String> getAdditionalFields() {
         return additionalFields;
     }
 
+    @Override
     public T setAdditionalFields(List<String> additionalFields) {
         this.additionalFields = additionalFields;
         return (T) this;
     }
 
+    @Override
     public T addAdditionalFields(String... fields) {
         if (additionalFields == null) {
             additionalFields = new ArrayList<>();
@@ -488,69 +555,84 @@ public abstract class AbstractChart<T extends AbstractChartObject> extends Chart
         return type;
     }
 
+    @Override
     public Boolean getAutoDisplay() {
         return autoDisplay;
     }
 
+    @Override
     public T setAutoDisplay(Boolean autoDisplay) {
         this.autoDisplay = autoDisplay;
         return (T) this;
     }
 
+    @Override
     public Boolean getAutoResize() {
         return autoResize;
     }
 
+    @Override
     public T setAutoResize(Boolean autoResize) {
         this.autoResize = autoResize;
         return (T) this;
     }
 
+    @Override
     public Double getBackgroundAlpha() {
         return backgroundAlpha;
     }
 
+    @Override
     public T setBackgroundAlpha(Double backgroundAlpha) {
         this.backgroundAlpha = backgroundAlpha;
         return (T) this;
     }
 
+    @Override
     public String getLanguage() {
         return language;
     }
 
+    @Override
     public T setLanguage(String language) {
         this.language = language;
         return (T) this;
     }
 
+    @Override
     public String getPath() {
         return path;
     }
 
+    @Override
     public T setPath(String path) {
         this.path = path;
         return (T) this;
     }
 
+    @Override
     public Boolean getSvgIcons() {
         return svgIcons;
     }
 
+    @Override
     public T setSvgIcons(Boolean svgIcons) {
         this.svgIcons = svgIcons;
         return (T) this;
     }
 
+    @Override
     public Boolean getTapToActivate() {
         return tapToActivate;
     }
 
+    @Override
     public T setTapToActivate(Boolean tapToActivate) {
         this.tapToActivate = tapToActivate;
         return (T) this;
     }
 
+    @Override
     public String getDefs() {
         return defs;
     }
@@ -563,60 +645,73 @@ public abstract class AbstractChart<T extends AbstractChartObject> extends Chart
      * @param defs json string
      * @return this object
      */
+    @Override
     public T setDefs(String defs) {
         this.defs = defs;
         return (T) this;
     }
 
+    @Override
     public Boolean getAccessible() {
         return accessible;
     }
 
+    @Override
     public T setAccessible(Boolean accessible) {
         this.accessible = accessible;
         return (T) this;
     }
 
+    @Override
     public String getAccessibleTitle() {
         return accessibleTitle;
     }
 
-    public T setResponsive(Responsive responsive) {
-        this.responsive = responsive;
-        return (T) this;
-    }
-
-    public Responsive getResponsive() {
-        return responsive;
-    }
-
+    @Override
     public T setAccessibleTitle(String accessibleTitle) {
         this.accessibleTitle = accessibleTitle;
         return (T) this;
     }
 
+    @Override
+    public T setResponsive(Responsive responsive) {
+        this.responsive = responsive;
+        return (T) this;
+    }
+
+    @Override
+    public Responsive getResponsive() {
+        return responsive;
+    }
+
+    @Override
     public Integer getProcessCount() {
         return processCount;
     }
 
+    @Override
     public T setProcessCount(Integer processCount) {
         this.processCount = processCount;
         return (T) this;
     }
 
+    @Override
     public Integer getProcessTimeout() {
         return processTimeout;
     }
 
+    @Override
     public T setProcessTimeout(Integer processTimeout) {
         this.processTimeout = processTimeout;
         return (T) this;
     }
 
+    @Override
     public Integer getTouchClickDuration() {
         return touchClickDuration;
     }
 
+    @Override
     public T setTouchClickDuration(Integer touchClickDuration) {
         this.touchClickDuration = touchClickDuration;
         return (T) this;
@@ -649,10 +744,12 @@ public abstract class AbstractChart<T extends AbstractChartObject> extends Chart
         }
     }
 
+    @Override
     public Boolean getAutoTransform() {
         return autoTransform;
     }
 
+    @Override
     public T setAutoTransform(Boolean autoTransform) {
         this.autoTransform = autoTransform;
         return (T) this;

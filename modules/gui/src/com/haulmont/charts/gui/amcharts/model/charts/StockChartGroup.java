@@ -24,8 +24,9 @@ import java.util.List;
  *
  * <a href="http://docs.amcharts.com/3/javascriptstockchart/AmStockChart">http://docs.amcharts.com/3/javascriptstockchart/AmStockChart</a>
  */
-public class StockChartGroup extends ChartModel
-        implements HasColors<StockChartGroup>, DataSet.DataProviderChangeListener {
+public class StockChartGroup extends ChartModelImpl implements StockChartModel<StockChartGroup>,
+                                                               HasColors<StockChartGroup>,
+                                                               DataSet.DataProviderChangeListener {
 
     private static final long serialVersionUID = -8514686195948609709L;
 
@@ -101,82 +102,100 @@ public class StockChartGroup extends ChartModel
     @Expose(serialize = false, deserialize = false)
     private List<String> additionalFields;
 
+    @Override
     public Boolean getAddClassNames() {
         return addClassNames;
     }
 
+    @Override
     public StockChartGroup setAddClassNames(Boolean addClassNames) {
         this.addClassNames = addClassNames;
         return this;
     }
 
+    @Override
     public Export getExport() {
         return export;
     }
 
+    @Override
     public StockChartGroup setExport(Export export) {
         this.export = export;
         return this;
     }
 
+    @Override
     public Boolean getAnimationPlayed() {
         return animationPlayed;
     }
 
+    @Override
     public StockChartGroup setAnimationPlayed(Boolean animationPlayed) {
         this.animationPlayed = animationPlayed;
         return this;
     }
 
+    @Override
     public Boolean getAutoResize() {
         return autoResize;
     }
 
+    @Override
     public StockChartGroup setAutoResize(Boolean autoResize) {
         this.autoResize = autoResize;
         return this;
     }
 
+    @Override
     public Balloon getBalloon() {
         return balloon;
     }
 
+    @Override
     public StockChartGroup setBalloon(Balloon balloon) {
         this.balloon = balloon;
         return this;
     }
 
+    @Override
     public CategoryAxesSettings getCategoryAxesSettings() {
         return categoryAxesSettings;
     }
 
+    @Override
     public StockChartGroup setCategoryAxesSettings(CategoryAxesSettings categoryAxesSettings) {
         this.categoryAxesSettings = categoryAxesSettings;
         return this;
     }
 
+    @Override
     public ChartCursorSettings getChartCursorSettings() {
         return chartCursorSettings;
     }
 
+    @Override
     public StockChartGroup setChartCursorSettings(ChartCursorSettings chartCursorSettings) {
         this.chartCursorSettings = chartCursorSettings;
         return this;
     }
 
+    @Override
     public ChartScrollbarSettings getChartScrollbarSettings() {
         return chartScrollbarSettings;
     }
 
+    @Override
     public StockChartGroup setChartScrollbarSettings(ChartScrollbarSettings chartScrollbarSettings) {
         this.chartScrollbarSettings = chartScrollbarSettings;
         return this;
     }
 
+    @Override
     public String getClassNamePrefix() {
         return classNamePrefix;
     }
 
+    @Override
     public StockChartGroup setClassNamePrefix(String classNamePrefix) {
         this.classNamePrefix = classNamePrefix;
         return this;
@@ -193,15 +212,29 @@ public class StockChartGroup extends ChartModel
         return this;
     }
 
+    @Override
+    public StockChartGroup addColors(Color... colors) {
+        if (colors != null) {
+            if (this.colors == null) {
+                this.colors = new ArrayList<>();
+            }
+            this.colors.addAll(Arrays.asList(colors));
+        }
+        return this;
+    }
+
+    @Override
     public List<String> getComparedDataSets() {
         return comparedDataSets;
     }
 
+    @Override
     public StockChartGroup setComparedDataSets(List<String> comparedDataSets) {
         this.comparedDataSets = comparedDataSets;
         return this;
     }
 
+    @Override
     public StockChartGroup addComparedDataSets(String... comparedDataSets) {
         if (comparedDataSets != null) {
             if (this.comparedDataSets == null) {
@@ -212,19 +245,23 @@ public class StockChartGroup extends ChartModel
         return this;
     }
 
+    @Override
     public String getDataDateFormat() {
         return dataDateFormat;
     }
 
+    @Override
     public StockChartGroup setDataDateFormat(String dataDateFormat) {
         this.dataDateFormat = dataDateFormat;
         return this;
     }
 
+    @Override
     public List<DataSet> getDataSets() {
         return dataSets;
     }
 
+    @Override
     public StockChartGroup setDataSets(List<DataSet> dataSets) {
         if (CollectionUtils.isNotEmpty(this.dataSets)) {
             for (DataSet dataSet : this.dataSets) {
@@ -243,6 +280,7 @@ public class StockChartGroup extends ChartModel
         return this;
     }
 
+    @Override
     public StockChartGroup addDataSets(DataSet... dataSets) {
         if (dataSets != null) {
             if (this.dataSets == null) {
@@ -269,87 +307,106 @@ public class StockChartGroup extends ChartModel
         }
     }
 
+    @Override
     public DataSetSelector getDataSetSelector() {
         return dataSetSelector;
     }
 
+    @Override
     public StockChartGroup setDataSetSelector(DataSetSelector dataSetSelector) {
         this.dataSetSelector = dataSetSelector;
         return this;
     }
 
+    @Override
     public Boolean getExtendToFullPeriod() {
         return extendToFullPeriod;
     }
 
+    @Override
     public StockChartGroup setExtendToFullPeriod(Boolean extendToFullPeriod) {
         this.extendToFullPeriod = extendToFullPeriod;
         return this;
     }
 
+    @Override
     public Integer getFirstDayOfWeek() {
         return firstDayOfWeek;
     }
 
+    @Override
     public StockChartGroup setFirstDayOfWeek(Integer firstDayOfWeek) {
         this.firstDayOfWeek = firstDayOfWeek;
         return this;
     }
 
+    @Override
     public Boolean getGlueToTheEnd() {
         return glueToTheEnd;
     }
 
+    @Override
     public StockChartGroup setGlueToTheEnd(Boolean glueToTheEnd) {
         this.glueToTheEnd = glueToTheEnd;
         return this;
     }
 
+    @Override
     public String getLanguage() {
         return language;
     }
 
+    @Override
     public StockChartGroup setLanguage(String language) {
         this.language = language;
         return this;
     }
 
+    @Override
     public LegendSettings getLegendSettings() {
         return legendSettings;
     }
 
+    @Override
     public StockChartGroup setLegendSettings(LegendSettings legendSettings) {
         this.legendSettings = legendSettings;
         return this;
     }
 
+    @Override
     public String getMainDataSet() {
         return mainDataSet;
     }
 
+    @Override
     public StockChartGroup setMainDataSet(String mainDataSet) {
         this.mainDataSet = mainDataSet;
         return this;
     }
 
+    @Override
     public Boolean getMouseWheelScrollEnabled() {
         return mouseWheelScrollEnabled;
     }
 
+    @Override
     public StockChartGroup setMouseWheelScrollEnabled(Boolean mouseWheelScrollEnabled) {
         this.mouseWheelScrollEnabled = mouseWheelScrollEnabled;
         return this;
     }
 
+    @Override
     public List<StockPanel> getPanels() {
         return panels;
     }
 
+    @Override
     public StockChartGroup setPanels(List<StockPanel> panels) {
         this.panels = panels;
         return this;
     }
 
+    @Override
     public StockChartGroup addPanels(StockPanel... panels) {
         if (panels != null) {
             if (this.panels == null) {
@@ -360,78 +417,95 @@ public class StockChartGroup extends ChartModel
         return this;
     }
 
+    @Override
     public PanelsSettings getPanelsSettings() {
         return panelsSettings;
     }
 
+    @Override
     public StockChartGroup setPanelsSettings(PanelsSettings panelsSettings) {
         this.panelsSettings = panelsSettings;
         return this;
     }
 
+    @Override
     public String getPath() {
         return path;
     }
 
+    @Override
     public StockChartGroup setPath(String path) {
         this.path = path;
         return this;
     }
 
+    @Override
     public String getPathToImages() {
         return pathToImages;
     }
 
+    @Override
     public StockChartGroup setPathToImages(String pathToImages) {
         this.pathToImages = pathToImages;
         return this;
     }
 
+    @Override
     public PeriodSelector getPeriodSelector() {
         return periodSelector;
     }
 
+    @Override
     public StockChartGroup setPeriodSelector(PeriodSelector periodSelector) {
         this.periodSelector = periodSelector;
         return this;
     }
 
+    @Override
     public StockEventsSettings getStockEventsSettings() {
         return stockEventsSettings;
     }
 
+    @Override
     public StockChartGroup setStockEventsSettings(StockEventsSettings stockEventsSettings) {
         this.stockEventsSettings = stockEventsSettings;
         return this;
     }
 
+    @Override
     public ChartTheme getTheme() {
         return theme;
     }
 
+    @Override
     public StockChartGroup setTheme(ChartTheme theme) {
         this.theme = theme;
         return this;
     }
 
+    @Override
     public ValueAxesSettings getValueAxesSettings() {
         return valueAxesSettings;
     }
 
+    @Override
     public StockChartGroup setValueAxesSettings(ValueAxesSettings valueAxesSettings) {
         this.valueAxesSettings = valueAxesSettings;
         return this;
     }
 
+    @Override
     public Boolean getZoomOutOnDataSetChange() {
         return zoomOutOnDataSetChange;
     }
 
+    @Override
     public StockChartGroup setZoomOutOnDataSetChange(Boolean zoomOutOnDataSetChange) {
         this.zoomOutOnDataSetChange = zoomOutOnDataSetChange;
         return this;
     }
 
+    @Override
     public DataSet getDataSet(String id) {
         for (DataSet dataSet : dataSets) {
             if (id.equals(dataSet.getId())) {
@@ -445,19 +519,23 @@ public class StockChartGroup extends ChartModel
         return type;
     }
 
+    @Override
     public List<String> getAdditionalFields() {
         return additionalFields;
     }
 
+    @Override
     public StockChartGroup setAdditionalFields(List<String> additionalFields) {
         this.additionalFields = additionalFields;
         return this;
     }
 
+    @Override
     public Integer getProcessTimeout() {
         return processTimeout;
     }
 
+    @Override
     public StockChartGroup setProcessTimeout(Integer processTimeout) {
         this.processTimeout = processTimeout;
         return this;

@@ -4,55 +4,48 @@
   -->
 
 <components>
-
     <!-- Charts -->
 
     <component>
         <tag>gaugeChart</tag>
-        <name>chart</name>
-        <class>com.haulmont.charts.web.gui.components.charts.amcharts.WebChart</class>
+        <name>gaugeChart</name>
+        <class>com.haulmont.charts.web.gui.components.charts.amcharts.WebAngularGaugeChart</class>
         <componentLoader>com.haulmont.charts.gui.xml.layout.loaders.charts.AngularGaugeChartLoader</componentLoader>
     </component>
     <component>
         <tag>funnelChart</tag>
-        <name>chart</name>
-        <class>com.haulmont.charts.web.gui.components.charts.amcharts.WebChart</class>
-        <componentLoader>com.haulmont.charts.gui.xml.layout.loaders.charts.FunnelChartLoader</componentLoader>
-    </component>
-    <component>
-        <tag>funnelChart</tag>
-        <name>chart</name>
-        <class>com.haulmont.charts.web.gui.components.charts.amcharts.WebChart</class>
+        <name>funnelChart</name>
+        <class>com.haulmont.charts.web.gui.components.charts.amcharts.WebFunnelChart</class>
         <componentLoader>com.haulmont.charts.gui.xml.layout.loaders.charts.FunnelChartLoader</componentLoader>
     </component>
     <component>
         <tag>pieChart</tag>
-        <name>chart</name>
-        <class>com.haulmont.charts.web.gui.components.charts.amcharts.WebChart</class>
+        <name>pieChart</name>
+        <class>com.haulmont.charts.web.gui.components.charts.amcharts.WebPieChart</class>
         <componentLoader>com.haulmont.charts.gui.xml.layout.loaders.charts.PieChartLoader</componentLoader>
     </component>
     <component>
         <tag>radarChart</tag>
-        <name>chart</name>
-        <class>com.haulmont.charts.web.gui.components.charts.amcharts.WebChart</class>
+        <name>radarChart</name>
+        <class>com.haulmont.charts.web.gui.components.charts.amcharts.WebRadarChart</class>
         <componentLoader>com.haulmont.charts.gui.xml.layout.loaders.charts.RadarChartLoader</componentLoader>
     </component>
     <component>
         <tag>serialChart</tag>
-        <name>chart</name>
-        <class>com.haulmont.charts.web.gui.components.charts.amcharts.WebChart</class>
+        <name>serialChart</name>
+        <class>com.haulmont.charts.web.gui.components.charts.amcharts.WebSerialChart</class>
         <componentLoader>com.haulmont.charts.gui.xml.layout.loaders.charts.SerialChartLoader</componentLoader>
     </component>
     <component>
         <tag>ganttChart</tag>
-        <name>chart</name>
-        <class>com.haulmont.charts.web.gui.components.charts.amcharts.WebChart</class>
+        <name>ganttChart</name>
+        <class>com.haulmont.charts.web.gui.components.charts.amcharts.WebGanttChart</class>
         <componentLoader>com.haulmont.charts.gui.xml.layout.loaders.charts.GanttChartLoader</componentLoader>
     </component>
     <component>
         <tag>xyChart</tag>
-        <name>chart</name>
-        <class>com.haulmont.charts.web.gui.components.charts.amcharts.WebChart</class>
+        <name>xyChart</name>
+        <class>com.haulmont.charts.web.gui.components.charts.amcharts.WebXYChart</class>
         <componentLoader>com.haulmont.charts.gui.xml.layout.loaders.charts.XYChartLoader</componentLoader>
     </component>
     <component>
@@ -61,6 +54,15 @@
         <class>com.haulmont.charts.web.gui.components.charts.amcharts.WebStockChart</class>
         <componentLoader>com.haulmont.charts.gui.xml.layout.loaders.charts.StockChartLoader</componentLoader>
     </component>
+    <component>
+        <tag>customChart</tag>
+        <name>customChart</name>
+        <class>com.haulmont.charts.web.gui.components.charts.amcharts.WebCustomChart</class>
+        <componentLoader>com.haulmont.charts.gui.xml.layout.loaders.charts.CustomChartLoader</componentLoader>
+    </component>
+
+    <!-- PivotTable -->
+
     <component>
         <tag>pivotTable</tag>
         <name>pivotTable</name>

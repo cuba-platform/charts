@@ -12,16 +12,15 @@ import com.haulmont.charts.gui.pivottable.model.*;
 import com.haulmont.cuba.gui.components.Component;
 import com.haulmont.cuba.gui.data.CollectionDatasource;
 
+import java.util.EventObject;
 import java.util.List;
 import java.util.Map;
 
-public interface PivotTable extends Component,
-        Component.BelongToFrame, Component.HasXmlDescriptor, Component.Editable {
+public interface PivotTable extends Component, Component.BelongToFrame, Component.HasXmlDescriptor, Component.Editable {
 
     String NAME = "pivotTable";
 
     CollectionDatasource getDatasource();
-
     void setDatasource(CollectionDatasource datasource);
 
     /**
@@ -443,21 +442,28 @@ public interface PivotTable extends Component,
     String getNativeJson();
 
     void addRefreshListener(RefreshListener refreshListener);
-
     void removeRefreshListener(RefreshListener refreshListener);
 
     /**
      * Describes PivotTable refresh event.
      */
-    class RefreshEvent {
-        private PivotTable pivotTable;
-
+    class RefreshEvent extends EventObject {
         public RefreshEvent(PivotTable pivotTable) {
-            this.pivotTable = pivotTable;
+            super(pivotTable);
         }
 
+        @Override
+        public PivotTable getSource() {
+            return (PivotTable) super.getSource();
+        }
+
+        /**
+         * @return source of event
+         * @deprecated Use {@link #getSource()}
+         */
+        @Deprecated
         public PivotTable getPivotTable() {
-            return pivotTable;
+            return getSource();
         }
     }
 

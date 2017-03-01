@@ -5,12 +5,9 @@
 package com.haulmont.charts.web.ui;
 
 import com.haulmont.charts.gui.amcharts.model.charts.AbstractChart;
-import com.haulmont.charts.gui.components.charts.Chart;
-import com.haulmont.charts.web.toolkit.ui.amcharts.CubaAmchartsScene;
+import com.haulmont.charts.gui.components.charts.CustomChart;
 import com.haulmont.cuba.gui.WindowParam;
 import com.haulmont.cuba.gui.components.AbstractFrame;
-import com.haulmont.cuba.gui.xml.layout.ComponentsFactory;
-import com.haulmont.cuba.web.gui.components.WebComponentsHelper;
 
 import javax.inject.Inject;
 import java.util.Map;
@@ -21,26 +18,20 @@ public class JsonChartController extends AbstractFrame {
     protected String chartJson;
 
     @Inject
-    protected ComponentsFactory componentsFactory;
+    protected CustomChart reportJsonChart;
 
     @Override
     public void init(Map<String, Object> params) {
         super.init(params);
 
-        Chart chart = (Chart) componentsFactory.createComponent(Chart.NAME);
-        chart.setSizeFull();
-
-        CubaAmchartsScene cubaAmchartsScene = (CubaAmchartsScene) WebComponentsHelper.unwrap(chart);
-        cubaAmchartsScene.drawChart(new CustomChart());
-        cubaAmchartsScene.setJson(chartJson);
-
-        add(chart);
+        reportJsonChart.setConfiguration(new BasicChart());
+        reportJsonChart.setNativeJson(chartJson);
     }
 
     /**
      * Used for default initialization in
      * WebChart.CubaAmchartsSceneExt#setupDefaults(AbstractChart)
      */
-    protected static class CustomChart extends AbstractChart {
+    protected static class BasicChart extends AbstractChart<BasicChart> {
     }
 }

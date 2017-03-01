@@ -5,19 +5,22 @@
 
 package com.haulmont.charts.gui.xml.layout.loaders.charts;
 
-import com.haulmont.charts.gui.amcharts.model.charts.XYChart;
+import com.haulmont.charts.gui.components.charts.XYChart;
 import org.apache.commons.lang.StringUtils;
 import org.dom4j.Element;
 
 public class XYChartLoader extends RectangularChartLoader<XYChart> {
+    @Override
+    public void createComponent() {
+        resultComponent = factory.createComponent(XYChart.class);
+        loadId(resultComponent, element);
+    }
 
     @Override
     public void loadComponent() {
         super.loadComponent();
 
-        XYChart configuration = new XYChart();
-        loadConfiguration(configuration, element);
-        resultComponent.setConfiguration(configuration);
+        loadConfiguration(resultComponent, element);
     }
 
     @Override

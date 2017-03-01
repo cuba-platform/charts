@@ -5,19 +5,23 @@
 
 package com.haulmont.charts.gui.xml.layout.loaders.charts;
 
-import com.haulmont.charts.gui.amcharts.model.charts.RadarChart;
+import com.haulmont.charts.gui.components.charts.RadarChart;
 import org.apache.commons.lang.StringUtils;
 import org.dom4j.Element;
 
 public class RadarChartLoader extends CoordinateChartLoader<RadarChart> {
 
     @Override
+    public void createComponent() {
+        resultComponent = factory.createComponent(RadarChart.class);
+        loadId(resultComponent, element);
+    }
+
+    @Override
     public void loadComponent() {
         super.loadComponent();
 
-        RadarChart configuration = new RadarChart();
-        loadConfiguration(configuration, element);
-        resultComponent.setConfiguration(configuration);
+        loadConfiguration(resultComponent, element);
     }
 
     @Override

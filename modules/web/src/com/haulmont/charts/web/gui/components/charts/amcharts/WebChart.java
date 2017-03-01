@@ -7,11 +7,9 @@ package com.haulmont.charts.web.gui.components.charts.amcharts;
 
 import com.haulmont.charts.gui.amcharts.model.*;
 import com.haulmont.charts.gui.amcharts.model.charts.AbstractChart;
-import com.haulmont.charts.gui.amcharts.model.charts.AbstractSerialChart;
-import com.haulmont.charts.gui.amcharts.model.charts.GanttChart;
-import com.haulmont.charts.gui.amcharts.model.charts.RectangularChart;
-import com.haulmont.charts.gui.amcharts.model.gson.ChartJsonSerializationContext;
 import com.haulmont.charts.gui.components.charts.Chart;
+import com.haulmont.charts.gui.data.DataItem;
+import com.haulmont.charts.gui.data.DataProvider;
 import com.haulmont.charts.gui.data.EntityDataProvider;
 import com.haulmont.charts.web.gui.ChartLocaleHelper;
 import com.haulmont.charts.web.toolkit.ui.amcharts.CubaAmchartsIntegration;
@@ -19,46 +17,32 @@ import com.haulmont.charts.web.toolkit.ui.amcharts.CubaAmchartsScene;
 import com.haulmont.chile.core.datatypes.Datatype;
 import com.haulmont.chile.core.datatypes.Datatypes;
 import com.haulmont.chile.core.datatypes.FormatStrings;
-import com.haulmont.chile.core.model.MetaClass;
 import com.haulmont.chile.core.model.MetaProperty;
 import com.haulmont.cuba.core.entity.Entity;
 import com.haulmont.cuba.core.global.*;
 import com.haulmont.cuba.gui.data.CollectionDatasource;
 import com.haulmont.cuba.gui.data.impl.CollectionDsHelper;
 import com.haulmont.cuba.web.gui.components.WebAbstractComponent;
-import org.apache.commons.collections.CollectionUtils;
-import org.apache.commons.lang.BooleanUtils;
 import org.apache.commons.lang.ObjectUtils;
 import org.apache.commons.lang.StringUtils;
 
 import javax.annotation.Nullable;
 import java.text.DecimalFormatSymbols;
 import java.text.ParseException;
-import java.util.*;
+import java.util.ArrayList;
+import java.util.List;
+import java.util.Locale;
 
-public class WebChart extends WebAbstractComponent<CubaAmchartsScene> implements Chart {
-
-    protected boolean byDate = false;
+@SuppressWarnings("unchecked")
+public abstract class WebChart<T extends Chart, M extends AbstractChart> extends WebAbstractComponent<CubaAmchartsScene> implements Chart<T> {
 
     protected Messages messages = AppBeans.get(Messages.class);
 
     protected CollectionDatasource datasource;
 
-    protected com.haulmont.charts.web.toolkit.ui.amcharts.events.AxisZoomListener axisZoomHandler;
-
     protected com.haulmont.charts.web.toolkit.ui.amcharts.events.ChartClickListener clickHandler;
 
     protected com.haulmont.charts.web.toolkit.ui.amcharts.events.ChartRightClickListener rightClickHandler;
-
-    protected com.haulmont.charts.web.toolkit.ui.amcharts.events.CursorPeriodSelectListener periodSelectHandler;
-
-    protected com.haulmont.charts.web.toolkit.ui.amcharts.events.CursorZoomListener cursorZoomHandler;
-
-    protected com.haulmont.charts.web.toolkit.ui.amcharts.events.GraphClickListener graphClickHandler;
-
-    protected com.haulmont.charts.web.toolkit.ui.amcharts.events.GraphItemClickListener graphItemClickHandler;
-
-    protected com.haulmont.charts.web.toolkit.ui.amcharts.events.GraphItemRightClickListener graphItemRightClickHandler;
 
     protected com.haulmont.charts.web.toolkit.ui.amcharts.events.LegendItemHideListener legendItemHideHandler;
 
@@ -68,25 +52,25 @@ public class WebChart extends WebAbstractComponent<CubaAmchartsScene> implements
 
     protected com.haulmont.charts.web.toolkit.ui.amcharts.events.LegendMarkerClickListener legendMarkerClickHandler;
 
-    protected com.haulmont.charts.web.toolkit.ui.amcharts.events.SliceClickListener sliceClickHandler;
-
-    protected com.haulmont.charts.web.toolkit.ui.amcharts.events.SliceRightClickListener sliceRightClickHandler;
-
-    protected com.haulmont.charts.web.toolkit.ui.amcharts.events.SlicePullInListener slicePullInHandler;
-
-    protected com.haulmont.charts.web.toolkit.ui.amcharts.events.SlicePullOutListener slicePullOutHandler;
-
-    protected com.haulmont.charts.web.toolkit.ui.amcharts.events.ZoomListener zoomHandler;
-
     public WebChart() {
         initLocale();
 
-        component = new CubaAmchartsSceneExt();
+        component = new CubaAmchartsScene();
         component.addAttachListener(event -> {
             if (datasource != null) {
                 CollectionDsHelper.autoRefreshInvalid(datasource, true);
             }
         });
+
+        M configuration = createChartConfiguration();
+        setupDefaults(configuration);
+        component.drawChart(configuration);
+    }
+
+    protected abstract M createChartConfiguration();
+
+    protected M getModel() {
+        return (M) component.getChart();
     }
 
     protected void initLocale() {
@@ -94,7 +78,6 @@ public class WebChart extends WebAbstractComponent<CubaAmchartsScene> implements
         CubaAmchartsIntegration amchartsIntegration = CubaAmchartsIntegration.get();
         if (amchartsIntegration.getSettings() == null
                 || !ObjectUtils.equals(userSessionSource.getLocale(), amchartsIntegration.getLocale())) {
-
             Settings settings = new Settings();
             Locale locale = userSessionSource.getLocale();
 
@@ -110,14 +93,39 @@ public class WebChart extends WebAbstractComponent<CubaAmchartsScene> implements
         }
     }
 
-    @Override
-    public boolean isByDate() {
-        return byDate;
+    protected void setupDefaults(M chart) {
+        setupChartLocale(chart);
     }
 
-    @Override
-    public void setByDate(boolean byDate) {
-        this.byDate = byDate;
+    protected void setupChartLocale(AbstractChart chart) {
+        UserSessionSource userSessionSource = AppBeans.get(UserSessionSource.class);
+        chart.setLanguage(messages.getTools().localeToString(userSessionSource.getLocale()));
+
+        // number formatting
+        FormatStrings formatStrings = Datatypes.getFormatStrings(userSessionSource.getLocale());
+        if (formatStrings != null) {
+            DecimalFormatSymbols formatSymbols = formatStrings.getFormatSymbols();
+
+            chart.setPrecision(-1);
+            chart.setPercentPrecision(2);
+            chart.setDecimalSeparator(Character.toString(formatSymbols.getDecimalSeparator()));
+            chart.setThousandsSeparator(Character.toString(formatSymbols.getGroupingSeparator()));
+        }
+
+        // number prefixes
+        List<BigNumberPrefix> bigPrefixes = new ArrayList<>();
+        for (BigNumberPower power : BigNumberPower.values()) {
+            bigPrefixes.add(new BigNumberPrefix(power,
+                    messages.getMainMessage("amcharts.bigNumberPower." + power.name())));
+        }
+        chart.setPrefixesOfBigNumbers(bigPrefixes);
+
+        List<SmallNumberPrefix> smallPrefixes = new ArrayList<>();
+        for (SmallNumberPower power : SmallNumberPower.values()) {
+            smallPrefixes.add(new SmallNumberPrefix(power,
+                    messages.getMainMessage("amcharts.smallNumberPower." + power.name())));
+        }
+        chart.setPrefixesOfSmallNumbers(smallPrefixes);
     }
 
     @Override
@@ -126,38 +134,23 @@ public class WebChart extends WebAbstractComponent<CubaAmchartsScene> implements
     }
 
     @Override
-    public void setConfiguration(AbstractChart chart) {
-        if (chart.getDataProvider() == null && datasource != null) {
-            chart.setDataProvider(new EntityDataProvider(datasource));
-        }
-
-        component.drawChart(chart);
-
-        if (component.getChart() != null &&
-                component.getChart().getResponsive() != null &&
-                BooleanUtils.isTrue(component.getChart().getResponsive().isEnabled())) {
-            component.activateResponsivePlugin();
-        }
+    public CollectionDatasource getDatasource() {
+        return datasource;
     }
 
     @Override
     public void setDatasource(CollectionDatasource datasource) {
-        this.datasource = datasource;
+        if (this.datasource != datasource) {
+            this.datasource = datasource;
 
-        if (datasource == null) {
-            component.getChart().setDataProvider(null);
-        } else {
-            CollectionDsHelper.autoRefreshInvalid(datasource, true);
+            if (datasource == null) {
+                component.getChart().setDataProvider(null);
+            } else {
+                CollectionDsHelper.autoRefreshInvalid(datasource, true);
+
+                setDataProvider(new EntityDataProvider(datasource));
+            }
         }
-
-        if (component.getChart() != null) {
-            component.getChart().setDataProvider(new EntityDataProvider(datasource));
-        }
-    }
-
-    @Override
-    public CollectionDatasource getDatasource() {
-        return datasource;
     }
 
     @Override
@@ -165,93 +158,11 @@ public class WebChart extends WebAbstractComponent<CubaAmchartsScene> implements
         component.drawChart();
     }
 
-    @Override
-    public void zoomOut() {
-        component.zoomOut();
-    }
-
-    @Override
-    public void zoomToIndexes(int start, int end) {
-        component.zoomToIndexes(start, end);
-    }
-
-    @Override
-    public void zoomToDates(Date start, Date end) {
-        component.zoomToDates(start, end);
-    }
-
-    @Override
-    public void zoomOutValueAxes() {
-        component.zoomOutValueAxes();
-    }
-
-    @Override
-    public void zoomOutValueAxis(String id) {
-        component.zoomOutValueAxis(id);
-    }
-
-    @Override
-    public void zoomOutValueAxis(int index) {
-        component.zoomOutValueAxis(index);
-    }
-
-    @Override
-    public void zoomValueAxisToValues(String id, Object startValue, Object endValue) {
-        component.zoomValueAxisToValues(id, startValue, endValue);
-    }
-
-    @Override
-    public void zoomValueAxisToValues(int index, Object startValue, Object endValue) {
-        component.zoomValueAxisToValues(index, startValue, endValue);
-    }
-
     protected Entity getEventItem(String itemIdString) {
         if (datasource != null && StringUtils.isNotEmpty(itemIdString)) {
-            if (component.getChart() instanceof GanttChart) {
-                return getGanttChartEventItem(itemIdString);
-            } else {
-                //noinspection unchecked
-                return datasource.getItem(getItemId(datasource, itemIdString));
-            }
+            //noinspection unchecked
+            return datasource.getItem(getItemId(datasource, itemIdString));
         }
-        return null;
-    }
-
-    protected Entity getGanttChartEventItem(String itemIdString) {
-        GanttChart ganttChart = (GanttChart) component.getChart();
-
-        String[] ids = itemIdString.split(":");
-        if (ids.length != 2) {
-            return null;
-        }
-
-        Object categoryId = getItemId(datasource, ids[0]);
-        if (categoryId == null) {
-            return null;
-        }
-
-        //noinspection unchecked
-        Entity category = datasource.getItem(categoryId);
-        if (category == null) {
-            return null;
-        }
-
-        Collection segments = category.getValue(ganttChart.getSegmentsField());
-        if (segments == null) {
-            return null;
-        }
-
-        Object segmentId = getItemId(segments, ids[1]);
-        if (segmentId == null) {
-            return null;
-        }
-
-        for (Object segment : segments) {
-            if (segment instanceof Entity && segmentId.equals(((Entity) segment).getId())) {
-                return (Entity) segment;
-            }
-        }
-
         return null;
     }
 
@@ -273,51 +184,553 @@ public class WebChart extends WebAbstractComponent<CubaAmchartsScene> implements
         return null;
     }
 
-    @Nullable
-    protected Object getItemId(Collection items, String itemIdString) {
-        if (CollectionUtils.isNotEmpty(items)) {
-            Object obj = items.iterator().next();
-            if (obj instanceof Entity) {
-                Entity entity = (Entity) obj;
-
-                Metadata metadata = AppBeans.get(Metadata.class);
-                MetaClass metaClass = metadata.getClassNN(entity.getClass());
-                if (metadata.getTools().isTransient(metaClass)) {
-                    return UuidProvider.fromString(itemIdString);
-                }
-                MetaProperty pkProp = metadata.getTools().getPrimaryKeyProperty(metaClass);
-                if (pkProp != null) {
-                    Datatype<Object> datatype = pkProp.getRange().asDatatype();
-                    try {
-                        return datatype.parse(itemIdString);
-                    } catch (ParseException e) {
-                        throw new RuntimeException("Error parsing item ID", e);
-                    }
-                }
-            }
-        }
-        return null;
+    @Override
+    public String getNativeJson() {
+        return component.getJson();
     }
 
     @Override
-    public void addAxisZoomListener(AxisZoomListener listener) {
-        getEventRouter().addListener(AxisZoomListener.class, listener);
-        if (axisZoomHandler == null) {
-            axisZoomHandler = e -> {
-                AxisZoomEvent event = new AxisZoomEvent(e.getAxisId(), e.getStartValue(), e.getEndValue());
-                getEventRouter().fireEvent(AxisZoomListener.class, AxisZoomListener::onZoom, event);
-            };
-            component.addAxisZoomListener(axisZoomHandler);
-        }
+    public void setNativeJson(String json) {
+        component.setJson(json);
     }
 
     @Override
-    public void removeAxisZoomListener(AxisZoomListener listener) {
-        getEventRouter().removeListener(AxisZoomListener.class, listener);
-        if (axisZoomHandler != null && !getEventRouter().hasListeners(AxisZoomListener.class)) {
-            component.removeAxisZoomListener(axisZoomHandler);
-            axisZoomHandler = null;
+    public Boolean getAddClassNames() {
+        return getModel().getAddClassNames();
+    }
+
+    @Override
+    public T setAddClassNames(Boolean addClassNames) {
+        getModel().setAddClassNames(addClassNames);
+        return (T) this;
+    }
+
+    @Override
+    public List<Label> getAllLabels() {
+        return getModel().getAllLabels();
+    }
+
+    @Override
+    public T setAllLabels(List allLabels) {
+        getModel().setAllLabels(allLabels);
+        return (T) this;
+    }
+
+    @Override
+    public T addLabels(Label... allLabels) {
+        getModel().addLabels(allLabels);
+        return (T) this;
+    }
+
+    @Override
+    public Export getExport() {
+        return getModel().getExport();
+    }
+
+    @Override
+    public T setExport(Export export) {
+        if (export != null && export.getDateFormat() == null) {
+            export.setDateFormat(messages.getMainMessage("amcharts.export.dateFormat"));
         }
+
+        getModel().setExport(export);
+        return (T) this;
+    }
+
+    @Override
+    public Color getBackgroundColor() {
+        return getModel().getBackgroundColor();
+    }
+
+    @Override
+    public T setBackgroundColor(Color backgroundColor) {
+        getModel().setBackgroundColor(backgroundColor);
+        return (T) this;
+    }
+
+    @Override
+    public Balloon getBalloon() {
+        return getModel().getBalloon();
+    }
+
+    @Override
+    public T setBalloon(Balloon balloon) {
+        getModel().setBalloon(balloon);
+        return (T) this;
+    }
+
+    @Override
+    public Legend getLegend() {
+        return getModel().getLegend();
+    }
+
+    @Override
+    public T setLegend(Legend legend) {
+        getModel().setLegend(legend);
+        return (T) this;
+    }
+
+    @Override
+    public String getDecimalSeparator() {
+        return getModel().getDecimalSeparator();
+    }
+
+    @Override
+    public T setDecimalSeparator(String decimalSeparator) {
+        getModel().setDecimalSeparator(decimalSeparator);
+        return (T) this;
+    }
+
+    @Override
+    public Integer getPercentPrecision() {
+        return getModel().getPercentPrecision();
+    }
+
+    @Override
+    public T setPercentPrecision(Integer percentPrecision) {
+        getModel().setPercentPrecision(percentPrecision);
+        return (T) this;
+    }
+
+    @Override
+    public Integer getPrecision() {
+        return getModel().getPrecision();
+    }
+
+    @Override
+    public T setPrecision(Integer precision) {
+        getModel().setPrecision(precision);
+        return (T) this;
+    }
+
+    @Override
+    public DataProvider getDataProvider() {
+        return getModel().getDataProvider();
+    }
+
+    @Override
+    public T setDataProvider(DataProvider dataProvider) {
+        getModel().setDataProvider(dataProvider);
+        return (T) this;
+    }
+
+    @Override
+    public T addData(DataItem... dataItems) {
+        getModel().addData(dataItems);
+        return (T) this;
+    }
+
+    @Override
+    public String getPathToImages() {
+        return getModel().getPathToImages();
+    }
+
+    @Override
+    public T setPathToImages(String pathToImages) {
+        getModel().setPathToImages(pathToImages);
+        return (T) this;
+    }
+
+    @Override
+    public ChartTheme getTheme() {
+        return getModel().getTheme();
+    }
+
+    @Override
+    public T setTheme(ChartTheme theme) {
+        getModel().setTheme(theme);
+        return (T) this;
+    }
+
+    @Override
+    public Double getBorderAlpha() {
+        return getModel().getBorderAlpha();
+    }
+
+    @Override
+    public T setBorderAlpha(Double borderAlpha) {
+        getModel().setBorderAlpha(borderAlpha);
+        return (T) this;
+    }
+
+    @Override
+    public Color getBorderColor() {
+        return getModel().getBorderColor();
+    }
+
+    @Override
+    public T setBorderColor(Color borderColor) {
+        getModel().setBorderColor(borderColor);
+        return (T) this;
+    }
+
+    @Override
+    public String getClassNamePrefix() {
+        return getModel().getClassNamePrefix();
+    }
+
+    @Override
+    public T setClassNamePrefix(String classNamePrefix) {
+        getModel().setClassNamePrefix(classNamePrefix);
+        return (T) this;
+    }
+
+    @Override
+    public CreditsPosition getCreditsPosition() {
+        return getModel().getCreditsPosition();
+    }
+
+    @Override
+    public T setCreditsPosition(CreditsPosition creditsPosition) {
+        getModel().setCreditsPosition(creditsPosition);
+        return (T) this;
+    }
+
+    @Override
+    public Color getColor() {
+        return getModel().getColor();
+    }
+
+    @Override
+    public T setColor(Color color) {
+        getModel().setColor(color);
+        return (T) this;
+    }
+
+    @Override
+    public String getFontFamily() {
+        return getModel().getFontFamily();
+    }
+
+    @Override
+    public T setFontFamily(String fontFamily) {
+        getModel().setFontFamily(fontFamily);
+        return (T) this;
+    }
+
+    @Override
+    public Integer getFontSize() {
+        return getModel().getFontSize();
+    }
+
+    @Override
+    public T setFontSize(Integer fontSize) {
+        getModel().setFontSize(fontSize);
+        return (T) this;
+    }
+
+    @Override
+    public Boolean getHandDrawn() {
+        return getModel().getHandDrawn();
+    }
+
+    @Override
+    public T setHandDrawn(Boolean handDrawn) {
+        getModel().setHandDrawn(handDrawn);
+        return (T) this;
+    }
+
+    @Override
+    public Integer getHandDrawScatter() {
+        return getModel().getHandDrawScatter();
+    }
+
+    @Override
+    public T setHandDrawScatter(Integer handDrawScatter) {
+        getModel().setHandDrawScatter(handDrawScatter);
+        return (T) this;
+    }
+
+    @Override
+    public Integer getHandDrawThickness() {
+        return getModel().getHandDrawThickness();
+    }
+
+    @Override
+    public T setHandDrawThickness(Integer handDrawThickness) {
+        getModel().setHandDrawThickness(handDrawThickness);
+        return (T) this;
+    }
+
+    @Override
+    public Integer getHideBalloonTime() {
+        return getModel().getHideBalloonTime();
+    }
+
+    @Override
+    public T setHideBalloonTime(Integer hideBalloonTime) {
+        getModel().setHideBalloonTime(hideBalloonTime);
+        return (T) this;
+    }
+
+    @Override
+    public Boolean getPanEventsEnabled() {
+        return getModel().getPanEventsEnabled();
+    }
+
+    @Override
+    public T setPanEventsEnabled(Boolean panEventsEnabled) {
+        getModel().setPanEventsEnabled(panEventsEnabled);
+        return (T) this;
+    }
+
+    @Override
+    public List<BigNumberPrefix> getPrefixesOfBigNumbers() {
+        return getModel().getPrefixesOfBigNumbers();
+    }
+
+    @Override
+    public T setPrefixesOfBigNumbers(List prefixesOfBigNumbers) {
+        getModel().setPrefixesOfBigNumbers(prefixesOfBigNumbers);
+        return (T) this;
+    }
+
+    @Override
+    public T addPrefixesOfBigNumbers(BigNumberPrefix... prefixesOfBigNumbers) {
+        getModel().addPrefixesOfBigNumbers(prefixesOfBigNumbers);
+        return (T) this;
+    }
+
+    @Override
+    public List<SmallNumberPrefix> getPrefixesOfSmallNumbers() {
+        return getModel().getPrefixesOfSmallNumbers();
+    }
+
+    @Override
+    public T setPrefixesOfSmallNumbers(List prefixesOfSmallNumbers) {
+        getModel().setPrefixesOfSmallNumbers(prefixesOfSmallNumbers);
+        return (T) this;
+    }
+
+    @Override
+    public T addPrefixesOfSmallNumbers(SmallNumberPrefix... prefixesOfSmallNumbers) {
+        getModel().addPrefixesOfSmallNumbers(prefixesOfSmallNumbers);
+        return (T) this;
+    }
+
+    @Override
+    public String getThousandsSeparator() {
+        return getModel().getThousandsSeparator();
+    }
+
+    @Override
+    public T setThousandsSeparator(String thousandsSeparator) {
+        getModel().setThousandsSeparator(thousandsSeparator);
+        return (T) this;
+    }
+
+    @Override
+    public List<Title> getTitles() {
+        return getModel().getTitles();
+    }
+
+    @Override
+    public T setTitles(List list) {
+        getModel().setTitles(list);
+        return (T) this;
+    }
+
+    @Override
+    public T addTitles(Title... titles) {
+        getModel().addTitles(titles);
+        return (T) this;
+    }
+
+    @Override
+    public Boolean getUsePrefixes() {
+        return getModel().getUsePrefixes();
+    }
+
+    @Override
+    public T setUsePrefixes(Boolean usePrefixes) {
+        getModel().setUsePrefixes(usePrefixes);
+        return (T) this;
+    }
+
+    @Override
+    public List<String> getAdditionalFields() {
+        return getModel().getAdditionalFields();
+    }
+
+    @Override
+    public T setAdditionalFields(List additionalFields) {
+        getModel().setAdditionalFields(additionalFields);
+        return (T) this;
+    }
+
+    @Override
+    public T addAdditionalFields(String... fields) {
+        getModel().addAdditionalFields(fields);
+        return (T) this;
+    }
+
+    @Override
+    public Boolean getAutoDisplay() {
+        return getModel().getAutoDisplay();
+    }
+
+    @Override
+    public T setAutoDisplay(Boolean autoDisplay) {
+        getModel().setAutoDisplay(autoDisplay);
+        return (T) this;
+    }
+
+    @Override
+    public Boolean getAutoResize() {
+        return getModel().getAutoResize();
+    }
+
+    @Override
+    public T setAutoResize(Boolean autoResize) {
+        getModel().setAutoResize(autoResize);
+        return (T) this;
+    }
+
+    @Override
+    public Double getBackgroundAlpha() {
+        return getModel().getBackgroundAlpha();
+    }
+
+    @Override
+    public T setBackgroundAlpha(Double backgroundAlpha) {
+        getModel().setBackgroundAlpha(backgroundAlpha);
+        return (T) this;
+    }
+
+    @Override
+    public String getLanguage() {
+        return getModel().getLanguage();
+    }
+
+    @Override
+    public T setLanguage(String language) {
+        getModel().setLanguage(language);
+        return (T) this;
+    }
+
+    @Override
+    public String getPath() {
+        return getModel().getPath();
+    }
+
+    @Override
+    public T setPath(String path) {
+        getModel().setPath(path);
+        return (T) this;
+    }
+
+    @Override
+    public Boolean getSvgIcons() {
+        return getModel().getSvgIcons();
+    }
+
+    @Override
+    public T setSvgIcons(Boolean svgIcons) {
+        getModel().setSvgIcons(svgIcons);
+        return (T) this;
+    }
+
+    @Override
+    public Boolean getTapToActivate() {
+        return getModel().getTapToActivate();
+    }
+
+    @Override
+    public T setTapToActivate(Boolean tapToActivate) {
+        getModel().setTapToActivate(tapToActivate);
+        return (T) this;
+    }
+
+    @Override
+    public String getDefs() {
+        return getModel().getDefs();
+    }
+
+    @Override
+    public T setDefs(String defs) {
+        getModel().setDefs(defs);
+        return (T) this;
+    }
+
+    @Override
+    public Boolean getAccessible() {
+        return getModel().getAccessible();
+    }
+
+    @Override
+    public T setAccessible(Boolean accessible) {
+        getModel().setAccessible(accessible);
+        return (T) this;
+    }
+
+    @Override
+    public String getAccessibleTitle() {
+        return getModel().getAccessibleTitle();
+    }
+
+    @Override
+    public T setAccessibleTitle(String accessibleTitle) {
+        getModel().setAccessibleTitle(accessibleTitle);
+        return (T) this;
+    }
+
+    @Override
+    public T setResponsive(Responsive responsive) {
+        if (responsive != null) {
+            component.activateResponsivePlugin();
+        }
+
+        getModel().setResponsive(responsive);
+        return (T) this;
+    }
+
+    @Override
+    public Responsive getResponsive() {
+        return getModel().getResponsive();
+    }
+
+    @Override
+    public Integer getProcessCount() {
+        return getModel().getProcessCount();
+    }
+
+    @Override
+    public T setProcessCount(Integer processCount) {
+        getModel().setProcessCount(processCount);
+        return (T) this;
+    }
+
+    @Override
+    public Integer getProcessTimeout() {
+        return getModel().getProcessTimeout();
+    }
+
+    @Override
+    public T setProcessTimeout(Integer processTimeout) {
+        getModel().setProcessTimeout(processTimeout);
+        return (T) this;
+    }
+
+    @Override
+    public Integer getTouchClickDuration() {
+        return getModel().getTouchClickDuration();
+    }
+
+    @Override
+    public T setTouchClickDuration(Integer touchClickDuration) {
+        getModel().setTouchClickDuration(touchClickDuration);
+        return (T) this;
+    }
+
+    @Override
+    public Boolean getAutoTransform() {
+        return getModel().getAutoTransform();
+    }
+
+    @Override
+    public T setAutoTransform(Boolean autoTransform) {
+        getModel().setAutoTransform(autoTransform);
+        return (T) this;
     }
 
     @Override
@@ -359,114 +772,6 @@ public class WebChart extends WebAbstractComponent<CubaAmchartsScene> implements
         if (rightClickHandler != null && !getEventRouter().hasListeners(ChartRightClickListener.class)) {
             component.removeChartRightClickListener(rightClickHandler);
             rightClickHandler = null;
-        }
-    }
-
-    @Override
-    public void addCursorPeriodSelectListener(CursorPeriodSelectListener listener) {
-        getEventRouter().addListener(CursorPeriodSelectListener.class, listener);
-        if (periodSelectHandler == null) {
-            periodSelectHandler = e -> {
-                CursorPeriodSelectEvent event = new CursorPeriodSelectEvent(e.getStart(), e.getEnd());
-                getEventRouter().fireEvent(CursorPeriodSelectListener.class, CursorPeriodSelectListener::onSelect, event);
-            };
-            component.addCursorPeriodSelectListener(periodSelectHandler);
-        }
-    }
-
-    @Override
-    public void removeCursorPeriodSelectListener(CursorPeriodSelectListener listener) {
-        getEventRouter().removeListener(CursorPeriodSelectListener.class, listener);
-        if (periodSelectHandler != null && !getEventRouter().hasListeners(CursorPeriodSelectListener.class)) {
-            component.removeCursorPeriodSelectListener(periodSelectHandler);
-            periodSelectHandler = null;
-        }
-    }
-
-    @Override
-    public void addCursorZoomListener(CursorZoomListener listener) {
-        getEventRouter().addListener(CursorZoomListener.class, listener);
-        if (cursorZoomHandler == null) {
-            cursorZoomHandler = e -> {
-                CursorZoomEvent event = new CursorZoomEvent(e.getStart(), e.getEnd());
-                getEventRouter().fireEvent(CursorZoomListener.class, CursorZoomListener::onZoom, event);
-            };
-            component.addCursorZoomListener(cursorZoomHandler);
-        }
-    }
-
-    @Override
-    public void removeCursorZoomListener(CursorZoomListener listener) {
-        getEventRouter().removeListener(CursorZoomListener.class, listener);
-        if (cursorZoomHandler != null && !getEventRouter().hasListeners(CursorZoomListener.class)) {
-            component.removeCursorZoomListener(cursorZoomHandler);
-            cursorZoomHandler = null;
-        }
-    }
-
-    @Override
-    public void addGraphClickListener(GraphClickListener listener) {
-        getEventRouter().addListener(GraphClickListener.class, listener);
-        if (graphClickHandler == null) {
-            graphClickHandler = e -> {
-                GraphClickEvent event = new GraphClickEvent(e.getGraphId(), e.getX(), e.getY(),
-                        e.getAbsoluteX(), e.getAbsoluteY());
-                getEventRouter().fireEvent(GraphClickListener.class, GraphClickListener::onClick, event);
-            };
-            component.addGraphClickListener(graphClickHandler);
-        }
-    }
-
-    @Override
-    public void removeGraphClickListener(GraphClickListener listener) {
-        getEventRouter().removeListener(GraphClickListener.class, listener);
-        if (graphClickHandler != null && !getEventRouter().hasListeners(GraphClickListener.class)) {
-            component.removeGraphClickListener(graphClickHandler);
-            graphClickHandler = null;
-        }
-    }
-
-    @Override
-    public void addGraphItemClickListener(GraphItemClickListener listener) {
-        getEventRouter().addListener(GraphItemClickListener.class, listener);
-        if (graphItemClickHandler == null) {
-            graphItemClickHandler = e -> {
-                GraphItemClickEvent event = new GraphItemClickEvent(e.getGraphId(), getEventItem(e.getItemId()),
-                        e.getItemIndex(), e.getX(), e.getY(), e.getAbsoluteX(), e.getAbsoluteY());
-                getEventRouter().fireEvent(GraphItemClickListener.class, GraphItemClickListener::onClick, event);
-            };
-            component.addGraphItemClickListener(graphItemClickHandler);
-        }
-    }
-
-    @Override
-    public void removeGraphItemClickListener(GraphItemClickListener listener) {
-        getEventRouter().removeListener(GraphItemClickListener.class, listener);
-        if (graphItemClickHandler != null && !getEventRouter().hasListeners(GraphItemClickListener.class)) {
-            component.removeGraphItemClickListener(graphItemClickHandler);
-            graphItemClickHandler = null;
-        }
-    }
-
-    @Override
-    public void addGraphItemRightClickListener(GraphItemRightClickListener listener) {
-        getEventRouter().addListener(GraphItemRightClickListener.class, listener);
-        if (graphItemRightClickHandler == null) {
-            graphItemRightClickHandler = e -> {
-                GraphItemRightClickEvent event = new GraphItemRightClickEvent(e.getGraphId(), getEventItem(e.getItemId()),
-                        e.getItemIndex(), e.getX(), e.getY(), e.getAbsoluteX(), e.getAbsoluteY());
-                getEventRouter().fireEvent(GraphItemRightClickListener.class, GraphItemRightClickListener::onRightClick, event);
-            };
-            component.addGraphItemRightClickListener(graphItemRightClickHandler);
-        }
-    }
-
-    @Override
-    public void removeGraphItemRightClickListener(GraphItemRightClickListener listener) {
-        getEventRouter().removeListener(GraphItemRightClickListener.class, listener);
-        if (graphItemRightClickHandler != null && !getEventRouter().hasListeners(GraphItemRightClickListener.class)) {
-            component.removeGraphItemRightClickListener(graphItemRightClickHandler);
-            graphItemRightClickHandler = null;
         }
     }
 
@@ -551,274 +856,6 @@ public class WebChart extends WebAbstractComponent<CubaAmchartsScene> implements
         if (legendMarkerClickHandler != null && !getEventRouter().hasListeners(LegendMarkerClickListener.class)) {
             component.removeLegendMarkerClickListener(legendMarkerClickHandler);
             legendMarkerClickHandler = null;
-        }
-    }
-
-    @Override
-    public void addSliceClickListener(SliceClickListener listener) {
-        getEventRouter().addListener(SliceClickListener.class, listener);
-        if (sliceClickHandler == null) {
-            sliceClickHandler = e -> {
-                SliceClickEvent event = new SliceClickEvent(getEventItem(e.getSliceId()), e.getX(), e.getY(),
-                        e.getAbsoluteX(), e.getAbsoluteY());
-                getEventRouter().fireEvent(SliceClickListener.class, SliceClickListener::onClick, event);
-            };
-            component.addSliceClickListener(sliceClickHandler);
-        }
-    }
-
-    @Override
-    public void removeSliceClickListener(SliceClickListener listener) {
-        getEventRouter().removeListener(SliceClickListener.class, listener);
-        if (sliceClickHandler != null && !getEventRouter().hasListeners(SliceClickListener.class)) {
-            component.removeSliceClickListener(sliceClickHandler);
-            sliceClickHandler = null;
-        }
-    }
-
-    @Override
-    public void addSliceRightClickListener(SliceRightClickListener listener) {
-        getEventRouter().addListener(SliceRightClickListener.class, listener);
-        if (sliceRightClickHandler == null) {
-            sliceRightClickHandler = e -> {
-                SliceRightClickEvent event = new SliceRightClickEvent(getEventItem(e.getSliceId()), e.getX(), e.getY(),
-                        e.getAbsoluteX(), e.getAbsoluteY());
-                getEventRouter().fireEvent(SliceRightClickListener.class, SliceRightClickListener::onRightClick, event);
-            };
-            component.addSliceRightClickListener(sliceRightClickHandler);
-        }
-    }
-
-    @Override
-    public void removeSliceRightClickListener(SliceRightClickListener listener) {
-        getEventRouter().removeListener(SliceRightClickListener.class, listener);
-        if (sliceRightClickHandler != null && !getEventRouter().hasListeners(SliceRightClickListener.class)) {
-            component.removeSliceRightClickListener(sliceRightClickHandler);
-            sliceRightClickHandler = null;
-        }
-    }
-
-    @Override
-    public void addSlicePullInListener(SlicePullInListener listener) {
-        getEventRouter().addListener(SlicePullInListener.class, listener);
-        if (slicePullInHandler == null) {
-            slicePullInHandler = e -> {
-                SlicePullInEvent event = new SlicePullInEvent(getEventItem(e.getSliceId()));
-                getEventRouter().fireEvent(SlicePullInListener.class, SlicePullInListener::onPullIn, event);
-            };
-            component.addSlicePullInListener(slicePullInHandler);
-        }
-    }
-
-    @Override
-    public void removeSlicePullInListener(SlicePullInListener listener) {
-        getEventRouter().removeListener(SlicePullInListener.class, listener);
-        if (slicePullInHandler != null && !getEventRouter().hasListeners(SlicePullInListener.class)) {
-            component.removeSlicePullInListener(slicePullInHandler);
-            slicePullInHandler = null;
-        }
-    }
-
-    @Override
-    public void addSlicePullOutListener(SlicePullOutListener listener) {
-        getEventRouter().addListener(SlicePullOutListener.class, listener);
-        if (slicePullOutHandler == null) {
-            slicePullOutHandler = e -> {
-                SlicePullOutEvent event = new SlicePullOutEvent(getEventItem(e.getSliceId()));
-                getEventRouter().fireEvent(SlicePullOutListener.class, SlicePullOutListener::onPullOut, event);
-            };
-            component.addSlicePullOutListener(slicePullOutHandler);
-        }
-    }
-
-    @Override
-    public void removeSlicePullOutListener(SlicePullOutListener listener) {
-        getEventRouter().removeListener(SlicePullOutListener.class, listener);
-        if (slicePullOutHandler != null && !getEventRouter().hasListeners(SlicePullOutListener.class)) {
-            component.removeSlicePullOutListener(slicePullOutHandler);
-            slicePullOutHandler = null;
-        }
-    }
-
-    @Override
-    public void addZoomListener(ZoomListener listener) {
-        getEventRouter().addListener(ZoomListener.class, listener);
-        if (zoomHandler == null) {
-            zoomHandler = e -> {
-                ZoomEvent event = new ZoomEvent(e.getStartIndex(), e.getEndIndex(), e.getStartDate(), e.getEndDate(),
-                        e.getStartValue(), e.getEndValue());
-                getEventRouter().fireEvent(ZoomListener.class, ZoomListener::onZoom, event);
-            };
-            component.addZoomListener(zoomHandler);
-        }
-    }
-
-    @Override
-    public void removeZoomListener(ZoomListener listener) {
-        getEventRouter().removeListener(ZoomListener.class, listener);
-        if (zoomHandler != null && !getEventRouter().hasListeners(ZoomListener.class)) {
-            component.removeZoomListener(zoomHandler);
-            zoomHandler = null;
-        }
-    }
-
-    @Override
-    public void setResponsive(boolean responsive) {
-        super.setResponsive(responsive);
-
-        if (component.getChart() == null) {
-            throw new IllegalStateException("Chart configuration is not set");
-        }
-
-        component.activateResponsivePlugin();
-        if (component.getChart().getResponsive() == null) {
-            component.getChart().setResponsive(new Responsive());
-        }
-
-        component.getChart().getResponsive().setEnabled(responsive);
-    }
-
-    @Override
-    public boolean isResponsive() {
-        return super.isResponsive();
-    }
-
-    @Override
-    public void setNativeJson(String json) {
-        component.setJson(json);
-    }
-
-    @Override
-    public String getNativeJson() {
-        return component.getJson();
-    }
-
-    protected class CubaAmchartsSceneExt extends CubaAmchartsScene {
-
-        private static final long serialVersionUID = 4357940484867437795L;
-
-        @Override
-        protected void setupDefaults(AbstractChart chart) {
-            super.setupDefaults(chart);
-
-            setupChartLocale(chart);
-
-            if (chart instanceof RectangularChart) {
-                setupRectangularChartDefaults((RectangularChart) chart);
-            }
-            if (chart instanceof AbstractSerialChart) {
-                setupSerialChartDefaults((AbstractSerialChart) chart);
-            }
-        }
-
-        protected void setupChartLocale(AbstractChart chart) {
-            UserSessionSource userSessionSource = AppBeans.get(UserSessionSource.class);
-            // language
-            if (StringUtils.isEmpty(chart.getLanguage())) {
-                chart.setLanguage(messages.getTools().localeToString(userSessionSource.getLocale()));
-            }
-
-            // export
-            if (chart.getExport() != null && chart.getExport().getDateFormat() == null) {
-                chart.getExport().setDateFormat(messages.getMainMessage("amcharts.export.dateFormat"));
-            }
-
-            // number formatting
-            FormatStrings formatStrings = Datatypes.getFormatStrings(userSessionSource.getLocale());
-            if (formatStrings != null) {
-                DecimalFormatSymbols formatSymbols = formatStrings.getFormatSymbols();
-
-                if (chart.getPrecision() == null) {
-                    chart.setPrecision(-1);
-                }
-
-                if (chart.getPercentPrecision() == null) {
-                    chart.setPercentPrecision(2);
-                }
-
-                if (chart.getDecimalSeparator() == null) {
-                    chart.setDecimalSeparator(Character.toString(formatSymbols.getDecimalSeparator()));
-                }
-
-                if (chart.getThousandsSeparator() == null) {
-                    chart.setThousandsSeparator(Character.toString(formatSymbols.getGroupingSeparator()));
-                }
-            }
-
-            // number prefixes
-            if (BooleanUtils.isTrue(chart.getUsePrefixes())) {
-                if (chart.getPrefixesOfBigNumbers() == null) {
-                    List<BigNumberPrefix> prefixes = new LinkedList<>();
-                    for (BigNumberPower power : BigNumberPower.values()) {
-                        prefixes.add(new BigNumberPrefix(power,
-                                messages.getMainMessage("amcharts.bigNumberPower." + power.name())));
-                    }
-                    chart.setPrefixesOfBigNumbers(prefixes);
-                }
-                if (chart.getPrefixesOfSmallNumbers() == null) {
-                    List<SmallNumberPrefix> prefixes = new LinkedList<>();
-                    for (SmallNumberPower power : SmallNumberPower.values()) {
-                        prefixes.add(new SmallNumberPrefix(power,
-                                messages.getMainMessage("amcharts.smallNumberPower." + power.name())));
-                    }
-                    chart.setPrefixesOfSmallNumbers(prefixes);
-                }
-            }
-        }
-
-        protected void setupRectangularChartDefaults(RectangularChart chart) {
-            if (chart.getZoomOutText() == null) {
-                chart.setZoomOutText(messages.getMainMessage("amcharts.zoomOutText"));
-            }
-
-            Cursor cursor = chart.getChartCursor();
-            if (cursor != null) {
-                if (StringUtils.isEmpty(cursor.getCategoryBalloonDateFormat())) {
-                    String format = messages.getMainMessage("amcharts.rectangularChart.categoryBalloonDateFormat");
-                    cursor.setCategoryBalloonDateFormat(format);
-                }
-            }
-        }
-
-        protected void setupSerialChartDefaults(AbstractSerialChart chart) {
-            boolean byDate = WebChart.this.byDate;
-
-            if (datasource != null && StringUtils.isNotEmpty(chart.getCategoryField())) {
-                MetaProperty property = datasource.getMetaClass().getProperty(chart.getCategoryField());
-                if (property == null) {
-                    throw new DevelopmentException(
-                            String.format("Unable to find metaproperty '%s' for class '%s'", chart.getCategoryField(), datasource.getMetaClass()));
-                }
-                if (Date.class.isAssignableFrom(property.getJavaType())) {
-                    byDate = true;
-                }
-            }
-
-            CategoryAxis categoryAxis = chart.getCategoryAxis();
-            if (categoryAxis == null) {
-                categoryAxis = new CategoryAxis();
-                chart.setCategoryAxis(categoryAxis);
-            }
-
-            if (byDate) {
-                if (categoryAxis.getParseDates() == null) {
-                    categoryAxis.setParseDates(true);
-                }
-            }
-
-            String firstDayOfWeek = messages.getMainMessage("amcharts.firstDayOfWeek");
-            if (categoryAxis.getFirstDayOfWeek() == null) {
-                categoryAxis.setFirstDayOfWeek(DayOfWeek.valueOf(firstDayOfWeek));
-            }
-
-            if (StringUtils.isEmpty(chart.getDataDateFormat())) {
-                chart.setDataDateFormat(ChartJsonSerializationContext.DEFAULT_JS_DATE_FORMAT);
-            }
-
-            if (StringUtils.isEmpty(chart.getBalloonDateFormat())) {
-                String format = messages.getMainMessage("amcharts.serialChart.balloonDateFormat");
-                chart.setBalloonDateFormat(format);
-            }
         }
     }
 }
