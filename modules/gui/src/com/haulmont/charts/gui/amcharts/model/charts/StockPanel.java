@@ -59,7 +59,7 @@ public class StockPanel extends AbstractSerialChart<StockPanel> implements Serie
     private Integer trendLineThickness;
 
     public StockPanel() {
-        super(ChartType.SERIAL);
+        super(null);
         this.id = UuidProvider.createUuid().toString();
     }
 
