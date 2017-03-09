@@ -130,100 +130,60 @@ public class CubaAmchartsSceneWidget extends Widget {
     public void zoomOut() {
         if (jsOverlay != null) {
             jsOverlay.zoomOut();
-        } else {
-            Scheduler.get().scheduleDeferred(
-                    () -> jsOverlay.zoomOut()
-            );
         }
     }
 
     public void zoomToIndexes(final int start, final int end) {
         if (jsOverlay != null) {
             jsOverlay.zoomToIndexes(start, end);
-        } else {
-            Scheduler.get().scheduleDeferred(
-                    () -> jsOverlay.zoomToIndexes(start, end)
-            );
         }
     }
 
     public void zoomToDates(final JsDate start, final JsDate end) {
         if (jsOverlay != null) {
             jsOverlay.zoomToDates(start, end);
-        } else {
-            Scheduler.get().scheduleDeferred(
-                    () -> jsOverlay.zoomToDates(start, end)
-            );
         }
     }
 
     public void zoomOutValueAxes() {
         if (jsOverlay != null) {
             jsOverlay.zoomOutValueAxes();
-        } else {
-            Scheduler.get().scheduleDeferred(
-                    () -> jsOverlay.zoomOutValueAxes()
-            );
         }
     }
 
     public void zoomOutValueAxis(String id) {
         if (jsOverlay != null) {
             jsOverlay.zoomOutValueAxis(id);
-        } else {
-            Scheduler.get().scheduleDeferred(
-                    () -> jsOverlay.zoomOutValueAxis(id)
-            );
         }
     }
 
     public void zoomOutValueAxis(int index) {
         if (jsOverlay != null) {
             jsOverlay.zoomOutValueAxis(index);
-        } else {
-            Scheduler.get().scheduleDeferred(
-                    () -> jsOverlay.zoomOutValueAxis(index)
-            );
         }
     }
 
     public void zoomValueAxisToValues(String id, String startValue, String endValue) {
         if (jsOverlay != null) {
             jsOverlay.zoomValueAxisToValues(id, startValue, endValue);
-        } else {
-            Scheduler.get().scheduleDeferred(
-                    () -> jsOverlay.zoomValueAxisToValues(id, startValue, endValue)
-            );
         }
     }
 
     public void zoomValueAxisToValues(int index, String startValue, String endValue) {
         if (jsOverlay != null) {
             jsOverlay.zoomValueAxisToValues(index, startValue, endValue);
-        } else {
-            Scheduler.get().scheduleDeferred(
-                    () -> jsOverlay.zoomValueAxisToValues(index, startValue, endValue)
-            );
         }
     }
 
     public void zoomValueAxisToValues(String id, JsDate start, JsDate end) {
         if (jsOverlay != null) {
             jsOverlay.zoomValueAxisToValues(id, start, end);
-        } else {
-            Scheduler.get().scheduleDeferred(
-                    () -> jsOverlay.zoomValueAxisToValues(id, start, end)
-            );
         }
     }
 
     public void zoomValueAxisToValues(int index, JsDate start, JsDate end) {
         if (jsOverlay != null) {
             jsOverlay.zoomValueAxisToValues(index, start, end);
-        } else {
-            Scheduler.get().scheduleDeferred(
-                    () -> jsOverlay.zoomValueAxisToValues(index, start, end)
-            );
         }
     }
 

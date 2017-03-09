@@ -16,7 +16,9 @@ import com.vaadin.client.ui.AbstractComponentConnector;
 import com.vaadin.client.ui.layout.ElementResizeListener;
 import com.vaadin.shared.ui.Connect;
 
+import java.util.ArrayList;
 import java.util.Date;
+import java.util.List;
 import java.util.Set;
 
 @Connect(CubaAmchartsScene.class)
@@ -24,6 +26,9 @@ public class CubaAmchartsSceneConnector extends AbstractComponentConnector {
 
     protected CubaAmchartsServerRpc rpc = RpcProxy.create(CubaAmchartsServerRpc.class, this);
     protected ElementResizeListener resizeListener;
+
+    protected boolean dataReady = false;
+    protected List<Runnable> afterDataReady = new ArrayList<>();
 
     public CubaAmchartsSceneConnector() {
         registerRpc(CubaAmchartsSceneClientRpc.class, new CubaAmchartsSceneClientRpc() {
@@ -39,63 +44,138 @@ public class CubaAmchartsSceneConnector extends AbstractComponentConnector {
 
             @Override
             public void zoomOut() {
-                getWidget().zoomOut();
+                Scheduler.get().scheduleDeferred(() -> {
+                    if (dataReady) {
+                        getWidget().zoomOut();
+                    } else {
+                        afterDataReady.add(() -> getWidget().zoomOut());
+                    }
+                });
             }
 
             @Override
             public void zoomToIndexes(int start, int end) {
-                getWidget().zoomToIndexes(start, end);
+                Scheduler.get().scheduleDeferred(() -> {
+                    if (dataReady) {
+                        getWidget().zoomToIndexes(start, end);
+                    } else {
+                        afterDataReady.add(() -> getWidget().zoomToIndexes(start, end));
+                    }
+                });
             }
 
             @Override
             public void zoomToDates(Date start, Date end) {
-                getWidget().zoomToDates(JsDate.toJs(start), JsDate.toJs(end));
+                Scheduler.get().scheduleDeferred(() -> {
+                    if (dataReady) {
+                        getWidget().zoomToDates(JsDate.toJs(start), JsDate.toJs(end));
+                    } else {
+                        afterDataReady.add(() -> getWidget().zoomToDates(JsDate.toJs(start), JsDate.toJs(end)));
+                    }
+                });
             }
 
             @Override
             public void zoomOutValueAxes() {
-                getWidget().zoomOutValueAxes();
+                Scheduler.get().scheduleDeferred(() -> {
+                    if (dataReady) {
+                        getWidget().zoomOutValueAxes();
+                    } else {
+                        afterDataReady.add(() -> getWidget().zoomOutValueAxes());
+                    }
+                });
             }
 
             @Override
             public void zoomOutValueAxisById(String id) {
-                getWidget().zoomOutValueAxis(id);
+                Scheduler.get().scheduleDeferred(() -> {
+                    if (dataReady) {
+                        getWidget().zoomOutValueAxis(id);
+                    } else {
+                        afterDataReady.add(() -> getWidget().zoomOutValueAxis(id));
+                    }
+                });
             }
 
             @Override
             public void zoomOutValueAxisByIndex(int index) {
-                getWidget().zoomOutValueAxis(index);
+                Scheduler.get().scheduleDeferred(() -> {
+                    if (dataReady) {
+                        getWidget().zoomOutValueAxis(index);
+                    } else {
+                        afterDataReady.add(() -> getWidget().zoomOutValueAxis(index));
+                    }
+                });
             }
 
             @Override
             public void zoomValueAxisToValuesById(String id, String startValue, String endValue) {
-                getWidget().zoomValueAxisToValues(id, startValue, endValue);
+                Scheduler.get().scheduleDeferred(() -> {
+                    if (dataReady) {
+                        getWidget().zoomValueAxisToValues(id, startValue, endValue);
+                    } else {
+                        afterDataReady.add(() -> getWidget().zoomValueAxisToValues(id, startValue, endValue));
+                    }
+                });
             }
 
             @Override
             public void zoomValueAxisToValuesByIndex(int index, String startValue, String endValue) {
-                getWidget().zoomValueAxisToValues(index, startValue, endValue);
+                Scheduler.get().scheduleDeferred(() -> {
+                    if (dataReady) {
+                        getWidget().zoomValueAxisToValues(index, startValue, endValue);
+                    } else {
+                        afterDataReady.add(() -> getWidget().zoomValueAxisToValues(index, startValue, endValue));
+                    }
+                });
             }
 
             @Override
             public void zoomValueAxisToDatesById(String id, Date start, Date end) {
-                getWidget().zoomValueAxisToValues(id, JsDate.toJs(start), JsDate.toJs(end));
+                Scheduler.get().scheduleDeferred(() -> {
+                    if (dataReady) {
+                        getWidget().zoomValueAxisToValues(id, JsDate.toJs(start), JsDate.toJs(end));
+                    } else {
+                        afterDataReady.add(() ->
+                                getWidget().zoomValueAxisToValues(id, JsDate.toJs(start), JsDate.toJs(end)));
+                    }
+                });
             }
 
             @Override
             public void zoomValueAxisToDatesByIndex(int index, Date start, Date end) {
-                getWidget().zoomValueAxisToValues(index, JsDate.toJs(start), JsDate.toJs(end));
+                Scheduler.get().scheduleDeferred(() -> {
+                    if (dataReady) {
+                        getWidget().zoomValueAxisToValues(index, JsDate.toJs(start), JsDate.toJs(end));
+                    } else {
+                        afterDataReady.add(() ->
+                                getWidget().zoomValueAxisToValues(index, JsDate.toJs(start), JsDate.toJs(end)));
+                    }
+                });
             }
         });
     }
 
     protected void updateChart(String json) {
-        Scheduler.get().scheduleDeferred(() ->
-                getWidget().updatePoints(getJsonAsObject(json))
-        );
+        dataReady = false;
+
+        Scheduler.get().scheduleDeferred(() -> {
+            getWidget().updatePoints(getJsonAsObject(json));
+            dataReady = true;
+            executeAfterDataReady();
+        });
+    }
+
+    protected void executeAfterDataReady() {
+        for (Runnable runnable : afterDataReady) {
+            runnable.run();
+        }
+        afterDataReady.clear();
     }
 
     protected void drawChart(String chartJson) {
+        dataReady = false;
+
         AmchartsConfig config = AmchartsConfig.fromServerConfig(chartJson, getState().json);
         AmchartsEvents amchartsEvents = createEvents(config);
 
@@ -110,6 +190,9 @@ public class CubaAmchartsSceneConnector extends AbstractComponentConnector {
 
                 getLayoutManager().addElementResizeListener(getWidget().getElement(), resizeListener);
             }
+
+            dataReady = true;
+            executeAfterDataReady();
         });
     }
 
