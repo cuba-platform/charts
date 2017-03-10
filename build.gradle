@@ -29,8 +29,17 @@ buildscript {
     }
 }
 
+configurations {
+    bom
+}
+dependencies {
+    bom("com.haulmont.cuba:cuba-global:$cubaVersion")
+}
+
 apply(plugin: 'idea')
 apply(plugin: 'cuba')
+
+bom.load file('modules/global/src/com/haulmont/charts/bom.properties')
 
 cuba {
     artifact {
@@ -183,7 +192,6 @@ configure(chartsWebModule) {
 
         provided(servletApi)
     }
-
 
     jar {
         with copySpec {
