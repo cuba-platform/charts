@@ -5,6 +5,14 @@
 
 package com.haulmont.charts.gui.components.map;
 
+/**
+ * @deprecated Use {@link MapViewer} component interface.
+ */
+@Deprecated
 public interface GoogleMapViewer extends MapViewer {
+    /**
+     * @deprecated Use {@link MapViewer} component interface.
+     */
+    @Deprecated
     String NAME = "googleMapViewer";
 }

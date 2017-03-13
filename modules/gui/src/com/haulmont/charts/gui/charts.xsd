@@ -1679,7 +1679,6 @@
         <xs:complexType>
             <xs:complexContent>
                 <xs:extension base="baseComponent">
-                    <xs:attribute name="vendor" type="mapVendorType" default="google"/>
                     <xs:attribute name="mapType" type="mapTypeType" default="roadmap"/>
                 </xs:extension>
             </xs:complexContent>

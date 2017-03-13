@@ -5,11 +5,7 @@
 
 package com.haulmont.charts.gui.xml.layout.loaders.map;
 
-import com.haulmont.charts.core.global.MapConfig;
-import com.haulmont.charts.gui.components.map.GoogleMapViewer;
 import com.haulmont.charts.gui.components.map.MapViewer;
-import com.haulmont.cuba.core.global.AppBeans;
-import com.haulmont.cuba.core.global.Configuration;
 import com.haulmont.cuba.gui.components.Component;
 import com.haulmont.cuba.gui.xml.layout.loaders.AbstractComponentLoader;
 import org.dom4j.Element;
@@ -18,24 +14,7 @@ public class MapViewerLoader extends AbstractComponentLoader<MapViewer> {
 
     @Override
     public void createComponent() {
-        String vendor = element.attributeValue("vendor");
-        if (vendor == null) {
-            Configuration configuration = AppBeans.get(Configuration.NAME);
-            MapConfig mapConfig = configuration.getConfig(MapConfig.class);
-
-            vendor = mapConfig.getMapsProvider();
-        }
-
-        String componentId;
-        switch (vendor) {
-            case "google":
-                componentId = GoogleMapViewer.NAME;
-                break;
-            default:
-                throw new IllegalArgumentException("Unknown maps vendor: " + vendor);
-        }
-
-        resultComponent = (MapViewer) factory.createComponent(componentId);
+        resultComponent = (MapViewer) factory.createComponent(MapViewer.NAME);
         loadId(resultComponent, element);
     }
 

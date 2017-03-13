@@ -36,10 +36,16 @@ import com.haulmont.cuba.gui.components.Component;
 import java.util.Collection;
 import java.util.List;
 
+/**
+ * Google map component.
+ */
 public interface MapViewer extends Component, Component.BelongToFrame, Component.HasXmlDescriptor, Component.HasIcon,
                                    Component.HasCaption {
 
-    /** Tag name for XML loader, for component name see {@link com.haulmont.charts.gui.components.map.GoogleMapViewer#NAME} */
+    String NAME = "mapViewer";
+
+    /** Tag name for XML loader */
+    @Deprecated
     String TAG_NAME = "mapViewer";
 
     /**

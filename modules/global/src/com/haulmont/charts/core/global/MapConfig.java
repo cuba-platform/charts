@@ -16,6 +16,10 @@ import com.haulmont.cuba.core.config.defaults.DefaultString;
 @Source(type = SourceType.DATABASE)
 public interface MapConfig extends Config {
 
+    /**
+     * @deprecated map provider functionality is deprecated. MapViewer component is tightly bound with Google Map implementation.
+     */
+    @Deprecated
     @Property("charts.map.provider")
     @DefaultString("google")
     String getMapsProvider();

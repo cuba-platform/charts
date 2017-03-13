@@ -78,4 +78,11 @@
         <class>com.haulmont.charts.web.gui.components.map.google.WebGoogleMapViewer</class>
         <componentLoader>com.haulmont.charts.gui.xml.layout.loaders.map.MapViewerLoader</componentLoader>
     </component>
+
+    <component>
+        <tag>mapViewer</tag>
+        <name>mapViewer</name>
+        <class>com.haulmont.charts.web.gui.components.map.google.WebGoogleMapViewer</class>
+        <componentLoader>com.haulmont.charts.gui.xml.layout.loaders.map.MapViewerLoader</componentLoader>
+    </component>
 </components>

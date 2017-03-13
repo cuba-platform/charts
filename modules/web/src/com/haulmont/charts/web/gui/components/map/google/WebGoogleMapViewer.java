@@ -8,6 +8,7 @@ package com.haulmont.charts.web.gui.components.map.google;
 import com.haulmont.bali.util.Preconditions;
 import com.haulmont.charts.core.global.MapConfig;
 import com.haulmont.charts.gui.components.map.GoogleMapViewer;
+import com.haulmont.charts.gui.components.map.MapViewer;
 import com.haulmont.charts.gui.map.model.*;
 import com.haulmont.charts.gui.map.model.base.MarkerImage;
 import com.haulmont.charts.gui.map.model.base.Point;
@@ -64,9 +65,7 @@ import static com.haulmont.charts.gui.map.model.listeners.doubleclick.MarkerDoub
 import static com.haulmont.charts.gui.map.model.listeners.drag.MarkerDragListener.MarkerDragEvent;
 import static com.haulmont.charts.gui.map.model.listeners.overlaycomplete.PolygonCompleteListener.PolygonCompleteEvent;
 
-public class WebGoogleMapViewer extends WebAbstractComponent<GoogleMap> implements GoogleMapViewer {
-
-    public static final String VENDOR = "google";
+public class WebGoogleMapViewer extends WebAbstractComponent<GoogleMap> implements MapViewer, GoogleMapViewer {
 
     private final Logger log = LoggerFactory.getLogger(WebGoogleMapViewer.class);
 
@@ -117,10 +116,7 @@ public class WebGoogleMapViewer extends WebAbstractComponent<GoogleMap> implemen
     protected List<CircleCompleteListener> circleCompleteListeners;
     protected com.vaadin.tapio.googlemaps.client.events.overlaycomplete.CircleCompleteListener circleCompleteHandler;
 
-
     public WebGoogleMapViewer() {
-        super();
-
         String clientId = mapConfig.getClientId();
         String key = mapConfig.getApiKey();
         String lang = mapConfig.getLanguage();

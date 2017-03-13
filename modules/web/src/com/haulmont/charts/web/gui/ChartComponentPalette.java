@@ -23,13 +23,14 @@ import java.util.HashMap;
 import java.util.Map;
 
 /**
- * Charts palette
+ * Charts palette.
+ *
+ * @deprecated Now components are configured using "charts-web-components.xml" configuration.
  */
 @Deprecated
 public class ChartComponentPalette implements ComponentPalette {
     @Override
     public Map<String, Class<? extends ComponentLoader>> getLoaders() {
-
         Map<String, Class<? extends ComponentLoader>> loaders = new HashMap<>();
 
         loaders.put("gaugeChart", AngularGaugeChartLoader.class);
@@ -41,7 +42,7 @@ public class ChartComponentPalette implements ComponentPalette {
         loaders.put("xyChart", XYChartLoader.class);
         loaders.put("stockChart", StockChartLoader.class);
 
-        loaders.put(MapViewer.TAG_NAME, MapViewerLoader.class);
+        loaders.put(MapViewer.NAME, MapViewerLoader.class);
 
         loaders.put(PivotTable.NAME, PivotTableLoader.class);
 
@@ -62,7 +63,8 @@ public class ChartComponentPalette implements ComponentPalette {
 
         components.put(StockChart.NAME, WebStockChart.class);
 
-        components.put(GoogleMapViewer.NAME, WebGoogleMapViewer.class);
+        components.put(GoogleMapViewer.NAME, WebGoogleMapViewer.class); // for backward compatibility only
+        components.put(MapViewer.NAME, WebGoogleMapViewer.class); // for backward compatibility only
 
         components.put(PivotTable.NAME, WebPivotTable.class);
 
