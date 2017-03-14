@@ -68,6 +68,10 @@ public abstract class ChartModelLoader<C extends Component> extends AbstractComp
                     context.getFullFrameId(), "Chart ID", resultComponent.getId());
         }
 
+        if (type == null) {
+            type = "string";
+        }
+
         switch (type) {
             case "int":
                 dataItem.add(name, Integer.parseInt(value));
