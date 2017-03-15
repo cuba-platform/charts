@@ -61,6 +61,9 @@ public class AmchartsConfig extends JavaScriptObject {
                 var guide = guides[i];
                 convertStringToDate(guide, "date");
                 convertStringToDate(guide, "toDate");
+
+                convertStringToDate(guide, "value");
+                convertStringToDate(guide, "toValue");
             }
         };
 

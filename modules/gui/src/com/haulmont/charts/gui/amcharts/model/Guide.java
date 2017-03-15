@@ -66,9 +66,9 @@ public class Guide extends AbstractChartObject {
 
     private Date toDate;
 
-    private Double toValue;
+    private Object toValue;
 
-    private Double value;
+    private Object value;
 
     private String valueAxis;
 
@@ -261,20 +261,20 @@ public class Guide extends AbstractChartObject {
         return this;
     }
 
-    public Double getToValue() {
+    public Object getToValue() {
         return toValue;
     }
 
-    public Guide setToValue(Double toValue) {
+    public Guide setToValue(Object toValue) {
         this.toValue = toValue;
         return this;
     }
 
-    public Double getValue() {
+    public Object getValue() {
         return value;
     }
 
-    public Guide setValue(Double value) {
+    public Guide setValue(Object value) {
         this.value = value;
         return this;
     }
