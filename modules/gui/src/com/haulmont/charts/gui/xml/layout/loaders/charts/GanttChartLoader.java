@@ -8,6 +8,7 @@ package com.haulmont.charts.gui.xml.layout.loaders.charts;
 import com.haulmont.bali.util.Dom4j;
 import com.haulmont.charts.gui.amcharts.model.DatePeriod;
 import com.haulmont.charts.gui.amcharts.model.Graph;
+import com.haulmont.charts.gui.amcharts.model.charts.ChartModel;
 import com.haulmont.charts.gui.amcharts.model.data.MapDataItem;
 import com.haulmont.charts.gui.components.charts.GanttChart;
 import com.haulmont.charts.gui.data.ListDataProvider;
@@ -26,7 +27,7 @@ public class GanttChartLoader extends AbstractSerialChartLoader<GanttChart> {
     }
 
     @Override
-    protected void loadChartData(GanttChart chart, Element element) {
+    protected void loadChartData(ChartModel chart, Element element) {
         Element dataSet = element.element("data");
         if (dataSet != null) {
             ListDataProvider listDataProvider = new ListDataProvider();

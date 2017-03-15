@@ -5,12 +5,19 @@
 
 package com.haulmont.charts.gui.xml.layout.loaders.charts;
 
+import com.haulmont.bali.util.Dom4j;
 import com.haulmont.charts.gui.amcharts.model.*;
+import com.haulmont.charts.gui.amcharts.model.charts.ChartModel;
+import com.haulmont.charts.gui.amcharts.model.charts.CoordinateChartModel;
+import com.haulmont.charts.gui.amcharts.model.charts.RectangularChartModel;
+import com.haulmont.charts.gui.amcharts.model.charts.SeriesBasedChartModel;
 import com.haulmont.charts.gui.amcharts.model.data.MapDataItem;
+import com.haulmont.charts.gui.data.ListDataProvider;
 import com.haulmont.charts.gui.model.JsFunction;
 import com.haulmont.cuba.gui.GuiDevelopmentException;
 import com.haulmont.cuba.gui.components.Component;
 import com.haulmont.cuba.gui.xml.layout.loaders.AbstractComponentLoader;
+import org.apache.commons.collections.CollectionUtils;
 import org.apache.commons.lang.StringUtils;
 import org.dom4j.Element;
 
@@ -1899,5 +1906,1266 @@ public abstract class ChartModelLoader<C extends Component> extends AbstractComp
         }
 
         return pattern;
+    }
+
+    protected void loadSeriesBasedProperties(SeriesBasedChartModel chart, Element element) {
+        loadCategoryAxis(chart, element);
+
+        String balloonDateFormat = element.attributeValue("balloonDateFormat");
+        if (StringUtils.isNotEmpty(balloonDateFormat)) {
+            chart.setBalloonDateFormat(loadResourceString(balloonDateFormat));
+        }
+
+        String categoryField = element.attributeValue("categoryField");
+        if (StringUtils.isNotEmpty(categoryField)) {
+            chart.setCategoryField(categoryField);
+        }
+
+        String columnSpacing = element.attributeValue("columnSpacing");
+        if (StringUtils.isNotEmpty(columnSpacing)) {
+            chart.setColumnSpacing(Integer.valueOf(columnSpacing));
+        }
+
+        String columnSpacing3D = element.attributeValue("columnSpacing3D");
+        if (StringUtils.isNotEmpty(columnSpacing3D)) {
+            chart.setColumnSpacing3D(Integer.valueOf(columnSpacing3D));
+        }
+
+        String columnWidth = element.attributeValue("columnWidth");
+        if (StringUtils.isNotEmpty(columnWidth)) {
+            chart.setColumnWidth(Double.valueOf(columnWidth));
+        }
+
+        String dataDateFormat = element.attributeValue("dataDateFormat");
+        if (StringUtils.isNotEmpty(dataDateFormat)) {
+            chart.setDataDateFormat(dataDateFormat);
+        }
+
+        String maxSelectedSeries = element.attributeValue("maxSelectedSeries");
+        if (StringUtils.isNotEmpty(maxSelectedSeries)) {
+            chart.setMaxSelectedSeries(Integer.valueOf(maxSelectedSeries));
+        }
+
+        String minSelectedTime = element.attributeValue("minSelectedTime");
+        if (StringUtils.isNotEmpty(minSelectedTime)) {
+            chart.setMinSelectedTime(Long.valueOf(minSelectedTime));
+        }
+
+        String maxSelectedTime = element.attributeValue("maxSelectedTime");
+        if (StringUtils.isNotEmpty(maxSelectedTime)) {
+            chart.setMaxSelectedTime(Long.valueOf(maxSelectedTime));
+        }
+
+        String mouseWheelScrollEnabled = element.attributeValue("mouseWheelScrollEnabled");
+        if (StringUtils.isNotEmpty(mouseWheelScrollEnabled)) {
+            chart.setMouseWheelScrollEnabled(Boolean.valueOf(mouseWheelScrollEnabled));
+        }
+
+        String mouseWheelZoomEnabled = element.attributeValue("mouseWheelZoomEnabled");
+        if (StringUtils.isNotEmpty(mouseWheelZoomEnabled)) {
+            chart.setMouseWheelZoomEnabled(Boolean.valueOf(mouseWheelZoomEnabled));
+        }
+
+        String rotate = element.attributeValue("rotate");
+        if (StringUtils.isNotEmpty(rotate)) {
+            chart.setRotate(Boolean.valueOf(rotate));
+        }
+
+        String synchronizeGrid = element.attributeValue("synchronizeGrid");
+        if (StringUtils.isNotEmpty(synchronizeGrid)) {
+            chart.setSynchronizeGrid(Boolean.parseBoolean(synchronizeGrid));
+        }
+
+        Element scrollbarElement = element.element("valueScrollbar");
+        if (scrollbarElement != null) {
+            chart.setValueScrollbar(loadScrollbar(scrollbarElement));
+        }
+
+        String zoomOutOnDataUpdate = element.attributeValue("zoomOutOnDataUpdate");
+        if (StringUtils.isNotEmpty(zoomOutOnDataUpdate)) {
+            chart.setZoomOutOnDataUpdate(Boolean.valueOf(zoomOutOnDataUpdate));
+        }
+    }
+
+    protected Scrollbar loadScrollbar(Element scrollbarElement) {
+        Scrollbar scrollbar = new Scrollbar();
+
+        String accessibleLabel = scrollbarElement.attributeValue("accessibleLabel");
+        if (StringUtils.isNotEmpty(accessibleLabel)) {
+            scrollbar.setAccessibleLabel(loadResourceString(accessibleLabel));
+        }
+
+        String autoGridCount = scrollbarElement.attributeValue("autoGridCount");
+        if (StringUtils.isNotEmpty(autoGridCount)) {
+            scrollbar.setAutoGridCount(Boolean.valueOf(autoGridCount));
+        }
+
+        String backgroundAlpha = scrollbarElement.attributeValue("backgroundAlpha");
+        if (StringUtils.isNotEmpty(backgroundAlpha)) {
+            scrollbar.setBackgroundAlpha(Double.valueOf(backgroundAlpha));
+        }
+
+        String backgroundColor = scrollbarElement.attributeValue("backgroundColor");
+        if (StringUtils.isNotEmpty(backgroundColor)) {
+            scrollbar.setBackgroundColor(Color.valueOf(backgroundColor));
+        }
+
+        String color = scrollbarElement.attributeValue("color");
+        if (StringUtils.isNotEmpty(color)) {
+            scrollbar.setColor(Color.valueOf(color));
+        }
+
+        String dragCursorDown = scrollbarElement.attributeValue("dragCursorDown");
+        if (StringUtils.isNotEmpty(dragCursorDown)) {
+            scrollbar.setDragCursorDown(dragCursorDown);
+        }
+
+        String dragCursorHover = scrollbarElement.attributeValue("dragCursorHover");
+        if (StringUtils.isNotEmpty(dragCursorHover)) {
+            scrollbar.setDragCursorHover(dragCursorHover);
+        }
+
+        String dragIcon = scrollbarElement.attributeValue("dragIcon");
+        if (StringUtils.isNotEmpty(dragIcon)) {
+            scrollbar.setDragIcon(dragIcon);
+        }
+
+        String dragIconHeight = scrollbarElement.attributeValue("dragIconHeight");
+        if (StringUtils.isNotEmpty(dragIconHeight)) {
+            scrollbar.setDragIconHeight(Integer.valueOf(dragIconHeight));
+        }
+
+        String dragIconWidth = scrollbarElement.attributeValue("dragIconWidth");
+        if (StringUtils.isNotEmpty(dragIconWidth)) {
+            scrollbar.setDragIconWidth(Integer.valueOf(dragIconWidth));
+        }
+
+        String enabled = scrollbarElement.attributeValue("enabled");
+        if (StringUtils.isNotEmpty(enabled)) {
+            scrollbar.setEnabled(Boolean.valueOf(enabled));
+        }
+
+        String graph = scrollbarElement.attributeValue("graph");
+        if (StringUtils.isNotEmpty(graph)) {
+            scrollbar.setGraph(graph);
+        }
+
+        String graphFillAlpha = scrollbarElement.attributeValue("graphFillAlpha");
+        if (StringUtils.isNotEmpty(graphFillAlpha)) {
+            scrollbar.setGraphFillAlpha(Double.valueOf(graphFillAlpha));
+        }
+
+        String graphFillColor = scrollbarElement.attributeValue("graphFillColor");
+        if (StringUtils.isNotEmpty(graphFillColor)) {
+            scrollbar.setGraphFillColor(Color.valueOf(graphFillColor));
+        }
+
+        String graphLineAlpha = scrollbarElement.attributeValue("graphLineAlpha");
+        if (StringUtils.isNotEmpty(graphLineAlpha)) {
+            scrollbar.setGraphLineAlpha(Double.valueOf(graphLineAlpha));
+        }
+
+        String graphLineColor = scrollbarElement.attributeValue("graphLineColor");
+        if (StringUtils.isNotEmpty(graphLineColor)) {
+            scrollbar.setGraphLineColor(Color.valueOf(graphLineColor));
+        }
+
+        String graphType = scrollbarElement.attributeValue("graphType");
+        if (StringUtils.isNotEmpty(graphType)) {
+            scrollbar.setGraphType(GraphType.valueOf(graphType));
+        }
+
+        String gridAlpha = scrollbarElement.attributeValue("gridAlpha");
+        if (StringUtils.isNotEmpty(gridAlpha)) {
+            scrollbar.setGridAlpha(Double.valueOf(gridAlpha));
+        }
+
+        String gridColor = scrollbarElement.attributeValue("gridColor");
+        if (StringUtils.isNotEmpty(gridColor)) {
+            scrollbar.setGridColor(Color.valueOf(gridColor));
+        }
+
+        String gridCount = scrollbarElement.attributeValue("gridCount");
+        if (StringUtils.isNotEmpty(gridCount)) {
+            scrollbar.setGridCount(Integer.valueOf(gridCount));
+        }
+
+        String hideResizeGrips = scrollbarElement.attributeValue("hideResizeGrips");
+        if (StringUtils.isNotEmpty(hideResizeGrips)) {
+            scrollbar.setHideResizeGrips(Boolean.valueOf(hideResizeGrips));
+        }
+
+        String ignoreCustomColors = scrollbarElement.attributeValue("ignoreCustomColors");
+        if (StringUtils.isNotEmpty(ignoreCustomColors)) {
+            scrollbar.setIgnoreCustomColors(Boolean.valueOf(ignoreCustomColors));
+        }
+
+        String maximum = scrollbarElement.attributeValue("maximum");
+        if (StringUtils.isNotEmpty(maximum)) {
+            scrollbar.setMaximum(Double.valueOf(maximum));
+        }
+
+        String minimum = scrollbarElement.attributeValue("minimum");
+        if (StringUtils.isNotEmpty(minimum)) {
+            scrollbar.setMinimum(Double.valueOf(minimum));
+        }
+
+        String offset = scrollbarElement.attributeValue("offset");
+        if (StringUtils.isNotEmpty(offset)) {
+            scrollbar.setOffset(Integer.valueOf(offset));
+        }
+
+        String oppositeAxis = scrollbarElement.attributeValue("oppositeAxis");
+        if (StringUtils.isNotEmpty(oppositeAxis)) {
+            scrollbar.setOppositeAxis(Boolean.valueOf(oppositeAxis));
+        }
+
+        String resizeEnabled = scrollbarElement.attributeValue("resizeEnabled");
+        if (StringUtils.isNotEmpty(resizeEnabled)) {
+            scrollbar.setResizeEnabled(Boolean.valueOf(resizeEnabled));
+        }
+
+        String scrollbarHeight = scrollbarElement.attributeValue("scrollbarHeight");
+        if (StringUtils.isNotEmpty(scrollbarHeight)) {
+            scrollbar.setScrollbarHeight(Integer.valueOf(scrollbarHeight));
+        }
+
+        String scrollDuration = scrollbarElement.attributeValue("scrollDuration");
+        if (StringUtils.isNotEmpty(scrollDuration)) {
+            scrollbar.setScrollDuration(Double.valueOf(scrollDuration));
+        }
+
+        String selectedBackgroundAlpha = scrollbarElement.attributeValue("selectedBackgroundAlpha");
+        if (StringUtils.isNotEmpty(selectedBackgroundAlpha)) {
+            scrollbar.setSelectedBackgroundAlpha(Double.valueOf(selectedBackgroundAlpha));
+        }
+
+        String selectedBackgroundColor = scrollbarElement.attributeValue("selectedBackgroundColor");
+        if (StringUtils.isNotEmpty(selectedBackgroundColor)) {
+            scrollbar.setSelectedBackgroundColor(Color.valueOf(selectedBackgroundColor));
+        }
+
+        String selectedGraphFillAlpha = scrollbarElement.attributeValue("selectedGraphFillAlpha");
+        if (StringUtils.isNotEmpty(selectedGraphFillAlpha)) {
+            scrollbar.setSelectedGraphFillAlpha(Double.valueOf(selectedGraphFillAlpha));
+        }
+
+        String selectedGraphFillColor = scrollbarElement.attributeValue("selectedGraphFillColor");
+        if (StringUtils.isNotEmpty(selectedGraphFillColor)) {
+            scrollbar.setSelectedGraphFillColor(Color.valueOf(selectedGraphFillColor));
+        }
+
+        String selectedGraphLineAlpha = scrollbarElement.attributeValue("selectedGraphLineAlpha");
+        if (StringUtils.isNotEmpty(selectedGraphLineAlpha)) {
+            scrollbar.setSelectedGraphLineAlpha(Double.valueOf(selectedGraphLineAlpha));
+        }
+
+        String selectedGraphLineColor = scrollbarElement.attributeValue("selectedGraphLineColor");
+        if (StringUtils.isNotEmpty(selectedGraphLineColor)) {
+            scrollbar.setSelectedGraphLineColor(Color.valueOf(selectedGraphLineColor));
+        }
+
+        String tabIndex = scrollbarElement.attributeValue("tabIndex");
+        if (StringUtils.isNotEmpty(tabIndex)) {
+            scrollbar.setTabIndex(Integer.valueOf(tabIndex));
+        }
+
+        String updateOnReleaseOnly = scrollbarElement.attributeValue("updateOnReleaseOnly");
+        if (StringUtils.isNotEmpty(updateOnReleaseOnly)) {
+            scrollbar.setUpdateOnReleaseOnly(Boolean.valueOf(updateOnReleaseOnly));
+        }
+
+        return scrollbar;
+    }
+
+    protected void loadCategoryAxis(SeriesBasedChartModel chart, Element element) {
+        Element axisElement = element.element("categoryAxis");
+        if (axisElement != null) {
+            CategoryAxis axis = new CategoryAxis();
+
+            loadAbstractAxis(axis, axisElement);
+
+            String autoWrap = axisElement.attributeValue("autoWrap");
+            if (StringUtils.isNotEmpty(autoWrap)) {
+                axis.setAutoWrap(Boolean.valueOf(autoWrap));
+            }
+
+            String categoryFunction = axisElement.elementText("categoryFunction");
+            if (StringUtils.isNotEmpty(categoryFunction)) {
+                axis.setCategoryFunction(new JsFunction(categoryFunction));
+            }
+
+            String classNameField = axisElement.attributeValue("classNameField");
+            if (StringUtils.isNotEmpty(classNameField)) {
+                axis.setClassNameField(classNameField);
+            }
+
+            String centerLabelOnFullPeriod = axisElement.attributeValue("centerLabelOnFullPeriod");
+            if (StringUtils.isNotEmpty(centerLabelOnFullPeriod)) {
+                axis.setCenterLabelOnFullPeriod(Boolean.valueOf(centerLabelOnFullPeriod));
+            }
+
+            String equalSpacing = axisElement.attributeValue("equalSpacing");
+            if (StringUtils.isNotEmpty(equalSpacing)) {
+                axis.setEqualSpacing(Boolean.valueOf(equalSpacing));
+            }
+
+            String forceShowField = axisElement.attributeValue("forceShowField");
+            if (StringUtils.isNotEmpty(forceShowField)) {
+                axis.setForceShowField(forceShowField);
+            }
+
+            String gridPosition = axisElement.attributeValue("gridPosition");
+            if (StringUtils.isNotEmpty(gridPosition)) {
+                axis.setGridPosition(GridPosition.valueOf(gridPosition));
+            }
+
+            String labelFunction = axisElement.elementText("labelFunction");
+            if (StringUtils.isNotBlank(labelFunction)) {
+                axis.setLabelFunction(new JsFunction(labelFunction));
+            }
+
+            String labelColorField = axisElement.attributeValue("labelColorField");
+            if (StringUtils.isNotEmpty(labelColorField)) {
+                axis.setLabelColorField(labelColorField);
+            }
+
+            String minPeriod = axisElement.attributeValue("minPeriod");
+            if (StringUtils.isNotEmpty(minPeriod)) {
+                DatePeriod dp = DatePeriod.fromId(minPeriod);
+                if (dp == null) {
+                    dp = DatePeriod.valueOf(minPeriod);
+                }
+                axis.setMinPeriod(dp);
+            }
+
+            String parseDates = axisElement.attributeValue("parseDates");
+            if (StringUtils.isNotEmpty(parseDates)) {
+                axis.setParseDates(Boolean.valueOf(parseDates));
+            }
+
+            String startOnAxis = axisElement.attributeValue("startOnAxis");
+            if (StringUtils.isNotEmpty(startOnAxis)) {
+                axis.setStartOnAxis(Boolean.valueOf(startOnAxis));
+            }
+
+            String tickPosition = axisElement.attributeValue("tickPosition");
+            if (StringUtils.isNotEmpty(tickPosition)) {
+                axis.setTickPosition(tickPosition);
+            }
+
+            String twoLineMode = axisElement.attributeValue("twoLineMode");
+            if (StringUtils.isNotEmpty(twoLineMode)) {
+                axis.setTwoLineMode(Boolean.valueOf(twoLineMode));
+            }
+
+            String widthField = axisElement.attributeValue("widthField");
+            if (StringUtils.isNotEmpty(widthField)) {
+                axis.setWidthField(widthField);
+            }
+
+            chart.setCategoryAxis(axis);
+        }
+    }
+
+    protected void loadRectangularProperties(RectangularChartModel chart, Element element) {
+        loadTrendLines(chart, element);
+        loadCursor(chart, element);
+
+        String angle = element.attributeValue("angle");
+        if (StringUtils.isNotEmpty(angle)) {
+            chart.setAngle(Integer.valueOf(angle));
+        }
+
+        String autoMarginOffset = element.attributeValue("autoMarginOffset");
+        if (StringUtils.isNotEmpty(autoMarginOffset)) {
+            chart.setAutoMarginOffset(Integer.valueOf(autoMarginOffset));
+        }
+
+        String autoMargins = element.attributeValue("autoMargins");
+        if (StringUtils.isNotEmpty(autoMargins)) {
+            chart.setAutoMargins(Boolean.valueOf(autoMargins));
+        }
+
+        Element scrollbarElement = element.element("chartScrollbar");
+        if (scrollbarElement != null) {
+            chart.setChartScrollbar(loadScrollbar(scrollbarElement));
+        }
+
+        String depth3D = element.attributeValue("depth3D");
+        if (StringUtils.isNotEmpty(depth3D)) {
+            chart.setDepth3D(Integer.valueOf(depth3D));
+        }
+
+        loadMargins(chart, element);
+
+        String marginsUpdated = element.attributeValue("marginsUpdated");
+        if (StringUtils.isNotEmpty(marginsUpdated)) {
+            chart.setMarginsUpdated(Boolean.valueOf(marginsUpdated));
+        }
+
+        String maxZoomFactor = element.attributeValue("maxZoomFactor");
+        if (StringUtils.isNotEmpty(maxZoomFactor)) {
+            chart.setMaxZoomFactor(Integer.valueOf(maxZoomFactor));
+        }
+
+        String minMarginBottom = element.attributeValue("minMarginBottom");
+        if (StringUtils.isNotEmpty(minMarginBottom)) {
+            chart.setMinMarginBottom(Integer.valueOf(minMarginBottom));
+        }
+
+        String minMarginLeft = element.attributeValue("minMarginLeft");
+        if (StringUtils.isNotEmpty(minMarginLeft)) {
+            chart.setMinMarginLeft(Integer.valueOf(minMarginLeft));
+        }
+
+        String minMarginRight = element.attributeValue("minMarginRight");
+        if (StringUtils.isNotEmpty(minMarginRight)) {
+            chart.setMinMarginRight(Integer.valueOf(minMarginRight));
+        }
+
+        String minMarginTop = element.attributeValue("minMarginTop");
+        if (StringUtils.isNotEmpty(minMarginTop)) {
+            chart.setMinMarginTop(Integer.valueOf(minMarginTop));
+        }
+
+        String plotAreaBorderAlpha = element.attributeValue("plotAreaBorderAlpha");
+        if (StringUtils.isNotEmpty(plotAreaBorderAlpha)) {
+            chart.setPlotAreaBorderAlpha(Double.valueOf(plotAreaBorderAlpha));
+        }
+
+        String plotAreaBorderColor = element.attributeValue("plotAreaBorderColor");
+        if (StringUtils.isNotEmpty(plotAreaBorderColor)) {
+            chart.setPlotAreaBorderColor(Color.valueOf(plotAreaBorderColor));
+        }
+
+        String plotAreaFillAlphas = element.attributeValue("plotAreaFillAlphas");
+        if (StringUtils.isNotEmpty(plotAreaFillAlphas)) {
+            chart.setPlotAreaFillAlphas(Double.valueOf(plotAreaFillAlphas));
+        }
+
+        String plotAreaFillColors = element.attributeValue("plotAreaFillColors");
+        if (StringUtils.isNotEmpty(plotAreaFillColors)) {
+            chart.setPlotAreaFillColors(Color.valueOf(plotAreaFillColors));
+        }
+
+        String plotAreaGradientAngle = element.attributeValue("plotAreaGradientAngle");
+        if (StringUtils.isNotEmpty(plotAreaGradientAngle)) {
+            chart.setPlotAreaGradientAngle(Integer.valueOf(plotAreaGradientAngle));
+        }
+
+        String zoomOutButtonAlpha = element.attributeValue("zoomOutButtonAlpha");
+        if (StringUtils.isNotEmpty(zoomOutButtonAlpha)) {
+            chart.setZoomOutButtonAlpha(Double.valueOf(zoomOutButtonAlpha));
+        }
+
+        String zoomOutButtonColor = element.attributeValue("zoomOutButtonColor");
+        if (StringUtils.isNotEmpty(zoomOutButtonColor)) {
+            chart.setZoomOutButtonColor(Color.valueOf(zoomOutButtonColor));
+        }
+
+        String zoomOutButtonImage = element.attributeValue("zoomOutButtonImage");
+        if (StringUtils.isNotEmpty(zoomOutButtonImage)) {
+            chart.setZoomOutButtonImage(zoomOutButtonImage);
+        }
+
+        String zoomOutButtonImageSize = element.attributeValue("zoomOutButtonImageSize");
+        if (StringUtils.isNotEmpty(zoomOutButtonImageSize)) {
+            chart.setZoomOutButtonImageSize(Integer.valueOf(zoomOutButtonImageSize));
+        }
+
+        String zoomOutButtonPadding = element.attributeValue("zoomOutButtonPadding");
+        if (StringUtils.isNotEmpty(zoomOutButtonPadding)) {
+            chart.setZoomOutButtonPadding(Integer.valueOf(zoomOutButtonPadding));
+        }
+
+        String zoomOutButtonRollOverAlpha = element.attributeValue("zoomOutButtonRollOverAlpha");
+        if (StringUtils.isNotEmpty(zoomOutButtonRollOverAlpha)) {
+            chart.setZoomOutButtonRollOverAlpha(Double.valueOf(zoomOutButtonRollOverAlpha));
+        }
+
+        String zoomOutButtonTabIndex = element.attributeValue("zoomOutButtonTabIndex");
+        if (StringUtils.isNotEmpty(zoomOutButtonTabIndex)) {
+            chart.setZoomOutButtonTabIndex(Integer.valueOf(zoomOutButtonTabIndex));
+        }
+
+        String zoomOutText = element.attributeValue("zoomOutText");
+        if (StringUtils.isNotEmpty(zoomOutText)) {
+            chart.setZoomOutText(loadResourceString(zoomOutText));
+        }
+    }
+
+    protected void loadCursor(RectangularChartModel chart, Element element) {
+        Element cursorElement = element.element("chartCursor");
+        if (cursorElement != null) {
+            Cursor cursor = new Cursor();
+
+            String adjustment = cursorElement.attributeValue("adjustment");
+            if (StringUtils.isNotEmpty(adjustment)) {
+                cursor.setAdjustment(Integer.valueOf(adjustment));
+            }
+
+            String categoryBalloonFunction = cursorElement.elementText("categoryBalloonFunction");
+            if (StringUtils.isNotEmpty(categoryBalloonFunction)) {
+                cursor.setCategoryBalloonFunction(new JsFunction(categoryBalloonFunction));
+            }
+
+            String animationDuration = cursorElement.attributeValue("animationDuration");
+            if (StringUtils.isNotEmpty(animationDuration)) {
+                cursor.setAnimationDuration(Double.valueOf(animationDuration));
+            }
+
+            String avoidBalloonOverlapping = cursorElement.attributeValue("avoidBalloonOverlapping");
+            if (StringUtils.isNotEmpty(avoidBalloonOverlapping)) {
+                cursor.setAvoidBalloonOverlapping(Boolean.valueOf(avoidBalloonOverlapping));
+            }
+
+            String balloonPointerOrientation = cursorElement.attributeValue("balloonPointerOrientation");
+            if (StringUtils.isNotEmpty(balloonPointerOrientation)) {
+                cursor.setBalloonPointerOrientation(balloonPointerOrientation);
+            }
+
+            String bulletsEnabled = cursorElement.attributeValue("bulletsEnabled");
+            if (StringUtils.isNotEmpty(bulletsEnabled)) {
+                cursor.setBulletsEnabled(Boolean.valueOf(bulletsEnabled));
+            }
+
+            String bulletSize = cursorElement.attributeValue("bulletSize");
+            if (StringUtils.isNotEmpty(bulletSize)) {
+                cursor.setBulletSize(Integer.valueOf(bulletSize));
+            }
+
+            String categoryBalloonAlpha = cursorElement.attributeValue("categoryBalloonAlpha");
+            if (StringUtils.isNotEmpty(categoryBalloonAlpha)) {
+                cursor.setCategoryBalloonAlpha(Double.valueOf(categoryBalloonAlpha));
+            }
+
+            String categoryBalloonColor = cursorElement.attributeValue("categoryBalloonColor");
+            if (StringUtils.isNotEmpty(categoryBalloonColor)) {
+                cursor.setCategoryBalloonColor(Color.valueOf(categoryBalloonColor));
+            }
+
+            String categoryBalloonDateFormat = cursorElement.attributeValue("categoryBalloonDateFormat");
+            if (StringUtils.isNotEmpty(categoryBalloonDateFormat)) {
+                cursor.setCategoryBalloonDateFormat(loadResourceString(categoryBalloonDateFormat));
+            }
+
+            String categoryBalloonEnabled = cursorElement.attributeValue("categoryBalloonEnabled");
+            if (StringUtils.isNotEmpty(categoryBalloonEnabled)) {
+                cursor.setCategoryBalloonEnabled(Boolean.valueOf(categoryBalloonEnabled));
+            }
+
+            String categoryBalloonText = cursorElement.attributeValue("categoryBalloonText");
+            if (StringUtils.isNotEmpty(categoryBalloonText)) {
+                cursor.setCategoryBalloonText(categoryBalloonText);
+            }
+
+            String color = cursorElement.attributeValue("color");
+            if (StringUtils.isNotEmpty(color)) {
+                cursor.setColor(Color.valueOf(color));
+            }
+
+            String cursorAlpha = cursorElement.attributeValue("cursorAlpha");
+            if (StringUtils.isNotEmpty(cursorAlpha)) {
+                cursor.setCursorAlpha(Double.valueOf(cursorAlpha));
+            }
+
+            String cursorColor = cursorElement.attributeValue("cursorColor");
+            if (StringUtils.isNotEmpty(cursorColor)) {
+                cursor.setCursorColor(Color.valueOf(cursorColor));
+            }
+
+            String cursorPosition = cursorElement.attributeValue("cursorPosition");
+            if (StringUtils.isNotEmpty(cursorPosition)) {
+                cursor.setCursorPosition(CursorPosition.valueOf(cursorPosition));
+            }
+
+            String enabled = cursorElement.attributeValue("enabled");
+            if (StringUtils.isNotEmpty(enabled)) {
+                cursor.setEnabled(Boolean.valueOf(enabled));
+            }
+
+            String fullWidth = cursorElement.attributeValue("fullWidth");
+            if (StringUtils.isNotEmpty(fullWidth)) {
+                cursor.setFullWidth(Boolean.valueOf(fullWidth));
+            }
+
+            String graphBulletAlpha = cursorElement.attributeValue("graphBulletAlpha");
+            if (StringUtils.isNotEmpty(graphBulletAlpha)) {
+                cursor.setGraphBulletAlpha(Double.valueOf(graphBulletAlpha));
+            }
+
+            String graphBulletSize = cursorElement.attributeValue("graphBulletSize");
+            if (StringUtils.isNotEmpty(graphBulletSize)) {
+                cursor.setGraphBulletSize(Double.valueOf(graphBulletSize));
+            }
+
+            String oneBalloonOnly = cursorElement.attributeValue("oneBalloonOnly");
+            if (StringUtils.isNotEmpty(oneBalloonOnly)) {
+                cursor.setOneBalloonOnly(Boolean.valueOf(oneBalloonOnly));
+            }
+
+            String leaveAfterTouch = cursorElement.attributeValue("leaveAfterTouch");
+            if (StringUtils.isNotEmpty(leaveAfterTouch)) {
+                cursor.setLeaveAfterTouch(Boolean.valueOf(leaveAfterTouch));
+            }
+
+            String leaveCursor = cursorElement.attributeValue("leaveCursor");
+            if (StringUtils.isNotEmpty(leaveCursor)) {
+                cursor.setLeaveCursor(Boolean.valueOf(leaveCursor));
+            }
+
+            String limitToGraph = cursorElement.attributeValue("limitToGraph");
+            if (StringUtils.isNotEmpty(limitToGraph)) {
+                cursor.setLimitToGraph(limitToGraph);
+            }
+
+            String pan = cursorElement.attributeValue("pan");
+            if (StringUtils.isNotEmpty(pan)) {
+                cursor.setPan(Boolean.valueOf(pan));
+            }
+
+            String selectionAlpha = cursorElement.attributeValue("selectionAlpha");
+            if (StringUtils.isNotEmpty(selectionAlpha)) {
+                cursor.setCursorAlpha(Double.valueOf(selectionAlpha));
+            }
+
+            String selectWithoutZooming = cursorElement.attributeValue("selectWithoutZooming");
+            if (StringUtils.isNotEmpty(selectWithoutZooming)) {
+                cursor.setSelectWithoutZooming(Boolean.valueOf(selectWithoutZooming));
+            }
+
+            String showNextAvailable = cursorElement.attributeValue("showNextAvailable");
+            if (StringUtils.isNotEmpty(showNextAvailable)) {
+                cursor.setShowNextAvailable(Boolean.valueOf(showNextAvailable));
+            }
+
+            String valueBalloonsEnabled = cursorElement.attributeValue("valueBalloonsEnabled");
+            if (StringUtils.isNotEmpty(valueBalloonsEnabled)) {
+                cursor.setValueBalloonsEnabled(Boolean.valueOf(valueBalloonsEnabled));
+            }
+
+            String valueLineAlpha = cursorElement.attributeValue("valueLineAlpha");
+            if (StringUtils.isNotEmpty(valueLineAlpha)) {
+                cursor.setValueLineAlpha(Double.valueOf(valueLineAlpha));
+            }
+
+            String valueLineAxis = cursorElement.attributeValue("valueLineAxis");
+            if (StringUtils.isNotEmpty(valueLineAxis)) {
+                cursor.setValueLineAxis(valueLineAxis);
+            }
+
+            String valueLineBalloonEnabled = cursorElement.attributeValue("valueLineBalloonEnabled");
+            if (StringUtils.isNotEmpty(valueLineBalloonEnabled)) {
+                cursor.setValueLineBalloonEnabled(Boolean.valueOf(valueLineBalloonEnabled));
+            }
+
+            String valueLineEnabled = cursorElement.attributeValue("valueLineEnabled");
+            if (StringUtils.isNotEmpty(valueLineEnabled)) {
+                cursor.setValueLineEnabled(Boolean.valueOf(valueLineEnabled));
+            }
+
+            String valueZoomable = cursorElement.attributeValue("valueZoomable");
+            if (StringUtils.isNotEmpty(valueZoomable)) {
+                cursor.setValueZoomable(Boolean.valueOf(valueZoomable));
+            }
+
+            String zoomable = cursorElement.attributeValue("zoomable");
+            if (StringUtils.isNotEmpty(zoomable)) {
+                cursor.setZoomable(Boolean.valueOf(zoomable));
+            }
+
+            String zooming = cursorElement.attributeValue("zooming");
+            if (StringUtils.isNotEmpty(zooming)) {
+                cursor.setZooming(Boolean.valueOf(zooming));
+            }
+
+            chart.setChartCursor(cursor);
+        }
+    }
+
+    protected void loadTrendLines(RectangularChartModel chart, Element element) {
+        Element trendLinesElement = element.element("trendLines");
+        if (trendLinesElement != null) {
+            for (Object trendLineItem : trendLinesElement.elements("trendLine")) {
+
+                Element trendLineElement = (Element) trendLineItem;
+
+                TrendLine trendLine = new TrendLine();
+
+                String balloonText = trendLineElement.attributeValue("balloonText");
+                if (StringUtils.isNotEmpty(balloonText)) {
+                    trendLine.setBalloonText(balloonText);
+                }
+
+                String dashLength = trendLineElement.attributeValue("dashLength");
+                if (StringUtils.isNotEmpty(dashLength)) {
+                    trendLine.setDashLength(Integer.valueOf(dashLength));
+                }
+
+                String finalCategory = trendLineElement.attributeValue("finalCategory");
+                if (StringUtils.isNotEmpty(finalCategory)) {
+                    trendLine.setFinalCategory(finalCategory);
+                }
+
+                String finalDate = trendLineElement.attributeValue("finalDate");
+                if (StringUtils.isNotEmpty(finalDate)) {
+                    trendLine.setFinalDate(loadDate(finalDate));
+                }
+
+                Element finalImageElement = trendLineElement.element("finalImage");
+                if (finalImageElement != null) {
+                    trendLine.setFinalImage(loadImage(finalImageElement));
+                }
+
+                String finalValue = trendLineElement.attributeValue("finalValue");
+                if (StringUtils.isNotEmpty(finalValue)) {
+                    trendLine.setFinalValue(Double.valueOf(finalValue));
+                }
+
+                String finalXValue = trendLineElement.attributeValue("finalXValue");
+                if (StringUtils.isNotEmpty(finalXValue)) {
+                    trendLine.setFinalXValue(Double.valueOf(finalXValue));
+                }
+
+                String id = trendLineElement.attributeValue("id");
+                if (StringUtils.isNotEmpty(id)) {
+                    trendLine.setId(id);
+                }
+
+                String initialCategory = trendLineElement.attributeValue("initialCategory");
+                if (StringUtils.isNotEmpty(initialCategory)) {
+                    trendLine.setInitialCategory(initialCategory);
+                }
+
+                String initialDate = trendLineElement.attributeValue("initialDate");
+                if (StringUtils.isNotEmpty(initialDate)) {
+                    trendLine.setInitialDate(loadDate(initialDate));
+                }
+
+                Element initialImageElement = trendLineElement.element("initialImage");
+                if (initialImageElement != null) {
+                    trendLine.setFinalImage(loadImage(initialImageElement));
+                }
+
+                String initialValue = trendLineElement.attributeValue("initialValue");
+                if (StringUtils.isNotEmpty(initialValue)) {
+                    trendLine.setInitialValue(Double.valueOf(initialValue));
+                }
+
+                String initialXValue = trendLineElement.attributeValue("initialXValue");
+                if (StringUtils.isNotEmpty(initialXValue)) {
+                    trendLine.setInitialXValue(Double.valueOf(initialXValue));
+                }
+
+                String isProtected = trendLineElement.attributeValue("isProtected");
+                if (StringUtils.isNotEmpty(isProtected)) {
+                    trendLine.setProtected(Boolean.valueOf(isProtected));
+                }
+
+                String lineAlpha = trendLineElement.attributeValue("lineAlpha");
+                if (StringUtils.isNotEmpty(lineAlpha)) {
+                    trendLine.setLineAlpha(Double.valueOf(lineAlpha));
+                }
+
+                String lineColor = trendLineElement.attributeValue("lineColor");
+                if (StringUtils.isNotEmpty(lineColor)) {
+                    trendLine.setLineColor(Color.valueOf(lineColor));
+                }
+
+                String lineThickness = trendLineElement.attributeValue("lineThickness");
+                if (StringUtils.isNotEmpty(lineThickness)) {
+                    trendLine.setLineThickness(Integer.valueOf(lineThickness));
+                }
+
+                String valueAxis = trendLineElement.attributeValue("valueAxis");
+                if (StringUtils.isNotEmpty(valueAxis)) {
+                    trendLine.setValueAxis(valueAxis);
+                }
+
+                String valueAxisX = trendLineElement.attributeValue("valueAxisX");
+                if (StringUtils.isNotEmpty(valueAxisX)) {
+                    trendLine.setValueAxisX(valueAxisX);
+                }
+
+                chart.addTrendLines(trendLine);
+            }
+        }
+    }
+
+    protected Image loadImage(Element element) {
+        Image image = new Image();
+
+        String balloonColor = element.attributeValue("balloonColor");
+        if (StringUtils.isNotEmpty(balloonColor)) {
+            image.setBalloonColor(Color.valueOf(balloonColor));
+        }
+
+        String balloonText = element.attributeValue("balloonText");
+        if (StringUtils.isNotEmpty(balloonText)) {
+            image.setBalloonText(balloonText);
+        }
+
+        String color = element.attributeValue("color");
+        if (StringUtils.isNotEmpty(color)) {
+            image.setColor(Color.valueOf(color));
+        }
+
+        String height = element.attributeValue("height");
+        if (StringUtils.isNotEmpty(height)) {
+            image.setHeight(Integer.parseInt(height));
+        }
+
+        String offsetX = element.attributeValue("offsetX");
+        if (StringUtils.isNotEmpty(offsetX)) {
+            image.setOffsetX(Integer.parseInt(offsetX));
+        }
+
+        String offsetY = element.attributeValue("offsetY");
+        if (StringUtils.isNotEmpty(offsetY)) {
+            image.setOffsetY(Integer.parseInt(offsetY));
+        }
+
+        String outlineColor = element.attributeValue("outlineColor");
+        if (StringUtils.isNotEmpty(outlineColor)) {
+            image.setOutlineColor(Color.valueOf(outlineColor));
+        }
+
+        String rotation = element.attributeValue("rotation");
+        if (StringUtils.isNotEmpty(rotation)) {
+            image.setRotation(Integer.parseInt(rotation));
+        }
+
+        String svgPath = element.attributeValue("svgPath");
+        if (StringUtils.isNotEmpty(svgPath)) {
+            image.setSvgPath(svgPath);
+        }
+
+        String url = element.attributeValue("url");
+        if (StringUtils.isNotEmpty(url)) {
+            image.setUrl(url);
+        }
+
+        String width = element.attributeValue("width");
+        if (StringUtils.isNotEmpty(width)) {
+            image.setWidth(Integer.parseInt(width));
+        }
+
+        return image;
+    }
+
+    protected void loadStartEffect(HasStartEffect chart, Element element) {
+        String startDuration = element.attributeValue("startDuration");
+        if (StringUtils.isNotEmpty(startDuration)) {
+            chart.setStartDuration(Integer.parseInt(startDuration));
+        }
+
+        String startEffect = element.attributeValue("startEffect");
+        if (StringUtils.isNotEmpty(startEffect)) {
+            chart.setStartEffect(AnimationEffect.valueOf(startEffect));
+        }
+    }
+
+    protected void loadCoordinateProperties(CoordinateChartModel chart, Element element) {
+        loadChartData(chart, element);
+        loadColors(chart, element);
+        loadGraphs(chart, element);
+        loadValueAxes(chart, element);
+
+        loadStartEffect(chart, element);
+
+        String gridAboveGraphs = element.attributeValue("gridAboveGraphs");
+        if (StringUtils.isNotEmpty(gridAboveGraphs)) {
+            chart.setGridAboveGraphs(Boolean.valueOf(gridAboveGraphs));
+        }
+
+        Element guidesElement = element.element("guides");
+        if (guidesElement != null) {
+            chart.setGuides(loadGuides(guidesElement));
+        }
+
+        String sequencedAnimation = element.attributeValue("sequencedAnimation");
+        if (StringUtils.isNotEmpty(sequencedAnimation)) {
+            chart.setSequencedAnimation(Boolean.valueOf(sequencedAnimation));
+        }
+
+        String startAlpha = element.attributeValue("startAlpha");
+        if (StringUtils.isNotEmpty(startAlpha)) {
+            chart.setStartAlpha(Double.valueOf(startAlpha));
+        }
+
+        String urlTarget = element.attributeValue("urlTarget");
+        if (StringUtils.isNotEmpty(urlTarget)) {
+            chart.setUrlTarget(urlTarget);
+        }
+    }
+
+    protected void loadGraphs(CoordinateChartModel chart, Element element) {
+        Element graphsElement = element.element("graphs");
+        if (graphsElement != null) {
+            for (Object graphItem : graphsElement.elements("graph")) {
+                Element graphElement = (Element) graphItem;
+                Graph graph = new Graph();
+                loadGraph(graph, graphElement);
+                chart.addGraphs(graph);
+            }
+        }
+    }
+
+    protected void loadValueAxes(CoordinateChartModel chart, Element element) {
+        Element valueAxesElement = element.element("valueAxes");
+        if (valueAxesElement != null) {
+            for (Object axisItem : valueAxesElement.elements("axis")) {
+                Element axisElement = (Element) axisItem;
+
+                ValueAxis axis = loadValueAxis(axisElement);
+
+                String labelFunction = valueAxesElement.elementText("labelFunction");
+                if (StringUtils.isNotBlank(labelFunction)) {
+                    axis.setLabelFunction(new JsFunction(labelFunction));
+                }
+
+                chart.addValueAxes(axis);
+            }
+        }
+    }
+
+    protected void loadColors(HasColors chart, Element element) {
+        Element colorsElement = element.element("colors");
+        if (colorsElement != null) {
+            List<Color> colors = loadColors(colorsElement);
+            if (CollectionUtils.isNotEmpty(colors)) {
+                chart.setColors(colors);
+            }
+        }
+    }
+
+    protected void loadChartData(ChartModel chart, Element element) {
+        Element dataElement = element.element("data");
+        if (dataElement != null) {
+            ListDataProvider listDataProvider = new ListDataProvider();
+
+            for (Object item : dataElement.elements("item")) {
+                Element itemElement = (Element) item;
+                MapDataItem dataItem = new MapDataItem();
+
+                for (Element property : Dom4j.elements(itemElement, "property")) {
+                    loadDataItem(property, dataItem);
+                }
+
+                listDataProvider.addItem(dataItem);
+                chart.setDataProvider(listDataProvider);
+            }
+        }
+    }
+
+    protected void loadLabels(ChartModel chart, Element element) {
+        Element allLabels = element.element("allLabels");
+        if (allLabels != null) {
+            for (Object labelItem : allLabels.elements("label")) {
+                Element labelElement = (Element) labelItem;
+
+                Label label = new Label();
+
+                String align = labelElement.attributeValue("align");
+                if (StringUtils.isNotEmpty(align)) {
+                    label.setAlign(Align.valueOf(align));
+                }
+
+                String alpha = labelElement.attributeValue("alpha");
+                if (StringUtils.isNotEmpty(alpha)) {
+                    label.setAlpha(Double.valueOf(alpha));
+                }
+
+                String bold = labelElement.attributeValue("bold");
+                if (StringUtils.isNotEmpty(bold)) {
+                    label.setBold(Boolean.valueOf(bold));
+                }
+
+                String color = labelElement.attributeValue("color");
+                if (StringUtils.isNotEmpty(color)) {
+                    label.setColor(Color.valueOf(color));
+                }
+
+                String id = labelElement.attributeValue("id");
+                if (StringUtils.isNotEmpty(id)) {
+                    label.setId(id);
+                }
+
+                String rotation = labelElement.attributeValue("rotation");
+                if (StringUtils.isNotEmpty(rotation)) {
+                    label.setRotation(Integer.parseInt(rotation));
+                }
+
+                String size = labelElement.attributeValue("size");
+                if (StringUtils.isNotEmpty(size)) {
+                    label.setSize(Integer.parseInt(size));
+                }
+
+                String text = labelElement.attributeValue("text");
+                if (StringUtils.isNotEmpty(text)) {
+                    label.setText(loadResourceString(text));
+                }
+
+                String tabIndex = labelElement.attributeValue("tabIndex");
+                if (StringUtils.isNotEmpty(tabIndex)) {
+                    label.setTabIndex(Integer.parseInt(tabIndex));
+                }
+
+                String url = labelElement.attributeValue("url");
+                if (StringUtils.isNotEmpty(url)) {
+                    label.setUrl(url);
+                }
+
+                String x = labelElement.attributeValue("x");
+                if (StringUtils.isNotEmpty(x)) {
+                    label.setX(Integer.parseInt(x));
+                }
+
+                String y = labelElement.attributeValue("y");
+                if (StringUtils.isNotEmpty(y)) {
+                    label.setY(Integer.parseInt(y));
+                }
+
+                chart.addLabels(label);
+            }
+        }
+    }
+
+    protected void loadTitles(ChartModel chart, Element element) {
+        Element titles = element.element("titles");
+        if (titles != null) {
+            for (Object titleItem : titles.elements("title")) {
+                Element titleElement = (Element) titleItem;
+
+                Title title = new Title();
+
+                String alpha = titleElement.attributeValue("alpha");
+                if (StringUtils.isNotEmpty(alpha)) {
+                    title.setAlpha(Double.valueOf(alpha));
+                }
+
+                String bold = titleElement.attributeValue("bold");
+                if (StringUtils.isNotEmpty(bold)) {
+                    title.setBold(Boolean.valueOf(bold));
+                }
+
+                String color = titleElement.attributeValue("color");
+                if (StringUtils.isNotEmpty(color)) {
+                    title.setColor(Color.valueOf(color));
+                }
+
+                String id = titleElement.attributeValue("id");
+                if (StringUtils.isNotEmpty(id)) {
+                    title.setId(id);
+                }
+
+                String size = titleElement.attributeValue("size");
+                if (StringUtils.isNotEmpty(size)) {
+                    title.setSize(Integer.parseInt(size));
+                }
+
+                String tabIndex = titleElement.attributeValue("tabIndex");
+                if (StringUtils.isNotEmpty(tabIndex)) {
+                    title.setTabIndex(Integer.parseInt(tabIndex));
+                }
+
+                String text = titleElement.attributeValue("text");
+                if (StringUtils.isNotEmpty(text)) {
+                    title.setText(loadResourceString(text));
+                }
+
+                chart.addTitles(title);
+            }
+        }
+    }
+
+    protected void loadBaseProperties(ChartModel chart, Element element) {
+        loadLabels(chart, element);
+        loadTitles(chart, element);
+
+        String accessible = element.attributeValue("accessible");
+        if (StringUtils.isNotEmpty(accessible)) {
+            chart.setAccessible(Boolean.valueOf(accessible));
+        }
+
+        String accessibleTitle = element.attributeValue("accessibleTitle");
+        if (StringUtils.isNotEmpty(accessibleTitle)) {
+            chart.setAccessibleTitle(accessibleTitle);
+        }
+
+        String addClassNames = element.attributeValue("addClassNames");
+        if (StringUtils.isNotEmpty(addClassNames)) {
+            chart.setAddClassNames(Boolean.valueOf(addClassNames));
+        }
+
+        String additionalFields = element.attributeValue("additionalFields");
+        if (StringUtils.isNotEmpty(additionalFields)) {
+            chart.addAdditionalFields(additionalFields.split(","));
+        }
+
+        String autoDisplay = element.attributeValue("autoDisplay");
+        if (StringUtils.isNotEmpty(autoDisplay)) {
+            chart.setAutoDisplay(Boolean.valueOf(autoDisplay));
+        }
+
+        String autoResize = element.attributeValue("autoResize");
+        if (StringUtils.isNotEmpty(autoResize)) {
+            chart.setAutoResize(Boolean.valueOf(autoResize));
+        }
+
+        String autoTransform = element.attributeValue("autoTransform");
+        if (StringUtils.isNotEmpty(autoTransform)) {
+            chart.setAutoTransform(Boolean.valueOf(autoTransform));
+        }
+
+        String backgroundAlpha = element.attributeValue("backgroundAlpha");
+        if (StringUtils.isNotEmpty(backgroundAlpha)) {
+            chart.setBackgroundAlpha(Double.valueOf(backgroundAlpha));
+        }
+
+        String backgroundColor = element.attributeValue("backgroundColor");
+        if (StringUtils.isNotEmpty(backgroundColor)) {
+            chart.setBackgroundColor(Color.valueOf(backgroundColor));
+        }
+
+        Element balloonElement = element.element("balloon");
+        if (balloonElement != null) {
+            chart.setBalloon(loadBalloon(balloonElement));
+        }
+
+        String classNamePrefix = element.attributeValue("classNamePrefix");
+        if (StringUtils.isNotEmpty(classNamePrefix)) {
+            chart.setClassNamePrefix(classNamePrefix);
+        }
+
+        chart.setCreditsPosition(loadCreditsPosition(element));
+
+        String borderAlpha = element.attributeValue("borderAlpha");
+        if (StringUtils.isNotEmpty(borderAlpha)) {
+            chart.setBorderAlpha(Double.valueOf(borderAlpha));
+        }
+
+        String borderColor = element.attributeValue("borderColor");
+        if (StringUtils.isNotEmpty(borderColor)) {
+            chart.setBorderColor(Color.valueOf(borderColor));
+        }
+
+        String color = element.attributeValue("color");
+        if (StringUtils.isNotEmpty(color)) {
+            chart.setColor(Color.valueOf(color));
+        }
+
+        String decimalSeparator = element.attributeValue("decimalSeparator");
+        if (StringUtils.isNotEmpty(decimalSeparator)) {
+            chart.setDecimalSeparator(decimalSeparator);
+        }
+
+        Element exportElement = element.element("export");
+        if (exportElement != null) {
+            chart.setExport(loadExport(exportElement));
+        }
+
+        String fontFamily = element.attributeValue("fontFamily");
+        if (StringUtils.isEmpty(fontFamily)) {
+            chart.setFontFamily(fontFamily);
+        }
+
+        String fontSize = element.attributeValue("fontSize");
+        if (StringUtils.isNotEmpty(fontSize)) {
+            chart.setFontSize(Integer.parseInt(fontSize));
+        }
+
+        String handDrawn = element.attributeValue("handDrawn");
+        if (StringUtils.isNotEmpty(handDrawn)) {
+            chart.setHandDrawn(Boolean.valueOf(handDrawn));
+        }
+
+        String handDrawScatter = element.attributeValue("handDrawScatter");
+        if (StringUtils.isNotEmpty(handDrawScatter)) {
+            chart.setHandDrawScatter(Integer.parseInt(handDrawScatter));
+        }
+
+        String handDrawThickness = element.attributeValue("handDrawThickness");
+        if (StringUtils.isNotEmpty(handDrawThickness)) {
+            chart.setHandDrawThickness(Integer.parseInt(handDrawThickness));
+        }
+
+        String hideBalloonTime = element.attributeValue("hideBalloonTime");
+        if (StringUtils.isNotEmpty(hideBalloonTime)) {
+            chart.setHideBalloonTime(Integer.parseInt(hideBalloonTime));
+        }
+
+        String language = element.attributeValue("language");
+        if (StringUtils.isNotEmpty(language)) {
+            chart.setLanguage(language);
+        }
+
+        Element legendElement = element.element("legend");
+        if (legendElement != null) {
+            Legend legend = new Legend();
+            loadLegend(legend, legendElement);
+            chart.setLegend(legend);
+        }
+
+        String panEventsEnabled = element.attributeValue("panEventsEnabled");
+        if (StringUtils.isNotEmpty(panEventsEnabled)) {
+            chart.setPanEventsEnabled(Boolean.valueOf(panEventsEnabled));
+        }
+
+        String percentPrecision = element.attributeValue("percentPrecision");
+        if (StringUtils.isNotEmpty(percentPrecision)) {
+            chart.setPercentPrecision(Integer.parseInt(percentPrecision));
+        }
+
+        String precision = element.attributeValue("precision");
+        if (StringUtils.isNotEmpty(precision)) {
+            chart.setPrecision(Integer.parseInt(precision));
+        }
+
+        String processCount = element.attributeValue("processCount");
+        if (StringUtils.isNotEmpty(processCount)) {
+            chart.setProcessCount(Integer.parseInt(processCount));
+        }
+
+        String processTimeout = element.attributeValue("processTimeout");
+        if (StringUtils.isNotEmpty(processTimeout)) {
+            chart.setProcessTimeout(Integer.parseInt(processTimeout));
+        }
+
+        String svgIcons = element.attributeValue("svgIcons");
+        if (StringUtils.isNotEmpty(svgIcons)) {
+            chart.setSvgIcons(Boolean.valueOf(svgIcons));
+        }
+
+        String tapToActivate = element.attributeValue("tapToActivate");
+        if (StringUtils.isNotEmpty(tapToActivate)) {
+            chart.setTapToActivate(Boolean.valueOf(tapToActivate));
+        }
+
+        String usePrefixes = element.attributeValue("usePrefixes");
+        if (StringUtils.isNotEmpty(usePrefixes)) {
+            chart.setUsePrefixes(Boolean.valueOf(usePrefixes));
+        }
+
+        String theme = element.attributeValue("theme");
+        if (StringUtils.isNotEmpty(theme)) {
+            chart.setTheme(ChartTheme.valueOf(theme));
+        }
+
+        String thousandsSeparator = element.attributeValue("thousandsSeparator");
+        if (StringUtils.isNotEmpty(thousandsSeparator)) {
+            chart.setThousandsSeparator(thousandsSeparator);
+        }
+
+        String touchClickDuration = element.attributeValue("touchClickDuration");
+        if (StringUtils.isNotEmpty(touchClickDuration)) {
+            chart.setTouchClickDuration(Integer.parseInt(touchClickDuration));
+        }
+
+        String defs = element.attributeValue("defs");
+        if (StringUtils.isNotEmpty(defs)) {
+            chart.setDefs(defs);
+        }
     }
 }

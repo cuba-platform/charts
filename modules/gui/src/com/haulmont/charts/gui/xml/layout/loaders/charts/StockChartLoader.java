@@ -1559,19 +1559,12 @@ public class StockChartLoader extends ChartModelLoader<StockChart> {
         }
     }
 
-    protected void loadStartEffect(HasStartEffect chart, Element element) {
-        String startDuration = element.attributeValue("startDuration");
-        if (StringUtils.isNotEmpty(startDuration)) {
-            chart.setStartDuration(Integer.valueOf(startDuration));
-        }
-
-        String startEffect = element.attributeValue("startEffect");
-        if (StringUtils.isNotEmpty(startEffect)) {
-            chart.setStartEffect(AnimationEffect.valueOf(startEffect));
-        }
-    }
-
     protected void loadStockPanel(StockPanel chart, Element element) {
+        loadBaseProperties(chart, element);
+        loadCoordinateProperties(chart, element);
+        loadRectangularProperties(chart, element);
+        loadSeriesBasedProperties(chart, element);
+
         loadStockGraphs(chart, element);
         loadStockLegend(chart, element);
 
