@@ -64,7 +64,7 @@ public class WebPivotTable extends WebAbstractComponent<CubaPivotTable> implemen
             CollectionDsHelper.autoRefreshInvalid(datasource, true);
         }
 
-        component.getPivotTable().setDataProvider(new EntityDataProvider(datasource));
+        setDataProvider(new EntityDataProvider(datasource));
     }
 
     @Override
@@ -240,6 +240,11 @@ public class WebPivotTable extends WebAbstractComponent<CubaPivotTable> implemen
     @Override
     public void setDataProvider(DataProvider dataProvider) {
         component.getPivotTable().setDataProvider(dataProvider);
+        dataProvider.addChangeListener(e -> {
+            if (!isEditable()) {
+                repaint();
+            }
+        });
     }
 
     @Override
