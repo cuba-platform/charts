@@ -3,7 +3,7 @@
   ~ Use is subject to license terms, see http://www.cuba-platform.com/commercial-software-license for details.
   -->
 
-<components>
+<components xmlns="http://schemas.haulmont.com/cuba/components.xsd">
     <!-- Charts -->
 
     <component>
