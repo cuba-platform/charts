@@ -7,6 +7,7 @@ package com.haulmont.charts.gui.amcharts.model;
 
 import com.haulmont.charts.gui.amcharts.model.charts.StockChartGroup;
 import com.haulmont.charts.gui.amcharts.model.charts.StockPanel;
+import com.haulmont.charts.gui.amcharts.model.gson.ChartDataItemsSerializer;
 import com.haulmont.charts.gui.amcharts.model.gson.StockChartSerializer;
 import com.haulmont.charts.gui.data.DataProvider;
 import com.haulmont.charts.gui.data.ListDataProvider;
@@ -22,9 +23,12 @@ import java.text.SimpleDateFormat;
 import java.util.Calendar;
 import java.util.Date;
 
+import static com.haulmont.charts.gui.amcharts.model.ChartSampleJsonHelper.*;
+import static org.junit.Assert.assertEquals;
+
 public class StockChartSerializationTest {
 
-    private SimpleDateFormat df = new SimpleDateFormat(ChartSampleJsonHelper.DATE_FORMAT);
+    private SimpleDateFormat df = new SimpleDateFormat(DATE_FORMAT);
 
     @Test
     public void testStockChartWithMultipleDataSets() throws ParseException, IOException, URISyntaxException {
@@ -81,10 +85,12 @@ public class StockChartSerializationTest {
                 .setDataSetSelector(new DataSetSelector().setPosition(Position.LEFT))
                 .setExport(new Export());
 
-        StockChartSerializer serializer = new StockChartSerializer();
+        StockChartSerializer serializer = getTestSerializer();
+
         String json = serializer.serialize(stockChart);
-        String expected = ChartSampleJsonHelper.readFile("StockChartWithMultipleDataSets.json");
-        Assert.assertEquals(null, expected, json);
+        String expected = readFile("StockChartWithMultipleDataSets.json");
+
+        assertEquals(prettyJson(expected), prettyJson(json));
     }
 
     @Test
@@ -123,14 +129,16 @@ public class StockChartSerializationTest {
                 .setPanelsSettings(new PanelsSettings().setUsePrefixes(true))
                 .setExport(new Export().setPosition(ExportPosition.BOTTOM_RIGHT));
 
-        StockChartSerializer serializer = new StockChartSerializer();
+        StockChartSerializer serializer = getTestSerializer();
+
         String json = serializer.serialize(stockChart);
-        String expected = ChartSampleJsonHelper.readFile("StockChartWithIntradayDatas.json");
-        Assert.assertEquals(null, expected, json);
+        String expected = readFile("StockChartWithIntradayDatas.json");
+
+        assertEquals(prettyJson(expected), prettyJson(json));
     }
 
     private void populateDataProvider(DataProvider dataProvider,
-                                      Long valueX1, Long valueX2, Long volumeX1, Long volumeX2, Long volumeX3)
+                                      long valueX1, long valueX2, long volumeX1, long volumeX2, long volumeX3)
             throws ParseException {
         int daysCount = 10;
         Date date = df.parse("2012-01-01");
@@ -142,7 +150,7 @@ public class StockChartSerializationTest {
         }
     }
 
-    private void populateStockDatasourceWithTime(DataProvider dataProvider, Long valueX1, Long valueX2) throws ParseException {
+    private void populateStockDatasourceWithTime(DataProvider dataProvider, long valueX1, long valueX2) throws ParseException {
         int hoursCount = 10;
         Date date = df.parse("2012-01-01");
         date = getZeroTime(date);
@@ -170,5 +178,20 @@ public class StockChartSerializationTest {
         calendar.set(Calendar.SECOND, 0);
         calendar.set(Calendar.MILLISECOND, 0);
         return calendar.getTime();
+    }
+
+    private StockChartSerializer getTestSerializer() {
+        return new TestStockChartSerializer();
+    }
+
+    private static class TestStockChartSerializer extends StockChartSerializer {
+        public TestStockChartSerializer() {
+            super(dataItem -> String.valueOf(dataItem.getValue("id")));
+        }
+
+        @Override
+        protected ChartDataItemsSerializer getDataItemsSerializer() {
+            return new ChartDataItemsSerializer();
+        }
     }
 }

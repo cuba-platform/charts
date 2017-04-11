@@ -10,10 +10,10 @@ import com.haulmont.charts.gui.amcharts.model.charts.*;
 import com.haulmont.charts.gui.amcharts.model.gson.ChartDataItemsSerializer;
 import com.haulmont.charts.gui.amcharts.model.gson.ChartSerializer;
 import com.haulmont.charts.gui.data.DataItem;
+import com.haulmont.charts.gui.data.DataProvider;
 import com.haulmont.charts.gui.data.ListDataProvider;
 import com.haulmont.charts.gui.data.MapDataItem;
 import org.apache.commons.lang.StringUtils;
-import org.junit.Assert;
 import org.junit.Test;
 
 import java.io.IOException;
@@ -24,13 +24,16 @@ import java.util.Arrays;
 import java.util.HashMap;
 import java.util.Map;
 
-public class ChartsSerializationTest {
+import static com.haulmont.charts.gui.amcharts.model.ChartSampleJsonHelper.prettyJson;
+import static com.haulmont.charts.gui.amcharts.model.ChartSampleJsonHelper.readFile;
+import static org.junit.Assert.assertEquals;
 
+public class ChartsSerializationTest {
     private SimpleDateFormat df = new SimpleDateFormat(ChartSampleJsonHelper.DATE_FORMAT);
 
     @Test
     public void testSerialChart() throws IOException, URISyntaxException, ParseException {
-        ListDataProvider dataProvider = new ListDataProvider();
+        DataProvider dataProvider = new ListDataProvider();
 
         dataProvider.addItem(new MapDataItem(ParamsMap.of("id", "1", "date", "2012-07-27", "value", 13)));
         dataProvider.addItem(new MapDataItem(ParamsMap.of("id", "2", "date", "2012-07-28", "value", 11)));
@@ -85,8 +88,8 @@ public class ChartsSerializationTest {
         ChartSerializer serializer = getTestSerializer();
         String json = serializer.serialize(chart);
 
-        String expected = ChartSampleJsonHelper.readFile("SerialChart.json");
-        Assert.assertEquals(null, expected, json);
+        String expected = readFile("SerialChart.json");
+        assertEquals(prettyJson(expected), prettyJson(json));
     }
 
     @Test
@@ -156,18 +159,16 @@ public class ChartsSerializationTest {
         ChartSerializer serializer = getTestSerializer();
 
         String json = serializer.serialize(chart);
-        String expected = ChartSampleJsonHelper.readFile("XYChart.json");
-        Assert.assertEquals(null, expected, json);
-    }
+        String expected = readFile("XYChart.json");
 
-    protected ChartSerializer getTestSerializer() {
-        return new TestChartSerializer();
+        assertEquals(prettyJson(expected), prettyJson(json));
     }
 
     @Test
     public void testPieChart() throws IOException, URISyntaxException {
-        ListDataProvider dataProvider = new ListDataProvider();
-        dataProvider.addItem(mapData());
+        DataProvider dataProvider = new ListDataProvider();
+
+        dataProvider.addItem(new MapDataItem(ParamsMap.of("id", "1", "country", "Czech Republic", "litres", 256.9)));
         dataProvider.addItem(new MapDataItem(ParamsMap.of("id", "2", "country", "Ireland", "litres", 131.1)));
         dataProvider.addItem(new MapDataItem(ParamsMap.of("id", "3", "country", "Germany", "litres", 115.8)));
         dataProvider.addItem(new MapDataItem(ParamsMap.of("id", "4", "country", "Australia", "litres", 109.9)));
@@ -193,12 +194,9 @@ public class ChartsSerializationTest {
         ChartSerializer serializer = getTestSerializer();
 
         String json = serializer.serialize(chart);
-        String expected = ChartSampleJsonHelper.readFile("PieChart.json");
-        Assert.assertEquals(null, expected, json);
-    }
+        String expected = readFile("PieChart.json");
 
-    protected MapDataItem mapData() {
-        return new MapDataItem(ParamsMap.of("id", "1", "country", "Czech Republic", "litres", 256.9));
+        assertEquals(prettyJson(expected), prettyJson(json));
     }
 
     @Test
@@ -302,8 +300,13 @@ public class ChartsSerializationTest {
         ChartSerializer serializer = getTestSerializer();
 
         String json = serializer.serialize(chart);
-        String expected = ChartSampleJsonHelper.readFile("GanttChart.json");
-        Assert.assertEquals(null, expected, json);
+        String expected = readFile("GanttChart.json");
+
+        assertEquals(prettyJson(expected), prettyJson(json));
+    }
+
+    private ChartSerializer getTestSerializer() {
+        return new TestChartSerializer();
     }
 
     private DataItem taskSpan(String id, String category, DataItem... segments) {
@@ -330,9 +333,9 @@ public class ChartsSerializationTest {
         return new MapDataItem(segment);
     }
 
-    protected static class TestChartSerializer extends ChartSerializer {
+    private static class TestChartSerializer extends ChartSerializer {
         public TestChartSerializer() {
-            super(o -> "");
+            super(o -> String.valueOf(o.getValue("id")));
         }
 
         @Override

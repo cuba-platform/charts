@@ -5,6 +5,11 @@
 
 package com.haulmont.charts.gui.amcharts.model;
 
+import com.google.gson.Gson;
+import com.google.gson.GsonBuilder;
+import com.google.gson.JsonElement;
+import com.google.gson.JsonParser;
+
 import java.io.IOException;
 import java.net.URISyntaxException;
 import java.net.URL;
@@ -23,5 +28,12 @@ public final class ChartSampleJsonHelper {
         URL resource = ChartSampleJsonHelper.class.getResource("/com/haulmont/charts/gui/amcharts/model/" + fileName);
         byte[] encoded = Files.readAllBytes(Paths.get(resource.toURI()));
         return new String(encoded, StandardCharsets.UTF_8);
+    }
+
+    public static String prettyJson(String json) {
+        JsonParser parser = new JsonParser();
+        JsonElement parsedJson = parser.parse(json);
+        Gson gson = new GsonBuilder().setPrettyPrinting().create();
+        return gson.toJson(parsedJson);
     }
 }
