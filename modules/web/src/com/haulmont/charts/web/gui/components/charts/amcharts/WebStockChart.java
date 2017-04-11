@@ -946,7 +946,7 @@ public class WebStockChart extends WebAbstractComponent<CubaAmStockChartScene> i
         @Override
         public void onClick(com.haulmont.charts.web.toolkit.ui.amcharts.events.StockGraphItemClickEvent e) {
             StockGraphItemClickEvent cubaEvent = new StockGraphItemClickEvent(e.getPanelId(), e.getGraphId(),
-                    getEventItem(e.getItemId()), e.getItemIndex(),
+                    e.getDataItem(), e.getItemIndex(),
                     e.getX(), e.getY(), e.getAbsoluteX(), e.getAbsoluteY());
             getEventRouter().fireEvent(StockGraphItemClickListener.class, StockGraphItemClickListener::onClick, cubaEvent);
         }
@@ -960,7 +960,7 @@ public class WebStockChart extends WebAbstractComponent<CubaAmStockChartScene> i
         @Override
         public void onRollOut(com.haulmont.charts.web.toolkit.ui.amcharts.events.StockGraphItemRollOutEvent e) {
             StockGraphItemRollOutEvent cubaEvent = new StockGraphItemRollOutEvent(e.getPanelId(), e.getGraphId(),
-                    getEventItem(e.getItemId()), e.getItemIndex(),
+                    e.getDataItem(), e.getItemIndex(),
                     e.getX(), e.getY(), e.getAbsoluteX(), e.getAbsoluteY());
             getEventRouter().fireEvent(StockGraphItemRollOutListener.class, StockGraphItemRollOutListener::onRollOut, cubaEvent);
         }
@@ -974,7 +974,7 @@ public class WebStockChart extends WebAbstractComponent<CubaAmStockChartScene> i
         @Override
         public void onRollOver(com.haulmont.charts.web.toolkit.ui.amcharts.events.StockGraphItemRollOverEvent e) {
             StockGraphItemRollOverEvent cubaEvent = new StockGraphItemRollOverEvent(e.getPanelId(), e.getGraphId(),
-                    getEventItem(e.getItemId()), e.getItemIndex(),
+                    e.getDataItem(), e.getItemIndex(),
                     e.getX(), e.getY(), e.getAbsoluteX(), e.getAbsoluteY());
             getEventRouter().fireEvent(StockGraphItemRollOverListener.class, StockGraphItemRollOverListener::onRollOver, cubaEvent);
         }
@@ -988,7 +988,7 @@ public class WebStockChart extends WebAbstractComponent<CubaAmStockChartScene> i
         @Override
         public void onClick(com.haulmont.charts.web.toolkit.ui.amcharts.events.StockGraphItemRightClickEvent e) {
             StockGraphItemRightClickEvent cubaEvent = new StockGraphItemRightClickEvent(e.getPanelId(), e.getGraphId(),
-                    getEventItem(e.getItemId()), e.getItemIndex(),
+                    e.getDataItem(), e.getItemIndex(),
                     e.getX(), e.getY(), e.getAbsoluteX(), e.getAbsoluteY());
             getEventRouter().fireEvent(StockGraphItemRightClickListener.class, StockGraphItemRightClickListener::onClick, cubaEvent);
         }

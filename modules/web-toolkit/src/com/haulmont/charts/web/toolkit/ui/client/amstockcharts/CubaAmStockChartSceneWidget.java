@@ -12,14 +12,15 @@ import com.google.gwt.user.client.Event;
 import com.google.gwt.user.client.ui.Widget;
 import com.haulmont.charts.web.toolkit.ui.client.amcharts.MouseHelper;
 import com.haulmont.charts.web.toolkit.ui.client.amstockcharts.events.JsStockChartClickEvent;
-import com.haulmont.charts.web.toolkit.ui.client.amstockcharts.events.StockChartClickHandler;
+
+import java.util.function.Consumer;
 
 public class CubaAmStockChartSceneWidget extends Widget {
 
     protected CubaAmStockChartJsOverlay jsOverlay;
 
-    protected StockChartClickHandler chartClickHandler;
-    protected StockChartClickHandler chartRightClickHandler;
+    protected Consumer<JsStockChartClickEvent> chartClickHandler;
+    protected Consumer<JsStockChartClickEvent> chartRightClickHandler;
 
     public CubaAmStockChartSceneWidget() {
         setElement(Document.get().createDivElement());
@@ -36,7 +37,7 @@ public class CubaAmStockChartSceneWidget extends Widget {
                 int y = MouseHelper.getY(event);
 
                 JsStockChartClickEvent clickEvent = jsOverlay.getClickEvent(x, y, event.getClientX(), event.getClientY());
-                chartRightClickHandler.onClick(clickEvent);
+                chartRightClickHandler.accept(clickEvent);
             }
 
             event.preventDefault();
@@ -46,7 +47,7 @@ public class CubaAmStockChartSceneWidget extends Widget {
             int y = MouseHelper.getY(event);
 
             JsStockChartClickEvent clickEvent = jsOverlay.getClickEvent(x, y, event.getClientX(), event.getClientY());
-            chartClickHandler.onClick(clickEvent);
+            chartClickHandler.accept(clickEvent);
 
             event.preventDefault();
         }
@@ -134,12 +135,9 @@ public class CubaAmStockChartSceneWidget extends Widget {
             jsOverlay.addStockGraphItemRollOverHandler(amStockChartEvents.getStockGraphItemRollOverHandler());
         }
 
-        Scheduler.get().scheduleDeferred(new Scheduler.ScheduledCommand() {
-            @Override
-            public void execute() {
-                updateSize();
-            }
-        });
+        Scheduler.get().scheduleDeferred(
+                this::updateSize
+        );
     }
 
     public void updatePoints(JavaScriptObject jsObj) {

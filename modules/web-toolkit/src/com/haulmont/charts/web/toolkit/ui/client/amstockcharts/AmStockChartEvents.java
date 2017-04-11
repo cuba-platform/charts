@@ -7,165 +7,167 @@ package com.haulmont.charts.web.toolkit.ui.client.amstockcharts;
 
 import com.haulmont.charts.web.toolkit.ui.client.amstockcharts.events.*;
 
+import java.util.function.Consumer;
+
 public class AmStockChartEvents {
 
-    private StockChartClickHandler chartClickHandler;
-    private StockChartClickHandler chartRightClickHandler;
+    private Consumer<JsStockChartClickEvent> chartClickHandler;
+    private Consumer<JsStockChartClickEvent> chartRightClickHandler;
 
-    private StockEventClickHandler stockEventClickHandler;
-    private StockEventRollOutHandler stockEventRollOutHandler;
-    private StockEventRollOverHandler stockEventRollOverHandler;
+    private Consumer<JsStockEventClickEvent> stockEventClickHandler;
+    private Consumer<JsStockEventRollOutEvent> stockEventRollOutHandler;
+    private Consumer<JsStockEventRollOverEvent> stockEventRollOverHandler;
 
-    private StockPanelZoomHandler stockPanelZoomHandler;
+    private Consumer<JsStockPanelZoomEvent> stockPanelZoomHandler;
 
-    private PeriodSelectorChangeHandler periodSelectorChangeHandler;
+    private Consumer<JsPeriodSelectorChangeEvent> periodSelectorChangeHandler;
 
-    private DataSetSelectorCompareHandler dataSetSelectorCompareHandler;
-    private DataSetSelectorSelectHandler dataSetSelectorSelectHandler;
-    private DataSetSelectorUnCompareHandler dataSetSelectorUnCompareHandler;
+    private Consumer<JsDataSetSelectorCompareEvent> dataSetSelectorCompareHandler;
+    private Consumer<JsDataSetSelectorSelectEvent> dataSetSelectorSelectHandler;
+    private Consumer<JsDataSetSelectorUnCompareEvent> dataSetSelectorUnCompareHandler;
 
-    private StockGraphClickHandler stockGraphClickHandler;
-    private StockGraphRollOutHandler stockGraphRollOutHandler;
-    private StockGraphRollOverHandler stockGraphRollOverHandler;
+    private Consumer<JsStockGraphClickEvent> stockGraphClickHandler;
+    private Consumer<JsStockGraphRollOutEvent> stockGraphRollOutHandler;
+    private Consumer<JsStockGraphRollOverEvent> stockGraphRollOverHandler;
 
-    private StockGraphItemClickHandler stockGraphItemClickHandler;
-    private StockGraphItemRightClickHandler stockGraphItemRightClickHandler;
-    private StockGraphItemRollOutHandler stockGraphItemRollOutHandler;
-    private StockGraphItemRollOverHandler stockGraphItemRollOverHandler;
+    private Consumer<JsStockGraphItemClickEvent> stockGraphItemClickHandler;
+    private Consumer<JsStockGraphItemRightClickEvent> stockGraphItemRightClickHandler;
+    private Consumer<JsStockGraphItemRollOutEvent> stockGraphItemRollOutHandler;
+    private Consumer<JsStockGraphItemRollOverEvent> stockGraphItemRollOverHandler;
 
-    public StockChartClickHandler getChartClickHandler() {
+    public Consumer<JsStockChartClickEvent> getChartClickHandler() {
         return chartClickHandler;
     }
 
-    public void setChartClickHandler(StockChartClickHandler chartClickHandler) {
+    public void setChartClickHandler(Consumer<JsStockChartClickEvent> chartClickHandler) {
         this.chartClickHandler = chartClickHandler;
     }
 
-    public StockChartClickHandler getChartRightClickHandler() {
+    public Consumer<JsStockChartClickEvent> getChartRightClickHandler() {
         return chartRightClickHandler;
     }
 
-    public void setChartRightClickHandler(StockChartClickHandler chartRightClickHandler) {
+    public void setChartRightClickHandler(Consumer<JsStockChartClickEvent> chartRightClickHandler) {
         this.chartRightClickHandler = chartRightClickHandler;
     }
 
-    public StockEventClickHandler getStockEventClickHandler() {
+    public Consumer<JsStockEventClickEvent> getStockEventClickHandler() {
         return stockEventClickHandler;
     }
 
-    public void setStockEventClickHandler(StockEventClickHandler stockEventClickHandler) {
+    public void setStockEventClickHandler(Consumer<JsStockEventClickEvent> stockEventClickHandler) {
         this.stockEventClickHandler = stockEventClickHandler;
     }
 
-    public StockEventRollOutHandler getStockEventRollOutHandler() {
+    public Consumer<JsStockEventRollOutEvent> getStockEventRollOutHandler() {
         return stockEventRollOutHandler;
     }
 
-    public void setStockEventRollOutHandler(StockEventRollOutHandler stockEventRollOutHandler) {
+    public void setStockEventRollOutHandler(Consumer<JsStockEventRollOutEvent> stockEventRollOutHandler) {
         this.stockEventRollOutHandler = stockEventRollOutHandler;
     }
 
-    public StockEventRollOverHandler getStockEventRollOverHandler() {
+    public Consumer<JsStockEventRollOverEvent> getStockEventRollOverHandler() {
         return stockEventRollOverHandler;
     }
 
-    public void setStockEventRollOverHandler(StockEventRollOverHandler stockEventRollOverHandler) {
+    public void setStockEventRollOverHandler(Consumer<JsStockEventRollOverEvent> stockEventRollOverHandler) {
         this.stockEventRollOverHandler = stockEventRollOverHandler;
     }
 
-    public StockPanelZoomHandler getStockPanelZoomHandler() {
+    public Consumer<JsStockPanelZoomEvent> getStockPanelZoomHandler() {
         return stockPanelZoomHandler;
     }
 
-    public void setStockPanelZoomHandler(StockPanelZoomHandler stockPanelZoomHandler) {
+    public void setStockPanelZoomHandler(Consumer<JsStockPanelZoomEvent> stockPanelZoomHandler) {
         this.stockPanelZoomHandler = stockPanelZoomHandler;
     }
 
-    public PeriodSelectorChangeHandler getPeriodSelectorChangeHandler() {
+    public Consumer<JsPeriodSelectorChangeEvent> getPeriodSelectorChangeHandler() {
         return periodSelectorChangeHandler;
     }
 
-    public void setPeriodSelectorChangeHandler(PeriodSelectorChangeHandler periodSelectorChangeHandler) {
+    public void setPeriodSelectorChangeHandler(Consumer<JsPeriodSelectorChangeEvent> periodSelectorChangeHandler) {
         this.periodSelectorChangeHandler = periodSelectorChangeHandler;
     }
 
-    public DataSetSelectorCompareHandler getDataSetSelectorCompareHandler() {
+    public Consumer<JsDataSetSelectorCompareEvent> getDataSetSelectorCompareHandler() {
         return dataSetSelectorCompareHandler;
     }
 
-    public void setDataSetSelectorCompareHandler(DataSetSelectorCompareHandler dataSetSelectorCompareHandler) {
+    public void setDataSetSelectorCompareHandler(Consumer<JsDataSetSelectorCompareEvent> dataSetSelectorCompareHandler) {
         this.dataSetSelectorCompareHandler = dataSetSelectorCompareHandler;
     }
 
-    public DataSetSelectorSelectHandler getDataSetSelectorSelectHandler() {
+    public Consumer<JsDataSetSelectorSelectEvent> getDataSetSelectorSelectHandler() {
         return dataSetSelectorSelectHandler;
     }
 
-    public void setDataSetSelectorSelectHandler(DataSetSelectorSelectHandler dataSetSelectorSelectHandler) {
+    public void setDataSetSelectorSelectHandler(Consumer<JsDataSetSelectorSelectEvent> dataSetSelectorSelectHandler) {
         this.dataSetSelectorSelectHandler = dataSetSelectorSelectHandler;
     }
 
-    public DataSetSelectorUnCompareHandler getDataSetSelectorUnCompareHandler() {
+    public Consumer<JsDataSetSelectorUnCompareEvent> getDataSetSelectorUnCompareHandler() {
         return dataSetSelectorUnCompareHandler;
     }
 
-    public void setDataSetSelectorUnCompareHandler(DataSetSelectorUnCompareHandler dataSetSelectorUnCompareHandler) {
+    public void setDataSetSelectorUnCompareHandler(Consumer<JsDataSetSelectorUnCompareEvent> dataSetSelectorUnCompareHandler) {
         this.dataSetSelectorUnCompareHandler = dataSetSelectorUnCompareHandler;
     }
 
-    public StockGraphClickHandler getStockGraphClickHandler() {
+    public Consumer<JsStockGraphClickEvent> getStockGraphClickHandler() {
         return stockGraphClickHandler;
     }
 
-    public void setStockGraphClickHandler(StockGraphClickHandler stockGraphClickHandler) {
+    public void setStockGraphClickHandler(Consumer<JsStockGraphClickEvent> stockGraphClickHandler) {
         this.stockGraphClickHandler = stockGraphClickHandler;
     }
 
-    public StockGraphRollOutHandler getStockGraphRollOutHandler() {
+    public Consumer<JsStockGraphRollOutEvent> getStockGraphRollOutHandler() {
         return stockGraphRollOutHandler;
     }
 
-    public void setStockGraphRollOutHandler(StockGraphRollOutHandler stockGraphRollOutHandler) {
+    public void setStockGraphRollOutHandler(Consumer<JsStockGraphRollOutEvent> stockGraphRollOutHandler) {
         this.stockGraphRollOutHandler = stockGraphRollOutHandler;
     }
 
-    public StockGraphRollOverHandler getStockGraphRollOverHandler() {
+    public Consumer<JsStockGraphRollOverEvent> getStockGraphRollOverHandler() {
         return stockGraphRollOverHandler;
     }
 
-    public void setStockGraphRollOverHandler(StockGraphRollOverHandler stockGraphRollOverHandler) {
+    public void setStockGraphRollOverHandler(Consumer<JsStockGraphRollOverEvent> stockGraphRollOverHandler) {
         this.stockGraphRollOverHandler = stockGraphRollOverHandler;
     }
 
-    public StockGraphItemClickHandler getStockGraphItemClickHandler() {
+    public Consumer<JsStockGraphItemClickEvent> getStockGraphItemClickHandler() {
         return stockGraphItemClickHandler;
     }
 
-    public void setStockGraphItemClickHandler(StockGraphItemClickHandler stockGraphItemClickHandler) {
+    public void setStockGraphItemClickHandler(Consumer<JsStockGraphItemClickEvent> stockGraphItemClickHandler) {
         this.stockGraphItemClickHandler = stockGraphItemClickHandler;
     }
 
-    public StockGraphItemRightClickHandler getStockGraphItemRightClickHandler() {
+    public Consumer<JsStockGraphItemRightClickEvent> getStockGraphItemRightClickHandler() {
         return stockGraphItemRightClickHandler;
     }
 
-    public void setStockGraphItemRightClickHandler(StockGraphItemRightClickHandler stockGraphItemRightClickHandler) {
+    public void setStockGraphItemRightClickHandler(Consumer<JsStockGraphItemRightClickEvent> stockGraphItemRightClickHandler) {
         this.stockGraphItemRightClickHandler = stockGraphItemRightClickHandler;
     }
 
-    public StockGraphItemRollOutHandler getStockGraphItemRollOutHandler() {
+    public Consumer<JsStockGraphItemRollOutEvent> getStockGraphItemRollOutHandler() {
         return stockGraphItemRollOutHandler;
     }
 
-    public void setStockGraphItemRollOutHandler(StockGraphItemRollOutHandler stockGraphItemRollOutHandler) {
+    public void setStockGraphItemRollOutHandler(Consumer<JsStockGraphItemRollOutEvent> stockGraphItemRollOutHandler) {
         this.stockGraphItemRollOutHandler = stockGraphItemRollOutHandler;
     }
 
-    public StockGraphItemRollOverHandler getStockGraphItemRollOverHandler() {
+    public Consumer<JsStockGraphItemRollOverEvent> getStockGraphItemRollOverHandler() {
         return stockGraphItemRollOverHandler;
     }
 
-    public void setStockGraphItemRollOverHandler(StockGraphItemRollOverHandler stockGraphItemRollOverHandler) {
+    public void setStockGraphItemRollOverHandler(Consumer<JsStockGraphItemRollOverEvent> stockGraphItemRollOverHandler) {
         this.stockGraphItemRollOverHandler = stockGraphItemRollOverHandler;
     }
 }

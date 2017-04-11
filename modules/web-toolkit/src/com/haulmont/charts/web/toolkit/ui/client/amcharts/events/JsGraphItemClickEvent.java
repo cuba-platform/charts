@@ -28,20 +28,23 @@ public class JsGraphItemClickEvent extends JavaScriptObject {
         return this.index;
     }-*/;
 
-    public final native String getItemId() /*-{
+    public final native String getItemKey() /*-{
         if (this.chart.type == "gantt") {
             if (this.graph && this.graph.customData && this.chart.dataProvider[this.index]) {
-                if (!this.graph.customData.id || !this.chart.dataProvider[this.index].id) {
+                if (typeof(this.graph.customData.$i) === "undefined"
+                    || typeof(this.chart.dataProvider[this.index].$k) == "undefined") {
                     return null;
                 }
-                return this.chart.dataProvider[this.index].id + ":" + this.graph.customData.id;
+                //noinspection JSUnresolvedVariable
+                return this.chart.dataProvider[this.index].$k + ":" + this.graph.customData.$i;
             }
         } else if (this.item && this.item.dataContext) {
-            if (!this.item.dataContext.id) {
+            //noinspection JSUnresolvedVariable
+            if (!this.item.dataContext.$k) {
                 return null;
             }
 
-            return "" + this.item.dataContext.id;
+            return this.item.dataContext.$k;
         }
         return null;
     }-*/;

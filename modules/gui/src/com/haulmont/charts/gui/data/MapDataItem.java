@@ -13,7 +13,7 @@ import java.util.Map;
 /**
  * Data item, which is a set of key-value pairs.
  */
-public class MapDataItem implements DataItem {
+public class MapDataItem implements DataItem, DataItem.HasId {
 
     private static final long serialVersionUID = -6115531750392377539L;
 
@@ -130,5 +130,10 @@ public class MapDataItem implements DataItem {
      */
     public void remove(String key) {
         properties.remove(key);
+    }
+
+    @Override
+    public Object getId() {
+        return this;
     }
 }

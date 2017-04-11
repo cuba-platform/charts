@@ -5,26 +5,32 @@
 
 package com.haulmont.charts.web.toolkit.ui.amcharts;
 
-import com.google.gson.*;
-import com.haulmont.charts.gui.amcharts.model.AbstractChartObject;
+import com.google.gson.JsonParser;
+import com.google.gson.JsonSyntaxException;
+import com.haulmont.charts.gui.amcharts.model.ChartType;
 import com.haulmont.charts.gui.amcharts.model.charts.*;
-import com.haulmont.charts.gui.amcharts.model.gson.ChartJsonSerializationContext;
-import com.haulmont.charts.gui.amcharts.model.gson.DataItemsSerializer;
+import com.haulmont.charts.gui.amcharts.model.gson.ChartIncrementalChanges;
+import com.haulmont.charts.gui.amcharts.model.gson.ChartSerializer;
 import com.haulmont.charts.gui.data.DataChangeListener;
 import com.haulmont.charts.gui.data.DataItem;
 import com.haulmont.charts.gui.data.DataItemsChangeEvent;
+import com.haulmont.charts.gui.data.DataProvider;
 import com.haulmont.charts.web.toolkit.ui.amcharts.events.*;
 import com.haulmont.charts.web.toolkit.ui.client.amcharts.CubaAmchartsSceneClientRpc;
 import com.haulmont.charts.web.toolkit.ui.client.amcharts.CubaAmchartsSceneState;
 import com.haulmont.charts.web.toolkit.ui.client.amcharts.CubaAmchartsServerRpc;
+import com.vaadin.server.KeyMapper;
 import com.vaadin.ui.AbstractComponent;
 import org.apache.commons.collections.CollectionUtils;
 import org.apache.commons.lang.StringUtils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
+import javax.annotation.Nullable;
 import java.lang.reflect.Method;
-import java.util.*;
+import java.util.Date;
+import java.util.List;
+import java.util.function.Function;
 
 import static com.vaadin.util.ReflectTools.findMethod;
 
@@ -87,13 +93,23 @@ public class CubaAmchartsScene extends AbstractComponent {
 
     protected AbstractChart chart;
 
-    protected Map<IncrementalUpdateType, List<DataItem>> changedItems;
+    protected ChartIncrementalChanges changedItems;
 
-    protected JsonSerializationContext serializationContext;
+    protected ChartSerializer chartSerializer;
+    protected KeyMapper<Object> dataItemKeys = new KeyMapper<>();
+    protected Function<DataItem, String> dataItemKeyMapper;
 
     public CubaAmchartsScene() {
         // enable amcharts integration
         CubaAmchartsIntegration.get();
+
+        dataItemKeyMapper = item -> {
+            if (item instanceof DataItem.HasId) {
+                return dataItemKeys.key(((DataItem.HasId) item).getId());
+            }
+            return null;
+        };
+        chartSerializer = new ChartSerializer(dataItemKeyMapper);
 
         registerRpc(new CubaAmchartsServerRpcImpl(), CubaAmchartsServerRpc.class);
     }
@@ -146,27 +162,26 @@ public class CubaAmchartsScene extends AbstractComponent {
         forceStateChange();
     }
 
-    protected void setChangedItems(Map<IncrementalUpdateType, List<DataItem>> changedItems) {
-        this.changedItems = changedItems;
-        markAsDirty();
-    }
-
     protected void forgetChangedItems() {
         this.changedItems = null;
     }
 
     protected void addChangedItems(IncrementalUpdateType type, List<DataItem> items) {
         if (changedItems == null) {
-            changedItems = new HashMap<>();
+            changedItems = new ChartIncrementalChanges();
         }
 
-        List<DataItem> existedItems = changedItems.get(type);
-        if (existedItems == null) {
-            existedItems = new ArrayList<>();
-            changedItems.put(type, existedItems);
+        switch (type) {
+            case ADD:
+                changedItems.registerAddedItem(items);
+                break;
+            case REMOVE:
+                changedItems.registerRemovedItems(items);
+                break;
+            case UPDATE:
+                changedItems.registerUpdatedItems(items);
+                break;
         }
-
-        existedItems.addAll(items);
 
         markAsDirty();
     }
@@ -362,39 +377,31 @@ public class CubaAmchartsScene extends AbstractComponent {
                 // Full repaint
                 setupDefaults(chart);
 
+                dataItemKeys.removeAll();
+
                 if (chart.getDataProvider() != null) {
                     chart.getDataProvider().addChangeListener(changeListener);
                 }
 
-                String jsonString = chart.toString();
+                String jsonString = chartSerializer.serialize(chart);
                 log.trace("Chart full JSON:\n{}", jsonString);
 
                 getRpcProxy(CubaAmchartsSceneClientRpc.class).draw(jsonString);
             }
             dirty = false;
         } else if (changedItems != null && !changedItems.isEmpty()) {
-            // Incremental repaint
+            // Incremental update
 
-            DataItemsSerializer serializer = new DataItemsSerializer();
-            JsonObject jsonChangedItemsElement = new JsonObject();
-            for (Map.Entry<IncrementalUpdateType, List<DataItem>> entry : changedItems.entrySet()) {
-                JsonArray jsonItemsArray = new JsonArray();
+            String jsonString = chartSerializer.serializeChanges(chart, changedItems);
+            log.trace("Chart update JSON:\n{}", jsonString);
 
-                if (serializationContext == null) {
-                    serializationContext = new ChartJsonSerializationContext(chart);
+            List<DataItem> removedItems = changedItems.getRemovedItems();
+            if (removedItems != null) {
+                for (DataItem removedItem : removedItems) {
+                    dataItemKeys.remove(removedItem);
                 }
-
-                List<JsonObject> jsonObjects = serializer.serialize(entry.getValue(), serializationContext);
-                for (JsonObject jsonObject : jsonObjects) {
-                    jsonItemsArray.add(jsonObject);
-                }
-                jsonChangedItemsElement.add(entry.getKey().getId(), jsonItemsArray);
             }
 
-            Gson gson = AbstractChartObject.getSharedGson();
-            String jsonString = gson.toJson(jsonChangedItemsElement);
-
-            log.trace("Chart update JSON:\n{}", jsonString);
             getRpcProxy(CubaAmchartsSceneClientRpc.class).updatePoints(jsonString);
         }
 
@@ -434,7 +441,7 @@ public class CubaAmchartsScene extends AbstractComponent {
     }
 
     protected String convertObjectToString(Object value) {
-        return AbstractChartObject.getSharedGson().toJson(value);
+        return chartSerializer.toJson(value);
     }
 
     public void zoomValueAxisToValues(String id, Object startValue, Object endValue) {
@@ -481,13 +488,17 @@ public class CubaAmchartsScene extends AbstractComponent {
         }
 
         @Override
-        public void onGraphItemClick(String graphId, int itemIndex, String itemId, int x, int y, int absoluteX, int absoluteY) {
-            fireEvent(new GraphItemClickEvent(CubaAmchartsScene.this, graphId, itemIndex, itemId, x, y, absoluteX, absoluteY));
+        public void onGraphItemClick(String graphId, int itemIndex, String itemKey, int x, int y, int absoluteX, int absoluteY) {
+            DataItem dataItem = getDataItemByKey(itemKey);
+            fireEvent(new GraphItemClickEvent(CubaAmchartsScene.this,
+                    graphId, itemIndex, dataItem, x, y, absoluteX, absoluteY));
         }
 
         @Override
-        public void onGraphItemRightClick(String graphId, int itemIndex, String itemId, int x, int y, int absoluteX, int absoluteY) {
-            fireEvent(new GraphItemRightClickEvent(CubaAmchartsScene.this, graphId, itemIndex, itemId, x, y, absoluteX, absoluteY));
+        public void onGraphItemRightClick(String graphId, int itemIndex, String itemKey, int x, int y, int absoluteX, int absoluteY) {
+            DataItem dataItem = getDataItemByKey(itemKey);
+            fireEvent(new GraphItemRightClickEvent(CubaAmchartsScene.this,
+                    graphId, itemIndex, dataItem, x, y, absoluteX, absoluteY));
         }
 
         @Override
@@ -496,43 +507,84 @@ public class CubaAmchartsScene extends AbstractComponent {
         }
 
         @Override
-        public void onSliceClick(String sliceId, int x, int y, int absoluteX, int absoluteY) {
-            fireEvent(new SliceClickEvent(CubaAmchartsScene.this, sliceId, x, y, absoluteX, absoluteY));
+        public void onSliceClick(int itemIndex, String dataItemKey, int x, int y, int absoluteX, int absoluteY) {
+            DataItem dataItem = getDataItemByKey(dataItemKey);
+            fireEvent(new SliceClickEvent(CubaAmchartsScene.this, dataItem, x, y, absoluteX, absoluteY));
         }
 
         @Override
-        public void onSliceRightClick(String sliceId, int x, int y, int absoluteX, int absoluteY) {
-            fireEvent(new SliceRightClickEvent(CubaAmchartsScene.this, sliceId, x, y, absoluteX, absoluteY));
+        public void onSliceRightClick(int itemIndex, String dataItemKey, int x, int y, int absoluteX, int absoluteY) {
+            DataItem dataItem = getDataItemByKey(dataItemKey);
+            fireEvent(new SliceRightClickEvent(CubaAmchartsScene.this, dataItem, x, y, absoluteX, absoluteY));
         }
 
         @Override
-        public void onSlicePullIn(String sliceId) {
-            fireEvent(new SlicePullInEvent(CubaAmchartsScene.this, sliceId));
+        public void onSlicePullIn(String dataItemKey) {
+            DataItem dataItem = getDataItemByKey(dataItemKey);
+            fireEvent(new SlicePullInEvent(CubaAmchartsScene.this, dataItem));
         }
 
         @Override
-        public void onSlicePullOut(String sliceId) {
-            fireEvent(new SlicePullOutEvent(CubaAmchartsScene.this, sliceId));
+        public void onSlicePullOut(String dataItemKey) {
+            DataItem dataItem = getDataItemByKey(dataItemKey);
+            fireEvent(new SlicePullOutEvent(CubaAmchartsScene.this, dataItem));
         }
 
         @Override
-        public void onLegendLabelClick(String itemId) {
-            fireEvent(new LegendLabelClickEvent(CubaAmchartsScene.this, itemId));
+        public void onLegendLabelClick(int legendItemIndex, @Nullable String dataItemKey) {
+            DataItem dataItem = getDataItemByKey(dataItemKey);
+            fireEvent(new LegendLabelClickEvent(CubaAmchartsScene.this, legendItemIndex, dataItem));
         }
 
         @Override
-        public void onLegendMarkerClick(String itemId) {
-            fireEvent(new LegendMarkerClickEvent(CubaAmchartsScene.this, itemId));
+        public void onLegendMarkerClick(int legendItemIndex, @Nullable String dataItemKey) {
+            DataItem dataItem = getDataItemByKey(dataItemKey);
+            fireEvent(new LegendMarkerClickEvent(CubaAmchartsScene.this, legendItemIndex, dataItem));
         }
 
         @Override
-        public void onLegendItemHide(String itemId) {
-            fireEvent(new LegendItemHideEvent(CubaAmchartsScene.this, itemId));
+        public void onLegendItemHide(int legendItemIndex, @Nullable String dataItemKey) {
+            DataItem dataItem = getDataItemByKey(dataItemKey);
+            fireEvent(new LegendItemHideEvent(CubaAmchartsScene.this, legendItemIndex, dataItem));
         }
 
         @Override
-        public void onLegendItemShow(String itemId) {
-            fireEvent(new LegendItemShowEvent(CubaAmchartsScene.this, itemId));
+        public void onLegendItemShow(int legendItemIndex, @Nullable String dataItemKey) {
+            DataItem dataItem = getDataItemByKey(dataItemKey);
+            fireEvent(new LegendItemShowEvent(CubaAmchartsScene.this, legendItemIndex, dataItem));
+        }
+
+        protected DataItem getDataItemByKey(@Nullable String dataItemKey) {
+            DataItem dataItem = null;
+            if (dataItemKey != null) {
+                DataProvider dataProvider = chart.getDataProvider();
+
+                if (chart.getType() == ChartType.GANTT && dataItemKey.contains(":")) {
+                    String graphItemKey = dataItemKey.substring(0, dataItemKey.indexOf(":"));
+                    String segmentItemKey = dataItemKey.substring(dataItemKey.indexOf(":") + 1, dataItemKey.length());
+
+                    Object dataItemId = dataItemKeys.get(graphItemKey);
+
+                    if (dataProvider != null) {
+                        DataItem graphDataItem = dataProvider.getItem(dataItemId);
+                        if (graphDataItem != null) {
+                            int segmentIndex = Integer.parseInt(segmentItemKey);
+                            String segmentsField = ((GanttChart) chart).getSegmentsField();
+
+                            @SuppressWarnings("unchecked")
+                            List<DataItem> segmentItems = (List<DataItem>) graphDataItem.getValue(segmentsField);
+                            dataItem = segmentItems.get(segmentIndex);
+                        }
+                    }
+                } else {
+                    Object dataItemId = dataItemKeys.get(dataItemKey);
+
+                    if (dataProvider != null) {
+                        dataItem = dataProvider.getItem(dataItemId);
+                    }
+                }
+            }
+            return dataItem;
         }
 
         @Override
@@ -578,7 +630,7 @@ public class CubaAmchartsScene extends AbstractComponent {
                     break;
                 case REFRESH:
                     chart.getChart().getDataProvider().removeChangeListener(this);
-                    chart.setChangedItems(null);
+                    chart.forgetChangedItems();
                     chart.drawChart();
                     break;
             }

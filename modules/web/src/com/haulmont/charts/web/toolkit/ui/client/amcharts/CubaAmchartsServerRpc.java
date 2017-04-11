@@ -7,6 +7,7 @@ package com.haulmont.charts.web.toolkit.ui.client.amcharts;
 
 import com.vaadin.shared.communication.ServerRpc;
 
+import javax.annotation.Nullable;
 import java.util.Date;
 
 public interface CubaAmchartsServerRpc extends ServerRpc {
@@ -17,27 +18,27 @@ public interface CubaAmchartsServerRpc extends ServerRpc {
 
     void onGraphClick(String graphId, int x, int y, int absoluteX, int absoluteY);
 
-    void onGraphItemClick(String graphId, int itemIndex, String itemId, int x, int y, int absoluteX, int absoluteY);
+    void onGraphItemClick(String graphId, int itemIndex, String itemKey, int x, int y, int absoluteX, int absoluteY);
 
-    void onGraphItemRightClick(String graphId, int itemIndex, String itemId, int x, int y, int absoluteX, int absoluteY);
+    void onGraphItemRightClick(String graphId, int itemIndex, String itemKey, int x, int y, int absoluteX, int absoluteY);
 
     void onZoom(int startIndex, int endIndex, Date startDate, Date endDate, String startValue, String endValue);
 
-    void onSliceClick(String sliceId, int x, int y, int absoluteX, int absoluteY);
+    void onSliceClick(int itemIndex, String dataItemKey, int x, int y, int absoluteX, int absoluteY);
 
-    void onSlicePullIn(String sliceId);
+    void onSliceRightClick(int itemIndex, String dataItemKey, int x, int y, int absoluteX, int absoluteY);
 
-    void onSlicePullOut(String sliceId);
+    void onSlicePullIn(String dataItemKey);
 
-    void onSliceRightClick(String sliceId, int x, int y, int absoluteX, int absoluteY);
+    void onSlicePullOut(String dataItemKey);
 
-    void onLegendLabelClick(String itemId);
+    void onLegendLabelClick(int legendItemIndex, @Nullable String dataItemKey);
 
-    void onLegendMarkerClick(String itemId);
+    void onLegendMarkerClick(int legendItemIndex, @Nullable String dataItemKey);
 
-    void onLegendItemHide(String itemId);
+    void onLegendItemHide(int legendItemIndex, @Nullable String dataItemKey);
 
-    void onLegendItemShow(String itemId);
+    void onLegendItemShow(int legendItemIndex, @Nullable String dataItemKey);
 
     void onCursorZoom(String start, String end);
 

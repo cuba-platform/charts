@@ -12,9 +12,10 @@ public class JsSlicePullEvent extends JavaScriptObject {
     protected JsSlicePullEvent() {
     }
 
-    public final native String getSliceId() /*-{
+    public final native String getItemKey() /*-{
         if (this.dataItem && this.dataItem.dataContext) {
-            return "" + this.dataItem.dataContext.id;
+            //noinspection JSUnresolvedVariable
+            return this.dataItem.dataContext.$k;
         }
         return null;
     }-*/;

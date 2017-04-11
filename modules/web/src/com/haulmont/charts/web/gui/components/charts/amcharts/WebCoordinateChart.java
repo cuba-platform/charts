@@ -229,7 +229,7 @@ public abstract class WebCoordinateChart<T extends CoordinateChart,
         getEventRouter().addListener(GraphItemClickListener.class, listener);
         if (graphItemClickHandler == null) {
             graphItemClickHandler = e -> {
-                GraphItemClickEvent event = new GraphItemClickEvent(e.getGraphId(), getEventItem(e.getItemId()),
+                GraphItemClickEvent event = new GraphItemClickEvent(e.getGraphId(), e.getDataItem(),
                         e.getItemIndex(), e.getX(), e.getY(), e.getAbsoluteX(), e.getAbsoluteY());
                 getEventRouter().fireEvent(GraphItemClickListener.class, GraphItemClickListener::onClick, event);
             };
@@ -251,7 +251,7 @@ public abstract class WebCoordinateChart<T extends CoordinateChart,
         getEventRouter().addListener(GraphItemRightClickListener.class, listener);
         if (graphItemRightClickHandler == null) {
             graphItemRightClickHandler = e -> {
-                GraphItemRightClickEvent event = new GraphItemRightClickEvent(e.getGraphId(), getEventItem(e.getItemId()),
+                GraphItemRightClickEvent event = new GraphItemRightClickEvent(e.getGraphId(), e.getDataItem(),
                         e.getItemIndex(), e.getX(), e.getY(), e.getAbsoluteX(), e.getAbsoluteY());
                 getEventRouter().fireEvent(GraphItemRightClickListener.class, GraphItemRightClickListener::onRightClick, event);
             };

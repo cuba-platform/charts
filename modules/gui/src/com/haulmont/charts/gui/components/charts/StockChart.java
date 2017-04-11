@@ -10,10 +10,13 @@ import com.haulmont.charts.gui.amcharts.model.PeriodType;
 import com.haulmont.charts.gui.amcharts.model.StockEvent;
 import com.haulmont.charts.gui.amcharts.model.charts.StockChartGroup;
 import com.haulmont.charts.gui.amcharts.model.charts.StockChartModel;
+import com.haulmont.charts.gui.data.DataItem;
+import com.haulmont.charts.gui.data.EntityDataItem;
 import com.haulmont.cuba.core.entity.Entity;
 import com.haulmont.cuba.gui.components.Component;
 import com.haulmont.cuba.gui.data.CollectionDatasource;
 
+import javax.annotation.Nullable;
 import java.util.Date;
 
 /**
@@ -654,13 +657,13 @@ public interface StockChart extends Component, StockChartModel<StockChart>, Comp
         private final int absoluteX;
         private final int absoluteY;
 
-        private final Entity item;
+        private final DataItem dataItem;
         private final int itemIndex;
 
-        protected AbstractStockGraphItemEvent(String panelId, String graphId, Entity item, int itemIndex,
+        protected AbstractStockGraphItemEvent(String panelId, String graphId, DataItem dataItem, int itemIndex,
                                               int x, int y, int absoluteX, int absoluteY) {
             this.panelId = panelId;
-            this.item = item;
+            this.dataItem = dataItem;
             this.itemIndex = itemIndex;
             this.absoluteY = absoluteY;
             this.absoluteX = absoluteX;
@@ -684,10 +687,39 @@ public interface StockChart extends Component, StockChartModel<StockChart>, Comp
         }
 
         /**
-         * @return an item corresponding to the graph item
+         * @return an item
+         * @deprecated Use {@link #getEntity()} or {@link #getEntityNN()}
          */
+        @Deprecated
         public Entity getItem() {
-            return item;
+            return getEntity();
+        }
+
+        @Nullable
+        public DataItem getDataItem() {
+            return dataItem;
+        }
+
+        public DataItem getDataItemNN() {
+            if (dataItem == null) {
+                throw new IllegalStateException("dataItem is null");
+            }
+            return dataItem;
+        }
+
+        @Nullable
+        public Entity getEntity() {
+            if (dataItem != null) {
+                return ((EntityDataItem) dataItem).getItem();
+            }
+            return null;
+        }
+
+        public Entity getEntityNN() {
+            if (dataItem == null) {
+                throw new IllegalStateException("dataItem is null");
+            }
+            return ((EntityDataItem) dataItem).getItem();
         }
 
         /**
@@ -730,7 +762,7 @@ public interface StockChart extends Component, StockChartModel<StockChart>, Comp
      * Describes stock graph item click event.
      */
     class StockGraphItemClickEvent extends AbstractStockGraphItemEvent {
-        public StockGraphItemClickEvent(String panelId, String graphId, Entity item, int itemIndex,
+        public StockGraphItemClickEvent(String panelId, String graphId, DataItem item, int itemIndex,
                                         int x, int y, int absoluteX, int absoluteY) {
             super(panelId, graphId, item, itemIndex, x, y, absoluteX, absoluteY);
         }
@@ -752,7 +784,7 @@ public interface StockChart extends Component, StockChartModel<StockChart>, Comp
      * Describes stock graph item click event.
      */
     class StockGraphItemRightClickEvent extends AbstractStockGraphItemEvent {
-        public StockGraphItemRightClickEvent(String panelId, String graphId, Entity item, int itemIndex,
+        public StockGraphItemRightClickEvent(String panelId, String graphId, DataItem item, int itemIndex,
                                              int x, int y, int absoluteX, int absoluteY) {
             super(panelId, graphId, item, itemIndex, x, y, absoluteX, absoluteY);
         }
@@ -774,7 +806,7 @@ public interface StockChart extends Component, StockChartModel<StockChart>, Comp
      * Describes stock graph item roll-out event.
      */
     class StockGraphItemRollOutEvent extends AbstractStockGraphItemEvent {
-        public StockGraphItemRollOutEvent(String panelId, String graphId, Entity item, int itemIndex,
+        public StockGraphItemRollOutEvent(String panelId, String graphId, DataItem item, int itemIndex,
                                           int x, int y, int absoluteX, int absoluteY) {
             super(panelId, graphId, item, itemIndex, x, y, absoluteX, absoluteY);
         }
@@ -796,7 +828,7 @@ public interface StockChart extends Component, StockChartModel<StockChart>, Comp
      * Describes stock graph item roll-over event.
      */
     class StockGraphItemRollOverEvent extends AbstractStockGraphItemEvent {
-        public StockGraphItemRollOverEvent(String panelId, String graphId, Entity item, int itemIndex,
+        public StockGraphItemRollOverEvent(String panelId, String graphId, DataItem item, int itemIndex,
                                            int x, int y, int absoluteX, int absoluteY) {
             super(panelId, graphId, item, itemIndex, x, y, absoluteX, absoluteY);
         }

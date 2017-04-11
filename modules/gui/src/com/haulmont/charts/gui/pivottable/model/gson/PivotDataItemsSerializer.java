@@ -11,9 +11,14 @@ import com.haulmont.charts.gui.data.DataItem;
 import com.haulmont.charts.gui.data.EntityDataItem;
 import com.haulmont.chile.core.datatypes.Datatypes;
 import com.haulmont.chile.core.datatypes.impl.DateDatatype;
+import com.haulmont.chile.core.datatypes.impl.EnumClass;
 import com.haulmont.chile.core.datatypes.impl.TimeDatatype;
+import com.haulmont.chile.core.model.Instance;
 import com.haulmont.chile.core.model.MetaClass;
 import com.haulmont.chile.core.model.MetaProperty;
+import com.haulmont.chile.core.model.Range;
+import com.haulmont.chile.core.model.utils.InstanceUtils;
+import com.haulmont.cuba.core.entity.Entity;
 import com.haulmont.cuba.core.global.AppBeans;
 import com.haulmont.cuba.core.global.Messages;
 import com.haulmont.cuba.core.global.Metadata;
@@ -50,16 +55,23 @@ public class PivotDataItemsSerializer {
 
     protected void addProperty(JsonObject jsonObject, String property, Object value,
                                PivotJsonSerializationContext context, DataItem item) {
-        if (value instanceof Date) {
+        Object formattedValue = null;
+
+        if (value instanceof Entity) {
+            formattedValue = InstanceUtils.getInstanceName((Instance) value);
+        } else if (value instanceof EnumClass) {
+            formattedValue = messages.getMessage((Enum) value);
+        } else if (value instanceof Date) {
             String formatStr;
             if (item instanceof EntityDataItem) {
                 EntityDataItem entityItem = (EntityDataItem) item;
                 MetaClass metaClass = metadata.getClassNN(entityItem.getItem().getClass());
                 MetaProperty metaProperty = metaClass.getPropertyNN(property);
 
-                if (metaProperty.getRange().asDatatype().equals(Datatypes.get(DateDatatype.NAME))) {
+                Range range = metaProperty.getRange();
+                if (range.asDatatype().equals(Datatypes.get(DateDatatype.NAME))) {
                     formatStr = messages.getMainMessage("dateFormat");
-                } else if (metaProperty.getRange().asDatatype().equals(Datatypes.get(TimeDatatype.NAME))) {
+                } else if (range.asDatatype().equals(Datatypes.get(TimeDatatype.NAME))) {
                     formatStr = messages.getMainMessage("timeFormat");
                 } else {
                     formatStr = messages.getMainMessage("dateTimeFormat");
@@ -67,13 +79,15 @@ public class PivotDataItemsSerializer {
             } else {
                 formatStr = messages.getMainMessage("dateTimeFormat");
             }
+
             SimpleDateFormat dateFormat = new SimpleDateFormat(formatStr);
-            value = dateFormat.format((Date) value);
+            formattedValue = dateFormat.format((Date) value);
         } else if (value instanceof Boolean) {
-            value = BooleanUtils.isTrue((Boolean) value)
+            formattedValue = BooleanUtils.isTrue((Boolean) value)
                     ? messages.getMainMessage("boolean.yes")
                     : messages.getMainMessage("boolean.no");
         }
-        jsonObject.add(context.getLocalizedPropertyName(property), context.serialize(value));
+
+        jsonObject.add(context.getLocalizedPropertyName(property), context.serialize(formattedValue));
     }
 }

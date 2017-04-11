@@ -8,6 +8,7 @@ package com.haulmont.charts.gui.data;
 import java.io.Serializable;
 import java.util.Collection;
 import java.util.List;
+import java.util.Objects;
 
 public interface DataProvider extends Serializable {
 
@@ -15,6 +16,17 @@ public interface DataProvider extends Serializable {
      * @return list of all items.
      */
     List<DataItem> getItems();
+
+    /**
+     * @param id id of data item
+     * @return data item by id
+     */
+    default DataItem getItem(Object id) {
+        return getItems().stream()
+                .filter(dataItem -> (dataItem instanceof DataItem.HasId)
+                        && Objects.equals(id, ((DataItem.HasId) dataItem).getId()))
+                .findFirst().orElse(null);
+    }
 
     /**
      * Adds an item to the data provider.

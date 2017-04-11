@@ -5,22 +5,20 @@
 
 package com.haulmont.charts.web.toolkit.ui.amcharts;
 
-import com.google.gson.JsonArray;
-import com.google.gson.JsonObject;
-import com.google.gson.JsonSerializationContext;
 import com.haulmont.charts.gui.amcharts.model.DataSet;
 import com.haulmont.charts.gui.amcharts.model.charts.StockChartGroup;
+import com.haulmont.charts.gui.amcharts.model.gson.ChartIncrementalChanges;
+import com.haulmont.charts.gui.amcharts.model.gson.StockChartSerializer;
 import com.haulmont.charts.gui.data.DataChangeListener;
 import com.haulmont.charts.gui.data.DataItem;
 import com.haulmont.charts.gui.data.DataItemsChangeEvent;
-import com.haulmont.charts.gui.amcharts.model.gson.ChartJsonSerializationContext;
-import com.haulmont.charts.gui.amcharts.model.gson.DataItemsSerializer;
+import com.haulmont.charts.gui.data.DataProvider;
 import com.haulmont.charts.web.toolkit.ui.amcharts.events.*;
 import com.haulmont.charts.web.toolkit.ui.client.amstockcharts.CubaAmStockChartSceneClientRpc;
 import com.haulmont.charts.web.toolkit.ui.client.amstockcharts.CubaAmStockChartSceneState;
 import com.haulmont.charts.web.toolkit.ui.client.amstockcharts.CubaAmStockChartServerRpc;
-import com.vaadin.annotations.JavaScript;
 import com.vaadin.annotations.StyleSheet;
+import com.vaadin.server.KeyMapper;
 import com.vaadin.ui.AbstractComponent;
 import org.apache.commons.collections.CollectionUtils;
 import org.apache.commons.lang.StringUtils;
@@ -28,12 +26,16 @@ import org.apache.commons.lang.builder.HashCodeBuilder;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
+import javax.annotation.Nullable;
 import java.lang.reflect.Method;
-import java.util.*;
+import java.util.Date;
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
+import java.util.function.Function;
 
 import static com.vaadin.util.ReflectTools.findMethod;
 
-@JavaScript("vaadin://resources/amcharts/amstock.js")
 @StyleSheet("vaadin://resources/amcharts/style.css")
 public class CubaAmStockChartScene extends AbstractComponent {
     private final Logger log = LoggerFactory.getLogger(CubaAmStockChartScene.class);
@@ -93,13 +95,24 @@ public class CubaAmStockChartScene extends AbstractComponent {
 
     protected StockChartGroup chart;
 
-    protected Map<String, Map<IncrementalUpdateType, List<DataItem>>> changedItems;
+    protected StockChartSerializer chartSerializer;
 
-    protected JsonSerializationContext serializationContext;
+    protected KeyMapper<Object> dataItemKeys = new KeyMapper<>();
+    protected Function<DataItem, String> dataItemKeyMapper;
+
+    protected Map<DataSet, ChartIncrementalChanges> changedItems;
 
     public CubaAmStockChartScene() {
         // enable amcharts integration
         CubaAmchartsIntegration.get();
+
+        dataItemKeyMapper = item -> {
+            if (item instanceof DataItem.HasId) {
+                return dataItemKeys.key(((DataItem.HasId) item).getId());
+            }
+            return null;
+        };
+        chartSerializer = new StockChartSerializer(dataItemKeyMapper);
 
         registerRpc(new CubaAmStockChartServerRpcImpl(), CubaAmStockChartServerRpc.class);
     }
@@ -140,33 +153,29 @@ public class CubaAmStockChartScene extends AbstractComponent {
         forceStateChange();
     }
 
-    protected void setChangedItems(Map<String, Map<IncrementalUpdateType, List<DataItem>>> changedItems) {
-        this.changedItems = changedItems;
-        markAsDirty();
-    }
-
     protected void forgetChangedItems() {
         this.changedItems = null;
     }
 
-    protected void addChangedItems(IncrementalUpdateType type, String dataSetId, List<DataItem> items) {
+    protected void addChangedItems(IncrementalUpdateType type, DataSet dataSet, List<DataItem> items) {
         if (changedItems == null) {
             changedItems = new HashMap<>();
         }
 
-        Map<IncrementalUpdateType, List<DataItem>> dataSetChanges = changedItems.get(dataSetId);
-        if (dataSetChanges == null) {
-            dataSetChanges = new HashMap<>();
-            changedItems.put(dataSetId, dataSetChanges);
-        }
+        ChartIncrementalChanges dataSetChanges =
+                changedItems.computeIfAbsent(dataSet, k -> new ChartIncrementalChanges());
 
-        List<DataItem> existedItems = dataSetChanges.get(type);
-        if (existedItems == null) {
-            existedItems = new ArrayList<>();
-            dataSetChanges.put(type, existedItems);
+        switch (type) {
+            case ADD:
+                dataSetChanges.registerAddedItem(items);
+                break;
+            case REMOVE:
+                dataSetChanges.registerRemovedItems(items);
+                break;
+            case UPDATE:
+                dataSetChanges.registerUpdatedItems(items);
+                break;
         }
-
-        existedItems.addAll(items);
 
         markAsDirty();
     }
@@ -316,13 +325,17 @@ public class CubaAmStockChartScene extends AbstractComponent {
                 // Full repaint
                 setupDefaults(chart);
 
-                for (DataSet dataSet : chart.getDataSets()) {
-                    if (dataSet.getDataProvider() != null) {
-                        dataSet.getDataProvider().addChangeListener(new ProxyChangeForwarder(this, dataSet));
+                dataItemKeys.removeAll();
+
+                if (chart.getDataSets() != null) {
+                    for (DataSet dataSet : chart.getDataSets()) {
+                        if (dataSet.getDataProvider() != null) {
+                            dataSet.getDataProvider().addChangeListener(new ProxyChangeForwarder(this, dataSet));
+                        }
                     }
                 }
 
-                String jsonString = chart.toString();
+                String jsonString = chartSerializer.serialize(chart);
                 log.trace("Chart full JSON:\n{}", jsonString);
 
                 getRpcProxy(CubaAmStockChartSceneClientRpc.class).draw(jsonString);
@@ -331,30 +344,18 @@ public class CubaAmStockChartScene extends AbstractComponent {
         } else if (changedItems != null && !changedItems.isEmpty()) {
             // Incremental repaint
 
-            DataItemsSerializer serializer = new DataItemsSerializer();
-            JsonObject jsonChangedItemsElement = new JsonObject();
+            String jsonString = chartSerializer.serializeChanges(chart, changedItems);
+            log.trace("Chart update JSON:\n{}", jsonString);
 
-            for (Map.Entry<String, Map<IncrementalUpdateType, List<DataItem>>> dataSetEntry : changedItems.entrySet()) {
-                JsonObject jsonChangedDataSetElement = new JsonObject();
-                for (Map.Entry<IncrementalUpdateType, List<DataItem>> entry : dataSetEntry.getValue().entrySet()) {
-                    JsonArray jsonItemsArray = new JsonArray();
-
-                    if (serializationContext == null) {
-                        serializationContext = new ChartJsonSerializationContext(chart);
+            for (ChartIncrementalChanges changes : changedItems.values()) {
+                List<DataItem> removedItems = changes.getRemovedItems();
+                if (removedItems != null) {
+                    for (DataItem removedItem : removedItems) {
+                        dataItemKeys.remove(removedItem);
                     }
-
-                    List<JsonObject> jsonObjects = serializer.serialize(entry.getValue(), serializationContext);
-                    for (JsonObject jsonObject : jsonObjects) {
-                        jsonItemsArray.add(jsonObject);
-                    }
-                    jsonChangedDataSetElement.add(entry.getKey().getId(), jsonItemsArray);
                 }
-                jsonChangedItemsElement.add(dataSetEntry.getKey(), jsonChangedDataSetElement);
             }
 
-            String jsonString = StockChartGroup.getSharedGson().toJson(jsonChangedItemsElement);
-
-            log.trace("Chart update JSON:\n{}", jsonString);
             getRpcProxy(CubaAmStockChartSceneClientRpc.class).updatePoints(jsonString);
         }
 
@@ -443,31 +444,51 @@ public class CubaAmStockChartScene extends AbstractComponent {
         }
 
         @Override
-        public void onStockGraphItemClick(String panelId, String graphId, int itemIndex, String itemId,
+        public void onStockGraphItemClick(String panelId, String graphId, int itemIndex, String dataSetId, String itemKey,
                                           int x, int y, int absoluteX, int absoluteY) {
-            fireEvent(new StockGraphItemClickEvent(CubaAmStockChartScene.this, panelId, graphId, itemId, itemIndex,
+            DataItem dataItem = getDataItemByKey(dataSetId, itemKey);
+            fireEvent(new StockGraphItemClickEvent(CubaAmStockChartScene.this, panelId, graphId, dataItem, itemIndex,
                     x, y, absoluteX, absoluteY));
         }
 
         @Override
-        public void onStockGraphItemRightClick(String panelId, String graphId, int itemIndex, String itemId,
+        public void onStockGraphItemRightClick(String panelId, String graphId, int itemIndex, String dataSetId, String itemKey,
                                                int x, int y, int absoluteX, int absoluteY) {
-            fireEvent(new StockGraphItemRightClickEvent(CubaAmStockChartScene.this, panelId, graphId, itemId, itemIndex,
+            DataItem dataItem = getDataItemByKey(dataSetId, itemKey);
+            fireEvent(new StockGraphItemRightClickEvent(CubaAmStockChartScene.this, panelId, graphId, dataItem, itemIndex,
                     x, y, absoluteX, absoluteY));
         }
 
         @Override
-        public void onStockGraphItemRollOut(String panelId, String graphId, int itemIndex, String itemId,
+        public void onStockGraphItemRollOut(String panelId, String graphId, int itemIndex, String dataSetId, String itemKey,
                                             int x, int y, int absoluteX, int absoluteY) {
-            fireEvent(new StockGraphItemRollOutEvent(CubaAmStockChartScene.this, panelId, graphId, itemId, itemIndex,
+            DataItem dataItem = getDataItemByKey(dataSetId, itemKey);
+            fireEvent(new StockGraphItemRollOutEvent(CubaAmStockChartScene.this, panelId, graphId, dataItem, itemIndex,
                     x, y, absoluteX, absoluteY));
         }
 
         @Override
-        public void onStockGraphItemRollOver(String panelId, String graphId, int itemIndex, String itemId,
+        public void onStockGraphItemRollOver(String panelId, String graphId, int itemIndex, String dataSetId, String itemKey,
                                              int x, int y, int absoluteX, int absoluteY) {
-            fireEvent(new StockGraphItemRollOverEvent(CubaAmStockChartScene.this, panelId, graphId, itemId, itemIndex,
+            DataItem dataItem = getDataItemByKey(dataSetId, itemKey);
+            fireEvent(new StockGraphItemRollOverEvent(CubaAmStockChartScene.this, panelId, graphId, dataItem, itemIndex,
                     x, y, absoluteX, absoluteY));
+        }
+
+        @Nullable
+        protected DataItem getDataItemByKey(String graphId, String itemKey) {
+            if (itemKey != null) {
+                Object dataItemId = dataItemKeys.get(itemKey);
+                DataSet dataSet = getChart().getDataSet(graphId);
+
+                if (dataSet != null) {
+                    DataProvider dataProvider = dataSet.getDataProvider();
+                    if (dataProvider != null) {
+                        return dataProvider.getItem(dataItemId);
+                    }
+                }
+            }
+            return null;
         }
     }
 
@@ -501,12 +522,13 @@ public class CubaAmStockChartScene extends AbstractComponent {
                     break;
                 case REFRESH:
                     dataSet.getDataProvider().removeChangeListener(this);
-                    chart.setChangedItems(null);
+                    chart.forgetChangedItems();
                     chart.drawChart();
                     break;
             }
+
             if (updateType != null && CollectionUtils.isNotEmpty(e.getItems())) {
-                chart.addChangedItems(updateType, dataSet.getId(), e.getItems());
+                chart.addChangedItems(updateType, dataSet, e.getItems());
             }
         }
 

@@ -5,13 +5,14 @@
 
 package com.haulmont.charts.web.toolkit.ui.amcharts.events;
 
+import com.haulmont.charts.gui.data.DataItem;
 import com.haulmont.charts.web.toolkit.ui.amcharts.CubaAmchartsScene;
 
 public class LegendItemHideEvent extends AbstractLegendItemEvent {
 
     private static final long serialVersionUID = -536343761071370040L;
 
-    public LegendItemHideEvent(CubaAmchartsScene scene, String itemId) {
-        super(scene, itemId);
+    public LegendItemHideEvent(CubaAmchartsScene scene, int itemIndex, DataItem dataItem) {
+        super(scene, itemIndex, dataItem);
     }
 }

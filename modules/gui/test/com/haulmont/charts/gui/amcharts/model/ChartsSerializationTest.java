@@ -7,9 +7,11 @@ package com.haulmont.charts.gui.amcharts.model;
 
 import com.haulmont.bali.util.ParamsMap;
 import com.haulmont.charts.gui.amcharts.model.charts.*;
+import com.haulmont.charts.gui.amcharts.model.gson.ChartDataItemsSerializer;
+import com.haulmont.charts.gui.amcharts.model.gson.ChartSerializer;
 import com.haulmont.charts.gui.data.DataItem;
 import com.haulmont.charts.gui.data.ListDataProvider;
-import com.haulmont.charts.gui.amcharts.model.data.MapDataItem;
+import com.haulmont.charts.gui.data.MapDataItem;
 import org.apache.commons.lang.StringUtils;
 import org.junit.Assert;
 import org.junit.Test;
@@ -29,6 +31,7 @@ public class ChartsSerializationTest {
     @Test
     public void testSerialChart() throws IOException, URISyntaxException, ParseException {
         ListDataProvider dataProvider = new ListDataProvider();
+
         dataProvider.addItem(new MapDataItem(ParamsMap.of("id", "1", "date", "2012-07-27", "value", 13)));
         dataProvider.addItem(new MapDataItem(ParamsMap.of("id", "2", "date", "2012-07-28", "value", 11)));
         dataProvider.addItem(new MapDataItem(ParamsMap.of("id", "3", "date", "2012-07-29", "value", 15)));
@@ -46,17 +49,42 @@ public class ChartsSerializationTest {
         dataProvider.addItem(new MapDataItem(ParamsMap.of("id", "15", "date", "2012-08-10", "value", 24)));
         dataProvider.addItem(new MapDataItem(ParamsMap.of("id", "16", "date", "2012-08-11", "value", 29)));
 
-        AbstractChart chart = new SerialChart().setCategoryField("date").setDataProvider(dataProvider)
-                .addValueAxes(new ValueAxis().setAxisAlpha(0.0).setPosition(Position.LEFT))
-                .addGraphs(new Graph().setId("g1").setBullet(BulletType.ROUND).setBulletBorderAlpha(1.0)
-                        .setBulletColor(Color.WHITE).setBulletSize(5).setHideBulletsCount(50).setLineThickness(2)
-                        .setTitle("Red line").setValueField("value"))
-                .setCategoryAxis(new CategoryAxis().setDashLength(1).setMinorGridEnabled(true).setPosition(Position.TOP))
-                .setChartScrollbar(new Scrollbar().setGraph("g1").setScrollbarHeight(30))
-                .setChartCursor(new Cursor().setCursorPosition(CursorPosition.MOUSE).setPan(true))
+        AbstractChart chart = new SerialChart()
+                .setCategoryField("date")
+                .setDataProvider(dataProvider)
+                .addValueAxes(
+                        new ValueAxis()
+                                .setAxisAlpha(0.0)
+                                .setPosition(Position.LEFT))
+                .addGraphs(
+                        new Graph()
+                                .setId("g1")
+                                .setBullet(BulletType.ROUND)
+                                .setBulletBorderAlpha(1.0)
+                                .setBulletColor(Color.WHITE)
+                                .setBulletSize(5)
+                                .setHideBulletsCount(50)
+                                .setLineThickness(2)
+                                .setTitle("Red line")
+                                .setValueField("value"))
+                .setCategoryAxis(
+                        new CategoryAxis()
+                                .setDashLength(1)
+                                .setMinorGridEnabled(true)
+                                .setPosition(Position.TOP))
+                .setChartScrollbar(
+                        new Scrollbar()
+                                .setGraph("g1")
+                                .setScrollbarHeight(30))
+                .setChartCursor(
+                        new Cursor()
+                                .setCursorPosition(CursorPosition.MOUSE)
+                                .setPan(true))
                 .setExport(new Export());
 
-        String json = chart.toString();
+        ChartSerializer serializer = getTestSerializer();
+        String json = serializer.serialize(chart);
+
         String expected = ChartSampleJsonHelper.readFile("SerialChart.json");
         Assert.assertEquals(null, expected, json);
     }
@@ -64,6 +92,7 @@ public class ChartsSerializationTest {
     @Test
     public void testXYChart() throws IOException, URISyntaxException {
         ListDataProvider dataProvider = new ListDataProvider();
+
         dataProvider.addItem(new MapDataItem(ParamsMap.of("id", "1", "ax", 1.0, "ay", 0.5, "bx", 1.0, "by", 2.2)));
         dataProvider.addItem(new MapDataItem(ParamsMap.of("id", "2", "ax", 2.0, "ay", 1.3, "bx", 2.0, "by", 4.9)));
         dataProvider.addItem(new MapDataItem(ParamsMap.of("id", "3", "ax", 3.0, "ay", 2.3, "bx", 3.0, "by", 5.1)));
@@ -77,33 +106,68 @@ public class ChartsSerializationTest {
         dataProvider.addItem(new MapDataItem(ParamsMap.of("id", "11", "ax", 11.0, "ay", 10.4, "bx", 11.0, "by", 18.8)));
         dataProvider.addItem(new MapDataItem(ParamsMap.of("id", "12", "ax", 12.0, "ay", 11.7, "bx", 12.0, "by", 19.0)));
 
-        AbstractChart chart = new XYChart().setDataProvider(dataProvider).setStartDuration(1).setMarginLeft(64)
+        AbstractChart chart = new XYChart()
+                .setDataProvider(dataProvider)
+                .setStartDuration(1)
+                .setMarginLeft(64)
                 .setMarginBottom(60)
                 .setChartCursor(new Cursor())
                 .setChartScrollbar(new Scrollbar())
                 .addGraphs(
-                        new Graph().setBullet(BulletType.TRIANGLE_UP).setLineAlpha(0.0).setXField("ax").setYField("ay")
-                                .setLineColor(Color.valueOf("#FF6600")).setFillAlphas(0.0),
-                        new Graph().setBullet(BulletType.TRIANGLE_DOWN).setLineAlpha(0.0).setXField("bx").setYField("by")
-                                .setLineColor(Color.valueOf("#FCD202")).setFillAlphas(0.0))
+                        new Graph()
+                                .setBullet(BulletType.TRIANGLE_UP)
+                                .setLineAlpha(0.0)
+                                .setXField("ax")
+                                .setYField("ay")
+                                .setLineColor(Color.valueOf("#FF6600"))
+                                .setFillAlphas(0.0),
+                        new Graph()
+                                .setBullet(BulletType.TRIANGLE_DOWN)
+                                .setLineAlpha(0.0)
+                                .setXField("bx")
+                                .setYField("by")
+                                .setLineColor(Color.valueOf("#FCD202"))
+                                .setFillAlphas(0.0))
                 .addTrendLines(
-                        new TrendLine().setFinalValue(12.0).setFinalXValue(12.0).setInitialValue(2.0)
-                                .setInitialXValue(1.0).setLineColor(Color.valueOf("#FF6600")),
-                        new TrendLine().setFinalValue(19.0).setFinalXValue(12.0).setInitialValue(1.0)
-                                .setInitialXValue(1.0).setLineColor(Color.valueOf("#FCD202")))
+                        new TrendLine()
+                                .setFinalValue(12.0)
+                                .setFinalXValue(12.0)
+                                .setInitialValue(2.0)
+                                .setInitialXValue(1.0)
+                                .setLineColor(Color.valueOf("#FF6600")),
+                        new TrendLine()
+                                .setFinalValue(19.0)
+                                .setFinalXValue(12.0)
+                                .setInitialValue(1.0)
+                                .setInitialXValue(1.0)
+                                .setLineColor(Color.valueOf("#FCD202")))
                 .addValueAxes(
-                        new ValueAxis().setAxisAlpha(0.0).setDashLength(1).setTitle("X Axis").setPosition(Position.BOTTOM),
-                        new ValueAxis().setAxisAlpha(0.0).setDashLength(1).setTitle("Y Axis").setPosition(Position.LEFT));
+                        new ValueAxis()
+                                .setAxisAlpha(0.0)
+                                .setDashLength(1)
+                                .setTitle("X Axis")
+                                .setPosition(Position.BOTTOM),
+                        new ValueAxis()
+                                .setAxisAlpha(0.0)
+                                .setDashLength(1)
+                                .setTitle("Y Axis")
+                                .setPosition(Position.LEFT));
 
-        String json = chart.toString();
+        ChartSerializer serializer = getTestSerializer();
+
+        String json = serializer.serialize(chart);
         String expected = ChartSampleJsonHelper.readFile("XYChart.json");
         Assert.assertEquals(null, expected, json);
+    }
+
+    protected ChartSerializer getTestSerializer() {
+        return new TestChartSerializer();
     }
 
     @Test
     public void testPieChart() throws IOException, URISyntaxException {
         ListDataProvider dataProvider = new ListDataProvider();
-        dataProvider.addItem(new MapDataItem(ParamsMap.of("id", "1", "country", "Czech Republic", "litres", 256.9)));
+        dataProvider.addItem(mapData());
         dataProvider.addItem(new MapDataItem(ParamsMap.of("id", "2", "country", "Ireland", "litres", 131.1)));
         dataProvider.addItem(new MapDataItem(ParamsMap.of("id", "3", "country", "Germany", "litres", 115.8)));
         dataProvider.addItem(new MapDataItem(ParamsMap.of("id", "4", "country", "Australia", "litres", 109.9)));
@@ -111,16 +175,30 @@ public class ChartsSerializationTest {
         dataProvider.addItem(new MapDataItem(ParamsMap.of("id", "6", "country", "UK", "litres", 65.0)));
         dataProvider.addItem(new MapDataItem(ParamsMap.of("id", "7", "country", "Belgium", "litres", 40.0)));
 
-        AbstractChart chart = new PieChart().setDataProvider(dataProvider).setDepth3D(15).setAngle(30)
-                .setValueField("litres").setTitleField("country").setBalloonText("[[title]] - [[percents]]%")
-                .setLegend(new Legend().setMarkerType(MarkerType.CIRCLE).setPosition(LegendPosition.RIGHT)
-                        .setMarginRight(80).setAutoMargins(false))
+        AbstractChart chart = new PieChart()
+                .setDataProvider(dataProvider)
+                .setDepth3D(15)
+                .setAngle(30)
+                .setValueField("litres")
+                .setTitleField("country")
+                .setBalloonText("[[title]] - [[percents]]%")
+                .setLegend(
+                        new Legend()
+                                .setMarkerType(MarkerType.CIRCLE)
+                                .setPosition(LegendPosition.RIGHT)
+                                .setMarginRight(80)
+                                .setAutoMargins(false))
                 .setExport(new Export());
 
+        ChartSerializer serializer = getTestSerializer();
 
-        String json = chart.toString();
+        String json = serializer.serialize(chart);
         String expected = ChartSampleJsonHelper.readFile("PieChart.json");
         Assert.assertEquals(null, expected, json);
+    }
+
+    protected MapDataItem mapData() {
+        return new MapDataItem(ParamsMap.of("id", "1", "country", "Czech Republic", "litres", 256.9));
     }
 
     @Test
@@ -185,19 +263,45 @@ public class ChartsSerializationTest {
                 segment("s39", 10, 3, "#7E585F", "Task #2"),
                 segment("s40", 17, 4, "#FFE4C4", "Task #4")));
 
-        AbstractChart chart = new GanttChart().setDataProvider(dataProvider).setTheme(ChartTheme.LIGHT)
-                .setMarginRight(70).setPeriod(DatePeriod.HOURS).setBalloonDateFormat("JJ:NN").setColumnWidth(0.5)
-                .setBrightnessStep(10).setRotate(true).setCategoryField("category").setSegmentsField("segments")
-                .setStartDate(df.parse("2015-01-01")).setColorField("color").setStartField("start").setEndField("end")
-                .setDurationField("duration").addAdditionalSegmentFields("task")
-                .setGraph(new Graph().setFillAlphas(1.0).setBalloonText("[[task]]: [[open]] [[value]]"))
-                .setValueAxis(new ValueAxis().setType(ValueAxisType.DATE).setMinimum(7.0).setMaximum(31.0))
+        AbstractChart chart = new GanttChart()
+                .setDataProvider(dataProvider)
+                .setTheme(ChartTheme.LIGHT)
+                .setMarginRight(70)
+                .setPeriod(DatePeriod.HOURS)
+                .setBalloonDateFormat("JJ:NN")
+                .setColumnWidth(0.5)
+                .setBrightnessStep(10)
+                .setRotate(true)
+                .setCategoryField("category")
+                .setSegmentsField("segments")
+                .setStartDate(df.parse("2015-01-01"))
+                .setColorField("color")
+                .setStartField("start")
+                .setEndField("end")
+                .setDurationField("duration")
+                .addAdditionalSegmentFields("task")
+                .setGraph(
+                        new Graph()
+                                .setFillAlphas(1.0)
+                                .setBalloonText("[[task]]: [[open]] [[value]]"))
+                .setValueAxis(
+                        new ValueAxis()
+                                .setType(ValueAxisType.DATE)
+                                .setMinimum(7.0)
+                                .setMaximum(31.0))
                 .setChartScrollbar(new Scrollbar())
-                .setChartCursor(new Cursor().setValueBalloonsEnabled(false).setCursorAlpha(0.1)
-                        .setValueLineBalloonEnabled(true).setValueLineEnabled(true).setFullWidth(true))
+                .setChartCursor(
+                        new Cursor()
+                                .setValueBalloonsEnabled(false)
+                                .setCursorAlpha(0.1)
+                                .setValueLineBalloonEnabled(true)
+                                .setValueLineEnabled(true)
+                                .setFullWidth(true))
                 .setExport(new Export());
 
-        String json = chart.toString();
+        ChartSerializer serializer = getTestSerializer();
+
+        String json = serializer.serialize(chart);
         String expected = ChartSampleJsonHelper.readFile("GanttChart.json");
         Assert.assertEquals(null, expected, json);
     }
@@ -224,5 +328,16 @@ public class ChartsSerializationTest {
             segment.put("task", task);
         }
         return new MapDataItem(segment);
+    }
+
+    protected static class TestChartSerializer extends ChartSerializer {
+        public TestChartSerializer() {
+            super(o -> "");
+        }
+
+        @Override
+        protected ChartDataItemsSerializer getDataItemsSerializer() {
+            return new ChartDataItemsSerializer();
+        }
     }
 }

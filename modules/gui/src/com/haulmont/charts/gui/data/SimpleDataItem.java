@@ -5,27 +5,23 @@
 
 package com.haulmont.charts.gui.data;
 
-import com.haulmont.chile.core.datatypes.impl.EnumClass;
-import com.haulmont.chile.core.model.Instance;
-import com.haulmont.chile.core.model.utils.InstanceUtils;
 import com.haulmont.chile.core.model.utils.MethodsCache;
-import com.haulmont.cuba.core.entity.Entity;
-import com.haulmont.cuba.core.global.AppBeans;
-import com.haulmont.cuba.core.global.Messages;
 
-import java.util.*;
+import java.util.ArrayList;
+import java.util.Collection;
+import java.util.List;
+import java.util.Map;
 import java.util.concurrent.ConcurrentHashMap;
 
 /**
  * Data item, which contains an instance of any class.
  */
-public class SimpleDataItem implements DataItem {
+public class SimpleDataItem implements DataItem, DataItem.HasId {
 
     private static final long serialVersionUID = -283289357315588981L;
 
     private static transient Map<Class, MethodsCache> methodCacheMap = new ConcurrentHashMap<>();
 
-    protected Messages messages = AppBeans.get(Messages.NAME);
     protected Object item;
 
     public SimpleDataItem(Object item) {
@@ -56,11 +52,6 @@ public class SimpleDataItem implements DataItem {
      *
      * @param property name of property
      * @return the value of a property with the specified property name.
-     * If property value is an instance of {@link com.haulmont.cuba.core.entity.Entity},
-     * then method returns entity instance name by
-     * {@link InstanceUtils#getInstanceName(com.haulmont.chile.core.model.Instance)}.
-     * If property value is an instance of {@link EnumClass},
-     * then method returns localized value for enum constant.
      * If property value is an instance of {@link Collection},
      * then method returns {@link List} of {@link SimpleDataItem}.
      * Otherwise method returns getter value
@@ -69,12 +60,6 @@ public class SimpleDataItem implements DataItem {
     public Object getValue(String property) {
         Object value = getMethodsCache().invokeGetter(item, property);
 
-        if (value instanceof Entity) {
-            return InstanceUtils.getInstanceName((Instance) value);
-        }
-        if (value instanceof EnumClass) {
-            return messages.getMessage((Enum) value);
-        }
         if (value instanceof Collection) {
             List<DataItem> items = new ArrayList<>();
 
@@ -89,5 +74,10 @@ public class SimpleDataItem implements DataItem {
     protected MethodsCache getMethodsCache() {
         Class cls = item.getClass();
         return methodCacheMap.computeIfAbsent(cls, k -> new MethodsCache(cls));
+    }
+
+    @Override
+    public Object getId() {
+        return item;
     }
 }

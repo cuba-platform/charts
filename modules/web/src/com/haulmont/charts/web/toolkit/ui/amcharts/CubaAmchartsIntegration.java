@@ -6,8 +6,8 @@
 package com.haulmont.charts.web.toolkit.ui.amcharts;
 
 import com.google.gson.*;
-import com.haulmont.charts.gui.amcharts.model.AbstractChartObject;
 import com.haulmont.charts.gui.amcharts.model.Settings;
+import com.haulmont.charts.gui.amcharts.model.gson.ChartSettingsSerializer;
 import com.haulmont.charts.web.toolkit.ui.client.amcharts.CubaAmchartsIntegrationState;
 import com.vaadin.annotations.JavaScript;
 import com.vaadin.annotations.StyleSheet;
@@ -41,9 +41,16 @@ import java.util.*;
 })
 public class CubaAmchartsIntegration extends AbstractExtension {
 
-    private Settings settings;
+    protected final static Gson gson = new Gson();
 
-    private Locale locale;
+    protected Settings settings;
+    protected ChartSettingsSerializer serializer;
+
+    protected Locale locale;
+
+    public CubaAmchartsIntegration() {
+        serializer = new ChartSettingsSerializer();
+    }
 
     public Settings getSettings() {
         return settings;
@@ -73,7 +80,7 @@ public class CubaAmchartsIntegration extends AbstractExtension {
 
         String jsonLocaleMap = getState(false).chartMessages.get(localeCode);
         //noinspection unchecked
-        Map<String, String> localeMap = new Gson().fromJson(jsonLocaleMap, Map.class);
+        Map<String, String> localeMap = gson.fromJson(jsonLocaleMap, Map.class);
         return Collections.unmodifiableMap(localeMap);
     }
 
@@ -98,7 +105,7 @@ public class CubaAmchartsIntegration extends AbstractExtension {
             jsonLocaleMap.add(localeEntry.getKey(), element);
         }
 
-        getState().chartMessages.put(localeCode, AbstractChartObject.getSharedGson().toJson(jsonLocaleMap));
+        getState().chartMessages.put(localeCode, gson.toJson(jsonLocaleMap));
     }
 
     public Map<String, String> getExportMessages(String localeCode) {
@@ -122,7 +129,7 @@ public class CubaAmchartsIntegration extends AbstractExtension {
             jsonLocaleMap.addProperty(localeEntry.getKey(), localeEntry.getValue());
         }
 
-        getState().exportMessages.put(localeCode, AbstractChartObject.getSharedGson().toJson(jsonLocaleMap));
+        getState().exportMessages.put(localeCode, gson.toJson(jsonLocaleMap));
     }
 
     @Override
@@ -140,7 +147,7 @@ public class CubaAmchartsIntegration extends AbstractExtension {
         super.beforeClientResponse(initial);
 
         if (settings != null) {
-            getState().json = settings.toString();
+            getState().json = serializer.serialize(settings);
         }
     }
 

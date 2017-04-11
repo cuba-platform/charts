@@ -13,11 +13,19 @@ public class JsSliceClickEvent extends JavaScriptObject {
     protected JsSliceClickEvent() {
     }
 
-    public final native String getSliceId() /*-{
+    public final native String getItemKey() /*-{
         if (this.dataItem && this.dataItem.dataContext) {
-            return "" + this.dataItem.dataContext.id;
+            //noinspection JSUnresolvedVariable
+            return this.dataItem.dataContext.$k;
         }
         return null;
+    }-*/;
+
+    public final native int getItemIndex() /*-{
+        if (this.dataItem && this.dataItem.index) {
+            return this.dataItem.index;
+        }
+        return -1;
     }-*/;
 
     public final native NativeEvent getMouseEvent() /*-{

@@ -5,15 +5,16 @@
 
 package com.haulmont.charts.gui.amcharts.model.gson;
 
+import com.google.gson.Gson;
 import com.google.gson.JsonElement;
 import com.google.gson.JsonSerializationContext;
-import com.haulmont.charts.gui.amcharts.model.AbstractChartObject;
 import com.haulmont.charts.gui.amcharts.model.charts.ChartModelImpl;
+import com.haulmont.charts.gui.data.DataItem;
 
 import java.lang.reflect.Type;
 import java.util.ArrayList;
-import java.util.LinkedHashSet;
 import java.util.List;
+import java.util.function.Function;
 
 public class ChartJsonSerializationContext implements JsonSerializationContext {
 
@@ -21,30 +22,41 @@ public class ChartJsonSerializationContext implements JsonSerializationContext {
 
     public static final String DEFAULT_DATE_FORMAT = "yyyy-MM-dd HH:mm:ss:S";
 
+    protected Gson gson;
     protected ChartModelImpl chartModel;
+    protected Function<DataItem, String> itemKeyMapper;
 
-    public ChartJsonSerializationContext(ChartModelImpl chartModel) {
+    public ChartJsonSerializationContext(Gson gson, ChartModelImpl chartModel, Function<DataItem, String> itemKeyMapper) {
+        this.gson = gson;
         this.chartModel = chartModel;
+        this.itemKeyMapper = itemKeyMapper;
     }
 
     @Override
     public JsonElement serialize(Object src) {
-        return AbstractChartObject.getSharedGson().toJsonTree(src);
+        return gson.toJsonTree(src);
     }
 
     @Override
     public JsonElement serialize(Object src, Type typeOfSrc) {
-        return AbstractChartObject.getSharedGson().toJsonTree(src, typeOfSrc);
+        return gson.toJsonTree(src, typeOfSrc);
     }
 
     public ChartModelImpl getChartModel() {
         return chartModel;
     }
 
+    public Function<DataItem, String> getItemKeyMapper() {
+        return itemKeyMapper;
+    }
+
     public List<String> getProperties() {
         List<String> properties = new ArrayList<>();
-        properties.add("id");
-        properties.addAll(new LinkedHashSet<>(chartModel.getWiredFields()));
+        for (String property : chartModel.getWiredFields()) {
+            if (!properties.contains(property)) {
+                properties.add(property);
+            }
+        }
         return properties;
     }
 }

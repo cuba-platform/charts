@@ -38,7 +38,7 @@ public class CubaAmchartsJsOverlay {
     protected native void updatePoints(JavaScriptObject chart, JavaScriptObject src) /*-{
         (function () {
             var srcAdd = src["add"];
-            if (srcAdd != null) {
+            if (srcAdd) {
                 for (var i = 0; i < srcAdd.length; i++) {
                     chart.dataProvider.push(srcAdd[i]);
                 }
@@ -47,10 +47,10 @@ public class CubaAmchartsJsOverlay {
 
         (function () {
             var srcRemove = src["remove"];
-            if (srcRemove != null) {
+            if (srcRemove) {
                 for (var i = 0; i < srcRemove.length; i++) {
                     for (var j = 0; j < chart.dataProvider.length; j++) {
-                        if (chart.dataProvider[j].id == srcRemove[i].id) {
+                        if (chart.dataProvider[j].$k == srcRemove[i].$k) {
                             chart.dataProvider.splice(j, 1);
                             break;
                         }
@@ -61,10 +61,10 @@ public class CubaAmchartsJsOverlay {
 
         (function () {
             var srcUpdate = src["update"];
-            if (srcUpdate != null) {
+            if (srcUpdate) {
                 for (var i = 0; i < srcUpdate.length; i++) {
                     for (var j = 0; j < chart.dataProvider.length; j++) {
-                        if (chart.dataProvider[j].id == srcUpdate[i].id) {
+                        if (chart.dataProvider[j].$k == srcUpdate[i].$k) {
                             chart.dataProvider[j] = srcUpdate[i];
                             break;
                         }
@@ -72,8 +72,6 @@ public class CubaAmchartsJsOverlay {
                 }
             }
         })();
-
-        $wnd.console.log(chart.dataProvider);
 
         chart.validateData();
     }-*/;
@@ -90,7 +88,7 @@ public class CubaAmchartsJsOverlay {
                 chart.cursorPosition = {"x": event.x, "y": event.y};
             });
         }
-        return  chart;
+        return chart;
     }-*/;
 
     public void updateSize() {
@@ -186,7 +184,7 @@ public class CubaAmchartsJsOverlay {
 
     protected static native void addSliceClickHandler(JavaScriptObject chart, Consumer<JsSliceClickEvent> handler) /*-{
         chart.addListener("clickSlice", $entry(function (event) {
-            if (event.event.which == 1) {
+            if (event.event.which === 1) {
                 handler.@java.util.function.Consumer::accept(*)(event);
             }
         }));

@@ -5,13 +5,8 @@
 
 package com.haulmont.charts.gui.amcharts.model.charts;
 
-import com.google.gson.JsonArray;
-import com.google.gson.JsonElement;
-import com.google.gson.JsonObject;
 import com.google.gson.annotations.Expose;
 import com.haulmont.charts.gui.amcharts.model.*;
-import com.haulmont.charts.gui.amcharts.model.gson.ChartJsonSerializationContext;
-import com.haulmont.charts.gui.amcharts.model.gson.DataProviderSerializer;
 import org.apache.commons.collections.CollectionUtils;
 
 import java.util.ArrayList;
@@ -560,30 +555,6 @@ public class StockChartGroup extends ChartModelImpl implements StockChartModel<S
             }
         }
         return wiredFields;
-    }
-
-    @Override
-    public String toString() {
-        JsonElement jsonTree = chartGson.toJsonTree(this);
-
-        if (CollectionUtils.isNotEmpty(dataSets)) {
-            DataProviderSerializer serializer = new DataProviderSerializer();
-            ChartJsonSerializationContext context = new ChartJsonSerializationContext(this);
-
-            JsonArray jsonDataSets = (JsonArray) jsonTree.getAsJsonObject().get("dataSets");
-            for (JsonElement dataSetElement : jsonDataSets) {
-                JsonObject dataSetObject = (JsonObject) dataSetElement;
-                String id = dataSetObject.get("id").getAsString();
-                DataSet dataSet = getDataSet(id);
-                if (dataSet != null && dataSet.getDataProvider() != null) {
-                    JsonElement dataProviderElement = serializer.serialize(dataSet.getDataProvider(),
-                            dataSet.getDataProvider().getClass(), context);
-                    dataSetObject.add("dataProvider", dataProviderElement);
-                }
-            }
-        }
-
-        return chartGson.toJson(jsonTree);
     }
 
     @Override

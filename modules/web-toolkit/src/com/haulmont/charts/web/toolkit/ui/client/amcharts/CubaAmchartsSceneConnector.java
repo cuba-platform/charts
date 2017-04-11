@@ -38,7 +38,7 @@ public class CubaAmchartsSceneConnector extends AbstractComponentConnector {
             }
 
             @Override
-            public void updatePoints(final String json) {
+            public void updatePoints(String json) {
                 updateChart(json);
             }
 
@@ -283,22 +283,22 @@ public class CubaAmchartsSceneConnector extends AbstractComponentConnector {
     protected void bindLegendEvents(AmchartsEvents amchartsEvents, Set<String> events) {
         if (events.contains(CubaAmchartsSceneState.LEGEND_LABEL_CLICK_EVENT)) {
             amchartsEvents.setLegendLabelClickHandler(event ->
-                    rpc.onLegendLabelClick(event.getItemId())
+                    rpc.onLegendLabelClick(event.getItemIndex(), event.getItemKey())
             );
         }
         if (events.contains(CubaAmchartsSceneState.LEGEND_MARKER_CLICK_EVENT)) {
             amchartsEvents.setLegendMarkerClickHandler(event ->
-                    rpc.onLegendMarkerClick(event.getItemId())
+                    rpc.onLegendMarkerClick(event.getItemIndex(), event.getItemKey())
             );
         }
         if (events.contains(CubaAmchartsSceneState.LEGEND_ITEM_SHOW_EVENT)) {
             amchartsEvents.setLegendItemShowHandler(event ->
-                    rpc.onLegendItemShow(event.getItemId())
+                    rpc.onLegendItemShow(event.getItemIndex(), event.getItemKey())
             );
         }
         if (events.contains(CubaAmchartsSceneState.LEGEND_ITEM_HIDE_EVENT)) {
             amchartsEvents.setLegendItemHideHandler(event ->
-                    rpc.onLegendItemHide(event.getItemId())
+                    rpc.onLegendItemHide(event.getItemIndex(), event.getItemKey())
             );
         }
     }
@@ -308,7 +308,7 @@ public class CubaAmchartsSceneConnector extends AbstractComponentConnector {
             amchartsEvents.setSliceClickHandler(event -> {
                 NativeEvent me = event.getMouseEvent();
 
-                rpc.onSliceClick(event.getSliceId(), MouseHelper.getX(me), MouseHelper.getY(me),
+                rpc.onSliceClick(event.getItemIndex(), event.getItemKey(), MouseHelper.getX(me), MouseHelper.getY(me),
                         me.getClientX(), me.getClientY());
             });
         }
@@ -316,15 +316,15 @@ public class CubaAmchartsSceneConnector extends AbstractComponentConnector {
             amchartsEvents.setSliceRightClickHandler(event -> {
                 NativeEvent me = event.getMouseEvent();
 
-                rpc.onSliceRightClick(event.getSliceId(), MouseHelper.getX(me), MouseHelper.getY(me),
+                rpc.onSliceRightClick(event.getItemIndex(), event.getItemKey(), MouseHelper.getX(me), MouseHelper.getY(me),
                         me.getClientX(), me.getClientY());
             });
         }
         if (events.contains(CubaAmchartsSceneState.SLICE_PULL_IN_EVENT)) {
-            amchartsEvents.setSlicePullInHandler(event -> rpc.onSlicePullIn(event.getSliceId()));
+            amchartsEvents.setSlicePullInHandler(event -> rpc.onSlicePullIn(event.getItemKey()));
         }
         if (events.contains(CubaAmchartsSceneState.SLICE_PULL_OUT_EVENT)) {
-            amchartsEvents.setSlicePullOutHandler(event -> rpc.onSlicePullOut(event.getSliceId()));
+            amchartsEvents.setSlicePullOutHandler(event -> rpc.onSlicePullOut(event.getItemKey()));
         }
     }
 
@@ -351,7 +351,7 @@ public class CubaAmchartsSceneConnector extends AbstractComponentConnector {
             amchartsEvents.setGraphItemClickHandler(event -> {
                 NativeEvent me = event.getMouseEvent();
 
-                rpc.onGraphItemClick(event.getGraphId(), event.getIndex(), event.getItemId(),
+                rpc.onGraphItemClick(event.getGraphId(), event.getIndex(), event.getItemKey(),
                         MouseHelper.getX(me), MouseHelper.getY(me),
                         me.getClientX(), me.getClientY());
             });
@@ -360,7 +360,7 @@ public class CubaAmchartsSceneConnector extends AbstractComponentConnector {
             amchartsEvents.setGraphItemRightClickHandler(event -> {
                 NativeEvent me = event.getMouseEvent();
 
-                rpc.onGraphItemRightClick(event.getGraphId(), event.getIndex(), event.getItemId(),
+                rpc.onGraphItemRightClick(event.getGraphId(), event.getIndex(), event.getItemKey(),
                         MouseHelper.getX(me), MouseHelper.getY(me),
                         me.getClientX(), me.getClientY());
             });

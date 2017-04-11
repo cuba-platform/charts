@@ -23,17 +23,18 @@ public class AmStockChartConfig extends JavaScriptObject {
         JsUtils.activateFunctions(configObject, false);
         parseConfigDateProperties(configObject);
         copyFromDataSets(configObject);
+        assignDataSetForItems(configObject);
         if (BrowserInfo.get().isIE() && BrowserInfo.get().getIEVersion() < 10) {
             disableExportFeatures(configObject);
         }
         return configObject;
     }
 
-    private static native String getDefs(JavaScriptObject config) /*-{
+    protected static native String getDefs(JavaScriptObject config) /*-{
         return config.defs;
     }-*/;
 
-    private static native void setDefs(JavaScriptObject config, JavaScriptObject defsObject) /*-{
+    protected static native void setDefs(JavaScriptObject config, JavaScriptObject defsObject) /*-{
         config.defs = defsObject;
     }-*/;
 
@@ -44,11 +45,25 @@ public class AmStockChartConfig extends JavaScriptObject {
         }
     }
 
-    private static native void disableExportFeatures(JavaScriptObject config) /*-{
+    // required for proper event handling
+    protected static native void assignDataSetForItems(JavaScriptObject config) /*-{
+        if (config.dataSets) {
+            for (var i = 0; i < config.dataSets.length; i++) {
+                var dataSet = config.dataSets[i];
+                if (dataSet.dataProvider) {
+                    for (var j = 0; j < dataSet.dataProvider.length; j++) {
+                        dataSet.dataProvider[j].$d = dataSet.id;
+                    }
+                }
+            }
+        }
+    }-*/;
+
+    protected static native void disableExportFeatures(JavaScriptObject config) /*-{
         config['export'] = undefined;
     }-*/;
 
-    private static native void parseConfigDateProperties(JavaScriptObject config) /*-{
+    protected static native void parseConfigDateProperties(JavaScriptObject config) /*-{
         var DEFAULT_JS_DATE_FORMAT = "YYYY-MM-DD JJ:NN:SS:QQQ";
 
         var convertStringToDate = function (object, property) {
@@ -137,7 +152,7 @@ public class AmStockChartConfig extends JavaScriptObject {
         })();
     }-*/;
 
-    private static native void copyFromDataSets(JavaScriptObject config) /*-{
+    protected static native void copyFromDataSets(JavaScriptObject config) /*-{
         if (config.dataSets) {
             var findDataSetById = function(id) {
                 for (var i = 0; i < config.dataSets.length; i++) {

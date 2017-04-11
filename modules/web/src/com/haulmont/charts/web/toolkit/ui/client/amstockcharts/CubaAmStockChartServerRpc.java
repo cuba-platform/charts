@@ -38,15 +38,15 @@ public interface CubaAmStockChartServerRpc extends ServerRpc {
 
     void onStockGraphRollOver(String panelId, String graphId, int x, int y, int absoluteX, int absoluteY);
 
-    void onStockGraphItemClick(String panelId, String graphId, int itemIndex, String itemId,
-                          int x, int y, int absoluteX, int absoluteY);
+    void onStockGraphItemClick(String panelId, String graphId, int itemIndex, String dataSetId, String itemKey,
+                               int x, int y, int absoluteX, int absoluteY);
 
-    void onStockGraphItemRightClick(String panelId, String graphId, int itemIndex, String itemId,
-                          int x, int y, int absoluteX, int absoluteY);
+    void onStockGraphItemRightClick(String panelId, String graphId, int itemIndex, String dataSetId, String itemKey,
+                                    int x, int y, int absoluteX, int absoluteY);
 
-    void onStockGraphItemRollOut(String panelId, String graphId, int itemIndex, String itemId,
-                            int x, int y, int absoluteX, int absoluteY);
+    void onStockGraphItemRollOut(String panelId, String graphId, int itemIndex, String dataSetId, String itemKey,
+                                 int x, int y, int absoluteX, int absoluteY);
 
-    void onStockGraphItemRollOver(String panelId, String graphId, int itemIndex, String itemId,
-                             int x, int y, int absoluteX, int absoluteY);
+    void onStockGraphItemRollOver(String panelId, String graphId, int itemIndex, String dataSetId, String itemKey,
+                                  int x, int y, int absoluteX, int absoluteY);
 }

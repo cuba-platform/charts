@@ -547,7 +547,7 @@ public abstract class WebSlicedChart<T extends SlicedChart,
         getEventRouter().addListener(SliceClickListener.class, listener);
         if (sliceClickHandler == null) {
             sliceClickHandler = e -> {
-                SliceClickEvent event = new SliceClickEvent(getEventItem(e.getSliceId()), e.getX(), e.getY(),
+                SliceClickEvent event = new SliceClickEvent(e.getDataItem(), e.getX(), e.getY(),
                         e.getAbsoluteX(), e.getAbsoluteY());
                 getEventRouter().fireEvent(SliceClickListener.class, SliceClickListener::onClick, event);
             };
@@ -569,7 +569,7 @@ public abstract class WebSlicedChart<T extends SlicedChart,
         getEventRouter().addListener(SliceRightClickListener.class, listener);
         if (sliceRightClickHandler == null) {
             sliceRightClickHandler = e -> {
-                SliceRightClickEvent event = new SliceRightClickEvent(getEventItem(e.getSliceId()), e.getX(), e.getY(),
+                SliceRightClickEvent event = new SliceRightClickEvent(e.getDataItem(), e.getX(), e.getY(),
                         e.getAbsoluteX(), e.getAbsoluteY());
                 getEventRouter().fireEvent(SliceRightClickListener.class, SliceRightClickListener::onRightClick, event);
             };
@@ -591,7 +591,7 @@ public abstract class WebSlicedChart<T extends SlicedChart,
         getEventRouter().addListener(SlicePullInListener.class, listener);
         if (slicePullInHandler == null) {
             slicePullInHandler = e -> {
-                SlicePullInEvent event = new SlicePullInEvent(getEventItem(e.getSliceId()));
+                SlicePullInEvent event = new SlicePullInEvent(e.getDataItem());
                 getEventRouter().fireEvent(SlicePullInListener.class, SlicePullInListener::onPullIn, event);
             };
             component.addSlicePullInListener(slicePullInHandler);
@@ -612,7 +612,7 @@ public abstract class WebSlicedChart<T extends SlicedChart,
         getEventRouter().addListener(SlicePullOutListener.class, listener);
         if (slicePullOutHandler == null) {
             slicePullOutHandler = e -> {
-                SlicePullOutEvent event = new SlicePullOutEvent(getEventItem(e.getSliceId()));
+                SlicePullOutEvent event = new SlicePullOutEvent(e.getDataItem());
                 getEventRouter().fireEvent(SlicePullOutListener.class, SlicePullOutListener::onPullOut, event);
             };
             component.addSlicePullOutListener(slicePullOutHandler);

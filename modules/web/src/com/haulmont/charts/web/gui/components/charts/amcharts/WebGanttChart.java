@@ -9,19 +9,7 @@ import com.haulmont.charts.gui.amcharts.model.DatePeriod;
 import com.haulmont.charts.gui.amcharts.model.Graph;
 import com.haulmont.charts.gui.amcharts.model.ValueAxis;
 import com.haulmont.charts.gui.components.charts.GanttChart;
-import com.haulmont.chile.core.datatypes.Datatype;
-import com.haulmont.chile.core.model.MetaClass;
-import com.haulmont.chile.core.model.MetaProperty;
-import com.haulmont.cuba.core.entity.Entity;
-import com.haulmont.cuba.core.global.AppBeans;
-import com.haulmont.cuba.core.global.Metadata;
-import com.haulmont.cuba.core.global.UuidProvider;
-import org.apache.commons.collections.CollectionUtils;
-import org.apache.commons.lang.StringUtils;
 
-import javax.annotation.Nullable;
-import java.text.ParseException;
-import java.util.Collection;
 import java.util.Date;
 import java.util.List;
 
@@ -31,78 +19,6 @@ public class WebGanttChart extends WebSeriesBasedChart<GanttChart, com.haulmont.
     @Override
     protected com.haulmont.charts.gui.amcharts.model.charts.GanttChart createChartConfiguration() {
         return new com.haulmont.charts.gui.amcharts.model.charts.GanttChart();
-    }
-
-    @Override
-    protected Entity getEventItem(String itemIdString) {
-        if (datasource != null && StringUtils.isNotEmpty(itemIdString)) {
-            return getGanttChartEventItem(itemIdString);
-        }
-        return null;
-    }
-
-    protected Entity getGanttChartEventItem(String itemIdString) {
-        com.haulmont.charts.gui.amcharts.model.charts.GanttChart ganttChart = getModel();
-
-        String[] ids = itemIdString.split(":");
-        if (ids.length != 2) {
-            return null;
-        }
-
-        Object categoryId = getItemId(datasource, ids[0]);
-        if (categoryId == null) {
-            return null;
-        }
-
-        //noinspection unchecked
-        Entity category = datasource.getItem(categoryId);
-        if (category == null) {
-            return null;
-        }
-
-        Collection segments = category.getValue(ganttChart.getSegmentsField());
-        if (segments == null) {
-            return null;
-        }
-
-        Object segmentId = getItemId(segments, ids[1]);
-        if (segmentId == null) {
-            return null;
-        }
-
-        for (Object segment : segments) {
-            if (segment instanceof Entity && segmentId.equals(((Entity) segment).getId())) {
-                return (Entity) segment;
-            }
-        }
-
-        return null;
-    }
-
-    @Nullable
-    protected Object getItemId(Collection items, String itemIdString) {
-        if (CollectionUtils.isNotEmpty(items)) {
-            Object obj = items.iterator().next();
-            if (obj instanceof Entity) {
-                Entity entity = (Entity) obj;
-
-                Metadata metadata = AppBeans.get(Metadata.class);
-                MetaClass metaClass = metadata.getClassNN(entity.getClass());
-                if (metadata.getTools().isTransient(metaClass)) {
-                    return UuidProvider.fromString(itemIdString);
-                }
-                MetaProperty pkProp = metadata.getTools().getPrimaryKeyProperty(metaClass);
-                if (pkProp != null) {
-                    Datatype<Object> datatype = pkProp.getRange().asDatatype();
-                    try {
-                        return datatype.parse(itemIdString);
-                    } catch (ParseException e) {
-                        throw new RuntimeException("Error parsing item ID", e);
-                    }
-                }
-            }
-        }
-        return null;
     }
 
     @Override

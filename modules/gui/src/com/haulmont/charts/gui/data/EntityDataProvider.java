@@ -82,11 +82,21 @@ public class EntityDataProvider implements DataProvider {
         return items;
     }
 
+    @Override
+    public DataItem getItem(Object id) {
+        @SuppressWarnings("unchecked")
+        Entity item = datasource.getItem(id);
+        if (item == null) {
+            return null;
+        }
+        return new EntityDataItem(item);
+    }
+
     /**
      * Unsupported. Always throws an {@link UnsupportedOperationException}.
      * Use datasource for changing data items of EntityDataProvider
      *
-     * @throws UnsupportedOperationException
+     * @throws UnsupportedOperationException use datasource for changing data items of EntityDataProvider
      */
     @Override
     public void addItem(DataItem item) {
@@ -97,7 +107,7 @@ public class EntityDataProvider implements DataProvider {
      * Unsupported. Always throws an {@link UnsupportedOperationException}.
      * Use datasource for changing data items of EntityDataProvider
      *
-     * @throws UnsupportedOperationException
+     * @throws UnsupportedOperationException use datasource for changing data items of EntityDataProvider
      */
     @Override
     public void addItems(Collection<DataItem> items) {
@@ -108,7 +118,7 @@ public class EntityDataProvider implements DataProvider {
      * Unsupported. Always throws an {@link UnsupportedOperationException}.
      * Use datasource for changing data items of EntityDataProvider
      *
-     * @throws UnsupportedOperationException
+     * @throws UnsupportedOperationException use datasource for changing data items of EntityDataProvider
      */
     @Override
     public void updateItem(DataItem item) {
@@ -119,7 +129,7 @@ public class EntityDataProvider implements DataProvider {
      * Unsupported. Always throws an {@link UnsupportedOperationException}.
      * Use datasource for changing data items of EntityDataProvider
      *
-     * @throws UnsupportedOperationException
+     * @throws UnsupportedOperationException use datasource for changing data items of EntityDataProvider
      */
     @Override
     public void removeItem(DataItem item) {

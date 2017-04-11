@@ -14,27 +14,24 @@ import com.haulmont.charts.gui.data.EntityDataProvider;
 import com.haulmont.charts.web.gui.ChartLocaleHelper;
 import com.haulmont.charts.web.toolkit.ui.amcharts.CubaAmchartsIntegration;
 import com.haulmont.charts.web.toolkit.ui.amcharts.CubaAmchartsScene;
-import com.haulmont.chile.core.datatypes.Datatype;
 import com.haulmont.chile.core.datatypes.Datatypes;
 import com.haulmont.chile.core.datatypes.FormatStrings;
-import com.haulmont.chile.core.model.MetaProperty;
-import com.haulmont.cuba.core.entity.Entity;
-import com.haulmont.cuba.core.global.*;
+import com.haulmont.cuba.core.global.AppBeans;
+import com.haulmont.cuba.core.global.Messages;
+import com.haulmont.cuba.core.global.UserSessionSource;
 import com.haulmont.cuba.gui.data.CollectionDatasource;
 import com.haulmont.cuba.gui.data.impl.CollectionDsHelper;
 import com.haulmont.cuba.web.gui.components.WebAbstractComponent;
 import org.apache.commons.lang.ObjectUtils;
-import org.apache.commons.lang.StringUtils;
 
-import javax.annotation.Nullable;
 import java.text.DecimalFormatSymbols;
-import java.text.ParseException;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Locale;
 
 @SuppressWarnings("unchecked")
-public abstract class WebChart<T extends Chart, M extends AbstractChart> extends WebAbstractComponent<CubaAmchartsScene> implements Chart<T> {
+public abstract class WebChart<T extends Chart, M extends AbstractChart>
+        extends WebAbstractComponent<CubaAmchartsScene> implements Chart<T> {
 
     protected Messages messages = AppBeans.get(Messages.class);
 
@@ -156,32 +153,6 @@ public abstract class WebChart<T extends Chart, M extends AbstractChart> extends
     @Override
     public void repaint() {
         component.drawChart();
-    }
-
-    protected Entity getEventItem(String itemIdString) {
-        if (datasource != null && StringUtils.isNotEmpty(itemIdString)) {
-            //noinspection unchecked
-            return datasource.getItem(getItemId(datasource, itemIdString));
-        }
-        return null;
-    }
-
-    @Nullable
-    protected Object getItemId(CollectionDatasource datasource, String itemIdString) {
-        Metadata metadata = AppBeans.get(Metadata.class);
-        if (metadata.getTools().isTransient(datasource.getMetaClass())) {
-            return UuidProvider.fromString(itemIdString);
-        }
-        MetaProperty pkProp = metadata.getTools().getPrimaryKeyProperty(datasource.getMetaClass());
-        if (pkProp != null) {
-            Datatype<Object> datatype = pkProp.getRange().asDatatype();
-            try {
-                return datatype.parse(itemIdString);
-            } catch (ParseException e) {
-                throw new RuntimeException("Error parsing item ID", e);
-            }
-        }
-        return null;
     }
 
     @Override
@@ -780,7 +751,7 @@ public abstract class WebChart<T extends Chart, M extends AbstractChart> extends
         getEventRouter().addListener(LegendItemHideListener.class, listener);
         if (legendItemHideHandler == null) {
             legendItemHideHandler = e -> {
-                LegendItemHideEvent event = new LegendItemHideEvent(getEventItem(e.getItemId()));
+                LegendItemHideEvent event = new LegendItemHideEvent(this, e.getItemIndex(), e.getDataItem());
                 getEventRouter().fireEvent(LegendItemHideListener.class, LegendItemHideListener::onHide, event);
             };
             component.addLegendItemHideListener(legendItemHideHandler);
@@ -801,7 +772,7 @@ public abstract class WebChart<T extends Chart, M extends AbstractChart> extends
         getEventRouter().addListener(LegendItemShowListener.class, listener);
         if (legendItemShowHandler == null) {
             legendItemShowHandler = e -> {
-                LegendItemShowEvent event = new LegendItemShowEvent(getEventItem(e.getItemId()));
+                LegendItemShowEvent event = new LegendItemShowEvent(this, e.getItemIndex(), e.getDataItem());
                 getEventRouter().fireEvent(LegendItemShowListener.class, LegendItemShowListener::onShow, event);
             };
             component.addLegendItemShowListener(legendItemShowHandler);
@@ -822,7 +793,7 @@ public abstract class WebChart<T extends Chart, M extends AbstractChart> extends
         getEventRouter().addListener(LegendItemClickListener.class, listener);
         if (legendLabelClickHandler == null) {
             legendLabelClickHandler = e -> {
-                LegendItemClickEvent event = new LegendItemClickEvent(getEventItem(e.getItemId()));
+                LegendItemClickEvent event = new LegendItemClickEvent(this, e.getItemIndex(), e.getDataItem());
                 getEventRouter().fireEvent(LegendItemClickListener.class, LegendItemClickListener::onClick, event);
             };
             component.addLegendLabelClickListener(legendLabelClickHandler);
@@ -843,7 +814,7 @@ public abstract class WebChart<T extends Chart, M extends AbstractChart> extends
         getEventRouter().addListener(LegendMarkerClickListener.class, listener);
         if (legendMarkerClickHandler == null) {
             legendMarkerClickHandler = e -> {
-                LegendMarkerClickEvent event = new LegendMarkerClickEvent(getEventItem(e.getItemId()));
+                LegendMarkerClickEvent event = new LegendMarkerClickEvent(this, e.getItemIndex(), e.getDataItem());
                 getEventRouter().fireEvent(LegendMarkerClickListener.class, LegendMarkerClickListener::onMarkerClick, event);
             };
             component.addLegendMarkerClickListener(legendMarkerClickHandler);

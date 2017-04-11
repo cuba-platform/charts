@@ -5,6 +5,7 @@
 
 package com.haulmont.charts.web.toolkit.ui.amcharts.events;
 
+import com.haulmont.charts.gui.data.DataItem;
 import com.haulmont.charts.web.toolkit.ui.amcharts.CubaAmStockChartScene;
 import com.vaadin.ui.Component;
 
@@ -18,14 +19,14 @@ public abstract class AbstractStockGraphItemEvent extends Component.Event {
     private final int absoluteX;
     private final int absoluteY;
 
-    private final String itemId;
+    private final DataItem dataItem;
     private final int itemIndex;
 
-    protected AbstractStockGraphItemEvent(CubaAmStockChartScene scene, String panelId, String graphId, String itemId, int itemIndex,
+    protected AbstractStockGraphItemEvent(CubaAmStockChartScene scene, String panelId, String graphId, DataItem dataItem, int itemIndex,
                                           int x, int y, int absoluteX, int absoluteY) {
         super(scene);
         this.panelId = panelId;
-        this.itemId = itemId;
+        this.dataItem = dataItem;
         this.itemIndex = itemIndex;
         this.absoluteY = absoluteY;
         this.absoluteX = absoluteX;
@@ -42,8 +43,8 @@ public abstract class AbstractStockGraphItemEvent extends Component.Event {
         return graphId;
     }
 
-    public String getItemId() {
-        return itemId;
+    public DataItem getDataItem() {
+        return dataItem;
     }
 
     public int getItemIndex() {

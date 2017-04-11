@@ -7,9 +7,10 @@ package com.haulmont.charts.gui.amcharts.model;
 
 import com.haulmont.charts.gui.amcharts.model.charts.StockChartGroup;
 import com.haulmont.charts.gui.amcharts.model.charts.StockPanel;
+import com.haulmont.charts.gui.amcharts.model.gson.StockChartSerializer;
 import com.haulmont.charts.gui.data.DataProvider;
 import com.haulmont.charts.gui.data.ListDataProvider;
-import com.haulmont.charts.gui.amcharts.model.data.MapDataItem;
+import com.haulmont.charts.gui.data.MapDataItem;
 import org.apache.commons.lang.time.DateUtils;
 import org.junit.Assert;
 import org.junit.Test;
@@ -80,7 +81,8 @@ public class StockChartSerializationTest {
                 .setDataSetSelector(new DataSetSelector().setPosition(Position.LEFT))
                 .setExport(new Export());
 
-        String json = stockChart.toString();
+        StockChartSerializer serializer = new StockChartSerializer();
+        String json = serializer.serialize(stockChart);
         String expected = ChartSampleJsonHelper.readFile("StockChartWithMultipleDataSets.json");
         Assert.assertEquals(null, expected, json);
     }
@@ -121,13 +123,15 @@ public class StockChartSerializationTest {
                 .setPanelsSettings(new PanelsSettings().setUsePrefixes(true))
                 .setExport(new Export().setPosition(ExportPosition.BOTTOM_RIGHT));
 
-        String json = stockChart.toString();
+        StockChartSerializer serializer = new StockChartSerializer();
+        String json = serializer.serialize(stockChart);
         String expected = ChartSampleJsonHelper.readFile("StockChartWithIntradayDatas.json");
         Assert.assertEquals(null, expected, json);
     }
 
     private void populateDataProvider(DataProvider dataProvider,
-                                      Long valueX1, Long valueX2, Long volumeX1, Long volumeX2, Long volumeX3) throws ParseException {
+                                      Long valueX1, Long valueX2, Long volumeX1, Long volumeX2, Long volumeX3)
+            throws ParseException {
         int daysCount = 10;
         Date date = df.parse("2012-01-01");
         date = getZeroTime(date);

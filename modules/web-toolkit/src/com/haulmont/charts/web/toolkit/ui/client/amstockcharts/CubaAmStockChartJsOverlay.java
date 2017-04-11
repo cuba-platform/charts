@@ -9,6 +9,8 @@ import com.google.gwt.core.client.JavaScriptObject;
 import com.google.gwt.dom.client.Element;
 import com.haulmont.charts.web.toolkit.ui.client.amstockcharts.events.*;
 
+import java.util.function.Consumer;
+
 public class CubaAmStockChartJsOverlay {
     private static boolean ready = false;
 
@@ -36,12 +38,13 @@ public class CubaAmStockChartJsOverlay {
         for (var i = 0; i < chart.dataSets.length; i++) {
             var dataSet = chart.dataSets[i];
             var dataSetObj = src[dataSet.id];
-            if (dataSetObj != null) {
+            if (dataSetObj) {
 
                 (function () {
                     var opp = 'add';
-                    if (dataSetObj[opp] != null) {
+                    if (dataSetObj[opp]) {
                         for (var i = 0; i < dataSetObj[opp].length; i++) {
+                            dataSetObj[opp][i].$d = dataSet.id;
                             dataSet.dataProvider.push(dataSetObj[opp][i]);
                         }
                     }
@@ -49,10 +52,10 @@ public class CubaAmStockChartJsOverlay {
 
                 (function () {
                     var opp = 'remove';
-                    if (dataSetObj[opp] != null) {
+                    if (dataSetObj[opp]) {
                         for (var i = 0; i < dataSetObj[opp].length; i++) {
                             for (var j = 0; j < dataSet.dataProvider.length; j++) {
-                                if (dataSet.dataProvider[j].id == dataSetObj[opp][i].id) {
+                                if (dataSet.dataProvider[j].$k == dataSetObj[opp][i].$k) {
                                     dataSet.dataProvider.splice(j, 1);
                                     break;
                                 }
@@ -63,11 +66,12 @@ public class CubaAmStockChartJsOverlay {
 
                 (function () {
                     var opp = 'update';
-                    if (dataSetObj[opp] != null) {
+                    if (dataSetObj[opp]) {
                         for (var i = 0; i < dataSetObj[opp].length; i++) {
                             for (var j = 0; j < dataSet.dataProvider.length; j++) {
-                                if (dataSet.dataProvider[j].id == dataSetObj[opp][i].id) {
+                                if (dataSet.dataProvider[j].$k == dataSetObj[opp][i].$k) {
                                     dataSet.dataProvider[j] = dataSetObj[opp][i];
+                                    dataSet.dataProvider[j].$d = dataSet.id;
                                     break;
                                 }
                             }
@@ -119,187 +123,187 @@ public class CubaAmStockChartJsOverlay {
         return event;
     }-*/;
 
-    public void addStockEventClickHandler(StockEventClickHandler handler) {
+    public void addStockEventClickHandler(Consumer<JsStockEventClickEvent> handler) {
         addStockEventClickHandler(chart, handler);
     }
 
-    private static native void addStockEventClickHandler(JavaScriptObject chart, StockEventClickHandler handler) /*-{
+    private static native void addStockEventClickHandler(JavaScriptObject chart, Consumer<JsStockEventClickEvent> handler) /*-{
         chart.addListener("clickStockEvent", $entry(function (event) {
-            handler.@com.haulmont.charts.web.toolkit.ui.client.amstockcharts.events.StockEventClickHandler::onClick(Lcom/haulmont/charts/web/toolkit/ui/client/amstockcharts/events/JsStockEventClickEvent;)(event);
+            handler.@java.util.function.Consumer::accept(*)(event);
         }));
     }-*/;
 
-    public void addStockEventRollOutHandler(StockEventRollOutHandler handler) {
+    public void addStockEventRollOutHandler(Consumer<JsStockEventRollOutEvent> handler) {
         addStockEventRollOutHandler(chart, handler);
     }
 
-    private static native void addStockEventRollOutHandler(JavaScriptObject chart, StockEventRollOutHandler handler) /*-{
+    private static native void addStockEventRollOutHandler(JavaScriptObject chart, Consumer<JsStockEventRollOutEvent> handler) /*-{
         chart.addListener("rollOutStockEvent", $entry(function (event) {
-            handler.@com.haulmont.charts.web.toolkit.ui.client.amstockcharts.events.StockEventRollOutHandler::onRollOut(Lcom/haulmont/charts/web/toolkit/ui/client/amstockcharts/events/JsStockEventRollOutEvent;)(event);
+            handler.@java.util.function.Consumer::accept(*)(event);
         }));
     }-*/;
 
-    public void addStockEventRollOverHandler(StockEventRollOverHandler handler) {
+    public void addStockEventRollOverHandler(Consumer<JsStockEventRollOverEvent> handler) {
         addStockEventRollOverHandler(chart, handler);
     }
 
-    private static native void addStockEventRollOverHandler(JavaScriptObject chart, StockEventRollOverHandler handler) /*-{
+    private static native void addStockEventRollOverHandler(JavaScriptObject chart, Consumer<JsStockEventRollOverEvent> handler) /*-{
         chart.addListener("rollOverStockEvent", $entry(function (event) {
-            handler.@com.haulmont.charts.web.toolkit.ui.client.amstockcharts.events.StockEventRollOverHandler::onRollOver(Lcom/haulmont/charts/web/toolkit/ui/client/amstockcharts/events/JsStockEventRollOverEvent;)(event);
+            handler.@java.util.function.Consumer::accept(*)(event);
         }));
     }-*/;
 
-    public void addStockPanelZoomHandler(StockPanelZoomHandler handler) {
+    public void addStockPanelZoomHandler(Consumer<JsStockPanelZoomEvent> handler) {
         addStockZoomHandler(chart, handler);
     }
 
-    private static native void addStockZoomHandler(JavaScriptObject chart, StockPanelZoomHandler handler) /*-{
+    private static native void addStockZoomHandler(JavaScriptObject chart, Consumer<JsStockPanelZoomEvent> handler) /*-{
         chart.addListener("zoomed", $entry(function (event) {
-            handler.@com.haulmont.charts.web.toolkit.ui.client.amstockcharts.events.StockPanelZoomHandler::onZoom(Lcom/haulmont/charts/web/toolkit/ui/client/amstockcharts/events/JsStockPanelZoomEvent;)(event);
+            handler.@java.util.function.Consumer::accept(*)(event);
         }));
     }-*/;
 
-    public void addPeriodSelectorChangeHandler(PeriodSelectorChangeHandler handler) {
+    public void addPeriodSelectorChangeHandler(Consumer<JsPeriodSelectorChangeEvent> handler) {
         addPeriodSelectorChangeHandler(chart, handler);
     }
 
-    private static native void addPeriodSelectorChangeHandler(JavaScriptObject chart, PeriodSelectorChangeHandler handler) /*-{
+    private static native void addPeriodSelectorChangeHandler(JavaScriptObject chart, Consumer<JsPeriodSelectorChangeEvent> handler) /*-{
         if (chart.periodSelector) {
             chart.periodSelector.addListener("changed", $entry(function (event) {
-                handler.@com.haulmont.charts.web.toolkit.ui.client.amstockcharts.events.PeriodSelectorChangeHandler::onChange(Lcom/haulmont/charts/web/toolkit/ui/client/amstockcharts/events/JsPeriodSelectorChangeEvent;)(event);
+                handler.@java.util.function.Consumer::accept(*)(event);
             }));
         }
     }-*/;
 
-    public void addDataSetSelectorCompareHandler(DataSetSelectorCompareHandler handler) {
+    public void addDataSetSelectorCompareHandler(Consumer<JsDataSetSelectorCompareEvent> handler) {
         addDataSetSelectorCompareHandler(chart, handler);
     }
 
-    private static native void addDataSetSelectorCompareHandler(JavaScriptObject chart, DataSetSelectorCompareHandler handler) /*-{
+    private static native void addDataSetSelectorCompareHandler(JavaScriptObject chart, Consumer<JsDataSetSelectorCompareEvent> handler) /*-{
         if (chart.dataSetSelector) {
             chart.dataSetSelector.addListener("dataSetCompared", $entry(function (event) {
-                handler.@com.haulmont.charts.web.toolkit.ui.client.amstockcharts.events.DataSetSelectorCompareHandler::onCompare(Lcom/haulmont/charts/web/toolkit/ui/client/amstockcharts/events/JsDataSetSelectorCompareEvent;)(event);
+                handler.@java.util.function.Consumer::accept(*)(event);
             }));
         }
     }-*/;
 
-    public void addDataSetSelectorSelectHandler(DataSetSelectorSelectHandler handler) {
+    public void addDataSetSelectorSelectHandler(Consumer<JsDataSetSelectorSelectEvent> handler) {
         addDataSetSelectorSelectHandler(chart, handler);
     }
 
-    private static native void addDataSetSelectorSelectHandler(JavaScriptObject chart, DataSetSelectorSelectHandler handler) /*-{
+    private static native void addDataSetSelectorSelectHandler(JavaScriptObject chart, Consumer<JsDataSetSelectorSelectEvent> handler) /*-{
         if (chart.dataSetSelector) {
             chart.dataSetSelector.addListener("dataSetSelected", $entry(function (event) {
-                handler.@com.haulmont.charts.web.toolkit.ui.client.amstockcharts.events.DataSetSelectorSelectHandler::onSelect(Lcom/haulmont/charts/web/toolkit/ui/client/amstockcharts/events/JsDataSetSelectorSelectEvent;)(event);
+                handler.@java.util.function.Consumer::accept(*)(event);
             }));
         }
     }-*/;
 
-    public void addDataSetSelectorUnCompareHandler(DataSetSelectorUnCompareHandler handler) {
+    public void addDataSetSelectorUnCompareHandler(Consumer<JsDataSetSelectorUnCompareEvent> handler) {
         addDataSetSelectorUnCompareHandler(chart, handler);
     }
 
-    private static native void addDataSetSelectorUnCompareHandler(JavaScriptObject chart, DataSetSelectorUnCompareHandler handler) /*-{
+    private static native void addDataSetSelectorUnCompareHandler(JavaScriptObject chart, Consumer<JsDataSetSelectorUnCompareEvent> handler) /*-{
         if (chart.dataSetSelector) {
             chart.dataSetSelector.addListener("dataSetUncompared", $entry(function (event) {
-                handler.@com.haulmont.charts.web.toolkit.ui.client.amstockcharts.events.DataSetSelectorUnCompareHandler::onUnCompare(Lcom/haulmont/charts/web/toolkit/ui/client/amstockcharts/events/JsDataSetSelectorUnCompareEvent;)(event);
+                handler.@java.util.function.Consumer::accept(*)(event);
             }));
         }
     }-*/;
 
-    public void addStockGraphClickHandler(StockGraphClickHandler handler) {
+    public void addStockGraphClickHandler(Consumer<JsStockGraphClickEvent> handler) {
         addStockGraphClickHandler(chart, handler);
     }
 
-    private static native void addStockGraphClickHandler(JavaScriptObject chart, StockGraphClickHandler handler) /*-{
+    private static native void addStockGraphClickHandler(JavaScriptObject chart, Consumer<JsStockGraphClickEvent> handler) /*-{
         if (chart.panels) {
             for (var i = 0; i < chart.panels.length; i++) {
                 chart.panels[i].addListener("clickGraph", $entry(function (event) {
-                    handler.@com.haulmont.charts.web.toolkit.ui.client.amstockcharts.events.StockGraphClickHandler::onClick(Lcom/haulmont/charts/web/toolkit/ui/client/amstockcharts/events/JsStockGraphClickEvent;)(event);
+                    handler.@java.util.function.Consumer::accept(*)(event);
                 }));
             }
         }
     }-*/;
 
-    public void addStockGraphRollOutHandler(StockGraphRollOutHandler handler) {
+    public void addStockGraphRollOutHandler(Consumer<JsStockGraphRollOutEvent> handler) {
         addStockGraphRollOutHandler(chart, handler);
     }
 
-    private static native void addStockGraphRollOutHandler(JavaScriptObject chart, StockGraphRollOutHandler handler) /*-{
+    private static native void addStockGraphRollOutHandler(JavaScriptObject chart, Consumer<JsStockGraphRollOutEvent> handler) /*-{
         if (chart.panels) {
             for (var i = 0; i < chart.panels.length; i++) {
                 chart.panels[i].addListener("rollOutGraph", $entry(function (event) {
-                    handler.@com.haulmont.charts.web.toolkit.ui.client.amstockcharts.events.StockGraphRollOutHandler::onRollOut(Lcom/haulmont/charts/web/toolkit/ui/client/amstockcharts/events/JsStockGraphRollOutEvent;)(event);
+                    handler.@java.util.function.Consumer::accept(*)(event);
                 }));
             }
         }
     }-*/;
 
-    public void addStockGraphRollOverHandler(StockGraphRollOverHandler handler) {
+    public void addStockGraphRollOverHandler(Consumer<JsStockGraphRollOverEvent> handler) {
         addStockGraphRollOverHandler(chart, handler);
     }
 
-    private static native void addStockGraphRollOverHandler(JavaScriptObject chart, StockGraphRollOverHandler handler) /*-{
+    private static native void addStockGraphRollOverHandler(JavaScriptObject chart, Consumer<JsStockGraphRollOverEvent> handler) /*-{
         if (chart.panels) {
             for (var i = 0; i < chart.panels.length; i++) {
                 chart.panels[i].addListener("rollOverGraph", $entry(function (event) {
-                    handler.@com.haulmont.charts.web.toolkit.ui.client.amstockcharts.events.StockGraphRollOverHandler::onRollOver(Lcom/haulmont/charts/web/toolkit/ui/client/amstockcharts/events/JsStockGraphRollOverEvent;)(event);
+                    handler.@java.util.function.Consumer::accept(*)(event);
                 }));
             }
         }
     }-*/;
 
-    public void addStockGraphItemClickHandler(StockGraphItemClickHandler handler) {
+    public void addStockGraphItemClickHandler(Consumer<JsStockGraphItemClickEvent> handler) {
         addStockGraphItemClickHandler(chart, handler);
     }
 
-    private static native void addStockGraphItemClickHandler(JavaScriptObject chart, StockGraphItemClickHandler handler) /*-{
+    private static native void addStockGraphItemClickHandler(JavaScriptObject chart, Consumer<JsStockGraphItemClickEvent> handler) /*-{
         if (chart.panels) {
             for (var i = 0; i < chart.panels.length; i++) {
                 chart.panels[i].addListener("clickGraphItem", $entry(function (event) {
-                    handler.@com.haulmont.charts.web.toolkit.ui.client.amstockcharts.events.StockGraphItemClickHandler::onClick(Lcom/haulmont/charts/web/toolkit/ui/client/amstockcharts/events/JsStockGraphItemClickEvent;)(event);
+                    handler.@java.util.function.Consumer::accept(*)(event);
                 }));
             }
         }
     }-*/;
 
-    public void addStockGraphItemRightClickHandler(StockGraphItemRightClickHandler handler) {
+    public void addStockGraphItemRightClickHandler(Consumer<JsStockGraphItemRightClickEvent> handler) {
         addStockGraphItemRightClickHandler(chart, handler);
     }
 
-    private static native void addStockGraphItemRightClickHandler(JavaScriptObject chart, StockGraphItemRightClickHandler handler) /*-{
+    private static native void addStockGraphItemRightClickHandler(JavaScriptObject chart, Consumer<JsStockGraphItemRightClickEvent> handler) /*-{
         if (chart.panels) {
             for (var i = 0; i < chart.panels.length; i++) {
                 chart.panels[i].addListener("rightClickGraphItem", $entry(function (event) {
-                    handler.@com.haulmont.charts.web.toolkit.ui.client.amstockcharts.events.StockGraphItemRightClickHandler::onClick(Lcom/haulmont/charts/web/toolkit/ui/client/amstockcharts/events/JsStockGraphItemRightClickEvent;)(event);
+                    handler.@java.util.function.Consumer::accept(*)(event);
                 }));
             }
         }
     }-*/;
 
-    public void addStockGraphItemRollOutHandler(StockGraphItemRollOutHandler handler) {
+    public void addStockGraphItemRollOutHandler(Consumer<JsStockGraphItemRollOutEvent> handler) {
         addStockGraphItemRollOutHandler(chart, handler);
     }
 
-    private static native void addStockGraphItemRollOutHandler(JavaScriptObject chart, StockGraphItemRollOutHandler handler) /*-{
+    private static native void addStockGraphItemRollOutHandler(JavaScriptObject chart, Consumer<JsStockGraphItemRollOutEvent> handler) /*-{
         if (chart.panels) {
             for (var i = 0; i < chart.panels.length; i++) {
                 chart.panels[i].addListener("rollOutGraphItem", $entry(function (event) {
-                    handler.@com.haulmont.charts.web.toolkit.ui.client.amstockcharts.events.StockGraphItemRollOutHandler::onRollOut(Lcom/haulmont/charts/web/toolkit/ui/client/amstockcharts/events/JsStockGraphItemRollOutEvent;)(event);
+                    handler.@java.util.function.Consumer::accept(*)(event);
                 }));
             }
         }
     }-*/;
 
-    public void addStockGraphItemRollOverHandler(StockGraphItemRollOverHandler handler) {
+    public void addStockGraphItemRollOverHandler(Consumer<JsStockGraphItemRollOverEvent> handler) {
         addStockGraphItemRollOverHandler(chart, handler);
     }
 
-    private static native void addStockGraphItemRollOverHandler(JavaScriptObject chart, StockGraphItemRollOverHandler handler) /*-{
+    private static native void addStockGraphItemRollOverHandler(JavaScriptObject chart, Consumer<JsStockGraphItemRollOverEvent> handler) /*-{
         if (chart.panels) {
             for (var i = 0; i < chart.panels.length; i++) {
                 chart.panels[i].addListener("rollOverGraphItem", $entry(function (event) {
-                    handler.@com.haulmont.charts.web.toolkit.ui.client.amstockcharts.events.StockGraphItemRollOverHandler::onRollOver(Lcom/haulmont/charts/web/toolkit/ui/client/amstockcharts/events/JsStockGraphItemRollOverEvent;)(event);
+                    handler.@java.util.function.Consumer::accept(*)(event);
                 }));
             }
         }

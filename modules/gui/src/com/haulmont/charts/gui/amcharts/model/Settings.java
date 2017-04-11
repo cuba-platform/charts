@@ -5,8 +5,6 @@
 
 package com.haulmont.charts.gui.amcharts.model;
 
-import java.util.List;
-
 /**
  * See documentation for properties of AmCharts JS Object. <br>
  *
@@ -24,15 +22,7 @@ public class Settings extends AbstractChartObject {
 
     private Integer bezierY;
 
-    private List<String> dayNames;
-
-    private List<String> monthNames;
-
     private Integer processDelay;
-
-    private List<String> shortDayNames;
-
-    private List<String> shortMonthNames;
 
     private Boolean useUTC;
 

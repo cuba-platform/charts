@@ -7,6 +7,8 @@ package com.haulmont.charts.gui.data;
 
 import java.util.*;
 
+import static com.haulmont.bali.util.Preconditions.checkNotNullArgument;
+
 /**
  * Data provider in which all items are stored in {@link List}.
  */
@@ -27,12 +29,22 @@ public class ListDataProvider implements DataProvider {
     }
 
     public ListDataProvider(List<DataItem> items) {
+        checkNotNullArgument(items);
+
         this.items.addAll(items);
     }
 
     @Override
     public List<DataItem> getItems() {
         return items;
+    }
+
+    @Override
+    public DataItem getItem(Object id) {
+        return items.stream()
+                .filter(dataItem -> (dataItem instanceof DataItem.HasId)
+                        && Objects.equals(id, ((DataItem.HasId) dataItem).getId()))
+                .findFirst().orElse(null);
     }
 
     @Override

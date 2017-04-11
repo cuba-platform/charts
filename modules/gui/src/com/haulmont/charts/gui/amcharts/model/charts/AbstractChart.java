@@ -5,14 +5,11 @@
 
 package com.haulmont.charts.gui.amcharts.model.charts;
 
-import com.google.gson.JsonElement;
 import com.google.gson.annotations.Expose;
 import com.haulmont.charts.gui.amcharts.model.*;
 import com.haulmont.charts.gui.data.DataItem;
 import com.haulmont.charts.gui.data.DataProvider;
 import com.haulmont.charts.gui.data.ListDataProvider;
-import com.haulmont.charts.gui.amcharts.model.gson.ChartJsonSerializationContext;
-import com.haulmont.charts.gui.amcharts.model.gson.DataProviderSerializer;
 import org.apache.commons.collections.CollectionUtils;
 
 import java.util.ArrayList;
@@ -715,20 +712,6 @@ public abstract class AbstractChart<T extends AbstractChartObject & ChartModel> 
     public T setTouchClickDuration(Integer touchClickDuration) {
         this.touchClickDuration = touchClickDuration;
         return (T) this;
-    }
-
-    @Override
-    public String toString() {
-        JsonElement jsonTree = chartGson.toJsonTree(this);
-
-        if (dataProvider != null) {
-            DataProviderSerializer serializer = new DataProviderSerializer();
-            ChartJsonSerializationContext context = new ChartJsonSerializationContext(this);
-            JsonElement dataProviderElement = serializer.serialize(dataProvider, dataProvider.getClass(), context);
-            jsonTree.getAsJsonObject().add("dataProvider", dataProviderElement);
-        }
-
-        return chartGson.toJson(jsonTree);
     }
 
     public void addDataProviderChangeListener(DataProviderChangeListener listener) {

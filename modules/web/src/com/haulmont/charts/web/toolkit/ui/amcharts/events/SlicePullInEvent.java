@@ -5,12 +5,13 @@
 
 package com.haulmont.charts.web.toolkit.ui.amcharts.events;
 
+import com.haulmont.charts.gui.data.DataItem;
 import com.haulmont.charts.web.toolkit.ui.amcharts.CubaAmchartsScene;
 
 public class SlicePullInEvent extends AbstractSlicePullEvent {
     private static final long serialVersionUID = -536343761071370040L;
 
-    public SlicePullInEvent(CubaAmchartsScene scene, String sliceId) {
-        super(scene, sliceId);
+    public SlicePullInEvent(CubaAmchartsScene scene, DataItem dataItem) {
+        super(scene, dataItem);
     }
 }

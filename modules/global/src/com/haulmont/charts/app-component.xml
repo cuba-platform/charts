@@ -24,6 +24,7 @@
         <artifact name="charts-web-toolkit" classifier="web" ext="zip" configuration="webcontent"
                   skipIfExists="web-toolkit"/>
 
+        <property name="cuba.springContextConfig" value="+charts-web-spring.xml"/>
         <property name="cuba.mainMessagePack" value="+com.haulmont.charts.web"/>
         <property name="cuba.dispatcherSpringContextConfig" value="+charts-dispatcher-spring.xml"/>
         <property name="cuba.windowConfig" value="+charts-web-screens.xml"/>

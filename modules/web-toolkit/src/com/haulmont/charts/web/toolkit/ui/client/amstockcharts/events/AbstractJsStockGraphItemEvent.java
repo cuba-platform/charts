@@ -35,13 +35,26 @@ public class AbstractJsStockGraphItemEvent extends JavaScriptObject {
         return this.index;
     }-*/;
 
-    public final native String getItemId() /*-{
+    public final native String getItemKey() /*-{
+        $wnd.console.log(this);
+
         if (this.item && this.item.dataContext) {
-            if (!this.item.dataContext.id) {
+            if (!this.item.dataContext.$k) {
                 return null;
             }
 
-            return "" + this.item.dataContext.id;
+            return "" + this.item.dataContext.$k;
+        }
+        return null;
+    }-*/;
+
+    public final native String getDataSetId() /*-{
+        if (this.item && this.item.dataContext) {
+            if (!this.item.dataContext.$d) {
+                return null;
+            }
+
+            return "" + this.item.dataContext.$d;
         }
         return null;
     }-*/;

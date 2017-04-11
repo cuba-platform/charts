@@ -5,20 +5,21 @@
 
 package com.haulmont.charts.web.toolkit.ui.amcharts.events;
 
+import com.haulmont.charts.gui.data.DataItem;
 import com.haulmont.charts.web.toolkit.ui.amcharts.CubaAmchartsScene;
 
 public class SliceRightClickEvent extends AbstractClickEvent {
 
     private static final long serialVersionUID = -536343761071370040L;
 
-    private final String sliceId;
+    private final DataItem dataItem;
 
-    public SliceRightClickEvent(CubaAmchartsScene scene, String sliceId, int x, int y, int absoluteX, int absoluteY) {
+    public SliceRightClickEvent(CubaAmchartsScene scene, DataItem dataItem, int x, int y, int absoluteX, int absoluteY) {
         super(scene, x, y, absoluteX, absoluteY);
-        this.sliceId = sliceId;
+        this.dataItem = dataItem;
     }
 
-    public String getSliceId() {
-        return sliceId;
+    public DataItem getDataItem() {
+        return dataItem;
     }
 }

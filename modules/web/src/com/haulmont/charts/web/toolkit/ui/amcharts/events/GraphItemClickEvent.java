@@ -5,6 +5,7 @@
 
 package com.haulmont.charts.web.toolkit.ui.amcharts.events;
 
+import com.haulmont.charts.gui.data.DataItem;
 import com.haulmont.charts.web.toolkit.ui.amcharts.CubaAmchartsScene;
 
 public class GraphItemClickEvent extends AbstractClickEvent {
@@ -14,13 +15,13 @@ public class GraphItemClickEvent extends AbstractClickEvent {
     private final String graphId;
 
     private final int itemIndex;
-    private final String itemId;
+    private final DataItem dataItem;
 
     public GraphItemClickEvent(CubaAmchartsScene scene, String graphId, int itemIndex,
-                               String itemId, int x, int y, int absoluteX, int absoluteY) {
+                               DataItem dataItem, int x, int y, int absoluteX, int absoluteY) {
         super(scene, x, y, absoluteX, absoluteY);
         this.itemIndex = itemIndex;
-        this.itemId = itemId;
+        this.dataItem = dataItem;
         this.graphId = graphId;
     }
 
@@ -32,7 +33,7 @@ public class GraphItemClickEvent extends AbstractClickEvent {
         return itemIndex;
     }
 
-    public String getItemId() {
-        return itemId;
+    public DataItem getDataItem() {
+        return dataItem;
     }
 }

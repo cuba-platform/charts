@@ -6,11 +6,15 @@ package com.haulmont.charts.gui.components.charts;
 
 import com.haulmont.charts.gui.amcharts.model.charts.AbstractChart;
 import com.haulmont.charts.gui.amcharts.model.charts.ChartModel;
+import com.haulmont.charts.gui.data.DataItem;
+import com.haulmont.charts.gui.data.EntityDataItem;
 import com.haulmont.cuba.core.entity.Entity;
 import com.haulmont.cuba.gui.components.Component;
 import com.haulmont.cuba.gui.data.CollectionDatasource;
 
+import javax.annotation.Nullable;
 import java.util.Date;
+import java.util.EventObject;
 
 /**
  * Base interface for all *Chart components.
@@ -71,17 +75,46 @@ public interface Chart<T extends Chart> extends Component, ChartModel<T>, Compon
     String getNativeJson();
 
     abstract class AbstractItemEvent {
-        private final Entity item;
+        private final DataItem dataItem;
 
-        public AbstractItemEvent(Entity item) {
-            this.item = item;
+        public AbstractItemEvent(DataItem dataItem) {
+            this.dataItem = dataItem;
         }
 
         /**
          * @return an item
-         */
+         * @deprecated Use {@link #getEntity()} or {@link #getEntityNN()}
+          */
+        @Deprecated
         public Entity getItem() {
-            return item;
+            return getEntity();
+        }
+
+        @Nullable
+        public DataItem getDataItem() {
+            return dataItem;
+        }
+
+        public DataItem getDataItemNN() {
+            if (dataItem == null) {
+                throw new IllegalStateException("dataItem is null");
+            }
+            return dataItem;
+        }
+
+        @Nullable
+        public Entity getEntity() {
+            if (dataItem != null) {
+                return ((EntityDataItem) dataItem).getItem();
+            }
+            return null;
+        }
+
+        public Entity getEntityNN() {
+            if (dataItem == null) {
+                throw new IllegalStateException("dataItem is null");
+            }
+            return ((EntityDataItem) dataItem).getItem();
         }
     }
 
@@ -149,12 +182,13 @@ public interface Chart<T extends Chart> extends Component, ChartModel<T>, Compon
     abstract class AbstractGraphItemClickEvent extends AbstractClickEvent {
         private final String graphId;
 
-        private final Entity item;
+        private final DataItem dataItem;
         private final int itemIndex;
 
-        public AbstractGraphItemClickEvent(String graphId, Entity item, int itemIndex, int x, int y, int absoluteX, int absoluteY) {
+        public AbstractGraphItemClickEvent(String graphId, DataItem dataItem,
+                                           int itemIndex, int x, int y, int absoluteX, int absoluteY) {
             super(x, y, absoluteX, absoluteY);
-            this.item = item;
+            this.dataItem = dataItem;
             this.itemIndex = itemIndex;
             this.graphId = graphId;
         }
@@ -163,8 +197,40 @@ public interface Chart<T extends Chart> extends Component, ChartModel<T>, Compon
             return graphId;
         }
 
+        /**
+         * @return entity
+         * @deprecated Use {@link #getEntity()} or {@link #getEntityNN()}
+         */
+        @Deprecated
         public Entity getItem() {
-            return item;
+            return getEntity();
+        }
+
+        @Nullable
+        public DataItem getDataItem() {
+            return dataItem;
+        }
+
+        public DataItem getDataItemNN() {
+            if (dataItem == null) {
+                throw new IllegalStateException("dataItem is null");
+            }
+            return dataItem;
+        }
+
+        @Nullable
+        public Entity getEntity() {
+            if (dataItem != null) {
+                return ((EntityDataItem) dataItem).getItem();
+            }
+            return null;
+        }
+
+        public Entity getEntityNN() {
+            if (dataItem == null) {
+                throw new IllegalStateException("dataItem is null");
+            }
+            return ((EntityDataItem) dataItem).getItem();
         }
 
         public int getItemIndex() {
@@ -173,15 +239,47 @@ public interface Chart<T extends Chart> extends Component, ChartModel<T>, Compon
     }
 
     abstract class AbstractSliceClickEvent extends AbstractClickEvent {
-        private final Entity item;
+        private final DataItem dataItem;
 
-        public AbstractSliceClickEvent(Entity item, int x, int y, int absoluteX, int absoluteY) {
+        public AbstractSliceClickEvent(DataItem dataItem, int x, int y, int absoluteX, int absoluteY) {
             super(x, y, absoluteX, absoluteY);
-            this.item = item;
+            this.dataItem = dataItem;
         }
 
+        /**
+         * @return entity related with event
+         * @deprecated Use {@link #getEntity()} or {@link #getEntityNN()}
+         */
+        @Deprecated
         public Entity getItem() {
-            return item;
+            return getEntity();
+        }
+
+        @Nullable
+        public DataItem getDataItem() {
+            return dataItem;
+        }
+
+        public DataItem getDataItemNN() {
+            if (dataItem == null) {
+                throw new IllegalStateException("dataItem is null");
+            }
+            return dataItem;
+        }
+
+        @Nullable
+        public Entity getEntity() {
+            if (dataItem != null) {
+                return ((EntityDataItem) dataItem).getItem();
+            }
+            return null;
+        }
+
+        public Entity getEntityNN() {
+            if (dataItem == null) {
+                throw new IllegalStateException("dataItem is null");
+            }
+            return ((EntityDataItem) dataItem).getItem();
         }
     }
 
@@ -378,7 +476,7 @@ public interface Chart<T extends Chart> extends Component, ChartModel<T>, Compon
      * Describes graph item click event.
      */
     class GraphItemClickEvent extends AbstractGraphItemClickEvent {
-        public GraphItemClickEvent(String graphId, Entity item, int itemIndex, int x, int y, int absoluteX, int absoluteY) {
+        public GraphItemClickEvent(String graphId, DataItem item, int itemIndex, int x, int y, int absoluteX, int absoluteY) {
             super(graphId, item, itemIndex, x, y, absoluteX, absoluteY);
         }
     }
@@ -399,7 +497,7 @@ public interface Chart<T extends Chart> extends Component, ChartModel<T>, Compon
      * Describes graph item click event.
      */
     class GraphItemRightClickEvent extends AbstractGraphItemClickEvent {
-        public GraphItemRightClickEvent(String graphId, Entity item, int itemIndex, int x, int y, int absoluteX, int absoluteY) {
+        public GraphItemRightClickEvent(String graphId, DataItem item, int itemIndex, int x, int y, int absoluteX, int absoluteY) {
             super(graphId, item, itemIndex, x, y, absoluteX, absoluteY);
         }
     }
@@ -419,9 +517,9 @@ public interface Chart<T extends Chart> extends Component, ChartModel<T>, Compon
     /**
      * Describes legend item hide event.
      */
-    class LegendItemHideEvent extends AbstractItemEvent {
-        public LegendItemHideEvent(Entity item) {
-            super(item);
+    class LegendItemHideEvent extends LegendItemEvent {
+        public LegendItemHideEvent(Chart chart, int itemIndex, DataItem dataItem) {
+            super(chart, itemIndex, dataItem);
         }
     }
 
@@ -440,9 +538,9 @@ public interface Chart<T extends Chart> extends Component, ChartModel<T>, Compon
     /**
      * Describes legend item show event.
      */
-    class LegendItemShowEvent extends AbstractItemEvent {
-        public LegendItemShowEvent(Entity item) {
-            super(item);
+    class LegendItemShowEvent extends LegendItemEvent {
+        public LegendItemShowEvent(Chart chart, int itemIndex, DataItem dataItem) {
+            super(chart, itemIndex, dataItem);
         }
     }
 
@@ -461,9 +559,59 @@ public interface Chart<T extends Chart> extends Component, ChartModel<T>, Compon
     /**
      * Describes legend item click event.
      */
-    class LegendItemClickEvent extends AbstractItemEvent {
-        public LegendItemClickEvent(Entity item) {
-            super(item);
+    abstract class LegendItemEvent extends EventObject {
+        private final int itemIndex;
+        private final DataItem dataItem;
+
+        public LegendItemEvent(Chart chart, int itemIndex, DataItem dataItem) {
+            super(chart);
+            this.itemIndex = itemIndex;
+            this.dataItem = dataItem;
+        }
+
+        @Override
+        public Chart getSource() {
+            return (Chart) super.getSource();
+        }
+
+        public int getItemIndex() {
+            return itemIndex;
+        }
+
+        @Nullable
+        public DataItem getDataItem() {
+            return dataItem;
+        }
+
+        public DataItem getDataItemNN() {
+            if (dataItem == null) {
+                throw new IllegalStateException("dataItem is null");
+            }
+            return dataItem;
+        }
+
+        @Nullable
+        public Entity getEntity() {
+            if (dataItem != null) {
+                return ((EntityDataItem) dataItem).getItem();
+            }
+            return null;
+        }
+
+        public Entity getEntityNN() {
+            if (dataItem == null) {
+                throw new IllegalStateException("dataItem is null");
+            }
+            return ((EntityDataItem) dataItem).getItem();
+        }
+    }
+
+    /**
+     * Describes legend item click event.
+     */
+    class LegendItemClickEvent extends LegendItemEvent {
+        public LegendItemClickEvent(Chart chart, int itemIndex, DataItem dataItem) {
+            super(chart, itemIndex, dataItem);
         }
     }
 
@@ -482,9 +630,9 @@ public interface Chart<T extends Chart> extends Component, ChartModel<T>, Compon
     /**
      * Describes legend marker click event.
      */
-    class LegendMarkerClickEvent extends AbstractItemEvent {
-        public LegendMarkerClickEvent(Entity item) {
-            super(item);
+    class LegendMarkerClickEvent extends LegendItemEvent {
+        public LegendMarkerClickEvent(Chart chart, int itemIndex, DataItem dataItem) {
+            super(chart, itemIndex, dataItem);
         }
     }
 
@@ -504,8 +652,8 @@ public interface Chart<T extends Chart> extends Component, ChartModel<T>, Compon
      * Describes slice click event.
      */
     class SliceClickEvent extends AbstractSliceClickEvent {
-        public SliceClickEvent(Entity item, int x, int y, int absoluteX, int absoluteY) {
-            super(item, x, y, absoluteX, absoluteY);
+        public SliceClickEvent(DataItem dataItem, int x, int y, int absoluteX, int absoluteY) {
+            super(dataItem, x, y, absoluteX, absoluteY);
         }
     }
 
@@ -525,8 +673,8 @@ public interface Chart<T extends Chart> extends Component, ChartModel<T>, Compon
      * Describes slice click event.
      */
     class SliceRightClickEvent extends AbstractSliceClickEvent {
-        public SliceRightClickEvent(Entity item, int x, int y, int absoluteX, int absoluteY) {
-            super(item, x, y, absoluteX, absoluteY);
+        public SliceRightClickEvent(DataItem dataItem, int x, int y, int absoluteX, int absoluteY) {
+            super(dataItem, x, y, absoluteX, absoluteY);
         }
     }
 
@@ -546,7 +694,7 @@ public interface Chart<T extends Chart> extends Component, ChartModel<T>, Compon
      * Describes slice pull-in event.
      */
     class SlicePullInEvent extends AbstractItemEvent {
-        public SlicePullInEvent(Entity item) {
+        public SlicePullInEvent(DataItem item) {
             super(item);
         }
     }
@@ -567,7 +715,7 @@ public interface Chart<T extends Chart> extends Component, ChartModel<T>, Compon
      * Describes slice pull-out event.
      */
     class SlicePullOutEvent extends AbstractItemEvent {
-        public SlicePullOutEvent(Entity item) {
+        public SlicePullOutEvent(DataItem item) {
             super(item);
         }
     }
@@ -588,7 +736,7 @@ public interface Chart<T extends Chart> extends Component, ChartModel<T>, Compon
      * Describes slice roll-out event.
      */
     class SliceRollOutEvent extends AbstractItemEvent {
-        public SliceRollOutEvent(Entity item) {
+        public SliceRollOutEvent(DataItem item) {
             super(item);
         }
     }
@@ -609,7 +757,7 @@ public interface Chart<T extends Chart> extends Component, ChartModel<T>, Compon
      * Describes slice roll-out event.
      */
     class SliceRollOverEvent extends AbstractItemEvent {
-        public SliceRollOverEvent(Entity item) {
+        public SliceRollOverEvent(DataItem item) {
             super(item);
         }
     }

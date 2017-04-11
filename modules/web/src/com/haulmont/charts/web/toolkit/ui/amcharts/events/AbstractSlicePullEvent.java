@@ -5,20 +5,21 @@
 
 package com.haulmont.charts.web.toolkit.ui.amcharts.events;
 
+import com.haulmont.charts.gui.data.DataItem;
 import com.haulmont.charts.web.toolkit.ui.amcharts.CubaAmchartsScene;
 
 public abstract class AbstractSlicePullEvent extends com.vaadin.ui.Component.Event {
 
     private static final long serialVersionUID = -3625204689056222328L;
 
-    private final String sliceId;
+    private final DataItem dataItem;
 
-    public AbstractSlicePullEvent(CubaAmchartsScene scene, String sliceId) {
+    public AbstractSlicePullEvent(CubaAmchartsScene scene, DataItem dataItem) {
         super(scene);
-        this.sliceId = sliceId;
+        this.dataItem = dataItem;
     }
 
-    public String getSliceId() {
-        return sliceId;
+    public DataItem getDataItem() {
+        return dataItem;
     }
 }

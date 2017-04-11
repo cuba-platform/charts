@@ -5,20 +5,37 @@
 
 package com.haulmont.charts.web.toolkit.ui.amcharts.events;
 
+import com.haulmont.charts.gui.data.DataItem;
 import com.haulmont.charts.web.toolkit.ui.amcharts.CubaAmchartsScene;
+
+import javax.annotation.Nullable;
 
 public abstract class AbstractLegendItemEvent extends com.vaadin.ui.Component.Event {
 
     private static final long serialVersionUID = -2258433755537180205L;
 
-    private final String itemId;
+    private final int itemIndex;
+    private final DataItem dataItem;
 
-    public AbstractLegendItemEvent(CubaAmchartsScene scene, String itemId) {
+    public AbstractLegendItemEvent(CubaAmchartsScene scene, int itemIndex, DataItem dataItem) {
         super(scene);
-        this.itemId = itemId;
+        this.itemIndex = itemIndex;
+        this.dataItem = dataItem;
     }
 
-    public String getItemId() {
-        return itemId;
+    public int getItemIndex() {
+        return itemIndex;
+    }
+
+    @Nullable
+    public DataItem getDataItem() {
+        return dataItem;
+    }
+
+    public DataItem getDataItemNN() {
+        if (dataItem == null) {
+            throw new IllegalStateException("LegendItemEvent dataItem is null");
+        }
+        return dataItem;
     }
 }
