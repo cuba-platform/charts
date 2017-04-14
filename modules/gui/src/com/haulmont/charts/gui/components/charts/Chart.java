@@ -733,48 +733,6 @@ public interface Chart<T extends Chart> extends Component, ChartModel<T>, Compon
     }
 
     /**
-     * Describes slice roll-out event.
-     */
-    class SliceRollOutEvent extends AbstractItemEvent {
-        public SliceRollOutEvent(DataItem item) {
-            super(item);
-        }
-    }
-
-    /**
-     * Listener to the slice roll-out events.
-     */
-    interface SliceRollOutListener {
-        /**
-         * Called when the slice did roll-out.
-         *
-         * @param event event object
-         */
-        void onRollOut(SliceRollOutEvent event);
-    }
-
-    /**
-     * Describes slice roll-out event.
-     */
-    class SliceRollOverEvent extends AbstractItemEvent {
-        public SliceRollOverEvent(DataItem item) {
-            super(item);
-        }
-    }
-
-    /**
-     * Listener to the slice roll-over events.
-     */
-    interface SliceRollOverListener {
-        /**
-         * Called when the slice did roll-out.
-         *
-         * @param event event object
-         */
-        void onRollOver(SliceRollOverEvent event);
-    }
-
-    /**
      * Describes zoom event.
      */
     class ZoomEvent {
