@@ -34,6 +34,14 @@ import com.haulmont.charts.gui.map.model.listeners.drag.MarkerDragListener;
 import com.haulmont.charts.gui.map.model.listeners.overlaycomplete.CircleCompleteListener;
 import com.haulmont.charts.gui.map.model.listeners.overlaycomplete.PolygonCompleteListener;
 import com.haulmont.charts.gui.map.model.listeners.radiuschange.CircleRadiusChangeListener;
+import com.haulmont.charts.gui.map.model.listeners.rightclick.CircleRightClickListener;
+import com.haulmont.charts.gui.map.model.listeners.rightclick.CircleRightClickListener.CircleRightClickEvent;
+import com.haulmont.charts.gui.map.model.listeners.rightclick.MapRightClickListener;
+import com.haulmont.charts.gui.map.model.listeners.rightclick.MapRightClickListener.MapRightClickEvent;
+import com.haulmont.charts.gui.map.model.listeners.rightclick.MarkerRightClickListener;
+import com.haulmont.charts.gui.map.model.listeners.rightclick.MarkerRightClickListener.MarkerRightClickEvent;
+import com.haulmont.charts.gui.map.model.listeners.rightclick.PolygonRightClickListener;
+import com.haulmont.charts.gui.map.model.listeners.rightclick.PolygonRightClickListener.PolygonRightClickEvent;
 import com.haulmont.charts.gui.map.model.maptype.ImageMapType;
 import com.haulmont.charts.web.gui.components.map.google.base.MarkerImageDelegate;
 import com.haulmont.charts.web.gui.components.map.google.base.PointDelegate;
@@ -76,6 +84,7 @@ public class WebGoogleMapViewer extends WebAbstractComponent<GoogleMap> implemen
 
     protected List<MapClickListener> mapClickListeners;
     protected com.vaadin.tapio.googlemaps.client.events.click.MapClickListener mapClickHandler;
+    protected com.vaadin.tapio.googlemaps.client.events.rightclick.MapRightClickListener mapRightClickHandler;
 
     protected List<MarkerDragListener> markerDragListeners;
     protected com.vaadin.tapio.googlemaps.client.events.MarkerDragListener markerDragHandler;
@@ -85,6 +94,7 @@ public class WebGoogleMapViewer extends WebAbstractComponent<GoogleMap> implemen
 
     protected List<MarkerDoubleClickListener> markerDoubleClickListeners;
     protected com.vaadin.tapio.googlemaps.client.events.doubleclick.MarkerDoubleClickListener markerDoubleClickHandler;
+    protected com.vaadin.tapio.googlemaps.client.events.rightclick.MarkerRightClickListener markerRightClickHandler;
 
     protected List<InfoWindowClosedListener> infoWindowClosedListeners;
     protected com.vaadin.tapio.googlemaps.client.events.InfoWindowClosedListener infoWindowClosedHandler;
@@ -97,6 +107,7 @@ public class WebGoogleMapViewer extends WebAbstractComponent<GoogleMap> implemen
 
     protected List<PolygonClickListener> polygonClickListeners;
     protected com.vaadin.tapio.googlemaps.client.events.click.PolygonClickListener polygonClickHandler;
+    protected com.vaadin.tapio.googlemaps.client.events.rightclick.PolygonRightClickListener polygonRightClickHandler;
 
     protected List<MapInitListener> mapInitListeners;
     protected com.vaadin.tapio.googlemaps.client.events.MapInitListener mapInitHandler;
@@ -115,6 +126,7 @@ public class WebGoogleMapViewer extends WebAbstractComponent<GoogleMap> implemen
 
     protected List<CircleCompleteListener> circleCompleteListeners;
     protected com.vaadin.tapio.googlemaps.client.events.overlaycomplete.CircleCompleteListener circleCompleteHandler;
+    protected com.vaadin.tapio.googlemaps.client.events.rightclick.CircleRightClickListener circleRightClickHandler;
 
     public WebGoogleMapViewer() {
         String clientId = mapConfig.getClientId();
@@ -1118,5 +1130,115 @@ public class WebGoogleMapViewer extends WebAbstractComponent<GoogleMap> implemen
     @Override
     public MarkerImage createMarkerImage(String url) {
         return new MarkerImageDelegate(new com.vaadin.tapio.googlemaps.client.base.MarkerImage(url));
+    }
+
+    @Override
+    public void addMarkerRightClickListener(MarkerRightClickListener listener) {
+        getEventRouter().addListener(MarkerRightClickListener.class, listener);
+
+        if (markerRightClickHandler == null) {
+            markerRightClickHandler = marker -> {
+                if (marker == null) {
+                    log.warn("Marker right clicked listener have been fired but no marker received");
+                    return;
+                }
+
+                MarkerRightClickEvent event = new MarkerRightClickEvent(new MarkerDelegate(marker));
+                getEventRouter().fireEvent(MarkerRightClickListener.class, MarkerRightClickListener::onRightClick, event);
+            };
+            component.addMarkerRightClickListener(markerRightClickHandler);
+        }
+    }
+
+    @Override
+    public void removeMarkerRightClickListener(MarkerRightClickListener listener) {
+        getEventRouter().removeListener(MarkerRightClickListener.class, listener);
+
+        if (!getEventRouter().hasListeners(MarkerRightClickListener.class)) {
+            component.removeMarkerRightClickListener(markerRightClickHandler);
+            markerRightClickHandler = null;
+        }
+    }
+
+    @Override
+    public void addMapRightClickListener(MapRightClickListener listener) {
+        getEventRouter().addListener(MapRightClickListener.class, listener);
+
+        if (mapRightClickHandler == null) {
+            mapRightClickHandler = position -> {
+                GeoPointDelegate geoPoint = position != null ? new GeoPointDelegate(position) : null;
+                MapRightClickEvent event = new MapRightClickEvent(geoPoint);
+
+                getEventRouter().fireEvent(MapRightClickListener.class, MapRightClickListener::onRightClick, event);
+            };
+
+            component.addMapRightClickListener(mapRightClickHandler);
+        }
+    }
+
+    @Override
+    public void removeMapRightClickListener(MapRightClickListener listener) {
+        getEventRouter().removeListener(MapRightClickListener.class, listener);
+
+        if (!getEventRouter().hasListeners(MapRightClickListener.class)) {
+            component.removeMapRightClickListener(mapRightClickHandler);
+            markerRightClickHandler = null;
+        }
+    }
+
+    @Override
+    public void addPolygonRightClickListener(PolygonRightClickListener listener) {
+        getEventRouter().addListener(PolygonRightClickListener.class, listener);
+
+        if (polygonRightClickHandler == null) {
+            polygonRightClickHandler = polygon -> {
+                if (polygon == null) {
+                    log.warn("Polygon right clicked listener have been fired but no polygon received");
+                    return;
+                }
+
+                PolygonRightClickEvent event = new PolygonRightClickEvent(new PolygonDelegate(polygon));
+                getEventRouter().fireEvent(PolygonRightClickListener.class, PolygonRightClickListener::onRightClick, event);
+            };
+            component.addPolygonRightClickListener(polygonRightClickHandler);
+        }
+    }
+
+    @Override
+    public void removePolygonRightClickListener(PolygonRightClickListener listener) {
+        getEventRouter().removeListener(PolygonRightClickListener.class, listener);
+
+        if (!getEventRouter().hasListeners(PolygonRightClickListener.class)) {
+            component.removePolygonRightClickListener(polygonRightClickHandler);
+            polygonRightClickHandler = null;
+        }
+    }
+
+    @Override
+    public void addCircleRightClickListener(CircleRightClickListener listener) {
+        getEventRouter().addListener(CircleRightClickListener.class, listener);
+
+        if (circleRightClickHandler == null) {
+            circleRightClickHandler = circle -> {
+                if (circle == null) {
+                    log.warn("Circle right clicked listener have been fired but no circle received");
+                    return;
+                }
+
+                CircleRightClickEvent event = new CircleRightClickEvent(new CircleDelegate(circle));
+                getEventRouter().fireEvent(CircleRightClickListener.class, CircleRightClickListener::onRightClick, event);
+            };
+            component.addCircleRightClickListener(circleRightClickHandler);
+        }
+    }
+
+    @Override
+    public void removeCircleRightClickListener(CircleRightClickListener listener) {
+        getEventRouter().removeListener(CircleRightClickListener.class, listener);
+
+        if (!getEventRouter().hasListeners(CircleRightClickListener.class)) {
+            component.removeCircleRightClickListener(circleRightClickHandler);
+            circleRightClickHandler = null;
+        }
     }
 }

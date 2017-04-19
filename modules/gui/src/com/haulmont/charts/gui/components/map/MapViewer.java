@@ -30,6 +30,10 @@ import com.haulmont.charts.gui.map.model.listeners.drag.MarkerDragListener;
 import com.haulmont.charts.gui.map.model.listeners.overlaycomplete.CircleCompleteListener;
 import com.haulmont.charts.gui.map.model.listeners.overlaycomplete.PolygonCompleteListener;
 import com.haulmont.charts.gui.map.model.listeners.radiuschange.CircleRadiusChangeListener;
+import com.haulmont.charts.gui.map.model.listeners.rightclick.CircleRightClickListener;
+import com.haulmont.charts.gui.map.model.listeners.rightclick.MapRightClickListener;
+import com.haulmont.charts.gui.map.model.listeners.rightclick.MarkerRightClickListener;
+import com.haulmont.charts.gui.map.model.listeners.rightclick.PolygonRightClickListener;
 import com.haulmont.charts.gui.map.model.maptype.ImageMapType;
 import com.haulmont.cuba.gui.components.Component;
 
@@ -101,11 +105,17 @@ public interface MapViewer extends Component, Component.BelongToFrame, Component
     void addMarkerDragListener(MarkerDragListener listener);
     void removeMarkerDragListener(MarkerDragListener listener);
 
+    void addMarkerRightClickListener(MarkerRightClickListener listener);
+    void removeMarkerRightClickListener(MarkerRightClickListener listener);
+
     void addMapMoveListener(MapMoveListener listener);
     void removeMapMoveListener(MapMoveListener listener);
 
     void addMapClickListener(MapClickListener listener);
     void removeMapClickListener(MapClickListener listener);
+
+    void addMapRightClickListener(MapRightClickListener listener);
+    void removeMapRightClickListener(MapRightClickListener listener);
 
     void addInfoWindowClosedListener(InfoWindowClosedListener listener);
     void removeInfoWindowClosedListener(InfoWindowClosedListener listener);
@@ -118,6 +128,9 @@ public interface MapViewer extends Component, Component.BelongToFrame, Component
 
     void addPolygonClickListener(PolygonClickListener listener);
     void removePolygonClickListener(PolygonClickListener listener);
+
+    void addPolygonRightClickListener(PolygonRightClickListener listener);
+    void removePolygonRightClickListener(PolygonRightClickListener listener);
 
     void addMapInitListener(MapInitListener listener);
     void removeMapInitListener(MapInitListener listener);
@@ -136,6 +149,9 @@ public interface MapViewer extends Component, Component.BelongToFrame, Component
 
     void addCircleCompleteListener(CircleCompleteListener listener);
     void removeCircleCompleteListener(CircleCompleteListener listener);
+
+    void addCircleRightClickListener(CircleRightClickListener listener);
+    void removeCircleRightClickListener(CircleRightClickListener listener);
 
     /**
      * Creates geo point with no coordinates
