@@ -55,8 +55,7 @@ public class PivotDataItemsSerializer {
 
     protected void addProperty(JsonObject jsonObject, String property, Object value,
                                PivotJsonSerializationContext context, DataItem item) {
-        Object formattedValue = null;
-
+        Object formattedValue;
         if (value instanceof Entity) {
             formattedValue = InstanceUtils.getInstanceName((Instance) value);
         } else if (value instanceof EnumClass) {
@@ -86,6 +85,8 @@ public class PivotDataItemsSerializer {
             formattedValue = BooleanUtils.isTrue((Boolean) value)
                     ? messages.getMainMessage("boolean.yes")
                     : messages.getMainMessage("boolean.no");
+        } else {
+            formattedValue = value;
         }
 
         jsonObject.add(context.getLocalizedPropertyName(property), context.serialize(formattedValue));
