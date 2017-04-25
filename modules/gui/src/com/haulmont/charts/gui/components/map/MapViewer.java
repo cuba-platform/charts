@@ -684,4 +684,46 @@ public interface MapViewer extends Component, Component.BelongToFrame, Component
      * @param callback callback object
      */
     void route(DirectionsRequest request, DirectionsRequestCallback callback);
+
+    /**
+     * Creates empty Label. Add Label on map using {@link MapViewer#addLabel(Label)}.
+     *
+     * @return Label instance
+     */
+    Label createLabel();
+
+    /**
+     * Creates Label with given params. Add Label on map using {@link MapViewer#addLabel(Label)}.
+     *
+     * @param value    value
+     * @param position position
+     *
+     * @return Label instance
+     */
+    Label createLabel(String value, GeoPoint position);
+
+    /**
+     * Creates Label with given params. Add Label on map using {@link MapViewer#addLabel(Label)}.
+     *
+     * @param value       value
+     * @param position    position
+     * @param contentType contentType
+     *
+     * @return Label instance
+     */
+    Label createLabel(String value, GeoPoint position, Label.ContentType contentType);
+
+    /**
+     * Adds label on the map.
+     *
+     * @param label label
+     */
+    void addLabel(Label label);
+
+    /**
+     * Removes label from the map.
+     *
+     * @param label label
+     */
+    void removeLabel(Label label);
 }

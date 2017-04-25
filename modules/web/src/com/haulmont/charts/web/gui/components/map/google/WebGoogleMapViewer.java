@@ -1241,4 +1241,33 @@ public class WebGoogleMapViewer extends WebAbstractComponent<GoogleMap> implemen
             circleRightClickHandler = null;
         }
     }
+
+    @Override
+    public void addLabel(Label label) {
+        component.addLabel(((LabelDelegate) label).getLabel());
+    }
+
+    @Override
+    public void removeLabel(Label label) {
+        component.removeLabel(((LabelDelegate) label).getLabel());
+    }
+
+    @Override
+    public Label createLabel() {
+        return new LabelDelegate();
+    }
+
+    @Override
+    public Label createLabel(String value, GeoPoint position) {
+        return createLabel(value, position, Label.ContentType.PLAIN_TEXT);
+    }
+
+    @Override
+    public Label createLabel(String value, GeoPoint position, Label.ContentType contentType) {
+        LabelDelegate labelDelegate = new LabelDelegate();
+        labelDelegate.setValue(value);
+        labelDelegate.setPosition(position);
+        labelDelegate.setContentType(contentType);
+        return labelDelegate;
+    }
 }
