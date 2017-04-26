@@ -234,11 +234,25 @@
         </xs:union>
     </xs:simpleType>
 
-    <xs:simpleType name="align">
+    <xs:simpleType name="hAlign">
         <xs:restriction base="xs:string">
             <xs:enumeration value="LEFT"/>
             <xs:enumeration value="RIGHT"/>
             <xs:enumeration value="CENTER"/>
+        </xs:restriction>
+    </xs:simpleType>
+
+    <xs:simpleType name="align">
+        <xs:restriction base="xs:string">
+            <xs:enumeration value="TOP_RIGHT"/>
+            <xs:enumeration value="TOP_LEFT"/>
+            <xs:enumeration value="TOP_CENTER"/>
+            <xs:enumeration value="MIDDLE_RIGHT"/>
+            <xs:enumeration value="MIDDLE_LEFT"/>
+            <xs:enumeration value="MIDDLE_CENTER"/>
+            <xs:enumeration value="BOTTOM_RIGHT"/>
+            <xs:enumeration value="BOTTOM_LEFT"/>
+            <xs:enumeration value="BOTTOM_CENTER"/>
         </xs:restriction>
     </xs:simpleType>
 
@@ -575,7 +589,7 @@
         <xs:attribute name="shadowAlpha" type="xs:double"/>
         <xs:attribute name="shadowColor" type="color"/>
         <xs:attribute name="showBullet" type="xs:boolean"/>
-        <xs:attribute name="textAlign" type="align"/>
+        <xs:attribute name="textAlign" type="hAlign"/>
         <xs:attribute name="verticalPadding" type="xs:integer"/>
     </xs:complexType>
 
@@ -879,7 +893,7 @@
         </xs:all>
 
         <xs:attribute name="accessibleLabel" type="resourceString"/>
-        <xs:attribute name="align" type="align"/>
+        <xs:attribute name="align" type="hAlign"/>
         <xs:attribute name="autoMargins" type="xs:boolean"/>
         <xs:attribute name="backgroundAlpha" type="xs:double"/>
         <xs:attribute name="backgroundColor" type="color"/>
@@ -933,7 +947,7 @@
     </xs:complexType>
 
     <xs:complexType name="label">
-        <xs:attribute name="align" type="align"/>
+        <xs:attribute name="align" type="hAlign"/>
         <xs:attribute name="alpha" type="xs:double"/>
         <xs:attribute name="bold" type="xs:boolean"/>
         <xs:attribute name="color" type="color"/>
@@ -2031,7 +2045,7 @@
     </xs:complexType>
 
     <xs:complexType name="legendSettings">
-        <xs:attribute name="align" type="align"/>
+        <xs:attribute name="align" type="hAlign"/>
         <xs:attribute name="equalWidths" type="xs:boolean"/>
         <xs:attribute name="horizontalGap" type="xs:integer"/>
         <xs:attribute name="labelText" type="xs:string"/>
