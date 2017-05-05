@@ -228,9 +228,9 @@ public class CubaAmchartsJsOverlay {
 
     protected native static void addLegendLabelClickHandler(JavaScriptObject chart, Consumer<JsLegendEvent> handler) /*-{
         if (chart.legend) {
-            chart.legend.addListener("clickLabel", $entry(function (event) {
+            chart.legend.clickLabel = $entry(function (event) {
                 handler.@java.util.function.Consumer::accept(*)(event);
-            }));
+            });
         }
     }-*/;
 
@@ -240,9 +240,9 @@ public class CubaAmchartsJsOverlay {
 
     protected native static void addLegendMarkerClickHandler(JavaScriptObject chart, Consumer<JsLegendEvent> handler) /*-{
         if (chart.legend) {
-            chart.legend.addListener("clickMarker", $entry(function (event) {
+            chart.legend.clickMarker = $entry(function (event) {
                 handler.@java.util.function.Consumer::accept(*)(event);
-            }));
+            });
         }
     }-*/;
 
