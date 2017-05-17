@@ -726,4 +726,36 @@ public interface MapViewer extends Component, Component.BelongToFrame, Component
      * @param label label
      */
     void removeLabel(Label label);
+
+    /**
+     * Removes given vertex from given polygon.
+     *
+     * @param polygon polygon
+     * @param vertex  vertex
+     */
+    void removePolygonVertex(Polygon polygon, GeoPoint vertex);
+
+    /**
+     * Sets message which will be used in popup to remove polygon vertex.
+     *
+     * @param message localized message
+     */
+    void setRemoveMessage(String message);
+
+    /**
+     * @return remove message
+     */
+    String getRemoveMessage();
+
+    /**
+     * Sets whether vertex removing is available or not.
+     *
+     * @param enabled enabled
+     */
+    void setVertexRemovingEnabled(boolean enabled);
+
+    /**
+     * @return whether vertex removing is available or not
+     */
+    boolean isVertexRemovingEnabled();
 }

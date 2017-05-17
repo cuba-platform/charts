@@ -53,6 +53,7 @@ import com.haulmont.charts.web.gui.components.map.google.layer.HeatMapLayerDeleg
 import com.haulmont.charts.web.gui.components.map.google.maptype.ImageMapTypeDelegate;
 import com.haulmont.cuba.core.global.AppBeans;
 import com.haulmont.cuba.core.global.Configuration;
+import com.haulmont.cuba.core.global.Messages;
 import com.haulmont.cuba.web.gui.components.WebAbstractComponent;
 import com.vaadin.tapio.googlemaps.GoogleMap;
 import com.vaadin.tapio.googlemaps.client.base.LatLon;
@@ -147,6 +148,9 @@ public class WebGoogleMapViewer extends WebAbstractComponent<GoogleMap> implemen
 
         component = new GoogleMap(new LatLon(mapConfig.getDefLatitude(), mapConfig.getDefLongitude()),
                 mapConfig.getDefZoom().intValue(), key, clientId, lang, mapInitHandler);
+
+        String deleteMessage = AppBeans.get(Messages.class).getMainMessage("actions.Remove");
+        component.setRemoveMessage(deleteMessage);
     }
 
     @Override
@@ -1269,5 +1273,36 @@ public class WebGoogleMapViewer extends WebAbstractComponent<GoogleMap> implemen
         labelDelegate.setPosition(position);
         labelDelegate.setContentType(contentType);
         return labelDelegate;
+    }
+
+    @Override
+    public void removePolygonVertex(Polygon polygon, GeoPoint vertex) {
+        Preconditions.checkNotNullArgument(polygon);
+        Preconditions.checkNotNullArgument(vertex);
+
+        LatLon latLon = new LatLon(vertex.getLatitude(), vertex.getLongitude());
+        GoogleMapPolygon vPolygon = ((PolygonDelegate) polygon).getPolygon();
+
+        component.removePolygonVertex(vPolygon, latLon);
+    }
+
+    @Override
+    public void setRemoveMessage(String message) {
+        component.setRemoveMessage(message);
+    }
+
+    @Override
+    public String getRemoveMessage() {
+        return component.getRemoveMessage();
+    }
+
+    @Override
+    public void setVertexRemovingEnabled(boolean enabled) {
+        component.setVertexRemovingEnabled(enabled);
+    }
+
+    @Override
+    public boolean isVertexRemovingEnabled() {
+        return component.isVertexRemovingEnabled();
     }
 }
