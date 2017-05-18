@@ -11,4 +11,8 @@
     <Match>
         <Bug pattern="IA_AMBIGUOUS_INVOCATION_OF_INHERITED_OR_OUTER_METHOD"/>
     </Match>
+
+    <Match>
+        <Bug pattern="NM_SAME_SIMPLE_NAME_AS_SUPERCLASS "/>
+    </Match>
 </FindBugsFilter>
