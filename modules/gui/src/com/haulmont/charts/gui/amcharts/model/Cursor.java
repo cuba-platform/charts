@@ -398,7 +398,7 @@ public class Cursor extends AbstractChartObject {
         return limitToGraph;
     }
 
-    public Cursor setLimitToGraph(String limitToGraphId) {
+    public Cursor setLimitToGraph(String limitToGraph) {
         this.limitToGraph = limitToGraph;
         return this;
     }
