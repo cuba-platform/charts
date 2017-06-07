@@ -148,8 +148,14 @@ public class CubaAmStockChartScene extends AbstractComponent {
 
     public void drawChart(StockChartGroup chart) {
         this.chart = chart;
-        chart.addDataSetDataProviderChangeListener(event -> forceStateChange());
-        chart.addDataSetsChangeListener(event -> forceStateChange());
+        chart.addDataSetDataProviderChangeListener(event -> {
+            forceStateChange();
+            forgetChangedItems();
+        });
+        chart.addDataSetsChangeListener(event -> {
+            forceStateChange();
+            forgetChangedItems();
+        });
         forceStateChange();
     }
 
