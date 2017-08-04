@@ -7,7 +7,7 @@ package com.haulmont.charts.gui.amcharts.model.charts;
 
 import com.google.gson.annotations.Expose;
 import com.haulmont.charts.gui.amcharts.model.*;
-import org.apache.commons.collections.CollectionUtils;
+import org.apache.commons.collections4.CollectionUtils;
 
 import java.util.ArrayList;
 import java.util.Arrays;

@@ -20,7 +20,7 @@ import com.haulmont.charts.web.toolkit.ui.client.amstockcharts.CubaAmStockChartS
 import com.vaadin.annotations.StyleSheet;
 import com.vaadin.server.KeyMapper;
 import com.vaadin.ui.AbstractComponent;
-import org.apache.commons.collections.CollectionUtils;
+import org.apache.commons.collections4.CollectionUtils;
 import org.apache.commons.lang.StringUtils;
 import org.apache.commons.lang.builder.HashCodeBuilder;
 import org.slf4j.Logger;

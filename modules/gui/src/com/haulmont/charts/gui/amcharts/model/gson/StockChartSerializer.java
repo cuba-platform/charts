@@ -17,7 +17,7 @@ import com.haulmont.charts.gui.model.JsonEnum;
 import com.haulmont.charts.gui.serialization.JsFunctionSerializer;
 import com.haulmont.charts.gui.serialization.JsonEnumSerializer;
 import com.haulmont.cuba.core.global.AppBeans;
-import org.apache.commons.collections.CollectionUtils;
+import org.apache.commons.collections4.CollectionUtils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 

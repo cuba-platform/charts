@@ -9,7 +9,7 @@ import com.google.gson.JsonElement;
 import com.google.gson.JsonSerializationContext;
 import com.haulmont.charts.gui.pivottable.model.AbstractPivotObject;
 import com.haulmont.charts.gui.pivottable.model.PivotTableModel;
-import org.apache.commons.collections.MapUtils;
+import org.apache.commons.collections4.MapUtils;
 
 import java.lang.reflect.Type;
 import java.util.ArrayList;

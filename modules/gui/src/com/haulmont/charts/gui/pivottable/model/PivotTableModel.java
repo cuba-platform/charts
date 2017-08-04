@@ -14,7 +14,7 @@ import com.haulmont.charts.gui.model.JsFunction;
 import com.haulmont.charts.gui.pivottable.model.gson.PivotDataProviderSerializer;
 import com.haulmont.charts.gui.pivottable.model.gson.PivotJsonSerializationContext;
 import com.haulmont.charts.gui.pivottable.model.gson.PivotTableModelSerializer;
-import org.apache.commons.collections.MapUtils;
+import org.apache.commons.collections4.MapUtils;
 
 import java.util.*;
 
