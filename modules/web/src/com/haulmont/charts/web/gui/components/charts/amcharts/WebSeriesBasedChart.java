@@ -24,6 +24,8 @@ public abstract class WebSeriesBasedChart<T extends SeriesBasedChart, M extends 
 
     protected com.haulmont.charts.web.toolkit.ui.amcharts.events.ZoomListener zoomHandler;
 
+    protected com.haulmont.charts.web.toolkit.ui.amcharts.events.CategoryItemClickListener categoryItemClickHandler;
+
     @Override
     protected void setupDefaults(M chart) {
         super.setupDefaults(chart);
@@ -279,6 +281,28 @@ public abstract class WebSeriesBasedChart<T extends SeriesBasedChart, M extends 
         if (zoomHandler != null && !getEventRouter().hasListeners(ZoomListener.class)) {
             component.removeZoomListener(zoomHandler);
             zoomHandler = null;
+        }
+    }
+
+    @Override
+    public void addCategoryItemClickListener(CategoryItemClickListener listener) {
+        getEventRouter().addListener(CategoryItemClickListener.class, listener);
+        if (categoryItemClickHandler == null) {
+            categoryItemClickHandler = e -> {
+                CategoryItemClickEvent event = new CategoryItemClickEvent(e.getValue(), e.getX(), e.getY(),
+                        e.getOffsetX(), e.getOffsetY(), e.getXAxis(), e.getYAxis());
+                getEventRouter().fireEvent(CategoryItemClickListener.class, CategoryItemClickListener::onClick, event);
+            };
+            component.addCategoryItemClickListener(categoryItemClickHandler);
+        }
+    }
+
+    @Override
+    public void removeCategoryItemClickListener(CategoryItemClickListener listener) {
+        getEventRouter().removeListener(CategoryItemClickListener.class, listener);
+        if (categoryItemClickHandler != null && !getEventRouter().hasListeners(CategoryItemClickListener.class)) {
+            component.removeCategoryItemClickListener(categoryItemClickHandler);
+            categoryItemClickHandler = null;
         }
     }
 }

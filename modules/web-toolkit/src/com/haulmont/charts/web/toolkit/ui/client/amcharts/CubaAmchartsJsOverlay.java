@@ -424,4 +424,16 @@ public class CubaAmchartsJsOverlay {
         }
         return null;
     }-*/;
+
+    public void addCategoryItemClickHandler(Consumer<JsCategoryItemClickEvent> handler) {
+        addCategoryItemClickHandler(chart, handler);
+    }
+
+    protected native static void addCategoryItemClickHandler(JavaScriptObject chart, Consumer<JsCategoryItemClickEvent> handler) /*-{
+        if (chart.categoryAxis) {
+            chart.categoryAxis.addListener("clickItem", $entry(function (event) {
+                handler.@java.util.function.Consumer::accept(*)(event);
+            }));
+        }
+    }-*/;
 }

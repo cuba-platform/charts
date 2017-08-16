@@ -45,4 +45,6 @@ public interface CubaAmchartsServerRpc extends ServerRpc {
     void onCursorPeriodSelect(String start, String end);
 
     void onValueAxisZoom(String axisId, double startValue, double endValue);
+
+    void onCategoryItemClick(String value, int x, int y, int offsetX, int offsetY, int xAxis, int yAxis);
 }

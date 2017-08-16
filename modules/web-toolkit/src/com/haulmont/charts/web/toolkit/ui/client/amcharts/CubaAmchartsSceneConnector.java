@@ -336,6 +336,12 @@ public class CubaAmchartsSceneConnector extends AbstractComponentConnector {
                     event.getStartValue(), event.getEndValue())
             );
         }
+        if (events.contains(CubaAmchartsSceneState.CATEGORY_ITEM_CLICK_EVENT)) {
+            amchartsEvents.setCategoryItemClickHandler(event ->
+                    rpc.onCategoryItemClick(event.getValue(), event.getX(), event.getY(),
+                    event.getOffsetX(), event.getOffsetY(), event.getXAxis(), event.getYAxis())
+            );
+        }
     }
 
     protected void bindCoordinateChartEvents(AmchartsEvents amchartsEvents, Set<String> events) {

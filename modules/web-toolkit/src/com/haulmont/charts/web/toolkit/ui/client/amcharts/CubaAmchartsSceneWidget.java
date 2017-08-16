@@ -119,6 +119,9 @@ public class CubaAmchartsSceneWidget extends Widget {
         if (amchartsEvents.getAxisZoomHandler() != null) {
             jsOverlay.addAxisZoomHandler(amchartsEvents.getAxisZoomHandler());
         }
+        if (amchartsEvents.getCategoryItemClickHandler() != null) {
+            jsOverlay.addCategoryItemClickHandler(amchartsEvents.getCategoryItemClickHandler());
+        }
 
         Scheduler.get().scheduleDeferred(this::updateSize);
     }

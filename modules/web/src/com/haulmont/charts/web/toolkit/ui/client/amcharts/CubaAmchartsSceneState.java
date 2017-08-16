@@ -38,6 +38,8 @@ public class CubaAmchartsSceneState extends AbstractComponentState {
 
     public static final String VALUE_AXIS_ZOOM_EVENT = "vaz";
 
+    public static final String CATEGORY_ITEM_CLICK_EVENT = "cic";
+
     // Custom JSON chart configuration
     public String json;
 }

@@ -33,6 +33,8 @@ public class AmchartsEvents {
     private Consumer<JsCursorEvent> cursorZoomHandler;
     private Consumer<JsAxisZoomedEvent> axisZoomHandler;
 
+    private Consumer<JsCategoryItemClickEvent> categoryItemClickHandler;
+
     public Consumer<JsChartClickEvent> getChartClickHandler() {
         return chartClickHandler;
     }
@@ -167,5 +169,13 @@ public class AmchartsEvents {
 
     public void setAxisZoomHandler(Consumer<JsAxisZoomedEvent> axisZoomHandler) {
         this.axisZoomHandler = axisZoomHandler;
+    }
+
+    public void setCategoryItemClickHandler(Consumer<JsCategoryItemClickEvent> categoryItemClickHandler) {
+        this.categoryItemClickHandler = categoryItemClickHandler;
+    }
+
+    public Consumer<JsCategoryItemClickEvent> getCategoryItemClickHandler() {
+        return categoryItemClickHandler;
     }
 }

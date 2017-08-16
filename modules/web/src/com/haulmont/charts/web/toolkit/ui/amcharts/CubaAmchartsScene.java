@@ -87,6 +87,9 @@ public class CubaAmchartsScene extends AbstractComponent {
     protected final static Method axisZoomMethod =
             findMethod(AxisZoomListener.class, "onZoom", AxisZoomEvent.class);
 
+    protected final static Method categoryItemClickMethod =
+            findMethod(CategoryItemClickListener.class, "onClick", CategoryItemClickEvent.class);
+
     protected final DataChangeListener changeListener = new ProxyChangeForwarder(this);
 
     protected boolean dirty = false;
@@ -371,6 +374,14 @@ public class CubaAmchartsScene extends AbstractComponent {
         removeListener(CubaAmchartsSceneState.VALUE_AXIS_ZOOM_EVENT, AxisZoomEvent.class, listener);
     }
 
+    public void addCategoryItemClickListener(CategoryItemClickListener listener) {
+        addListener(CubaAmchartsSceneState.CATEGORY_ITEM_CLICK_EVENT, CategoryItemClickEvent.class, listener, categoryItemClickMethod);
+    }
+
+    public void removeCategoryItemClickListener(CategoryItemClickListener listener) {
+        removeListener(CubaAmchartsSceneState.CATEGORY_ITEM_CLICK_EVENT, CategoryItemClickEvent.class, listener);
+    }
+
     @Override
     public void beforeClientResponse(boolean initial) {
         super.beforeClientResponse(initial);
@@ -603,6 +614,11 @@ public class CubaAmchartsScene extends AbstractComponent {
         @Override
         public void onValueAxisZoom(String axisId, double startValue, double endValue) {
             fireEvent(new AxisZoomEvent(CubaAmchartsScene.this, axisId, startValue, endValue));
+        }
+
+        @Override
+        public void onCategoryItemClick(String value, int x, int y, int offsetX, int offsetY, int xAxis, int yAxis) {
+            fireEvent(new CategoryItemClickEvent(CubaAmchartsScene.this, value, x, y, offsetX, offsetY, xAxis, yAxis));
         }
     }
 
