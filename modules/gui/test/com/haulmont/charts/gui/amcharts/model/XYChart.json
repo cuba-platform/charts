@@ -52,7 +52,7 @@
       "title": "Y Axis"
     }
   ],
-  "path": "VAADIN/resources/amcharts/",
+  "path": "VAADIN/webjars/amcharts/",
   "type": "xy",
   "dataProvider": [
     {

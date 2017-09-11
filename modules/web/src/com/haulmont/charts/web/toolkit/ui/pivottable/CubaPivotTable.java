@@ -14,8 +14,7 @@ import com.haulmont.charts.web.toolkit.ui.pivottable.events.RefreshEvent;
 import com.haulmont.charts.web.toolkit.ui.pivottable.events.RefreshListener;
 import com.haulmont.cuba.core.global.AppBeans;
 import com.haulmont.cuba.core.global.Messages;
-import com.vaadin.annotations.JavaScript;
-import com.vaadin.annotations.StyleSheet;
+import com.haulmont.cuba.web.sys.WebJarResource;
 import com.vaadin.ui.AbstractComponent;
 import org.apache.commons.lang.StringUtils;
 import org.slf4j.Logger;
@@ -28,19 +27,17 @@ import java.util.Map;
 
 import static com.vaadin.util.ReflectTools.findMethod;
 
-@JavaScript({
-        "vaadin://resources/jquery/jquery-ui.min.js",
-        "vaadin://resources/pivottable/pivot.min.js",
-        "vaadin://resources/pivottable/tips_data.min.js",
-        "vaadin://resources/pivottable/plugins/d3/d3.min.js",
-        "vaadin://resources/pivottable/plugins/c3/c3.min.js",
-        "vaadin://resources/pivottable/c3_renderers.min.js",
-        "vaadin://resources/pivottable/d3_renderers.min.js",
-        "vaadin://resources/pivottable/export_renderers.min.js"
-})
-@StyleSheet({
-        "vaadin://resources/pivottable/pivot.min.css",
-        "vaadin://resources/pivottable/plugins/c3/c3.min.css"
+@WebJarResource({
+        "jquery-ui/1.12.1/jquery-ui.min.js",
+        "pivottable/2.3.0/pivot.min.js",
+        "pivottable/2.3.0/tips_data.min.js",
+        "pivottable/2.3.0/plugins/d3/d3.min.js",
+        "pivottable/2.3.0/plugins/c3/c3.min.js",
+        "pivottable/2.3.0/c3_renderers.min.js",
+        "pivottable/2.3.0/d3_renderers.min.js",
+        "pivottable/2.3.0/export_renderers.min.js",
+        "pivottable/2.3.0/pivot.min.css",
+        "pivottable/2.3.0/plugins/c3/c3.min.css"
 })
 public class CubaPivotTable extends AbstractComponent {
     private static final long serialVersionUID = 3250758720037122580L;

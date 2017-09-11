@@ -112,7 +112,7 @@
         "markerType": "none"
       },
       "title": "Value",
-      "path": "VAADIN/resources/amcharts/"
+      "path": "VAADIN/webjars/amcharts/"
     },
     {
       "id": "p2",
@@ -130,13 +130,13 @@
         "markerType": "none"
       },
       "title": "Volume",
-      "path": "VAADIN/resources/amcharts/"
+      "path": "VAADIN/webjars/amcharts/"
     }
   ],
   "panelsSettings": {
     "usePrefixes": true
   },
-  "path": "VAADIN/resources/amcharts/",
+  "path": "VAADIN/webjars/amcharts/",
   "periodSelector": {
     "inputFieldWidth": 150,
     "periods": [

@@ -345,7 +345,7 @@
         "periodValueTextRegular": "[[value.close]]"
       },
       "title": "Value",
-      "path": "VAADIN/resources/amcharts/"
+      "path": "VAADIN/webjars/amcharts/"
     },
     {
       "id": "panel2",
@@ -362,10 +362,10 @@
         "periodValueTextRegular": "[[value.close]]"
       },
       "title": "Volume",
-      "path": "VAADIN/resources/amcharts/"
+      "path": "VAADIN/webjars/amcharts/"
     }
   ],
-  "path": "VAADIN/resources/amcharts/",
+  "path": "VAADIN/webjars/amcharts/",
   "periodSelector": {
     "periods": [
       {

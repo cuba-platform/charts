@@ -76,7 +76,7 @@ public class StockChartGroup extends ChartModelImpl implements StockChartModel<S
 
     private PanelsSettings panelsSettings;
 
-    private String path = "VAADIN/resources/amcharts/";
+    private String path = "VAADIN/webjars/amcharts/";
 
     private String pathToImages;
 

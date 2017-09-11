@@ -20,7 +20,6 @@
 
     <module name="web" dependsOn="gui" blocks="web">
         <artifact name="charts-web" appJar="true"/>
-        <artifact name="charts-web" classifier="web" ext="zip" configuration="webcontent"/>
         <artifact name="charts-web-toolkit" classifier="web" ext="zip" configuration="webcontent"
                   skipIfExists="web-toolkit"/>
 

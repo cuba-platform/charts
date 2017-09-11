@@ -254,6 +254,9 @@ configure(chartsWebModule) {
         compile(chartsGuiModule)
         compile(cubaWeb)
 
+        compile(bom['org.webjars:pivottable'])
+        compile(bom['org.webjars:amcharts'])
+
         compile(bom['com.haulmont.thirdparty:googlemaps']) {
             exclude(group: 'junit', module: 'junit')
         }
@@ -266,16 +269,5 @@ configure(chartsWebModule) {
             from sourceSets.main.allJava
             include 'com/haulmont/charts/web/toolkit/ui/client/**'
         }
-    }
-
-    task webArchive(type: Zip) {
-        from file('web')
-        from file("$buildDir/web")
-        exclude '**/web.xml', '**/app.properties'
-        classifier = 'web'
-    }
-
-    artifacts {
-        archives webArchive
     }
 }

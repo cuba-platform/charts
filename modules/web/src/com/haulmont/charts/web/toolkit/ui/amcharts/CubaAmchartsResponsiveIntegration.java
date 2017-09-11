@@ -5,12 +5,12 @@
 
 package com.haulmont.charts.web.toolkit.ui.amcharts;
 
-import com.vaadin.annotations.JavaScript;
+import com.haulmont.cuba.web.sys.WebJarResource;
 import com.vaadin.server.AbstractExtension;
 import com.vaadin.server.Extension;
 import com.vaadin.ui.UI;
 
-@JavaScript(value = "vaadin://resources/amcharts/plugins/responsive/responsive.min.js")
+@WebJarResource("amcharts/plugins/responsive/responsive.min.js")
 public class CubaAmchartsResponsiveIntegration extends AbstractExtension {
 
     public static CubaAmchartsResponsiveIntegration get(UI ui) {

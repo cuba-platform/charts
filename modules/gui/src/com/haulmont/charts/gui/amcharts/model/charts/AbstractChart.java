@@ -92,7 +92,7 @@ public abstract class AbstractChart<T extends AbstractChartObject & ChartModel> 
 
     private Boolean panEventsEnabled;
 
-    private String path = "VAADIN/resources/amcharts/";
+    private String path = "VAADIN/webjars/amcharts/";
 
     private String pathToImages;
 

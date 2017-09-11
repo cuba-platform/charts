@@ -9,35 +9,33 @@ import com.google.gson.*;
 import com.haulmont.charts.gui.amcharts.model.Settings;
 import com.haulmont.charts.gui.amcharts.model.gson.ChartSettingsSerializer;
 import com.haulmont.charts.web.toolkit.ui.client.amcharts.CubaAmchartsIntegrationState;
-import com.vaadin.annotations.JavaScript;
-import com.vaadin.annotations.StyleSheet;
+import com.haulmont.cuba.web.sys.WebJarResource;
 import com.vaadin.server.AbstractExtension;
 import com.vaadin.server.Extension;
 import com.vaadin.ui.UI;
 
 import java.util.*;
 
-@JavaScript({
-        "vaadin://resources/amcharts/amcharts.js",
-        "vaadin://resources/amcharts/funnel.js",
-        "vaadin://resources/amcharts/gauge.js",
-        "vaadin://resources/amcharts/pie.js",
-        "vaadin://resources/amcharts/radar.js",
-        "vaadin://resources/amcharts/serial.js",
-        "vaadin://resources/amcharts/xy.js",
-        "vaadin://resources/amcharts/gantt.js",
-        "vaadin://resources/amcharts/amstock.js",
+@WebJarResource({
+        "amcharts/amcharts.js",
+        "amcharts/funnel.js",
+        "amcharts/gauge.js",
+        "amcharts/pie.js",
+        "amcharts/radar.js",
+        "amcharts/serial.js",
+        "amcharts/xy.js",
+        "amcharts/gantt.js",
+        "amcharts/amstock.js",
 
-        "vaadin://resources/amcharts/themes/black.js",
-        "vaadin://resources/amcharts/themes/chalk.js",
-        "vaadin://resources/amcharts/themes/dark.js",
-        "vaadin://resources/amcharts/themes/light.js",
-        "vaadin://resources/amcharts/themes/patterns.js",
+        "amcharts/themes/black.js",
+        "amcharts/themes/chalk.js",
+        "amcharts/themes/dark.js",
+        "amcharts/themes/light.js",
+        "amcharts/themes/patterns.js",
 
-        "vaadin://resources/amcharts/plugins/export/export.min.js"
-})
-@StyleSheet({
-        "vaadin://resources/amcharts/plugins/export/export.css"
+        "amcharts/plugins/export/export.min.js",
+
+        "amcharts/plugins/export/export.css"
 })
 public class CubaAmchartsIntegration extends AbstractExtension {
 
