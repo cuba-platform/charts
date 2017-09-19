@@ -9,7 +9,6 @@ import com.haulmont.cuba.core.config.Config;
 import com.haulmont.cuba.core.config.Property;
 import com.haulmont.cuba.core.config.Source;
 import com.haulmont.cuba.core.config.SourceType;
-import com.haulmont.cuba.core.config.defaults.DefaultBoolean;
 import com.haulmont.cuba.core.config.defaults.DefaultDouble;
 import com.haulmont.cuba.core.config.defaults.DefaultString;
 
@@ -51,4 +50,18 @@ public interface MapConfig extends Config {
     @Property("charts.map.defaultLongitude")
     Double getDefLongitude();
     void setDefLongitude(Double defLongitude);
+
+    /**
+     * Version of Google Maps API that should be used.
+     * <p>
+     * You can set this property to the "3" to use last released version of Google Maps API or to the "3.exp",
+     * if you want to use experimental version.
+     * <p>
+     * Visit the official Google Maps API <a href="https://developers.google.com/maps/documentation/javascript/versions">documentation</a>
+     * for more information.
+     */
+    @DefaultString("3.28")
+    @Property("charts.map.apiVersion")
+    String getMapsApiVersion();
+    void setMapsApiVersion(String apiVersion);
 }
