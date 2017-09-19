@@ -344,8 +344,7 @@
         "periodValueTextComparing": "[[percents.value.close]]%",
         "periodValueTextRegular": "[[value.close]]"
       },
-      "title": "Value",
-      "path": "VAADIN/webjars/amcharts/"
+      "title": "Value"
     },
     {
       "id": "panel2",
@@ -361,11 +360,9 @@
       "stockLegend": {
         "periodValueTextRegular": "[[value.close]]"
       },
-      "title": "Volume",
-      "path": "VAADIN/webjars/amcharts/"
+      "title": "Volume"
     }
   ],
-  "path": "VAADIN/webjars/amcharts/",
   "periodSelector": {
     "periods": [
       {

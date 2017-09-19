@@ -158,6 +158,12 @@ public class AmStockChartConfig extends JavaScriptObject {
                     if (panel.valueAxes) {
                         parseValueAxes(panel.valueAxes);
                     }
+                    if (!panel.path) {
+                        panel.path = "VAADIN/webjars/amcharts/";
+                    }
+                    if (!panel.pathToImages) {
+                        panel.pathToImages = "VAADIN/webjars/amcharts/images/";
+                    }
                 }
             }
         })();

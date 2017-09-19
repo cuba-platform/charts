@@ -13,7 +13,6 @@
     "markerType": "circle",
     "position": "right"
   },
-  "path": "VAADIN/webjars/amcharts/",
   "type": "pie",
   "dataProvider": [
     {

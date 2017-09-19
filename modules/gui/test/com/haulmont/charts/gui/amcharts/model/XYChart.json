@@ -52,7 +52,6 @@
       "title": "Y Axis"
     }
   ],
-  "path": "VAADIN/webjars/amcharts/",
   "type": "xy",
   "dataProvider": [
     {

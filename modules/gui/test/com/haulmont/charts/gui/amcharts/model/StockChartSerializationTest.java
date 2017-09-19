@@ -13,7 +13,6 @@ import com.haulmont.charts.gui.data.DataProvider;
 import com.haulmont.charts.gui.data.ListDataProvider;
 import com.haulmont.charts.gui.data.MapDataItem;
 import org.apache.commons.lang.time.DateUtils;
-import org.junit.Assert;
 import org.junit.Test;
 
 import java.io.IOException;

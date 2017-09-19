@@ -35,7 +35,6 @@
   "export": {
     "enabled": true
   },
-  "path": "VAADIN/webjars/amcharts/",
   "type": "serial",
   "dataProvider": [
     {
