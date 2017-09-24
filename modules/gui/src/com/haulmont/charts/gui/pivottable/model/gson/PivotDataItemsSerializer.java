@@ -9,14 +9,10 @@ import com.google.gson.JsonObject;
 import com.google.gson.JsonSerializationContext;
 import com.haulmont.charts.gui.data.DataItem;
 import com.haulmont.charts.gui.data.EntityDataItem;
-import com.haulmont.chile.core.datatypes.Datatypes;
-import com.haulmont.chile.core.datatypes.impl.DateDatatype;
 import com.haulmont.chile.core.datatypes.impl.EnumClass;
-import com.haulmont.chile.core.datatypes.impl.TimeDatatype;
 import com.haulmont.chile.core.model.Instance;
 import com.haulmont.chile.core.model.MetaClass;
 import com.haulmont.chile.core.model.MetaProperty;
-import com.haulmont.chile.core.model.Range;
 import com.haulmont.chile.core.model.utils.InstanceUtils;
 import com.haulmont.cuba.core.entity.Entity;
 import com.haulmont.cuba.core.global.AppBeans;
@@ -24,6 +20,7 @@ import com.haulmont.cuba.core.global.Messages;
 import com.haulmont.cuba.core.global.Metadata;
 import org.apache.commons.lang.BooleanUtils;
 
+import java.sql.Time;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Date;
@@ -67,10 +64,10 @@ public class PivotDataItemsSerializer {
                 MetaClass metaClass = metadata.getClassNN(entityItem.getItem().getClass());
                 MetaProperty metaProperty = metaClass.getPropertyNN(property);
 
-                Range range = metaProperty.getRange();
-                if (range.asDatatype().equals(Datatypes.get(DateDatatype.NAME))) {
+                Class type = metaProperty.getRange().asDatatype().getJavaClass();
+                if (type.equals(java.sql.Date.class)) {
                     formatStr = messages.getMainMessage("dateFormat");
-                } else if (range.asDatatype().equals(Datatypes.get(TimeDatatype.NAME))) {
+                } else if (type.equals(Time.class)) {
                     formatStr = messages.getMainMessage("timeFormat");
                 } else {
                     formatStr = messages.getMainMessage("dateTimeFormat");
