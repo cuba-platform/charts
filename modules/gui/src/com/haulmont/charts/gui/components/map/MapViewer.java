@@ -528,7 +528,9 @@ public interface MapViewer extends Component, Component.BelongToFrame, Component
     void setVisibleAreaBoundLimitsEnabled(boolean enabled);
 
     /**
-     * Changes map viewpoint to contain area defined by a given bounds
+     * Changes map viewpoint to contain area defined by a given bounds. If the boundsNE has longitude
+     * less than boundsSW longitude, so viewpoint will be changed to the bounds from boundsSW
+     * of the first part of MapViewer to the boundsNE of next part of MapViewer.
      * @param boundsNE north-east coordinate
      * @param boundsSW south-west coordinate
      */
