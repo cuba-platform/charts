@@ -117,7 +117,7 @@ configure([chartsGlobalModule, chartsGuiModule, chartsWebModule]) {
             html {
                 enabled = true
                 stylesheet = rootProject.resources.text.fromFile("findbugs/fancy-hist.xsl")
-                destination "${project.buildDir}/reports/findbugs/${project.name}.html"
+                destination file("${project.buildDir}/reports/findbugs/${project.name}.html")
             }
         }
     }
@@ -128,7 +128,7 @@ configure([chartsGlobalModule, chartsGuiModule, chartsWebModule]) {
             html {
                 enabled = true
                 stylesheet = rootProject.resources.text.fromFile("findbugs/fancy-hist.xsl")
-                destination "${project.buildDir}/reports/findbugs/test-${project.name}.html"
+                destination file("${project.buildDir}/reports/findbugs/test-${project.name}.html")
             }
         }
     }
