@@ -665,7 +665,7 @@
         <xs:attribute name="labelFrequency" type="xs:double"/>
         <xs:attribute name="labelOffset" type="xs:integer"/>
         <xs:attribute name="labelsEnabled" type="xs:boolean"/>
-        <xs:attribute name="minorTickInterval" type="xs:integer"/>
+        <xs:attribute name="minorTickInterval" type="xs:double"/>
         <xs:attribute name="minorTickLength" type="xs:integer"/>
         <xs:attribute name="radius" type="xs:string"/>
         <xs:attribute name="showFirstLabel" type="xs:string"/>

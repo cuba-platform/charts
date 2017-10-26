@@ -248,7 +248,7 @@ public class AngularGaugeChartLoader extends AbstractChartLoader<AngularGaugeCha
 
                 String minorTickInterval = axisElement.attributeValue("minorTickInterval");
                 if (StringUtils.isNotEmpty(minorTickInterval)) {
-                    axis.setMinorTickInterval(Integer.valueOf(minorTickInterval));
+                    axis.setMinorTickInterval(Double.valueOf(minorTickInterval));
                 }
 
                 String minorTickLength = axisElement.attributeValue("minorTickLength");

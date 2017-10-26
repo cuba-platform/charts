@@ -76,7 +76,7 @@ public class GaugeAxis extends AbstractChartObject {
 
     private Boolean labelsEnabled;
 
-    private Integer minorTickInterval;
+    private Double minorTickInterval;
 
     private Integer minorTickLength;
 
@@ -296,11 +296,11 @@ public class GaugeAxis extends AbstractChartObject {
         return this;
     }
 
-    public Integer getMinorTickInterval() {
+    public Double getMinorTickInterval() {
         return minorTickInterval;
     }
 
-    public GaugeAxis setMinorTickInterval(Integer minorTickInterval) {
+    public GaugeAxis setMinorTickInterval(Double minorTickInterval) {
         this.minorTickInterval = minorTickInterval;
         return this;
     }
