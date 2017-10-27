@@ -2757,7 +2757,7 @@ public abstract class ChartModelLoader<C extends Component> extends AbstractComp
     protected void loadStartEffect(HasStartEffect chart, Element element) {
         String startDuration = element.attributeValue("startDuration");
         if (StringUtils.isNotEmpty(startDuration)) {
-            chart.setStartDuration(Integer.parseInt(startDuration));
+            chart.setStartDuration(Double.parseDouble(startDuration));
         }
 
         String startEffect = element.attributeValue("startEffect");

@@ -55,7 +55,7 @@ public class AngularGaugeChart extends AbstractChart<AngularGaugeChart>
 
     private Integer minRadius;
 
-    private Integer startDuration;
+    private Double startDuration;
 
     private AnimationEffect startEffect;
 
@@ -273,12 +273,12 @@ public class AngularGaugeChart extends AbstractChart<AngularGaugeChart>
     }
 
     @Override
-    public Integer getStartDuration() {
+    public Double getStartDuration() {
         return startDuration;
     }
 
     @Override
-    public AngularGaugeChart setStartDuration(Integer startDuration) {
+    public AngularGaugeChart setStartDuration(Double startDuration) {
         this.startDuration = startDuration;
         return this;
     }

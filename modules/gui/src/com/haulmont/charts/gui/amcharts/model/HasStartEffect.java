@@ -10,6 +10,6 @@ public interface HasStartEffect<T> {
     AnimationEffect getStartEffect();
     T setStartEffect(AnimationEffect startEffect);
 
-    Integer getStartDuration();
-    T setStartDuration(Integer startDuration);
+    Double getStartDuration();
+    T setStartDuration(Double startDuration);
 }

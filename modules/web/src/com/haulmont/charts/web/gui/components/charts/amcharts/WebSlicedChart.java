@@ -389,12 +389,12 @@ public abstract class WebSlicedChart<T extends SlicedChart,
     }
 
     @Override
-    public Integer getStartDuration() {
+    public Double getStartDuration() {
         return getModel().getStartDuration();
     }
 
     @Override
-    public T setStartDuration(Integer startDuration) {
+    public T setStartDuration(Double startDuration) {
         getModel().setStartDuration(startDuration);
         return (T) this;
     }

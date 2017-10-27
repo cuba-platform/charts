@@ -77,7 +77,7 @@ public class PanelsSettings extends AbstractChartObject implements HasMargins<Pa
 
     private Double startAlpha;
 
-    private Integer startDuration;
+    private Double startDuration;
 
     private AnimationEffect startEffect;
 
@@ -367,12 +367,12 @@ public class PanelsSettings extends AbstractChartObject implements HasMargins<Pa
     }
 
     @Override
-    public Integer getStartDuration() {
+    public Double getStartDuration() {
         return startDuration;
     }
 
     @Override
-    public PanelsSettings setStartDuration(Integer startDuration) {
+    public PanelsSettings setStartDuration(Double startDuration) {
         this.startDuration = startDuration;
         return this;
     }

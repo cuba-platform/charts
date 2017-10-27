@@ -99,7 +99,7 @@ public abstract class SlicedChart<T extends SlicedChart> extends AbstractChart<T
 
     private Double startAlpha;
 
-    private Integer startDuration;
+    private Double startDuration;
 
     private AnimationEffect startEffect;
 
@@ -494,12 +494,12 @@ public abstract class SlicedChart<T extends SlicedChart> extends AbstractChart<T
     }
 
     @Override
-    public Integer getStartDuration() {
+    public Double getStartDuration() {
         return startDuration;
     }
 
     @Override
-    public T setStartDuration(Integer startDuration) {
+    public T setStartDuration(Double startDuration) {
         this.startDuration = startDuration;
         return (T) this;
     }

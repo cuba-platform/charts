@@ -559,7 +559,7 @@
 
     <xs:attributeGroup name="hasStartEffect">
         <xs:attribute name="startEffect" type="animationEffect"/>
-        <xs:attribute name="startDuration" type="xs:integer"/>
+        <xs:attribute name="startDuration" type="xs:double"/>
     </xs:attributeGroup>
 
     <!-- Chart controls -->
@@ -2107,7 +2107,7 @@
         <xs:attribute name="recalculateToPercents" type="recalculateToPercents"/>
         <xs:attribute name="sequencedAnimation" type="xs:boolean"/>
         <xs:attribute name="startAlpha" type="xs:double"/>
-        <xs:attribute name="startDuration" type="xs:integer"/>
+        <xs:attribute name="startDuration" type="xs:double"/>
         <xs:attribute name="startEffect" type="animationEffect"/>
         <xs:attribute name="thousandsSeparator" type="xs:string"/>
         <xs:attribute name="usePrefixes" type="xs:boolean"/>

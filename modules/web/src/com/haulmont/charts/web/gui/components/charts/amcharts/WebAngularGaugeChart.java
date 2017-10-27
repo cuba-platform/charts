@@ -216,12 +216,12 @@ public class WebAngularGaugeChart extends WebChart<AngularGaugeChart, com.haulmo
     }
 
     @Override
-    public Integer getStartDuration() {
+    public Double getStartDuration() {
         return getModel().getStartDuration();
     }
 
     @Override
-    public AngularGaugeChart setStartDuration(Integer startDuration) {
+    public AngularGaugeChart setStartDuration(Double startDuration) {
         getModel().setStartDuration(startDuration);
         return this;
     }
