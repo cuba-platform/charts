@@ -111,7 +111,7 @@ public class ChartsSerializationTest {
 
         AbstractChart chart = new XYChart()
                 .setDataProvider(dataProvider)
-                .setStartDuration(1)
+                .setStartDuration(1.0)
                 .setMarginLeft(64)
                 .setMarginBottom(60)
                 .setChartCursor(new Cursor())

@@ -37,7 +37,7 @@
       "yField": "by"
     }
   ],
-  "startDuration": 1,
+  "startDuration": 1.0,
   "valueAxes": [
     {
       "axisAlpha": 0.0,
