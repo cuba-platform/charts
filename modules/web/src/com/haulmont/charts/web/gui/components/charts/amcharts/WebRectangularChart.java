@@ -213,12 +213,12 @@ public abstract class WebRectangularChart<T extends RectangularChart,
     }
 
     @Override
-    public Color getPlotAreaFillColors() {
+    public List<Color> getPlotAreaFillColors() {
         return getModel().getPlotAreaFillColors();
     }
 
     @Override
-    public T setPlotAreaFillColors(Color plotAreaFillColors) {
+    public T setPlotAreaFillColors(List<Color> plotAreaFillColors) {
         getModel().setPlotAreaFillColors(plotAreaFillColors);
         return (T) this;
     }

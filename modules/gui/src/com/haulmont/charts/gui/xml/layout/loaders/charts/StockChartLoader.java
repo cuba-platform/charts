@@ -1776,9 +1776,12 @@ public class StockChartLoader extends ChartModelLoader<StockChart> {
             stockGraph.setCompareGraphFillAlphas(Double.valueOf(compareGraphFillAlphas));
         }
 
-        String compareGraphFillColors = stockGraphElement.attributeValue("compareGraphFillColors");
-        if (StringUtils.isNotEmpty(compareGraphFillColors)) {
-            stockGraph.setCompareGraphFillColors(Color.valueOf(compareGraphFillColors));
+        Element compareGraphFillColors = stockGraphElement.element("compareGraphFillColors");
+        if (compareGraphFillColors != null) {
+            List<Color> colors = loadColors(compareGraphFillColors);
+            if (CollectionUtils.isNotEmpty(colors)) {
+                stockGraph.setCompareGraphFillColors(colors);
+            }
         }
 
         String compareGraphLineAlpha = stockGraphElement.attributeValue("compareGraphLineAlpha");

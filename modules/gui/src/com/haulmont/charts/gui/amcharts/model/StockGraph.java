@@ -52,7 +52,7 @@ public class StockGraph extends AbstractGraph<StockGraph> {
 
     private Double compareGraphFillAlphas;
 
-    private Color compareGraphFillColors;
+    private List<Color> compareGraphFillColors;
 
     private Double compareGraphLineAlpha;
 
@@ -216,11 +216,11 @@ public class StockGraph extends AbstractGraph<StockGraph> {
         return this;
     }
 
-    public Color getCompareGraphFillColors() {
+    public List<Color> getCompareGraphFillColors() {
         return compareGraphFillColors;
     }
 
-    public StockGraph setCompareGraphFillColors(Color compareGraphFillColors) {
+    public StockGraph setCompareGraphFillColors(List<Color> compareGraphFillColors) {
         this.compareGraphFillColors = compareGraphFillColors;
         return this;
     }

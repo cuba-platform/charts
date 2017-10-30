@@ -60,7 +60,7 @@ public abstract class RectangularChart<T extends RectangularChart> extends Coord
 
     private Double plotAreaFillAlphas;
 
-    private Color plotAreaFillColors;
+    private List<Color> plotAreaFillColors;
 
     private Integer plotAreaGradientAngle;
 
@@ -263,12 +263,12 @@ public abstract class RectangularChart<T extends RectangularChart> extends Coord
     }
 
     @Override
-    public Color getPlotAreaFillColors() {
+    public List<Color> getPlotAreaFillColors() {
         return plotAreaFillColors;
     }
 
     @Override
-    public T setPlotAreaFillColors(Color plotAreaFillColors) {
+    public T setPlotAreaFillColors(List<Color> plotAreaFillColors) {
         this.plotAreaFillColors = plotAreaFillColors;
         return (T) this;
     }

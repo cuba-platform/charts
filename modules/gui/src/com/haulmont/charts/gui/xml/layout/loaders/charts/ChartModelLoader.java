@@ -1516,9 +1516,12 @@ public abstract class ChartModelLoader<C extends Component> extends AbstractComp
             graph.setFillAlphas(Double.valueOf(fillAlphas));
         }
 
-        String fillColors = graphElement.attributeValue("fillColors");
-        if (StringUtils.isNotEmpty(fillColors)) {
-            graph.setFillColors(Color.valueOf(fillColors));
+        Element fillColorsElement = graphElement.element("fillColors");
+        if (fillColorsElement != null) {
+            List<Color> colors = loadColors(fillColorsElement);
+            if (CollectionUtils.isNotEmpty(colors)) {
+                graph.setFillColors(colors);
+            }
         }
 
         String fillColorsField = graphElement.attributeValue("fillColorsField");
@@ -1706,9 +1709,12 @@ public abstract class ChartModelLoader<C extends Component> extends AbstractComp
             graph.setNegativeFillAlphas(Double.valueOf(negativeFillAlphas));
         }
 
-        String negativeFillColors = graphElement.attributeValue("negativeFillColors");
-        if (StringUtils.isNotEmpty(negativeFillColors)) {
-            graph.setNegativeFillColors(Color.valueOf(negativeFillColors));
+        Element negativeFillColors = graphElement.element("negativeFillColors");
+        if (negativeFillColors != null) {
+            List<Color> colors = loadColors(negativeFillColors);
+            if (CollectionUtils.isNotEmpty(colors)) {
+                graph.setNegativeFillColors(colors);
+            }
         }
 
         String negativeLineAlpha = graphElement.attributeValue("negativeLineAlpha");
@@ -2344,9 +2350,12 @@ public abstract class ChartModelLoader<C extends Component> extends AbstractComp
             chart.setPlotAreaFillAlphas(Double.valueOf(plotAreaFillAlphas));
         }
 
-        String plotAreaFillColors = element.attributeValue("plotAreaFillColors");
-        if (StringUtils.isNotEmpty(plotAreaFillColors)) {
-            chart.setPlotAreaFillColors(Color.valueOf(plotAreaFillColors));
+        Element plotAreaFillColors = element.element("plotAreaFillColors");
+        if (plotAreaFillColors != null) {
+            List<Color> colors = loadColors(plotAreaFillColors);
+            if (CollectionUtils.isNotEmpty(colors)) {
+                chart.setPlotAreaFillColors(colors);
+            }
         }
 
         String plotAreaGradientAngle = element.attributeValue("plotAreaGradientAngle");

@@ -1137,6 +1137,29 @@
             <xs:element name="pattern" minOccurs="0" maxOccurs="1" type="pattern"/>
             <xs:element name="labelFunction" minOccurs="0" maxOccurs="1"/>
             <xs:element name="legendColorFunction" minOccurs="0" maxOccurs="1"/>
+            <xs:element name="fillColors" minOccurs="0" maxOccurs="1">
+                <xs:complexType>
+                    <xs:sequence minOccurs="0" maxOccurs="1">
+                        <xs:element name="color" minOccurs="0" maxOccurs="unbounded">
+                            <xs:complexType>
+                                <xs:attribute name="value" type="color"/>
+                            </xs:complexType>
+                        </xs:element>
+                    </xs:sequence>
+                </xs:complexType>
+            </xs:element>
+            <xs:element name="negativeFillColors" minOccurs="0" maxOccurs="1">
+                <xs:complexType>
+                    <xs:sequence minOccurs="0" maxOccurs="1">
+                        <xs:element name="color" minOccurs="0" maxOccurs="unbounded">
+                            <xs:complexType>
+                                <xs:attribute name="value" type="color"/>
+                            </xs:complexType>
+                        </xs:element>
+                    </xs:sequence>
+                </xs:complexType>
+            </xs:element>
+
         </xs:all>
 
         <xs:attribute name="id" type="xs:string"/>
@@ -1179,7 +1202,6 @@
         <xs:attribute name="descriptionField" type="xs:string"/>
         <xs:attribute name="errorField" type="xs:string"/>
         <xs:attribute name="fillAlphas" type="xs:double"/>
-        <xs:attribute name="fillColors" type="color"/>
         <xs:attribute name="fillColorsField" type="xs:string"/>
         <xs:attribute name="fillToAxis" type="xs:string"/>
         <xs:attribute name="fillToGraph" type="xs:string"/>
@@ -1214,7 +1236,6 @@
         <xs:attribute name="minDistance" type="xs:integer"/>
         <xs:attribute name="negativeBase" type="xs:double"/>
         <xs:attribute name="negativeFillAlphas" type="xs:double"/>
-        <xs:attribute name="negativeFillColors" type="color"/>
         <xs:attribute name="negativeLineAlpha" type="xs:double"/>
         <xs:attribute name="negativeLineColor" type="color"/>
         <xs:attribute name="newStack" type="xs:boolean"/>
@@ -1378,6 +1399,17 @@
                             </xs:sequence>
                         </xs:complexType>
                     </xs:element>
+                    <xs:element name="plotAreaFillColors" minOccurs="0" maxOccurs="1">
+                        <xs:complexType>
+                            <xs:sequence minOccurs="0" maxOccurs="1">
+                                <xs:element name="color" minOccurs="0" maxOccurs="unbounded">
+                                    <xs:complexType>
+                                        <xs:attribute name="value" type="color"/>
+                                    </xs:complexType>
+                                </xs:element>
+                            </xs:sequence>
+                        </xs:complexType>
+                    </xs:element>
                     <xs:element name="chartCursor" minOccurs="0" maxOccurs="1" type="chartCursor"/>
                     <xs:element name="chartScrollbar" minOccurs="0" maxOccurs="1" type="chartScrollbar"/>
                 </xs:all>
@@ -1398,7 +1430,6 @@
                 <xs:attribute name="plotAreaBorderAlpha" type="xs:double"/>
                 <xs:attribute name="plotAreaBorderColor" type="color"/>
                 <xs:attribute name="plotAreaFillAlphas" type="xs:double"/>
-                <xs:attribute name="plotAreaFillColors" type="color"/>
                 <xs:attribute name="plotAreaGradientAngle" type="xs:integer"/>
                 <xs:attribute name="zoomOutButtonAlpha" type="xs:double"/>
                 <xs:attribute name="zoomOutButtonColor" type="color"/>
@@ -1956,6 +1987,17 @@
                 <xs:all>
                     <xs:element name="compareGraphBalloonFunction" minOccurs="0" maxOccurs="1"/>
                     <xs:element name="compareGraph" minOccurs="0" maxOccurs="1" type="chartGraph"/>
+                    <xs:element name="compareGraphFillColors" minOccurs="0" maxOccurs="1">
+                        <xs:complexType>
+                            <xs:sequence minOccurs="0" maxOccurs="1">
+                                <xs:element name="color" minOccurs="0" maxOccurs="unbounded">
+                                    <xs:complexType>
+                                        <xs:attribute name="value" type="color"/>
+                                    </xs:complexType>
+                                </xs:element>
+                            </xs:sequence>
+                        </xs:complexType>
+                    </xs:element>
                 </xs:all>
 
                 <xs:attribute name="comparable" type="xs:boolean"/>
@@ -1972,7 +2014,6 @@
                 <xs:attribute name="compareGraphCornerRadiusTop" type="xs:integer"/>
                 <xs:attribute name="compareGraphDashLength" type="xs:integer"/>
                 <xs:attribute name="compareGraphFillAlphas" type="xs:double"/>
-                <xs:attribute name="compareGraphFillColors" type="color"/>
                 <xs:attribute name="compareGraphLineAlpha" type="xs:double"/>
                 <xs:attribute name="compareGraphLineColor" type="color"/>
                 <xs:attribute name="compareGraphLineThickness" type="xs:integer"/>

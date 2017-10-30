@@ -44,8 +44,8 @@ public interface RectangularChartModel<T extends RectangularChartModel> extends 
     Double getPlotAreaFillAlphas();
     T setPlotAreaFillAlphas(Double plotAreaFillAlphas);
 
-    Color getPlotAreaFillColors();
-    T setPlotAreaFillColors(Color plotAreaFillColors);
+    List<Color> getPlotAreaFillColors();
+    T setPlotAreaFillColors(List<Color> plotAreaFillColors);
 
     Integer getPlotAreaGradientAngle();
     T setPlotAreaGradientAngle(Integer plotAreaGradientAngle);

@@ -99,7 +99,7 @@ public class AbstractGraph<T extends AbstractGraph> extends AbstractChartObject 
 
     private Double fillAlphas;
 
-    private Color fillColors;
+    private List<Color> fillColors;
 
     private String fillColorsField;
 
@@ -175,7 +175,7 @@ public class AbstractGraph<T extends AbstractGraph> extends AbstractChartObject 
 
     private Double negativeFillAlphas;
 
-    private Color negativeFillColors;
+    private List<Color> negativeFillColors;
 
     private Double negativeLineAlpha;
 
@@ -571,11 +571,11 @@ public class AbstractGraph<T extends AbstractGraph> extends AbstractChartObject 
         return (T) this;
     }
 
-    public Color getFillColors() {
+    public List<Color> getFillColors() {
         return fillColors;
     }
 
-    public T setFillColors(Color fillColors) {
+    public T setFillColors(List<Color> fillColors) {
         this.fillColors = fillColors;
         return (T) this;
     }
@@ -814,11 +814,11 @@ public class AbstractGraph<T extends AbstractGraph> extends AbstractChartObject 
         return (T) this;
     }
 
-    public Color getNegativeFillColors() {
+    public List<Color> getNegativeFillColors() {
         return negativeFillColors;
     }
 
-    public T setNegativeFillColors(Color negativeFillColors) {
+    public T setNegativeFillColors(List<Color> negativeFillColors) {
         this.negativeFillColors = negativeFillColors;
         return (T) this;
     }
