@@ -19,6 +19,7 @@ import com.haulmont.cuba.core.global.AppBeans;
 import com.haulmont.cuba.core.global.Messages;
 import com.haulmont.cuba.core.global.Metadata;
 import org.apache.commons.lang.BooleanUtils;
+import org.apache.commons.lang.StringUtils;
 
 import java.sql.Time;
 import java.text.SimpleDateFormat;
@@ -53,7 +54,9 @@ public class PivotDataItemsSerializer {
     protected void addProperty(JsonObject jsonObject, String property, Object value,
                                PivotJsonSerializationContext context, DataItem item) {
         Object formattedValue;
-        if (value instanceof Entity) {
+        if (value == null) {
+            formattedValue = StringUtils.EMPTY;
+        } else if (value instanceof Entity) {
             formattedValue = InstanceUtils.getInstanceName((Instance) value);
         } else if (value instanceof EnumClass) {
             formattedValue = messages.getMessage((Enum) value);
