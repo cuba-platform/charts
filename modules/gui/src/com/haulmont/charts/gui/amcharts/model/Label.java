@@ -34,9 +34,9 @@ public class Label extends AbstractChartObject {
 
     private String url;
 
-    private Integer x;
+    private String x;
 
-    private Integer y;
+    private String y;
 
     public Align getAlign() {
         return align;
@@ -110,20 +110,48 @@ public class Label extends AbstractChartObject {
         return this;
     }
 
-    public Integer getX() {
+    /**
+     * Gets the x position of the label.
+     *
+     * @return String with double or double with "%".
+     */
+    public String getX() {
         return x;
     }
 
-    public Label setX(Integer x) {
+    /**
+     * Sets the x position of the label. You can set x coordinate in percentage or in pixels format.
+     * For instance, 50% - position with percentage, 50 - position in pixels.
+     *
+     * @param x double or double with "%".
+     * @return
+     */
+    public Label setX(String x) {
+        checkCorrectInputFormat(x);
+
         this.x = x;
         return this;
     }
 
-    public Integer getY() {
+    /**
+     * Gets the y position of the label.
+     *
+     * @return String with double or double with "%".
+     */
+    public String getY() {
         return y;
     }
 
-    public Label setY(Integer y) {
+    /**
+     * Sets the x position of the label. You can set x coordinate in percentage or in pixels format.
+     * For instance, 50% - position with percentage, 50 - position in pixels.
+     *
+     * @param y double or double with "%".
+     * @return
+     */
+    public Label setY(String y) {
+        checkCorrectInputFormat(y);
+
         this.y = y;
         return this;
     }
@@ -144,5 +172,22 @@ public class Label extends AbstractChartObject {
     public Label setTabIndex(Integer tabIndex) {
         this.tabIndex = tabIndex;
         return this;
+    }
+
+    @SuppressWarnings("ResultOfMethodCallIgnored")
+    protected void checkCorrectInputFormat(String value) {
+        if (value == null) {
+            return;
+        }
+
+        if (value.endsWith("%")) {
+            value = value.substring(0, value.length() - 1);
+        }
+        try {
+            Double.parseDouble(value);
+        } catch (NumberFormatException e) {
+            throw new IllegalArgumentException(String.format("Can not set '%s' value. " +
+                    "Try to set numbers or percentage values.", value));
+        }
     }
 }

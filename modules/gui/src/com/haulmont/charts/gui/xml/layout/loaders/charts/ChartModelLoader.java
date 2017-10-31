@@ -2928,12 +2928,12 @@ public abstract class ChartModelLoader<C extends Component> extends AbstractComp
 
                 String x = labelElement.attributeValue("x");
                 if (StringUtils.isNotEmpty(x)) {
-                    label.setX(Integer.parseInt(x));
+                    label.setX(x);
                 }
 
                 String y = labelElement.attributeValue("y");
                 if (StringUtils.isNotEmpty(y)) {
-                    label.setY(Integer.parseInt(y));
+                    label.setY(y);
                 }
 
                 chart.addLabels(label);

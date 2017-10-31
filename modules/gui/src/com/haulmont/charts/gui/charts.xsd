@@ -957,8 +957,8 @@
         <xs:attribute name="tabIndex" type="xs:integer"/>
         <xs:attribute name="text" type="xs:string"/>
         <xs:attribute name="url" type="xs:string"/>
-        <xs:attribute name="x" type="xs:integer"/>
-        <xs:attribute name="y" type="xs:integer"/>
+        <xs:attribute name="x" type="xs:string"/>
+        <xs:attribute name="y" type="xs:string"/>
     </xs:complexType>
 
     <xs:complexType name="title">
