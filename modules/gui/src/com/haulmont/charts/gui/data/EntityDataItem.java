@@ -38,7 +38,7 @@ public class EntityDataItem implements DataItem, DataItem.HasId {
      */
     @Override
     public Object getValue(String property) {
-        Object value = item.getValue(property);
+        Object value = item.getValueEx(property);
         if (value instanceof Collection) {
             List<DataItem> items = new ArrayList<>();
 

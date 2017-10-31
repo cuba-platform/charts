@@ -5,6 +5,7 @@
 
 package com.haulmont.charts.gui.data;
 
+import com.haulmont.chile.core.model.utils.InstanceUtils;
 import com.haulmont.chile.core.model.utils.MethodsCache;
 
 import java.util.ArrayList;
@@ -45,34 +46,61 @@ public class SimpleDataItem implements DataItem, DataItem.HasId {
     }
 
     /**
-     * Returns the value of a property with the specified property name.
+     * Get an property value. Locates the property by the given path in object graph starting from this object.
      * <p>
-     * <p> Each property in a class which will be used by {@code SimpleDataItem} must have a {@code public} getter method.
+     * Each property in a class which will be used by {@code SimpleDataItem} must have a {@code public} getter method.
      * Reflection is used to get property values.
      *
-     * @param property name of property
-     * @return the value of a property with the specified property name.
+     * @param path path to the attribute
+     * @return the value of a property with the specified property path.
      * If property value is an instance of {@link Collection},
      * then method returns {@link List} of {@link SimpleDataItem}.
+     * If any traversing property value is null, this method stops here and returns current value.
      * Otherwise method returns getter value
      */
     @Override
-    public Object getValue(String property) {
-        Object value = getMethodsCache().invokeGetter(item, property);
+    public Object getValue(String path) {
+        String[] properties = InstanceUtils.parseValuePath(path);
+        Object currentValue = null;
+        Object currentObject = item;
 
-        if (value instanceof Collection) {
-            List<DataItem> items = new ArrayList<>();
-
-            for (Object item : (Collection) value) {
-                items.add(new SimpleDataItem(item));
+        for (String property : properties) {
+            if (currentObject == null) {
+                break;
             }
-            return items;
+
+            currentValue = getMethodsCache(currentObject).invokeGetter(currentObject, property);
+
+            if (currentValue == null) {
+                break;
+            }
+
+            if (currentValue instanceof Collection) {
+                List<DataItem> items = new ArrayList<>();
+
+                for (Object item : (Collection) currentValue) {
+                    items.add(new SimpleDataItem(item));
+                }
+                return items;
+            }
+
+            currentObject = currentValue;
         }
-        return value;
+
+        return currentValue;
     }
 
+    /**
+     * @deprecated Use {@link #getMethodsCache(Object)}
+     */
+    @Deprecated
     protected MethodsCache getMethodsCache() {
         Class cls = item.getClass();
+        return methodCacheMap.computeIfAbsent(cls, k -> new MethodsCache(cls));
+    }
+
+    protected MethodsCache getMethodsCache(Object object) {
+        Class cls = object.getClass();
         return methodCacheMap.computeIfAbsent(cls, k -> new MethodsCache(cls));
     }
 
