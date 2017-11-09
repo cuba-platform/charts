@@ -370,6 +370,10 @@
             <xs:enumeration value="PNG"/>
             <xs:enumeration value="SVG"/>
             <xs:enumeration value="PDF"/>
+            <xs:enumeration value="CSV"/>
+            <xs:enumeration value="JSON"/>
+            <xs:enumeration value="XLSX"/>
+            <xs:enumeration value="PRINT"/>
         </xs:restriction>
     </xs:simpleType>
 
@@ -597,7 +601,86 @@
         <xs:attribute name="format" type="exportFormat"/>
         <xs:attribute name="label" type="xs:string"/>
         <xs:attribute name="title" type="xs:string"/>
+        <xs:attribute name="fileName" type="resourceString"/>
+        <xs:attribute name="pageOrientation" type="pageOrientation"/>
+        <xs:attribute name="pageSize" type="pageSize"/>
+        <xs:attribute name="pageOrigin" type="xs:boolean"/>
+        <xs:attribute name="quality" type="xs:double"/>
+        <xs:attribute name="multiplier" type="xs:double"/>
+
+        <xs:attribute name="delay" type="xs:double"/>
+        <xs:attribute name="lossless" type="xs:boolean"/>
+
+        <xs:attribute name="delimiter" type="xs:string"/>
+        <xs:attribute name="quotes" type="xs:boolean"/>
+        <xs:attribute name="escape" type="xs:boolean"/>
+        <xs:attribute name="withHeader" type="xs:boolean"/>
+
+        <xs:attribute name="dateFormat" type="xs:date"/>
+        <xs:attribute name="stringify" type="xs:boolean"/>
     </xs:complexType>
+
+    <xs:simpleType name="pageOrientation">
+        <xs:restriction base="xs:string">
+            <xs:enumeration value="LANDSCAPE"/>
+            <xs:enumeration value="PORTRAIT"/>
+        </xs:restriction>
+    </xs:simpleType>
+
+    <xs:simpleType name="pageSize">
+        <xs:restriction base="xs:string">
+            <xs:enumeration value="4A0"/>
+            <xs:enumeration value="2A0"/>
+            <xs:enumeration value="A0"/>
+            <xs:enumeration value="A1"/>
+            <xs:enumeration value="A2"/>
+            <xs:enumeration value="A3"/>
+            <xs:enumeration value="A4"/>
+            <xs:enumeration value="A5"/>
+            <xs:enumeration value="A6"/>
+            <xs:enumeration value="A7"/>
+            <xs:enumeration value="A8"/>
+            <xs:enumeration value="A9"/>
+            <xs:enumeration value="A10"/>
+            <xs:enumeration value="B0"/>
+            <xs:enumeration value="B1"/>
+            <xs:enumeration value="B2"/>
+            <xs:enumeration value="B3"/>
+            <xs:enumeration value="B4"/>
+            <xs:enumeration value="B5"/>
+            <xs:enumeration value="B6"/>
+            <xs:enumeration value="B7"/>
+            <xs:enumeration value="B8"/>
+            <xs:enumeration value="B9"/>
+            <xs:enumeration value="B10"/>
+            <xs:enumeration value="C0"/>
+            <xs:enumeration value="C1"/>
+            <xs:enumeration value="C2"/>
+            <xs:enumeration value="C3"/>
+            <xs:enumeration value="C4"/>
+            <xs:enumeration value="C5"/>
+            <xs:enumeration value="C6"/>
+            <xs:enumeration value="C7"/>
+            <xs:enumeration value="C8"/>
+            <xs:enumeration value="C9"/>
+            <xs:enumeration value="C10"/>
+            <xs:enumeration value="RA0"/>
+            <xs:enumeration value="RA1"/>
+            <xs:enumeration value="RA2"/>
+            <xs:enumeration value="RA3"/>
+            <xs:enumeration value="RA4"/>
+            <xs:enumeration value="SA0"/>
+            <xs:enumeration value="SA1"/>
+            <xs:enumeration value="SA2"/>
+            <xs:enumeration value="SA3"/>
+            <xs:enumeration value="SA4"/>
+            <xs:enumeration value="EXECUTIVE"/>
+            <xs:enumeration value="FOLIO"/>
+            <xs:enumeration value="LEGAL"/>
+            <xs:enumeration value="LETTER"/>
+            <xs:enumeration value="TABLOID"/>
+        </xs:restriction>
+    </xs:simpleType>
 
     <xs:complexType name="exportLibs">
         <xs:attribute name="path" type="xs:string"/>

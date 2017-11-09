@@ -285,6 +285,76 @@ public abstract class ChartModelLoader<C extends Component> extends AbstractComp
             menuItem.setLabel(loadResourceString(label));
         }
 
+        String fileName = menuItemElement.attributeValue("fileName");
+        if (StringUtils.isNotBlank(fileName)) {
+            menuItem.setFileName(loadResourceString(fileName));
+        }
+
+        String pageOrientation = menuItemElement.attributeValue("pageOrientation");
+        if (StringUtils.isNotBlank(pageOrientation)) {
+            menuItem.setPageOrientation(PageOrientation.valueOf(pageOrientation));
+        }
+
+        String pageOrigin = menuItemElement.attributeValue("pageOrigin");
+        if (StringUtils.isNotEmpty(pageOrigin)) {
+            menuItem.setPageOrigin(Boolean.valueOf(pageOrigin));
+        }
+
+        String quality = menuItemElement.attributeValue("quality");
+        if (StringUtils.isNotEmpty(quality)) {
+            menuItem.setQuality(Double.parseDouble(quality));
+        }
+
+        String multiplier = menuItemElement.attributeValue("multiplier");
+        if (StringUtils.isNotEmpty(multiplier)) {
+            menuItem.setMultiplier(Double.parseDouble(multiplier));
+        }
+
+        String delay = menuItemElement.attributeValue("delay");
+        if (StringUtils.isNotEmpty(delay)) {
+            menuItem.setDelay(Double.parseDouble(delay));
+        }
+
+        String lossless = menuItemElement.attributeValue("lossless");
+        if (StringUtils.isNotEmpty(lossless)) {
+            menuItem.setLossless(Boolean.valueOf(lossless));
+        }
+
+        String delimiter = menuItemElement.attributeValue("delimiter");
+        if (StringUtils.isNotEmpty(delimiter)) {
+            menuItem.setDelimiter(delimiter);
+        }
+
+        String quotes = menuItemElement.attributeValue("quotes");
+        if (StringUtils.isNotEmpty(quotes)) {
+            menuItem.setQuotes(Boolean.valueOf(quotes));
+        }
+
+        String escape = menuItemElement.attributeValue("escape");
+        if (StringUtils.isNotEmpty(escape)) {
+            menuItem.setEscape(Boolean.valueOf(escape));
+        }
+
+        String withHeader = menuItemElement.attributeValue("withHeader");
+        if (StringUtils.isNotEmpty(withHeader)) {
+            menuItem.setWithHeader(Boolean.valueOf(withHeader));
+        }
+
+        String stringify = menuItemElement.attributeValue("stringify");
+        if (StringUtils.isNotEmpty(stringify)) {
+            menuItem.setStringify(Boolean.valueOf(stringify));
+        }
+
+        String dateFormat = menuItemElement.attributeValue("dateFormat");
+        if (StringUtils.isNotEmpty(dateFormat)) {
+            menuItem.setDateFormat(dateFormat);
+        }
+
+        String pageSize = menuItemElement.attributeValue("pageSize");
+        if (StringUtils.isNotEmpty(pageSize)) {
+            menuItem.setPageSize(PageSize.valueFromId(pageSize));
+        }
+
         return menuItem;
     }
 

@@ -81,6 +81,7 @@ public final class ChartLocaleHelper {
         exportLocaleMap.put("menu.label.draw.modes.pencil", messages.getMainMessage("menu.label.draw.modes.pencil", locale));
         exportLocaleMap.put("menu.label.draw.modes.line", messages.getMainMessage("menu.label.draw.modes.line", locale));
         exportLocaleMap.put("menu.label.draw.modes.arrow", messages.getMainMessage("menu.label.draw.modes.arrow", locale));
+        exportLocaleMap.put("label.saved.from", messages.getMainMessage("label.saved.from", locale));
 
         return exportLocaleMap;
     }
