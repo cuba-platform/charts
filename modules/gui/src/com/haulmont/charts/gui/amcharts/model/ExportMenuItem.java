@@ -47,9 +47,9 @@ public class ExportMenuItem extends AbstractChartObject {
     private Double multiplier;
 
     /**
-     * Delay by number of seconds before triggering print.
+     * Delay by number of seconds.
      */
-    private Double delay = 1.0;
+    private Double delay;
 
     /**
      * Enable or disable image optimization when printing. Default value is false;
