@@ -24,22 +24,22 @@ public class ExportMenuItem extends AbstractChartObject {
     /**
      * Default orientation is portrait.
      */
-    private PageOrientation pageOrientation = PageOrientation.PORTRAIT;
+    private PageOrientation pageOrientation;
 
     /**
      * A flag to show / hide the origin of the generated PDF ( pdf format only ). Default value is true
      */
-    private Boolean pageOrigin = true;
+    private Boolean pageOrigin;
 
     /**
      * The format of pdf list. Default value is A4;
      */
-    private PageSize pageSize = PageSize.A4;
+    private PageSize pageSize;
 
     /**
      * A quality of the resulting JPG image. Default value is 1. Available values 0 - 1.
      */
-    private Double quality = 1.0;
+    private Double quality;
 
     /**
      * Scale factor for the generated image.
@@ -54,27 +54,27 @@ public class ExportMenuItem extends AbstractChartObject {
     /**
      * Enable or disable image optimization when printing. Default value is false;
      */
-    private Boolean lossless = false;
+    private Boolean lossless;
 
     /**
      * A string to use as a column delimiter. Default value is ",".
      */
-    private String delimiter = ",";
+    private String delimiter;
 
     /**
      * Set whether to enclose strings in doublequotes. Default value is true.
      */
-    private Boolean quotes = true;
+    private Boolean quotes;
 
     /**
      * Set whether to escape strings. Default value is true.
      */
-    private Boolean escape = true;
+    private Boolean escape;
 
     /**
      * Add header row with column names. Work for CSV and XLSX format. Default value is true.
      */
-    private Boolean withHeader = true;
+    private Boolean withHeader;
 
     /**
      * The date format, work for XLSX format. Do not forget to set
