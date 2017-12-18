@@ -10,10 +10,10 @@ import com.google.gson.JsonSyntaxException;
 import com.haulmont.bali.util.Dom4j;
 import com.haulmont.charts.gui.amcharts.model.*;
 import com.haulmont.charts.gui.amcharts.model.charts.StockPanel;
-import com.haulmont.charts.gui.amcharts.model.data.MapDataItem;
 import com.haulmont.charts.gui.components.charts.StockChart;
 import com.haulmont.charts.gui.data.EntityDataProvider;
 import com.haulmont.charts.gui.data.ListDataProvider;
+import com.haulmont.charts.gui.data.MapDataItem;
 import com.haulmont.cuba.gui.GuiDevelopmentException;
 import com.haulmont.cuba.gui.data.CollectionDatasource;
 import com.haulmont.cuba.gui.data.Datasource;
@@ -393,9 +393,9 @@ public class StockChartLoader extends ChartModelLoader<StockChart> {
             stockEvent.setShowBullet(Boolean.valueOf(showBullet));
         }
 
-        String showOnAxiseriod = stockEventElement.attributeValue("showOnAxis");
-        if (StringUtils.isNotEmpty(showOnAxiseriod)) {
-            stockEvent.setShowOnAxis(Boolean.valueOf(showOnAxiseriod));
+        String showOnAxis = stockEventElement.attributeValue("showOnAxis");
+        if (StringUtils.isNotEmpty(showOnAxis)) {
+            stockEvent.setShowOnAxis(Boolean.valueOf(showOnAxis));
         }
 
         String text = stockEventElement.attributeValue("text");
@@ -934,9 +934,9 @@ public class StockChartLoader extends ChartModelLoader<StockChart> {
                 categoryAxesSettings.setAxisHeight(Integer.valueOf(axisHeight));
             }
 
-            String axiaxisThicknessColor = settingsElement.attributeValue("axisThickness");
-            if (StringUtils.isNotEmpty(axiaxisThicknessColor)) {
-                categoryAxesSettings.setAxisThickness(Integer.valueOf(axiaxisThicknessColor));
+            String axisThickness = settingsElement.attributeValue("axisThickness");
+            if (StringUtils.isNotEmpty(axisThickness)) {
+                categoryAxesSettings.setAxisThickness(Integer.valueOf(axisThickness));
             }
 
             String boldLabels = settingsElement.attributeValue("boldLabels");

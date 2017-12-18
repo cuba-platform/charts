@@ -9,9 +9,9 @@ import com.haulmont.bali.util.Dom4j;
 import com.haulmont.charts.gui.amcharts.model.DatePeriod;
 import com.haulmont.charts.gui.amcharts.model.Graph;
 import com.haulmont.charts.gui.amcharts.model.charts.ChartModel;
-import com.haulmont.charts.gui.amcharts.model.data.MapDataItem;
 import com.haulmont.charts.gui.components.charts.GanttChart;
 import com.haulmont.charts.gui.data.ListDataProvider;
+import com.haulmont.charts.gui.data.MapDataItem;
 import org.apache.commons.lang.StringUtils;
 import org.dom4j.Element;
 
