@@ -22,12 +22,12 @@ import com.haulmont.cuba.core.global.UserSessionSource;
 import com.haulmont.cuba.gui.data.CollectionDatasource;
 import com.haulmont.cuba.gui.data.impl.CollectionDsHelper;
 import com.haulmont.cuba.web.gui.components.WebAbstractComponent;
-import org.apache.commons.lang.ObjectUtils;
 
 import java.text.DecimalFormatSymbols;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Locale;
+import java.util.Objects;
 
 @SuppressWarnings("unchecked")
 public abstract class WebChart<T extends Chart, M extends AbstractChart>
@@ -74,7 +74,7 @@ public abstract class WebChart<T extends Chart, M extends AbstractChart>
         UserSessionSource userSessionSource = AppBeans.get(UserSessionSource.class);
         CubaAmchartsIntegration amchartsIntegration = CubaAmchartsIntegration.get();
         if (amchartsIntegration.getSettings() == null
-                || !ObjectUtils.equals(userSessionSource.getLocale(), amchartsIntegration.getLocale())) {
+                || !Objects.equals(userSessionSource.getLocale(), amchartsIntegration.getLocale())) {
             Settings settings = new Settings();
             Locale locale = userSessionSource.getLocale();
 

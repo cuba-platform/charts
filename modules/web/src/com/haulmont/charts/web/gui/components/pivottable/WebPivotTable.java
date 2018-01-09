@@ -19,11 +19,11 @@ import com.haulmont.cuba.core.global.UserSessionSource;
 import com.haulmont.cuba.gui.data.CollectionDatasource;
 import com.haulmont.cuba.gui.data.impl.CollectionDsHelper;
 import com.haulmont.cuba.web.gui.components.WebAbstractComponent;
-import org.apache.commons.lang.ObjectUtils;
 
 import java.util.List;
 import java.util.Locale;
 import java.util.Map;
+import java.util.Objects;
 
 public class WebPivotTable extends WebAbstractComponent<CubaPivotTable> implements PivotTable {
 
@@ -40,7 +40,7 @@ public class WebPivotTable extends WebAbstractComponent<CubaPivotTable> implemen
         UserSessionSource userSessionSource = AppBeans.get(UserSessionSource.class);
         Locale locale = userSessionSource.getLocale();
 
-        if (!ObjectUtils.equals(userSessionSource.getLocale(), component.getLocale())) {
+        if (!Objects.equals(userSessionSource.getLocale(), component.getLocale())) {
             Messages messages = AppBeans.get(Messages.class);
             String localeString = messages.getTools().localeToString(locale);
             component.setPivotTableMessages(localeString, PivotTableLocaleHelper.getPivotTableLocaleMap(locale));
