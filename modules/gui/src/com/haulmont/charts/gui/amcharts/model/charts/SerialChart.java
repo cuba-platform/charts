@@ -16,7 +16,29 @@ public class SerialChart extends AbstractSerialChart<SerialChart> {
 
     private static final long serialVersionUID = 4640758803235179022L;
 
+    private Integer bezierX;
+
+    private Integer bezierY;
+
     public SerialChart() {
         super(ChartType.SERIAL);
+    }
+
+    public Integer getBezierX() {
+        return bezierX;
+    }
+
+    public SerialChart setBezierX(Integer bezierX) {
+        this.bezierX = bezierX;
+        return this;
+    }
+
+    public Integer getBezierY() {
+        return bezierY;
+    }
+
+    public SerialChart setBezierY(Integer bezierY) {
+        this.bezierY = bezierY;
+        return this;
     }
 }

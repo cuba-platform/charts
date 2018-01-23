@@ -3073,6 +3073,11 @@ public abstract class ChartModelLoader<C extends Component> extends AbstractComp
             chart.setAccessibleTitle(accessibleTitle);
         }
 
+        String accessibleDescription = element.attributeValue("accessibleDescription");
+        if (StringUtils.isNotEmpty(accessibleDescription)) {
+            chart.setAccessibleDescription(accessibleDescription);
+        }
+
         String addClassNames = element.attributeValue("addClassNames");
         if (StringUtils.isNotEmpty(addClassNames)) {
             chart.setAddClassNames(Boolean.valueOf(addClassNames));

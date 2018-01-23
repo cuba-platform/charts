@@ -126,6 +126,8 @@ public abstract class AbstractChart<T extends AbstractChartObject & ChartModel> 
 
     private Responsive responsive;
 
+    private String accessibleDescription;
+
     @Expose(serialize = false, deserialize = false)
     private List<String> additionalFields;
 
@@ -735,6 +737,15 @@ public abstract class AbstractChart<T extends AbstractChartObject & ChartModel> 
     @Override
     public T setAutoTransform(Boolean autoTransform) {
         this.autoTransform = autoTransform;
+        return (T) this;
+    }
+
+    public String getAccessibleDescription() {
+        return accessibleDescription;
+    }
+
+    public T setAccessibleDescription(String accessibleDescription) {
+        this.accessibleDescription = accessibleDescription;
         return (T) this;
     }
 

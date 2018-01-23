@@ -18,10 +18,6 @@ public class Settings extends AbstractChartObject {
 
     private Boolean baseHref;
 
-    private Integer bezierX;
-
-    private Integer bezierY;
-
     private Integer processDelay;
 
     private Boolean useUTC;
@@ -59,24 +55,6 @@ public class Settings extends AbstractChartObject {
 
     public Settings setProcessDelay(Integer processDelay) {
         this.processDelay = processDelay;
-        return this;
-    }
-
-    public Integer getBezierX() {
-        return bezierX;
-    }
-
-    public Settings setBezierX(Integer bezierX) {
-        this.bezierX = bezierX;
-        return this;
-    }
-
-    public Integer getBezierY() {
-        return bezierY;
-    }
-
-    public Settings setBezierY(Integer bezierY) {
-        this.bezierY = bezierY;
         return this;
     }
 }

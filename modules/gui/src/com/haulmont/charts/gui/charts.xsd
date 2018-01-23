@@ -1383,6 +1383,7 @@
 
                 <xs:attribute name="accessible" type="xs:boolean"/>
                 <xs:attribute name="accessibleTitle" type="xs:string"/>
+                <xs:attribute name="accessibleDescription" type="xs:string"/>
                 <xs:attribute name="addClassNames" type="xs:boolean"/>
                 <xs:attribute name="datasource" type="xs:string"/>
 
@@ -1744,7 +1745,10 @@
     <xs:element name="serialChart">
         <xs:complexType>
             <xs:complexContent>
-                <xs:extension base="serialChartType"/>
+                <xs:extension base="serialChartType">
+                    <xs:attribute name="bezierX" type="xs:integer"/>
+                    <xs:attribute name="bezierY" type="xs:integer"/>
+                </xs:extension>
             </xs:complexContent>
         </xs:complexType>
     </xs:element>

@@ -153,4 +153,7 @@ public interface ChartModel<T extends ChartModel> {
 
     Boolean getAutoTransform();
     T setAutoTransform(Boolean autoTransform);
+
+    String getAccessibleDescription();
+    T setAccessibleDescription(String accessibleDescription);
 }

@@ -12,4 +12,10 @@ package com.haulmont.charts.gui.components.charts;
  */
 public interface SerialChart extends SeriesBasedChart<SerialChart> {
     String NAME = "serialChart";
+
+    Integer getBezierX();
+    void setBezierX(Integer bezierX);
+
+    Integer getBezierY();
+    void setBezierY(Integer bezierY);
 }

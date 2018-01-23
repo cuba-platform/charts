@@ -6,6 +6,7 @@
 package com.haulmont.charts.gui.xml.layout.loaders.charts;
 
 import com.haulmont.charts.gui.components.charts.SerialChart;
+import org.dom4j.Element;
 
 public class SerialChartLoader extends AbstractSerialChartLoader<SerialChart> {
 
@@ -13,5 +14,27 @@ public class SerialChartLoader extends AbstractSerialChartLoader<SerialChart> {
     public void createComponent() {
         resultComponent = factory.createComponent(SerialChart.class);
         loadId(resultComponent, element);
+    }
+
+    @Override
+    public void loadComponent() {
+        super.loadComponent();
+
+        loadBezierX(resultComponent, element);
+        loadBezierY(resultComponent, element);
+    }
+
+    private void loadBezierX(SerialChart serialChart, Element element) {
+        String bezierX = element.attributeValue("bezierX");
+        if (bezierX != null && !bezierX.isEmpty()) {
+            serialChart.setBezierX(Integer.valueOf(bezierX));
+        }
+    }
+
+    private void loadBezierY(SerialChart serialChart, Element element) {
+        String bezierY = element.attributeValue("bezierY");
+        if (bezierY != null && !bezierY.isEmpty()) {
+            serialChart.setBezierY(Integer.valueOf(bezierY));
+        }
     }
 }

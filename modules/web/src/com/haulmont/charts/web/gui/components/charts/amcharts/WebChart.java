@@ -829,4 +829,15 @@ public abstract class WebChart<T extends Chart, M extends AbstractChart>
             legendMarkerClickHandler = null;
         }
     }
+
+    @Override
+    public String getAccessibleDescription() {
+        return getModel().getAccessibleDescription();
+    }
+
+    @Override
+    public T setAccessibleDescription(String accessibleDescription) {
+        getModel().setAccessibleDescription(accessibleDescription);
+        return (T) this;
+    }
 }
