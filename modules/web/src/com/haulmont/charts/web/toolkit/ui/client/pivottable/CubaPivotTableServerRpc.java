@@ -8,5 +8,6 @@ package com.haulmont.charts.web.toolkit.ui.client.pivottable;
 import com.vaadin.shared.communication.ServerRpc;
 
 public interface CubaPivotTableServerRpc extends ServerRpc {
-    void onRefresh();
+    void onRefresh(String[] rows, String[] cols, String renderer,
+                   String aggregation, String[] aggregationProperties);
 }

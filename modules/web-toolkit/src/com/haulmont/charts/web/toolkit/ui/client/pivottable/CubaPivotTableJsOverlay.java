@@ -7,7 +7,9 @@ package com.haulmont.charts.web.toolkit.ui.client.pivottable;
 
 import com.google.gwt.core.client.JavaScriptObject;
 import com.google.gwt.dom.client.Element;
-import com.haulmont.charts.web.toolkit.ui.client.pivottable.events.RefreshHandler;
+import com.haulmont.charts.web.toolkit.ui.client.pivottable.events.JsRefreshEvent;
+
+import java.util.function.Consumer;
 
 public class CubaPivotTableJsOverlay {
     protected JavaScriptObject pivotTable;
@@ -17,21 +19,21 @@ public class CubaPivotTableJsOverlay {
     }
 
     public static CubaPivotTableJsOverlay makePivot(Element placeHolder, JavaScriptObject configObject,
-                                                    RefreshHandler refreshHandler, boolean enabled) {
+                                                    Consumer<JsRefreshEvent> refreshHandler, boolean enabled) {
         return new CubaPivotTableJsOverlay(makeJsPivotTable(placeHolder, configObject, refreshHandler, enabled));
     }
 
     protected static native JavaScriptObject makeJsPivotTable(Element placeHolder, JavaScriptObject configObject,
-                                                              RefreshHandler handler, boolean enabled) /*-{
+                                                              Consumer<JsRefreshEvent> handler, boolean enabled) /*-{
         if (handler) {
-            configObject.options["onRefresh"] = $entry(function () {
-                handler.@com.haulmont.charts.web.toolkit.ui.client.pivottable.events.RefreshHandler::onRefresh()();
+            configObject.options["onRefresh"] = $entry(function (config) {
+                handler.@java.util.function.Consumer::accept(*)(config);
             });
         }
 
-        var localeCode = configObject.options.localeCode;
         if (configObject.options.editable) {
-            var pivot = $wnd.jQuery(placeHolder).pivotUI(configObject.data, configObject.options, false, localeCode);
+            var pivot = $wnd.jQuery(placeHolder).pivotUI(configObject.data,
+                configObject.options, false, configObject.options.localeCode);
 
             if (!enabled) {
                 pivot.find("select").attr('disabled', 'disabled');

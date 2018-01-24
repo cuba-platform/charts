@@ -7,6 +7,8 @@ package com.haulmont.charts.gui.pivottable.model;
 
 import com.haulmont.charts.gui.model.JsonEnum;
 
+import javax.annotation.Nullable;
+
 /**
  * An enum with predefined renderers.
  */
@@ -36,6 +38,16 @@ public enum Renderer implements JsonEnum {
 
     public String getId() {
         return id;
+    }
+
+    @Nullable
+    public static Renderer fromId(String id) {
+        for (Renderer renderer : values()) {
+            if (renderer.getId().equals(id)) {
+                return renderer;
+            }
+        }
+        return null;
     }
 
     @Override

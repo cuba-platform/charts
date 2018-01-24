@@ -178,7 +178,9 @@ public class CubaPivotTableSceneConnector extends AbstractComponentConnector {
         Set<String> events = getState().registeredEventListeners;
         if (events != null) {
             if (events.contains(CubaPivotTableSceneState.REFRESH_EVENT)) {
-                pivotTableEvents.setRefreshHandler(() -> rpc.onRefresh());
+                pivotTableEvents.setRefreshHandler(event ->
+                        rpc.onRefresh(event.getRows(), event.getCols(), event.getRenderer(),
+                                event.getAggregation(), event.getAggregationProperties()));
             }
         }
 

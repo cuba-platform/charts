@@ -104,23 +104,28 @@ public class PivotTableConfig extends JavaScriptObject {
                 var aggregations = config.aggregations.aggregations;
                 if (aggregations) {
                     var aggregators = {};
+                    var aggregatorsIds = {};
                     for (var i = 0; i < aggregations.length; i++) {
                         var aggregatorCaption = aggregations[i].caption;
+                        var aggregationKey = aggregatorCaption;
 
                         if (aggregations[i].custom) {
-                            aggregators[aggregatorCaption] = $wnd.eval("(" + aggregations[i]["function"] + ")");
+                            aggregators[aggregationKey] = $wnd.eval("(" + aggregations[i]["function"] + ")");
                         } else {
                             var aggregatorName = localeMapping[aggregations[i].mode];
                             var aggregatorFunc = allAggregators[aggregatorName];
                             if (aggregatorFunc) {
-                                aggregators[aggregatorCaption ? aggregatorCaption : aggregatorName] = aggregatorFunc;
+                                aggregationKey = aggregatorCaption ? aggregatorCaption : aggregatorName;
+                                aggregators[aggregationKey] = aggregatorFunc;
                                 if (aggregatorCaption && config.aggregatorName == aggregatorName) {
                                     config.aggregatorName = aggregatorCaption;
                                 }
                             }
                         }
+                        aggregatorsIds[aggregationKey] = aggregations[i].id;
                     }
                     config.aggregators = aggregators;
+                    config.aggregatorsIds = aggregatorsIds;
                 }
 
                 delete config.aggregations;

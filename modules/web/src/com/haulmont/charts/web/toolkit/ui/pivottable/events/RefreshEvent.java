@@ -5,13 +5,53 @@
 
 package com.haulmont.charts.web.toolkit.ui.pivottable.events;
 
+import com.haulmont.charts.gui.pivottable.model.Aggregation;
+import com.haulmont.charts.gui.pivottable.model.Renderer;
 import com.haulmont.charts.web.toolkit.ui.pivottable.CubaPivotTable;
+
+import javax.annotation.Nullable;
+import java.util.List;
 
 public class RefreshEvent extends com.vaadin.ui.Component.Event {
 
     private static final long serialVersionUID = -5007279701639243292L;
 
-    public RefreshEvent(CubaPivotTable source) {
+    protected List<String> rows;
+    protected List<String> cols;
+    protected Renderer renderer;
+    protected Aggregation aggregation;
+    protected List<String> aggregationProperties;
+
+    public RefreshEvent(CubaPivotTable source,
+                        List<String> rows, List<String> cols, Renderer renderer,
+                        Aggregation aggregation, List<String> aggregationProperties) {
         super(source);
+        this.rows = rows;
+        this.cols = cols;
+        this.renderer = renderer;
+        this.aggregation = aggregation;
+        this.aggregationProperties = aggregationProperties;
+    }
+
+    public List<String> getRows() {
+        return rows;
+    }
+
+    public List<String> getCols() {
+        return cols;
+    }
+
+    @Nullable
+    public Renderer getRenderer() {
+        return renderer;
+    }
+
+    @Nullable
+    public Aggregation getAggregation() {
+        return aggregation;
+    }
+
+    public List<String> getAggregationProperties() {
+        return aggregationProperties;
     }
 }

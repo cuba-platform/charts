@@ -7,6 +7,8 @@ package com.haulmont.charts.gui.pivottable.model;
 
 import com.haulmont.charts.gui.model.JsonEnum;
 
+import javax.annotation.Nullable;
+
 /**
  * An enum with predefined aggregations.
  */
@@ -37,6 +39,16 @@ public enum AggregationMode implements JsonEnum {
 
     public String getId() {
         return id;
+    }
+
+    @Nullable
+    public static AggregationMode fromId(String id) {
+        for (AggregationMode mode : values()) {
+            if (mode.getId().equals(id)) {
+                return mode;
+            }
+        }
+        return null;
     }
 
     @Override

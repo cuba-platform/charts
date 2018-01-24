@@ -5,17 +5,19 @@
 
 package com.haulmont.charts.web.toolkit.ui.client.pivottable;
 
-import com.haulmont.charts.web.toolkit.ui.client.pivottable.events.RefreshHandler;
+import com.haulmont.charts.web.toolkit.ui.client.pivottable.events.JsRefreshEvent;
+
+import java.util.function.Consumer;
 
 public class PivotTableEvents {
 
-    private RefreshHandler refreshHandler;
+    private Consumer<JsRefreshEvent> refreshHandler;
 
-    public RefreshHandler getRefreshHandler() {
+    public Consumer<JsRefreshEvent> getRefreshHandler() {
         return refreshHandler;
     }
 
-    public void setRefreshHandler(RefreshHandler refreshHandler) {
+    public void setRefreshHandler(Consumer<JsRefreshEvent> refreshHandler) {
         this.refreshHandler = refreshHandler;
     }
 }

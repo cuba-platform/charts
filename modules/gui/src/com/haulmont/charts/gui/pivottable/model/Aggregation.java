@@ -6,6 +6,7 @@
 package com.haulmont.charts.gui.pivottable.model;
 
 import com.haulmont.charts.gui.model.JsFunction;
+import com.haulmont.cuba.core.global.UuidProvider;
 
 import java.util.ArrayList;
 import java.util.Arrays;
@@ -17,6 +18,11 @@ import java.util.List;
  */
 public class Aggregation extends AbstractPivotObject {
     private static final long serialVersionUID = 8131812058171838527L;
+
+    /**
+     * Id for the unique identification of this Aggregation
+     */
+    private String id;
 
     /**
      * One of predefined aggregations.
@@ -55,6 +61,14 @@ public class Aggregation extends AbstractPivotObject {
      * Applies only when {@code custom=false}.
      */
     private List<String> properties;
+
+    public Aggregation() {
+        id = UuidProvider.createUuid().toString();
+    }
+
+    public String getId() {
+        return id;
+    }
 
     public AggregationMode getMode() {
         return mode;

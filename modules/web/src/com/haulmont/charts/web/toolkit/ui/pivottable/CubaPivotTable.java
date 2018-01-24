@@ -5,9 +5,16 @@
 
 package com.haulmont.charts.web.toolkit.ui.pivottable;
 
-import com.google.gson.*;
+import com.google.gson.JsonElement;
+import com.google.gson.JsonObject;
+import com.google.gson.JsonParser;
+import com.google.gson.JsonPrimitive;
+import com.google.gson.JsonSyntaxException;
 import com.haulmont.charts.gui.pivottable.model.AbstractPivotObject;
+import com.haulmont.charts.gui.pivottable.model.Aggregation;
 import com.haulmont.charts.gui.pivottable.model.PivotTableModel;
+import com.haulmont.charts.gui.pivottable.model.Renderer;
+import com.haulmont.charts.gui.pivottable.model.Renderers;
 import com.haulmont.charts.web.toolkit.ui.client.pivottable.CubaPivotTableSceneState;
 import com.haulmont.charts.web.toolkit.ui.client.pivottable.CubaPivotTableServerRpc;
 import com.haulmont.charts.web.toolkit.ui.pivottable.events.RefreshEvent;
@@ -20,8 +27,11 @@ import org.apache.commons.lang.StringUtils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
+import javax.annotation.Nullable;
 import java.lang.reflect.Method;
+import java.util.Arrays;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Locale;
 import java.util.Map;
 
@@ -180,8 +190,51 @@ public class CubaPivotTable extends AbstractComponent {
         private static final long serialVersionUID = 4789102026045383363L;
 
         @Override
-        public void onRefresh() {
-            fireEvent(new RefreshEvent(CubaPivotTable.this));
+        public void onRefresh(String[] rows, String[] cols, String rendererId,
+                              String aggregationId, String[] aggregationProperties) {
+            if (!pivotTable.getEditable()) {
+                return;
+            }
+
+            List<String> rowsList = Arrays.asList(rows);
+            List<String> colsList = Arrays.asList(cols);
+            Renderer renderer = Renderer.fromId(rendererId);
+            Aggregation aggregation = findAggregation(aggregationId);
+            List<String> aggregationPropertiesList = Arrays.asList(aggregationProperties);
+
+            pivotTable.setRows(rowsList);
+            pivotTable.setCols(colsList);
+
+            if (pivotTable.getRenderers() == null) {
+                pivotTable.setRenderers(new Renderers());
+            }
+            pivotTable.getRenderers().setDefaultRenderer(renderer);
+
+            boolean hasMode = aggregation != null && !aggregation.getCustom();
+            pivotTable.getAggregations().setDefaultAggregation(hasMode ? aggregation.getMode() : null);
+            if (aggregation != null && aggregation.getCustom()) {
+                // Due to impossibility to set a custom aggregation as the default
+                // we need to set a custom aggregation as the first one and clear
+                // the default aggregation value, so it will be set as the default by pivot.js
+                pivotTable.getAggregations().getAggregations().remove(aggregation);
+                pivotTable.getAggregations().getAggregations().add(0, aggregation);
+            }
+
+            pivotTable.setAggregationProperties(aggregationPropertiesList);
+
+            fireEvent(new RefreshEvent(CubaPivotTable.this,
+                    rowsList, colsList, renderer,
+                    aggregation, aggregationPropertiesList));
+        }
+
+        @Nullable
+        private Aggregation findAggregation(String aggregationId) {
+            for (Aggregation aggregation : pivotTable.getAggregations().getAggregations()) {
+                if (aggregation.getId().equals(aggregationId)) {
+                    return aggregation;
+                }
+            }
+            return null;
         }
     }
 }

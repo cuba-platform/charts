@@ -347,7 +347,10 @@ public class WebPivotTable extends WebAbstractComponent<CubaPivotTable> implemen
         getEventRouter().addListener(RefreshListener.class, refreshListener);
         if (refreshHandler == null) {
             refreshHandler = e -> {
-                RefreshEvent event = new RefreshEvent(WebPivotTable.this);
+                RefreshEvent event = new RefreshEvent(WebPivotTable.this,
+                        e.getRows(), e.getCols(), e.getRenderer(),
+                        e.getAggregation(), e.getAggregationProperties());
+
                 getEventRouter().fireEvent(RefreshListener.class, RefreshListener::onRefresh, event);
             };
             component.addRefreshListener(refreshHandler);

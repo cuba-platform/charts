@@ -12,6 +12,7 @@ import com.haulmont.charts.gui.pivottable.model.*;
 import com.haulmont.cuba.gui.components.Component;
 import com.haulmont.cuba.gui.data.CollectionDatasource;
 
+import javax.annotation.Nullable;
 import java.util.EventObject;
 import java.util.List;
 import java.util.Map;
@@ -448,13 +449,63 @@ public interface PivotTable extends Component, Component.BelongToFrame, Componen
      * Describes PivotTable refresh event.
      */
     class RefreshEvent extends EventObject {
-        public RefreshEvent(PivotTable pivotTable) {
+        protected List<String> rows;
+        protected List<String> cols;
+        protected Renderer renderer;
+        protected Aggregation aggregation;
+        protected List<String> aggregationProperties;
+
+        public RefreshEvent(PivotTable pivotTable,
+                            List<String> rows, List<String> cols, Renderer renderer,
+                            Aggregation aggregation, List<String> aggregationProperties) {
             super(pivotTable);
+            this.rows = rows;
+            this.cols = cols;
+            this.renderer = renderer;
+            this.aggregation = aggregation;
+            this.aggregationProperties = aggregationProperties;
         }
 
         @Override
         public PivotTable getSource() {
             return (PivotTable) super.getSource();
+        }
+
+        /**
+         * @return currently selected properties as rows
+         */
+        public List<String> getRows() {
+            return rows;
+        }
+
+        /**
+         * @return currently selected properties as cols
+         */
+        public List<String> getCols() {
+            return cols;
+        }
+
+        /**
+         * @return currently selected renderer, or null if not selected
+         */
+        @Nullable
+        public Renderer getRenderer() {
+            return renderer;
+        }
+
+        /**
+         * @return currently selected aggregation, or null if not selected
+         */
+        @Nullable
+        public Aggregation getAggregation() {
+            return aggregation;
+        }
+
+        /**
+         * @return currently selected aggreagtion properties, or empty if not selected
+         */
+        public List<String> getAggregationProperties() {
+            return aggregationProperties;
         }
 
         /**
@@ -468,7 +519,7 @@ public interface PivotTable extends Component, Component.BelongToFrame, Componen
     }
 
     /**
-     * Listener to the pivot table refresh events. Fired upon renderer refresh.
+     * Listener to the pivot table refresh events. Fired only for editable PivotTable.
      */
     interface RefreshListener {
         void onRefresh(RefreshEvent event);
