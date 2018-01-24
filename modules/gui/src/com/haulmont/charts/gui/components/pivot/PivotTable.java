@@ -479,7 +479,7 @@ public interface PivotTable extends Component, Component.BelongToFrame, Componen
         }
 
         /**
-         * @return currently selected properties as cols
+         * @return currently selected properties as columns
          */
         public List<String> getCols() {
             return cols;
@@ -502,7 +502,7 @@ public interface PivotTable extends Component, Component.BelongToFrame, Componen
         }
 
         /**
-         * @return currently selected aggreagtion properties, or empty if not selected
+         * @return currently selected aggregation properties, or empty if not selected
          */
         public List<String> getAggregationProperties() {
             return aggregationProperties;

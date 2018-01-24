@@ -66,6 +66,29 @@ public class CubaPivotTable extends AbstractComponent {
     public CubaPivotTable() {
         pivotTable = new PivotTableModel();
         registerRpc(new CubaPivotTableServerRpcImpl(), CubaPivotTableServerRpc.class);
+
+        addRefreshListener(event -> {
+            pivotTable.setRows(event.getRows());
+            pivotTable.setCols(event.getCols());
+
+            if (pivotTable.getRenderers() == null) {
+                pivotTable.setRenderers(new Renderers());
+            }
+            pivotTable.getRenderers().setDefaultRenderer(event.getRenderer());
+
+            Aggregation aggregation = event.getAggregation();
+            boolean hasMode = aggregation != null && !Boolean.TRUE.equals(aggregation.getCustom());
+            pivotTable.getAggregations().setDefaultAggregation(hasMode ? aggregation.getMode() : null);
+            if (aggregation != null && Boolean.TRUE.equals(aggregation.getCustom())) {
+                // Due to impossibility to set a custom aggregation as the default
+                // we need to set a custom aggregation as the first one and clear
+                // the default aggregation value, so it will be set as the default by pivot.js
+                pivotTable.getAggregations().getAggregations().remove(aggregation);
+                pivotTable.getAggregations().getAggregations().add(0, aggregation);
+            }
+
+            pivotTable.setAggregationProperties(event.getAggregationProperties());
+        });
     }
 
     @Override
@@ -201,26 +224,6 @@ public class CubaPivotTable extends AbstractComponent {
             Renderer renderer = Renderer.fromId(rendererId);
             Aggregation aggregation = findAggregation(aggregationId);
             List<String> aggregationPropertiesList = Arrays.asList(aggregationProperties);
-
-            pivotTable.setRows(rowsList);
-            pivotTable.setCols(colsList);
-
-            if (pivotTable.getRenderers() == null) {
-                pivotTable.setRenderers(new Renderers());
-            }
-            pivotTable.getRenderers().setDefaultRenderer(renderer);
-
-            boolean hasMode = aggregation != null && !aggregation.getCustom();
-            pivotTable.getAggregations().setDefaultAggregation(hasMode ? aggregation.getMode() : null);
-            if (aggregation != null && aggregation.getCustom()) {
-                // Due to impossibility to set a custom aggregation as the default
-                // we need to set a custom aggregation as the first one and clear
-                // the default aggregation value, so it will be set as the default by pivot.js
-                pivotTable.getAggregations().getAggregations().remove(aggregation);
-                pivotTable.getAggregations().getAggregations().add(0, aggregation);
-            }
-
-            pivotTable.setAggregationProperties(aggregationPropertiesList);
 
             fireEvent(new RefreshEvent(CubaPivotTable.this,
                     rowsList, colsList, renderer,
