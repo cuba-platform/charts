@@ -23,17 +23,14 @@ import com.haulmont.cuba.core.global.AppBeans;
 import com.haulmont.cuba.core.global.Messages;
 import com.haulmont.cuba.web.sys.WebJarResource;
 import com.vaadin.ui.AbstractComponent;
+import org.apache.commons.collections4.CollectionUtils;
 import org.apache.commons.lang.StringUtils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 import javax.annotation.Nullable;
 import java.lang.reflect.Method;
-import java.util.Arrays;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Locale;
-import java.util.Map;
+import java.util.*;
 
 import static com.vaadin.util.ReflectTools.findMethod;
 
@@ -206,6 +203,14 @@ public class CubaPivotTable extends AbstractComponent {
         }
 
         getState().localeMap.put(localeCode, AbstractPivotObject.getSharedGson().toJson(localeMap));
+    }
+
+    public String getEmptyDataMessage() {
+        return getState(false).emptyDataMessage;
+    }
+
+    public void setEmptyDataMessage(String emptyDataMessage) {
+        getState().emptyDataMessage = emptyDataMessage;
     }
 
     protected class CubaPivotTableServerRpcImpl implements CubaPivotTableServerRpc {

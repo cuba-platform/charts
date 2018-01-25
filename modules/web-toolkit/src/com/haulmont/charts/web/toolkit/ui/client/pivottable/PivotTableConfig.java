@@ -14,7 +14,7 @@ public class PivotTableConfig extends JavaScriptObject {
     protected PivotTableConfig() {
     }
 
-    public static PivotTableConfig fromServerConfig(String data, String options, String json) {
+    public static PivotTableConfig fromServerConfig(String data, String options, String json, String emptyDataMessage) {
         PivotTableConfig configObject = JavaScriptObject.createObject().cast();
 
         String dataJson = data != null ? data : "[]";
@@ -29,6 +29,7 @@ public class PivotTableConfig extends JavaScriptObject {
         applyLocaleStrings(optionsObject);
         JsUtils.activateFunctions(optionsObject, true);
         setOptions(configObject, optionsObject);
+        setEmptyDataMessage(configObject, emptyDataMessage);
 
         JsUtils.applyCustomJson(optionsObject, json);
 
@@ -50,12 +51,20 @@ public class PivotTableConfig extends JavaScriptObject {
         }
     }-*/;
 
+    public final native boolean hasData() /*-{
+        return this.data.length > 0;
+    }-*/;
+
     private static native void setData(JavaScriptObject config, JavaScriptObject data) /*-{
         config.data = data;
     }-*/;
 
     private static native void setOptions(JavaScriptObject config, JavaScriptObject options) /*-{
         config.options = options;
+    }-*/;
+
+    private static native void setEmptyDataMessage(JavaScriptObject config, String emptyDataMessage) /*-{
+        config.emptyDataMessage = emptyDataMessage;
     }-*/;
 
     private static native void parseRenderers(JavaScriptObject config) /*-{

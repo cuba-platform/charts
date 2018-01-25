@@ -11,6 +11,8 @@ import com.google.gwt.user.client.ui.Widget;
 
 public class CubaPivotTableSceneWidget extends Widget implements HasEnabled {
 
+    protected static final String EMPTY_DATA_STYLE = "empty";
+
     protected CubaPivotTableJsOverlay jsOverlay;
     protected boolean enabled = true;
 
@@ -21,6 +23,7 @@ public class CubaPivotTableSceneWidget extends Widget implements HasEnabled {
 
     public void init(PivotTableConfig config, PivotTableEvents events) {
         jsOverlay = CubaPivotTableJsOverlay.makePivot(getElement(), config, events.getRefreshHandler(), enabled);
+        setShowEmptyDataMessage(!config.hasData());
     }
 
     @Override
@@ -31,5 +34,13 @@ public class CubaPivotTableSceneWidget extends Widget implements HasEnabled {
     @Override
     public void setEnabled(boolean enabled) {
         this.enabled = enabled;
+    }
+
+    protected void setShowEmptyDataMessage(boolean showEmptyDataMessage) {
+        if (showEmptyDataMessage) {
+            addStyleDependentName(EMPTY_DATA_STYLE);
+        } else {
+            removeStyleDependentName(EMPTY_DATA_STYLE);
+        }
     }
 }

@@ -22,11 +22,6 @@ public class PivotDataProviderSerializer extends PivotDataItemsSerializer
             dataProviderElement.add(jsonObject);
         }
 
-        // Prevent errors on client for empty data provider
-        if (dataProviderElement.size() == 0) {
-            dataProviderElement.add(new JsonObject());
-        }
-
         return dataProviderElement;
     }
 }

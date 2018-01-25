@@ -46,6 +46,8 @@ public class WebPivotTable extends WebAbstractComponent<CubaPivotTable> implemen
             component.setPivotTableMessages(localeString, PivotTableLocaleHelper.getPivotTableLocaleMap(locale));
 
             component.setLocale(locale);
+
+            component.setEmptyDataMessage(messages.getMainMessage("pivottable.emptyDataMessage", locale));
         }
     }
 
@@ -333,13 +335,23 @@ public class WebPivotTable extends WebAbstractComponent<CubaPivotTable> implemen
     }
 
     @Override
+    public String getNativeJson() {
+        return component.getJson();
+    }
+
+    @Override
     public void setNativeJson(String json) {
         component.setJson(json);
     }
 
     @Override
-    public String getNativeJson() {
-        return component.getJson();
+    public String getEmptyDataMessage() {
+        return component.getEmptyDataMessage();
+    }
+
+    @Override
+    public void setEmptyDataMessage(String emptyDataMessage) {
+        component.setEmptyDataMessage(emptyDataMessage);
     }
 
     @Override

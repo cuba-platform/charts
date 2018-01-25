@@ -100,6 +100,11 @@ public class PivotTableLoader extends AbstractComponentLoader<PivotTable> {
             pivot.setEditable(Boolean.valueOf(editable));
         }
 
+        String emptyDataMessage = element.attributeValue("emptyDataMessage");
+        if (StringUtils.isNotEmpty(emptyDataMessage)) {
+            pivot.setEmptyDataMessage(loadResourceString(emptyDataMessage));
+        }
+
         String renderer = element.attributeValue("renderer");
         if (StringUtils.isNotEmpty(renderer)) {
             pivot.setRenderer(Renderer.valueOf(renderer));

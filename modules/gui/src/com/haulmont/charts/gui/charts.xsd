@@ -2728,6 +2728,7 @@
             <xs:attribute name="menuLimit" type="xs:integer"/>
             <xs:attribute name="autoSortUnusedProperties" type="xs:boolean"/>
             <xs:attribute name="unusedPropertiesVertical" type="xs:string"/>
+            <xs:attribute name="emptyDataMessage" type="resourceString"/>
 
             <xs:attributeGroup ref="hasId"/>
             <xs:attributeGroup ref="hasSize"/>

@@ -31,17 +31,20 @@ public class CubaPivotTableJsOverlay {
             });
         }
 
+        var pivot;
         if (configObject.options.editable) {
-            var pivot = $wnd.jQuery(placeHolder).pivotUI(configObject.data,
+            pivot = $wnd.jQuery(placeHolder).pivotUI(configObject.data,
                 configObject.options, false, configObject.options.localeCode);
 
             if (!enabled) {
                 pivot.find("select").attr('disabled', 'disabled');
             }
 
-            return pivot;
         } else {
-            return $wnd.jQuery(placeHolder).pivot(configObject.data, configObject.options);
+            pivot = $wnd.jQuery(placeHolder).pivot(configObject.data, configObject.options);
         }
+        pivot.attr('empty-data-message', configObject.emptyDataMessage);
+
+        return pivot;
     }-*/;
 }

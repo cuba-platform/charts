@@ -442,6 +442,18 @@ public interface PivotTable extends Component, Component.BelongToFrame, Componen
      */
     String getNativeJson();
 
+    /**
+     * @return the message that will be displayed in case of empty data
+     */
+    String getEmptyDataMessage();
+
+    /**
+     * Sets the message that will be displayed in case of empty data.
+     *
+     * @param emptyDataMessage the message that will be displayed in case of empty data
+     */
+    void setEmptyDataMessage(String emptyDataMessage);
+
     void addRefreshListener(RefreshListener refreshListener);
     void removeRefreshListener(RefreshListener refreshListener);
 

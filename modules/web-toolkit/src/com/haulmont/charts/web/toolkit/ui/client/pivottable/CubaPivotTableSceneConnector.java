@@ -50,8 +50,8 @@ public class CubaPivotTableSceneConnector extends AbstractComponentConnector {
         super.onStateChanged(stateChangeEvent);
 
         if (stateChangeEvent.hasPropertyChanged("localeMap") && getState().localeMap != null) {
-            Map<String, String> chartMessages = getState().localeMap;
-            for (final Map.Entry<String, String> entry : chartMessages.entrySet()) {
+            Map<String, String> pivotMessages = getState().localeMap;
+            for (final Map.Entry<String, String> entry : pivotMessages.entrySet()) {
                 JavaScriptObject pivotLocalization = getJsonAsObject(entry.getValue());
                 addPivotTableMessages(entry.getKey(), pivotLocalization);
             }
@@ -62,7 +62,7 @@ public class CubaPivotTableSceneConnector extends AbstractComponentConnector {
         }
 
         final PivotTableConfig config = PivotTableConfig.fromServerConfig(getState().data,
-                getState().options, getState().json);
+                getState().options, getState().json, getState().emptyDataMessage);
         PivotTableEvents events = createEvents();
 
         Scheduler.get().scheduleDeferred(() -> {
