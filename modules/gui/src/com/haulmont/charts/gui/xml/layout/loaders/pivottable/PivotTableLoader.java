@@ -9,6 +9,7 @@ import com.haulmont.charts.gui.components.pivot.PivotTable;
 import com.haulmont.charts.gui.model.JsFunction;
 import com.haulmont.charts.gui.pivottable.model.*;
 import com.haulmont.chile.core.model.MetaClass;
+import com.haulmont.chile.core.model.MetaProperty;
 import com.haulmont.cuba.gui.GuiDevelopmentException;
 import com.haulmont.cuba.gui.data.CollectionDatasource;
 import com.haulmont.cuba.gui.data.Datasource;
@@ -18,6 +19,7 @@ import org.apache.commons.collections4.MapUtils;
 import org.apache.commons.lang.StringUtils;
 import org.dom4j.Element;
 
+import javax.annotation.Nullable;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
@@ -144,6 +146,7 @@ public class PivotTableLoader extends AbstractComponentLoader<PivotTable> {
 
                 String name = propertyElement.attributeValue("name");
                 if (StringUtils.isNotEmpty(name)) {
+                    checkValidProperty(pivot.getDatasource(), name);
 
                     String localizedName = propertyElement.attributeValue("localizedName");
                     if (StringUtils.isNotEmpty(localizedName)) {
@@ -159,6 +162,18 @@ public class PivotTableLoader extends AbstractComponentLoader<PivotTable> {
 
                     pivot.addProperty(name, localizedName);
                 }
+            }
+        }
+    }
+
+    protected void checkValidProperty(@Nullable CollectionDatasource datasource, String name) {
+        if (datasource != null) {
+            MetaProperty property = datasource.getMetaClass().getProperty(name);
+            if (property != null
+                    && property.getRange().getCardinality() != null
+                    && property.getRange().getCardinality().isMany()) {
+                throw new GuiDevelopmentException(String.format("'%s' cannot be added as a property, because " +
+                        "PivotTable doesn't support collections as properties", name), context.getFullFrameId());
             }
         }
     }

@@ -18,12 +18,14 @@ import com.haulmont.cuba.core.entity.Entity;
 import com.haulmont.cuba.core.global.AppBeans;
 import com.haulmont.cuba.core.global.Messages;
 import com.haulmont.cuba.core.global.Metadata;
+import com.haulmont.cuba.gui.GuiDevelopmentException;
 import org.apache.commons.lang.BooleanUtils;
 import org.apache.commons.lang.StringUtils;
 
 import java.sql.Time;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Collection;
 import java.util.Date;
 import java.util.List;
 
@@ -85,6 +87,9 @@ public class PivotDataItemsSerializer {
             formattedValue = BooleanUtils.isTrue((Boolean) value)
                     ? messages.getMainMessage("boolean.yes")
                     : messages.getMainMessage("boolean.no");
+        } else if (value instanceof Collection) {
+            throw new GuiDevelopmentException(String.format("'%s' cannot be added as a property, because " +
+                    "PivotTable doesn't support collections as properties", property), null);
         } else {
             formattedValue = value;
         }
