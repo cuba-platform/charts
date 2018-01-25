@@ -65,6 +65,8 @@ public abstract class AbstractChart<T extends AbstractChartObject & ChartModel> 
 
     private String decimalSeparator;
 
+    private Double renderingDelay;
+
     /**
      * Using this property you can add any additional information to SVG,
      * like SVG filters or clip paths. The structure of this object should be
@@ -751,5 +753,16 @@ public abstract class AbstractChart<T extends AbstractChartObject & ChartModel> 
 
     public interface DataProviderChangeListener {
         void onChange();
+    }
+
+    @Override
+    public Double getRenderingDelay() {
+        return renderingDelay;
+    }
+
+    @Override
+    public T setRenderingDelay(Double delay) {
+        this.renderingDelay = delay;
+        return (T) this;
     }
 }

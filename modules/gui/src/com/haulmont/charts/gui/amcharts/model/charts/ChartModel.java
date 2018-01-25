@@ -156,4 +156,17 @@ public interface ChartModel<T extends ChartModel> {
 
     String getAccessibleDescription();
     T setAccessibleDescription(String accessibleDescription);
+
+    /**
+     * @return delay in ms
+     */
+    Double getRenderingDelay();
+
+    /**
+     * Sets rendering delay in which the chart should be rendered (renders instantly if not set).
+     *
+     * @param delay is time in ms
+     * @return chart
+     */
+    T setRenderingDelay(Double delay);
 }
