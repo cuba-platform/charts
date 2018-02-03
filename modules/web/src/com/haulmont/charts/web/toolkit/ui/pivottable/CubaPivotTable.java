@@ -5,16 +5,8 @@
 
 package com.haulmont.charts.web.toolkit.ui.pivottable;
 
-import com.google.gson.JsonElement;
-import com.google.gson.JsonObject;
-import com.google.gson.JsonParser;
-import com.google.gson.JsonPrimitive;
-import com.google.gson.JsonSyntaxException;
-import com.haulmont.charts.gui.pivottable.model.AbstractPivotObject;
-import com.haulmont.charts.gui.pivottable.model.Aggregation;
-import com.haulmont.charts.gui.pivottable.model.PivotTableModel;
-import com.haulmont.charts.gui.pivottable.model.Renderer;
-import com.haulmont.charts.gui.pivottable.model.Renderers;
+import com.google.gson.*;
+import com.haulmont.charts.gui.pivottable.model.*;
 import com.haulmont.charts.web.toolkit.ui.client.pivottable.CubaPivotTableSceneState;
 import com.haulmont.charts.web.toolkit.ui.client.pivottable.CubaPivotTableServerRpc;
 import com.haulmont.charts.web.toolkit.ui.pivottable.events.RefreshEvent;
@@ -23,7 +15,6 @@ import com.haulmont.cuba.core.global.AppBeans;
 import com.haulmont.cuba.core.global.Messages;
 import com.haulmont.cuba.web.sys.WebJarResource;
 import com.vaadin.ui.AbstractComponent;
-import org.apache.commons.collections4.CollectionUtils;
 import org.apache.commons.lang.StringUtils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -35,16 +26,16 @@ import java.util.*;
 import static com.vaadin.util.ReflectTools.findMethod;
 
 @WebJarResource({
-        "jquery-ui/1.12.1/jquery-ui.min.js",
-        "pivottable/2.3.0/pivot.min.js",
-        "pivottable/2.3.0/tips_data.min.js",
-        "pivottable/2.3.0/plugins/d3/d3.min.js",
-        "pivottable/2.3.0/plugins/c3/c3.min.js",
-        "pivottable/2.3.0/c3_renderers.min.js",
-        "pivottable/2.3.0/d3_renderers.min.js",
-        "pivottable/2.3.0/export_renderers.min.js",
-        "pivottable/2.3.0/pivot.min.css",
-        "pivottable/2.3.0/plugins/c3/c3.min.css"
+        "jquery-ui:jquery-ui.min.js",
+        "pivottable:pivot.min.js",
+        "pivottable:tips_data.min.js",
+        "pivottable:plugins/d3/d3.min.js",
+        "pivottable:plugins/c3/c3.min.js",
+        "pivottable:c3_renderers.min.js",
+        "pivottable:d3_renderers.min.js",
+        "pivottable:export_renderers.min.js",
+        "pivottable:pivot.min.css",
+        "pivottable:plugins/c3/c3.min.css"
 })
 public class CubaPivotTable extends AbstractComponent {
     private static final long serialVersionUID = 3250758720037122580L;

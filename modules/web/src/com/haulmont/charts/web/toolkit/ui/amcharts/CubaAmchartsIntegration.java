@@ -17,25 +17,25 @@ import com.vaadin.ui.UI;
 import java.util.*;
 
 @WebJarResource({
-        "amcharts/amcharts.js",
-        "amcharts/funnel.js",
-        "amcharts/gauge.js",
-        "amcharts/pie.js",
-        "amcharts/radar.js",
-        "amcharts/serial.js",
-        "amcharts/xy.js",
-        "amcharts/gantt.js",
-        "amcharts/amstock.js",
+        "amcharts-all:amcharts.js",
+        "amcharts-all:funnel.js",
+        "amcharts-all:gauge.js",
+        "amcharts-all:pie.js",
+        "amcharts-all:radar.js",
+        "amcharts-all:serial.js",
+        "amcharts-all:xy.js",
+        "amcharts-all:gantt.js",
+        "amcharts-all:amstock.js",
 
-        "amcharts/themes/black.js",
-        "amcharts/themes/chalk.js",
-        "amcharts/themes/dark.js",
-        "amcharts/themes/light.js",
-        "amcharts/themes/patterns.js",
+        "amcharts-all:themes/black.js",
+        "amcharts-all:themes/chalk.js",
+        "amcharts-all:themes/dark.js",
+        "amcharts-all:themes/light.js",
+        "amcharts-all:themes/patterns.js",
 
-        "amcharts/plugins/export/export.min.js",
+        "amcharts-all:plugins/export/export.min.js",
 
-        "amcharts/plugins/export/export.css"
+        "amcharts-all:plugins/export/export.css"
 })
 public class CubaAmchartsIntegration extends AbstractExtension {
 

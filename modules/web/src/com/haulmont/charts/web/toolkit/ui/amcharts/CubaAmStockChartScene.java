@@ -36,7 +36,7 @@ import java.util.function.Function;
 
 import static com.vaadin.util.ReflectTools.findMethod;
 
-@WebJarResource("amcharts/style.css")
+@WebJarResource("amcharts-all:style.css")
 public class CubaAmStockChartScene extends AbstractComponent {
     private final Logger log = LoggerFactory.getLogger(CubaAmStockChartScene.class);
 

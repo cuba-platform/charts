@@ -255,7 +255,7 @@ configure(chartsWebModule) {
         compile(cubaWeb)
 
         compile(bom['org.webjars:pivottable'])
-        compile(bom['org.webjars:amcharts'])
+        compile(bom['org.webjars:amcharts-all'])
 
         compile(bom['com.haulmont.thirdparty:googlemaps']) {
             exclude(group: 'junit', module: 'junit')
