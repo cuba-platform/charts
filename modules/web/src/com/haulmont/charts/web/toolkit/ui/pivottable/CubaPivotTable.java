@@ -40,7 +40,7 @@ import static com.vaadin.util.ReflectTools.findMethod;
 public class CubaPivotTable extends AbstractComponent {
     private static final long serialVersionUID = 3250758720037122580L;
 
-    private final Logger log = LoggerFactory.getLogger(CubaPivotTable.class);
+    private static final Logger log = LoggerFactory.getLogger(CubaPivotTable.class);
 
     protected static final Method refreshMethod =
             findMethod(RefreshListener.class, "onRefresh", RefreshEvent.class);
