@@ -62,8 +62,6 @@ def chartsWebToolkitModule = project(':charts-web-toolkit')
 
 def baseVersion = cuba.artifact.version + (cuba.artifact.isSnapshot ? '-SNAPSHOT' : '')
 
-def servletApi = 'org.apache.tomcat:tomcat-servlet-api:8.0.26'
-
 def cubaWeb = [group: 'com.haulmont.cuba', name: 'cuba-web', version: baseVersion]
 def cubaGui = [group: 'com.haulmont.cuba', name: 'cuba-gui', version: baseVersion]
 def cubaWebToolkit = [group: 'com.haulmont.cuba', name: 'cuba-web-toolkit', version: baseVersion]
@@ -261,7 +259,7 @@ configure(chartsWebModule) {
             exclude(group: 'junit', module: 'junit')
         }
 
-        provided(servletApi)
+        provided(bom['javax.servlet:javax.servlet-api'])
     }
 
     jar {
