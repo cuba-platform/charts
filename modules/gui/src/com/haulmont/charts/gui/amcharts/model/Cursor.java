@@ -88,6 +88,8 @@ public class Cursor extends AbstractChartObject {
     
     private Boolean zooming;
 
+    private Integer tabIndex;
+
     public Integer getAdjustment() {
         return adjustment;
     }
@@ -410,5 +412,23 @@ public class Cursor extends AbstractChartObject {
     public Cursor setValueZoomable(Boolean valueZoomable) {
         this.valueZoomable = valueZoomable;
         return this;
+    }
+
+    /**
+     * @return tab index
+     */
+    public Integer getTabIndex() {
+        return tabIndex;
+    }
+
+    /**
+     * In case you set it to some number, the chart will set focus on chart cursor (works only with serial chart)
+     * when user clicks tab key. When a focus is set user can move cursor using cursor keys. Note, not all browsers
+     * and readers support this.
+     *
+     * @param tabIndex tab index
+     */
+    public void setTabIndex(Integer tabIndex) {
+        this.tabIndex = tabIndex;
     }
 }

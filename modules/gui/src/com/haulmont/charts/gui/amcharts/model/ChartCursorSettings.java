@@ -56,8 +56,6 @@ public class ChartCursorSettings extends AbstractChartObject {
 
     private Boolean pan;
 
-    private Integer tabIndex;
-
     private Boolean valueBalloonsEnabled;
 
     private Double valueLineAlpha;
@@ -291,15 +289,6 @@ public class ChartCursorSettings extends AbstractChartObject {
 
     public ChartCursorSettings setColor(Color color) {
         this.color = color;
-        return this;
-    }
-
-    public Integer getTabIndex() {
-        return tabIndex;
-    }
-
-    public ChartCursorSettings setTabIndex(Integer tabIndex) {
-        this.tabIndex = tabIndex;
         return this;
     }
 }

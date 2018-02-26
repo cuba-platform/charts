@@ -701,11 +701,6 @@ public class StockChartLoader extends ChartModelLoader<StockChart> {
                 chartCursorSettings.setPan(Boolean.valueOf(pan));
             }
 
-            String tabIndex = settingsElement.attributeValue("tabIndex");
-            if (StringUtils.isNotEmpty(tabIndex)) {
-                chartCursorSettings.setTabIndex(Integer.valueOf(tabIndex));
-            }
-
             String valueBalloonsEnabled = settingsElement.attributeValue("valueBalloonsEnabled");
             if (StringUtils.isNotEmpty(valueBalloonsEnabled)) {
                 chartCursorSettings.setValueBalloonsEnabled(Boolean.valueOf(valueBalloonsEnabled));

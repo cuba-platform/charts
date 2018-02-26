@@ -2659,6 +2659,11 @@ public abstract class ChartModelLoader<C extends Component> extends AbstractComp
                 cursor.setZooming(Boolean.valueOf(zooming));
             }
 
+            String tabIndex = cursorElement.attributeValue("tabIndex");
+            if (StringUtils.isNotEmpty(tabIndex)) {
+               cursor.setTabIndex(Integer.parseInt(tabIndex));
+            }
+
             chart.setChartCursor(cursor);
         }
     }
