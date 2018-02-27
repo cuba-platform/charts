@@ -1148,7 +1148,6 @@
         <xs:attribute name="valueLineEnabled" type="xs:boolean"/>
         <xs:attribute name="valueZoomable" type="xs:boolean"/>
         <xs:attribute name="zoomable" type="xs:boolean"/>
-        <xs:attribute name="zooming" type="xs:boolean"/>
     </xs:complexType>
 
     <xs:complexType name="trendLine">

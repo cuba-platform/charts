@@ -85,8 +85,6 @@ public class Cursor extends AbstractChartObject {
     private Boolean valueZoomable;
 
     private Boolean zoomable;
-    
-    private Boolean zooming;
 
     private Integer tabIndex;
 
@@ -671,15 +669,6 @@ public class Cursor extends AbstractChartObject {
      */
     public Cursor setLeaveCursor(Boolean leaveCursor) {
         this.leaveCursor = leaveCursor;
-        return this;
-    }
-
-    public Boolean getZooming() {
-        return zooming;
-    }
-
-    public Cursor setZooming(Boolean zooming) {
-        this.zooming = zooming;
         return this;
     }
 
