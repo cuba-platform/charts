@@ -20,6 +20,8 @@ import javax.annotation.Nullable;
 import java.util.Date;
 
 /**
+ * Stock chart component.
+ * <br>
  * See documentation for properties of AmStockChart JS object.
  * <br>
  * <a href="http://docs.amcharts.com/3/javascriptstockchart/AmStockChart">http://docs.amcharts.com/3/javascriptstockchart/AmStockChart</a>

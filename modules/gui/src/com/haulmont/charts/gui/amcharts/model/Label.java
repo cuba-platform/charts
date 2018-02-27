@@ -38,93 +38,156 @@ public class Label extends AbstractChartObject {
 
     private String y;
 
+    /**
+     * @return align
+     */
     public Align getAlign() {
         return align;
     }
 
+    /**
+     * Sets align to the label.
+     *
+     * @param align align
+     */
     public Label setAlign(Align align) {
         this.align = align;
         return this;
     }
 
+    /**
+     * @return opacity of the label
+     */
     public Double getAlpha() {
         return alpha;
     }
 
+    /**
+     * Sets opacity of the label
+     *
+     * @param alpha opacity
+     */
     public Label setAlpha(Double alpha) {
         this.alpha = alpha;
         return this;
     }
 
+    /**
+     * @return true if label is bold
+     */
     public Boolean getBold() {
         return bold;
     }
 
+    /**
+     * Set bold to true if label should be bold.
+     *
+     * @param bold bold option
+     */
     public Label setBold(Boolean bold) {
         this.bold = bold;
         return this;
     }
 
+    /**
+     * @return color of a label
+     */
     public Color getColor() {
         return color;
     }
 
+    /**
+     * Sets color of a label.
+     *
+     * @param color color
+     */
     public Label setColor(Color color) {
         this.color = color;
         return this;
     }
 
+    /**
+     * @return rotation angle
+     */
     public Integer getRotation() {
         return rotation;
     }
 
+    /**
+     * Sets rotation angle.
+     *
+     * @param rotation angle
+     */
     public Label setRotation(Integer rotation) {
         this.rotation = rotation;
         return this;
     }
 
+    /**
+     * @return text size
+     */
     public Integer getSize() {
         return size;
     }
 
+    /**
+     * Sets text size.
+     *
+     * @param size size
+     */
     public Label setSize(Integer size) {
         this.size = size;
         return this;
     }
 
+    /**
+     * @return text of the label
+     */
     public String getText() {
         return text;
     }
 
+    /**
+     * Sets text of the label.
+     *
+     * @param text text
+     */
     public Label setText(String text) {
         this.text = text;
         return this;
     }
 
+    /**
+     * @return the URL
+     */
     public String getUrl() {
         return url;
     }
 
+    /**
+     * Sets the URL which will be access if user clicks on a label.
+     *
+     * @param url the URL
+     */
     public Label setUrl(String url) {
         this.url = url;
         return this;
     }
 
     /**
-     * Gets the x position of the label.
+     * Gets the X position of the label.
      *
-     * @return String with double or double with "%".
+     * @return string with double or double with "%"
      */
     public String getX() {
         return x;
     }
 
     /**
-     * Sets the x position of the label. You can set x coordinate in percentage or in pixels format.
+     * Sets the X position of the label. You can set x coordinate in percentage or in pixels format.
      * For instance, 50% - position with percentage, 50 - position in pixels.
      *
-     * @param x double or double with "%".
-     * @return
+     * @param x double or double with "%"
      */
     public Label setX(String x) {
         checkCorrectInputFormat(x);
@@ -134,20 +197,19 @@ public class Label extends AbstractChartObject {
     }
 
     /**
-     * Gets the y position of the label.
+     * Gets the Y position of the label.
      *
-     * @return String with double or double with "%".
+     * @return string with double or double with "%"
      */
     public String getY() {
         return y;
     }
 
     /**
-     * Sets the x position of the label. You can set x coordinate in percentage or in pixels format.
+     * Sets the Y position of the label. You can set x coordinate in percentage or in pixels format.
      * For instance, 50% - position with percentage, 50 - position in pixels.
      *
-     * @param y double or double with "%".
-     * @return
+     * @param y double or double with "%"
      */
     public Label setY(String y) {
         checkCorrectInputFormat(y);
@@ -156,19 +218,37 @@ public class Label extends AbstractChartObject {
         return this;
     }
 
+    /**
+     * @return unique id of the label
+     */
     public String getId() {
         return id;
     }
 
+    /**
+     * Sets unique id of the label.
+     *
+     * @param id id
+     */
     public Label setId(String id) {
         this.id = id;
         return this;
     }
 
+    /**
+     * @return tab index
+     */
     public Integer getTabIndex() {
         return tabIndex;
     }
 
+    /**
+     * Sets tab index. In case you set it to some number, the chart will set focus on the label when user clicks tab
+     * key. When a focus is set, screen readers like NVDA screen reader will read the title. Note, not all browsers
+     * and readers support this.
+     *
+     * @param tabIndex tab index
+     */
     public Label setTabIndex(Integer tabIndex) {
         this.tabIndex = tabIndex;
         return this;

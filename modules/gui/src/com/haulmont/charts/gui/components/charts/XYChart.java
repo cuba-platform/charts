@@ -8,6 +8,9 @@ package com.haulmont.charts.gui.components.charts;
 import com.haulmont.charts.gui.amcharts.model.charts.XYChartModel;
 
 /**
+ * XY chart component. It can represent XY, bubble and scatter charts. Supports multiple axes with simple or
+ * logarithmic scales.
+ * <br>
  * See documentation for properties of AmXYChart JS object.
  * <br>
  * <a href="http://docs.amcharts.com/3/javascriptcharts/AmXYChart">http://docs.amcharts.com/3/javascriptcharts/AmXYChart</a>

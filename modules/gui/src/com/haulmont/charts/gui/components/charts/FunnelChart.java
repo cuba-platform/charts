@@ -8,6 +8,8 @@ package com.haulmont.charts.gui.components.charts;
 import com.haulmont.charts.gui.amcharts.model.charts.FunnelChartModel;
 
 /**
+ * Funnel / pyramid chart component.
+ * <br>
  * See documentation for properties of AmFunnelChart JS object.
  * <br>
  * <a href="http://docs.amcharts.com/3/javascriptcharts/AmFunnelChart">http://docs.amcharts.com/3/javascriptcharts/AmFunnelChart</a>

@@ -8,6 +8,8 @@ package com.haulmont.charts.gui.components.charts;
 import com.haulmont.charts.gui.amcharts.model.charts.RadarChartModel;
 
 /**
+ * Radar / polar chart component.
+ * <br>
  * See documentation for properties of AmRadarChart JS object.
  * <br>
  * <a href="http://docs.amcharts.com/3/javascriptcharts/AmRadarChart">http://docs.amcharts.com/3/javascriptcharts/AmRadarChart</a>

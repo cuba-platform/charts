@@ -8,6 +8,8 @@ package com.haulmont.charts.gui.components.charts;
 import com.haulmont.charts.gui.amcharts.model.charts.PieChartModel;
 
 /**
+ * Pie / donut chart component.
+ * <br>
  * See documentation for properties of AmPieChart JS object.
  * <br>
  * <a href="http://docs.amcharts.com/3/javascriptcharts/AmPieChart">http://docs.amcharts.com/3/javascriptcharts/AmPieChart</a>

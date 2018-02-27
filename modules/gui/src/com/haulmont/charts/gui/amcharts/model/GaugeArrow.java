@@ -42,127 +42,237 @@ public class GaugeArrow extends AbstractChartObject {
 
     private Double value;
 
+    /**
+     * @return opacity of an arrow
+     */
     public Double getAlpha() {
         return alpha;
     }
 
+    /**
+     * Sets opacity of an arrow.
+     *
+     * @param alpha opacity
+     */
     public GaugeArrow setAlpha(Double alpha) {
         this.alpha = alpha;
         return this;
     }
 
+    /**
+     * @return opacity of arrow border
+     */
     public Double getBorderAlpha() {
         return borderAlpha;
     }
 
+    /**
+     * Sets opacity of arrow border.
+     *
+     * @param borderAlpha border opacity
+     */
     public GaugeArrow setBorderAlpha(Double borderAlpha) {
         this.borderAlpha = borderAlpha;
         return this;
     }
 
+    /**
+     * @return true if clockWiseOnly is enabled
+     */
     public Boolean getClockWiseOnly() {
         return clockWiseOnly;
     }
 
+    /**
+     * Set clockWiseOnly to true if you need the arrow to rotate only clock-wise.
+     *
+     * @param clockWiseOnly clockWiseOnly option
+     */
     public GaugeArrow setClockWiseOnly(Boolean clockWiseOnly) {
         this.clockWiseOnly = clockWiseOnly;
         return this;
     }
 
+    /**
+     * @return color of an arrow
+     */
     public Color getColor() {
         return color;
     }
 
+    /**
+     * Sets color of an arrow.
+     *
+     * @param color color
+     */
     public GaugeArrow setColor(Color color) {
         this.color = color;
         return this;
     }
 
+    /**
+     * @return inner radius
+     */
     public String getInnerRadius() {
         return innerRadius;
     }
 
+    /**
+     * Sets inner radius of an arrow.
+     *
+     * @param innerRadius inner radius
+     */
     public GaugeArrow setInnerRadius(String innerRadius) {
         this.innerRadius = innerRadius;
         return this;
     }
 
+    /**
+     * @return opacity of a nail, holding the arrow
+     */
     public Double getNailAlpha() {
         return nailAlpha;
     }
 
+    /**
+     * Sets opacity of a nail, holding the arrow.
+     *
+     * @param nailAlpha opacity
+     */
     public GaugeArrow setNailAlpha(Double nailAlpha) {
         this.nailAlpha = nailAlpha;
         return this;
     }
 
+    /**
+     * @return opacity of nail border
+     */
     public Double getNailBorderAlpha() {
         return nailBorderAlpha;
     }
 
+    /**
+     * Sets opacity of nail border.
+     *
+     * @param nailBorderAlpha opacity
+     */
     public GaugeArrow setNailBorderAlpha(Double nailBorderAlpha) {
         this.nailBorderAlpha = nailBorderAlpha;
         return this;
     }
 
+    /**
+     * @return thickness of nail border
+     */
     public Integer getNailBorderThickness() {
         return nailBorderThickness;
     }
 
+    /**
+     * Sets thickness of nail border.
+     *
+     * @param nailBorderThickness thickness
+     */
     public GaugeArrow setNailBorderThickness(Integer nailBorderThickness) {
         this.nailBorderThickness = nailBorderThickness;
         return this;
     }
 
+    /**
+     * @return radius
+     */
     public Integer getNailRadius() {
         return nailRadius;
     }
 
+    /**
+     * Sets radius of a nail, holding the arrow.
+     *
+     * @param nailRadius radius
+     */
     public GaugeArrow setNailRadius(Integer nailRadius) {
         this.nailRadius = nailRadius;
         return this;
     }
 
+    /**
+     * @return radius of an arrow
+     */
     public String getRadius() {
         return radius;
     }
 
+    /**
+     * Sets radius of an arrow.
+     *
+     * @param radius radius
+     */
     public GaugeArrow setRadius(String radius) {
         this.radius = radius;
         return this;
     }
 
+    /**
+     * @return width of arrow root
+     */
     public Integer getStartWidth() {
         return startWidth;
     }
 
+    /**
+     * Sets width of arrow root.
+     *
+     * @param startWidth width
+     */
     public GaugeArrow setStartWidth(Integer startWidth) {
         this.startWidth = startWidth;
         return this;
     }
 
+    /**
+     * @return axis id
+     */
     public String getAxis() {
         return axis;
     }
 
+    /**
+     * Sets axis of the arrow. If you don't set any axis, the first axis of a chart will be used.
+     *
+     * @param axis axis id
+     */
     public GaugeArrow setAxis(String axis) {
         this.axis = axis;
         return this;
     }
 
+    /**
+     * @return unique id of an arrow
+     */
     public String getId() {
         return id;
     }
 
+    /**
+     * Sets unique id of an arrow.
+     */
     public GaugeArrow setId(String id) {
         this.id = id;
         return this;
     }
 
+    /**
+     * @return value to which the arrow is point at
+     */
     public Double getValue() {
         return value;
     }
 
+    /**
+     * Sets value to which the arrow should point at.
+     *
+     * @param value value
+     */
     public GaugeArrow setValue(Double value) {
         this.value = value;
         return this;

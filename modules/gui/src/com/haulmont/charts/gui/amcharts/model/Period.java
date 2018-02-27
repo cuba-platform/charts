@@ -26,28 +26,52 @@ public class Period extends AbstractChartObject {
         return this;
     }
 
+    /**
+     * return count of periods
+     */
     public Integer getCount() {
         return count;
     }
 
+    /**
+     * Sets how many periods button will select.
+     *
+     * @param count count
+     */
     public Period setCount(Integer count) {
         this.count = count;
         return this;
     }
 
+    /**
+     * @return text label that is displayed on the button
+     */
     public String getLabel() {
         return label;
     }
 
+    /**
+     * Sets text label that will be displayed on the button.
+     *
+     * @param label label string
+     */
     public Period setLabel(String label) {
         this.label = label;
         return this;
     }
 
+    /**
+     * @return true if this button is selected when the chart is initialized
+     */
     public Boolean getSelected() {
         return selected;
     }
 
+    /**
+     * Set selected to true if this button should be selected when the chart is initialized.
+     *
+     * @param selected selected option
+     */
     public Period setSelected(Boolean selected) {
         this.selected = selected;
         return this;

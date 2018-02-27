@@ -42,7 +42,8 @@ public interface SeriesBasedChart<T extends SeriesBasedChart> extends Rectangula
 
     /**
      * Describes clickItem event on categories in the CategoryAxis.
-     * <br> See documentation for properties of clickItem event in the CategoryAxis.
+     * <br>
+     * See documentation for properties of clickItem event in the CategoryAxis.
      * <br>
      * <a href="https://docs.amcharts.com/3/javascriptcharts/CategoryAxis#clickItem">https://docs.amcharts.com/3/javascriptcharts/CategoryAxis#clickItem</a>
      */
@@ -69,7 +70,7 @@ public interface SeriesBasedChart<T extends SeriesBasedChart> extends Rectangula
         }
 
         /**
-         * @return category value that represents in String type.
+         * @return category value that represents in String type
          */
         public String getValue() {
             return value;
@@ -80,8 +81,8 @@ public interface SeriesBasedChart<T extends SeriesBasedChart> extends Rectangula
         }
 
         /**
-         * @return offset in the X coordinate of the mouse pointer between that
-         * event and the padding edge of the target node.
+         * @return offset in the X coordinate of the mouse pointer between that event and the padding edge of the
+         * target node
          */
         public int getOffsetX() {
             return offsetX;
@@ -92,8 +93,8 @@ public interface SeriesBasedChart<T extends SeriesBasedChart> extends Rectangula
         }
 
         /**
-         * @return offset in the Y coordinate of the mouse pointer between that
-         * event and the padding edge of the target node.
+         * @return offset in the Y coordinate of the mouse pointer between that event and the padding edge of the
+         * target node
          */
         public int getOffsetY() {
             return offsetY;
@@ -104,7 +105,7 @@ public interface SeriesBasedChart<T extends SeriesBasedChart> extends Rectangula
         }
 
         /**
-         * @return X coordinate within the application's client area.
+         * @return X coordinate within the application's client area
          */
         public int getX() {
             return x;
@@ -115,7 +116,7 @@ public interface SeriesBasedChart<T extends SeriesBasedChart> extends Rectangula
         }
 
         /**
-         * @return Y coordinate within the application's client area.
+         * @return Y coordinate within the application's client area
          */
         public int getY() {
             return y;
@@ -126,7 +127,7 @@ public interface SeriesBasedChart<T extends SeriesBasedChart> extends Rectangula
         }
 
         /**
-         * @return X coordinate of the axis.
+         * @return X coordinate of the axis
          */
         public int getXAxis() {
             return xAxis;
@@ -137,7 +138,7 @@ public interface SeriesBasedChart<T extends SeriesBasedChart> extends Rectangula
         }
 
         /**
-         * @return Y coordinate of the axis.
+         * @return Y coordinate of the axis
          */
         public int getYAxis() {
             return yAxis;
@@ -149,7 +150,7 @@ public interface SeriesBasedChart<T extends SeriesBasedChart> extends Rectangula
     }
 
     /**
-     * Listener to the click events on categories .
+     * Listener to the click events on categories.
      */
     interface CategoryItemClickListener {
 

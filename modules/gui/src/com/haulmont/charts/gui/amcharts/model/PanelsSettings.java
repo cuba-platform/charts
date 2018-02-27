@@ -18,7 +18,7 @@ public class PanelsSettings extends AbstractChartObject implements HasMargins<Pa
                                                                    HasStartEffect<PanelsSettings> {
 
     private static final long serialVersionUID = -4296426800291941801L;
-    
+
     private Integer angel;
 
     private Double backgroundAlpha;
@@ -87,91 +87,173 @@ public class PanelsSettings extends AbstractChartObject implements HasMargins<Pa
 
     private Boolean zoomOutAxes;
 
+    /**
+     * @return angle of the 3D part of plot area
+     */
     public Integer getAngel() {
         return angel;
     }
 
+    /**
+     * Sets the angle of the 3D part of plot area. This creates a 3D effect (if the depth3D is greater than 0).
+     *
+     * @param angel angle
+     */
     public PanelsSettings setAngel(Integer angel) {
         this.angel = angel;
         return this;
     }
 
+    /**
+     * @return opacity of panel background
+     */
     public Double getBackgroundAlpha() {
         return backgroundAlpha;
     }
 
+    /**
+     * Sets opacity of panel background. Possible values are 1 and 0. Values like 0.5 will not make it half-transparent.
+     *
+     * @param backgroundAlpha opacity
+     */
     public PanelsSettings setBackgroundAlpha(Double backgroundAlpha) {
         this.backgroundAlpha = backgroundAlpha;
         return this;
     }
 
+    /**
+     * @return background color of panels
+     */
     public Color getBackgroundColor() {
         return backgroundColor;
     }
 
+    /**
+     * Sets background color of panels. Set backgroundAlpha to greater than 0 value in order to make background visible.
+     *
+     * @param backgroundColor color
+     */
     public PanelsSettings setBackgroundColor(Color backgroundColor) {
         this.backgroundColor = backgroundColor;
         return this;
     }
 
+    /**
+     * @return gap in pixels between two columns of the same category
+     */
     public Integer getColumnSpacing() {
         return columnSpacing;
     }
 
+    /**
+     * Sets the gap in pixels between two columns of the same category.
+     *
+     * @param columnSpacing column spacing
+     */
     public PanelsSettings setColumnSpacing(Integer columnSpacing) {
         this.columnSpacing = columnSpacing;
         return this;
     }
 
+    /**
+     * @return relative width of columns
+     */
     public Integer getColumnWidth() {
         return columnWidth;
     }
 
+    /**
+     * Sets relative width of columns. Valid values 0 - 1.
+     *
+     * @param columnWidth column relative width
+     */
     public PanelsSettings setColumnWidth(Integer columnWidth) {
         this.columnWidth = columnWidth;
         return this;
     }
 
+    /**
+     * @return credits position
+     */
     public CreditsPosition getCreditsPosition() {
         return creditsPosition;
     }
 
+    /**
+     * Sets position of amCharts link (free version only). Possible values are: top-left. top-right, bottom-left,
+     * bottom-right. You can adjust the position of amcharts link so that it would not overlap with contents of  your
+     * chart.
+     *
+     * @param creditsPosition credits position
+     */
     public PanelsSettings setCreditsPosition(CreditsPosition creditsPosition) {
         this.creditsPosition = creditsPosition;
         return this;
     }
 
+    /**
+     * @return separator of decimal values
+     */
     public String getDecimalSeparator() {
         return decimalSeparator;
     }
 
+    /**
+     * Sets	separator of decimal values.
+     *
+     * @param decimalSeparator decimal separator
+     */
     public PanelsSettings setDecimalSeparator(String decimalSeparator) {
         this.decimalSeparator = decimalSeparator;
         return this;
     }
 
+    /**
+     * @return depth of the 3D part of plot area
+     */
     public Integer getDepth3D() {
         return depth3D;
     }
 
+    /**
+     * Sets the depth of the 3D part of plot area. This creates a 3D effect (if the angle is greater than 0).
+     *
+     * @param depth3D depth 3D
+     */
     public PanelsSettings setDepth3D(Integer depth3D) {
         this.depth3D = depth3D;
         return this;
     }
 
+    /**
+     * @return font family
+     */
     public String getFontFamily() {
         return fontFamily;
     }
 
+    /**
+     * Sets font family.
+     *
+     * @param fontFamily font family
+     */
     public PanelsSettings setFontFamily(String fontFamily) {
         this.fontFamily = fontFamily;
         return this;
     }
 
+    /**
+     * @return font size
+     */
     public Integer getFontSize() {
         return fontSize;
     }
 
+    /**
+     * Sets font size.
+     *
+     * @param fontSize font size
+     */
     public PanelsSettings setFontSize(Integer fontSize) {
         this.fontSize = fontSize;
         return this;
@@ -221,87 +303,170 @@ public class PanelsSettings extends AbstractChartObject implements HasMargins<Pa
         return this;
     }
 
+    /**
+     * @return the longest time span allowed to select (in milliseconds)
+     */
     public Long getMaxSelectedTime() {
         return maxSelectedTime;
     }
 
+    /**
+     * Sets the longest time span allowed to select (in milliseconds). For example, 259200000 will limit selection to 3
+     * days. Works if {@link CategoryAxesSettings#equalSpacing} is set to false.
+     *
+     * @param maxSelectedTime maximum selected time
+     */
     public PanelsSettings setMaxSelectedTime(Long maxSelectedTime) {
         this.maxSelectedTime = maxSelectedTime;
         return this;
     }
 
+    /**
+     * @return the shortest time span allowed to select (in milliseconds)
+     */
     public Long getMinSelectedTime() {
         return minSelectedTime;
     }
 
+    /**
+     * Sets the shortest time span allowed to select (in milliseconds). For example, 1000 will limit selection to 1
+     * second. Works if {@link CategoryAxesSettings#equalSpacing} is set to false.
+     *
+     * @param minSelectedTime minimum selected time
+     */
     public PanelsSettings setMinSelectedTime(Long minSelectedTime) {
         this.minSelectedTime = minSelectedTime;
         return this;
     }
 
+    /**
+     * @return gap between panels
+     */
     public Integer getPanelSpacing() {
         return panelSpacing;
     }
 
+    /**
+     * Sets gap between panels.
+     *
+     * @param panelSpacing panel spacing
+     */
     public PanelsSettings setPanelSpacing(Integer panelSpacing) {
         this.panelSpacing = panelSpacing;
         return this;
     }
 
+    /**
+     * @return true if panEventsEnabled is enabled
+     */
     public Boolean getPanEventsEnabled() {
         return panEventsEnabled;
     }
 
+    /**
+     * This setting affects touch-screen devices only. If a chart is on a page, and panEventsEnabled are set to true,
+     * the page won't move if the user touches the chart first. If a chart is big enough and occupies all the screen
+     * of your touch device, the user won’t be able to move the page at all. That's why the default value is false.
+     * If you think that selecting or or panning the chart is a primary purpose of your chart users, you should set
+     * panEventsEnabled to true.
+     *
+     * @param panEventsEnabled panEventsEnabled option
+     */
     public PanelsSettings setPanEventsEnabled(Boolean panEventsEnabled) {
         this.panEventsEnabled = panEventsEnabled;
         return this;
     }
 
+    /**
+     * @return precision of percent values
+     */
     public Double getPercentPrecision() {
         return percentPrecision;
     }
 
+    /**
+     * Sets precision of percent values.
+     *
+     * @param percentPrecision percent precision
+     */
     public PanelsSettings setPercentPrecision(Double percentPrecision) {
         this.percentPrecision = percentPrecision;
         return this;
     }
 
+    /**
+     * @return the opacity of plot area's border
+     */
     public Double getPlotAreaBorderAlpha() {
         return plotAreaBorderAlpha;
     }
 
+    /**
+     * Sets the opacity of plot area's border.
+     *
+     * @param plotAreaBorderAlpha opacity
+     */
     public PanelsSettings setPlotAreaBorderAlpha(Double plotAreaBorderAlpha) {
         this.plotAreaBorderAlpha = plotAreaBorderAlpha;
         return this;
     }
 
+    /**
+     * @return the color of the plot area's border.
+     */
     public Color getPlotAreaBorderColor() {
         return plotAreaBorderColor;
     }
 
+    /**
+     * Sets the color of the plot area's border.
+     *
+     * @param plotAreaBorderColor color
+     */
     public PanelsSettings setPlotAreaBorderColor(Color plotAreaBorderColor) {
         this.plotAreaBorderColor = plotAreaBorderColor;
         return this;
     }
 
+    /**
+     * @return opacity of plot area fill
+     */
     public Double getPlotAreaFillAlphas() {
         return plotAreaFillAlphas;
     }
 
+    /**
+     * Sets opacity of plot area fill.
+     *
+     * @param plotAreaFillAlphas opacity
+     */
     public PanelsSettings setPlotAreaFillAlphas(Double plotAreaFillAlphas) {
         this.plotAreaFillAlphas = plotAreaFillAlphas;
         return this;
     }
 
+    /**
+     * @return list of colors
+     */
     public List<Color> getPlotAreaFillColors() {
         return plotAreaFillColors;
     }
 
+    /**
+     * Sets list of the colors used to tint the background gradient fill of the plot area.
+     *
+     * @param plotAreaFillColors list of colors
+     */
     public PanelsSettings setPlotAreaFillColors(List<Color> plotAreaFillColors) {
         this.plotAreaFillColors = plotAreaFillColors;
         return this;
     }
 
+    /**
+     * Adds colors.
+     *
+     * @param plotAreaFillColors colors
+     */
     public PanelsSettings addPlotAreaFillColors(Color... plotAreaFillColors) {
         if (plotAreaFillColors != null) {
             if (this.plotAreaFillColors == null) {
@@ -312,55 +477,106 @@ public class PanelsSettings extends AbstractChartObject implements HasMargins<Pa
         return this;
     }
 
+    /**
+     * @return precision of values
+     */
     public Double getPrecision() {
         return precision;
     }
 
+    /**
+     * Sets precision of values. -1 means values will not be rounded and shown as they are.
+     *
+     * @param precision precision
+     */
     public PanelsSettings setPrecision(Double precision) {
         this.precision = precision;
         return this;
     }
 
+    /**
+     * @return list of big number prefixes
+     */
     public List<BigNumberPrefix> getPrefixesOfBigNumbers() {
         return prefixesOfBigNumbers;
     }
 
+    /**
+     * Sets list of big number prefixes. Prefixes which are used to make big numbers shorter: 2M instead of 2000000,
+     * etc. Prefixes are used on value axes and in the legend. To enable prefixes, set usePrefixes property to true.
+     *
+     * @param prefixesOfBigNumbers list of big number prefixes
+     */
     public PanelsSettings setPrefixesOfBigNumbers(List<BigNumberPrefix> prefixesOfBigNumbers) {
         this.prefixesOfBigNumbers = prefixesOfBigNumbers;
         return this;
     }
 
+    /**
+     * @return list of small number prefixes
+     */
     public List<SmallNumberPrefix> getPrefixesOfSmallNumbers() {
         return prefixesOfSmallNumbers;
     }
 
+    /**
+     * Sets prefixes which are used to make small numbers shorter: 2μ instead of 0.000002, etc. Prefixes are used on
+     * value axes and in the legend. To enable prefixes, set usePrefixes property to true.
+     *
+     * @param prefixesOfSmallNumbers list of small number prefixes
+     */
     public PanelsSettings setPrefixesOfSmallNumbers(List<SmallNumberPrefix> prefixesOfSmallNumbers) {
         this.prefixesOfSmallNumbers = prefixesOfSmallNumbers;
         return this;
     }
 
+    /**
+     * @return recalculate to percents
+     */
     public RecalculateToPercents getRecalculateToPercents() {
         return recalculateToPercents;
     }
 
+    /**
+     * Specifies when values should be recalculated to percents. Possible values are: "never", "always", "whenComparing".
+     *
+     * @param recalculateToPercents recalculate to percents
+     */
     public PanelsSettings setRecalculateToPercents(RecalculateToPercents recalculateToPercents) {
         this.recalculateToPercents = recalculateToPercents;
         return this;
     }
 
+    /**
+     * @return true if in the animation all objects appear at once
+     */
     public Boolean getSequencedAnimation() {
         return sequencedAnimation;
     }
 
+    /**
+     * Set sequencedAnimation to true if in the animation all objects should appear at once.
+     *
+     * @param sequencedAnimation sequencedAnimation option
+     */
     public PanelsSettings setSequencedAnimation(Boolean sequencedAnimation) {
         this.sequencedAnimation = sequencedAnimation;
         return this;
     }
 
+    /**
+     * @return initial opacity of the column/line
+     */
     public Double getStartAlpha() {
         return startAlpha;
     }
 
+    /**
+     * Sets the initial opacity of the column/line. If you set startDuration to a value higher than 0, the
+     * columns/lines will fade in from startAlpha.
+     *
+     * @param startAlpha initial opacity
+     */
     public PanelsSettings setStartAlpha(Double startAlpha) {
         this.startAlpha = startAlpha;
         return this;
@@ -388,28 +604,53 @@ public class PanelsSettings extends AbstractChartObject implements HasMargins<Pa
         return this;
     }
 
+    /**
+     * @return separator of thousand values
+     */
     public String getThousandsSeparator() {
         return thousandsSeparator;
     }
 
+    /**
+     * Sets separator of thousand values.
+     *
+     * @param thousandsSeparator thousands separator
+     */
     public PanelsSettings setThousandsSeparator(String thousandsSeparator) {
         this.thousandsSeparator = thousandsSeparator;
         return this;
     }
 
+    /**
+     * @return true if prefixes is used for big and small numbers
+     */
     public Boolean getUsePrefixes() {
         return usePrefixes;
     }
 
+    /**
+     * Set usePrefixes to true if prefixes should be used for big and small numbers.
+     *
+     * @param usePrefixes usePrefixes option
+     */
     public PanelsSettings setUsePrefixes(Boolean usePrefixes) {
         this.usePrefixes = usePrefixes;
         return this;
     }
 
+    /**
+     * @return true if zoomOutAxes is enabled
+     */
     public Boolean getZoomOutAxes() {
         return zoomOutAxes;
     }
 
+    /**
+     * Set zoomOutAxes to false if zoomed-in value axes shouldn't be zoomed-out when user changes selected period with
+     * {@link PeriodSelector}.
+     *
+     * @param zoomOutAxes zoomOutAxes option
+     */
     public PanelsSettings setZoomOutAxes(Boolean zoomOutAxes) {
         this.zoomOutAxes = zoomOutAxes;
         return this;

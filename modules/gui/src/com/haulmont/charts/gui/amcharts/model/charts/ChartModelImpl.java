@@ -11,5 +11,8 @@ import java.util.List;
 
 public abstract class ChartModelImpl extends AbstractChartObject {
 
+    /**
+     * @return fields of the {@link com.haulmont.charts.gui.data.DataItem DataItem} that are bound to the chart
+     */
     public abstract List<String> getWiredFields();
 }

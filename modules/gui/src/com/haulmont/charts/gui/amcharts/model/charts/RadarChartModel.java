@@ -8,9 +8,27 @@ package com.haulmont.charts.gui.amcharts.model.charts;
 import com.haulmont.charts.gui.amcharts.model.HasMargins;
 
 public interface RadarChartModel<T extends RadarChartModel> extends CoordinateChartModel<T>, HasMargins<T> {
+    /**
+     * @return category field
+     */
     String getCategoryField();
+
+    /**
+     * Sets field from your data provider containing categories.
+     *
+     * @param categoryField category field string
+     */
     T setCategoryField(String categoryField);
 
+    /**
+     * @return radius
+     */
     String getRadius();
+
+    /**
+     * Radius of radar
+     *
+     * @param radius the radius
+     */
     T setRadius(String radius);
 }

@@ -9,7 +9,18 @@ import java.io.Serializable;
 
 /**
  * JavaScript function definition. <br>
- * Code example: {@code new JsFunction("function (event) { alert(event); }");}
+ * Code example:
+ * <pre>
+ *  &#64;Inject
+ *  private SerialChart serialChart;
+ *  ...
+ *  Graph graph = serialChart.getGraphs().get(0);
+ *  graph.setBalloonFunction(new JsFunction(
+ *      "function(event){"
+ *          + "var result = 'Income in ' + event.category + ': '"
+ *          + "+ event.serialDataItem.dataContext.expenses;"
+ *          + "return result;}"));
+ * </pre>
  */
 public class JsFunction implements Serializable {
 
