@@ -35,10 +35,6 @@ public class AmStockChartConfig extends JavaScriptObject {
         if (!config.path) {
             config.path = "VAADIN/webjars/amcharts/";
         }
-
-        if (!config.pathToImages) {
-            config.pathToImages = "VAADIN/webjars/amcharts/images/";
-        }
     }-*/;
 
     protected static native String getDefs(JavaScriptObject config) /*-{
@@ -160,9 +156,6 @@ public class AmStockChartConfig extends JavaScriptObject {
                     }
                     if (!panel.path) {
                         panel.path = "VAADIN/webjars/amcharts/";
-                    }
-                    if (!panel.pathToImages) {
-                        panel.pathToImages = "VAADIN/webjars/amcharts/images/";
                     }
                 }
             }

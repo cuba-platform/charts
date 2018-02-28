@@ -33,10 +33,6 @@ public class AmchartsConfig extends JavaScriptObject {
         if (!config.path) {
             config.path = "VAADIN/webjars/amcharts/";
         }
-
-        if (!config.pathToImages) {
-            config.pathToImages = "VAADIN/webjars/amcharts/images/";
-        }
     }-*/;
 
     private static native String getDefs(JavaScriptObject config) /*-{
