@@ -109,6 +109,8 @@ public abstract class AbstractAxis<T extends AbstractAxis> extends AbstractChart
 
     private Integer titleRotation;
 
+    private Boolean centerRotatedLabels;
+
     /**
      * @return true if number of gridCount is specified automatically, according to the axis size
      */
@@ -928,5 +930,21 @@ public abstract class AbstractAxis<T extends AbstractAxis> extends AbstractChart
     public T setMarkPeriodChange(Boolean markPeriodChange) {
         this.markPeriodChange = markPeriodChange;
         return (T) this;
+    }
+
+    /**
+     * @return true if rotated labels are force-centered
+     */
+    public Boolean getCenterRotatedLabels() {
+        return centerRotatedLabels;
+    }
+
+    /**
+     * In case you have rotated labels on horizontal axis, you can force-center them using this property.
+     *
+     * @param centerRotatedLabels centerRotatedLabels option
+     */
+    public void setCenterRotatedLabels(Boolean centerRotatedLabels) {
+        this.centerRotatedLabels = centerRotatedLabels;
     }
 }

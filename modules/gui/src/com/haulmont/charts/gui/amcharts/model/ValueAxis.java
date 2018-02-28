@@ -95,6 +95,10 @@ public class ValueAxis extends AbstractAxis<ValueAxis> {
 
     private Double zeroGridAlpha;
 
+    private Boolean autoWrap;
+
+    private DatePeriod minPeriod;
+
     /**
      * @return the distance from axis to the axis title (category)
      */
@@ -767,5 +771,37 @@ public class ValueAxis extends AbstractAxis<ValueAxis> {
     public ValueAxis setBalloonTextFunction(JsFunction balloonTextFunction) {
         this.balloonTextFunction = balloonTextFunction;
         return this;
+    }
+
+    /**
+     * @return true if autoWrap is enabled
+     */
+    public Boolean getAutoWrap() {
+        return autoWrap;
+    }
+
+    /**
+     * If this is set to true and the label does not fit, it will be wrapped. Works only on horizontal value axes.
+     *
+     * @param autoWrap autoWrap option
+     */
+    public void setAutoWrap(Boolean autoWrap) {
+        this.autoWrap = autoWrap;
+    }
+
+    /**
+     * @return the shortest period of your data
+     */
+    public DatePeriod getMinPeriod() {
+        return minPeriod;
+    }
+
+    /**
+     * Sets the shortest period of your data. This will work only if you set the type of your value axis to "date".
+     *
+     * @param minPeriod shortest period
+     */
+    public void setMinPeriod(DatePeriod minPeriod) {
+        this.minPeriod = minPeriod;
     }
 }

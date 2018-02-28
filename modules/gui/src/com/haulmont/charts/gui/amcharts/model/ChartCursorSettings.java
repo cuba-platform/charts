@@ -66,6 +66,10 @@ public class ChartCursorSettings extends AbstractChartObject {
 
     private Boolean zoomable;
 
+    private Boolean selectWithoutZooming;
+
+    private Boolean showNextAvailable;
+
     /**
      * @return orientation of value balloon pointer
      */
@@ -497,5 +501,40 @@ public class ChartCursorSettings extends AbstractChartObject {
     public ChartCursorSettings setColor(Color color) {
         this.color = color;
         return this;
+    }
+
+    /**
+     * @return true if cursor selects area but not zoom-in
+     */
+    public Boolean getSelectWithoutZooming() {
+        return selectWithoutZooming;
+    }
+
+    /**
+     * Set selectWithoutZooming to true if cursor should only mark selected area but not zoom-in after user releases
+     * mouse button.
+     *
+     * @param selectWithoutZooming selectWithoutZooming option
+     */
+    public void setSelectWithoutZooming(Boolean selectWithoutZooming) {
+        this.selectWithoutZooming = selectWithoutZooming;
+    }
+
+    /**
+     * @return true if graph displays balloon on next available data point while currently hovered item doesn't have
+     * value for this graph
+     */
+    public Boolean getShowNextAvailable() {
+        return showNextAvailable;
+    }
+
+    /**
+     * If true, the graph will display balloon on next available data point if currently hovered item doesn't have
+     * value for this graph.
+     *
+     * @param showNextAvailable showNextAvailable option
+     */
+    public void setShowNextAvailable(Boolean showNextAvailable) {
+        this.showNextAvailable = showNextAvailable;
     }
 }

@@ -726,6 +726,16 @@ public class StockChartLoader extends ChartModelLoader<StockChart> {
                 chartCursorSettings.setZoomable(Boolean.valueOf(zoomable));
             }
 
+            String selectWithoutZooming = settingsElement.attributeValue("selectWithoutZooming");
+            if (StringUtils.isNotEmpty(selectWithoutZooming)) {
+                chartCursorSettings.setSelectWithoutZooming(Boolean.valueOf(selectWithoutZooming));
+            }
+
+            String showNextAvailable = settingsElement.attributeValue("showNextAvailable");
+            if (StringUtils.isNotEmpty(showNextAvailable)) {
+                chartCursorSettings.setShowNextAvailable(Boolean.valueOf(showNextAvailable));
+            }
+
             chart.setChartCursorSettings(chartCursorSettings);
         }
     }
@@ -1177,9 +1187,9 @@ public class StockChartLoader extends ChartModelLoader<StockChart> {
             loadMargins(panelsSettings, panelSettingsElement);
             loadStartEffect(panelsSettings, panelSettingsElement);
 
-            String angel = panelSettingsElement.attributeValue("angel");
+            String angel = panelSettingsElement.attributeValue("angle");
             if (StringUtils.isNotEmpty(angel)) {
-                panelsSettings.setAngel(Integer.valueOf(angel));
+                panelsSettings.setAngle(Integer.valueOf(angel));
             }
 
             String backgroundAlpha = panelSettingsElement.attributeValue("backgroundAlpha");

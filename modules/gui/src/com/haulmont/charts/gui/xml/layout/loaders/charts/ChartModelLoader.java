@@ -703,6 +703,11 @@ public abstract class ChartModelLoader<C extends Component> extends AbstractComp
         if (StringUtils.isNotEmpty(width)) {
             legend.setWidth(Integer.parseInt(width));
         }
+
+        String combineLegend = legendElement.attributeValue("combineLegend");
+        if (StringUtils.isNotEmpty(combineLegend)) {
+            legend.setCombineLegend(Boolean.valueOf(combineLegend));
+        }
     }
 
     protected void loadLegendItems(AbstractLegend legend, Element legendElement) {
@@ -1193,6 +1198,11 @@ public abstract class ChartModelLoader<C extends Component> extends AbstractComp
         if (StringUtils.isNotEmpty(titleRotation)) {
             axis.setTitleRotation(Integer.parseInt(titleRotation));
         }
+
+        String centerRotatedLabels = element.attributeValue("centerRotatedLabels");
+        if (StringUtils.isNotEmpty(centerRotatedLabels)) {
+            axis.setCenterRotatedLabels(Boolean.valueOf(centerRotatedLabels));
+        }
     }
 
     protected ValueAxis loadValueAxis(Element valueAxisElement) {
@@ -1383,6 +1393,20 @@ public abstract class ChartModelLoader<C extends Component> extends AbstractComp
         String zeroGridAlpha = valueAxisElement.attributeValue("zeroGridAlpha");
         if (StringUtils.isNotEmpty(zeroGridAlpha)) {
             axis.setZeroGridAlpha(Double.valueOf(zeroGridAlpha));
+        }
+
+        String autoWrap = valueAxisElement.attributeValue("autoWrap");
+        if (StringUtils.isNotEmpty(autoWrap)) {
+            axis.setAutoWrap(Boolean.valueOf(autoWrap));
+        }
+
+        String minPeriod = valueAxisElement.attributeValue("minPeriod");
+        if (StringUtils.isNotEmpty(minPeriod)) {
+            DatePeriod dp = DatePeriod.fromId(minPeriod);
+            if (dp == null) {
+                dp = DatePeriod.valueOf(minPeriod);
+            }
+            axis.setMinPeriod(dp);
         }
 
         return axis;
@@ -2249,6 +2273,36 @@ public abstract class ChartModelLoader<C extends Component> extends AbstractComp
         String updateOnReleaseOnly = scrollbarElement.attributeValue("updateOnReleaseOnly");
         if (StringUtils.isNotEmpty(updateOnReleaseOnly)) {
             scrollbar.setUpdateOnReleaseOnly(Boolean.valueOf(updateOnReleaseOnly));
+        }
+
+        String hResizeCursor = scrollbarElement.attributeValue("hResizeCursor");
+        if (StringUtils.isNotEmpty(hResizeCursor)) {
+            scrollbar.setHResizeCursor(hResizeCursor);
+        }
+
+        String hResizeCursorDown = scrollbarElement.attributeValue("hResizeCursorDown");
+        if (StringUtils.isNotEmpty(hResizeCursorDown)) {
+            scrollbar.setHResizeCursorDown(hResizeCursorDown);
+        }
+
+        String hResizeCursorHover = scrollbarElement.attributeValue("hResizeCursorHover");
+        if (StringUtils.isNotEmpty(hResizeCursorHover)) {
+            scrollbar.setHResizeCursorHover(hResizeCursorHover);
+        }
+
+        String vResizeCursor = scrollbarElement.attributeValue("vResizeCursor");
+        if (StringUtils.isNotEmpty(vResizeCursor)) {
+            scrollbar.setVResizeCursor(vResizeCursor);
+        }
+
+        String vResizeCursorDown = scrollbarElement.attributeValue("vResizeCursorDown");
+        if (StringUtils.isNotEmpty(vResizeCursorDown)) {
+            scrollbar.setVResizeCursorDown(vResizeCursorDown);
+        }
+
+        String vResizeCursorHover = scrollbarElement.attributeValue("vResizeCursorHover");
+        if (StringUtils.isNotEmpty(vResizeCursorHover)) {
+            scrollbar.setVResizeCursorHover(vResizeCursorHover);
         }
 
         return scrollbar;

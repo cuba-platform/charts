@@ -131,6 +131,8 @@ public class AbstractLegend<T extends AbstractLegend> extends AbstractChartObjec
 
     private Integer width;
 
+    private Boolean combineLegend;
+
     /**
      * @return alignment of legend entries
      */
@@ -1076,5 +1078,21 @@ public class AbstractLegend<T extends AbstractLegend> extends AbstractChartObjec
     public T setAccessibleLabel(String accessibleLabel) {
         this.accessibleLabel = accessibleLabel;
         return (T) this;
+    }
+
+    /**
+     * @return true if displayed legend data and graph’s entries
+     */
+    public Boolean getCombineLegend() {
+        return combineLegend;
+    }
+
+    /**
+     * Set combineLegend to true if you want to display both legend data and graph’s entries.
+     *
+     * @param combineLegend combineLegend option
+     */
+    public void setCombineLegend(Boolean combineLegend) {
+        this.combineLegend = combineLegend;
     }
 }

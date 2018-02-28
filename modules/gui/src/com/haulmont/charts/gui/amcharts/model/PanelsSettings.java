@@ -19,7 +19,7 @@ public class PanelsSettings extends AbstractChartObject implements HasMargins<Pa
 
     private static final long serialVersionUID = -4296426800291941801L;
 
-    private Integer angel;
+    private Integer angle;
 
     private Double backgroundAlpha;
 
@@ -90,17 +90,17 @@ public class PanelsSettings extends AbstractChartObject implements HasMargins<Pa
     /**
      * @return angle of the 3D part of plot area
      */
-    public Integer getAngel() {
-        return angel;
+    public Integer getAngle() {
+        return angle;
     }
 
     /**
      * Sets the angle of the 3D part of plot area. This creates a 3D effect (if the depth3D is greater than 0).
      *
-     * @param angel angle
+     * @param angle angle
      */
-    public PanelsSettings setAngel(Integer angel) {
-        this.angel = angel;
+    public PanelsSettings setAngle(Integer angle) {
+        this.angle = angle;
         return this;
     }
 

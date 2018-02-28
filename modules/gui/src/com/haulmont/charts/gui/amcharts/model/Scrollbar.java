@@ -88,6 +88,18 @@ public class Scrollbar extends AbstractChartObject {
 
     private Boolean updateOnReleaseOnly;
 
+    private String hResizeCursor;
+
+    private String hResizeCursorDown;
+
+    private String hResizeCursorHover;
+
+    private String vResizeCursor;
+
+    private String vResizeCursorDown;
+
+    private String vResizeCursorHover;
+
     /**
      * @return true if a number of gridCount is specified automatically, according to the axis size
      */
@@ -739,5 +751,105 @@ public class Scrollbar extends AbstractChartObject {
     public Scrollbar setAccessibleLabel(String accessibleLabel) {
         this.accessibleLabel = accessibleLabel;
         return this;
+    }
+
+    /**
+     * @return mouse cursor type when user hovers horizontal cursor's resize grips
+     */
+    public String getHResizeCursor() {
+        return hResizeCursor;
+    }
+
+    /**
+     * Sets mouse cursor type shown when user hovers horizontal cursor's resize grips. Possible values are:
+     * "e-resize", "n-resize", etc.
+     *
+     * @param hResizeCursor hResizeCursor value
+     */
+    public void setHResizeCursor(String hResizeCursor) {
+        this.hResizeCursor = hResizeCursor;
+    }
+
+    /**
+     * @return CSS value of cursor when mouse is pressed down over horizontal cursor's resize grip
+     */
+    public String getHResizeCursorDown() {
+        return hResizeCursorDown;
+    }
+
+    /**
+     * Sets CSS value of cursor displayed when mouse is pressed down over horizontal cursor's resize grip. For instance,
+     * "cursor: all-scroll;".
+     *
+     * @param hResizeCursorDown CSS value
+     */
+    public void setHResizeCursorDown(String hResizeCursorDown) {
+        this.hResizeCursorDown = hResizeCursorDown;
+    }
+
+    /**
+     * @return CSS value of cursor when hovering over horizontal cursor's resize grip
+     */
+    public String getHResizeCursorHover() {
+        return hResizeCursorHover;
+    }
+
+    /**
+     * Sets CSS value of cursor displayed when hovering over horizontal cursor's resize grip.
+     *
+     * @param hResizeCursorHover CSS value
+     */
+    public void setHResizeCursorHover(String hResizeCursorHover) {
+        this.hResizeCursorHover = hResizeCursorHover;
+    }
+
+    /**
+     * @return mouse cursor type when user hovers vertical cursor's resize grips
+     */
+    public String getVResizeCursor() {
+        return vResizeCursor;
+    }
+
+    /**
+     * Sets mouse cursor type shown when user hovers vertical cursor's resize grips. Possible values are:
+     * "e-resize", "n-resize", etc.
+     *
+     * @param vResizeCursor vResizeCursor value
+     */
+    public void setVResizeCursor(String vResizeCursor) {
+        this.vResizeCursor = vResizeCursor;
+    }
+
+    /**
+     * @return CSS value of cursor when mouse is pressed down over vertical cursor's resize grip
+     */
+    public String getVResizeCursorDown() {
+        return vResizeCursorDown;
+    }
+
+    /**
+     * Sets CSS value of cursor displayed when mouse is pressed down over vertical cursor's resize grip. For instance,
+     * "cursor: all-scroll;".
+     *
+     * @param vResizeCursorDown CSS value
+     */
+    public void setVResizeCursorDown(String vResizeCursorDown) {
+        this.vResizeCursorDown = vResizeCursorDown;
+    }
+
+    /**
+     * @return CSS value of cursor when hovering over vertical cursor's resize grip
+     */
+    public String getVResizeCursorHover() {
+        return vResizeCursorHover;
+    }
+
+    /**
+     * Sets CSS value of cursor displayed when hovering over vertical cursor's resize grip.
+     *
+     * @param vResizeCursorHover CSS value
+     */
+    public void setVResizeCursorHover(String vResizeCursorHover) {
+        this.vResizeCursorHover = vResizeCursorHover;
     }
 }

@@ -896,6 +896,7 @@
         <xs:attribute name="titleColor" type="color"/>
         <xs:attribute name="titleFontSize" type="xs:integer"/>
         <xs:attribute name="titleRotation" type="xs:integer"/>
+        <xs:attribute name="centerRotatedLabels" type="xs:boolean"/>
     </xs:complexType>
 
     <xs:complexType name="categoryAxis">
@@ -1027,6 +1028,7 @@
         <xs:attribute name="valueWidth" type="xs:integer"/>
         <xs:attribute name="verticalGap" type="xs:integer"/>
         <xs:attribute name="width" type="xs:integer"/>
+        <xs:attribute name="combineLegend" type="xs:boolean"/>
     </xs:complexType>
 
     <xs:complexType name="label">
@@ -1104,6 +1106,8 @@
                 <xs:attribute name="usePrefixes" type="xs:boolean"/>
                 <xs:attribute name="useScientificNotation" type="xs:boolean"/>
                 <xs:attribute name="zeroGridAlpha" type="xs:double"/>
+                <xs:attribute name="autoWrap" type="xs:boolean"/>
+                <xs:attribute name="minPeriod" type="datePeriod"/>
             </xs:extension>
         </xs:complexContent>
     </xs:complexType>
@@ -1210,6 +1214,12 @@
         <xs:attribute name="selectedGraphLineColor" type="color"/>
         <xs:attribute name="tabIndex" type="xs:integer"/>
         <xs:attribute name="updateOnReleaseOnly" type="xs:boolean"/>
+        <xs:attribute name="hResizeCursor" type="xs:string"/>
+        <xs:attribute name="hResizeCursorDown" type="xs:string"/>
+        <xs:attribute name="hResizeCursorHover" type="xs:string"/>
+        <xs:attribute name="vResizeCursor" type="xs:string"/>
+        <xs:attribute name="vResizeCursorDown" type="xs:string"/>
+        <xs:attribute name="vResizeCursorHover" type="xs:string"/>
     </xs:complexType>
 
     <xs:complexType name="chartGraph">
@@ -2016,6 +2026,8 @@
         <xs:attribute name="valueLineBalloonEnabled" type="xs:boolean"/>
         <xs:attribute name="valueLineEnabled" type="xs:boolean"/>
         <xs:attribute name="zoomable" type="xs:boolean"/>
+        <xs:attribute name="selectWithoutZooming" type="xs:boolean"/>
+        <xs:attribute name="showNextAvailable" type="xs:boolean"/>
     </xs:complexType>
 
     <xs:complexType name="chartScrollbarSettings">
@@ -2212,7 +2224,7 @@
             </xs:element>
         </xs:all>
 
-        <xs:attribute name="angel" type="xs:integer"/>
+        <xs:attribute name="angle" type="xs:integer"/>
         <xs:attribute name="backgroundAlpha" type="xs:double"/>
         <xs:attribute name="backgroundColor" type="color"/>
         <xs:attribute name="columnSpacing" type="xs:integer"/>
