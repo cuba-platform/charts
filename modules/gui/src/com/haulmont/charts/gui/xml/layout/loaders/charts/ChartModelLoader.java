@@ -5,6 +5,7 @@
 
 package com.haulmont.charts.gui.xml.layout.loaders.charts;
 
+import com.google.common.base.Splitter;
 import com.haulmont.bali.util.Dom4j;
 import com.haulmont.charts.gui.amcharts.model.*;
 import com.haulmont.charts.gui.amcharts.model.charts.ChartModel;
@@ -25,10 +26,7 @@ import javax.annotation.Nullable;
 import java.math.BigDecimal;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
-import java.util.ArrayList;
-import java.util.Date;
-import java.util.List;
-import java.util.UUID;
+import java.util.*;
 
 public abstract class ChartModelLoader<C extends Component> extends AbstractComponentLoader<C> {
 
@@ -2710,7 +2708,7 @@ public abstract class ChartModelLoader<C extends Component> extends AbstractComp
 
             String tabIndex = cursorElement.attributeValue("tabIndex");
             if (StringUtils.isNotEmpty(tabIndex)) {
-               cursor.setTabIndex(Integer.parseInt(tabIndex));
+                cursor.setTabIndex(Integer.parseInt(tabIndex));
             }
 
             chart.setChartCursor(cursor);
@@ -3139,7 +3137,9 @@ public abstract class ChartModelLoader<C extends Component> extends AbstractComp
 
         String additionalFields = element.attributeValue("additionalFields");
         if (StringUtils.isNotEmpty(additionalFields)) {
-            chart.addAdditionalFields(additionalFields.split(","));
+            List<String> fields = Splitter.on(",").omitEmptyStrings().trimResults().splitToList(additionalFields);
+
+            chart.addAdditionalFields(fields.toArray(new String[fields.size()]));
         }
 
         String autoDisplay = element.attributeValue("autoDisplay");

@@ -5,6 +5,7 @@
 
 package com.haulmont.charts.gui.xml.layout.loaders.charts;
 
+import com.google.common.base.Splitter;
 import com.haulmont.bali.util.Dom4j;
 import com.haulmont.charts.gui.amcharts.model.DatePeriod;
 import com.haulmont.charts.gui.amcharts.model.Graph;
@@ -81,7 +82,9 @@ public class GanttChartLoader extends AbstractSerialChartLoader<GanttChart> {
 
         String additionalSegmentFields = element.attributeValue("additionalSegmentFields");
         if (StringUtils.isNotEmpty(additionalSegmentFields)) {
-            chart.addAdditionalSegmentFields(additionalSegmentFields.split(","));
+            List<String> fields = Splitter.on(",").omitEmptyStrings().trimResults().splitToList(additionalSegmentFields);
+
+            chart.addAdditionalSegmentFields(fields.toArray(new String[fields.size()]));
         }
 
         String brightnessStep = element.attributeValue("brightnessStep");
