@@ -1408,7 +1408,6 @@
                 <xs:attribute name="color" type="color"/>
                 <xs:attribute name="creditsPosition" type="creditsPosition"/>
                 <xs:attribute name="decimalSeparator" type="xs:string"/>
-                <xs:attribute name="renderingDelay" type="xs:double"/>
                 <xs:attribute name="defs" type="xs:string"/>
                 <xs:attribute name="fontFamily" type="xs:string"/>
                 <xs:attribute name="fontSize" type="xs:integer"/>

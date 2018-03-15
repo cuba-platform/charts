@@ -840,15 +840,4 @@ public abstract class WebChart<T extends Chart, M extends AbstractChart>
         getModel().setAccessibleDescription(accessibleDescription);
         return (T) this;
     }
-
-    @Override
-    public Double getRenderingDelay() {
-        return getModel().getRenderingDelay();
-    }
-
-    @Override
-    public T setRenderingDelay(Double delay) {
-        getModel().setRenderingDelay(delay);
-        return (T) this;
-    }
 }

@@ -81,13 +81,7 @@ public class CubaAmchartsJsOverlay {
     }-*/;
 
     protected static native JavaScriptObject makeJsChart(Element placeHolder, JavaScriptObject json) /*-{
-        var delay = 0;
-
-        if (json.hasOwnProperty('renderingDelay')) {
-            delay = json.renderingDelay;
-        }
-
-        var chart = $wnd.AmCharts.makeChart(placeHolder, json, delay);
+        var chart = $wnd.AmCharts.makeChart(placeHolder, json);
         // save last cursor position to chart.cursorPosition
         if (("xy" === chart.type || "serial" === chart.type) && chart.chartCursor) {
             chart.chartCursor.addListener("moved", function (event) {

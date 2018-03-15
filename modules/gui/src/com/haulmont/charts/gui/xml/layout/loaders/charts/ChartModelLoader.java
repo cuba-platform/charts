@@ -3305,10 +3305,5 @@ public abstract class ChartModelLoader<C extends Component> extends AbstractComp
         if (StringUtils.isNotEmpty(defs)) {
             chart.setDefs(defs);
         }
-
-        String renderingDelay = element.attributeValue("renderingDelay");
-        if (StringUtils.isNotEmpty(renderingDelay)) {
-            chart.setRenderingDelay(Double.parseDouble(renderingDelay));
-        }
     }
 }
