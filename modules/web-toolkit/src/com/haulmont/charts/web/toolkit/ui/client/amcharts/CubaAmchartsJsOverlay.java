@@ -88,6 +88,14 @@ public class CubaAmchartsJsOverlay {
                 chart.cursorPosition = {"x": event.x, "y": event.y};
             });
         }
+
+        // need to start animation of sliced charts
+        if ("pie" === chart.type || "funnel" === chart.type) {
+            chart.addListener("drawn", function (event) {
+                event.chart.animateAgain();
+            });
+        }
+
         return chart;
     }-*/;
 
