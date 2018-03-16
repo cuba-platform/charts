@@ -18,7 +18,6 @@ public class AmchartsConfig extends JavaScriptObject {
     public static AmchartsConfig fromServerConfig(String config, String json) {
         String configJson = config != null ? config : "{}";
         AmchartsConfig configObject = (AmchartsConfig) JSONParser.parseLenient(configJson).isObject().getJavaScriptObject();
-        setupDefaultPaths(configObject);
         parseDefs(configObject);
         JsUtils.applyCustomJson(configObject, json);
         JsUtils.activateFunctions(configObject, false);
@@ -28,12 +27,6 @@ public class AmchartsConfig extends JavaScriptObject {
         }
         return configObject;
     }
-
-    private static native void setupDefaultPaths(JavaScriptObject config) /*-{
-        if (!config.path) {
-            config.path = "VAADIN/webjars/amcharts/";
-        }
-    }-*/;
 
     private static native String getDefs(JavaScriptObject config) /*-{
         return config.defs;

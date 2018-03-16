@@ -25,6 +25,7 @@ import org.apache.commons.collections4.CollectionUtils;
 import org.apache.commons.lang.StringUtils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import org.webjars.WebJarAssetLocator;
 
 import javax.annotation.Nullable;
 import java.lang.reflect.Method;
@@ -390,6 +391,7 @@ public class CubaAmchartsScene extends AbstractComponent {
             if (chart != null) {
                 // Full repaint
                 setupDefaults(chart);
+                setupPaths(chart);
 
                 dataItemKeys.removeAll();
 
@@ -423,6 +425,20 @@ public class CubaAmchartsScene extends AbstractComponent {
     }
 
     protected void setupDefaults(AbstractChart chart) {
+    }
+
+    protected void setupPaths(AbstractChart chart) {
+        if (chart.getPath() != null && !chart.getPath().isEmpty()) {
+            return;
+        }
+
+        if (chart.getPath() == null || chart.getPath().isEmpty()) {
+            String amchartsPath = new WebJarAssetLocator()
+                    .getFullPath("amcharts", "amcharts.js");
+            String path = amchartsPath.substring(0, amchartsPath.lastIndexOf("/"))
+                    .replace("META-INF/resources", "VAADIN") + "/";
+            chart.setPath(path);
+        }
     }
 
     protected void forceStateChange() {

@@ -10,7 +10,7 @@ import com.vaadin.server.AbstractExtension;
 import com.vaadin.server.Extension;
 import com.vaadin.ui.UI;
 
-@WebJarResource("amcharts-all:responsive.min.js")
+@WebJarResource(value = "amcharts:responsive.min.js", overridePath = "amcharts/")
 public class CubaAmchartsResponsiveIntegration extends AbstractExtension {
 
     public static CubaAmchartsResponsiveIntegration get(UI ui) {

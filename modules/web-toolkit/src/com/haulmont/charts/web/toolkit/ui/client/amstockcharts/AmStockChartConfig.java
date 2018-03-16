@@ -18,7 +18,6 @@ public class AmStockChartConfig extends JavaScriptObject {
     public static AmStockChartConfig fromServerConfig(String config, String json) {
         String configJson = config != null ? config : "{}";
         AmStockChartConfig configObject = (AmStockChartConfig) JSONParser.parseLenient(configJson).isObject().getJavaScriptObject();
-        setupDefaultPaths(configObject);
         parseDefs(configObject);
         JsUtils.applyCustomJson(configObject, json);
         JsUtils.activateFunctions(configObject, false);
@@ -30,12 +29,6 @@ public class AmStockChartConfig extends JavaScriptObject {
         }
         return configObject;
     }
-
-    private static native void setupDefaultPaths(JavaScriptObject config) /*-{
-        if (!config.path) {
-            config.path = "VAADIN/webjars/amcharts/";
-        }
-    }-*/;
 
     protected static native String getDefs(JavaScriptObject config) /*-{
         return config.defs;
@@ -153,9 +146,6 @@ public class AmStockChartConfig extends JavaScriptObject {
                     }
                     if (panel.valueAxes) {
                         parseValueAxes(panel.valueAxes);
-                    }
-                    if (!panel.path) {
-                        panel.path = "VAADIN/webjars/amcharts/";
                     }
                 }
             }

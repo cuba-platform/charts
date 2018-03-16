@@ -25,6 +25,7 @@ import org.apache.commons.lang.StringUtils;
 import org.apache.commons.lang.builder.HashCodeBuilder;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import org.webjars.WebJarAssetLocator;
 
 import javax.annotation.Nullable;
 import java.lang.reflect.Method;
@@ -36,7 +37,7 @@ import java.util.function.Function;
 
 import static com.vaadin.util.ReflectTools.findMethod;
 
-@WebJarResource("amcharts-all:style.css")
+@WebJarResource(value = "amcharts:style.css", overridePath = "amcharts/")
 public class CubaAmStockChartScene extends AbstractComponent {
     private final Logger log = LoggerFactory.getLogger(CubaAmStockChartScene.class);
 
@@ -330,6 +331,7 @@ public class CubaAmStockChartScene extends AbstractComponent {
             if (chart != null) {
                 // Full repaint
                 setupDefaults(chart);
+                setupPaths(chart);
 
                 dataItemKeys.removeAll();
 
@@ -369,6 +371,20 @@ public class CubaAmStockChartScene extends AbstractComponent {
     }
 
     protected void setupDefaults(StockChartGroup chart) {
+    }
+
+    protected void setupPaths(StockChartGroup chart) {
+        if (chart.getPath() != null && !chart.getPath().isEmpty()) {
+            return;
+        }
+
+        if (chart.getPath() == null || chart.getPath().isEmpty()) {
+            String amchartsPath = new WebJarAssetLocator()
+                    .getFullPath("amcharts", "amcharts.js");
+            String path = amchartsPath.substring(0, amchartsPath.lastIndexOf("/"))
+                    .replace("META-INF/resources", "VAADIN") + "/";
+            chart.setPath(path);
+        }
     }
 
     protected void forceStateChange() {
