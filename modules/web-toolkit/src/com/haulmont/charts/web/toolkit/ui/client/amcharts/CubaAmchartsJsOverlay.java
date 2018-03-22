@@ -92,7 +92,7 @@ public class CubaAmchartsJsOverlay {
         // need to start animation of sliced charts
         if ("pie" === chart.type || "funnel" === chart.type) {
             chart.addListener("drawn", function (event) {
-                if (event.chart.startDuration != 0) {
+                if (event.chart.startDuration > 0) {
                     event.chart.animateAgain();
                 }
             });
