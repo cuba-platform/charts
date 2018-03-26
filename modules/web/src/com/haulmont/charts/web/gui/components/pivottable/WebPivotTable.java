@@ -205,6 +205,56 @@ public class WebPivotTable extends WebAbstractComponent<CubaPivotTable> implemen
     }
 
     @Override
+    public List<String> getHiddenFromAggregations() {
+        return component.getPivotTable().getHiddenFromAggregations();
+    }
+
+    @Override
+    public void setHiddenFromAggregations(List<String> hiddenFromAggregations) {
+        component.getPivotTable().setHiddenFromAggregations(hiddenFromAggregations);
+    }
+
+    @Override
+    public void addHiddenFromAggregations(String... hiddenFromAggregations) {
+        component.getPivotTable().addHiddenFromAggregations(hiddenFromAggregations);
+    }
+
+    @Override
+    public List<String> getHiddenFromDragDrop() {
+        return component.getPivotTable().getHiddenFromDragDrop();
+    }
+
+    @Override
+    public void setHiddenFromDragDrop(List<String> hiddenFromDragDrop) {
+        component.getPivotTable().setHiddenFromDragDrop(hiddenFromDragDrop);
+    }
+
+    @Override
+    public void addHiddenFromDragDrop(String... hiddenFromDragDrop) {
+        component.getPivotTable().addHiddenFromDragDrop(hiddenFromDragDrop);
+    }
+
+    @Override
+    public ColumnOrder getColumnOrder() {
+        return component.getPivotTable().getColumnOrder();
+    }
+
+    @Override
+    public void setColumnOrder(ColumnOrder columnOrder) {
+        component.getPivotTable().setColumnOrder(columnOrder);
+    }
+
+    @Override
+    public RowOrder getRowOrder() {
+        return component.getPivotTable().getRowOrder();
+    }
+
+    @Override
+    public void setRowOrder(RowOrder rowOrder) {
+        component.getPivotTable().setRowOrder(rowOrder);
+    }
+
+    @Override
     public Integer getMenuLimit() {
         return component.getPivotTable().getMenuLimit();
     }
@@ -361,7 +411,9 @@ public class WebPivotTable extends WebAbstractComponent<CubaPivotTable> implemen
             refreshHandler = e -> {
                 RefreshEvent event = new RefreshEvent(WebPivotTable.this,
                         e.getRows(), e.getCols(), e.getRenderer(),
-                        e.getAggregation(), e.getAggregationProperties());
+                        e.getAggregation(), e.getAggregationProperties(),
+                        e.getInclusions(), e.getExclusions(),
+                        e.getColumnOrder(), e.getRowOrder());
 
                 getEventRouter().fireEvent(RefreshListener.class, RefreshListener::onRefresh, event);
             };

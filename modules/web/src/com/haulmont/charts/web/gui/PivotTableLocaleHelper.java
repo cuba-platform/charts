@@ -68,6 +68,8 @@ public final class PivotTableLocaleHelper {
         localeMap.put("uiRenderError", messages.getMainMessage("pivottable.uiRenderError", locale));
         localeMap.put("selectAll", messages.getMainMessage("pivottable.selectAll", locale));
         localeMap.put("selectNone", messages.getMainMessage("pivottable.selectNone", locale));
+        localeMap.put("apply", messages.getMainMessage("pivottable.apply", locale));
+        localeMap.put("cancel", messages.getMainMessage("pivottable.cancel", locale));
         localeMap.put("tooMany", messages.getMainMessage("pivottable.tooMany", locale));
         localeMap.put("filterResults", messages.getMainMessage("pivottable.filterResults", locale));
         localeMap.put("totals", messages.getMainMessage("pivottable.totals", locale));

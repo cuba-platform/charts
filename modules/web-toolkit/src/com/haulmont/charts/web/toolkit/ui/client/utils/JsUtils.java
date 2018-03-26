@@ -51,4 +51,11 @@ public class JsUtils {
         };
         active(config);
     }-*/;
+
+    public static native void replaceProperty(JavaScriptObject config, String origin, String replacer) /*-{
+        if (config[origin]) {
+            config[replacer] = config[origin];
+            delete config[origin];
+        }
+    }-*/;
 }

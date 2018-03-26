@@ -24,6 +24,8 @@ public class PivotTableModelSerializer implements JsonSerializer<PivotTableModel
             localizeArray(pivotJson, "cols", pivotContext);
             localizeArray(pivotJson, "aggregationProperties", pivotContext);
             localizeArray(pivotJson, "hiddenProperties", pivotContext);
+            localizeArray(pivotJson, "hiddenFromAggregations", pivotContext);
+            localizeArray(pivotJson, "hiddenFromDragDrop", pivotContext);
 
             JsonObject aggregation = pivotJson.getAsJsonObject("aggregation");
             if (aggregation != null) {

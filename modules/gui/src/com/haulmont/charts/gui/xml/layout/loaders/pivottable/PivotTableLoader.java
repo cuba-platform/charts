@@ -89,6 +89,8 @@ public class PivotTableLoader extends AbstractComponentLoader<PivotTable> {
         loadColumns(pivot, element);
         loadAggregationProperties(pivot, element);
         loadHiddenProperties(pivot, element);
+        loadHiddenFromAggregations(pivot, element);
+        loadHiddenFromDragDrop(pivot, element);
         loadRenderers(pivot, element);
         loadAggregation(pivot, element);
         loadAggregations(pivot, element);
@@ -110,6 +112,16 @@ public class PivotTableLoader extends AbstractComponentLoader<PivotTable> {
         String renderer = element.attributeValue("renderer");
         if (StringUtils.isNotEmpty(renderer)) {
             pivot.setRenderer(Renderer.valueOf(renderer));
+        }
+
+        String columnOrder = element.attributeValue("columnOrder");
+        if (StringUtils.isNotEmpty(columnOrder)) {
+            pivot.setColumnOrder(ColumnOrder.valueOf(columnOrder));
+        }
+
+        String rowOrder = element.attributeValue("rowOrder");
+        if (StringUtils.isNotEmpty(rowOrder)) {
+            pivot.setRowOrder(RowOrder.valueOf(rowOrder));
         }
 
         String menuLimit = element.attributeValue("menuLimit");
@@ -214,6 +226,26 @@ public class PivotTableLoader extends AbstractComponentLoader<PivotTable> {
             List<String> properties = loadListOfStrings(hiddenPropertiesElement, "property", "name", true);
             if (CollectionUtils.isNotEmpty(properties)) {
                 pivot.setHiddenProperties(properties);
+            }
+        }
+    }
+
+    protected void loadHiddenFromAggregations(PivotTable pivot, Element element) {
+        Element hiddenFromAggregationsElement = element.element("hiddenFromAggregations");
+        if (hiddenFromAggregationsElement != null) {
+            List<String> properties = loadListOfStrings(hiddenFromAggregationsElement, "property", "name", true);
+            if (CollectionUtils.isNotEmpty(properties)) {
+                pivot.setHiddenFromAggregations(properties);
+            }
+        }
+    }
+
+    protected void loadHiddenFromDragDrop(PivotTable pivot, Element element) {
+        Element hiddenFromDragDropElement = element.element("hiddenFromDragDrop");
+        if (hiddenFromDragDropElement != null) {
+            List<String> properties = loadListOfStrings(hiddenFromDragDropElement, "property", "name", true);
+            if (CollectionUtils.isNotEmpty(properties)) {
+                pivot.setHiddenFromDragDrop(properties);
             }
         }
     }

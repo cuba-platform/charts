@@ -2538,6 +2538,8 @@
             <xs:enumeration value="LINE_CHART"/>
             <xs:enumeration value="BAR_CHART"/>
             <xs:enumeration value="STACKED_BAR_CHART"/>
+            <xs:enumeration value="HORIZONTAL_BAR_CHART"/>
+            <xs:enumeration value="HORIZONTAL_STACKED_BAR_CHART"/>
             <xs:enumeration value="AREA_CHART"/>
             <xs:enumeration value="SCATTER_CHART"/>
             <xs:enumeration value="TREEMAP"/>
@@ -2564,6 +2566,22 @@
             <xs:enumeration value="COUNT_AS_FRACTION_OF_TOTAL"/>
             <xs:enumeration value="COUNT_AS_FRACTION_OF_TOTAL"/>
             <xs:enumeration value="COUNT_AS_FRACTION_OF_TOTAL"/>
+        </xs:restriction>
+    </xs:simpleType>
+
+    <xs:simpleType name="columnOrder">
+        <xs:restriction base="xs:string">
+            <xs:enumeration value="KEYS_ASCENDING"/>
+            <xs:enumeration value="VALUES_ASCENDING"/>
+            <xs:enumeration value="VALUES_DESCENDING"/>
+        </xs:restriction>
+    </xs:simpleType>
+
+    <xs:simpleType name="rowOrder">
+        <xs:restriction base="xs:string">
+            <xs:enumeration value="KEYS_ASCENDING"/>
+            <xs:enumeration value="VALUES_ASCENDING"/>
+            <xs:enumeration value="VALUES_DESCENDING"/>
         </xs:restriction>
     </xs:simpleType>
 
@@ -2727,6 +2745,8 @@
 
                 <xs:element name="aggregationProperties" minOccurs="0" maxOccurs="1" type="propertiesListType"/>
                 <xs:element name="hiddenProperties" minOccurs="0" maxOccurs="1" type="propertiesListType"/>
+                <xs:element name="hiddenFromAggregations" minOccurs="0" maxOccurs="1" type="propertiesListType"/>
+                <xs:element name="hiddenFromDragDrop" minOccurs="0" maxOccurs="1" type="propertiesListType"/>
                 <xs:element name="inclusions" minOccurs="0" maxOccurs="1" type="propertiesWithValueListsType"/>
                 <xs:element name="exclusions" minOccurs="0" maxOccurs="1" type="propertiesWithValueListsType"/>
                 <xs:element name="filterFunction" minOccurs="0" maxOccurs="1"/>
@@ -2735,6 +2755,8 @@
 
             <xs:attribute name="datasource" type="xs:string"/>
             <xs:attribute name="renderer" type="renderer"/>
+            <xs:attribute name="columnOrder" type="columnOrder"/>
+            <xs:attribute name="rowOrder" type="rowOrder"/>
             <xs:attribute name="menuLimit" type="xs:integer"/>
             <xs:attribute name="autoSortUnusedProperties" type="xs:boolean"/>
             <xs:attribute name="unusedPropertiesVertical" type="xs:string"/>

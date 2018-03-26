@@ -89,10 +89,10 @@ public class CubaPivotTableSceneConnector extends AbstractComponentConnector {
     }
 
     private native void addPivotTableMessages(String localeCode, JavaScriptObject pivotLocalization) /*-{
-        var frFmt, frFmtInt, frFmtPct, nf, tpl;
-        nf = $wnd.$.pivotUtilities.numberFormat;
-        tpl = $wnd.$.pivotUtilities.aggregatorTemplates;
-        frFmt = nf({
+        var formatFloat, formatInt, formatPercent, numberFormat, aggregatorTemplates;
+        numberFormat = $wnd.$.pivotUtilities.numberFormat;
+        aggregatorTemplates = $wnd.$.pivotUtilities.aggregatorTemplates;
+        formatFloat = numberFormat({
             digitsAfterDecimal: pivotLocalization.floatFormat.digitsAfterDecimal,
             scaler: pivotLocalization.floatFormat.scaler,
             thousandsSep: pivotLocalization.floatFormat.thousandsSep,
@@ -101,7 +101,7 @@ public class CubaPivotTableSceneConnector extends AbstractComponentConnector {
             suffix: pivotLocalization.floatFormat.suffix,
             showZero: pivotLocalization.floatFormat.showZero
         });
-        frFmtInt = nf({
+        formatInt = numberFormat({
             digitsAfterDecimal: pivotLocalization.integerFormat.digitsAfterDecimal,
             scaler: pivotLocalization.integerFormat.scaler,
             thousandsSep: pivotLocalization.integerFormat.thousandsSep,
@@ -110,7 +110,7 @@ public class CubaPivotTableSceneConnector extends AbstractComponentConnector {
             suffix: pivotLocalization.integerFormat.suffix,
             showZero: pivotLocalization.integerFormat.showZero
         });
-        frFmtPct = nf({
+        formatPercent = numberFormat({
             digitsAfterDecimal: pivotLocalization.percentFormat.digitsAfterDecimal,
             scaler: pivotLocalization.percentFormat.scaler,
             thousandsSep: pivotLocalization.percentFormat.thousandsSep,
@@ -121,23 +121,29 @@ public class CubaPivotTableSceneConnector extends AbstractComponentConnector {
         });
 
         var allAggregators = {};
-        allAggregators[pivotLocalization.aggregation.count] = tpl.count(frFmtInt);
-        allAggregators[pivotLocalization.aggregation.countUniqueValues] = tpl.countUnique(frFmtInt);
-        allAggregators[pivotLocalization.aggregation.listUniqueValues] = tpl.listUnique(", ");
-        allAggregators[pivotLocalization.aggregation.sum] = tpl.sum(frFmt);
-        allAggregators[pivotLocalization.aggregation.integerSum] = tpl.sum(frFmtInt);
-        allAggregators[pivotLocalization.aggregation.average] = tpl.average(frFmt);
-        allAggregators[pivotLocalization.aggregation.minimum] = tpl.min(frFmt);
-        allAggregators[pivotLocalization.aggregation.maximum] = tpl.max(frFmt);
-        allAggregators[pivotLocalization.aggregation.sumOverSum] = tpl.sumOverSum(frFmt);
-        allAggregators[pivotLocalization.aggregation.upperBound80] = tpl.sumOverSumBound80(true, frFmt);
-        allAggregators[pivotLocalization.aggregation.lowerBound80] = tpl.sumOverSumBound80(false, frFmt);
-        allAggregators[pivotLocalization.aggregation.sumAsFractionOfTotal] = tpl.fractionOf(tpl.sum(), "total", frFmtPct);
-        allAggregators[pivotLocalization.aggregation.sumAsFractionOfRows] = tpl.fractionOf(tpl.sum(), "row", frFmtPct);
-        allAggregators[pivotLocalization.aggregation.sumAsFractionOfColumns] = tpl.fractionOf(tpl.sum(), "col", frFmtPct);
-        allAggregators[pivotLocalization.aggregation.countAsFractionOfTotal] = tpl.fractionOf(tpl.count(), "total", frFmtPct);
-        allAggregators[pivotLocalization.aggregation.countAsFractionOfRows] = tpl.fractionOf(tpl.count(), "row", frFmtPct);
-        allAggregators[pivotLocalization.aggregation.countAsFractionOfColumns] = tpl.fractionOf(tpl.count(), "col", frFmtPct);
+        allAggregators[pivotLocalization.aggregation.count] = aggregatorTemplates.count(formatInt);
+        allAggregators[pivotLocalization.aggregation.countUniqueValues] = aggregatorTemplates.countUnique(formatInt);
+        allAggregators[pivotLocalization.aggregation.listUniqueValues] = aggregatorTemplates.listUnique(", ");
+        allAggregators[pivotLocalization.aggregation.sum] = aggregatorTemplates.sum(formatFloat);
+        allAggregators[pivotLocalization.aggregation.integerSum] = aggregatorTemplates.sum(formatInt);
+        allAggregators[pivotLocalization.aggregation.average] = aggregatorTemplates.average(formatFloat);
+        allAggregators[pivotLocalization.aggregation.minimum] = aggregatorTemplates.min(formatFloat);
+        allAggregators[pivotLocalization.aggregation.maximum] = aggregatorTemplates.max(formatFloat);
+        allAggregators[pivotLocalization.aggregation.sumOverSum] = aggregatorTemplates.sumOverSum(formatFloat);
+        allAggregators[pivotLocalization.aggregation.upperBound80] = aggregatorTemplates.sumOverSumBound80(true, formatFloat);
+        allAggregators[pivotLocalization.aggregation.lowerBound80] = aggregatorTemplates.sumOverSumBound80(false, formatFloat);
+        allAggregators[pivotLocalization.aggregation.sumAsFractionOfTotal] =
+            aggregatorTemplates.fractionOf(aggregatorTemplates.sum(), "total", formatPercent);
+        allAggregators[pivotLocalization.aggregation.sumAsFractionOfRows] =
+            aggregatorTemplates.fractionOf(aggregatorTemplates.sum(), "row", formatPercent);
+        allAggregators[pivotLocalization.aggregation.sumAsFractionOfColumns] =
+            aggregatorTemplates.fractionOf(aggregatorTemplates.sum(), "col", formatPercent);
+        allAggregators[pivotLocalization.aggregation.countAsFractionOfTotal] =
+            aggregatorTemplates.fractionOf(aggregatorTemplates.count(), "total", formatPercent);
+        allAggregators[pivotLocalization.aggregation.countAsFractionOfRows] =
+            aggregatorTemplates.fractionOf(aggregatorTemplates.count(), "row", formatPercent);
+        allAggregators[pivotLocalization.aggregation.countAsFractionOfColumns] =
+            aggregatorTemplates.fractionOf(aggregatorTemplates.count(), "col", formatPercent);
 
         var allRenderers = {};
         allRenderers[pivotLocalization.renderer.table] = $wnd.$.pivotUtilities.renderers["Table"];
@@ -147,7 +153,12 @@ public class CubaPivotTableSceneConnector extends AbstractComponentConnector {
         allRenderers[pivotLocalization.renderer.colHeatmap] = $wnd.$.pivotUtilities.renderers["Col Heatmap"];
         allRenderers[pivotLocalization.renderer.lineChart] = $wnd.$.pivotUtilities.c3_renderers["Line Chart"];
         allRenderers[pivotLocalization.renderer.barChart] = $wnd.$.pivotUtilities.c3_renderers["Bar Chart"];
-        allRenderers[pivotLocalization.renderer.stackedBarChart] = $wnd.$.pivotUtilities.c3_renderers["Stacked Bar Chart"];
+        allRenderers[pivotLocalization.renderer.stackedBarChart] =
+            $wnd.$.pivotUtilities.c3_renderers["Stacked Bar Chart"];
+        allRenderers[pivotLocalization.renderer.horizontalBarChart] =
+            $wnd.$.pivotUtilities.c3_renderers["Horizontal Bar Chart"];
+        allRenderers[pivotLocalization.renderer.horizontalStackedBarChart] =
+            $wnd.$.pivotUtilities.c3_renderers["Horizontal Stacked Bar Chart"];
         allRenderers[pivotLocalization.renderer.areaChart] = $wnd.$.pivotUtilities.c3_renderers["Area Chart"];
         allRenderers[pivotLocalization.renderer.scatterChart] = $wnd.$.pivotUtilities.c3_renderers["Scatter Chart"];
         allRenderers[pivotLocalization.renderer.treemap] = $wnd.$.pivotUtilities.d3_renderers["Treemap"];
@@ -160,6 +171,8 @@ public class CubaPivotTableSceneConnector extends AbstractComponentConnector {
                 uiRenderError: pivotLocalization.uiRenderError,
                 selectAll: pivotLocalization.selectAll,
                 selectNone: pivotLocalization.selectNone,
+                apply: pivotLocalization.apply,
+                cancel: pivotLocalization.cancel,
                 tooMany: pivotLocalization.tooMany,
                 filterResults: pivotLocalization.filterResults,
                 totals: pivotLocalization.totals,
@@ -180,7 +193,9 @@ public class CubaPivotTableSceneConnector extends AbstractComponentConnector {
             if (events.contains(CubaPivotTableSceneState.REFRESH_EVENT)) {
                 pivotTableEvents.setRefreshHandler(event ->
                         rpc.onRefresh(event.getRows(), event.getCols(), event.getRenderer(),
-                                event.getAggregation(), event.getAggregationProperties()));
+                                event.getAggregation(), event.getAggregationProperties(),
+                                event.getInclusions(), event.getExclusions(),
+                                event.getColumnOrder(), event.getRowOrder()));
             }
         }
 

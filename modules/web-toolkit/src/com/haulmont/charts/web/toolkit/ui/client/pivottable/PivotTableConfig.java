@@ -23,6 +23,7 @@ public class PivotTableConfig extends JavaScriptObject {
 
         String optionsJson = options != null ? options : "{}";
         JavaScriptObject optionsObject = JSONParser.parseLenient(optionsJson).isObject().getJavaScriptObject();
+        JsUtils.applyCustomJson(optionsObject, json);
         parseRenderers(optionsObject);
         parseAggregators(optionsObject);
         replaceProperties(optionsObject);
@@ -31,25 +32,18 @@ public class PivotTableConfig extends JavaScriptObject {
         setOptions(configObject, optionsObject);
         setEmptyDataMessage(configObject, emptyDataMessage);
 
-        JsUtils.applyCustomJson(optionsObject, json);
-
         return configObject;
     }
 
     private static void replaceProperties(JavaScriptObject config) {
-        replaceProperty(config, "hiddenProperties", "hiddenAttributes");
-        replaceProperty(config, "autoSortUnusedProperties", "autoSortUnusedAttrs");
-        replaceProperty(config, "unusedPropertiesVertical", "unusedAttrsVertical");
-        replaceProperty(config, "aggregationProperties", "vals");
-        replaceProperty(config, "derivedProperties", "derivedAttributes");
+        JsUtils.replaceProperty(config, "hiddenProperties", "hiddenAttributes");
+        JsUtils.replaceProperty(config, "hiddenFromAggregations", "hiddenFromAggregators");
+        JsUtils.replaceProperty(config, "autoSortUnusedProperties", "autoSortUnusedAttrs");
+        JsUtils.replaceProperty(config, "unusedPropertiesVertical", "unusedAttrsVertical");
+        JsUtils.replaceProperty(config, "aggregationProperties", "vals");
+        JsUtils.replaceProperty(config, "derivedProperties", "derivedAttributes");
+        JsUtils.replaceProperty(config, "columnOrder", "colOrder");
     }
-
-    private static native void replaceProperty(JavaScriptObject config, String origin, String replacer) /*-{
-        if (config[origin]) {
-            config[replacer] = config[origin];
-            delete config[origin];
-        }
-    }-*/;
 
     public final native boolean hasData() /*-{
         return this.data.length > 0;

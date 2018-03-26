@@ -23,6 +23,8 @@ public enum Renderer implements JsonEnum {
     LINE_CHART("lineChart"),
     BAR_CHART("barChart"),
     STACKED_BAR_CHART("stackedBarChart"),
+    HORIZONTAL_BAR_CHART("horizontalBarChart"),
+    HORIZONTAL_STACKED_BAR_CHART("horizontalStackedBarChart"),
     AREA_CHART("areaChart"),
     SCATTER_CHART("scatterChart"),
     // d3

@@ -209,6 +209,80 @@ public interface PivotTable extends Component, Component.BelongToFrame, Componen
     void addHiddenProperties(String... hiddenProperties);
 
     /**
+     * @return list of properties names to omit from the aggregation arguments dropdowns
+     */
+    List<String> getHiddenFromAggregations();
+
+    /**
+     * Sets the list of properties names to omit from the aggregation arguments dropdowns.
+     * <p>
+     * Applies only when {@code editable=true}.
+     *
+     * @param hiddenFromAggregations a list of properties names
+     */
+    void setHiddenFromAggregations(List<String> hiddenFromAggregations);
+
+    /**
+     * Adds an array of properties names to omit from the aggregation arguments dropdowns.
+     * <p>
+     * Applies only when {@code editable=true}.
+     *
+     * @param hiddenFromAggregations an array of properties names
+     */
+    void addHiddenFromAggregations(String... hiddenFromAggregations);
+
+    /**
+     * @return list of properties names to omit from the drag'n'drop portion of the UI
+     */
+    List<String> getHiddenFromDragDrop();
+
+    /**
+     * Sets the list of properties names to omit from the drag'n'drop portion of the UI.
+     * <p>
+     * Applies only when {@code editable=true}.
+     *
+     * @param hiddenFromDragDrop a list of properties names
+     */
+    void setHiddenFromDragDrop(List<String> hiddenFromDragDrop);
+
+    /**
+     * Adds an array of properties names to omit from the drag'n'drop portion of the UI.
+     * <p>
+     * Applies only when {@code editable=true}.
+     *
+     * @param hiddenFromDragDrop an array of properties names
+     */
+    void addHiddenFromDragDrop(String... hiddenFromDragDrop);
+
+    /**
+     * @return the order in which column data is provided to the renderer
+     */
+    ColumnOrder getColumnOrder();
+
+    /**
+     * Set the order in which column data is provided to the renderer.
+     * <p>
+     * Ordering by value orders by column total.
+     *
+     * @param columnOrder the order in which column data is provided to the renderer
+     */
+    void setColumnOrder(ColumnOrder columnOrder);
+
+    /**
+     * @return the order in which row data is provided to the renderer
+     */
+    RowOrder getRowOrder();
+
+    /**
+     * Sets the order in which row data is provided to the renderer.
+     * <p>
+     * Ordering by value orders by row total.
+     *
+     * @param rowOrder the order in which row data is provided to the renderer
+     */
+    void setRowOrder(RowOrder rowOrder);
+
+    /**
      * @return maximum number of values to list in the double-click menu
      */
     Integer getMenuLimit();
@@ -359,7 +433,7 @@ public interface PivotTable extends Component, Component.BelongToFrame, Componen
     void setInclusions(String property, List<String> inclusions);
 
     /**
-     * Adds a values to to given key od inclusions map.
+     * Adds a values to given key of inclusions map.
      *
      * @param property   a property name
      * @param inclusions an array of properties values
@@ -407,7 +481,7 @@ public interface PivotTable extends Component, Component.BelongToFrame, Componen
     void setExclusions(String property, List<String> exclusions);
 
     /**
-     * Adds a values to to given key od exclusions map.
+     * Adds a values to given key of exclusions map.
      *
      * @param property   a property name
      * @param exclusions an array of properties values
@@ -466,16 +540,26 @@ public interface PivotTable extends Component, Component.BelongToFrame, Componen
         protected Renderer renderer;
         protected Aggregation aggregation;
         protected List<String> aggregationProperties;
+        protected Map<String, List<String>> inclusions;
+        protected Map<String, List<String>> exclusions;
+        protected ColumnOrder columnOrder;
+        protected RowOrder rowOrder;
 
         public RefreshEvent(PivotTable pivotTable,
                             List<String> rows, List<String> cols, Renderer renderer,
-                            Aggregation aggregation, List<String> aggregationProperties) {
+                            Aggregation aggregation, List<String> aggregationProperties,
+                            Map<String, List<String>> inclusions, Map<String, List<String>> exclusions,
+                            ColumnOrder columnOrder, RowOrder rowOrder) {
             super(pivotTable);
             this.rows = rows;
             this.cols = cols;
             this.renderer = renderer;
             this.aggregation = aggregation;
             this.aggregationProperties = aggregationProperties;
+            this.inclusions = inclusions;
+            this.exclusions = exclusions;
+            this.columnOrder = columnOrder;
+            this.rowOrder = rowOrder;
         }
 
         @Override
@@ -518,6 +602,38 @@ public interface PivotTable extends Component, Component.BelongToFrame, Componen
          */
         public List<String> getAggregationProperties() {
             return aggregationProperties;
+        }
+
+        /**
+         * @return currently defined map whose keys are properties names and values are lists
+         * of properties values which denote records to include in rendering; used to prepopulate
+         * the filter menus that appear on double-click
+         */
+        public Map<String, List<String>> getInclusions() {
+            return inclusions;
+        }
+
+        /**
+         * @return currently defined map whose keys are properties names and values are lists
+         * of properties values which denote records to exclude from rendering; used to prepopulate
+         * the filter menus that appear on double-click
+         */
+        public Map<String, List<String>> getExclusions() {
+            return exclusions;
+        }
+
+        /**
+         * @return currently selected columns order
+         */
+        public ColumnOrder getColumnOrder() {
+            return columnOrder;
+        }
+
+        /**
+         * @return currently selected rows order
+         */
+        public RowOrder getRowOrder() {
+            return rowOrder;
         }
 
         /**

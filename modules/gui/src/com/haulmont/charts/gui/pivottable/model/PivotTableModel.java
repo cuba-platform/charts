@@ -103,6 +103,34 @@ public class PivotTableModel extends AbstractPivotObject {
     private List<String> hiddenProperties;                      // pivotUI()
 
     /**
+     * Contains attribute names to omit from the aggregation arguments dropdowns.
+     * <p>
+     * Applies only when {@code editable=true}.
+     */
+    private List<String> hiddenFromAggregations;                // pivotUI()
+
+    /**
+     * Contains attribute names to omit from the drag'n'drop portion of the UI.
+     * <p>
+     * Applies only when {@code editable=true}.
+     */
+    private List<String> hiddenFromDragDrop;                    // pivotUI()
+
+    /**
+     * The order in which column data is provided to the renderer.
+     * <p>
+     * Ordering by value orders by column total.
+     */
+    private ColumnOrder columnOrder;
+
+    /**
+     * The order in which row data is provided to the renderer.
+     * <p>
+     * Ordering by value orders by row total.
+     */
+    private RowOrder rowOrder;
+
+    /**
      * Maximum number of values to list in the double-click menu.
      * <p>
      * Applies only when {@code editable=true}.
@@ -344,6 +372,62 @@ public class PivotTableModel extends AbstractPivotObject {
             }
             this.hiddenProperties.addAll(Arrays.asList(hiddenProperties));
         }
+        return this;
+    }
+
+    public List<String> getHiddenFromAggregations() {
+        return hiddenFromAggregations;
+    }
+
+    public PivotTableModel setHiddenFromAggregations(List<String> hiddenFromAggregations) {
+        this.hiddenFromAggregations = hiddenFromAggregations;
+        return this;
+    }
+
+    public PivotTableModel addHiddenFromAggregations(String... hiddenFromAggregations) {
+        if (hiddenFromAggregations != null) {
+            if (this.hiddenFromAggregations == null) {
+                this.hiddenFromAggregations = new ArrayList<>();
+            }
+            this.hiddenFromAggregations.addAll(Arrays.asList(hiddenFromAggregations));
+        }
+        return this;
+    }
+
+    public List<String> getHiddenFromDragDrop() {
+        return hiddenFromDragDrop;
+    }
+
+    public PivotTableModel setHiddenFromDragDrop(List<String> hiddenFromDragDrop) {
+        this.hiddenFromDragDrop = hiddenFromDragDrop;
+        return this;
+    }
+
+    public PivotTableModel addHiddenFromDragDrop(String... hiddenFromDragDrop) {
+        if (hiddenFromDragDrop != null) {
+            if (this.hiddenFromDragDrop == null) {
+                this.hiddenFromDragDrop = new ArrayList<>();
+            }
+            this.hiddenFromDragDrop.addAll(Arrays.asList(hiddenFromDragDrop));
+        }
+        return this;
+    }
+
+    public ColumnOrder getColumnOrder() {
+        return columnOrder;
+    }
+
+    public PivotTableModel setColumnOrder(ColumnOrder columnOrder) {
+        this.columnOrder = columnOrder;
+        return this;
+    }
+
+    public RowOrder getRowOrder() {
+        return rowOrder;
+    }
+
+    public PivotTableModel setRowOrder(RowOrder rowOrder) {
+        this.rowOrder = rowOrder;
         return this;
     }
 

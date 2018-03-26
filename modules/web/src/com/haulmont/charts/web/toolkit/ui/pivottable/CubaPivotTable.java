@@ -64,6 +64,12 @@ public class CubaPivotTable extends AbstractComponent {
             }
             pivotTable.getRenderers().setDefaultRenderer(event.getRenderer());
 
+            pivotTable.setInclusions(event.getInclusions());
+            pivotTable.setExclusions(event.getExclusions());
+
+            pivotTable.setColumnOrder(event.getColumnOrder());
+            pivotTable.setRowOrder(event.getRowOrder());
+
             Aggregation aggregation = event.getAggregation();
             boolean hasMode = aggregation != null && !Boolean.TRUE.equals(aggregation.getCustom());
             pivotTable.getAggregations().setDefaultAggregation(hasMode ? aggregation.getMode() : null);
@@ -209,21 +215,24 @@ public class CubaPivotTable extends AbstractComponent {
         private static final long serialVersionUID = 4789102026045383363L;
 
         @Override
-        public void onRefresh(String[] rows, String[] cols, String rendererId,
-                              String aggregationId, String[] aggregationProperties) {
+        public void onRefresh(List<String> rows, List<String> cols, String rendererId,
+                              String aggregationId, List<String> aggregationProperties,
+                              Map<String, List<String>> inclusions, Map<String, List<String>> exclusions,
+                              String colOrderId, String rowOrderId) {
             if (!pivotTable.getEditable()) {
                 return;
             }
 
-            List<String> rowsList = Arrays.asList(rows);
-            List<String> colsList = Arrays.asList(cols);
             Renderer renderer = Renderer.fromId(rendererId);
             Aggregation aggregation = findAggregation(aggregationId);
-            List<String> aggregationPropertiesList = Arrays.asList(aggregationProperties);
+
+            ColumnOrder columnOrder = ColumnOrder.fromId(colOrderId);
+            RowOrder rowOrder = RowOrder.fromId(rowOrderId);
 
             fireEvent(new RefreshEvent(CubaPivotTable.this,
-                    rowsList, colsList, renderer,
-                    aggregation, aggregationPropertiesList));
+                    rows, cols, renderer,
+                    aggregation, aggregationProperties,
+                    inclusions, exclusions, columnOrder, rowOrder));
         }
 
         @Nullable

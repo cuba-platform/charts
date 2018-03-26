@@ -7,16 +7,19 @@ package com.haulmont.charts.web.toolkit.ui.client.pivottable.events;
 
 import com.google.gwt.core.client.JavaScriptObject;
 
+import java.util.List;
+import java.util.Map;
+
 public class JsRefreshEvent extends JavaScriptObject {
 
     protected JsRefreshEvent() {
     }
 
-    public final native String[] getRows() /*-{
+    public final native List<String> getRows() /*-{
         return this.rows;
     }-*/;
 
-    public final native String[] getCols() /*-{
+    public final native List<String> getCols() /*-{
         return this.cols;
     }-*/;
 
@@ -35,7 +38,23 @@ public class JsRefreshEvent extends JavaScriptObject {
         return this.aggregatorsIds[this.aggregatorName];
     }-*/;
 
-    public final native String[] getAggregationProperties() /*-{
+    public final native List<String> getAggregationProperties() /*-{
         return this.vals;
+    }-*/;
+
+    public final native Map<String, List<String>> getInclusions() /*-{
+        return this.inclusions;
+    }-*/;
+
+    public final native Map<String, List<String>> getExclusions() /*-{
+        return this.exclusions;
+    }-*/;
+
+    public final native String getColumnOrder() /*-{
+        return this.colOrder;
+    }-*/;
+
+    public final native String getRowOrder() /*-{
+        return this.rowOrder;
     }-*/;
 }
