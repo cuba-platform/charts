@@ -72,6 +72,9 @@ public class CubaPivotTable extends AbstractComponent {
 
             Aggregation aggregation = event.getAggregation();
             boolean hasMode = aggregation != null && !Boolean.TRUE.equals(aggregation.getCustom());
+            if (pivotTable.getAggregations() == null) {
+                pivotTable.setAggregations(new Aggregations());
+            }
             pivotTable.getAggregations().setDefaultAggregation(hasMode ? aggregation.getMode() : null);
             if (aggregation != null && Boolean.TRUE.equals(aggregation.getCustom())) {
                 // Due to impossibility to set a custom aggregation as the default
@@ -237,10 +240,16 @@ public class CubaPivotTable extends AbstractComponent {
 
         @Nullable
         private Aggregation findAggregation(String aggregationId) {
-            for (Aggregation aggregation : pivotTable.getAggregations().getAggregations()) {
-                if (aggregation.getId().equals(aggregationId)) {
-                    return aggregation;
+            if (pivotTable.getAggregations() != null
+                    && pivotTable.getAggregations().getAggregations() != null) {
+                for (Aggregation aggregation : pivotTable.getAggregations().getAggregations()) {
+                    if (aggregation.getId().equals(aggregationId)) {
+                        return aggregation;
+                    }
                 }
+            } else {
+                AggregationMode mode = AggregationMode.fromId(aggregationId);
+                return new Aggregation().setMode(mode);
             }
             return null;
         }

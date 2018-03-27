@@ -58,4 +58,10 @@ public class JsUtils {
             delete config[origin];
         }
     }-*/;
+
+    public static native void getKeyByValue(JavaScriptObject object, String value) /*-{
+        return Object.keys(object).find(function (key) {
+            return object[key] === value
+        });
+    }-*/;
 }

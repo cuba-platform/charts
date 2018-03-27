@@ -24,18 +24,13 @@ public class JsRefreshEvent extends JavaScriptObject {
     }-*/;
 
     public final native String getRenderer() /*-{
-        var keyByValue = function getKeyByValue(object, value) {
-            return Object.keys(object).find(function (key) {
-                return object[key] === value
-            });
-        };
-
         var localeMapping = $wnd.$.pivotUtilities.locales[this.localeCode].renderersLocaleMapping;
-        return keyByValue(localeMapping, this.rendererName);
+        return @com.haulmont.charts.web.toolkit.ui.client.utils.JsUtils::getKeyByValue(*)(localeMapping, this.rendererName);
     }-*/;
 
     public final native String getAggregation() /*-{
-        return this.aggregatorsIds[this.aggregatorName];
+        var localeMapping = $wnd.$.pivotUtilities.locales[this.localeCode].aggregatorsLocaleMapping;
+        return @com.haulmont.charts.web.toolkit.ui.client.utils.JsUtils::getKeyByValue(*)(localeMapping, this.aggregatorName);
     }-*/;
 
     public final native List<String> getAggregationProperties() /*-{
