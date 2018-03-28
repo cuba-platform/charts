@@ -29,8 +29,15 @@ public class JsRefreshEvent extends JavaScriptObject {
     }-*/;
 
     public final native String getAggregation() /*-{
-        var localeMapping = $wnd.$.pivotUtilities.locales[this.localeCode].aggregatorsLocaleMapping;
-        return @com.haulmont.charts.web.toolkit.ui.client.utils.JsUtils::getKeyByValue(*)(localeMapping, this.aggregatorName);
+        // if we define custom aggregation list, we use unique ids
+        // to identify certain aggregator in case of using the same
+        // aggregation mode for different aggregators
+        if (this.aggregatorsIds) {
+            return this.aggregatorsIds[this.aggregatorName];
+        } else {
+            var localeMapping = $wnd.$.pivotUtilities.locales[this.localeCode].aggregatorsLocaleMapping;
+            return @com.haulmont.charts.web.toolkit.ui.client.utils.JsUtils::getKeyByValue(*)(localeMapping, this.aggregatorName);
+        }
     }-*/;
 
     public final native List<String> getAggregationProperties() /*-{
