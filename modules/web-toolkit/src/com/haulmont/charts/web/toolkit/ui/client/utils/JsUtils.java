@@ -9,24 +9,25 @@ import com.google.gwt.core.client.JavaScriptObject;
 
 public class JsUtils {
 
-    public static native void applyCustomJson(JavaScriptObject config, String manualOptions) /*-{
-        var merge = function (dst, src) {
-            for (var property in src) {
-                if (src.hasOwnProperty(property)) {
-                    if (src[property] && typeof src[property] === "object") {
-                        if (!dst[property]) {
-                            dst[property] = src[property];
-                        } else {
-                            arguments.callee(dst[property], src[property]);
-                        }
-                    } else {
+    public static native void merge(JavaScriptObject dst, JavaScriptObject src) /*-{
+        for (var property in src) {
+            if (src.hasOwnProperty(property)) {
+                if (src[property] && typeof src[property] === "object") {
+                    if (!dst[property]) {
                         dst[property] = src[property];
+                    } else {
+                        arguments.callee(dst[property], src[property]);
                     }
+                } else {
+                    dst[property] = src[property];
                 }
             }
-        };
+        }
+    }-*/;
+
+    public static native void applyCustomJson(JavaScriptObject config, String manualOptions) /*-{
         var cfg = $wnd.eval("(" + manualOptions + ")");
-        merge(config, cfg);
+        @com.haulmont.charts.web.toolkit.ui.client.utils.JsUtils::merge(*)(config, cfg);
     }-*/;
 
     public static native void activateFunctions(JavaScriptObject config, boolean removeSuffix) /*-{

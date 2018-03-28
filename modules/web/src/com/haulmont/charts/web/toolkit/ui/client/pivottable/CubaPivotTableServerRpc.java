@@ -7,10 +7,14 @@ package com.haulmont.charts.web.toolkit.ui.client.pivottable;
 
 import com.vaadin.shared.communication.ServerRpc;
 
+import javax.annotation.Nullable;
 import java.util.List;
 import java.util.Map;
 
 public interface CubaPivotTableServerRpc extends ServerRpc {
+
+    void onCellClick(@Nullable Double value, Map<String, String> filters);
+
     void onRefresh(List<String> rows, List<String> cols, String renderer,
                    String aggregation, List<String> aggregationProperties,
                    Map<String, List<String>> inclusions, Map<String, List<String>> exclusions,

@@ -22,7 +22,8 @@ public class CubaPivotTableSceneWidget extends Widget implements HasEnabled {
     }
 
     public void init(PivotTableConfig config, PivotTableEvents events) {
-        jsOverlay = CubaPivotTableJsOverlay.makePivot(getElement(), config, events.getRefreshHandler(), enabled);
+        jsOverlay = CubaPivotTableJsOverlay.makePivot(getElement(), config,
+                events.getRefreshHandler(), events.getCellClickHandler(), enabled);
         setShowEmptyDataMessage(!config.hasData());
     }
 

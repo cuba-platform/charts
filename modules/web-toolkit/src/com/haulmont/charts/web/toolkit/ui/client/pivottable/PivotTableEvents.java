@@ -5,6 +5,7 @@
 
 package com.haulmont.charts.web.toolkit.ui.client.pivottable;
 
+import com.haulmont.charts.web.toolkit.ui.client.pivottable.events.JsCellClickEvent;
 import com.haulmont.charts.web.toolkit.ui.client.pivottable.events.JsRefreshEvent;
 
 import java.util.function.Consumer;
@@ -12,6 +13,7 @@ import java.util.function.Consumer;
 public class PivotTableEvents {
 
     private Consumer<JsRefreshEvent> refreshHandler;
+    private Consumer<JsCellClickEvent> cellClickHandler;
 
     public Consumer<JsRefreshEvent> getRefreshHandler() {
         return refreshHandler;
@@ -19,5 +21,13 @@ public class PivotTableEvents {
 
     public void setRefreshHandler(Consumer<JsRefreshEvent> refreshHandler) {
         this.refreshHandler = refreshHandler;
+    }
+
+    public Consumer<JsCellClickEvent> getCellClickHandler() {
+        return cellClickHandler;
+    }
+
+    public void setCellClickHandler(Consumer<JsCellClickEvent> cellClickHandler) {
+        this.cellClickHandler = cellClickHandler;
     }
 }

@@ -20,16 +20,14 @@ import com.haulmont.cuba.gui.data.CollectionDatasource;
 import com.haulmont.cuba.gui.data.impl.CollectionDsHelper;
 import com.haulmont.cuba.web.gui.components.WebAbstractComponent;
 
-import java.util.List;
-import java.util.Locale;
-import java.util.Map;
-import java.util.Objects;
+import java.util.*;
 
 public class WebPivotTable extends WebAbstractComponent<CubaPivotTable> implements PivotTable {
 
     protected CollectionDatasource datasource;
 
     protected com.haulmont.charts.web.toolkit.ui.pivottable.events.RefreshListener refreshHandler;
+    protected com.haulmont.charts.web.toolkit.ui.pivottable.events.CellClickListener cellClickHandler;
 
     public WebPivotTable() {
         component = new CubaPivotTable();
@@ -427,6 +425,27 @@ public class WebPivotTable extends WebAbstractComponent<CubaPivotTable> implemen
         if (refreshHandler != null && !getEventRouter().hasListeners(RefreshListener.class)) {
             component.removeRefreshListener(refreshHandler);
             refreshHandler = null;
+        }
+    }
+
+    @Override
+    public void addCellClickListener(CellClickListener listener) {
+        getEventRouter().addListener(CellClickListener.class, listener);
+        if (cellClickHandler == null) {
+            cellClickHandler = e -> {
+                CellClickEvent event = new CellClickEvent(WebPivotTable.this, e.getValue(), e.getFilters());
+                getEventRouter().fireEvent(CellClickListener.class, CellClickListener::onCellClick, event);
+            };
+            component.addCellClickListener(cellClickHandler);
+        }
+    }
+
+    @Override
+    public void removeCellClickListener(CellClickListener listener) {
+        getEventRouter().removeListener(CellClickListener.class, listener);
+        if (cellClickHandler != null && !getEventRouter().hasListeners(CellClickListener.class)) {
+            component.removeCellClickListener(cellClickHandler);
+            cellClickHandler = null;
         }
     }
 }

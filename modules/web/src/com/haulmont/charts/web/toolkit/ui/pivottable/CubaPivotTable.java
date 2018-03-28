@@ -9,6 +9,8 @@ import com.google.gson.*;
 import com.haulmont.charts.gui.pivottable.model.*;
 import com.haulmont.charts.web.toolkit.ui.client.pivottable.CubaPivotTableSceneState;
 import com.haulmont.charts.web.toolkit.ui.client.pivottable.CubaPivotTableServerRpc;
+import com.haulmont.charts.web.toolkit.ui.pivottable.events.CellClickEvent;
+import com.haulmont.charts.web.toolkit.ui.pivottable.events.CellClickListener;
 import com.haulmont.charts.web.toolkit.ui.pivottable.events.RefreshEvent;
 import com.haulmont.charts.web.toolkit.ui.pivottable.events.RefreshListener;
 import com.haulmont.cuba.core.global.AppBeans;
@@ -44,6 +46,9 @@ public class CubaPivotTable extends AbstractComponent {
 
     protected static final Method refreshMethod =
             findMethod(RefreshListener.class, "onRefresh", RefreshEvent.class);
+
+    protected static final Method cellClickMethod =
+            findMethod(CellClickListener.class, "onCellClick", CellClickEvent.class);
 
     protected boolean dirty = false;
 
@@ -164,6 +169,14 @@ public class CubaPivotTable extends AbstractComponent {
         removeListener(CubaPivotTableSceneState.REFRESH_EVENT, RefreshEvent.class, listener);
     }
 
+    public void addCellClickListener(CellClickListener listener) {
+        addListener(CubaPivotTableSceneState.CELL_CLICK_EVENT, CellClickEvent.class, listener, cellClickMethod);
+    }
+
+    public void removeCellClickListener(CellClickListener listener) {
+        removeListener(CubaPivotTableSceneState.CELL_CLICK_EVENT, CellClickEvent.class, listener);
+    }
+
     @Override
     public Locale getLocale() {
         return locale;
@@ -216,6 +229,11 @@ public class CubaPivotTable extends AbstractComponent {
     protected class CubaPivotTableServerRpcImpl implements CubaPivotTableServerRpc {
 
         private static final long serialVersionUID = 4789102026045383363L;
+
+        @Override
+        public void onCellClick(Double value, Map<String, String> filters) {
+            fireEvent(new CellClickEvent(CubaPivotTable.this, value, filters));
+        }
 
         @Override
         public void onRefresh(List<String> rows, List<String> cols, String rendererId,

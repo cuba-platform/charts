@@ -649,7 +649,66 @@ public interface PivotTable extends Component, Component.BelongToFrame, Componen
     /**
      * Listener to the pivot table refresh events. Fired only for editable PivotTable.
      */
+    @FunctionalInterface
     interface RefreshListener {
         void onRefresh(RefreshEvent event);
+    }
+
+    /**
+     * Adds a listener to the pivot table cell click events. Fired only for table
+     * renderers (table, heatmap, table barchart, col heatmap, row heatmap).
+     *
+     * @param listener a listener to add
+     */
+    void addCellClickListener(CellClickListener listener);
+
+    /**
+     * @param listener a listener to remove
+     */
+    void removeCellClickListener(CellClickListener listener);
+
+    /**
+     * Describes PivotTable cell click event.
+     */
+    class CellClickEvent extends EventObject {
+
+        protected Double value;
+        protected Map<String, String> filters;
+
+        public CellClickEvent(PivotTable pivotTable, Double value, Map<String, String> filters) {
+            super(pivotTable);
+            this.value = value;
+            this.filters = filters;
+        }
+
+        @Override
+        public PivotTable getSource() {
+            return (PivotTable) super.getSource();
+        }
+
+        /**
+         * @return value of the clicked cell
+         */
+        @Nullable
+        public Double getValue() {
+            return value;
+        }
+
+        /**
+         * @return a map in which keys are localized property names used in columns or rows
+         * and values are localized property values.
+         */
+        public Map<String, String> getFilters() {
+            return filters;
+        }
+    }
+
+    /**
+     * Listener to the pivot table cell click events. Fired only for table
+     * renderers (table, heatmap, table barchart, col heatmap, row heatmap).
+     */
+    @FunctionalInterface
+    interface CellClickListener {
+        void onCellClick(CellClickEvent event);
     }
 }

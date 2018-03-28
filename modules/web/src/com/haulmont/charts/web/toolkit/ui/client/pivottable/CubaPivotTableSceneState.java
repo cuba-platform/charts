@@ -16,6 +16,7 @@ public class CubaPivotTableSceneState extends AbstractComponentState {
     }
 
     public static final String REFRESH_EVENT = "r";
+    public static final String CELL_CLICK_EVENT = "cc";
 
     public String data;
     public String options;

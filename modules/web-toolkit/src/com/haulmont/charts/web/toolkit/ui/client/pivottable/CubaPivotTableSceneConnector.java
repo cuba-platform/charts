@@ -197,6 +197,11 @@ public class CubaPivotTableSceneConnector extends AbstractComponentConnector {
                                 event.getInclusions(), event.getExclusions(),
                                 event.getColumnOrder(), event.getRowOrder()));
             }
+
+            if (events.contains(CubaPivotTableSceneState.CELL_CLICK_EVENT)) {
+                pivotTableEvents.setCellClickHandler(event ->
+                        rpc.onCellClick(event.getValue(), event.getFilters()));
+            }
         }
 
         return pivotTableEvents;
