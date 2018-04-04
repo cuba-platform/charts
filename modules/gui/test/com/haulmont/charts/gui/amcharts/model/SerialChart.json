@@ -33,7 +33,8 @@
     }
   ],
   "export": {
-    "enabled": true
+    "enabled": true,
+    "fileName": "chart"
   },
   "type": "serial",
   "dataProvider": [

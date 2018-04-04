@@ -5,7 +5,8 @@
   "titleField": "country",
   "valueField": "litres",
   "export": {
-    "enabled": true
+    "enabled": true,
+    "fileName": "chart"
   },
   "legend": {
     "autoMargins": false,

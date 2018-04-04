@@ -1,6 +1,7 @@
 {
   "export": {
-    "enabled": true
+    "enabled": true,
+    "fileName": "chart"
   },
   "chartCursorSettings": {
     "cursorAlpha": 0.1,

@@ -32,7 +32,8 @@
   },
   "marginRight": 70,
   "export": {
-    "enabled": true
+    "enabled": true,
+    "fileName": "chart"
   },
   "theme": "light",
   "type": "gantt",
