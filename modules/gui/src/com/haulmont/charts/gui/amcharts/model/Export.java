@@ -12,11 +12,13 @@ public class Export extends AbstractChartObject {
 
     private static final long serialVersionUID = -8908356283007782587L;
 
+    private static final String DEFAULT_FILE_NAME = "chart";
+
     private Color backgroundColor;
 
     private Boolean enabled = true;
 
-    private String fileName;
+    private String fileName = DEFAULT_FILE_NAME;
 
     private ExportLibs libs;
 
