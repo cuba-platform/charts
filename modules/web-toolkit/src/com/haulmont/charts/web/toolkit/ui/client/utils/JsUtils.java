@@ -61,8 +61,10 @@ public class JsUtils {
     }-*/;
 
     public static native void getKeyByValue(JavaScriptObject object, String value) /*-{
-        return Object.keys(object).find(function (key) {
-            return object[key] === value
-        });
+        for (var key in Object.keys(object)) {
+            if (object.hasOwnProperty(key) && object[key] === value) {
+                return key;
+            }
+        }
     }-*/;
 }
