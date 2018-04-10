@@ -281,7 +281,11 @@ task aggregateJavadoc(type: Javadoc,
     options.addStringOption("sourcepath", "")
     options.memberLevel = org.gradle.external.javadoc.JavadocMemberLevel.PUBLIC
 
+    exclude 'com/haulmont/charts/gui/serialization/**'
+    exclude 'com/haulmont/charts/gui/xml/layout/loaders/**'
+
     exclude 'com/haulmont/charts/web/toolkit/**'
+    exclude 'com/haulmont/charts/web/gui/**'
 
     subprojects.each { proj ->
         def javadocTask = proj.tasks.getByPath('javadoc')
