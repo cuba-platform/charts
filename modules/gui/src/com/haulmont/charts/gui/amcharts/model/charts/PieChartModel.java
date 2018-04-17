@@ -15,7 +15,7 @@ public interface PieChartModel<T extends PieChartModel> extends SlicedChartModel
     Integer getAngle();
 
     /**
-     * Sets pie lean angle (for 3D effect). Valid range is 0 - 90.
+     * Sets pie lean angle (for 3D effect). Valid range is 0 - 90. If not set the default value is 0.
      *
      * @param angle the angle
      */
@@ -29,7 +29,8 @@ public interface PieChartModel<T extends PieChartModel> extends SlicedChartModel
     /**
      * Sets balloon text. The following tags can be used: [[value]], [[title]], [[percents]], [[description]]. Also can
      * be used fields in the chart such as titleField, valueField etc. Fields that not used in the chart can be added
-     * by using additionalFields. HTML tags can also be used.
+     * by using additionalFields. HTML tags can also be used. If not set the default value is "[[title]]:
+     * [[percents]]% ([[value]])\n[[description]]".
      *
      * @param balloonText balloon text string
      */
@@ -41,7 +42,7 @@ public interface PieChartModel<T extends PieChartModel> extends SlicedChartModel
     Integer getDepth3D();
 
     /**
-     * Sets depth of the pie (for 3D effect).
+     * Sets depth of the pie (for 3D effect). If not set the default value is 0.
      *
      * @param depth3D the depth 3D
      */
@@ -53,7 +54,7 @@ public interface PieChartModel<T extends PieChartModel> extends SlicedChartModel
     String getInnerRadius();
 
     /**
-     * Sets inner radius of the pie, in pixels or percents.
+     * Sets inner radius of the pie, in pixels or percents. If not set the default value is 0.
      *
      * @param innerRadius inner radius in pixels or percents
      */
@@ -66,7 +67,7 @@ public interface PieChartModel<T extends PieChartModel> extends SlicedChartModel
 
     /**
      * Sets the distance between the label and the slice, in pixels. You can use negative values to put the label on
-     * the slice.
+     * the slice. If not set the default value is 20.
      *
      * @param labelRadius distance between the label and the slice, in pixels
      */
@@ -93,7 +94,7 @@ public interface PieChartModel<T extends PieChartModel> extends SlicedChartModel
     /**
      * Sets label text. The following tags can be used: [[value]], [[title]], [[percents]], [[description]]. Also can
      * be used fields in the chart such as titleField, valueField etc. Fields that not used in the chart can be added
-     * by using additionalFields.
+     * by using additionalFields. If not set the default value is "[[title]]: [[percents]]%".
      *
      * @param labelText label text string
      */
@@ -105,7 +106,7 @@ public interface PieChartModel<T extends PieChartModel> extends SlicedChartModel
     Integer getMinRadius();
 
     /**
-     * Sets minimum radius of the pie, in pixels.
+     * Sets minimum radius of the pie, in pixels. If not set the default value is 10.
      *
      * @param minRadius the minimum radius
      */
@@ -153,7 +154,7 @@ public interface PieChartModel<T extends PieChartModel> extends SlicedChartModel
     String getPullOutRadius();
 
     /**
-     * 	Sets pull out radius, in pixels or percents
+     * 	Sets pull out radius, in pixels or percents. If not set the default value is 20%.
      *
      * @param pullOutRadius pull out radius
      */
@@ -178,7 +179,8 @@ public interface PieChartModel<T extends PieChartModel> extends SlicedChartModel
 
     /**
      * Sets angle of the first slice, in degrees. This will work properly only if depth3D is set to 0. If depth3D is
-     * greater than 0, then there can be two angles only: 90 and 270. Value range is 0-360.
+     * greater than 0, then there can be two angles only: 90 and 270. Value range is 0-360. If not set the default
+     * value is 90.
      *
      * @param startAngle angle of the first slice in degree
      */
@@ -190,7 +192,7 @@ public interface PieChartModel<T extends PieChartModel> extends SlicedChartModel
     String getStartRadius();
 
     /**
-     * Sets radius of the positions from which the slices will fly in.
+     * Sets radius of the positions from which the slices will fly in. If not set the default value is 500%.
      *
      * @param startRadius the start radius
      */
@@ -203,7 +205,8 @@ public interface PieChartModel<T extends PieChartModel> extends SlicedChartModel
 
     /**
      * Set this to true, when percent of a sum of all slices is not equal to 100%, number of decimals will be
-     * increased so that sum would become 100%. It can happen because of a rounding.
+     * increased so that sum would become 100%. It can happen because of a rounding. If not set the default value is
+     * false.
      *
      * @param adjustPrecision adjust precision option
      */
@@ -228,7 +231,7 @@ public interface PieChartModel<T extends PieChartModel> extends SlicedChartModel
     GradientType getGradientType();
 
     /**
-     * Sets type of gradient. Use gradientRatio to create gradients.
+     * Sets type of gradient. Use gradientRatio to create gradients. If not set the default value is RADIAL.
      *
      * @param gradientType the gradient type
      */

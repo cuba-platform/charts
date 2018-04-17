@@ -6,6 +6,9 @@
 package com.haulmont.charts.gui.amcharts.model;
 
 /**
+ * Defines set of properties for chart scrollbar. If there is no default value specified, default value of
+ * {@link Scrollbar} class will be used.
+ * <br>
  * See documentation for properties of ChartScrollbarSettings JS object. <br>
  *
  * <a href="http://docs.amcharts.com/3/javascriptstockchart/ChartScrollbarSettings">http://docs.amcharts.com/3/javascriptstockchart/ChartScrollbarSettings</a>
@@ -85,7 +88,7 @@ public class ChartScrollbarSettings extends AbstractChartObject {
 
     /**
      * Set autoGridCount to false if you don't want that the number of gridCount will be specified
-     * automatically, according to the axis size.
+     * automatically, according to the axis size. If not set the default value is true.
      *
      * @param autoGridCount autoGridCount option
      */
@@ -154,7 +157,7 @@ public class ChartScrollbarSettings extends AbstractChartObject {
 
     /**
      * Sets height of resize grip image. Note, you should also update the image in amcharts/images folder if you don't
-     * want it to be distorted because of resizing.
+     * want it to be distorted because of resizing. If not set the default value is 18.
      *
      * @param dragIconHeight icon height
      */
@@ -172,7 +175,7 @@ public class ChartScrollbarSettings extends AbstractChartObject {
 
     /**
      * Sets width of resize grip image. Note, you should also update the image in amcharts/images folder if you don't
-     * want it to be distorted because of resizing.
+     * want it to be distorted because of resizing. If not set the default value is 11.
      *
      * @param dragIconWidth icon width
      */
@@ -189,7 +192,7 @@ public class ChartScrollbarSettings extends AbstractChartObject {
     }
 
     /**
-     * Set enabled false if you don't need scrollbar.
+     * Set enabled false if you don't need scrollbar. If not set the default value is true.
      *
      * @param enabled enabled option
      */
@@ -378,7 +381,7 @@ public class ChartScrollbarSettings extends AbstractChartObject {
     }
 
     /**
-     * Sets height of scrollbar, in pixels.
+     * Sets height of scrollbar, in pixels. If not set the default value is 40.
      *
      * @param height height, in pixels
      */
@@ -395,7 +398,8 @@ public class ChartScrollbarSettings extends AbstractChartObject {
     }
 
     /**
-     * Set hideResizeGrips to true if resize grips should be hidden when the mouse is away from the scrollbar.
+     * Set hideResizeGrips to true if resize grips should be hidden when the mouse is away from the scrollbar. If not
+     * set the default value is false.
      *
      * @param hideResizeGrips hideResizeGrips option
      */
@@ -429,7 +433,7 @@ public class ChartScrollbarSettings extends AbstractChartObject {
     }
 
     /**
-     * Sets position of a scrollbar. Possible values are "top" and "bottom".
+     * Sets position of a scrollbar. Possible values are "top" and "bottom". If not set the default value is BOTTOM.
      *
      * @param position position of a scrollbar
      */
@@ -446,7 +450,7 @@ public class ChartScrollbarSettings extends AbstractChartObject {
     }
 
     /**
-     * Set resizeEnabled to false if you want to disable a resizing.
+     * Set resizeEnabled to false if you want to disable a resizing. If not set the default value is true.
      *
      * @param resizeEnabled resizeEnabled option
      */
@@ -464,7 +468,7 @@ public class ChartScrollbarSettings extends AbstractChartObject {
 
     /**
      * Sets duration of scrolling, when the user clicks on scrollbar's background, in seconds. Note,
-     * updateOnReleaseOnly should be set to false in order animation to happen.
+     * updateOnReleaseOnly should be set to false in order animation to happen. If not set the default value is true.
      *
      * @param scrollDuration duration of scrolling, in seconds
      */

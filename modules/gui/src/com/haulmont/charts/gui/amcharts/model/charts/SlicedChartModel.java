@@ -17,7 +17,7 @@ public interface SlicedChartModel<T extends SlicedChartModel> extends ChartModel
     Double getAlpha();
 
     /**
-     * Sets opacity of all slices.
+     * Sets opacity of all slices. If not set the default value is 1.
      *
      * @param alpha opacity of all slices
      */
@@ -42,7 +42,7 @@ public interface SlicedChartModel<T extends SlicedChartModel> extends ChartModel
 
     /**
      * Sets color of the first slice. All the other will be colored with darker or brighter colors. Use
-     * brightnessStep to set intensity of color change for each subsequent slice.
+     * brightnessStep to set intensity of color change for each subsequent slice. If not set the default value is 20.
      *
      * @param baseColor color of the first slice
      */
@@ -98,7 +98,7 @@ public interface SlicedChartModel<T extends SlicedChartModel> extends ChartModel
     Double getGroupedAlpha();
 
     /**
-     * Sets opacity of the group slice. Value range is 0 - 1.
+     * Sets opacity of the group slice. Value range is 0 - 1. If not set the default value is 1.
      *
      * @param groupedAlpha opacity of the group slice
      */
@@ -135,7 +135,8 @@ public interface SlicedChartModel<T extends SlicedChartModel> extends ChartModel
     Boolean getGroupedPulled();
 
     /**
-     * If groupedPulled set to true, the group slice will be pulled out when the chart loads.
+     * If groupedPulled set to true, the group slice will be pulled out when the chart loads. If not set the default
+     * value is false.
      *
      * @param groupedPulled grouped pulled option
      */
@@ -147,7 +148,7 @@ public interface SlicedChartModel<T extends SlicedChartModel> extends ChartModel
     String getGroupedTitle();
 
     /**
-     * Sets title of the group slice.
+     * Sets title of the group slice. If not set the default value is "Other".
      *
      * @param groupedTitle grouped title string
      */
@@ -158,7 +159,7 @@ public interface SlicedChartModel<T extends SlicedChartModel> extends ChartModel
     /**
      * Sets group percent. If there is more than one slice whose percentage of the pie is less than this number,
      * those slices will be grouped together into one slice. This is the "other" slice. It will always be the last
-     * slice in a pie.
+     * slice in a pie. If not set the default value is 0.
      *
      * @param groupPercent the group percent
      */
@@ -171,7 +172,8 @@ public interface SlicedChartModel<T extends SlicedChartModel> extends ChartModel
 
     /**
      * Sets hide labels percent. Slices with percent less then hideLabelsPercent won't display labels. This is useful
-     * to avoid cluttering up the chart, if you have a lot of small slices. 0 means all labels will be shown.
+     * to avoid cluttering up the chart, if you have a lot of small slices. 0 means all labels will be shown. If not
+     * set the default value is 0.
      *
      * @param hideLabelsPercent the hide labels percent
      */
@@ -183,7 +185,7 @@ public interface SlicedChartModel<T extends SlicedChartModel> extends ChartModel
     Double getHoverAlpha();
 
     /**
-     * Sets opacity of a hovered slice. Value range is 0 - 1.
+     * Sets opacity of a hovered slice. Value range is 0 - 1. If not set the default value is 1.
      *
      * @param hoverAlpha opacity of a hovered slice
      */
@@ -195,7 +197,7 @@ public interface SlicedChartModel<T extends SlicedChartModel> extends ChartModel
     Boolean getLabelsEnabled();
 
     /**
-     * Set labelsEnabled to true if data labels should be visible.
+     * Set labelsEnabled to true if data labels should be visible. If not set the default value is true.
      *
      * @param labelsEnabled labels enabled option
      */
@@ -207,7 +209,7 @@ public interface SlicedChartModel<T extends SlicedChartModel> extends ChartModel
     Double getLabelTickAlpha();
 
     /**
-     * Sets {@link Label label} tick opacity. Value range is 0 - 1.
+     * Sets {@link Label label} tick opacity. Value range is 0 - 1. If not set the default value is 0.2.
      *
      * @param labelTickAlpha label tick opacity
      */
@@ -219,7 +221,7 @@ public interface SlicedChartModel<T extends SlicedChartModel> extends ChartModel
     Color getLabelTickColor();
 
     /**
-     * Sets	{@link Label label} tick color.
+     * Sets	{@link Label label} tick color. If not set the default value is #000000.
      *
      * @param labelTickColor label tick color
      */
@@ -231,7 +233,7 @@ public interface SlicedChartModel<T extends SlicedChartModel> extends ChartModel
     Double getOutlineAlpha();
 
     /**
-     * Sets outline opacity. Value range is 0 - 1.
+     * Sets outline opacity. Value range is 0 - 1. If not set the default value is 0.
      *
      * @param outlineAlpha outline opacity
      */
@@ -243,7 +245,7 @@ public interface SlicedChartModel<T extends SlicedChartModel> extends ChartModel
     Color getOutlineColor();
 
     /**
-     * Sets outline color.
+     * Sets outline color. If not set the default value is #FFFFFF.
      *
      * @param outlineColor the outline color
      */
@@ -255,7 +257,7 @@ public interface SlicedChartModel<T extends SlicedChartModel> extends ChartModel
     Integer getOutlineThickness();
 
     /**
-     * Sets pie outline thickness.
+     * Sets pie outline thickness. If not set the default value is 1.
      *
      * @param outlineThickness the outline thickness
      */
@@ -292,7 +294,7 @@ public interface SlicedChartModel<T extends SlicedChartModel> extends ChartModel
     Integer getPullOutDuration();
 
     /**
-     * Sets pull out duration in seconds.
+     * Sets pull out duration in seconds. If not set the default value is 1.
      *
      * @param pullOutDuration pull out duration in seconds
      */
@@ -304,7 +306,8 @@ public interface SlicedChartModel<T extends SlicedChartModel> extends ChartModel
     AnimationEffect getPullOutEffect();
 
     /**
-     * Sets pull out effect. Possible values are: easeOutSine, easeInSine, elastic, bounce.
+     * Sets pull out effect. Possible values are: easeOutSine, easeInSine, elastic, bounce. If not set the default
+     * value is BOUNCE.
      *
      * @param pullOutEffect the pull out effect
      */
@@ -317,7 +320,7 @@ public interface SlicedChartModel<T extends SlicedChartModel> extends ChartModel
 
     /**
      * If pullOutOnlyOne set to true, only one slice can be pulled out at a time. If the viewer clicks on a slice,
-     * any other pulled-out slice will be pulled in.
+     * any other pulled-out slice will be pulled in. If not set the default value is false.
      *
      * @param pullOutOnlyOne pull out only one option
      */
@@ -329,7 +332,8 @@ public interface SlicedChartModel<T extends SlicedChartModel> extends ChartModel
     Boolean getSequencedAnimation();
 
     /**
-     * Specifies whether the animation should be sequenced or all slices should appear at once.
+     * Specifies whether the animation should be sequenced or all slices should appear at once. If not set the
+     * default value is true.
      *
      * @param sequencedAnimation sequenced animation option
      */
@@ -341,7 +345,7 @@ public interface SlicedChartModel<T extends SlicedChartModel> extends ChartModel
     Double getStartAlpha();
 
     /**
-     * Sets initial opacity of all slices. Slices will fade in from startAlpha.
+     * Sets initial opacity of all slices. Slices will fade in from startAlpha. If not set the default value is 0.
      *
      * @param startAlpha initial opacity of all slices
      */
@@ -378,7 +382,7 @@ public interface SlicedChartModel<T extends SlicedChartModel> extends ChartModel
 
     /**
      * If URL is specified for a slice, it will be opened when user clicks on it. urlTarget specifies target of this
-     * URL. Use "_blank" if you want URL to be opened in a new window.
+     * URL. Use "_blank" if you want URL to be opened in a new window. If not set the default value is "_self".
      *
      * @param urlTarget the URL target string
      */
@@ -430,7 +434,8 @@ public interface SlicedChartModel<T extends SlicedChartModel> extends ChartModel
     Integer getMaxLabelWidth();
 
     /**
-     * Sets maximum label width. If width of the label is bigger than maxLabelWidth, it will be wrapped.
+     * Sets maximum label width. If width of the label is bigger than maxLabelWidth, it will be wrapped. If not set
+     * the default value is 200.
      *
      * @param maxLabelWidth maximum label width
      */
@@ -456,7 +461,7 @@ public interface SlicedChartModel<T extends SlicedChartModel> extends ChartModel
 
     /**
      * Set showZeroSlices to true if you want the chart should display outlines (if visible) and labels for slices
-     * even if their value is 0.
+     * even if their value is 0. If not set the default value is false.
      *
      * @param showZeroSlices show zero slices option
      */
@@ -470,7 +475,8 @@ public interface SlicedChartModel<T extends SlicedChartModel> extends ChartModel
     /**
      * Sets accessible label text. It will be read by screen readers if user rolls-over the slice or sets focus using
      * tab key (this is possible only if {@link SlicedChart#tabIndex} is set to some number). Text is added as
-     * aria-label tag. Note, not all screen readers and browsers support this.
+     * aria-label tag. Note, not all screen readers and browsers support this. If not set the default value is
+     * "[[title]]: [[percents]]% [[value]] [[description]]".
      *
      * @param accessibleLabel accessible label text
      */
@@ -483,7 +489,7 @@ public interface SlicedChartModel<T extends SlicedChartModel> extends ChartModel
 
     /**
      * Sets a field from your data provider which holds color value for the tick. Use it to set color of the label
-     * for each slice individually.
+     * for each slice individually. If not set the default value is #000000.
      *
      * @param labelColorField label color field string
      */

@@ -7,6 +7,7 @@ package com.haulmont.charts.gui.amcharts.model.charts;
 
 import com.haulmont.charts.gui.amcharts.model.CategoryAxis;
 import com.haulmont.charts.gui.amcharts.model.Scrollbar;
+import com.haulmont.charts.gui.amcharts.model.Cursor;
 
 public interface SeriesBasedChartModel<T extends SeriesBasedChartModel> extends RectangularChartModel<T> {
     /**
@@ -41,7 +42,7 @@ public interface SeriesBasedChartModel<T extends SeriesBasedChartModel> extends 
 
     /**
      * Sets date format of the graph balloon (if chart parses dates and you don't use
-     * {@link com.haulmont.charts.gui.amcharts.model.Cursor Cursor}).
+     * {@link Cursor}). If not set the default value is "MMM DD, YYYY".
      *
      * @param balloonDateFormat the balloon date format
      */
@@ -53,7 +54,7 @@ public interface SeriesBasedChartModel<T extends SeriesBasedChartModel> extends 
     Integer getColumnSpacing3D();
 
     /**
-     * Sets space between 3D stacked columns.
+     * Sets space between 3D stacked columns. If not set the default value is 0.
      *
      * @param columnSpacing3D space between 3D stacked columns
      */
@@ -65,7 +66,7 @@ public interface SeriesBasedChartModel<T extends SeriesBasedChartModel> extends 
     Integer getColumnSpacing();
 
     /**
-     * Sets the gap in pixels between two columns of the same category.
+     * Sets the gap in pixels between two columns of the same category. If not set the default value is 5.
      *
      * @param columnSpacing column spacing in pixels
      */
@@ -77,7 +78,7 @@ public interface SeriesBasedChartModel<T extends SeriesBasedChartModel> extends 
     Double getColumnWidth();
 
     /**
-     * Sets relative width of columns. Value range is 0 - 1.
+     * Sets relative width of columns. Value range is 0 - 1. If not set the default value is 0.8.
      *
      * @param columnWidth relative width of columns
      */
@@ -129,7 +130,7 @@ public interface SeriesBasedChartModel<T extends SeriesBasedChartModel> extends 
 
     /**
      * Sets the shortest time span allowed to select in milliseconds for example, 1000 will limit selection to 1
-     * second. Works if {@link CategoryAxis#equalSpacing} is set to false.
+     * second. Works if {@link CategoryAxis#equalSpacing} is set to false. If not set the default value is 0.
      *
      * @param minSelectedTime the minimum selected time in milliseconds
      */
@@ -142,7 +143,7 @@ public interface SeriesBasedChartModel<T extends SeriesBasedChartModel> extends 
 
     /**
      * Set true if you want scroll chart with the mouse wheel. If you press shift while rotating mouse wheel, the
-     * chart will zoom-in/out.
+     * chart will zoom-in/out. If not set the default value is false.
      *
      * @param mouseWheelScrollEnabled mouse wheel scroll option
      */
@@ -154,7 +155,8 @@ public interface SeriesBasedChartModel<T extends SeriesBasedChartModel> extends 
     Boolean getRotate();
 
     /**
-     * Set rotate to true, if the chart should be rotated by 90 degrees (the columns will become bars).
+     * Set rotate to true, if the chart should be rotated by 90 degrees (the columns will become bars). If not set
+     * the default value is false.
      *
      * @param rotate rotate option
      */
@@ -166,7 +168,8 @@ public interface SeriesBasedChartModel<T extends SeriesBasedChartModel> extends 
     Boolean getZoomOutOnDataUpdate();
 
     /**
-     * Set zoomOutOnDataUpdate to true if chart should be zoom-out when data is updated.
+     * Set zoomOutOnDataUpdate to true if chart should be zoom-out when data is updated. If not set the default value is
+     * true.
      *
      * @param zoomOutOnDataUpdate zoomOutOnDataUpdate option
      */
@@ -179,7 +182,7 @@ public interface SeriesBasedChartModel<T extends SeriesBasedChartModel> extends 
 
     /**
      * Set mouseWheelZoomEnabled to true if zooming of a chart with mouse wheel should be enabled. If you press shift
-     * while rotating mouse wheel, the chart will scroll.
+     * while rotating mouse wheel, the chart will scroll. If not set the default value is false.
      *
      * @param mouseWheelZoomEnabled mouseWheelZoomEnabled option
      */

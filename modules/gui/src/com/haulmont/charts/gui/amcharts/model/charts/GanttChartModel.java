@@ -82,7 +82,7 @@ public interface GanttChartModel<T extends GanttChartModel> extends SeriesBasedC
     /**
      * Sets end field from your data provider which holds end value of a segment. If your data is date-based, you
      * should use endDateField instead, unless you specified startDate and period values. In this case you can use
-     * endField and set number of periods instead of providing exact end date.
+     * endField and set number of periods instead of providing exact end date. If not set the default value is "ss".
      *
      * @param endField end field string
      */

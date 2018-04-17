@@ -5,55 +5,107 @@
 
 package com.haulmont.charts.gui.amcharts.model;
 
+import com.haulmont.charts.gui.components.charts.RadarChart;
+import com.haulmont.charts.gui.components.charts.RectangularChart;
+import com.haulmont.charts.gui.components.charts.SlicedChart;
+import com.haulmont.charts.gui.components.charts.SerialChart;
+import com.haulmont.charts.gui.components.charts.XYChart;
+
 public interface HasMargins<T> {
 
     /**
-     * @return top spacing between chart and container
+     * @return top spacing
      */
     Integer getMarginTop();
 
     /**
-     * Sets top spacing between chart and container.
+     * Sets top spacing. If not set the default value is 10.
+     * <p>
+     * If is used for {@link Legend Legend} the default value is 0.
+     * <p>
+     * If is used for {@link RadarChart} the default value is 0.
+     * <p>
+     * If is used for chart based on {@link RectangularChart}
+     * (GanttChart, SerialChart, XYChart) the default value is 20.
+     * <p>
+     * If is used for chart based on {@link SlicedChart} the default value is 10.
+     * <p>
+     * If is used for {@link PanelsSettings} the default value is 0.
      *
      * @param marginTop top spacing
      */
     T setMarginTop(Integer marginTop);
 
     /**
-     * @return bottom spacing between chart and container
+     * @return bottom spacing
      */
     Integer getMarginBottom();
 
     /**
-     * Sets bottom spacing between chart and container.
+     * Sets bottom spacing. If not set the default value is 10.
+     * <p>
+     * If is used for {@link Legend Legend} default value is 0.
+     * <p>
+     * If is used for {@link RadarChart} the default value is 0.
+     * <p>
+     * If is used for chart based on {@link RectangularChart}
+     * (GanttChart, SerialChart, XYChart) the default value is 20.
+     * <p>
+     * If is used for chart based on {@link SlicedChart} (FunnelChart, PieChart) the default value is 10.
+     * <p>
+     * If is used for {@link PanelsSettings} the default value is 0.
      *
      * @param marginBottom bottom spacing
      */
     T setMarginBottom(Integer marginBottom);
 
     /**
-     * @return left-hand spacing between chart and container
+     * @return left-hand spacing
      */
     Integer getMarginLeft();
 
     /**
-     * Sets left-hand spacing between chart and container. marginLeft will be ignored if chart is
-     * {@link com.haulmont.charts.gui.components.charts.SerialChart SerialChart} or
-     * {@link com.haulmont.charts.gui.components.charts.XYChart XYCHart} and {@link Legend#autoMargins} is true.
+     * Sets left-hand spacing.
+     * <p>
+     * marginLeft will be ignored if chart is {@link SerialChart} or {@link XYChart} and {@link Legend#autoMargins}
+     * is true.
+     * <p>
+     * If is used for {@link Legend Legend} the default value is 20.
+     * <p>
+     * If is used for {@link RadarChart} the default value is 0.
+     * <p>
+     * If is used for chart based on {@link RectangularChart} (GanttChart, SerialChart, XYChart) the default value is
+     * 20.
+     * <p>
+     * If is used for chart based on {@link SlicedChart} the default value is 0.
+     * <p>
+     * If is used for {@link PanelsSettings} the default value is 0.
      *
      * @param marginLeft left-hand spacing
      */
     T setMarginLeft(Integer marginLeft);
 
     /**
-     * @return right-hand spacing between chart and container
+     * @return right-hand spacing
      */
     Integer getMarginRight();
 
     /**
-     * Sets right-hand spacing between chart and container. marginRight will be ignored if chart is
-     * {@link com.haulmont.charts.gui.components.charts.SerialChart SerialChart} or
-     * {@link com.haulmont.charts.gui.components.charts.XYChart XYCHart} and autoMargins property of the legend is true.
+     * Sets right-hand spacing.
+     * <p>
+     * marginRight will be ignored if chart is {@link SerialChart} or {@link XYChart} and {@link Legend#autoMargins}
+     * is true.
+     * <p>
+     * If is used for {@link Legend Legend} the default value is 20.
+     * <p>
+     * If is used for {@link RadarChart} the default value is 0.
+     * <p>
+     * If is used for chart based on {@link RectangularChart} (GanttChart, SerialChart, XYChart) the default value is
+     * 20.
+     * <p>
+     * If is used for chart based on {@link SlicedChart} (FunnelChart, PieChart) the default value is 0.
+     * <p>
+     * If is used for {@link PanelsSettings} the default value is 0.
      *
      * @param marginRight right-hand spacing
      */

@@ -6,11 +6,16 @@
 package com.haulmont.charts.gui.amcharts.model;
 
 import com.haulmont.cuba.core.global.UuidProvider;
+import com.haulmont.charts.gui.components.charts.StockChart;
 
 import java.util.Date;
 import java.util.UUID;
 
 /**
+ * StockEvent is object which holds information about event (bullet). Values from {@link StockEventsSettings} will be
+ * used if not set. Stock event bullet's size depends on it's {@link StockGraph#fontSize}. When user rolls-over,
+ * clicks or rolls-out of the event bullet, {@link StockChart} dispatches events.
+ * <br>
  * See documentation for properties of StockEvent JS object. <br>
  *
  * <a href="http://docs.amcharts.com/3/javascriptstockchart/StockEvent">http://docs.amcharts.com/3/javascriptstockchart/StockEvent</a>
@@ -73,7 +78,7 @@ public class StockEvent extends AbstractChartObject {
     }
 
     /**
-     * Sets opacity of bullet background.
+     * Sets opacity of bullet background. If not set the default value is 1.
      *
      * @param backgroundAlpha opacity
      */
@@ -90,7 +95,7 @@ public class StockEvent extends AbstractChartObject {
     }
 
     /**
-     * Sets color of bullet background.
+     * Sets color of bullet background. If not set the default value is #DADADA.
      *
      * @param backgroundColor color
      */
@@ -107,7 +112,7 @@ public class StockEvent extends AbstractChartObject {
     }
 
     /**
-     * Sets opacity of bullet border.
+     * Sets opacity of bullet border. If not set the default value is 1.
      *
      * @param borderAlpha opacity
      */
@@ -124,7 +129,7 @@ public class StockEvent extends AbstractChartObject {
     }
 
     /**
-     * Sets bullet border color.
+     * Sets bullet border color. If not set the default value is #888888.
      *
      * @param borderColor color
      */
@@ -141,7 +146,7 @@ public class StockEvent extends AbstractChartObject {
     }
 
     /**
-     * Sets color of the event text.
+     * Sets color of the event text. If not set the default value is #000000.
      *
      * @param color color
      */
@@ -226,7 +231,7 @@ public class StockEvent extends AbstractChartObject {
     }
 
     /**
-     * Sets roll-over background color.
+     * Sets roll-over background color. If not set the default value is #CC0000.
      *
      * @param rollOverColor color
      */
@@ -260,7 +265,8 @@ public class StockEvent extends AbstractChartObject {
     }
 
     /**
-     * Set showBullet to true if the data point should display both event and regular (if set) bullets.
+     * Set showBullet to true if the data point should display both event and regular (if set) bullets. If not set
+     * the default value is false.
      *
      * @param showBullet showBullet option
      */
@@ -277,7 +283,8 @@ public class StockEvent extends AbstractChartObject {
     }
 
     /**
-     * Set showOnAxis to true if the event should be displayed on the category axis.
+     * Set showOnAxis to true if the event should be displayed on the category axis. If not set the default value is
+     * false.
      *
      * @param showOnAxis showOnAxis option
      */
@@ -312,7 +319,7 @@ public class StockEvent extends AbstractChartObject {
     }
 
     /**
-     * Sets type of bullet.
+     * Sets type of bullet. If not set the default value is SIGN.
      *
      * @param type type
      */

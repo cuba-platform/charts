@@ -6,7 +6,10 @@
 package com.haulmont.charts.gui.amcharts.model;
 
 /**
- * See documentation for properties of ValueAxesSettings JS object. <br>
+ * Defines set of properties for all {@link ValueAxis}. If there is no default value specified, default value of
+ * {@link ValueAxis} class will be used.
+ * <p>
+ * See documentation for properties of {@link ValueAxesSettings} JS object. <br>
  *
  * <a href="http://docs.amcharts.com/3/javascriptstockchart/ValueAxesSettings">http://docs.amcharts.com/3/javascriptstockchart/ValueAxesSettings</a>
  */
@@ -97,7 +100,7 @@ public class ValueAxesSettings extends AbstractChartObject {
 
     /**
      * Set autoGridCount to false the number for gridCount shouldn't be specified automatically, according to the axis
-     * size.
+     * size. If not set the default value is true.
      *
      * @param autoGridCount autoGridCount option
      */
@@ -114,7 +117,7 @@ public class ValueAxesSettings extends AbstractChartObject {
     }
 
     /**
-     * Sets axis opacity.
+     * Sets axis opacity. If not set the default value is 0.
      *
      * @param axisAlpha opacity
      */
@@ -321,7 +324,8 @@ public class ValueAxesSettings extends AbstractChartObject {
     /**
      * Set inside to false if values should be placed inside plot area. In case you set this to false, you'll have to
      * adjust {@link PanelsSettings#marginLeft} or {@link PanelsSettings#marginRight} in order labels to be visible.
-     * Note, if you set this property to false, you might also consider setting showLastLabel to true.
+     * Note, if you set this property to false, you might also consider setting showLastLabel to true. If not set the
+     * default value is true.
      *
      * @param inside inside option
      */
@@ -372,7 +376,7 @@ public class ValueAxesSettings extends AbstractChartObject {
     }
 
     /**
-     * Sets label offset. You can use it to adjust position of axis labels.
+     * Sets label offset. You can use it to adjust position of axis labels. If not set the default value is 0.
      *
      * @param labelOffset label offset
      */
@@ -529,7 +533,8 @@ public class ValueAxesSettings extends AbstractChartObject {
     }
 
     /**
-     * Set showFirstLabel to false if first label of value axis shouldn't be displayed.
+     * Set showFirstLabel to false if first label of value axis shouldn't be displayed. If not set the default value
+     * is true.
      *
      * @param showFirstLabel showFirstLabel option
      */
@@ -546,7 +551,7 @@ public class ValueAxesSettings extends AbstractChartObject {
     }
 
     /**
-     * Set showLastLabel to true if last label of value axis should be displayed.
+     * Set showLastLabel to true if last label of value axis should be displayed. If not set the default value is false.
      *
      * @param showLastLabel showLastLabel option
      */
@@ -580,7 +585,7 @@ public class ValueAxesSettings extends AbstractChartObject {
     }
 
     /**
-     * Sets tick length.
+     * Sets tick length. If not set the default value is 0.
      *
      * @param tickLength tick length
      */

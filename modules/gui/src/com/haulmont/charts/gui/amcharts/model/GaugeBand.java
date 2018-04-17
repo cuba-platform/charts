@@ -8,6 +8,9 @@ package com.haulmont.charts.gui.amcharts.model;
 import java.util.List;
 
 /**
+ * Creates a band for a specified value range on the {@link GaugeAxis}. Multiple bands can be assigned to a single
+ * {@link GaugeAxis}.
+ * <br>
  * See documentation for properties of GaugeBand JS Object. <br>
  *
  * <a href="http://docs.amcharts.com/3/javascriptcharts/GaugeBand">http://docs.amcharts.com/3/javascriptcharts/GaugeBand</a>

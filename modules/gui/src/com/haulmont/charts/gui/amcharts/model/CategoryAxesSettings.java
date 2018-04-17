@@ -5,11 +5,16 @@
 
 package com.haulmont.charts.gui.amcharts.model;
 
+import com.haulmont.charts.gui.amcharts.model.charts.StockPanel;
+
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 
 /**
+ * Defines set of properties for all CategoryAxes of {@link StockPanel}. If there is no default value specified,
+ * default value of {@link CategoryAxis} class will be used.
+ * <br>
  * See documentation for properties of CategoryAxesSettings JS object. <br>
  *
  * <a href="http://docs.amcharts.com/3/javascriptstockchart/CategoryAxesSettings">http://docs.amcharts.com/3/javascriptstockchart/CategoryAxesSettings</a>
@@ -95,7 +100,7 @@ public class CategoryAxesSettings extends AbstractChartObject {
 
     /**
      * Set alwaysGroup to true and if groupToPeriods doesn't have minPeriod value included, chart will always group
-     * values to the first period available.
+     * values to the first period available. If not set the default value is false.
      *
      * @param alwaysGroup alwaysGroup option
      */
@@ -113,7 +118,7 @@ public class CategoryAxesSettings extends AbstractChartObject {
 
     /**
      * Set autoGridCount to false if you don't want the number of gridCount are specified automatically,
-     * according to the axis size.
+     * according to the axis size. If not set the default value is true.
      *
      * @param autoGridCount autoGridCount option
      */
@@ -130,7 +135,7 @@ public class CategoryAxesSettings extends AbstractChartObject {
     }
 
     /**
-     * Sets axis opacity.
+     * Sets axis opacity. If not set the default value is 0.
      *
      * @param axisAlpha axis opacity
      */
@@ -164,7 +169,7 @@ public class CategoryAxesSettings extends AbstractChartObject {
     }
 
     /**
-     * Sets height of category axes. Set it to 0 if you set inside property to true.
+     * Sets height of category axes. Set it to 0 if you set inside property to true. If not set the default value is 28.
      *
      * @param axisHeight height of category axes
      */
@@ -199,7 +204,7 @@ public class CategoryAxesSettings extends AbstractChartObject {
 
     /**
      * Set boldPeriodBeginning to false if you want chart will not try to highlight the beginning of the periods,
-     * like month, in bold. Works when parse dates are on for the category axis.
+     * like month, in bold. Works when parse dates are on for the category axis. If not set the default value is true.
      *
      * @param boldPeriodBeginning bold period beginning option
      */
@@ -284,6 +289,7 @@ public class CategoryAxesSettings extends AbstractChartObject {
 
     /**
      * Set equalSpacing to true if you want data points to be placed at equal intervals (omitting dates with no data).
+     * If not set the default value is false.
      *
      * @param equalSpacing equalSpacing option
      */
@@ -386,7 +392,8 @@ public class CategoryAxesSettings extends AbstractChartObject {
     }
 
     /**
-     * Sets number of grid lines. You should set autoGridCount to false in order this property not to be ignored.
+     * Sets number of grid lines. You should set autoGridCount to false in order this property not to be ignored. If
+     * not set the default value is 10.
      *
      * @param gridCount number of grid lines
      */
@@ -422,7 +429,14 @@ public class CategoryAxesSettings extends AbstractChartObject {
     /**
      * Sets list of groupToPeriods strings. Periods to which data will be grouped in case there are more data items in
      * the selected period than specified in maxSeries property. Possible values: "ss", "10ss", "mm", "DD", "WW","MM",
-     * "YYYY".
+     * "YYYY". If not set the default value is
+     *
+     * <pre>{@code
+     * ["ss", "10ss", "30ss",
+     *  "mm", "10mm", "30mm",
+     *  "hh", "DD",   "WW",
+     *  "MM", "YYYY"]}
+     * </pre>
      *
      * @param groupToPeriods list of groupToPeriods strings
      */
@@ -454,7 +468,7 @@ public class CategoryAxesSettings extends AbstractChartObject {
     }
 
     /**
-     * Set inside to true if values should be placed inside of plot area.
+     * Set inside to true if values should be placed inside of plot area. If not set the default value is false.
      *
      * @param inside inside option
      */
@@ -471,7 +485,7 @@ public class CategoryAxesSettings extends AbstractChartObject {
     }
 
     /**
-     * Sets offset of axis labels.
+     * Sets offset of axis labels. If not set the default value is 0.
      *
      * @param labelOffset offset of axis labels
      */
@@ -505,7 +519,8 @@ public class CategoryAxesSettings extends AbstractChartObject {
     }
 
     /**
-     * Set labelsEnabled to false if you don't wont to display category axis labels and value axis values.
+     * Set labelsEnabled to false if you don't wont to display category axis labels and value axis values. If not set
+     * the default value is true.
      *
      * @param labelsEnabled labelsEnabled option
      */
@@ -522,7 +537,8 @@ public class CategoryAxesSettings extends AbstractChartObject {
     }
 
     /**
-     * Set markPeriodChange to false if period shouldn't be marked by a different date format
+     * Set markPeriodChange to false if period shouldn't be marked by a different date format. If not set the default
+     * value is true.
      *
      * @param markPeriodChange markPeriodChange option
      */
@@ -541,7 +557,7 @@ public class CategoryAxesSettings extends AbstractChartObject {
     /**
      * Sets maximum series shown at a time. In case there are more data points in the selection than maxSeries, the
      * chart will group data to longer periods, for example - you have 250 days in the selection, and maxSeries is
-     * 150 - the chart will group data to weeks.
+     * 150 - the chart will group data to weeks. If not set the default value is 150.
      *
      * @param maxSeries maximum series shown at a time
      */
@@ -559,7 +575,7 @@ public class CategoryAxesSettings extends AbstractChartObject {
 
     /**
      * Sets minimum cell width required for one span between grid lines. minHorizontalGap is used when calculating
-     * grid count.
+     * grid count. If not set the default value is 75.
      *
      * @param minHorizontalGap minimum cell width
      */
@@ -578,7 +594,7 @@ public class CategoryAxesSettings extends AbstractChartObject {
     /**
      * Sets the shortest period of your data. "fff" - millisecond, "ss" - second, "mm" - minute, "hh" - hour, "DD" -
      * day, "MM" - month, 'YYYY' - year. It's also possible to supply a number for increments, i.e. "15mm" which will
-     * instruct the chart that your data is supplied in 15 minute increments.
+     * instruct the chart that your data is supplied in 15 minute increments. If not set the default value is "DD".
      *
      * @param minPeriod the shortest period
      */
@@ -613,7 +629,8 @@ public class CategoryAxesSettings extends AbstractChartObject {
 
     /**
      * Set startOnAxis to false if the graph should start on axis. In case you display columns, it is recommended to set
-     * this to false. startOnAxis can be set to true only if equalSpacing is set to true.
+     * this to false. startOnAxis can be set to true only if equalSpacing is set to true. If not set the default
+     * value is false.
      *
      * @param startOnAxis startOnAxis option
      */
@@ -630,7 +647,7 @@ public class CategoryAxesSettings extends AbstractChartObject {
     }
 
     /**
-     * Sets tick length.
+     * Sets tick length. If not set the default value is 0.
      *
      * @param tickLength tick length
      */
@@ -649,6 +666,7 @@ public class CategoryAxesSettings extends AbstractChartObject {
     /**
      * Set twoLineMode to true, category axis will display date strings of bot small and big period, in two rows, at
      * the position where bigger period changes. Works only when parseDates is set to true and equalSpacing is false.
+     * If not set the default value is false.
      *
      * @param twoLineMode twoLineMode option
      */

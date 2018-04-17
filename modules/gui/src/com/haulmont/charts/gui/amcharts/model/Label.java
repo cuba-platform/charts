@@ -6,6 +6,8 @@
 package com.haulmont.charts.gui.amcharts.model;
 
 /**
+ * Creates a label on the chart which can be placed anywhere, multiple can be assigned.
+ * <br>
  * See documentation for properties of Label JS Object. <br>
  *
  * <a href="http://docs.amcharts.com/3/javascriptcharts/Label">http://docs.amcharts.com/3/javascriptcharts/Label</a>
@@ -46,7 +48,7 @@ public class Label extends AbstractChartObject {
     }
 
     /**
-     * Sets align to the label.
+     * Sets align to the label. If not set the default value is LEFT.
      *
      * @param align align
      */
@@ -63,7 +65,7 @@ public class Label extends AbstractChartObject {
     }
 
     /**
-     * Sets opacity of the label
+     * Sets opacity of the label. If not set the default value is 1.
      *
      * @param alpha opacity
      */
@@ -80,7 +82,7 @@ public class Label extends AbstractChartObject {
     }
 
     /**
-     * Set bold to true if label should be bold.
+     * Set bold to true if label should be bold. If not set the default value is false.
      *
      * @param bold bold option
      */
@@ -114,7 +116,7 @@ public class Label extends AbstractChartObject {
     }
 
     /**
-     * Sets rotation angle.
+     * Sets rotation angle. If not set the default value is 0.
      *
      * @param rotation angle
      */

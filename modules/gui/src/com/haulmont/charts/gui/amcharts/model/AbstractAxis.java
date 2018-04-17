@@ -10,6 +10,8 @@ import java.util.Arrays;
 import java.util.List;
 
 /**
+ * Base class for {@link ValueAxis} and {@link CategoryAxis}.
+ * <br>
  * See documentation for properties of AxisBase JS Object.
  * <br>
  * <a href="http://docs.amcharts.com/3/javascriptcharts/AxisBase">http://docs.amcharts.com/3/javascriptcharts/AxisBase</a>
@@ -120,7 +122,7 @@ public abstract class AbstractAxis<T extends AbstractAxis> extends AbstractChart
 
     /**
      * Set autoGridCount to false if you don't want that the number of gridCount will be specified automatically,
-     * according to the axis size.
+     * according to the axis size. If not set the default value is true.
      *
      * @param autoGridCount auto grid count option
      */
@@ -137,7 +139,7 @@ public abstract class AbstractAxis<T extends AbstractAxis> extends AbstractChart
     }
 
     /**
-     * Sets axis opacity. Value range is 0 - 1.
+     * Sets axis opacity. Value range is 0 - 1. If not set the default value is 1.
      *
      * @param axisAlpha axis opacity
      */
@@ -154,7 +156,7 @@ public abstract class AbstractAxis<T extends AbstractAxis> extends AbstractChart
     }
 
     /**
-     * Sets axis color.
+     * Sets axis color. If not set the default value is #000000.
      *
      * @param axisColor axis color
      */
@@ -171,7 +173,7 @@ public abstract class AbstractAxis<T extends AbstractAxis> extends AbstractChart
     }
 
     /**
-     * Sets thickness of the axis.
+     * Sets thickness of the axis. If not set the default value is 1.
      *
      * @param axisThickness thickness of the axis
      */
@@ -205,7 +207,7 @@ public abstract class AbstractAxis<T extends AbstractAxis> extends AbstractChart
     }
 
     /**
-     * Sets length of a dash. 0 means line is not dashed.
+     * Sets length of a dash. 0 means line is not dashed. If not set the default value is 0.
      *
      * @param dashLength length of a dash
      */
@@ -241,7 +243,7 @@ public abstract class AbstractAxis<T extends AbstractAxis> extends AbstractChart
 
     /**
      * Set fill color. Every second space between grid lines can be filled with color. Set fillAlpha to a value greater
-     * than 0 to see the fills.
+     * than 0 to see the fills. If not set the default value is #FFFFFF.
      *
      * @param fillColor fill color
      */
@@ -275,7 +277,7 @@ public abstract class AbstractAxis<T extends AbstractAxis> extends AbstractChart
     }
 
     /**
-     * Sets opacity of grid lines.
+     * Sets opacity of grid lines. If not set the default value is 0.15.
      *
      * @param gridAlpha opacity of grid lines
      */
@@ -292,7 +294,7 @@ public abstract class AbstractAxis<T extends AbstractAxis> extends AbstractChart
     }
 
     /**
-     * Sets color of grid lines.
+     * Sets color of grid lines. If not set the default value is #000000
      *
      * @param gridColor color of grid lines
      */
@@ -310,7 +312,8 @@ public abstract class AbstractAxis<T extends AbstractAxis> extends AbstractChart
 
     /**
      * Sets number of grid lines. In case this is value axis, or your categoryAxis parses dates, the number is
-     * approximate. The default value is 5. If you set autoGridCount to true, gridCount is ignored.
+     * approximate. The default value is 5. If you set autoGridCount to true, gridCount is ignored. If not set the
+     * default value is 5.
      *
      * @param gridCount grid count
      */
@@ -327,7 +330,7 @@ public abstract class AbstractAxis<T extends AbstractAxis> extends AbstractChart
     }
 
     /**
-     * Sets thickness of grid lines.
+     * Sets thickness of grid lines. If not set the default value is 1.
      *
      * @param gridThickness thickness of grid lines
      */
@@ -376,8 +379,8 @@ public abstract class AbstractAxis<T extends AbstractAxis> extends AbstractChart
     }
 
     /**
-     * Set ignoreAxisWidth to true if autoMargins of a chart is set to true, but you want
-     * this axis not to be measured when calculating margin.
+     * Set ignoreAxisWidth to true if autoMargins of a chart is set to true, but you want this axis not to be
+     * measured when calculating margin. If not set the default value is false.
      *
      * @param ignoreAxisWidth ignoreAxisWidth option
      */
@@ -394,7 +397,7 @@ public abstract class AbstractAxis<T extends AbstractAxis> extends AbstractChart
     }
 
     /**
-     * Set inside to true if values should be placed inside of plot area.
+     * Set inside to true if values should be placed inside of plot area. If not set the default value is false.
      *
      * @param inside inside option
      */
@@ -411,8 +414,8 @@ public abstract class AbstractAxis<T extends AbstractAxis> extends AbstractChart
     }
 
     /**
-     * Sets frequency at which labels should be placed. Doesn't work for CategoryAxis if parseDates is set to
-     * true.
+     * Sets frequency at which labels should be placed. Doesn't work for CategoryAxis if parseDates is set to true.
+     * If not set the default value is 1.
      *
      * @param labelFrequency frequency at which labels should be placed
      */
@@ -430,7 +433,7 @@ public abstract class AbstractAxis<T extends AbstractAxis> extends AbstractChart
 
     /**
      * Sets rotation angle of a label. Only horizontal axis values can be rotated. If you set this for vertical axis,
-     * the setting will be ignored. Possible values from -90 to 90.
+     * the setting will be ignored. Possible values from -90 to 90. If not set the default value is 0.
      *
      * @param labelRotation rotation angle of a label
      */
@@ -447,8 +450,8 @@ public abstract class AbstractAxis<T extends AbstractAxis> extends AbstractChart
     }
 
     /**
-     * Set labelsEnabled to false if you don't wont to display category axis labels and value axis
-     * values.
+     * Set labelsEnabled to false if you don't wont to display category axis labels and value axis values. If not set
+     * the default value is true.
      *
      * @param labelsEnabled labelsEnabled option
      */
@@ -466,7 +469,7 @@ public abstract class AbstractAxis<T extends AbstractAxis> extends AbstractChart
 
     /**
      * Sets minimum cell width required for one span between grid lines. minHorizontalGap is used when calculating grid
-     * count (when autoGridCount is true).
+     * count (when autoGridCount is true). If not set the default value is 75.
      *
      * @param minHorizontalGap minimum cell width required for one span between grid lines
      */
@@ -483,7 +486,8 @@ public abstract class AbstractAxis<T extends AbstractAxis> extends AbstractChart
     }
 
     /**
-     * Sets opacity of minor grid. In order minor to be visible, you should set minorGridEnabled to true.
+     * Sets opacity of minor grid. In order minor to be visible, you should set minorGridEnabled to true. If not set
+     * the default value is 0.07.
      *
      * @param minorGridAlpha opacity of minor grid
      */
@@ -500,8 +504,8 @@ public abstract class AbstractAxis<T extends AbstractAxis> extends AbstractChart
     }
 
     /**
-     * Set minorGridEnabled to true if minor grid should be displayed. Note, if equalSpacing is set to
-     * true, this setting will be ignored.
+     * Set minorGridEnabled to true if minor grid should be displayed. Note, if equalSpacing is set to true, this
+     * setting will be ignored. If not set the default value is false.
      *
      * @param minorGridEnabled minorGridEnabled option
      */
@@ -519,7 +523,7 @@ public abstract class AbstractAxis<T extends AbstractAxis> extends AbstractChart
 
     /**
      * Sets minimum cell height required for one span between grid lines. minVerticalGap is used when calculating grid
-     * count (when autoGridCount is set to true).
+     * count (when autoGridCount is set to true). If not set the default value is 35.
      *
      * @param minVerticalGap minimum cell height required for one span between grid lines
      */
@@ -536,7 +540,8 @@ public abstract class AbstractAxis<T extends AbstractAxis> extends AbstractChart
     }
 
     /**
-     * Sets the distance of the axis to the plot area, in pixels. Negative values can also be used.
+     * Sets the distance of the axis to the plot area, in pixels. Negative values can also be used. If not set the
+     * default value is 0.
      *
      * @param offset the distance of the axis to the plot area, in pixels
      */
@@ -554,7 +559,7 @@ public abstract class AbstractAxis<T extends AbstractAxis> extends AbstractChart
 
     /**
      * Sets position. Possible values are: "top", "bottom", "left", "right". If axis is vertical, default position is
-     * "left". If axis is horizontal, default position is "bottom".
+     * "left". If axis is horizontal, default position is "bottom". If not set the default value is BOTTOM.
      *
      * @param position position
      */
@@ -573,7 +578,8 @@ public abstract class AbstractAxis<T extends AbstractAxis> extends AbstractChart
     /**
      * Set showFirstLabel to false if you don't want to show first axis label. This works properly only
      * on {@link ValueAxis}. With {@link CategoryAxis} it wont work 100%, it depends on the period, zooming, etc.
-     * There is no guaranteed way to force category axis to show or hide first label.
+     * There is no guaranteed way to force category axis to show or hide first label. If not set the default value is
+     * true.
      *
      * @param showFirstLabel showFirstLabel option
      */
@@ -592,7 +598,8 @@ public abstract class AbstractAxis<T extends AbstractAxis> extends AbstractChart
     /**
      * Set showFirstLabel to false if you don't want to show last axis label. This works properly
      * only on {@link ValueAxis}. With {@link CategoryAxis} it wont work 100%, it depends on the period, zooming, etc.
-     * There is no guaranteed way to force category axis to show or hide last label.
+     * There is no guaranteed way to force category axis to show or hide last label. If not set the default value is
+     * true.
      *
      * @param showLastLabel showLastLabel option
      */
@@ -609,7 +616,7 @@ public abstract class AbstractAxis<T extends AbstractAxis> extends AbstractChart
     }
 
     /**
-     * Sets length of the tick marks.
+     * Sets length of the tick marks. If not set the default value is 5.
      *
      * @param tickLength length of the tick marks
      */
@@ -643,7 +650,7 @@ public abstract class AbstractAxis<T extends AbstractAxis> extends AbstractChart
     }
 
     /**
-     * Set titleBold to false if title shouldn't be bold
+     * Set titleBold to false if title shouldn't be bold. If not set the default value is true.
      *
      * @param titleBold titleBold option
      */
@@ -694,7 +701,7 @@ public abstract class AbstractAxis<T extends AbstractAxis> extends AbstractChart
     }
 
     /**
-     * Set boldLabels to true if axis labels should be bold.
+     * Set boldLabels to true if axis labels should be bold. If not set the default value is false.
      *
      * @param boldLabels bold labels option
      */
@@ -749,8 +756,8 @@ public abstract class AbstractAxis<T extends AbstractAxis> extends AbstractChart
     }
 
     /**
-     * Set centerLabels to true if you want to center labels of the date-based axis (in case it's
-     * category axis, equalSpacing must be false)
+     * Set centerLabels to true if you want to center labels of the date-based axis (in case it's category axis,
+     * equalSpacing must be false). If not set the default value is false.
      *
      * @param centerLabels center labels option
      */
@@ -768,7 +775,19 @@ public abstract class AbstractAxis<T extends AbstractAxis> extends AbstractChart
 
     /**
      * Sets list of date formats of different periods. Possible period values: fff - milliseconds, ss - seconds, mm -
-     * minutes, hh - hours, DD - days, MM - months, WW - weeks, YYYY - years.
+     * minutes, hh - hours, DD - days, MM - months, WW - weeks, YYYY - years. If not set the default value is
+     *
+     * <pre>{@code
+     *  [{"period":"fff",  "format":"JJ:NN:SS"},
+     *   {"period":"ss",   "format":"JJ:NN:SS"},
+     *   {"period":"mm",   "format":"JJ:NN"},
+     *   {"period":"hh",   "format":"JJ:NN"},
+     *   {"period":"DD",   "format":"MMM DD"},
+     *   {"period":"WW",   "format":"MMM DD"},
+     *   {"period":"MM",   "format":"MMM"},
+     *   {"period":"YYYY", "format":"YYYY"}]
+     * }
+     * </pre>
      *
      * @param dateFormats list of date formats
      */
@@ -800,7 +819,7 @@ public abstract class AbstractAxis<T extends AbstractAxis> extends AbstractChart
     }
 
     /**
-     * Sets length of minor grid tick.
+     * Sets length of minor grid tick. If not set the default value is 0.
      *
      * @param minorTickLength length of minor grid tick
      */
@@ -852,7 +871,7 @@ public abstract class AbstractAxis<T extends AbstractAxis> extends AbstractChart
 
     /**
      * Set boldPeriodBeginning to false if you want chart will not try to highlight the beginning of
-     * the periods, like month, in bold.
+     * the periods, like month, in bold. If not set the default value is true.
      *
      * @param boldPeriodBeginning boldPeriodBeginning option
      */
@@ -870,8 +889,8 @@ public abstract class AbstractAxis<T extends AbstractAxis> extends AbstractChart
 
     /**
      * Set centerLabelOnFullPeriod to false if you want labels never to be centered between grid lines.
-     * This setting works only when parseDates is set to true and equalSpacing is set to
-     * false.
+     * This setting works only when parseDates is set to true and equalSpacing is set to false. If not set the
+     * default value is true.
      *
      * @param centerLabelOnFullPeriod centerLabelOnFullPeriod option
      */
@@ -888,7 +907,7 @@ public abstract class AbstractAxis<T extends AbstractAxis> extends AbstractChart
     }
 
     /**
-     * Sets first day of the week. 0 is Sunday, 1 is Monday, etc.
+     * Sets first day of the week. 0 is Sunday, 1 is Monday, etc. If not set the default value is 1.
      *
      * @param firstDayOfWeek first day of the week
      */
@@ -905,7 +924,8 @@ public abstract class AbstractAxis<T extends AbstractAxis> extends AbstractChart
     }
 
     /**
-     * Sets offset of axes labels. Works both with {@link CategoryAxis} and {@link ValueAxis}.
+     * Sets offset of axes labels. Works both with {@link CategoryAxis} and {@link ValueAxis}. If not set the default
+     * value is 0.
      *
      * @param labelOffset offset of axes labels
      */
@@ -922,8 +942,8 @@ public abstract class AbstractAxis<T extends AbstractAxis> extends AbstractChart
     }
 
     /**
-     * Set markPeriodChange to false if the start of longer periods shouldn't use a different date
-     * format and shouldn't be bold.
+     * Set markPeriodChange to false if the start of longer periods shouldn't use a different date format and
+     * shouldn't be bold. If not set the default value is true.
      *
      * @param markPeriodChange markPeriodChange option
      */
@@ -940,7 +960,8 @@ public abstract class AbstractAxis<T extends AbstractAxis> extends AbstractChart
     }
 
     /**
-     * In case you have rotated labels on horizontal axis, you can force-center them using this property.
+     * In case you have rotated labels on horizontal axis, you can force-center them using this property. If not set
+     * the default value is false.
      *
      * @param centerRotatedLabels centerRotatedLabels option
      */

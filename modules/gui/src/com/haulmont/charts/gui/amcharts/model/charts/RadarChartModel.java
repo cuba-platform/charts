@@ -26,7 +26,7 @@ public interface RadarChartModel<T extends RadarChartModel> extends CoordinateCh
     String getRadius();
 
     /**
-     * Radius of radar
+     * Sets radius of radar. If not set the default value is 35%.
      *
      * @param radius the radius
      */

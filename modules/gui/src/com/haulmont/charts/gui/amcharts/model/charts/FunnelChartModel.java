@@ -17,7 +17,8 @@ public interface FunnelChartModel<T extends FunnelChartModel> extends SlicedChar
     /**
      * Sets balloon text. The following tags can be used: [[value]], [[title]], [[percents]], [[description]]. Also can
      * be used fields in the chart such as titleField, valueField etc. Fields that not used in the chart can be added
-     * by using additionalFields. HTML tags can also be used.
+     * by using additionalFields. HTML tags can also be used. If not set the default value is
+     * "[[title]]:[[value]]\n[[description]]".
      *
      * @param balloonText balloon text string
      */
@@ -29,7 +30,8 @@ public interface FunnelChartModel<T extends FunnelChartModel> extends SlicedChar
     String getBaseWidth();
 
     /**
-     * Sets width of a base (first slice) of a chart. 100% means it will occupy all available space.
+     * Sets width of a base (first slice) of a chart. 100% means it will occupy all available space. If not set the
+     * default value is 100%.
      *
      * @param baseWidth the base width
      */
@@ -42,7 +44,7 @@ public interface FunnelChartModel<T extends FunnelChartModel> extends SlicedChar
 
     /**
      * Specifies where labels should be placed. Allowed values are left, center, right. If you set left or right, you
-     * should increase left or right margin in order labels to be visible.
+     * should increase left or right margin in order labels to be visible. If not set the default value is CENTER.
      *
      * @param labelPosition the label position
      */
@@ -56,7 +58,7 @@ public interface FunnelChartModel<T extends FunnelChartModel> extends SlicedChar
     /**
      * Sets label text. The following tags can be used: [[value]], [[title]], [[percents]], [[description]]. Also can
      * be used fields in the chart such as titleField, valueField etc. Fields that not used in the chart can be added
-     * by using additionalFields.
+     * by using additionalFields. If not set the default value is "[[title]]: [[value]]".
      *
      * @param labelText label text string
      */
@@ -69,7 +71,7 @@ public interface FunnelChartModel<T extends FunnelChartModel> extends SlicedChar
 
     /**
      * Sets height of a funnel neck. If default value, zero is used, the funnel won't have neck at all, which will make
-     * it look like pyramid.
+     * it look like pyramid. If not set the default value is "0".
      *
      * @param neckHeight the neck height
      */
@@ -82,7 +84,7 @@ public interface FunnelChartModel<T extends FunnelChartModel> extends SlicedChar
 
     /**
      * Sets width of a funnel neck. If default value, zero is used, the funnel won't have neck at all, which will make
-     * it look like pyramid.
+     * it look like pyramid. If not set the default value is "0".
      *
      * @param neckWidth the neck width
      */
@@ -94,7 +96,7 @@ public interface FunnelChartModel<T extends FunnelChartModel> extends SlicedChar
     String getPullDistance();
 
     /**
-     * Sets the distance by which slice should be pulled when user clicks on it.
+     * Sets the distance by which slice should be pulled when user clicks on it. If not set the default value is 30.
      *
      * @param pullDistance the pull distance
      */
@@ -106,7 +108,8 @@ public interface FunnelChartModel<T extends FunnelChartModel> extends SlicedChar
     Integer getStartX();
 
     /**
-     * Sets initial X coordinate of slices. They will animate to the final X position from this one.
+     * Sets initial X coordinate of slices. They will animate to the final X position from this one. If not set the
+     * default value is 0.
      *
      * @param startX the start X
      */
@@ -118,7 +121,8 @@ public interface FunnelChartModel<T extends FunnelChartModel> extends SlicedChar
     Integer getStartY();
 
     /**
-     * Sets initial y coordinate of slices. They will animate to the final y position from this one.
+     * Sets initial y coordinate of slices. They will animate to the final y position from this one. If not set the
+     * default value is 0.
      *
      * @param startY the start Y
      */
@@ -131,7 +135,7 @@ public interface FunnelChartModel<T extends FunnelChartModel> extends SlicedChar
 
     /**
      * Sets the value represents. By default, the height of a slice represents it's value. Set this property to "area"
-     * if you want the area of a slice to represent value.
+     * if you want the area of a slice to represent value. If not set the default value is HEIGHT.
      *
      * @param valueRepresents the value represents
      */
@@ -143,7 +147,8 @@ public interface FunnelChartModel<T extends FunnelChartModel> extends SlicedChar
     Boolean getRotate();
 
     /**
-     * If rotate is set to true, the funnel will be rotated and will became a pyramid.
+     * If rotate is set to true, the funnel will be rotated and will became a pyramid. If not set the default value
+     * is false.
      *
      * @param rotate rotate option
      */
@@ -155,7 +160,8 @@ public interface FunnelChartModel<T extends FunnelChartModel> extends SlicedChar
     Integer getAngle();
 
     /**
-     * Sets the angle of the 3D part of the chart. This creates a 3D effect (if the depth3D is greater than 0).
+     * Sets the angle of the 3D part of the chart. This creates a 3D effect (if the depth3D is greater than 0). If
+     * not set the default value is 0.
      *
      * @param angle the angle
      */

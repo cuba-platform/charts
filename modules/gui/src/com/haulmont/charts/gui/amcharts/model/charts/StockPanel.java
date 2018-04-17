@@ -7,6 +7,7 @@ package com.haulmont.charts.gui.amcharts.model.charts;
 
 import com.haulmont.charts.gui.amcharts.model.*;
 import com.haulmont.cuba.core.global.UuidProvider;
+import com.haulmont.charts.gui.components.charts.StockChart;
 
 import java.util.ArrayList;
 import java.util.Arrays;
@@ -14,6 +15,8 @@ import java.util.Date;
 import java.util.List;
 
 /**
+ * Creates stock panels (charts). {@link StockChart} can have multiple Stock panels.
+ * <br>
  * See documentation for properties of StockPanel JS object. <br>
  * <br>
  * <a href="http://docs.amcharts.com/3/javascriptstockchart/StockPanel">http://docs.amcharts.com/3/javascriptstockchart/StockPanel</a>
@@ -81,6 +84,7 @@ public class StockPanel extends AbstractSerialChart<StockPanel> implements Serie
 
     /**
      * Set allowTurningOff to true if x button should be displayed near the panel. This button allows turning panel off.
+     * If not set the default value is false.
      *
      * @param allowTurningOff allowTurningOff option
      */
@@ -97,7 +101,8 @@ public class StockPanel extends AbstractSerialChart<StockPanel> implements Serie
     }
 
     /**
-     * Set drawingIconsEnabled to true if drawing icons should be displayed in top-right corner.
+     * Set drawingIconsEnabled to true if drawing icons should be displayed in top-right corner. If not set the
+     * default value is false.
      *
      * @param drawingIconsEnabled drawingIconsEnabled option
      */
@@ -134,7 +139,7 @@ public class StockPanel extends AbstractSerialChart<StockPanel> implements Serie
 
     /**
      * Set eraseAll to true if all trend lines should be erased when erase button is clicked. If eraseAll is set to
-     * false trend lines will be erased one by one.
+     * false trend lines will be erased one by one. If not set the default value is false.
      *
      * @param eraseAll eraseAll option
      */
@@ -152,7 +157,7 @@ public class StockPanel extends AbstractSerialChart<StockPanel> implements Serie
 
     /**
      * Sets size of trend line drawing icons. If you change this size, you should update icon images if you want
-     * them to look properly.
+     * them to look properly. If not set the default value is 18.
      *
      * @param iconSize icon size
      */
@@ -204,7 +209,7 @@ public class StockPanel extends AbstractSerialChart<StockPanel> implements Serie
 
     /**
      * Specifies when values should be recalculated to percents. Possible values are: "never", "always",
-     * "whenComparing".
+     * "whenComparing". If not set the default value is "whenComparing".
      *
      * @param recalculateToPercents recalculate to percents value
      */
@@ -221,7 +226,7 @@ public class StockPanel extends AbstractSerialChart<StockPanel> implements Serie
     }
 
     /**
-     * Set showCategoryAxis to false if this panel should't show category axis.
+     * Set showCategoryAxis to false if this panel should't show category axis. If not set the default value is true.
      *
      * @param showCategoryAxis showCategoryAxis option
      */
@@ -238,7 +243,8 @@ public class StockPanel extends AbstractSerialChart<StockPanel> implements Serie
     }
 
     /**
-     * Set showComparedOnTop to false if compared graphs shouldn't be shown above or behind the main graph.
+     * Set showComparedOnTop to false if compared graphs shouldn't be shown above or behind the main graph. If not
+     * set the default value is true.
      *
      * @param showComparedOnTop showComparedOnTop option
      */
@@ -321,7 +327,7 @@ public class StockPanel extends AbstractSerialChart<StockPanel> implements Serie
     }
 
     /**
-     * Sets trend line opacity.
+     * Sets trend line opacity. If not set the default value is 1.
      *
      * @param trendLineAlpha opacity
      */
@@ -338,7 +344,7 @@ public class StockPanel extends AbstractSerialChart<StockPanel> implements Serie
     }
 
     /**
-     * Sets trend line color.
+     * Sets trend line color. If not set the default value is #00CC00.
      *
      * @param trendLineColor color
      */
@@ -355,7 +361,7 @@ public class StockPanel extends AbstractSerialChart<StockPanel> implements Serie
     }
 
     /**
-     * Sets trend line dash length.
+     * Sets trend line dash length. If not set the default value is 0.
      *
      * @param trendLineDashLength dash length
      */
@@ -372,7 +378,7 @@ public class StockPanel extends AbstractSerialChart<StockPanel> implements Serie
     }
 
     /**
-     * Sets trend line thickness.
+     * Sets trend line thickness. If not set the default value is 2.
      *
      * @param trendLineThickness thickness
      */

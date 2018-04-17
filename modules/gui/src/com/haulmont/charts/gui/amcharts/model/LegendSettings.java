@@ -6,6 +6,9 @@
 package com.haulmont.charts.gui.amcharts.model;
 
 /**
+ * Common settings of legends. If there is no default value specified, default value of {@link StockLegend} class
+ * will be used.
+ * <br>
  * See documentation for properties of LegendSettings JS object. <br>
  *
  * <a href="http://docs.amcharts.com/3/javascriptstockchart/LegendSettings">http://docs.amcharts.com/3/javascriptstockchart/LegendSettings</a>
@@ -91,7 +94,8 @@ public class LegendSettings extends AbstractChartObject {
     }
 
     /**
-     * Set equalWidths to true if each legend entry should take up much space as the longest legend entry.
+     * Set equalWidths to true if each legend entry should take up much space as the longest legend entry. If not set
+     * the default value is false.
      *
      * @param equalWidths equalWidths option
      */
@@ -142,7 +146,7 @@ public class LegendSettings extends AbstractChartObject {
     }
 
     /**
-     * Sets space below the last row of the legend, in pixels.
+     * Sets space below the last row of the legend, in pixels. If not set the default value is 0.
      *
      * @param marginBottom margin bottom
      */
@@ -159,7 +163,7 @@ public class LegendSettings extends AbstractChartObject {
     }
 
     /**
-     * Sets space above the first row of the legend, in pixels.
+     * Sets space above the first row of the legend, in pixels. If not set the default value is 0.
      *
      * @param marginTop margin top
      */
@@ -323,7 +327,6 @@ public class LegendSettings extends AbstractChartObject {
     }
 
     /**
-     *
      * @return opacity of the graphs
      */
     public Double getRollOverGraphAlpha() {
@@ -401,7 +404,7 @@ public class LegendSettings extends AbstractChartObject {
 
     /**
      * Set textClickEnabled to true if the legend text should be clickable. Clicking on legend text can show/hide
-     * value balloons if they are enabled.
+     * value balloons if they are enabled. If not set the default value is false.
      *
      * @param textClickEnabled textClickEnabled option
      */

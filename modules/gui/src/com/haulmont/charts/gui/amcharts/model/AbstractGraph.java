@@ -7,11 +7,17 @@ package com.haulmont.charts.gui.amcharts.model;
 
 import com.haulmont.charts.gui.model.JsFunction;
 import org.apache.commons.lang.StringUtils;
+import com.haulmont.charts.gui.components.charts.SerialChart;
+import com.haulmont.charts.gui.amcharts.model.charts.CoordinateChart;
+import com.haulmont.charts.gui.data.DataItem;
 
 import java.util.ArrayList;
 import java.util.List;
 
 /**
+ * Defines the visualization of the data in following types: line, column, step line, smoothed line, olhc and
+ * candlestick.
+ * <br>
  * See documentation for properties of AmGraph JS Object. <br>
  *
  * <a href="http://docs.amcharts.com/3/javascriptcharts/AmGraph">http://docs.amcharts.com/3/javascriptcharts/AmGraph</a>
@@ -255,7 +261,8 @@ public class AbstractGraph<T extends AbstractGraph> extends AbstractChartObject 
     }
 
     /**
-     * If you set animationPlayed to true before chart is drawn, the animation of this graph won't be played.
+     * If you set animationPlayed to true before chart is drawn, the animation of this graph won't be played. If not
+     * set the default value is false.
      *
      * @param animationPlayed animation played option
      */
@@ -290,7 +297,7 @@ public class AbstractGraph<T extends AbstractGraph> extends AbstractChartObject 
 
     /**
      * Sets type of the graph. Possible values are: "line", "column", "step", "smoothedLine", "candlestick", "ohlc". XY
-     * and Radar charts can only display "line" type graphs.
+     * and Radar charts can only display "line" type graphs. If not set the default value is LINE.
      *
      * @param type graph type
      */
@@ -393,7 +400,8 @@ public class AbstractGraph<T extends AbstractGraph> extends AbstractChartObject 
 
     /**
      * Sets balloon text. You can use tags like [[value]], [[description]], [[percents]], [[open]], [[category]] or any
-     * other field name from your data provider. HTML tags can also be used.
+     * other field name from your data provider. HTML tags can also be used. If not set the default value is
+     * "[[value]]".
      *
      * @param balloonText balloon text
      */
@@ -410,7 +418,8 @@ public class AbstractGraph<T extends AbstractGraph> extends AbstractChartObject 
     }
 
     /**
-     * Set behindColumns to true if the line graph should be placed behind column graphs.
+     * Set behindColumns to true if the line graph should be placed behind column graphs. If not set the default
+     * value is false;
      *
      * @param behindColumns behind columns option
      */
@@ -427,7 +436,7 @@ public class AbstractGraph<T extends AbstractGraph> extends AbstractChartObject 
     }
 
     /**
-     * Sets type of the bullets.
+     * Sets type of the bullets. If not set the default value is NONE.
      *
      * @param bullet bullet type
      */
@@ -444,7 +453,7 @@ public class AbstractGraph<T extends AbstractGraph> extends AbstractChartObject 
     }
 
     /**
-     * Sets opacity of bullets. Value range is 0 - 1.
+     * Sets opacity of bullets. Value range is 0 - 1. If not set the default value is 1.
      *
      * @param bulletAlpha opacity of bullets
      */
@@ -461,7 +470,7 @@ public class AbstractGraph<T extends AbstractGraph> extends AbstractChartObject 
     }
 
     /**
-     * Sets	bullet border opacity.
+     * Sets	bullet border opacity. If not set the default value is 0.
      *
      * @param bulletBorderAlpha bullet border opacity
      */
@@ -495,7 +504,7 @@ public class AbstractGraph<T extends AbstractGraph> extends AbstractChartObject 
     }
 
     /**
-     * Sets bullet border thickness.
+     * Sets bullet border thickness. If not set the default value is 2.
      *
      * @param bulletBorderThickness bullet border thickness
      */
@@ -547,7 +556,7 @@ public class AbstractGraph<T extends AbstractGraph> extends AbstractChartObject 
 
     /**
      * Sets bullet offset. Distance from the actual data point to the bullet. Can be used to place custom bullets above
-     * the columns.
+     * the columns. If not set the default value is 0.
      *
      * @param bulletOffset bullet offset
      */
@@ -564,7 +573,7 @@ public class AbstractGraph<T extends AbstractGraph> extends AbstractChartObject 
     }
 
     /**
-     * Sets bullet size.
+     * Sets bullet size. If not set the default value is 8.
      *
      * @param bulletSize bullet size
      */
@@ -617,6 +626,7 @@ public class AbstractGraph<T extends AbstractGraph> extends AbstractChartObject 
     /**
      * Set clustered to false if you want to place this graph's columns in front of other columns. If you set to
      * true, the columns will be clustered next to each other. Note, clustering works only for graphs of type "column".
+     * If not set the default value is true.
      *
      * @param clustered clustered option
      */
@@ -684,7 +694,8 @@ public class AbstractGraph<T extends AbstractGraph> extends AbstractChartObject 
     }
 
     /**
-     * Specifies whether to connect data points if data is missing. This feature does not work with XY chart.
+     * Specifies whether to connect data points if data is missing. This feature does not work with XY chart. If not
+     * set the default value is true.
      *
      * @param connect connect option
      */
@@ -703,6 +714,7 @@ public class AbstractGraph<T extends AbstractGraph> extends AbstractChartObject 
     /**
      * Sets corner radius of column. It can be set both, in pixels or in percents. The chart's depth and angle styles
      * must be set to 0. The default value is 0. Note, cornerRadiusTop will be applied for all corners of the column.
+     * If not set the default value is 0.
      *
      * @param cornerRadiusTop corner radius
      */
@@ -720,7 +732,8 @@ public class AbstractGraph<T extends AbstractGraph> extends AbstractChartObject 
 
     /**
      *  Sets opacity of each graphs bullet. If bulletsEnabled of Cursor is true, a bullet on each graph follows the
-     *  cursor. In case you want to disable these bullets for a certain graph, set opacity to 0.
+     *  cursor. In case you want to disable these bullets for a certain graph, set opacity to 0. If not set the
+     *  default value is 1.
      *
      * @param cursorBulletAlpha opacity of each graphs bullet
      */
@@ -789,6 +802,7 @@ public class AbstractGraph<T extends AbstractGraph> extends AbstractChartObject 
 
     /**
      * Sets dash length. If you set it to a value greater than 0, the graph line (or columns border) will be dashed.
+     * If not set the default value is 0.
      *
      * @param dashLength dash length
      */
@@ -894,7 +908,7 @@ public class AbstractGraph<T extends AbstractGraph> extends AbstractChartObject 
     /**
      * Sets name of the fill colors field in your data provider. fillColorsField adds a possibility to change line
      * graphs fill color on any data point to create highlighted sections of the graph. Works only with
-     * {@link com.haulmont.charts.gui.components.charts.SerialChart SerialChart}.
+     * {@link SerialChart}.
      *
      * @param fillColorsField name of the fill colors field
      */
@@ -929,7 +943,8 @@ public class AbstractGraph<T extends AbstractGraph> extends AbstractChartObject 
 
     /**
      * Set forceGap to true if you want the graph should always break the line if the distance in time between two
-     * adjacent data points is bigger than "gapPeriod * minPeriod", even if connect property is set to true.
+     * adjacent data points is bigger than "gapPeriod * minPeriod", even if connect property is set to true. If not
+     * set the default value is false.
      *
      * @param forceGap force gap
      */
@@ -947,7 +962,7 @@ public class AbstractGraph<T extends AbstractGraph> extends AbstractChartObject 
 
     /**
      * Sets orientation of the gradient fills (only for "column" graph type). Possible values are "vertical" and
-     * "horizontal".
+     * "horizontal". If not set the default value is VERTICAL.
      *
      * @param gradientOrientation gradient orientation
      */
@@ -964,7 +979,7 @@ public class AbstractGraph<T extends AbstractGraph> extends AbstractChartObject 
     }
 
     /**
-     * Set hidden to true if the graph should be hidden.
+     * Set hidden to true if the graph should be hidden. If not set the default value is false.
      *
      * @param hidden hidden option
      */
@@ -982,7 +997,7 @@ public class AbstractGraph<T extends AbstractGraph> extends AbstractChartObject 
 
     /**
      * Sets hide bullets count. If there are more data points than hideBulletsCount, the bullets will not be shown. 0
-     * means the bullets will always be visible.
+     * means the bullets will always be visible. If not set the default value is 0.
      *
      * @param hideBulletsCount hide bullets count
      */
@@ -1035,7 +1050,7 @@ public class AbstractGraph<T extends AbstractGraph> extends AbstractChartObject 
 
     /**
      * Set includeInMinMax to true if this graph should be included when calculating minimum and maximum value of the
-     * axis.
+     * axis. If not set the default value is true.
      *
      * @param includeInMinMax include in min max option
      */
@@ -1070,7 +1085,8 @@ public class AbstractGraph<T extends AbstractGraph> extends AbstractChartObject 
 
     /**
      * Sets the position of value label. Possible values are: "bottom", "top", "right", "left", "inside", "middle".
-     * Sometimes position is changed by the chart, depending on a graph type, rotation, etc.
+     * Sometimes position is changed by the chart, depending on a graph type, rotation, etc. If not set the default
+     * value is TOP.
      *
      * @param labelPosition value label position
      */
@@ -1104,7 +1120,8 @@ public class AbstractGraph<T extends AbstractGraph> extends AbstractChartObject 
     }
 
     /**
-     * Sets legend marker opacity. Will use lineAlpha if not set. Value range is 0 - 1.
+     * Sets legend marker opacity. Will use lineAlpha if not set. Value range is 0 - 1. If not set the default value
+     * is 1.
      *
      * @param legendAlpha legend marker opacity
      */
@@ -1194,8 +1211,7 @@ public class AbstractGraph<T extends AbstractGraph> extends AbstractChartObject 
 
     /**
      * Sets color of the line (or column border). If you do not set any, the color from
-     * {@link com.haulmont.charts.gui.amcharts.model.charts.CoordinateChart#colors CoordinateChart.colors} list
-     * will be used for each subsequent graph.
+     * {@link CoordinateChart#colors} list will be used for each subsequent graph.
      *
      * @param lineColor color of the line (or column border)
      */
@@ -1214,7 +1230,7 @@ public class AbstractGraph<T extends AbstractGraph> extends AbstractChartObject 
     /**
      * Sets name of the line color field in your data provider. lineColorField adds a possibility to change graphs’ line
      * color on any data point to create highlighted sections of the graph. Works only with
-     * {@link com.haulmont.charts.gui.components.charts.SerialChart SerialChart}.
+     * {@link SerialChart}.
      *
      * @param lineColorField name of the line color field
      */
@@ -1231,7 +1247,7 @@ public class AbstractGraph<T extends AbstractGraph> extends AbstractChartObject 
     }
 
     /**
-     * Sets thickness of the graph line (or column border).
+     * Sets thickness of the graph line (or column border). If not set the default value is 1.
      *
      * @param lineThickness thickness of the graph line (or column border)
      */
@@ -1283,7 +1299,7 @@ public class AbstractGraph<T extends AbstractGraph> extends AbstractChartObject 
     }
 
     /**
-     * Sets size of the bullet which value is the biggest (XY chart).
+     * Sets size of the bullet which value is the biggest (XY chart). If not set the default value is 50.
      *
      * @param maxBulletSize maximum bullet size
      */
@@ -1300,7 +1316,7 @@ public class AbstractGraph<T extends AbstractGraph> extends AbstractChartObject 
     }
 
     /**
-     * Sets minimum size of the bullet (XY chart).
+     * Sets minimum size of the bullet (XY chart). If not set the default value is 4.
      *
      * @param minBulletSize minimum bullet size
      */
@@ -1318,7 +1334,7 @@ public class AbstractGraph<T extends AbstractGraph> extends AbstractChartObject 
 
     /**
      * Sets different base value at which colors should be changed to negative colors if you use different colors
-     * for your negative values.
+     * for your negative values. If not set the default value is 0.
      *
      * @param negativeBase negative base
      */
@@ -1369,7 +1385,8 @@ public class AbstractGraph<T extends AbstractGraph> extends AbstractChartObject 
     }
 
     /**
-     * Sets opacity of the negative portion of the line (or column border). Value range is 0 - 1.
+     * Sets opacity of the negative portion of the line (or column border). Value range is 0 - 1. If not set the
+     * default value is 1.
      *
      * @param negativeLineAlpha opacity
      */
@@ -1404,7 +1421,8 @@ public class AbstractGraph<T extends AbstractGraph> extends AbstractChartObject 
     }
 
     /**
-     * Set noStepRisers to true if you want to have a step line graph without risers.
+     * Set noStepRisers to true if you want to have a step line graph without risers. If not set the default value is
+     * false.
      *
      * @param noStepRisers noStepRisers option
      */
@@ -1476,7 +1494,8 @@ public class AbstractGraph<T extends AbstractGraph> extends AbstractChartObject 
     }
 
     /**
-     * Sets how many periods one horizontal line should span. periodSpan can be used by step graphs.
+     * Sets how many periods one horizontal line should span. periodSpan can be used by step graphs. If not set the
+     * default value is 1.
      *
      * @param periodSpan period span
      */
@@ -1495,7 +1514,7 @@ public class AbstractGraph<T extends AbstractGraph> extends AbstractChartObject 
     /**
      * Specifies where data points should be placed - on the beginning of the period (day, hour, etc) or in the
      * middle (only when parseDates property of categoryAxis is set to true). This setting affects Serial chart only.
-     * Possible values are "start", "middle" and "end".
+     * Possible values are "start", "middle" and "end". If not set the default value is MIDDLE.
      *
      * @param pointPosition point position
      */
@@ -1513,7 +1532,8 @@ public class AbstractGraph<T extends AbstractGraph> extends AbstractChartObject 
 
     /**
      * If graph's type is column and labelText is set, graph hides labels which do not fit into the column's space
-     * or go outside plot area. If you don't want these labels to be hidden, set this to true.
+     * or go outside plot area. If you don't want these labels to be hidden, set this to true. If not set the
+     * default value is false.
      *
      * @param showAllValueLabels show all value labels option
      */
@@ -1531,7 +1551,7 @@ public class AbstractGraph<T extends AbstractGraph> extends AbstractChartObject 
 
     /**
      * Set showBalloon to true if the value balloon of this graph should be shown when mouse is over data item or
-     * chart's indicator is over some series.
+     * chart's indicator is over some series. If not set the default value is true.
      *
      * @param showBalloon show balloon option
      */
@@ -1550,7 +1570,7 @@ public class AbstractGraph<T extends AbstractGraph> extends AbstractChartObject 
     /**
      * Specifies graphs value at which cursor is shown. This is only important for candlestick and ohlc charts, also
      * if column chart has "open" value. Possible values are: "open", "close", "high", "low". "top" and "bottom"
-     * values will glue the balloon to top/bottom of the plot area.
+     * values will glue the balloon to top/bottom of the plot area. If not set the default value is CLOSE.
      *
      * @param showBalloonAt graphs value at which cursor is shown
      */
@@ -1567,7 +1587,8 @@ public class AbstractGraph<T extends AbstractGraph> extends AbstractChartObject 
     }
 
     /**
-     * Set showHandOnHover to true if you want mouse pointer to change to hand when hovering the graph.
+     * Set showHandOnHover to true if you want mouse pointer to change to hand when hovering the graph. If not set
+     * the default value is false.
      *
      * @param showHandOnHover showHandOnHover option
      */
@@ -1585,7 +1606,7 @@ public class AbstractGraph<T extends AbstractGraph> extends AbstractChartObject 
 
     /**
      * Set stackable to false if you want exclude this graph from stacking. Note, the value axis of this graph should
-     * has stack types like "regular" or "100%".
+     * has stack types like "regular" or "100%". If not set the default value is true.
      *
      * @param stackable stackable option
      */
@@ -1602,7 +1623,7 @@ public class AbstractGraph<T extends AbstractGraph> extends AbstractChartObject 
     }
 
     /**
-     * Specifies to which direction step should be drawn. Step graph only.
+     * Specifies to which direction step should be drawn. Step graph only. If not set the default value is RIGHT.
      *
      * @param stepDirection step direction
      */
@@ -1657,7 +1678,7 @@ public class AbstractGraph<T extends AbstractGraph> extends AbstractChartObject 
      * If negativeLineColor and/or negativeFillColors are set and useNegativeColorIfDown is set to true, the line,
      * step and column graphs will use these colors for lines, bullets or columns if previous value is bigger than
      * current value. In case you set openField for the graph, the graph will compare current value with openField
-     * value instead of comparing to previous value.
+     * value instead of comparing to previous value. If not set the default value is false.
      *
      * @param useNegativeColorIfDown useNegativeColorIfDown option
      */
@@ -1674,7 +1695,8 @@ public class AbstractGraph<T extends AbstractGraph> extends AbstractChartObject 
     }
 
     /**
-     * Set visibleInLegend to false if the graph shouldn't be shown in the {@link Legend}.
+     * Set visibleInLegend to false if the graph shouldn't be shown in the {@link Legend}. If not set the default
+     * value is true.
      *
      * @param visibleInLegend visible in legend option
      */
@@ -1856,7 +1878,8 @@ public class AbstractGraph<T extends AbstractGraph> extends AbstractChartObject 
 
     /**
      * Specifies when graph should display gap - if the time difference between data points is bigger than duration
-     * of "minPeriod * gapPeriod", and connect property of a graph is set to false, graph will display gap.
+     * of "minPeriod * gapPeriod", and connect property of a graph is set to false, graph will display gap. If not
+     * set the default value is 1.1.
      *
      * @param gapPeriod gap period
      */
@@ -1873,7 +1896,7 @@ public class AbstractGraph<T extends AbstractGraph> extends AbstractChartObject 
     }
 
     /**
-     * Sets data label text anchor.
+     * Sets data label text anchor. If not set the default value is "auto".
      *
      * @param labelAnchor label anchor string
      */
@@ -1906,7 +1929,7 @@ public class AbstractGraph<T extends AbstractGraph> extends AbstractChartObject 
     }
 
     /**
-     * Sets offset of data label.
+     * Sets offset of data label. If not set the default value is 0.
      *
      * @param labelOffset label offset
      */
@@ -1927,7 +1950,7 @@ public class AbstractGraph<T extends AbstractGraph> extends AbstractChartObject 
      * points is less that minDistance, in pixels). It is useful if you have really lots of data points. This will
      * not affect the bullets or indicator in anyway, so the user will not see any difference (unless you set
      * minValue to a bigger value, let say 5), but will increase performance as less lines will be drawn. By setting
-     * value to a bigger number you can also make your lines look less jagged.
+     * value to a bigger number you can also make your lines look less jagged. If not set the default value is 1.
      *
      * @param minDistance minimum distance, in pixels
      */
@@ -1944,8 +1967,8 @@ public class AbstractGraph<T extends AbstractGraph> extends AbstractChartObject 
     }
 
     /**
-     * Set newStack to true if column chart should begin new stack. This allows having Clustered and
-     * Stacked column/bar chart.
+     * Set newStack to true if column chart should begin new stack. This allows having Clustered and Stacked
+     * column/bar chart. If not set the default value is false.
      *
      * @param newStack newStack option
      */
@@ -1963,7 +1986,7 @@ public class AbstractGraph<T extends AbstractGraph> extends AbstractChartObject 
 
     /**
      * Works with candlestick graph type, you can set it to open, close, high, low. If you set it to high, the
-     * events will be shown at the tip of the high line.
+     * events will be shown at the tip of the high line. If not set the default value is CLOSE.
      *
      * @param showBulletsAt position on candle
      */
@@ -1980,9 +2003,9 @@ public class AbstractGraph<T extends AbstractGraph> extends AbstractChartObject 
     }
 
     /**
-     * If you set showOnAxis to true, the cylinder will be lowered down so that the center of it's
-     * bottom circle would be right on category axis. It can only be used together with topRadius (when columns look
-     * like cylinders).
+     * If you set showOnAxis to true, the cylinder will be lowered down so that the center of it's bottom circle
+     * would be right on category axis. It can only be used together with topRadius (when columns look like cylinders).
+     * If not set the default value is false.
      *
      * @param showOnAxis showOnAxis option
      */
@@ -1999,7 +2022,8 @@ public class AbstractGraph<T extends AbstractGraph> extends AbstractChartObject 
     }
 
     /**
-     * If you set switchable to false, the graph will not be hidden when user clicks on legend entry.
+     * If you set switchable to false, the graph will not be hidden when user clicks on legend entry. If not set the
+     * default value is true.
      *
      * @param switchable switchable option
      */
@@ -2036,7 +2060,8 @@ public class AbstractGraph<T extends AbstractGraph> extends AbstractChartObject 
     }
 
     /**
-     * Sets date format. Used to format balloons if value axis is date-based.
+     * Sets date format. Used to format balloons if value axis is date-based. If not set the default value is "MMM
+     * DD, YYYY".
      *
      * @param dateFormat date format
      */
@@ -2053,7 +2078,7 @@ public class AbstractGraph<T extends AbstractGraph> extends AbstractChartObject 
     }
 
     /**
-     * Sets the rotation of a data label.
+     * Sets the rotation of a data label. If not set the default value is 0.
      *
      * @param labelRotation label rotation
      */
@@ -2089,7 +2114,8 @@ public class AbstractGraph<T extends AbstractGraph> extends AbstractChartObject 
     /**
      * If proCandlesticks is set to true, candlesticks will be colored in a different manner - if current close is
      * less than current open, the candlestick will be empty, otherwise - filled with color. If previous close is
-     * less than current close, the candlestick will use positive color, otherwise - negative color.
+     * less than current close, the candlestick will use positive color, otherwise - negative color. If not set the
+     * default value is false.
      *
      * @param proCandlesticks proCandlesticks option
      */
@@ -2106,7 +2132,7 @@ public class AbstractGraph<T extends AbstractGraph> extends AbstractChartObject 
     }
 
     /**
-     * If set to true, the bullet border will take the same color as graph line.
+     * If set to true, the bullet border will take the same color as graph line. If not set the default value is false.
      *
      * @param useLineColorForBulletBorder useLineColorForBulletBorder option
      */
@@ -2125,7 +2151,8 @@ public class AbstractGraph<T extends AbstractGraph> extends AbstractChartObject 
     /**
      * Sets text which screen readers will read if user rolls-over the bullet/column or sets focus using tab key
      * (this is possible only if tabIndex property of graph is set to some number). Text is added as aria-label.
-     * Note - not all screen readers and browsers support this.
+     * Note - not all screen readers and browsers support this. If not set the default value is "[[title]]
+     * [[category]] [[value]]".
      *
      * @param accessibleLabel accessible label string
      */
@@ -2191,7 +2218,7 @@ public class AbstractGraph<T extends AbstractGraph> extends AbstractChartObject 
     }
 
     /**
-     * @return fields of the {@link com.haulmont.charts.gui.data.DataItem DataItem} that are bound to the graph
+     * @return fields of the {@link DataItem} that are bound to the graph
      */
     public List<String> getWiredFields() {
         List<String> wiredFields = new ArrayList<>();

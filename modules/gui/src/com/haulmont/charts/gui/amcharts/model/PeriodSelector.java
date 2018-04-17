@@ -10,6 +10,8 @@ import java.util.Arrays;
 import java.util.List;
 
 /**
+ * Displays date input fields and predefined period buttons.
+ * <br>
  * See documentation for properties of PeriodSelector JS object. <br>
  *
  * <a href="http://docs.amcharts.com/3/javascriptstockchart/PeriodSelector">http://docs.amcharts.com/3/javascriptstockchart/PeriodSelector</a>
@@ -49,7 +51,8 @@ public class PeriodSelector extends AbstractChartObject {
 
     /**
      * Sets date format of date input fields. Note, only numeric date formats are allowed, so don't use "MMM" or "MMMM"
-     * month format, two-digit years "YY" is NOT supported in this setting.
+     * month format, two-digit years "YY" is NOT supported in this setting. If not set the default value is
+     * "DD-MM-YYYY".
      *
      * @param dateFormat date format string
      */
@@ -66,7 +69,7 @@ public class PeriodSelector extends AbstractChartObject {
     }
 
     /**
-     * Sets text displayed next to "from" date input field.
+     * Sets text displayed next to "from" date input field. If not set the default value is "From:".
      *
      * @param fromText from text
      */
@@ -84,7 +87,7 @@ public class PeriodSelector extends AbstractChartObject {
 
     /**
      * Set hideOutOfScopePeriods to false if period buttons with date range bigger than available data shouldn't be
-     * hidden.
+     * hidden. If not set the default value is true.
      *
      * @param hideOutOfScopePeriods hideOutOfScopePeriods option
      */
@@ -101,7 +104,8 @@ public class PeriodSelector extends AbstractChartObject {
     }
 
     /**
-     * Set inputFieldsEnabled to false if period selector shouldn't display "from" and "to" date input fields.
+     * Set inputFieldsEnabled to false if period selector shouldn't display "from" and "to" date input fields. If not
+     * set the default value is true.
      *
      * @param inputFieldsEnabled inputFieldsEnabled option
      */
@@ -118,7 +122,8 @@ public class PeriodSelector extends AbstractChartObject {
     }
 
     /**
-     * Sets width of date input fields, in pixels. Works only if period selector is horizontal.
+     * Sets width of date input fields, in pixels. Works only if period selector is horizontal. If not set the
+     * default value is 100.
      *
      * @param inputFieldWidth width
      */
@@ -167,7 +172,7 @@ public class PeriodSelector extends AbstractChartObject {
     }
 
     /**
-     * Sets text displayed next to predefined period buttons.
+     * Sets text displayed next to predefined period buttons. If not set the default value is "Zoom:".
      *
      * @param periodsText periods text
      */
@@ -184,7 +189,7 @@ public class PeriodSelector extends AbstractChartObject {
     }
 
     /**
-     * Sets position.
+     * Sets position. If not set the default value is BOTTOM.
      *
      * @param position position
      */
@@ -201,7 +206,8 @@ public class PeriodSelector extends AbstractChartObject {
     }
 
     /**
-     * Set selectFromStart to true if predefined period buttons should select a period from the beginning.
+     * Set selectFromStart to true if predefined period buttons should select a period from the beginning. If not set
+     * the default value is false.
      *
      * @param selectFromStart selectFromStart option
      */
@@ -218,7 +224,7 @@ public class PeriodSelector extends AbstractChartObject {
     }
 
     /**
-     * Sets text displayed next to "to" date input field.
+     * Sets text displayed next to "to" date input field. If not set the default value is "To:".
      *
      * @param toText text
      */
@@ -235,7 +241,7 @@ public class PeriodSelector extends AbstractChartObject {
     }
 
     /**
-     * Sets width of a period selector, when position is "left" or "right".
+     * Sets width of a period selector, when position is "left" or "right". If not set the default value is 180.
      *
      * @param width width
      */

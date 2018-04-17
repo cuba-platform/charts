@@ -6,6 +6,8 @@
 package com.haulmont.charts.gui.amcharts.model;
 
 /**
+ * Creates a title on above the chart, multiple can be assigned.
+ * <br>
  * See documentation for properties of Title JS Object. <br>
  *
  * <a href="http://docs.amcharts.com/3/javascriptcharts/Title">http://docs.amcharts.com/3/javascriptcharts/Title</a>
@@ -36,7 +38,7 @@ public class Title extends AbstractChartObject {
     }
 
     /**
-     * Sets opacity of a title.
+     * Sets opacity of a title. If not set the default value is 1.
      *
      * @param alpha opacity
      */
@@ -53,7 +55,7 @@ public class Title extends AbstractChartObject {
     }
 
     /**
-     * Set bold to false if title shouldn't be bold.
+     * Set bold to false if title shouldn't be bold. If not set the default value is true.
      *
      * @param bold bold option
      */

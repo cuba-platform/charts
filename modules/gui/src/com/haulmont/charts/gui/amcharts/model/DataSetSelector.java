@@ -6,6 +6,8 @@
 package com.haulmont.charts.gui.amcharts.model;
 
 /**
+ * DataSetSelector is a tool for selecting data set's as main and for comparing with main data set
+ * <br>
  * See documentation for properties of DataSetSelector JS object.
  * <br>
  * <a href="http://docs.amcharts.com/3/javascriptstockchart/DataSetSelector">http://docs.amcharts.com/3/javascriptstockchart/DataSetSelector</a>
@@ -34,7 +36,8 @@ public class DataSetSelector extends AbstractChartObject {
     }
 
     /**
-     * Sets text displayed in the "compare to" combobox (when position is "top" or "bottom").
+     * Sets text displayed in the "compare to" combobox (when position is "top" or "bottom"). If not set the default
+     * value is "Select..."
      *
      * @param comboBoxSelectText text
      */
@@ -51,7 +54,7 @@ public class DataSetSelector extends AbstractChartObject {
     }
 
     /**
-     * Sets text displayed near "compare to" list.
+     * Sets text displayed near "compare to" list. If not set the default value is "Compare to:".
      *
      * @param compareText compare text
      */
@@ -68,7 +71,7 @@ public class DataSetSelector extends AbstractChartObject {
     }
 
     /**
-     * Sets the maximum height of the "compare to" field in pixels.
+     * Sets the maximum height of the "compare to" field in pixels. If not set the default value is 150.
      *
      * @param listHeight list height
      */
@@ -86,7 +89,8 @@ public class DataSetSelector extends AbstractChartObject {
 
     /**
      * Sets position. Possible values: "right", "left", "top", "bottom". "top" and "bottom" positions has a
-     * limitation - only one data set can be selected for comparing.
+     * limitation - only one data set can be selected for comparing. If not set the default value is "right, left,
+     * top, bottom".
      *
      * @param position position
      */
@@ -103,7 +107,7 @@ public class DataSetSelector extends AbstractChartObject {
     }
 
     /**
-     * Sets text displayed near "Select" drop down.
+     * Sets text displayed near "Select" drop down. If not set the default value is "Select:".
      *
      * @param selectText select text
      */
@@ -120,7 +124,7 @@ public class DataSetSelector extends AbstractChartObject {
     }
 
     /**
-     * Sets width of a data set selector, when position is "left" or "right".
+     * Sets width of a data set selector, when position is "left" or "right". If not set the default value is 180.
      *
      * @param width width
      */

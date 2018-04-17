@@ -12,6 +12,8 @@ import java.util.Arrays;
 import java.util.List;
 
 /**
+ * Defines the legend for the chart.
+ * <br>
  * See documentation for properties of AmLegend JS Object. <br>
  *
  * <a href="http://docs.amcharts.com/3/javascriptcharts/AmLegend">http://docs.amcharts.com/3/javascriptcharts/AmLegend</a>
@@ -141,7 +143,8 @@ public class AbstractLegend<T extends AbstractLegend> extends AbstractChartObjec
     }
 
     /**
-     * Sets alignment of legend entries. Possible values are: "left", "center", "right".
+     * Sets alignment of legend entries. Possible values are: "left", "center", "right". If not set the default value is
+     * LEFT.
      *
      * @param align align
      */
@@ -159,7 +162,7 @@ public class AbstractLegend<T extends AbstractLegend> extends AbstractChartObjec
 
     /**
      * Set autoMargins to true if you want margins of the legend should be adjusted and made equal to chart's margins.
-     * Used if chart is Serial or XY.
+     * Used if chart is Serial or XY. If not set the default value is true.
      *
      * @param autoMargins autoMargins option
      */
@@ -176,7 +179,7 @@ public class AbstractLegend<T extends AbstractLegend> extends AbstractChartObjec
     }
 
     /**
-     * Sets opacity of legend's background. Value range is 0 - 1.
+     * Sets opacity of legend's background. Value range is 0 - 1. If not set the default value is 0.
      *
      * @param backgroundAlpha opacity
      */
@@ -194,6 +197,7 @@ public class AbstractLegend<T extends AbstractLegend> extends AbstractChartObjec
 
     /**
      * Sets background color. You should set backgroundAlpha to greater than 0 value in order background to be visible.
+     * If not set the default value is #FFFFFF.
      *
      * @param backgroundColor background color
      */
@@ -210,7 +214,7 @@ public class AbstractLegend<T extends AbstractLegend> extends AbstractChartObjec
     }
 
     /**
-     * Sets opacity of chart's border. Value range is 0 - 1.
+     * Sets opacity of chart's border. Value range is 0 - 1. If not set the default value is 0.
      *
      * @param borderAlpha opacity
      */
@@ -227,7 +231,8 @@ public class AbstractLegend<T extends AbstractLegend> extends AbstractChartObjec
     }
 
     /**
-     * Sets color of legend's border. You should set borderAlpha to greater than 0 in order border to be visible.
+     * Sets color of legend's border. You should set borderAlpha to greater than 0 in order border to be visible. If
+     * not set the default value is #000000.
      *
      * @param borderColor border color
      */
@@ -261,7 +266,7 @@ public class AbstractLegend<T extends AbstractLegend> extends AbstractChartObjec
     }
 
     /**
-     * Sets text color.
+     * Sets text color. If not set the default value is #000000.
      *
      * @param color text color
      */
@@ -311,7 +316,7 @@ public class AbstractLegend<T extends AbstractLegend> extends AbstractChartObjec
 
     /**
      * Set equalWidths to false if each of legend entry shouldn't be equal to the most widest entry. Won't look good
-     * if legend has more than one line.
+     * if legend has more than one line. If not set the default value is true.
      *
      * @param equalWidths equals widths option
      */
@@ -328,7 +333,7 @@ public class AbstractLegend<T extends AbstractLegend> extends AbstractChartObjec
     }
 
     /**
-     * Sets font size.
+     * Sets font size. If not set the default value is 11.
      *
      * @param fontSize font size
      */
@@ -345,7 +350,7 @@ public class AbstractLegend<T extends AbstractLegend> extends AbstractChartObjec
     }
 
     /**
-     * Sets horizontal space between legend item and left/right border.
+     * Sets horizontal space between legend item and left/right border. If not set the default value is 0.
      *
      * @param horizontalGap horizontal gap
      */
@@ -363,6 +368,7 @@ public class AbstractLegend<T extends AbstractLegend> extends AbstractChartObjec
 
     /**
      * Sets the text which will be displayed in the legend. Tag [[title]] will be replaced with the title of the graph.
+     * If not set the default value is "[[title]]".
      *
      * @param labelText label text
      */
@@ -440,7 +446,7 @@ public class AbstractLegend<T extends AbstractLegend> extends AbstractChartObjec
     }
 
     /**
-     * 	Sets marker border opacity.
+     * 	Sets marker border opacity. If not set the default value is 1.
      *
      * 	@param markerBorderAlpha marker border opacity
      */
@@ -475,7 +481,7 @@ public class AbstractLegend<T extends AbstractLegend> extends AbstractChartObjec
 
     /**
      * Sets thickness of the legend border. The value 0 means the line will be a "hairline" (1 px). In case marker
-     * type is line, this style will be used for line thickness.
+     * type is line, this style will be used for line thickness. If not set the default value is 1.
      *
      * @param markerBorderThickness marker border thickness
      */
@@ -492,7 +498,7 @@ public class AbstractLegend<T extends AbstractLegend> extends AbstractChartObjec
     }
 
     /**
-     * Sets the color of the disabled marker (when the graph is hidden).
+     * Sets the color of the disabled marker (when the graph is hidden). If not set the default value is #AAB3B3.
      *
      * @param markerDisabledColor marker disabled color
      */
@@ -509,7 +515,7 @@ public class AbstractLegend<T extends AbstractLegend> extends AbstractChartObjec
     }
 
     /**
-     * Sets space between legend marker and legend text, in pixels.
+     * Sets space between legend marker and legend text, in pixels. If not set the default value is 5.
      *
      * @param markerLabelGap marker label gap
      */
@@ -526,7 +532,7 @@ public class AbstractLegend<T extends AbstractLegend> extends AbstractChartObjec
     }
 
     /**
-     * Sets size of the legend marker (key).
+     * Sets size of the legend marker (key). If not set the default value is 16.
      *
      * @param markerSize marker size
      */
@@ -544,7 +550,7 @@ public class AbstractLegend<T extends AbstractLegend> extends AbstractChartObjec
 
     /**
      * Sets shape of the legend marker (key). Possible values are: square, circle, diamond, triangleUp, triangleDown,
-     * triangleLeft, triangleDown, bubble, line, none.
+     * triangleLeft, triangleDown, bubble, line, none. If not set the default value is SQUARE.
      *
      * @param markerType marker type
      */
@@ -601,7 +607,7 @@ public class AbstractLegend<T extends AbstractLegend> extends AbstractChartObjec
 
     /**
      * Sets position of a legend. Possible values are: "bottom", "top", "left", "right" and "absolute". In case
-     * "absolute", you should set left and top properties too.
+     * "absolute", you should set left and top properties too. If not set the default value is BOTTOM.
      *
      * @param position position
      */
@@ -618,7 +624,8 @@ public class AbstractLegend<T extends AbstractLegend> extends AbstractChartObjec
     }
 
     /**
-     * Set reversedOrder to true if legend entries should be placed in reversed order.
+     * Set reversedOrder to true if legend entries should be placed in reversed order. If not set the default value
+     * is false.
      *
      * @param reversedOrder reversed order option
      */
@@ -652,7 +659,7 @@ public class AbstractLegend<T extends AbstractLegend> extends AbstractChartObjec
     }
 
     /**
-     * Sets legend item text color on roll-over.
+     * Sets legend item text color on roll-over. If not set the default value is #CC0000.
      *
      * @param rollOverColor roll over color
      */
@@ -670,7 +677,7 @@ public class AbstractLegend<T extends AbstractLegend> extends AbstractChartObjec
 
     /**
      * Sets the opacity of the non-hovered graphs. When you roll-over the legend entry, all other graphs can reduce
-     * their opacity, so that the graph you rolled-over would be distinguished.
+     * their opacity, so that the graph you rolled-over would be distinguished. If not set the default value is 1.
      *
      * @param rollOverGraphAlpha roll over graph alpha
      */
@@ -687,7 +694,7 @@ public class AbstractLegend<T extends AbstractLegend> extends AbstractChartObjec
     }
 
     /**
-     * Set showEntries to false if you want to turn all the legend entries off.
+     * Set showEntries to false if you want to turn all the legend entries off. If not set the default value is true.
      *
      * @param showEntries showEntries option
      */
@@ -704,7 +711,7 @@ public class AbstractLegend<T extends AbstractLegend> extends AbstractChartObjec
     }
 
     /**
-     * Sets horizontal space between legend items, in pixels.
+     * Sets horizontal space between legend items, in pixels. If not set the default value is 10.
      *
      * @param spacing horizontal space between legend items, in pixels
      */
@@ -721,7 +728,8 @@ public class AbstractLegend<T extends AbstractLegend> extends AbstractChartObjec
     }
 
     /**
-     * Set switchable to true if graphs should be shown/hidden by clicking on the legend marker.
+     * Set switchable to true if graphs should be shown/hidden by clicking on the legend marker. If not set the
+     * default value is true.
      *
      * @param switchable switchable option
      */
@@ -738,7 +746,7 @@ public class AbstractLegend<T extends AbstractLegend> extends AbstractChartObjec
     }
 
     /**
-     * Sets legend switch color.
+     * Sets legend switch color. If not set the default value is #FFFFFF
      *
      * @param switchColor switch color
      */
@@ -755,7 +763,8 @@ public class AbstractLegend<T extends AbstractLegend> extends AbstractChartObjec
     }
 
     /**
-     * Sets legend switch type (in case the legend is switchable). Possible values are "x" and "v".
+     * Sets legend switch type (in case the legend is switchable). Possible values are "x" and "v". If not set the
+     * default value is "x".
      *
      * @param switchType legend switch type
      */
@@ -773,7 +782,7 @@ public class AbstractLegend<T extends AbstractLegend> extends AbstractChartObjec
 
     /**
      * Set textClickEnabled to true if you want show/hide balloon of the graph by click on the text. Otherwise it
-     * will show/hide graph/slice, if switchable is set to true.
+     * will show/hide graph/slice, if switchable is set to true. If not set the default value is false.
      */
     public T setTextClickEnabled(Boolean textClickEnabled) {
         this.textClickEnabled = textClickEnabled;
@@ -807,7 +816,7 @@ public class AbstractLegend<T extends AbstractLegend> extends AbstractChartObjec
     /**
      * Set useGraphSettings to true if you want to use graph’s settings. Legend markers can mirror graph’s settings,
      * displaying a line and a real bullet as in the graph itself. Note, if you set graph colors in data provider,
-     * they will not be reflected in the marker.
+     * they will not be reflected in the marker. If not set the default value is false.
      *
      * @param useGraphSettings use graph settings option
      */
@@ -824,7 +833,8 @@ public class AbstractLegend<T extends AbstractLegend> extends AbstractChartObjec
     }
 
     /**
-     * Set useMarkerColorForLabels to true if you want {@link Label labels} should use marker color.
+     * Set useMarkerColorForLabels to true if you want {@link Label labels} should use marker color. If not set the
+     * default value is false.
      *
      * @param useMarkerColorForLabels useMarkerColorForLabels option
      */
@@ -841,7 +851,8 @@ public class AbstractLegend<T extends AbstractLegend> extends AbstractChartObjec
     }
 
     /**
-     * Set useMarkerColorForValues to true if legend values should use the same color as corresponding markers.
+     * Set useMarkerColorForValues to true if legend values should use the same color as corresponding markers. If
+     * not set the default value is false.
      *
      * @param useMarkerColorForValues useMarkerColorForValues option
      */
@@ -858,7 +869,7 @@ public class AbstractLegend<T extends AbstractLegend> extends AbstractChartObjec
     }
 
     /**
-     * Sets alignment of the value text. Possible values are "left" and "right".
+     * Sets alignment of the value text. Possible values are "left" and "right". If not set the default value is RIGHT.
      *
      * @param valueAlign alignment of the value text
      */
@@ -876,7 +887,8 @@ public class AbstractLegend<T extends AbstractLegend> extends AbstractChartObjec
 
     /**
      * Sets the text which will be displayed in the value portion of the legend. You can use tags like [[value]],
-     * [[open]], [[high]], [[low]], [[close]], [[percents]], [[description]].
+     * [[open]], [[high]], [[low]], [[close]], [[percents]], [[description]]. If not set the default value is
+     * "[[value]]".
      *
      * @param valueText value text
      */
@@ -893,7 +905,7 @@ public class AbstractLegend<T extends AbstractLegend> extends AbstractChartObjec
     }
 
     /**
-     * Sets width of the value text.
+     * Sets width of the value text. If not set the default value is 50.
      *
      * @param valueWidth value width
      */
@@ -910,7 +922,8 @@ public class AbstractLegend<T extends AbstractLegend> extends AbstractChartObjec
     }
 
     /**
-     * Sets vertical space between legend items also between legend border and first and last legend row.
+     * Sets vertical space between legend items also between legend border and first and last legend row. If not set
+     * the default value is 10.
      *
      * @param verticalGap vertical space
      */
@@ -944,7 +957,7 @@ public class AbstractLegend<T extends AbstractLegend> extends AbstractChartObjec
     }
 
     /**
-     * Specifies if legend is enabled or not.
+     * Specifies if legend is enabled or not. If not set the default value is true.
      *
      * @param enabled enabled option
      */
@@ -1015,7 +1028,7 @@ public class AbstractLegend<T extends AbstractLegend> extends AbstractChartObjec
 
     /**
      * Set forceWidth to true if you want the width of legend item labels won't be adjusted. Useful when you have
-     * more than one chart and want to align all the legends.
+     * more than one chart and want to align all the legends. If not set the default value is false.
      *
      * @param forceWidth force width option
      */
@@ -1071,7 +1084,7 @@ public class AbstractLegend<T extends AbstractLegend> extends AbstractChartObjec
     /**
      * Sets the text which screen readers will read if user rolls-over the element or sets focus on it using tab key
      * (this is possible only if tabIndex property is set to some number). Text is added as aria-label tag. Note, not
-     * all screen readers and browsers support this.
+     * all screen readers and browsers support this. If not set the default value is "[[title]]".
      *
      * @param accessibleLabel accessible label text
      */
@@ -1088,7 +1101,8 @@ public class AbstractLegend<T extends AbstractLegend> extends AbstractChartObjec
     }
 
     /**
-     * Set combineLegend to true if you want to display both legend data and graph’s entries.
+     * Set combineLegend to true if you want to display both legend data and graph’s entries. If not set the default
+     * value is false.
      *
      * @param combineLegend combineLegend option
      */

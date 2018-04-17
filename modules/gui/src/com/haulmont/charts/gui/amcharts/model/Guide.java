@@ -5,9 +5,16 @@
 
 package com.haulmont.charts.gui.amcharts.model;
 
+import com.haulmont.charts.gui.components.charts.SerialChart;
+import com.haulmont.charts.gui.components.charts.XYChart;
+import com.haulmont.charts.gui.components.charts.RadarChart;
+
 import java.util.Date;
 
 /**
+ * Creates a horizontal/vertical guideline-/area for {@link SerialChart}, {@link XYChart} and {@link RadarChart}
+ * charts, automatically adapts it's settings from the axes if none has been specified.
+ * <p>
  * See documentation for properties of Guide JS Object. <br>
  *
  * <a href="http://docs.amcharts.com/3/javascriptcharts/Guide">http://docs.amcharts.com/3/javascriptcharts/Guide</a>
@@ -80,7 +87,7 @@ public class Guide extends AbstractChartObject {
     }
 
     /**
-     * Set above to true if the guide should be displayed above the graphs.
+     * Set above to true if the guide should be displayed above the graphs. If not set the default value is false.
      *
      * @param above above option
      */
@@ -474,7 +481,7 @@ public class Guide extends AbstractChartObject {
     }
 
     /**
-     * Set boldLabel to true if label should be bold.
+     * Set boldLabel to true if label should be bold. If not set the default value is false.
      *
      * @param boldLabel boldLabel option
      */
@@ -511,7 +518,7 @@ public class Guide extends AbstractChartObject {
     /**
      * Set expand to true if the guide should start (or be placed, if it's not a fill) on the beginning of the
      * category cell and should end at the end of "toCategory" cell. Works if a guide is added to {@link CategoryAxis}
-     * and this axis is non-date-based.
+     * and this axis is non-date-based. If not set the default value is false.
      *
      * @param expand expand option
      */

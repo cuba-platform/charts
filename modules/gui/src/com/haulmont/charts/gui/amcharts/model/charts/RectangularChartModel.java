@@ -59,7 +59,8 @@ public interface RectangularChartModel<T extends RectangularChartModel> extends 
     Integer getAngle();
 
     /**
-     * Sets the angle of the 3D part of plot area. This creates a 3D effect (if the depth3D is greater than 0).
+     * Sets the angle of the 3D part of plot area. This creates a 3D effect (if the depth3D is greater than 0). If
+     * not set the default value is 0.
      *
      * @param angle the angle
      */
@@ -71,7 +72,8 @@ public interface RectangularChartModel<T extends RectangularChartModel> extends 
     Integer getAutoMarginOffset();
 
     /**
-     * Sets space left from axis labels/title to the chart's outside border, if autoMargins set to true.
+     * Sets space left from axis labels/title to the chart's outside border, if autoMargins set to true. If not set
+     * the default value is 10.
      *
      * @param autoMarginOffset the auto margin offset
      */
@@ -85,7 +87,7 @@ public interface RectangularChartModel<T extends RectangularChartModel> extends 
     /**
      * Specifies if margins of a chart should be calculated automatically so that labels of axes would fit. The chart
      * will adjust only margins with axes. Other margins will use values set with marginRight, marginTop, marginLeft
-     * and marginBottom properties.
+     * and marginBottom properties. If not set the default value is true.
      *
      * @param autoMargins auto margins option
      */
@@ -97,7 +99,8 @@ public interface RectangularChartModel<T extends RectangularChartModel> extends 
     Integer getDepth3D();
 
     /**
-     * Sets the depth of the 3D part of plot area. This creates a 3D effect (if the angle is greater than 0).
+     * Sets the depth of the 3D part of plot area. This creates a 3D effect (if the angle is greater than 0). If not
+     * set the default value is 0.
      *
      * @param depth3D the depth 3D
      */
@@ -110,7 +113,8 @@ public interface RectangularChartModel<T extends RectangularChartModel> extends 
 
     /**
      * Set to false if you need margins to be recalculated on next
-     * <a href="http://docs.amcharts.com/3/javascriptcharts/AmChart#validateNow">validateNow()</a> call.
+     * <a href="http://docs.amcharts.com/3/javascriptcharts/AmChart#validateNow">validateNow()</a> call. If not set
+     * the default value is false.
      *
      * @param marginsUpdated the margin update option
      */
@@ -122,7 +126,7 @@ public interface RectangularChartModel<T extends RectangularChartModel> extends 
     Double getPlotAreaBorderAlpha();
 
     /**
-     * Sets the opacity of plot area's border. Value range is 0 - 1.
+     * Sets the opacity of plot area's border. Value range is 0 - 1. If not set the default value is 0.
      *
      * @param plotAreaBorderAlpha opacity of plot area's border
      */
@@ -134,7 +138,8 @@ public interface RectangularChartModel<T extends RectangularChartModel> extends 
     Color getPlotAreaBorderColor();
 
     /**
-     * Sets the color of the plot area's border. Set it to a value higher than 0 to make it visible.
+     * Sets the color of the plot area's border. Set it to a value higher than 0 to make it visible. If not set the
+     * default value is #000000.
      *
      * @param plotAreaBorderColor the plot area border color
      */
@@ -146,7 +151,7 @@ public interface RectangularChartModel<T extends RectangularChartModel> extends 
     Double getPlotAreaFillAlphas();
 
     /**
-     * Sets opacity of plot area.
+     * Sets opacity of plot area. If not set the default value is 0.
      *
      * @param plotAreaFillAlphas opacity
      */
@@ -159,7 +164,7 @@ public interface RectangularChartModel<T extends RectangularChartModel> extends 
 
     /**
      * Sets the list of plot area colors. Create several colors if you need to generate gradients or create one if you
-     * need to get a solid color.
+     * need to get a solid color. If not set the default value is #FFFFFF.
      *
      * @param plotAreaFillColors list of plot area colors
      */
@@ -172,7 +177,7 @@ public interface RectangularChartModel<T extends RectangularChartModel> extends 
 
     /**
      * Sets the gradient angle, if you are using gradients to fill the plot area. The only allowed values are
-     * horizontal and vertical: 0, 90, 180, 270.
+     * horizontal and vertical: 0, 90, 180, 270. If not set the default value is 0.
      *
      * @param plotAreaGradientAngle the plot area gradient angle
      */
@@ -184,7 +189,7 @@ public interface RectangularChartModel<T extends RectangularChartModel> extends 
     Double getZoomOutButtonAlpha();
 
     /**
-     * Sets opacity of zoom-out button background.
+     * Sets opacity of zoom-out button background. If not set the default value is 0.
      *
      * @param zoomOutButtonAlpha opacity of zoom-out button background
      */
@@ -196,7 +201,7 @@ public interface RectangularChartModel<T extends RectangularChartModel> extends 
     Color getZoomOutButtonColor();
 
     /**
-     * Sets zoom-out button background color.
+     * Sets zoom-out button background color. If not set the default value is #e5e5e5.
      *
      * @param zoomOutButtonColor zoom-out button background color
      */
@@ -209,7 +214,8 @@ public interface RectangularChartModel<T extends RectangularChartModel> extends 
 
     /**
      * Sets the name of zoom-out button image. Note, you don't have to set image extension. If svgIcons is set to true,
-     * ".svg" will be added to the file name if SVG is supported by the browser, otherwise – ".png".
+     * ".svg" will be added to the file name if SVG is supported by the browser, otherwise – ".png". If not set the
+     * default value is "lens".
      *
      * @param zoomOutButtonImage zoom out button image name string
      */
@@ -221,7 +227,7 @@ public interface RectangularChartModel<T extends RectangularChartModel> extends 
     Integer getZoomOutButtonImageSize();
 
     /**
-     * Sets the size of zoom-out button image.
+     * Sets the size of zoom-out button image. If not set the default value is 17.
      *
      * @param zoomOutButtonImageSize the zoom out button image size
      */
@@ -233,7 +239,7 @@ public interface RectangularChartModel<T extends RectangularChartModel> extends 
     Integer getZoomOutButtonPadding();
 
     /**
-     * Sets padding around the text and image.
+     * Sets padding around the text and image. If not set the default value is 8.
      *
      * @param zoomOutButtonPadding the zoom out button padding
      */
@@ -245,7 +251,7 @@ public interface RectangularChartModel<T extends RectangularChartModel> extends 
     Double getZoomOutButtonRollOverAlpha();
 
     /**
-     * Sets opacity of zoom-out button background when mouse is over it.
+     * Sets opacity of zoom-out button background when mouse is over it. If not set the default value is 1.
      *
      * @param zoomOutButtonRollOverAlpha opacity of zoom-out button background
      */
@@ -257,7 +263,7 @@ public interface RectangularChartModel<T extends RectangularChartModel> extends 
     String getZoomOutText();
 
     /**
-     * Sets text in the zoom-out button.
+     * Sets text in the zoom-out button. If not set the default value is "Show all".
      *
      * @param zoomOutText zoom out text string
      */
@@ -269,7 +275,7 @@ public interface RectangularChartModel<T extends RectangularChartModel> extends 
     Integer getMaxZoomFactor();
 
     /**
-     * Sets the maximum zoom factor value axes.
+     * Sets the maximum zoom factor value axes. If not set the default value is 20.
      *
      * @param maxZoomFactor maximum zoom factor
      */

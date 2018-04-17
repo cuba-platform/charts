@@ -5,9 +5,15 @@
 
 package com.haulmont.charts.gui.amcharts.model;
 
+import com.haulmont.charts.gui.components.charts.SerialChart;
+import com.haulmont.charts.gui.components.charts.XYChart;
+
 import java.util.Date;
 
 /**
+ * Creates a trendline for {@link SerialChart} and {@link XYChart} charts which indicates the trend of your data or
+ * covers some different purposes. Multiple can be assigned.
+ * <p>
  * See documentation for properties of TrendLine JS Object. <br>
  *
  * <a href="http://docs.amcharts.com/3/javascriptcharts/TrendLine">http://docs.amcharts.com/3/javascriptcharts/TrendLine</a>
@@ -79,7 +85,7 @@ public class TrendLine extends AbstractChartObject {
     }
 
     /**
-     * Sets dash length.
+     * Sets dash length. If not set the default value is 0.
      *
      * @param dashLength dash length
      */
@@ -235,6 +241,7 @@ public class TrendLine extends AbstractChartObject {
 
     /**
      * Set isProtected to true if trend line shouldn't be removed when clicked on eraser tool. Used by stock chart.
+     * If not set the default value is false.
      *
      * @param aProtected isProtected option
      */
@@ -251,7 +258,7 @@ public class TrendLine extends AbstractChartObject {
     }
 
     /**
-     * Sets line opacity.
+     * Sets line opacity. If not set the default value is 1.
      *
      * @param lineAlpha opacity
      */
@@ -268,7 +275,7 @@ public class TrendLine extends AbstractChartObject {
     }
 
     /**
-     * Sets line color.
+     * Sets line color. If not set the default value is #00CC00.
      *
      * @param lineColor color
      */
@@ -285,7 +292,7 @@ public class TrendLine extends AbstractChartObject {
     }
 
     /**
-     * Sets line thickness.
+     * Sets line thickness. If not set the default value is 1.
      *
      * @param lineThickness thickness
      */

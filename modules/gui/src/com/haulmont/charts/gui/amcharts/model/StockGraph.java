@@ -7,11 +7,14 @@ package com.haulmont.charts.gui.amcharts.model;
 
 import com.haulmont.charts.gui.model.JsFunction;
 import org.apache.commons.lang.StringUtils;
+import com.haulmont.charts.gui.amcharts.model.charts.StockPanel;
 
 import java.util.ArrayList;
 import java.util.List;
 
 /**
+ * StockGraph displays graphs on {@link StockPanel}.
+ * <br>
  * See documentation for properties of StockGraph JS object. <br>
  *
  * <a href="http://docs.amcharts.com/3/javascriptstockchart/StockGraph">http://docs.amcharts.com/3/javascriptstockchart/StockGraph</a>
@@ -80,7 +83,8 @@ public class StockGraph extends AbstractGraph<StockGraph> {
     }
 
     /**
-     * Sets comparable to true if this graph should be compared if some data set is selected for comparing.
+     * Sets comparable to true if this graph should be compared if some data set is selected for comparing. If not
+     * set the default value is false.
      *
      * @param comparable comparable option
      */
@@ -116,7 +120,7 @@ public class StockGraph extends AbstractGraph<StockGraph> {
 
     /**
      * Set compareFromStart to true if the graphs should use first value as a base value instead of using the first
-     * value of selected period when data sets are compared.
+     * value of selected period when data sets are compared. If not set the default value is false.
      *
      * @param compareFromStart compareFromStart option
      */
@@ -426,7 +430,8 @@ public class StockGraph extends AbstractGraph<StockGraph> {
     }
 
     /**
-     * Sets type of comparing graph. Possible values are: "line", "column", "step", "smoothedLine".
+     * Sets type of comparing graph. Possible values are: "line", "column", "step", "smoothedLine". If not set the
+     * default value is LINE.
      *
      * @param compareGraphType type
      */
@@ -443,7 +448,8 @@ public class StockGraph extends AbstractGraph<StockGraph> {
     }
 
     /**
-     * Set compareGraphVisibleInLegend to false if compare graph shouldn't be visible in legend.
+     * Set compareGraphVisibleInLegend to false if compare graph shouldn't be visible in legend. If not set the
+     * default value is true.
      *
      * @param compareGraphVisibleInLegend compareGraphVisibleInLegend option
      */
@@ -499,7 +505,8 @@ public class StockGraph extends AbstractGraph<StockGraph> {
     }
 
     /**
-     * Set showEventsOnComparedGraphs to true if events of compared graphs should be shown.
+     * Set showEventsOnComparedGraphs to true if events of compared graphs should be shown. If not set the default
+     * value is false.
      *
      * @param showEventsOnComparedGraphs showEventsOnComparedGraphs option
      */
@@ -520,7 +527,7 @@ public class StockGraph extends AbstractGraph<StockGraph> {
      * data set will have a color from its relative DataSet (either auto-assigned by chart or set by color parameter).
      * The graph's color properties will be ignored. To disable this behavior, set useDataSetColors to false. This
      * way the chart will use graph's own color settings, such as "lineColor" or auto-assign the color if those are
-     * not set.
+     * not set. If not set the default value is true.
      *
      * @param useDataSetColors useDataSetColors option
      */

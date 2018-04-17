@@ -6,11 +6,18 @@
 package com.haulmont.charts.gui.amcharts.model;
 
 import com.haulmont.charts.gui.model.JsFunction;
+import com.haulmont.charts.gui.components.charts.SerialChart;
+import com.haulmont.charts.gui.components.charts.RadarChart;
+import com.haulmont.charts.gui.components.charts.XYChart;
+import com.haulmont.charts.gui.amcharts.model.charts.AbstractChart;
 
 import java.util.Date;
 import java.util.Map;
 
 /**
+ * Create an axis for {@link SerialChart}, {@link RadarChart}, {@link XYChart}, charts, multiple can be assigned.
+ * Gets automatically populated, one for SerialChart and two for XYChart charts, if none has been specified.
+ * <br>
  * See documentation for properties of ValueAxis JS Object. <br>
  *
  * <a href="http://docs.amcharts.com/3/javascriptcharts/ValueAxis">http://docs.amcharts.com/3/javascriptcharts/ValueAxis</a>
@@ -107,7 +114,8 @@ public class ValueAxis extends AbstractAxis<ValueAxis> {
     }
 
     /**
-     * Sets the distance from axis to the axis title (category). Work with radar chart only.
+     * Sets the distance from axis to the axis title (category). Work with radar chart only. If not set the default
+     * value is 10.
      *
      * @param axisTitleOffset axis title offset
      */
@@ -124,7 +132,7 @@ public class ValueAxis extends AbstractAxis<ValueAxis> {
     }
 
     /**
-     * Sets the base value of the axis.
+     * Sets the base value of the axis. If not set the default value is 0.
      *
      * @param baseValue base value
      */
@@ -160,7 +168,10 @@ public class ValueAxis extends AbstractAxis<ValueAxis> {
 
     /**
      * If duration property is set, you can specify what string should be displayed next to day, hour, minute and
-     * second. I.e. pairs like: "DD": "d.", "hh": ":", "mm": ":", "ss": " "
+     * second. I.e. pairs like: "DD": "d.", "hh": ":", "mm": ":", "ss": " ". If not set the default value is
+     * <pre>{@code
+     * {DD:'d. ', hh:':', mm:':',ss:''}}
+     * </pre>
      *
      * @param durationUnits duration units map
      */
@@ -178,7 +189,7 @@ public class ValueAxis extends AbstractAxis<ValueAxis> {
 
     /**
      * Sets grid type. Possible values are: "polygons" and "circles". Set "circles" for polar charts. Work with radar
-     * chart only.
+     * chart only. If not set the default value is POLYGONS.
      *
      * @param gridType grid type
      */
@@ -214,7 +225,7 @@ public class ValueAxis extends AbstractAxis<ValueAxis> {
 
     /**
      * Set includeGuidesInMinMax to true the guide values should be included when calculating minimum and maximum of
-     * the axis.
+     * the axis. If not set the default value is false.
      *
      * @param includeGuidesInMinMax includeGuidesInMinMax option
      */
@@ -231,7 +242,8 @@ public class ValueAxis extends AbstractAxis<ValueAxis> {
     }
 
     /**
-     * Sets includeHidden to true if the axis should include hidden graphs when calculating minimum and maximum values.
+     * Sets includeHidden to true if the axis should include hidden graphs when calculating minimum and maximum
+     * values. If not set the default value is false.
      *
      * @param includeHidden includeHidden option
      */
@@ -248,7 +260,7 @@ public class ValueAxis extends AbstractAxis<ValueAxis> {
     }
 
     /**
-     * Set integersOnly to true if values on the axis can only be integers.
+     * Set integersOnly to true if values on the axis can only be integers. If not set the default value is false.
      *
      * @param integersOnly integersOnly option
      */
@@ -265,7 +277,7 @@ public class ValueAxis extends AbstractAxis<ValueAxis> {
     }
 
     /**
-     * Set logarithmic to true if this value axis scale should be logarithmic.
+     * Set logarithmic to true if this value axis scale should be logarithmic. If not set the default value is false.
      *
      * @param logarithmic logarithmic option
      */
@@ -319,7 +331,7 @@ public class ValueAxis extends AbstractAxis<ValueAxis> {
 
     /**
      * Sets minimum and maximum multiplier. If set value axis scale (min and max numbers) will be multiplied by it.
-     * I.e. if set to 1.2 the scope of values will increase by 20%.
+     * I.e. if set to 1.2 the scope of values will increase by 20%. If not set the default value is 1.
      *
      * @param minMaxMultiplier minimum and maximum multiplier
      */
@@ -353,7 +365,8 @@ public class ValueAxis extends AbstractAxis<ValueAxis> {
     }
 
     /**
-     * Set radarCategoriesEnabled to false if categories (axes titles) shouldn't be displayed near axes.
+     * Set radarCategoriesEnabled to false if categories (axes titles) shouldn't be displayed near axes. If not set
+     * the default value is true.
      *
      * @param radarCategoriesEnabled radarCategoriesEnabled option
      */
@@ -372,7 +385,7 @@ public class ValueAxis extends AbstractAxis<ValueAxis> {
     /**
      * Set recalculateToPercents to true, if graphs values should be recalculated to percents. Note, that this
      * setting will work only on serial chart (and stock), not on any other charts that are using {@link ValueAxis},
-     * like XY chart.
+     * like XY chart. If not set the default value is false.
      *
      * @param recalculateToPercents recalculateToPercents option
      */
@@ -389,7 +402,8 @@ public class ValueAxis extends AbstractAxis<ValueAxis> {
     }
 
     /**
-     * Set reversed to true if value axis should be reversed (smaller values on top).
+     * Set reversed to true if value axis should be reversed (smaller values on top). If not set the default value is
+     * false.
      *
      * @param reversed reversed option
      */
@@ -407,7 +421,7 @@ public class ValueAxis extends AbstractAxis<ValueAxis> {
 
     /**
      * Sets	stacking mode of the axis. Possible values are: "none", "regular", "100%", "3d". Note, only graphs of one
-     * type will be stacked.
+     * type will be stacked. If not set the default value is NONE.
      *
      * @param stackType stack type
      */
@@ -493,7 +507,8 @@ public class ValueAxis extends AbstractAxis<ValueAxis> {
     }
 
     /**
-     * Sets position of the unit. Possible values are "left" and "right".
+     * Sets position of the unit. Possible values are LEFT and RIGHT. If not set the default value is LEFT. If not
+     * set the default value is RIGHT.
      *
      * @param unitPosition unit position
      */
@@ -512,9 +527,8 @@ public class ValueAxis extends AbstractAxis<ValueAxis> {
     /**
      * Set usePrefixes to true, if prefixes should be used for big and small numbers. You can set list of prefixes
      * directly to the chart via
-     * {@link com.haulmont.charts.gui.amcharts.model.charts.AbstractChart#prefixesOfSmallNumbers prefixesOfSmallNumbers}
-     * and
-     * {@link com.haulmont.charts.gui.amcharts.model.charts.AbstractChart#prefixesOfBigNumbers prefixesOfBigNumbers}.
+     * {@link AbstractChart#prefixesOfSmallNumbers prefixesOfSmallNumbers} and
+     * {@link AbstractChart#prefixesOfBigNumbers prefixesOfBigNumbers}. If not set the default value is false.
      *
      * @param usePrefixes usePrefixes option
      */
@@ -532,7 +546,8 @@ public class ValueAxis extends AbstractAxis<ValueAxis> {
 
     /**
      * Set useScientificNotation to true if values should always be formatted using scientific notation (5e+8, 5e-8...).
-     * Otherwise only values bigger then 1e+21 and smaller then 1e-7 will be displayed in scientific notation.
+     * Otherwise only values bigger then 1e+21 and smaller then 1e-7 will be displayed in scientific notation. If not
+     * set the default value is false.
      *
      * @param useScientificNotation useScientificNotation option
      */
@@ -567,7 +582,7 @@ public class ValueAxis extends AbstractAxis<ValueAxis> {
     }
 
     /**
-     * Sets distance from data point to total text.
+     * Sets distance from data point to total text. If not set the default value is 0.
      *
      * @param totalTextOffset total text offset
      */
@@ -585,7 +600,7 @@ public class ValueAxis extends AbstractAxis<ValueAxis> {
 
     /**
      * This allows you to have logarithmic value axis and have zero values in the data. You must set it to greater
-     * than 0 value in order to work.
+     * than 0 value in order to work. If not set the default value is 0.
      *
      * @param treatZeroAs treatZeroAs value
      */
@@ -602,7 +617,8 @@ public class ValueAxis extends AbstractAxis<ValueAxis> {
     }
 
     /**
-     * Set includeAllValues to true if minimum and maximum of value axis shouldn't change while zooming/scrolling.
+     * Set includeAllValues to true if minimum and maximum of value axis shouldn't change while zooming/scrolling. If
+     * not set the default value is false.
      *
      * @param includeAllValues includeAllValues option
      */
@@ -674,7 +690,7 @@ public class ValueAxis extends AbstractAxis<ValueAxis> {
 
     /**
      * Sets point position. If you set it to “middle”, labels and data points will be placed in the middle between
-     * axes. Works with radar charts only.
+     * axes. Works with radar charts only. If not set the default value is START.
      *
      * @param pointPosition point position
      */
@@ -693,7 +709,7 @@ public class ValueAxis extends AbstractAxis<ValueAxis> {
     /**
      * If you set minimum and maximum for your axis, chart adjusts them so that grid would start and end on the
      * beginning and end of plot area and grid would be at equal intervals. If you set strictMinMax to true, the
-     * chart will not adjust minimum and maximum of value axis.
+     * chart will not adjust minimum and maximum of value axis. If not set the default value is false.
      *
      * @param strictMinMax strictMinMax option
      */
@@ -711,7 +727,7 @@ public class ValueAxis extends AbstractAxis<ValueAxis> {
 
     /**
      * Sets type of value axis. If your values in data provider are dates and you want this axis to show dates
-     * instead of numbers, set it to "date".
+     * instead of numbers, set it to "date". If not set the default value is NUMERIC.
      *
      * @param type type
      */
@@ -746,7 +762,7 @@ public class ValueAxis extends AbstractAxis<ValueAxis> {
 
     /**
      * Sets axis frequency. If you have a big number of axes, this property will help you to show every X axis only.
-     * Works with radar chart only.
+     * Works with radar chart only. If not set the default value is 1.
      *
      * @param axisFrequency axis frequency
      */
@@ -781,7 +797,8 @@ public class ValueAxis extends AbstractAxis<ValueAxis> {
     }
 
     /**
-     * If this is set to true and the label does not fit, it will be wrapped. Works only on horizontal value axes.
+     * If this is set to true and the label does not fit, it will be wrapped. Works only on horizontal value axes. If
+     * not set the default value is false.
      *
      * @param autoWrap autoWrap option
      */
@@ -798,6 +815,7 @@ public class ValueAxis extends AbstractAxis<ValueAxis> {
 
     /**
      * Sets the shortest period of your data. This will work only if you set the type of your value axis to "date".
+     * If not set the default value is "DD".
      *
      * @param minPeriod shortest period
      */

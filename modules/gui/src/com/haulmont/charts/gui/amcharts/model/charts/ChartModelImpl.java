@@ -6,13 +6,14 @@
 package com.haulmont.charts.gui.amcharts.model.charts;
 
 import com.haulmont.charts.gui.amcharts.model.AbstractChartObject;
+import com.haulmont.charts.gui.data.DataItem;
 
 import java.util.List;
 
 public abstract class ChartModelImpl extends AbstractChartObject {
 
     /**
-     * @return fields of the {@link com.haulmont.charts.gui.data.DataItem DataItem} that are bound to the chart
+     * @return fields of the {@link DataItem} that are bound to the chart
      */
     public abstract List<String> getWiredFields();
 }

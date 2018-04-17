@@ -6,12 +6,15 @@
 package com.haulmont.charts.gui.amcharts.model;
 
 import com.haulmont.charts.gui.model.JsFunction;
+import com.haulmont.charts.gui.components.charts.AngularGaugeChart;
 
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 
 /**
+ * Creates an axis for {@link AngularGaugeChart AngularGaugeChart} charts, multiple can be assigned.
+ * <br>
  * See documentation for properties of GaugeAxis JS Object. <br>
  *
  * <a href="http://docs.amcharts.com/3/javascriptcharts/GaugeAxis">http://docs.amcharts.com/3/javascriptcharts/GaugeAxis</a>
@@ -124,7 +127,7 @@ public class GaugeAxis extends AbstractChartObject {
     }
 
     /**
-     * Sets axis opacity.
+     * Sets axis opacity. If not set the default value is 1.
      *
      * @param axisAlpha opacity
      */
@@ -141,7 +144,7 @@ public class GaugeAxis extends AbstractChartObject {
     }
 
     /**
-     * Sets axis color.
+     * Sets axis color. If not set the default value is #000000.
      *
      * @param axisColor color
      */
@@ -158,7 +161,7 @@ public class GaugeAxis extends AbstractChartObject {
     }
 
     /**
-     * Sets thickness of the axis outline.
+     * Sets thickness of the axis outline. If not set the default value is 1.
      *
      * @param axisThickness axis thickness
      */
@@ -175,7 +178,7 @@ public class GaugeAxis extends AbstractChartObject {
     }
 
     /**
-     * Sets opacity of band fills.
+     * Sets opacity of band fills. If not set the default value is 1.
      *
      * @param bandAlpha opacity
      */
@@ -192,7 +195,7 @@ public class GaugeAxis extends AbstractChartObject {
     }
 
     /**
-     * Sets opacity of band outlines.
+     * Sets opacity of band outlines. If not set the default value is 0.
      *
      * @param bandOutlineAlpha opacity
      */
@@ -209,7 +212,7 @@ public class GaugeAxis extends AbstractChartObject {
     }
 
     /**
-     * Sets color of band outlines.
+     * Sets color of band outlines. If not set the default value is #000000.
      *
      * @param bandOutlineColor color
      */
@@ -226,7 +229,7 @@ public class GaugeAxis extends AbstractChartObject {
     }
 
     /**
-     * Sets thickness of band outlines.
+     * Sets thickness of band outlines. If not set the default value is 0.
      *
      * @param bandOutlineThickness thickness
      */
@@ -260,7 +263,7 @@ public class GaugeAxis extends AbstractChartObject {
     }
 
     /**
-     * Set bottomTextBold to false if text shouldn't be bold
+     * Set bottomTextBold to false if text shouldn't be bold. If not set the default value is true.
      *
      * @param bottomTextBold bottomTextBold option
      */
@@ -311,7 +314,7 @@ public class GaugeAxis extends AbstractChartObject {
     }
 
     /**
-     * Sets Y offset of bottom text.
+     * Sets Y offset of bottom text. If not set the default value is 0.
      *
      * @param bottomTextYOffset Y offset
      */
@@ -328,7 +331,7 @@ public class GaugeAxis extends AbstractChartObject {
     }
 
     /**
-     * Sets X position of the axis, relative to the center of the gauge.
+     * Sets X position of the axis, relative to the center of the gauge. If not set the default value is 0%.
      *
      * @param centerX X position of the axis
      */
@@ -345,7 +348,7 @@ public class GaugeAxis extends AbstractChartObject {
     }
 
     /**
-     * Sets Y position of the axis, relative to the center of the gauge.
+     * Sets Y position of the axis, relative to the center of the gauge. If not set the default value is 0%.
      *
      * @param centerY Y position of the axis
      */
@@ -362,7 +365,7 @@ public class GaugeAxis extends AbstractChartObject {
     }
 
     /**
-     * Sets axis end angle. Valid values are from - 180 to 180.
+     * Sets axis end angle. Valid values are from - 180 to 180. If not set the default value is 120.
      *
      * @param endAngle angle
      */
@@ -396,7 +399,7 @@ public class GaugeAxis extends AbstractChartObject {
     }
 
     /**
-     * Set gridInside to false if grid shouldn't be drawn inside the axis.
+     * Set gridInside to false if grid shouldn't be drawn inside the axis. If not set the default value is true.
      *
      * @param gridInside gridInside option
      */
@@ -413,7 +416,7 @@ public class GaugeAxis extends AbstractChartObject {
     }
 
     /**
-     * Set inside to false if labels should be placed outside the axis.
+     * Set inside to false if labels should be placed outside the axis. If not set the default value is true.
      *
      * @param inside inside option
      */
@@ -430,7 +433,7 @@ public class GaugeAxis extends AbstractChartObject {
     }
 
     /**
-     * Sets frequency of labels.
+     * Sets frequency of labels. If not set the default value is 1.
      *
      * @param labelFrequency frequency
      */
@@ -447,7 +450,7 @@ public class GaugeAxis extends AbstractChartObject {
     }
 
     /**
-     * Sets distance from axis to the labels.
+     * Sets distance from axis to the labels. If not set the default value is 15.
      *
      * @param labelOffset label offset
      */
@@ -481,7 +484,7 @@ public class GaugeAxis extends AbstractChartObject {
     }
 
     /**
-     * Sets length of a minor tick.
+     * Sets length of a minor tick. If not set the default value is 5.
      *
      * @param minorTickLength length
      */
@@ -498,7 +501,7 @@ public class GaugeAxis extends AbstractChartObject {
     }
 
     /**
-     * Sets axis radius.
+     * Sets axis radius. If not set the default value is 95%.
      *
      * @param radius radius
      */
@@ -515,7 +518,7 @@ public class GaugeAxis extends AbstractChartObject {
     }
 
     /**
-     * Set showFirstLabel to false if the first label shouldn't be shown.
+     * Set showFirstLabel to false if the first label shouldn't be shown. If not set the default value is true.
      *
      * @param showFirstLabel showFirstLabel option
      */
@@ -532,7 +535,7 @@ public class GaugeAxis extends AbstractChartObject {
     }
 
     /**
-     * Set showLastLabel to false if the last label shouldn't be shown.
+     * Set showLastLabel to false if the last label shouldn't be shown. If not set the default value is true.
      *
      * @param showLastLabel showLastLabel option
      */
@@ -549,7 +552,7 @@ public class GaugeAxis extends AbstractChartObject {
     }
 
     /**
-     * Sets axis start angle. Valid values are from - 180 to 180.
+     * Sets axis start angle. Valid values are from - 180 to 180. If not set the default value is -120.
      *
      * @param startAngle start angle
      */
@@ -566,7 +569,7 @@ public class GaugeAxis extends AbstractChartObject {
     }
 
     /**
-     * Sets axis start (minimum) value.
+     * Sets axis start (minimum) value. If not set the default value is 0.
      *
      * @param startValue start value
      */
@@ -583,7 +586,7 @@ public class GaugeAxis extends AbstractChartObject {
     }
 
     /**
-     * Sets opacity of axis ticks.
+     * Sets opacity of axis ticks. If not set the default value is 1.
      *
      * @param tickAlpha opacity
      */
@@ -600,7 +603,7 @@ public class GaugeAxis extends AbstractChartObject {
     }
 
     /**
-     * Sets color of axis ticks.
+     * Sets color of axis ticks. If not set the default value is #555555.
      *
      * @param tickColor tick color
      */
@@ -617,7 +620,7 @@ public class GaugeAxis extends AbstractChartObject {
     }
 
     /**
-     * Sets length of a major tick.
+     * Sets length of a major tick. If not set the default value is 10.
      *
      * @param tickLength tick length
      */
@@ -634,7 +637,7 @@ public class GaugeAxis extends AbstractChartObject {
     }
 
     /**
-     * Sets tick thickness.
+     * Sets tick thickness. If not set the default value is 1.
      *
      * @param tickThickness tick thickness
      */
@@ -668,7 +671,7 @@ public class GaugeAxis extends AbstractChartObject {
     }
 
     /**
-     * Sets topTextBold to false if text shouldn't be bold.
+     * Sets topTextBold to false if text shouldn't be bold. If not set the default value is true.
      *
      * @param topTextBold topTextBold option
      */
@@ -719,7 +722,7 @@ public class GaugeAxis extends AbstractChartObject {
     }
 
     /**
-     * Sets Y offset of top text.
+     * Sets Y offset of top text. If not set the default value is 0.
      *
      * @param topTextYOffset Y offset
      */
@@ -753,7 +756,7 @@ public class GaugeAxis extends AbstractChartObject {
     }
 
     /**
-     * Sets position of the unit.
+     * Sets position of the unit. If not set the default value is RIGHT.
      *
      * @param unitPosition unit position
      */
@@ -820,7 +823,7 @@ public class GaugeAxis extends AbstractChartObject {
 
     /**
      * Sets number of grid lines. Note, GaugeAxis doesn't adjust gridCount, so you should check your values and
-     * choose a proper gridCount which would result grids at round numbers.
+     * choose a proper gridCount which would result grids at round numbers. If not set the default value is 5.
      *
      * @param gridCount number of grid lines
      */
@@ -854,7 +857,7 @@ public class GaugeAxis extends AbstractChartObject {
     }
 
     /**
-     * Sets labelsEnabled to false if labels on the axis shouldn't be shown.
+     * Sets labelsEnabled to false if labels on the axis shouldn't be shown. If not set the default value is true.
      *
      * @param labelsEnabled labelsEnabled option
      */
@@ -871,7 +874,8 @@ public class GaugeAxis extends AbstractChartObject {
     }
 
     /**
-     * Set usePrefixes to true if small and big numbers should use prefixes to make them more readable.
+     * Set usePrefixes to true if small and big numbers should use prefixes to make them more readable. If not set
+     * the default value is false.
      *
      * @param usePrefixes usePrefixes option
      */

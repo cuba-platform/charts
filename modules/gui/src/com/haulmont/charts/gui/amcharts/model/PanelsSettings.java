@@ -5,17 +5,22 @@
 
 package com.haulmont.charts.gui.amcharts.model;
 
+import com.haulmont.charts.gui.amcharts.model.charts.StockPanel;
+
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 
 /**
+ * Defines set of properties for all StockPanels. If there is no default value specified, default value of
+ * {@link StockPanel} class will be used.
+ * <br>
  * See documentation for properties of PanelsSettings JS object. <br>
  *
  * <a href="http://docs.amcharts.com/3/javascriptstockchart/PanelsSettings">http://docs.amcharts.com/3/javascriptstockchart/PanelsSettings</a>
  */
 public class PanelsSettings extends AbstractChartObject implements HasMargins<PanelsSettings>,
-                                                                   HasStartEffect<PanelsSettings> {
+        HasStartEffect<PanelsSettings> {
 
     private static final long serialVersionUID = -4296426800291941801L;
 
@@ -113,6 +118,7 @@ public class PanelsSettings extends AbstractChartObject implements HasMargins<Pa
 
     /**
      * Sets opacity of panel background. Possible values are 1 and 0. Values like 0.5 will not make it half-transparent.
+     * If not set the default value is 0.
      *
      * @param backgroundAlpha opacity
      */
@@ -130,6 +136,7 @@ public class PanelsSettings extends AbstractChartObject implements HasMargins<Pa
 
     /**
      * Sets background color of panels. Set backgroundAlpha to greater than 0 value in order to make background visible.
+     * If not set the default value is #FFFFFF.
      *
      * @param backgroundColor color
      */
@@ -181,8 +188,8 @@ public class PanelsSettings extends AbstractChartObject implements HasMargins<Pa
 
     /**
      * Sets position of amCharts link (free version only). Possible values are: top-left. top-right, bottom-left,
-     * bottom-right. You can adjust the position of amcharts link so that it would not overlap with contents of  your
-     * chart.
+     * bottom-right. You can adjust the position of amcharts link so that it would not overlap with contents of your
+     * chart. If not set the default value is TOP_RIGHT.
      *
      * @param creditsPosition credits position
      */
@@ -330,7 +337,7 @@ public class PanelsSettings extends AbstractChartObject implements HasMargins<Pa
 
     /**
      * Sets the shortest time span allowed to select (in milliseconds). For example, 1000 will limit selection to 1
-     * second. Works if {@link CategoryAxesSettings#equalSpacing} is set to false.
+     * second. Works if {@link CategoryAxesSettings#equalSpacing} is set to false. If not set the default value is 0.
      *
      * @param minSelectedTime minimum selected time
      */
@@ -347,7 +354,7 @@ public class PanelsSettings extends AbstractChartObject implements HasMargins<Pa
     }
 
     /**
-     * Sets gap between panels.
+     * Sets gap between panels. If not set the default value is 8.
      *
      * @param panelSpacing panel spacing
      */
@@ -368,7 +375,7 @@ public class PanelsSettings extends AbstractChartObject implements HasMargins<Pa
      * the page won't move if the user touches the chart first. If a chart is big enough and occupies all the screen
      * of your touch device, the user won’t be able to move the page at all. That's why the default value is false.
      * If you think that selecting or or panning the chart is a primary purpose of your chart users, you should set
-     * panEventsEnabled to true.
+     * panEventsEnabled to true. If not set the default value is false.
      *
      * @param panEventsEnabled panEventsEnabled option
      */
@@ -504,6 +511,17 @@ public class PanelsSettings extends AbstractChartObject implements HasMargins<Pa
     /**
      * Sets list of big number prefixes. Prefixes which are used to make big numbers shorter: 2M instead of 2000000,
      * etc. Prefixes are used on value axes and in the legend. To enable prefixes, set usePrefixes property to true.
+     * If not set the default value is
+     * <pre>{@code
+     * [{number:1e+3,  prefix:"k"},
+     *  {number:1e+6,  prefix:"M"},
+     *  {number:1e+9,  prefix:"G"},
+     *  {number:1e+12, prefix:"T"},
+     *  {number:1e+15, prefix:"P"},
+     *  {number:1e+18, prefix:"E"},
+     *  {number:1e+21, prefix:"Z"},
+     *  {number:1e+24, prefix:"Y"}]}
+     * </pre>
      *
      * @param prefixesOfBigNumbers list of big number prefixes
      */
@@ -521,7 +539,18 @@ public class PanelsSettings extends AbstractChartObject implements HasMargins<Pa
 
     /**
      * Sets prefixes which are used to make small numbers shorter: 2μ instead of 0.000002, etc. Prefixes are used on
-     * value axes and in the legend. To enable prefixes, set usePrefixes property to true.
+     * value axes and in the legend. To enable prefixes, set usePrefixes property to true. If not set the default
+     * value is
+     * <pre>{@code
+     * [{number:1e-24, prefix:"y"},
+     *  {number:1e-21, prefix:"z"},
+     *  {number:1e-18, prefix:"a"},
+     *  {number:1e-15, prefix:"f"},
+     *  {number:1e-12, prefix:"p"},
+     *  {number:1e-9,  prefix:"n"},
+     *  {number:1e-6,  prefix:"μ"},
+     *  {number:1e-3,  prefix:"m"}]}
+     * </pre>
      *
      * @param prefixesOfSmallNumbers list of small number prefixes
      */
@@ -539,6 +568,7 @@ public class PanelsSettings extends AbstractChartObject implements HasMargins<Pa
 
     /**
      * Specifies when values should be recalculated to percents. Possible values are: "never", "always", "whenComparing".
+     * If not set the default value is "whenComparing".
      *
      * @param recalculateToPercents recalculate to percents
      */
@@ -647,7 +677,7 @@ public class PanelsSettings extends AbstractChartObject implements HasMargins<Pa
 
     /**
      * Set zoomOutAxes to false if zoomed-in value axes shouldn't be zoomed-out when user changes selected period with
-     * {@link PeriodSelector}.
+     * {@link PeriodSelector}. If not set the default value is true.
      *
      * @param zoomOutAxes zoomOutAxes option
      */

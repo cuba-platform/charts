@@ -6,8 +6,11 @@
 package com.haulmont.charts.gui.amcharts.model;
 
 import com.haulmont.charts.gui.model.JsFunction;
+import com.haulmont.charts.gui.amcharts.model.charts.AbstractChart;
 
 /**
+ * Defines category axis in chart. <br>
+ *
  * See documentation for properties of CategoryAxis JS Object. <br>
  *
  * <a href="http://docs.amcharts.com/3/javascriptcharts/CategoryAxis">http://docs.amcharts.com/3/javascriptcharts/CategoryAxis</a>
@@ -54,6 +57,7 @@ public class CategoryAxis extends AbstractAxis<CategoryAxis> {
     /**
      * Set autoWrap to true if axis labels (only when it is horizontal) should be wrapped if they don't fit in the
      * allocated space. If axis is vertical, you should set axis.ignoreAxisWidth to true in order this feature to work.
+     * If not set the default value is false.
      *
      * @param autoWrap autoWrap option
      */
@@ -72,7 +76,7 @@ public class CategoryAxis extends AbstractAxis<CategoryAxis> {
     /**
      * Set equalSpacing to true if want dates to be parsed (displayed on the axis, balloons, etc), but data points to
      * be placed at equal intervals (omitting dates with no data). In case your category axis values are Date objects
-     * and parseDates is set to true.
+     * and parseDates is set to true. If not set the default value is false.
      *
      * @param equalSpacing equalSpacing option
      */
@@ -109,7 +113,8 @@ public class CategoryAxis extends AbstractAxis<CategoryAxis> {
 
     /**
      * Sets grid position: grid line is placed on the center of a cell or on the beginning of a cell. Possible
-     * values are: "start" and "middle" This setting doesn't work if parseDates is set to true.
+     * values are: "start" and "middle" This setting doesn't work if parseDates is set to true. If not set the
+     * default value is MIDDLE.
      *
      * @param gridPosition grid position
      */
@@ -126,7 +131,8 @@ public class CategoryAxis extends AbstractAxis<CategoryAxis> {
     }
 
     /**
-     * Sets the shortest period of your data. This should be set only if parseDates is set to true.
+     * Sets the shortest period of your data. This should be set only if parseDates is set to true. If not set the
+     * default value is "DD".
      *
      * @param minPeriod the shortest period of your data
      */
@@ -152,7 +158,8 @@ public class CategoryAxis extends AbstractAxis<CategoryAxis> {
      * <p>
      * Important, if parseDates is set to true, the data points need to come pre-ordered in ascending order. Data with
      * incorrect order might result in visual and functional glitches on the chart.
-     *
+     * <p>
+     * If not set the default value is false.
      *
      * @param parseDates parseDates option
      */
@@ -226,7 +233,8 @@ public class CategoryAxis extends AbstractAxis<CategoryAxis> {
     }
 
     /**
-     * Sets position of an axis tick. Available settings: "middle", "start". Works only with non-date-based data.
+     * Sets position of an axis tick. Available settings: "middle", "start". Works only with non-date-based data. If
+     * not set the default value is false. If not set the default value is "middle".
      *
      * @param tickPosition tick position string
      */
@@ -245,6 +253,7 @@ public class CategoryAxis extends AbstractAxis<CategoryAxis> {
     /**
      * Set twoLineMode to true, category axis will display date strings of bot small and big period, in two rows, at
      * the position where bigger period changes. Works only when parseDates is set to true and equalSpacing is false.
+     * If not set the default value is false.
      *
      * @param twoLineMode twoLineMode option
      */
@@ -298,8 +307,8 @@ public class CategoryAxis extends AbstractAxis<CategoryAxis> {
 
     /**
      * Sets CSS class name field. If classNameField is set and
-     * {@link com.haulmont.charts.gui.amcharts.model.charts.AbstractChart#addClassNames AbstractChart.addClassNames}
-     * is enabled, the category axis labels, ticks and grid will have this class name set. Note, this will not work
+     * {@link AbstractChart#addClassNames AbstractChart.addClassNames} is enabled, the category axis labels, ticks
+     * and grid will have this class name set. Note, this will not work
      * if the axis is date-based.
      *
      * @param classNameField class name field string

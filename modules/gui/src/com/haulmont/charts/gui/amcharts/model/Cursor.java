@@ -6,8 +6,12 @@
 package com.haulmont.charts.gui.amcharts.model;
 
 import com.haulmont.charts.gui.model.JsFunction;
+import com.haulmont.charts.gui.components.charts.SerialChart;
 
 /**
+ * Creates a cursor for the chart which follows the mouse movements. In case of {@link SerialChart} charts it shows
+ * the balloons of hovered data points.
+ * <br>
  * See documentation for properties of ChartCursor JS Object. <br>
  *
  * <a href="http://docs.amcharts.com/3/javascriptcharts/ChartCursor">http://docs.amcharts.com/3/javascriptcharts/ChartCursor</a>
@@ -97,7 +101,7 @@ public class Cursor extends AbstractChartObject {
 
     /**
      * Sets adjustment. If you set adjustment to -1, the balloon will be shown near previous, if you set it to 1 - near
-     * next data point.
+     * next data point. If not set the default value is 0.
      *
      * @param adjustment adjustment
      */
@@ -115,7 +119,7 @@ public class Cursor extends AbstractChartObject {
 
     /**
      * Specifies if cursor should arrange balloons so they won't overlap. If chart is rotated, it might be good idea
-     * to turn this off.
+     * to turn this off. If not set the default value is true.
      *
      * @param avoidBalloonOverlapping avoidBalloonOverlapping option
      */
@@ -133,6 +137,7 @@ public class Cursor extends AbstractChartObject {
 
     /**
      * Sets the balloon pointer orientation. It defines if the balloon should be shown above the datapoint or sideways.
+     * If not set the default value is "horizontal".
      *
      * @param balloonPointerOrientation balloon pointer orientation
      */
@@ -149,7 +154,7 @@ public class Cursor extends AbstractChartObject {
     }
 
     /**
-     * Sets duration of animation of a line, in seconds.
+     * Sets duration of animation of a line, in seconds. If not set the default value is 0.3.
      *
      * @param animationDuration duration of animation of a line, in seconds
      */
@@ -166,7 +171,8 @@ public class Cursor extends AbstractChartObject {
     }
 
     /**
-     * Set bulletsEnabled to true if bullet for each graph should follow the cursor.
+     * Set bulletsEnabled to true if bullet for each graph should follow the cursor. If not set the default value is
+     * false.
      *
      * @param bulletsEnabled bulletsEnabled option
      */
@@ -183,7 +189,7 @@ public class Cursor extends AbstractChartObject {
     }
 
     /**
-     * Sets bullet size, that following the cursor.
+     * Sets bullet size, that following the cursor. If not set the default value is 8.
      *
      * @param bulletSize bullet size
      */
@@ -200,7 +206,7 @@ public class Cursor extends AbstractChartObject {
     }
 
     /**
-     * Sets opacity of the category balloon.
+     * Sets opacity of the category balloon. If not set the default value is 1.
      *
      * @param categoryBalloonAlpha opacity of the category balloon
      */
@@ -234,7 +240,8 @@ public class Cursor extends AbstractChartObject {
     }
 
     /**
-     * Sets category balloon date format (used only if category axis parses dates).
+     * Sets category balloon date format (used only if category axis parses dates). If not set the default value is
+     * "MMM DD, YYYY".
      *
      * @param categoryBalloonDateFormat category balloon date format string
      */
@@ -251,7 +258,8 @@ public class Cursor extends AbstractChartObject {
     }
 
     /**
-     * Set categoryBalloonEnabled to false if you want balloon shouldn't be enabled.
+     * Set categoryBalloonEnabled to false if you want balloon shouldn't be enabled. If not set the default value is
+     * true.
      *
      * @param categoryBalloonEnabled categoryBalloonEnabled option
      */
@@ -268,7 +276,7 @@ public class Cursor extends AbstractChartObject {
     }
 
     /**
-     * Sets text color.
+     * Sets text color. If not set the default value is #FFFFFF.
      *
      * @param color text color
      */
@@ -285,7 +293,7 @@ public class Cursor extends AbstractChartObject {
     }
 
     /**
-     * Sets opacity of the cursor line.
+     * Sets opacity of the cursor line. If not set the default value is 1.
      *
      * @param cursorAlpha opacity
      */
@@ -302,7 +310,7 @@ public class Cursor extends AbstractChartObject {
     }
 
     /**
-     * Sets color of the cursor line.
+     * Sets color of the cursor line. If not set the default value is #CC0000.
      *
      * @param cursorColor color
      */
@@ -321,7 +329,8 @@ public class Cursor extends AbstractChartObject {
     /**
      * Sets cursor position: on the beginning of the period (day, hour, etc) or in the middle (only when
      * {@link CategoryAxis#parseDates} is set to true). If you want the cursor to follow mouse and not to glue to the
-     * nearest data point, set "mouse" here. Possible values are: start, middle, mouse.
+     * nearest data point, set "mouse" here. Possible values are: start, middle, mouse. If not set the default value
+     * is MIDDLE.
      *
      * @param cursorPosition cursor position
      */
@@ -338,7 +347,7 @@ public class Cursor extends AbstractChartObject {
     }
 
     /**
-     * Set enabled to false if you want cursor shouldn't be enabled.
+     * Set enabled to false if you want cursor shouldn't be enabled. If not set the default value is true.
      *
      * @param enabled enabled option
      */
@@ -356,7 +365,7 @@ public class Cursor extends AbstractChartObject {
 
     /**
      * Sets size of a graph's bullet (if available) at the cursor position. If you don't want the bullet to change
-     * its size, set this property to 1.
+     * its size, set this property to 1. If not set the default value is 1.7.
      *
      * @param graphBulletSize graph bullet size
      */
@@ -375,6 +384,7 @@ public class Cursor extends AbstractChartObject {
     /**
      *
      * Set to oneBalloonOnly true if only one balloon at a time should be displayed. Note, this is quite CPU consuming.
+     * If not set the default value is false.
      *
      * @param oneBalloonOnly oneBalloonOnly option
      */
@@ -391,7 +401,8 @@ public class Cursor extends AbstractChartObject {
     }
 
     /**
-     * Set pan to true and the user will be able to pan the chart instead of zooming.
+     * Set pan to true and the user will be able to pan the chart instead of zooming. If not set the default value is
+     * false.
      *
      * @param pan pan option
      */
@@ -408,7 +419,7 @@ public class Cursor extends AbstractChartObject {
     }
 
     /**
-     * Sets opacity of the selection.
+     * Sets opacity of the selection. If not set the default value is 0.2.
      *
      * @param selectionAlpha opacity
      */
@@ -426,7 +437,7 @@ public class Cursor extends AbstractChartObject {
 
     /**
      * Set selectWithoutZooming to true if cursor should only mark selected area but not zoom-in after user releases
-     * mouse button.
+     * mouse button. If not set the default value is false.
      *
      * @param selectWithoutZooming selectWithoutZooming option
      */
@@ -437,7 +448,7 @@ public class Cursor extends AbstractChartObject {
 
     /**
      * @return true if the graph displays balloon on next available data point if currently hovered item doesn't have
-     * value for this graph.
+     * value for this graph. If not set the default value is false.
      */
     public Boolean getShowNextAvailable() {
         return showNextAvailable;
@@ -463,8 +474,8 @@ public class Cursor extends AbstractChartObject {
 
     /**
      * Set valueBalloonsEnabled to false if you want value balloons will not be enabled. In case they are
-     * not, the balloons might be displayed anyway, when the user rolls-over the column or
-     * bullet.
+     * not, the balloons might be displayed anyway, when the user rolls-over the column or bullet. If not set the
+     * default value is true.
      *
      * @param valueBalloonsEnabled valueBalloonsEnabled option
      */
@@ -482,7 +493,7 @@ public class Cursor extends AbstractChartObject {
 
     /**
      * Set zoomable to true if the user should zoom-in the chart. If pan is set to true, zoomable is switched to false
-     * automatically.
+     * automatically. If not set the default value is true.
      *
      * @param zoomable zoomable option
      */
@@ -521,7 +532,7 @@ public class Cursor extends AbstractChartObject {
     /**
      * Set to true if you want instead of a cursor line user should see a fill which width will always be equal to the
      * width of one data item. It recommended setting cursorAlpha to 0.1 or some other small number if using this
-     * feature.
+     * feature. If not set the default value is false.
      *
      * @param fullWidth fullWidth option
      */
@@ -591,7 +602,8 @@ public class Cursor extends AbstractChartObject {
     }
 
     /**
-     * Set valueLineBalloonEnabled to true if value balloon next to value axes labels should be displayed.
+     * Set valueLineBalloonEnabled to true if value balloon next to value axes labels should be displayed. If not set
+     * the default value is false.
      *
      * @param valueLineBalloonEnabled valueLineBalloonEnabled option
      */
@@ -610,7 +622,7 @@ public class Cursor extends AbstractChartObject {
     /**
      * Set valueLineEnabled to true if cursor of serial chart should display horizontal (or vertical if chart is
      * rotated) line. This line might help users to compare distant values of a chart. You can also enable value
-     * balloons on this line by setting valueLineBalloonEnabled to true.
+     * balloons on this line by setting valueLineBalloonEnabled to true. If not set the default value is false.
      *
      * @param valueLineEnabled valueLineEnabled option
      */
@@ -628,7 +640,7 @@ public class Cursor extends AbstractChartObject {
 
     /**
      * Sets category balloon text. You can have [[category]] - [[toCategory]] tags in there and show category ranges
-     * this way.
+     * this way. If not set the default value is "[[category]]".
      *
      * @param categoryBalloonText category balloon text
      */
@@ -645,7 +657,8 @@ public class Cursor extends AbstractChartObject {
     }
 
     /**
-     * Set leaveAfterTouch to false if cursor and balloons shouldn't remain after the user touches the chart.
+     * Set leaveAfterTouch to false if cursor and balloons shouldn't remain after the user touches the chart. If not
+     * set the default value is true.
      *
      * @param leaveAfterTouch leaveAfterTouch option
      */
@@ -663,7 +676,7 @@ public class Cursor extends AbstractChartObject {
 
     /**
      * Set leaveCursor to true if cursor should be left at it's last position. Useful for touch devices - user might
-     * want to see the balloons after he moves finger away.
+     * want to see the balloons after he moves finger away. If not set the default value is false.
      *
      * @param leaveCursor leaveCursor option
      */
@@ -699,7 +712,8 @@ public class Cursor extends AbstractChartObject {
     }
 
     /**
-     * Set valueZoomable to true if the user should zoom-in value axes of a serial chart.
+     * Set valueZoomable to true if the user should zoom-in value axes of a serial chart. If not set the default
+     * value is false.
      *
      * @param valueZoomable valueZoomable option
      */

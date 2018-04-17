@@ -6,6 +6,8 @@
 package com.haulmont.charts.gui.amcharts.model;
 
 /**
+ * Defines set of properties for all StockEvents.
+ * <br>
  * See documentation for properties of StockEventsSettings JS object. <br>
  *
  * <a href="http://docs.amcharts.com/3/javascriptstockchart/StockEventsSettings">http://docs.amcharts.com/3/javascriptstockchart/StockEventsSettings</a>
@@ -13,7 +15,7 @@ package com.haulmont.charts.gui.amcharts.model;
 public class StockEventsSettings extends AbstractChartObject {
 
     private static final long serialVersionUID = 6413770909562353029L;
-    
+
     private Double backgroundAlpha;
 
     private Color backgroundColor;
@@ -38,7 +40,7 @@ public class StockEventsSettings extends AbstractChartObject {
     }
 
     /**
-     * Sets opacity of bullet background.
+     * Sets opacity of bullet background. If not set the default value is 1.
      *
      * @param backgroundAlpha opacity
      */
@@ -55,7 +57,7 @@ public class StockEventsSettings extends AbstractChartObject {
     }
 
     /**
-     * Sets color of bullet background.
+     * Sets color of bullet background. If not set the default value is #DADADA.
      *
      * @param backgroundColor color
      */
@@ -72,7 +74,7 @@ public class StockEventsSettings extends AbstractChartObject {
     }
 
     /**
-     * Sets color for a roll-over balloon.
+     * Sets color for a roll-over balloon. If not set the default value is #CC0000.
      *
      * @param balloonColor balloon color
      */
@@ -89,7 +91,7 @@ public class StockEventsSettings extends AbstractChartObject {
     }
 
     /**
-     * Sets opacity of bullet border.
+     * Sets opacity of bullet border. If not set the default value is 1.
      *
      * @param borderAlpha opacity
      */
@@ -106,7 +108,7 @@ public class StockEventsSettings extends AbstractChartObject {
     }
 
     /**
-     * Sets bullet border color.
+     * Sets bullet border color. If not set the default value is #888888.
      *
      * @param borderColor color
      */
@@ -123,7 +125,7 @@ public class StockEventsSettings extends AbstractChartObject {
     }
 
     /**
-     * Sets roll-over background color.
+     * Sets roll-over background color. If not set the default value is #CC0000.
      *
      * @param rollOverColor color
      */
@@ -140,7 +142,7 @@ public class StockEventsSettings extends AbstractChartObject {
     }
 
     /**
-     * Allows placing event bullets at "open", "close", "low", "high" values.
+     * Allows placing event bullets at "open", "close", "low", "high" values. If not set the default value is "close".
      *
      * @param showAt showAt string
      */
@@ -157,7 +159,7 @@ public class StockEventsSettings extends AbstractChartObject {
     }
 
     /**
-     * Sets type of bullet.
+     * Sets type of bullet. If not set the default value is SIGN.
      *
      * @param type type
      */

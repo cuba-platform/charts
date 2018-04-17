@@ -53,7 +53,8 @@ public interface StockChartModel<T extends StockChartModel> extends HasColors<T>
     Boolean getAutoResize();
 
     /**
-     * Set autoResize to true if you want chart to resize itself whenever its parent container size changes.
+     * Set autoResize to true if you want chart to resize itself whenever its parent container size changes. If not
+     * set the default value is true.
      *
      * @param autoResize auto resize option
      */
@@ -111,7 +112,8 @@ public interface StockChartModel<T extends StockChartModel> extends HasColors<T>
 
     /**
      * Sets the class name prefix. This prefix is added to all class names which are added to all visual elements of
-     * a chart in case addClassNames is set to true.
+     * a chart in case addClassNames is set to true. If not set the default value is false. If not set the default
+     * value is "amcharts".
      *
      * @param classNamePrefix class name prefix string
      */
@@ -196,7 +198,7 @@ public interface StockChartModel<T extends StockChartModel> extends HasColors<T>
 
     /**
      * Specifies if the chart should always display full first and last data item when data is grouped to a longer
-     * period if the chart is zoomed from the beginning or end of the data.
+     * period if the chart is zoomed from the beginning or end of the data. If not set the default value is true.
      *
      * @param extendToFullPeriod extend to full period option
      */
@@ -208,7 +210,7 @@ public interface StockChartModel<T extends StockChartModel> extends HasColors<T>
     Integer getFirstDayOfWeek();
 
     /**
-     * Sets day week starts. 0 - Sunday, 1 - Monday etc.
+     * Sets day week starts. 0 - Sunday, 1 - Monday etc. If not set the default value is 1.
      *
      * @param firstDayOfWeek first day of week
      */
@@ -220,7 +222,8 @@ public interface StockChartModel<T extends StockChartModel> extends HasColors<T>
     Boolean getGlueToTheEnd();
 
     /**
-     * Set glueToTheEnd to true if the scope of the data view should be set to the end after data update.
+     * Set glueToTheEnd to true if the scope of the data view should be set to the end after data update. If not set
+     * the default value is false.
      *
      * @param glueToTheEnd glue to the end option
      */
@@ -269,7 +272,8 @@ public interface StockChartModel<T extends StockChartModel> extends HasColors<T>
     Boolean getMouseWheelScrollEnabled();
 
     /**
-     * Set mouseWheelScrollEnabled to true you wont to scroll chart with mouse wheel.
+     * Set mouseWheelScrollEnabled to true you wont to scroll chart with mouse wheel. If not set the default value is
+     * false.
      *
      * @param mouseWheelScrollEnabled mouse wheel scroll option
      */
@@ -382,7 +386,7 @@ public interface StockChartModel<T extends StockChartModel> extends HasColors<T>
     Boolean getZoomOutOnDataSetChange();
 
     /**
-     * Specifies whether the chart should zoom-out when main data set is changed.
+     * Specifies whether the chart should zoom-out when main data set is changed. If not set the default value is false.
      *
      * @param zoomOutOnDataSetChange zoom out on data set change option
      */
@@ -410,7 +414,7 @@ public interface StockChartModel<T extends StockChartModel> extends HasColors<T>
      * Sets the process timeout. If you set it to 1 millisecond or some bigger value, chart will be built in chunks
      * instead of all at once. This is useful if you work with a lot of data and the initial build of the chart takes
      * a lot of time, which freezes the whole web application by not allowing other processes to do their job while
-     * the chart is busy.
+     * the chart is busy. If not set the default value is 0.
      *
      * @param processTimeout process timeout
      */

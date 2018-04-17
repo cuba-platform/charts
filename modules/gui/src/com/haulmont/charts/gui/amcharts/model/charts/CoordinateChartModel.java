@@ -77,7 +77,7 @@ public interface CoordinateChartModel<T extends CoordinateChartModel> extends Ch
 
     /**
      * Set grid above graphs to true if grid should be drawn above the graphs or below. Will not work
-     * properly with 3D charts.
+     * properly with 3D charts. If not set the default value is false.
      *
      * @param gridAboveGraphs grid above graphs option
      */
@@ -89,7 +89,8 @@ public interface CoordinateChartModel<T extends CoordinateChartModel> extends Ch
     Boolean getSequencedAnimation();
 
     /**
-     * Specifies whether the animation should be sequenced or all objects should appear at once.
+     * Specifies whether the animation should be sequenced or all objects should appear at once. If not set the
+     * default value is true.
      *
      * @param sequencedAnimation sequenced animation option
      */
@@ -102,7 +103,7 @@ public interface CoordinateChartModel<T extends CoordinateChartModel> extends Ch
 
     /**
      * Sets the initial opacity of the column/line. If you set startDuration to a value higher than 0, the
-     * columns/lines will fade in from startAlpha. Value range is 0 - 1.
+     * columns/lines will fade in from startAlpha. Value range is 0 - 1. If not set the default value is 1.
      *
      * @param startAlpha - the start alpha
      */
@@ -114,7 +115,7 @@ public interface CoordinateChartModel<T extends CoordinateChartModel> extends Ch
     String getUrlTarget();
 
     /**
-     * Sets target of URL.
+     * Sets target of URL. If not set the default value is "_self".
      *
      * @param urlTarget the URL target string
      */

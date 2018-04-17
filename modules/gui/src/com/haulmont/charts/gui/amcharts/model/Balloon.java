@@ -6,6 +6,8 @@
 package com.haulmont.charts.gui.amcharts.model;
 
 /**
+ * Creates the balloons (tooltips) of the chart, It follows the mouse cursor when you roll-over the data items.
+ * <br>
  * See documentation for properties of AmBalloon JS object. <br>
  *
  * <a href="http://docs.amcharts.com/3/javascriptcharts/AmBalloon">http://docs.amcharts.com/3/javascriptcharts/AmBalloon</a>
@@ -76,7 +78,7 @@ public class Balloon extends AbstractChartObject {
 
     /**
      * Set adjustBorderColor to true if you want that the border color will be changed when user rolls-over the
-     * slice, graph, etc instead of background color
+     * slice, graph, etc instead of background color. If not set the default value is true.
      *
      * @param adjustBorderColor adjust border color option
      */
@@ -93,7 +95,8 @@ public class Balloon extends AbstractChartObject {
     }
 
     /**
-     * Sets duration of balloon movement from previous point to current point, in seconds.
+     * Sets duration of balloon movement from previous point to current point, in seconds. If not set the default
+     * value is 0.3.
      *
      * @param animationDuration animation duration in seconds
      */
@@ -110,7 +113,7 @@ public class Balloon extends AbstractChartObject {
     }
 
     /**
-     * Sets balloon border opacity. Value range is 0 - 1.
+     * Sets balloon border opacity. Value range is 0 - 1. If not set the default value is 1.
      *
      * @param borderAlpha border opacity
      */
@@ -127,7 +130,8 @@ public class Balloon extends AbstractChartObject {
     }
 
     /**
-     * Sets balloon border color. Will only be used of adjustBorderColor is false.
+     * Sets balloon border color. Will only be used of adjustBorderColor is false. If not set the default value is
+     * #FFFFFF.
      *
      * @param borderColor border color
      */
@@ -144,7 +148,7 @@ public class Balloon extends AbstractChartObject {
     }
 
     /**
-     * Sets balloon border thickness.
+     * Sets balloon border thickness. If not set the default value is 2.
      *
      * @param borderThickness border thickness
      */
@@ -161,7 +165,7 @@ public class Balloon extends AbstractChartObject {
     }
 
     /**
-     * Sets color of text in the balloon.
+     * Sets color of text in the balloon. If not set the default value is #000000.
      *
      * @param color color of the text
      */
@@ -178,7 +182,7 @@ public class Balloon extends AbstractChartObject {
     }
 
     /**
-     * Sets balloon corner radius.
+     * Sets balloon corner radius. If not set the default value is 0.
      *
      * @param cornerRadius corner radius
      */
@@ -195,7 +199,7 @@ public class Balloon extends AbstractChartObject {
     }
 
     /**
-     * Sets duration of a fade out animation, in seconds.
+     * Sets duration of a fade out animation, in seconds. If not set the default value is 0.3.
      *
      * @param fadeOutDuration duration in seconds
      */
@@ -212,7 +216,7 @@ public class Balloon extends AbstractChartObject {
     }
 
     /**
-     * Sets balloon background opacity.
+     * Sets balloon background opacity. If not set the default value is 0.8.
      *
      * @param fillAlpha background opacity
      */
@@ -230,7 +234,7 @@ public class Balloon extends AbstractChartObject {
 
     /**
      * Sets balloon background color. Usually balloon background color is set by the chart. Only if adjustBorderColor
-     * is true this color will be used.
+     * is true this color will be used. If not set the default value is #FFFFFF.
      *
      * @param fillColor background color
      */
@@ -248,7 +252,7 @@ public class Balloon extends AbstractChartObject {
 
     /**
      * Specifies if balloon should follow mouse when hovering the slice/column/bullet or stay in fixed position
-     * (this does not affect balloon behavior if ChartCursor is used).
+     * (this does not affect balloon behavior if ChartCursor is used). If not set the default value is true.
      *
      * @param fixedPosition fixed position option
      */
@@ -282,7 +286,7 @@ public class Balloon extends AbstractChartObject {
     }
 
     /**
-     * Sets horizontal padding of the balloon.
+     * Sets horizontal padding of the balloon. If not set the default value is 8.
      *
      * @param horizontalPadding horizontal padding
      */
@@ -318,7 +322,7 @@ public class Balloon extends AbstractChartObject {
     /**
      * Sets horizontal distance from mouse pointer to balloon pointer. If you set it to a small value, the balloon might
      * flicker, as mouse might lose focus on hovered object. Note, this setting is ignored unless fixedPosition is set
-     * to false or Chart Cursor is enabled.
+     * to false or Chart Cursor is enabled. If not set the default value is 1.
      *
      * @param offsetX horizontal distance from mouse pointer to balloon pointer
      */
@@ -337,7 +341,7 @@ public class Balloon extends AbstractChartObject {
     /**
      * Sets vertical distance from mouse pointer to balloon pointer. If you set it to a small value, the balloon might
      * flicker, as mouse might lose focus on hovered object. Note, this setting is ignored unless fixedPosition is set
-     * to false or Chart Cursor is enabled.
+     * to false or Chart Cursor is enabled. If not set the default value is 6.
      *
      * @param offsetY vertical distance from mouse pointer to balloon pointer
      */
@@ -354,7 +358,7 @@ public class Balloon extends AbstractChartObject {
     }
 
     /**
-     * Specifies direction of a pointer. Works only if balloon drop set to true.
+     * Specifies direction of a pointer. Works only if balloon drop set to true. If not set the default value is 6.
      *
      * @param pointerWidth pointer width
      */
@@ -371,7 +375,7 @@ public class Balloon extends AbstractChartObject {
     }
 
     /**
-     * Sets opacity of a shadow.
+     * Sets opacity of a shadow. If not set the default value is 0.4.
      *
      * @param shadowAlpha opacity of a shadow
      */
@@ -388,7 +392,7 @@ public class Balloon extends AbstractChartObject {
     }
 
     /**
-     * Sets color of a shadow.
+     * Sets color of a shadow. If not set the default value is #000000.
      *
      * @param shadowColor shadow color
      */
@@ -406,7 +410,7 @@ public class Balloon extends AbstractChartObject {
 
     /**
      * If cornerRadius of a balloon is greater than 0, showBullet is set to true for value balloons when {@link Cursor}
-     * is used. If you don't want the bullet near the balloon, set it to false
+     * is used. If you don't want the bullet near the balloon, set it to false. If not set the default value is false.
      *
      * @param showBullet show bullet option
      */
@@ -423,7 +427,7 @@ public class Balloon extends AbstractChartObject {
     }
 
     /**
-     * Sets text alignment, possible values "left", "middle" and "right".
+     * Sets text alignment, possible values "left", "middle" and "right". If not set the default value is CENTER.
      *
      * @param textAlign text alignment
      */
@@ -440,7 +444,7 @@ public class Balloon extends AbstractChartObject {
     }
 
     /**
-     * Sets vertical padding of the balloon.
+     * Sets vertical padding of the balloon. If not set the default value is 4.
      *
      * @param verticalPadding vertical padding
      */
@@ -457,7 +461,8 @@ public class Balloon extends AbstractChartObject {
     }
 
     /**
-     * Set disableMouseEvents to false if your balloon has links and you want those links to be clickable.
+     * Set disableMouseEvents to false if your balloon has links and you want those links to be clickable. If not set
+     * the default value is true.
      *
      * @param disableMouseEvents disable mouse eventes option
      */
@@ -477,7 +482,7 @@ public class Balloon extends AbstractChartObject {
      * Allows having drop-shaped balloons. Note, these balloons will not check for overlapping with other balloons,
      * or if they go outside plot area. It also does not change pointer orientation automatically based on its
      * vertical position like regular balloons do. You can use pointerOrientation property if you want it to point to
-     * different direction. Not supported by IE8.
+     * different direction. Not supported by IE8. If not set the default value is false.
      *
      * @param drop drop option
      */
@@ -494,7 +499,8 @@ public class Balloon extends AbstractChartObject {
     }
 
     /**
-     * Set enabled to false if you want to disable balloons for certain value axes.
+     * Set enabled to false if you want to disable balloons for certain value axes. If not set the default value is
+     * true.
      *
      * @param enabled enabled option
      */
@@ -511,7 +517,8 @@ public class Balloon extends AbstractChartObject {
     }
 
     /**
-     * Specifies direction of a pointer. Works only if balloon drop set to true.
+     * Specifies direction of a pointer. Works only if {@link Balloon#drop} set to true. If not set the default value
+     * is DOWN.
      *
      * @param pointerOrientation pointer orientation
      */

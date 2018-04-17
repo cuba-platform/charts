@@ -12,7 +12,8 @@ public interface XYChartModel<T extends XYChartModel> extends RectangularChartMo
     Boolean getHideXScrollbar();
 
     /**
-     * Set hideXScrollbar to true if scrollbar of X axis (horizontal) should be hidden.
+     * Set hideXScrollbar to true if scrollbar of X axis (horizontal) should be hidden. If not set the default value
+     * is false.
      *
      * @param hideXScrollbar hide X scrollbar option
      */
@@ -24,7 +25,8 @@ public interface XYChartModel<T extends XYChartModel> extends RectangularChartMo
     Boolean getHideYScrollbar();
 
     /**
-     * Set hideYScrollbar to true if scrollbar of Y axis (vertical) should be hidden.
+     * Set hideYScrollbar to true if scrollbar of Y axis (vertical) should be hidden. If not set the default value is
+     * false.
      *
      * @param hideYScrollbar hide Y scrollbar option
      */

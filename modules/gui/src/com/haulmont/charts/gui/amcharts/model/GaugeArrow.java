@@ -5,7 +5,11 @@
 
 package com.haulmont.charts.gui.amcharts.model;
 
+import com.haulmont.charts.gui.components.charts.AngularGaugeChart;
+
 /**
+ * Creates an arrow for {@link AngularGaugeChart} chart, multiple can be assigned.
+ * <br>
  * See documentation for properties of GaugeArrow JS Object. <br>
  *
  * <a href="http://docs.amcharts.com/3/javascriptcharts/GaugeArrow">http://docs.amcharts.com/3/javascriptcharts/GaugeArrow</a>
@@ -50,7 +54,7 @@ public class GaugeArrow extends AbstractChartObject {
     }
 
     /**
-     * Sets opacity of an arrow.
+     * Sets opacity of an arrow. If not set the default value is 1.
      *
      * @param alpha opacity
      */
@@ -67,7 +71,7 @@ public class GaugeArrow extends AbstractChartObject {
     }
 
     /**
-     * Sets opacity of arrow border.
+     * Sets opacity of arrow border. If not set the default value is 1.
      *
      * @param borderAlpha border opacity
      */
@@ -84,7 +88,7 @@ public class GaugeArrow extends AbstractChartObject {
     }
 
     /**
-     * Set clockWiseOnly to true if you need the arrow to rotate only clock-wise.
+     * Set clockWiseOnly to true if you need the arrow to rotate only clock-wise. If not set the default value is false.
      *
      * @param clockWiseOnly clockWiseOnly option
      */
@@ -101,7 +105,7 @@ public class GaugeArrow extends AbstractChartObject {
     }
 
     /**
-     * Sets color of an arrow.
+     * Sets color of an arrow. If not set the default value is #000000.
      *
      * @param color color
      */
@@ -118,7 +122,7 @@ public class GaugeArrow extends AbstractChartObject {
     }
 
     /**
-     * Sets inner radius of an arrow.
+     * Sets inner radius of an arrow. If not set the default value is 0.
      *
      * @param innerRadius inner radius
      */
@@ -135,7 +139,7 @@ public class GaugeArrow extends AbstractChartObject {
     }
 
     /**
-     * Sets opacity of a nail, holding the arrow.
+     * Sets opacity of a nail, holding the arrow. If not set the default value is 1.
      *
      * @param nailAlpha opacity
      */
@@ -152,7 +156,7 @@ public class GaugeArrow extends AbstractChartObject {
     }
 
     /**
-     * Sets opacity of nail border.
+     * Sets opacity of nail border. If not set the default value is 0.
      *
      * @param nailBorderAlpha opacity
      */
@@ -169,7 +173,7 @@ public class GaugeArrow extends AbstractChartObject {
     }
 
     /**
-     * Sets thickness of nail border.
+     * Sets thickness of nail border. If not set the default value is 1.
      *
      * @param nailBorderThickness thickness
      */
@@ -186,7 +190,7 @@ public class GaugeArrow extends AbstractChartObject {
     }
 
     /**
-     * Sets radius of a nail, holding the arrow.
+     * Sets radius of a nail, holding the arrow. If not set the default value is 8.
      *
      * @param nailRadius radius
      */
@@ -203,7 +207,7 @@ public class GaugeArrow extends AbstractChartObject {
     }
 
     /**
-     * Sets radius of an arrow.
+     * Sets radius of an arrow. If not set the default value is 90%.
      *
      * @param radius radius
      */
@@ -220,7 +224,7 @@ public class GaugeArrow extends AbstractChartObject {
     }
 
     /**
-     * Sets width of arrow root.
+     * Sets width of arrow root. If not set the default value is 8.
      *
      * @param startWidth width
      */

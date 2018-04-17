@@ -8,6 +8,7 @@ package com.haulmont.charts.gui.amcharts.model.charts;
 import com.haulmont.charts.gui.amcharts.model.*;
 import com.haulmont.charts.gui.data.DataItem;
 import com.haulmont.charts.gui.data.DataProvider;
+import com.haulmont.charts.gui.data.ListDataProvider;
 
 import java.util.List;
 
@@ -18,7 +19,8 @@ public interface ChartModel<T extends ChartModel> {
     Boolean getAddClassNames();
 
     /**
-     * Specifies, if CSS class names should be added to chart elements (line, fill, column, etc).
+     * Specifies, if CSS class names should be added to chart elements (line, fill, column, etc). If not set the
+     * default value is false.
      * <br>
      * See documentation for available CSS class names.
      * <br>
@@ -66,7 +68,7 @@ public interface ChartModel<T extends ChartModel> {
 
     /**
      * Sets background color. You should set {@link AbstractChart#backgroundAlpha} to greater than 0 value in order
-     * background to be visible.
+     * background to be visible. If not set the default value is #FFFFFF.
      *
      * @param backgroundColor the background color
      */
@@ -102,7 +104,7 @@ public interface ChartModel<T extends ChartModel> {
     String getDecimalSeparator();
 
     /**
-     * Sets decimal separator.
+     * Sets decimal separator. If not set the default value is ".".
      *
      * @param decimalSeparator the decimal separator string
      */
@@ -114,7 +116,8 @@ public interface ChartModel<T extends ChartModel> {
     Integer getPercentPrecision();
 
     /**
-     * Sets precision of percent values. -1 means percent values won't be rounded at all and show as they are.
+     * Sets precision of percent values. -1 means percent values won't be rounded at all and show as they are. If not
+     * set the default value is 2.
      *
      * @param percentPrecision the percent precision
      */
@@ -126,7 +129,8 @@ public interface ChartModel<T extends ChartModel> {
     Integer getPrecision();
 
     /**
-     * Precision of values. -1 means values won't be rounded at all and show as they are.
+     * Precision of values. -1 means values won't be rounded at all and show as they are. If not set the default
+     * value is -1.
      *
      * @param precision the precision
      */
@@ -142,8 +146,7 @@ public interface ChartModel<T extends ChartModel> {
     T setDataProvider(DataProvider dataProvider);
 
     /**
-     * Adds data items. If {@link DataProvider} is null, so it creates
-     * {@link com.haulmont.charts.gui.data.ListDataProvider}
+     * Adds data items. If {@link DataProvider} is null, so it creates {@link ListDataProvider}
      *
      * @param dataItems data items to add
      */
@@ -167,7 +170,7 @@ public interface ChartModel<T extends ChartModel> {
     ChartTheme getTheme();
 
     /**
-     * Sets theme of a chart.
+     * Sets theme of a chart. If not set the default value is NONE.
      *
      * @param theme the theme
      */
@@ -179,7 +182,7 @@ public interface ChartModel<T extends ChartModel> {
     Double getBorderAlpha();
 
     /**
-     * Sets opacity of chart's border. Value range is 0 - 1.
+     * Sets opacity of chart's border. Value range is 0 - 1. If not set the default value is 0.
      *
      * @param borderAlpha the border alpha
      */
@@ -192,6 +195,7 @@ public interface ChartModel<T extends ChartModel> {
 
     /**
      * Sets color of chart's border. You should set borderAlpha to greater than 0 value in order border to be visible.
+     * If not set the default value is #000000.
      *
      * @param borderColor the border color
      */
@@ -204,7 +208,7 @@ public interface ChartModel<T extends ChartModel> {
 
     /**
      * Sets prefix to all class names which are added to all visual elements of a chart in case
-     * {@link AbstractChart#addClassNames} is set to true.
+     * {@link AbstractChart#addClassNames} is set to true. If not set the default value is "amcharts".
      *
      * @param classNamePrefix class name prefix string
      */
@@ -217,7 +221,7 @@ public interface ChartModel<T extends ChartModel> {
 
     /**
      * Sets position of link to amCharts site. Allowed values are: top-left, top-right, bottom-left and bottom-right.
-     * Non-commercial version only.
+     * Non-commercial version only. If not set the default value is TOP_LEFT.
      *
      * @param creditsPosition the credits position
      */
@@ -229,7 +233,7 @@ public interface ChartModel<T extends ChartModel> {
     Color getColor();
 
     /**
-     * Sets text color.
+     * Sets text color. If not set the default value is "#000000".
      *
      * @param color the text color
      */
@@ -241,7 +245,7 @@ public interface ChartModel<T extends ChartModel> {
     String getFontFamily();
 
     /**
-     * Sets font family.
+     * Sets font family. If not set the default value is "Verdana".
      *
      * @param fontFamily font family string
      */
@@ -253,7 +257,7 @@ public interface ChartModel<T extends ChartModel> {
     Integer getFontSize();
 
     /**
-     * Sets font size.
+     * Sets font size. If not set the default value is 11.
      *
      * @param fontSize the font size
      */
@@ -267,7 +271,7 @@ public interface ChartModel<T extends ChartModel> {
     /**
      * If true, the lines of the chart will be distorted and will produce hand-drawn effect. Try to adjust
      * {@link AbstractChart#handDrawScatter handDrawScatter} and {@link AbstractChart#handDrawThickness
-     * handDrawThickness} properties for a more scattered result.
+     * handDrawThickness} properties for a more scattered result. If not set the default value is false.
      *
      * @param handDrawn hand drawn option
      */
@@ -280,7 +284,7 @@ public interface ChartModel<T extends ChartModel> {
 
     /**
      * Defines by how many pixels hand-drawn line (when {@link AbstractChart#handDrawn handDrawn} is set to
-     * true) will fluctuate.
+     * true) will fluctuate. If not set the default value is 2.
      *
      * @param handDrawScatter the hand drawn scatter
      */
@@ -293,7 +297,7 @@ public interface ChartModel<T extends ChartModel> {
 
     /**
      * Defines by how many pixels line thickness will fluctuate (when {@link AbstractChart#handDrawn handDrawn} is set
-     * to true).
+     * to true). If not set the default value is 1.
      *
      * @param handDrawThickness the hand draw thickness
      */
@@ -306,7 +310,8 @@ public interface ChartModel<T extends ChartModel> {
 
     /**
      * Sets time, in milliseconds after which balloon is hidden if the user rolls-out of the object. Note, this is not
-     * duration of fade-out. Duration of fade-out is {@link Balloon#fadeOutDuration}.
+     * duration of fade-out. Duration of fade-out is {@link Balloon#fadeOutDuration}. If not set the default value is
+     * 150.
      *
      * @param hideBalloonTime the hide balloon time in milliseconds
      */
@@ -321,7 +326,8 @@ public interface ChartModel<T extends ChartModel> {
      * This setting affects touch-screen devices only. If a chart is on a page, and panEventsEnabled are set to true,
      * the page won't move if the user touches the chart first. If a chart is big enough and occupies all the screen
      * of your touch device, the user won’t be able to move the page at all. If you think that selecting/panning the
-     * chart is a primary purpose of your users, you should set panEventsEnabled to true, otherwise - false.
+     * chart is a primary purpose of your users, you should set panEventsEnabled to true, otherwise - false. If not
+     * set the default value is true.
      *
      * @param panEventsEnabled pan events enabled option
      */
@@ -335,7 +341,17 @@ public interface ChartModel<T extends ChartModel> {
     /**
      * Sets the prefixes which are used to make big numbers shorter: 2M instead of 2000000, etc. Prefixes are used on
      * value axes and in the legend. To enable prefixes, set {@link AbstractChart#usePrefixes usePrefixes} property to
-     * true.
+     * true. If not set the default value is
+     * <pre>{@code
+     * [{"number":1e+3,  "prefix":"k"},
+     *  {"number":1e+6,  "prefix":"M"},
+     *  {"number":1e+9,  "prefix":"G"},
+     *  {"number":1e+12, "prefix":"T"},
+     *  {"number":1e+15, "prefix":"P"},
+     *  {"number":1e+18, "prefix":"E"},
+     *  {"number":1e+21, "prefix":"Z"},
+     *  {"number":1e+24, "prefix":"Y"}]
+     *}</pre>
      *
      * @param prefixesOfBigNumbers list of BigNumberPrefix
      */
@@ -356,7 +372,17 @@ public interface ChartModel<T extends ChartModel> {
     /**
      * Sets prefixes which are used to make small numbers shorter: 2μ instead of 0.000002, etc. Prefixes are used on
      * value axes and in the legend. To enable prefixes, set {@link AbstractChart#usePrefixes usePrefixes} property to
-     * true.
+     * true. If not set the default value is
+     * <pre>{@code
+     * [{"number":1e-24, "prefix":"y"},
+     *  {"number":1e-21, "prefix":"z"},
+     *  {"number":1e-18, "prefix":"a"},
+     *  {"number":1e-15, "prefix":"f"},
+     *  {"number":1e-12, "prefix":"p"},
+     *  {"number":1e-9,  "prefix":"n"},
+     *  {"number":1e-6,  "prefix":"μ"},
+     *  {"number":1e-3,  "prefix":"m"}]
+     * }</pre>
      *
      * @param prefixesOfSmallNumbers list of SmallNumberPrefix
      */
@@ -375,7 +401,7 @@ public interface ChartModel<T extends ChartModel> {
     String getThousandsSeparator();
 
     /**
-     * Sets thousands separator.
+     * Sets thousands separator. If not set the default value is ".".
      *
      * @param thousandsSeparator - thousands separator string
      */
@@ -408,7 +434,8 @@ public interface ChartModel<T extends ChartModel> {
     /**
      * If true, prefixes will be used for big and small numbers. You can set arrays of prefixes
      * {@link AbstractChart#prefixesOfSmallNumbers prefixesOfSmallNumbers} and
-     * {@link AbstractChart#prefixesOfBigNumbers prefixesOfBigNumbers} properties.
+     * {@link AbstractChart#prefixesOfBigNumbers prefixesOfBigNumbers} properties. If not set the default value is
+     * false.
      *
      * @param usePrefixes the use prefixes option
      */
@@ -441,7 +468,7 @@ public interface ChartModel<T extends ChartModel> {
 
     /**
      * If you set autoDisplay to true the chart will automatically monitor changes of display style of chart’s
-     * container (or any of it’s parents) and will render chart correctly.
+     * container (or any of it’s parents) and will render chart correctly. If not set the default value is false.
      *
      * @param autoDisplay auto display option
      */
@@ -453,7 +480,8 @@ public interface ChartModel<T extends ChartModel> {
     Boolean getAutoResize();
 
     /**
-     * Set to false if you don't want chart to resize itself whenever its parent container size changes.
+     * Set to false if you don't want chart to resize itself whenever its parent container size changes. If not set
+     * the default value is true.
      *
      * @param autoResize auto resize option
      */
@@ -466,6 +494,7 @@ public interface ChartModel<T extends ChartModel> {
 
     /**
      * Sets opacity of background. Set it to greater 0 value if you want {@link AbstractChart#backgroundColor} to work.
+     * If not set the default value is 0.
      *
      * @param backgroundAlpha background alpha option
      */
@@ -502,7 +531,7 @@ public interface ChartModel<T extends ChartModel> {
     Boolean getSvgIcons();
 
     /**
-     * Sets use SVG icons (if browser supports SVG).
+     * Sets use SVG icons (if browser supports SVG). If not set the default value is true.
      *
      * @param svgIcons svgIcons option
      */
@@ -519,7 +548,7 @@ public interface ChartModel<T extends ChartModel> {
      * to start working user has to touch the chart once. Regular touch events like touching on the bar/slice area do
      * not require the first tap and will show balloons and perform other tasks as usual. If you have a chart which
      * occupies full screen and your page does not require scrolling, set tapToActivate to false – this
-     * will bring old behavior back.
+     * will bring old behavior back. If not set the default value is true.
      *
      * @param tapToActivate tap to activate option
      */
@@ -545,7 +574,7 @@ public interface ChartModel<T extends ChartModel> {
 
     /**
      * When enabled, chart adds aria-label attributes to columns or bullets objects. You can control values of these
-     * labels using properties like {@link AbstractGraph#accessibleLabel}.
+     * labels using properties like {@link AbstractGraph#accessibleLabel}. If not set the default value is true.
      *
      * @param accessible accessible option
      */
@@ -582,7 +611,7 @@ public interface ChartModel<T extends ChartModel> {
 
     /**
      * If processTimeout is greater than 0, 1000 data items will be parsed at a time, then the chart will make pause
-     * and continue parsing data until it finishes.
+     * and continue parsing data until it finishes. If not set the default value is 1000.
      *
      * @param processCount the process count
      */
@@ -596,7 +625,8 @@ public interface ChartModel<T extends ChartModel> {
     /**
      * If you set it to 1 millisecond or some bigger value, chart will be built in chunks instead of all at once. This
      * is useful if you work with a lot of data and the initial build of the chart takes a lot of time, which freezes
-     * the whole web application by not allowing other processes to do their job while the chart is busy.
+     * the whole web application by not allowing other processes to do their job while the chart is busy. If not set
+     * the default value is 0.
      *
      * @param processTimeout the process timeout
      */
@@ -610,7 +640,7 @@ public interface ChartModel<T extends ChartModel> {
     /**
      * Sets the touch click duration. If you set it to 200 (milliseconds) or so, the chart will fire
      * GraphItemClickEvent or SliceClickEvent only if user holds his/her finger for 0.2 seconds (200 ms) on the
-     * column/bullet/slice object.
+     * column/bullet/slice object. If not set the default value is 0.
      *
      * @param touchClickDuration the touch click duration in milliseconds
      */
@@ -624,7 +654,7 @@ public interface ChartModel<T extends ChartModel> {
     /**
      * If you set it to true and your chart div (or any of the parent div) has CSS scale applied, the chart will
      * position mouse at a correct position. This operation consumes some CPU and quite a few people are using CSS
-     * transforms.
+     * transforms. If not set the default value is false.
      *
      * @param autoTransform auto transform option
      */

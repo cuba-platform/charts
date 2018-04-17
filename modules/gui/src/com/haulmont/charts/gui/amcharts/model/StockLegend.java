@@ -5,7 +5,11 @@
 
 package com.haulmont.charts.gui.amcharts.model;
 
+import com.haulmont.charts.gui.amcharts.model.charts.StockPanel;
+
 /**
+ * StockLegend is a legend of {@link StockPanel}.
+ * <br>
  * See documentation for properties of StockLegend JS object. <br>
  *
  * <a href="http://docs.amcharts.com/3/javascriptstockchart/StockLegend">http://docs.amcharts.com/3/javascriptstockchart/StockLegend</a>
@@ -75,7 +79,7 @@ public class StockLegend extends AbstractLegend<StockLegend> {
     /**
      * Sets the text which will be displayed in the value portion of the legend when graph is comparable and at least
      * one data set is selected for comparing. You can use tags like [[value]], [[open]], [[high]], [[low]], [[close]],
-     * [[percents.value/open/close/low/high]], [[description]].
+     * [[percents.value/open/close/low/high]], [[description]]. If not set the default value is "[[percents.value]]%".
      *
      * @param valueTextComparing value text comparing
      */
@@ -93,7 +97,8 @@ public class StockLegend extends AbstractLegend<StockLegend> {
 
     /**
      * Sets the text which will be displayed in the value portion of the legend. You can use tags like [[value]],
-     * [[open]], [[high]], [[low]], [[close]], [[percents]], [[description]].
+     * [[open]], [[high]], [[low]], [[close]], [[percents]], [[description]]. If not set the default value is
+     * "[[value]]".
      *
      * @param valueTextRegular value text regular
      */

@@ -5,7 +5,12 @@
 
 package com.haulmont.charts.gui.amcharts.model;
 
+import com.haulmont.charts.gui.components.charts.SerialChart;
+import com.haulmont.charts.gui.components.charts.XYChart;
+
 /**
+ * Creates a scrollbar for {@link SerialChart} and {@link XYChart} charts.
+ * <br>
  * See documentation for properties of ChartScrollbar JS Object.
  * <br>
  * <a href="http://docs.amcharts.com/3/javascriptcharts/ChartScrollbar">http://docs.amcharts.com/3/javascriptcharts/ChartScrollbar</a>
@@ -109,6 +114,7 @@ public class Scrollbar extends AbstractChartObject {
 
     /**
      * Set autoGridCount to true if a number of gridCount should be specified automatically, according to the axis size.
+     * If not set the default value is false.
      *
      * @param autoGridCount autoGridCount option
      */
@@ -125,7 +131,7 @@ public class Scrollbar extends AbstractChartObject {
     }
 
     /**
-     * Sets background opacity.
+     * Sets background opacity. If not set the default value is 1.
      *
      * @param backgroundAlpha background opacity
      */
@@ -142,7 +148,7 @@ public class Scrollbar extends AbstractChartObject {
     }
 
     /**
-     * Sets background color of the scrollbar.
+     * Sets background color of the scrollbar. If not set the default value is #D4D4D4.
      *
      * @param backgroundColor background color of the scrollbar
      */
@@ -159,7 +165,7 @@ public class Scrollbar extends AbstractChartObject {
     }
 
     /**
-     * Sets text color.
+     * Sets text color. If not set the default value is #FFFFFF.
      *
      * @param color text color
      */
@@ -177,7 +183,7 @@ public class Scrollbar extends AbstractChartObject {
 
     /**
      * Sets height of resize grip image. Note, you should also update the image in amcharts/images folder if you don't
-     * want it to be distorted because of resizing.
+     * want it to be distorted because of resizing. If not set the default value is 35.
      *
      * @param dragIconHeight drag icon height
      */
@@ -195,7 +201,7 @@ public class Scrollbar extends AbstractChartObject {
 
     /**
      * Sets width of resize grip image. Note, you should also update the image in amcharts/images folder if you don't
-     * want it to be distorted because of resizing.
+     * want it to be distorted because of resizing. If not set the default value is 35.
      *
      * @param dragIconWidth drag icon width
      */
@@ -212,7 +218,7 @@ public class Scrollbar extends AbstractChartObject {
     }
 
     /**
-     * Sets graph fill opacity. Value range is 0 - 1.
+     * Sets graph fill opacity. Value range is 0 - 1. If not set the default value is 1.
      *
      * @param graphFillAlpha graph fill opacity
      */
@@ -229,7 +235,7 @@ public class Scrollbar extends AbstractChartObject {
     }
 
     /**
-     * Sets graph fill color.
+     * Sets graph fill color. If not set the default value is #BBBBBB.
      *
      * @param graphFillColor graph fill color
      */
@@ -246,7 +252,7 @@ public class Scrollbar extends AbstractChartObject {
     }
 
     /**
-     * Sets graph line opacity. Value range is 0 - 1.
+     * Sets graph line opacity. Value range is 0 - 1. If not set the default value is 0.
      *
      * @param graphLineAlpha graph line opacity
      */
@@ -263,7 +269,7 @@ public class Scrollbar extends AbstractChartObject {
     }
 
     /**
-     * Sets graph line color.
+     * Sets graph line color. If not set the default value is #BBBBBB.
      *
      * @param graphLineColor graph line color
      */
@@ -299,7 +305,7 @@ public class Scrollbar extends AbstractChartObject {
     }
 
     /**
-     * Sets grid opacity. Value range is 0 - 1.
+     * Sets grid opacity. Value range is 0 - 1. If not set the default value is 0.7.
      *
      * @param gridAlpha grid opacity
      */
@@ -316,7 +322,7 @@ public class Scrollbar extends AbstractChartObject {
     }
 
     /**
-     * Sets grid color.
+     * Sets grid color. If not set the default value is #FFFFFF.
      *
      * @param gridColor grid color
      */
@@ -333,7 +339,7 @@ public class Scrollbar extends AbstractChartObject {
     }
 
     /**
-     * Sets the number of grid lines.
+     * Sets the number of grid lines. If not set the default value is 0.
      *
      * @param gridCount number of grid lines
      */
@@ -350,7 +356,8 @@ public class Scrollbar extends AbstractChartObject {
     }
 
     /**
-     * Set hideResizeGrips to true if resize grips should be hidden when the mouse is away from the scrollbar.
+     * Set hideResizeGrips to true if resize grips should be hidden when the mouse is away from the scrollbar. If not
+     * set the default value is false.
      *
      * @param hideResizeGrips hideResizeGrips option
      */
@@ -402,7 +409,8 @@ public class Scrollbar extends AbstractChartObject {
 
     /**
      * Set resizeEnabled to false if you want prevent the chart scroll bar to change selection scope. The grip
-     * images will not be shown as well. The user would still be able to pan / move selection.
+     * images will not be shown as well. The user would still be able to pan / move selection. If not set the default
+     * value is true. If not set the default value is true.
      *
      * @param resizeEnabled resizeEnabled option
      */
@@ -419,7 +427,7 @@ public class Scrollbar extends AbstractChartObject {
     }
 
     /**
-     * Sets height (width, if chart is rotated) of a scrollbar.
+     * Sets height (width, if chart is rotated) of a scrollbar. If not set the default value is 20.
      *
      * @param scrollbarHeight scrollbar height
      */
@@ -437,7 +445,7 @@ public class Scrollbar extends AbstractChartObject {
 
     /**
      * Sets duration of scrolling, when the user clicks on scrollbar's background, in seconds. Note,
-     * updateOnReleaseOnly should be set to false in order animation to happen.
+     * updateOnReleaseOnly should be set to false in order animation to happen. If not set the default value is 1.
      *
      * @param scrollDuration scroll duration, in seconds
      */
@@ -454,7 +462,7 @@ public class Scrollbar extends AbstractChartObject {
     }
 
     /**
-     * Sets selected background opacity.
+     * Sets selected background opacity. If not set the default value is 1.
      *
      * @param selectedBackgroundAlpha opacity
      */
@@ -471,7 +479,7 @@ public class Scrollbar extends AbstractChartObject {
     }
 
     /**
-     * Sets selected background color.
+     * Sets selected background color. If not set the default value is #EFEFEF.
      *
      * @param selectedBackgroundColor color
      */
@@ -488,7 +496,7 @@ public class Scrollbar extends AbstractChartObject {
     }
 
     /**
-     * Sets selected graph's fill opacity. Value range is 0 - 1.
+     * Sets selected graph's fill opacity. Value range is 0 - 1. If not set the default value is 1.
      *
      * @param selectedGraphFillAlpha opacity
      */
@@ -505,7 +513,7 @@ public class Scrollbar extends AbstractChartObject {
     }
 
     /**
-     * Sets selected graph's fill color.
+     * Sets selected graph's fill color. If not set the default value is #888888.
      *
      * @param selectedGraphFillColor color.
      */
@@ -522,7 +530,7 @@ public class Scrollbar extends AbstractChartObject {
     }
 
     /**
-     * Sets selected graph's line opacity. Value range is 0 - 1.
+     * Sets selected graph's line opacity. Value range is 0 - 1. If not set the default value is 0.
      *
      * @param selectedGraphLineAlpha opacity
      */
@@ -539,7 +547,7 @@ public class Scrollbar extends AbstractChartObject {
     }
 
     /**
-     * Sets selected graph's line color.
+     * Sets selected graph's line color. If not set the default value is #888888.
      *
      * @param selectedGraphLineColor color
      */
@@ -557,7 +565,7 @@ public class Scrollbar extends AbstractChartObject {
 
     /**
      * Set updateOnReleaseOnly to true if the chart should be updated only at the moment when user releases mouse
-     * button.
+     * button. If not set the default value is false.
      *
      * @param updateOnReleaseOnly updateOnReleaseOnly option
      */
@@ -610,7 +618,7 @@ public class Scrollbar extends AbstractChartObject {
     }
 
     /**
-     * Sets distance from plot area to scrollbar, in pixels.
+     * Sets distance from plot area to scrollbar, in pixels. If not set the default value is 0.
      *
      * @param offset distance, in pixels
      */
@@ -630,7 +638,8 @@ public class Scrollbar extends AbstractChartObject {
      * Sets file name of scrollbar drag (resize grip) icon. You can find a set of icons in amcharts/images folder -
      * you can choose from these: dragIconRectBig, dragIconRectBigBlack, dragIconRectSmall, dragIconRectSmallBlack,
      * dragIconRoundBig, dragIconRoundBigBlack, dragIconRoundSmall, dragIconRoundSmallBlack. You can also use your
-     * own custom icons. Don't forget to change dragIconWidth and dragIconHeight if you change icons.
+     * own custom icons. Don't forget to change dragIconWidth and dragIconHeight if you change icons. If not set the
+     * default value is "dragIconRoundBig".
      *
      * @param dragIcon icon file name
      */
@@ -649,7 +658,7 @@ public class Scrollbar extends AbstractChartObject {
     /**
      * Set ignoreCustomColors to true to use scrollbar's graph colors. If you have column type graph in your
      * scrollbar, and this graph has custom colors for one or more columns in data provider, those columns will be
-     * colored with this custom color.
+     * colored with this custom color. If not set the default value is false.
      *
      * @param ignoreCustomColors ignoreCustomColors option
      */
@@ -668,7 +677,8 @@ public class Scrollbar extends AbstractChartObject {
     /**
      * Set oppositeAxis to false and scrollbar will be placed next to category/value axis. However it won't adjust
      * its position regarding axis labels, so you might need to use offset property to move scrollbar away from
-     * labels. By default, scrollbar is in the opposite side of plot area from the axis.
+     * labels. By default, scrollbar is in the opposite side of plot area from the axis. If not set the default value
+     * is true.
      *
      * @param oppositeAxis oppositeAxis option
      */
@@ -685,8 +695,8 @@ public class Scrollbar extends AbstractChartObject {
     }
 
     /**
-     * Sets drag cursor. Mouse cursor displayed when clicked on selected part of a scrollbar. For example, "cursor:
-     * move; cursor: grab; cursor: -moz-grabbing; cursor: -webkit-grabbing;"
+     * Sets drag cursor. Mouse cursor displayed when clicked on selected part of a scrollbar. If not set the default
+     * value is "cursor: move; cursor: grab; cursor: -moz-grabbing; cursor: -webkit-grabbing;"
      *
      * @param dragCursorDown drag cursor down string
      */
@@ -703,8 +713,8 @@ public class Scrollbar extends AbstractChartObject {
     }
 
     /**
-     * Sets drag cursor hover. Mouse cursor displayed when hovering over selected part of a scrollbar. For example,
-     * "cursor: move; cursor: grab; cursor: -moz-grab; cursor: -webkit-grab;"
+     * Sets drag cursor hover. Mouse cursor displayed when hovering over selected part of a scrollbar. If not set the
+     * default value is "cursor: move; cursor: grab; cursor: -moz-grab; cursor: -webkit-grab;".
      *
      * @param dragCursorHover drag cursor hover string
      */
@@ -744,7 +754,8 @@ public class Scrollbar extends AbstractChartObject {
      * Sets text which screen readers will read if user rolls-over or sets focus using tab key (this is possible only
      * if {@link AbstractGraph#tabIndex} is set to some number) on the grips or draggable part of a scrollbar. Text is
      * added as aria-label tag. Not all screen readers and browsers support this. Note, you should set tabIndex to
-     * some number in order it would be possible to zoom chart using cursor keys.
+     * some number in order it would be possible to zoom chart using cursor keys. If not set the default value is
+     * "Zoom chart using cursor arrows".
      *
      * @param accessibleLabel accessible label string
      */
@@ -762,7 +773,7 @@ public class Scrollbar extends AbstractChartObject {
 
     /**
      * Sets mouse cursor type shown when user hovers horizontal cursor's resize grips. Possible values are:
-     * "e-resize", "n-resize", etc.
+     * "e-resize", "n-resize", etc. If not set the default value is "ew-resize".
      *
      * @param hResizeCursor hResizeCursor value
      */
@@ -812,7 +823,7 @@ public class Scrollbar extends AbstractChartObject {
 
     /**
      * Sets mouse cursor type shown when user hovers vertical cursor's resize grips. Possible values are:
-     * "e-resize", "n-resize", etc.
+     * "e-resize", "n-resize", etc. If not set the default value is "ns-resize".
      *
      * @param vResizeCursor vResizeCursor value
      */

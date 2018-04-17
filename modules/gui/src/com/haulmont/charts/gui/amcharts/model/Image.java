@@ -5,10 +5,18 @@
 
 package com.haulmont.charts.gui.amcharts.model;
 
+/**
+ * Image is used to add images to the end/start of trend lines. Allows you to display image anywhere on chart's plot
+ * area.
+ * <br>
+ * See documentation for properties of Image JS Object. <br>
+ *
+ * <a href="https://docs.amcharts.com/3/javascriptstockchart/Image">https://docs.amcharts.com/3/javascriptstockchart/Image</a>
+ */
 public class Image extends AbstractChartObject {
 
     private static final long serialVersionUID = -1259965238248274458L;
-    
+
     private Color balloonColor;
     private String balloonText;
     private Color color;
@@ -29,7 +37,7 @@ public class Image extends AbstractChartObject {
     }
 
     /**
-     * Sets roll-over balloon color.
+     * Sets roll-over balloon color. If not set the default value is #000000.
      *
      * @param balloonColor color
      */
@@ -63,7 +71,8 @@ public class Image extends AbstractChartObject {
     }
 
     /**
-     * Sets color of an image. Works only if an image is generated using SVG path (svgPath property)
+     * Sets color of an image. Works only if an image is generated using SVG path (svgPath property). If not set the
+     * default value is #000000.
      *
      * @param color color
      */
@@ -80,7 +89,7 @@ public class Image extends AbstractChartObject {
     }
 
     /**
-     * Sets height of an image.
+     * Sets height of an image. If not set the default value is 20.
      *
      * @param height height
      */
@@ -97,7 +106,7 @@ public class Image extends AbstractChartObject {
     }
 
     /**
-     * Sets horizontal offset.
+     * Sets horizontal offset. If not set the default value is 0.
      *
      * @param offsetX X offset
      */
@@ -114,7 +123,7 @@ public class Image extends AbstractChartObject {
     }
 
     /**
-     * Sets vertical offset.
+     * Sets vertical offset. If not set the default value is 0.
      *
      * @param offsetY Y offset
      */
@@ -148,7 +157,7 @@ public class Image extends AbstractChartObject {
     }
 
     /**
-     * Sets rotation of an image.
+     * Sets rotation of an image. If not set the default value is 0.
      *
      * @param rotation rotation
      */
@@ -199,7 +208,7 @@ public class Image extends AbstractChartObject {
     }
 
     /**
-     * Sets width on an image.
+     * Sets width on an image. If not set the default value is 20.
      *
      * @param width width
      */

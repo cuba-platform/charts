@@ -17,7 +17,7 @@ public interface AngularGaugeChartModel<T extends AngularGaugeChartModel> extend
     Boolean getAdjustSize();
 
     /**
-     * Sets using the whole space of the canvas to draw the gauge.
+     * Sets using the whole space of the canvas to draw the gauge. If not set the default value is true.
      *
      * @param adjustSize adjust size option
      */
@@ -67,7 +67,7 @@ public interface AngularGaugeChartModel<T extends AngularGaugeChartModel> extend
     Boolean getClockWiseOnly();
 
     /**
-     * Set clockWiseOnly to true if you use gauge to create a clock.
+     * Set clockWiseOnly to true if you use gauge to create a clock. If not set the default value is false.
      *
      * @param clockWiseOnly clock wise only option
      */
@@ -79,7 +79,7 @@ public interface AngularGaugeChartModel<T extends AngularGaugeChartModel> extend
     Double getFaceAlpha();
 
     /**
-     * Sets gauge face opacity.
+     * Sets gauge face opacity. If not set the default value is 0.
      *
      * @param faceAlpha the face alpha
      */
@@ -91,7 +91,7 @@ public interface AngularGaugeChartModel<T extends AngularGaugeChartModel> extend
     Double getFaceBorderAlpha();
 
     /**
-     * Sets gauge face border opacity.
+     * Sets gauge face border opacity. If not set the default value is 0.
      *
      * @param faceBorderAlpha the face border alpha
      */
@@ -103,7 +103,7 @@ public interface AngularGaugeChartModel<T extends AngularGaugeChartModel> extend
     Color getFaceBorderColor();
 
     /**
-     * Sets gauge face border color.
+     * Sets gauge face border color. If not set the default value is #555555.
      *
      * @param faceBorderColor the face border color
      */
@@ -115,7 +115,7 @@ public interface AngularGaugeChartModel<T extends AngularGaugeChartModel> extend
     Integer getFaceBorderWidth();
 
     /**
-     * Sets gauge face border width.
+     * Sets gauge face border width. If not set the default value is 1.
      *
      * @param faceBorderWidth the face border width
      */
@@ -127,7 +127,7 @@ public interface AngularGaugeChartModel<T extends AngularGaugeChartModel> extend
     Color getFaceColor();
 
     /**
-     * Sets gauge face color, requires faceAlpha greater than 0 value.
+     * Sets gauge face color, requires faceAlpha greater than 0 value. If not set the default value is #FAFAFA.
      *
      * @param faceColor the face color
      */
@@ -175,7 +175,7 @@ public interface AngularGaugeChartModel<T extends AngularGaugeChartModel> extend
     Integer getMinRadius();
 
     /**
-     * Sets minimum radius of a gauge.
+     * Sets minimum radius of a gauge. If not set the default value is 10.
      *
      * @param minRadius minimum radius
      */

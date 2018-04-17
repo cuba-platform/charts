@@ -10,6 +10,7 @@ import com.haulmont.charts.gui.data.DataProvider;
 import com.haulmont.cuba.core.global.UuidProvider;
 import org.apache.commons.collections4.CollectionUtils;
 import org.apache.commons.lang.StringUtils;
+import com.haulmont.charts.gui.amcharts.model.charts.StockChartGroup;
 
 import java.util.ArrayList;
 import java.util.Arrays;
@@ -88,8 +89,7 @@ public class DataSet extends AbstractChartObject {
     }
 
     /**
-     * Sets color of the data set. One of colors from
-     * {@link com.haulmont.charts.gui.amcharts.model.charts.StockChartGroup#colors colors} array will be used if not
+     * Sets color of the data set. One of colors from {@link StockChartGroup#colors colors} array will be used if not
      * set.
      *
      * @param color color
@@ -107,7 +107,7 @@ public class DataSet extends AbstractChartObject {
     }
 
     /**
-     * Set to true if this data set selected for comparing.
+     * Set to true if this data set selected for comparing. If not set the default value is false.
      *
      * @param compared compared option
      */
@@ -187,7 +187,8 @@ public class DataSet extends AbstractChartObject {
     }
 
     /**
-     * Set showInCompare to false if this data set shouldn't be visible in "compare to" list.
+     * Set showInCompare to false if this data set shouldn't be visible in "compare to" list. If not set the default
+     * value is true.
      *
      * @param showInCompare showInCompare option
      */
@@ -204,7 +205,8 @@ public class DataSet extends AbstractChartObject {
     }
 
     /**
-     * Set showInSelect to false if this data set shouldn't be visible in "select" dropdown.
+     * Set showInSelect to false if this data set shouldn't be visible in "select" dropdown. If not set the default
+     * value is true.
      *
      * @param showInSelect showInSelect option
      */
