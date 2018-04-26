@@ -1,0 +1,25 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<!--
+  ~ Copyright (c) 2008-2018 Haulmont. All rights reserved.
+  ~ Use is subject to license terms, see http://www.cuba-platform.com/commercial-software-license for details.
+  -->
+
+<window xmlns="http://schemas.haulmont.com/cuba/window.xsd"
+        xmlns:chart="http://schemas.haulmont.com/charts/charts.xsd"
+        caption="msg://screenCaption"
+        class="com.haulmont.charts.web.ui.PivotTableController"
+        messagesPack="com.haulmont.charts.web.ui">
+    <dsContext>
+        <datasource id="pivotTableDs"
+                    datasourceClass="com.haulmont.charts.web.ui.PivotTableDatasource"
+                    allowCommit="false"/>
+    </dsContext>
+
+    <layout height="100%">
+        <chart:pivotTable id="pivotTable" datasource="pivotTableDs"
+                          width="100%"
+                          height="100%">
+            <chart:properties/>
+        </chart:pivotTable>
+    </layout>
+</window>

@@ -6,4 +6,5 @@
 
 <screen-config xmlns="http://schemas.haulmont.com/cuba/screens.xsd">
     <screen id="chart$jsonChart" template="/com/haulmont/charts/web/ui/json-chart.xml"/>
+    <screen id="chart$pivotTable" template="/com/haulmont/charts/web/ui/pivot-table-frame.xml"/>
 </screen-config>
