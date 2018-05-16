@@ -9,30 +9,29 @@ import com.google.gson.JsonObject;
 import com.google.gson.JsonSerializationContext;
 import com.haulmont.charts.gui.data.DataItem;
 import com.haulmont.charts.gui.data.EntityDataItem;
+import com.haulmont.chile.core.datatypes.Datatypes;
 import com.haulmont.chile.core.datatypes.impl.EnumClass;
 import com.haulmont.chile.core.model.Instance;
 import com.haulmont.chile.core.model.MetaClass;
-import com.haulmont.chile.core.model.MetaProperty;
+import com.haulmont.chile.core.model.MetaPropertyPath;
 import com.haulmont.chile.core.model.utils.InstanceUtils;
+import com.haulmont.cuba.core.app.dynamicattributes.DynamicAttributesUtils;
 import com.haulmont.cuba.core.entity.Entity;
 import com.haulmont.cuba.core.global.AppBeans;
 import com.haulmont.cuba.core.global.Messages;
 import com.haulmont.cuba.core.global.Metadata;
+import com.haulmont.cuba.core.global.UserSessionSource;
 import com.haulmont.cuba.gui.GuiDevelopmentException;
 import org.apache.commons.lang.BooleanUtils;
 import org.apache.commons.lang.StringUtils;
 
-import java.sql.Time;
-import java.text.SimpleDateFormat;
-import java.util.ArrayList;
-import java.util.Collection;
-import java.util.Date;
-import java.util.List;
+import java.util.*;
 
 public class PivotDataItemsSerializer {
 
     protected Messages messages = AppBeans.get(Messages.class);
     protected Metadata metadata = AppBeans.get(Metadata.class);
+    protected UserSessionSource userSessionSource = AppBeans.get(UserSessionSource.class);
 
     public List<JsonObject> serialize(List<DataItem> items, JsonSerializationContext context) {
         List<JsonObject> serialized = new ArrayList<>();
@@ -63,26 +62,19 @@ public class PivotDataItemsSerializer {
         } else if (value instanceof EnumClass) {
             formattedValue = messages.getMessage((Enum) value);
         } else if (value instanceof Date) {
-            String formatStr;
             if (item instanceof EntityDataItem) {
                 EntityDataItem entityItem = (EntityDataItem) item;
                 MetaClass metaClass = metadata.getClassNN(entityItem.getItem().getClass());
-                MetaProperty metaProperty = metaClass.getPropertyNN(property);
-
-                Class type = metaProperty.getRange().asDatatype().getJavaClass();
-                if (type.equals(java.sql.Date.class)) {
-                    formatStr = messages.getMainMessage("dateFormat");
-                } else if (type.equals(Time.class)) {
-                    formatStr = messages.getMainMessage("timeFormat");
+                MetaPropertyPath mpp = resolveMetaPropertyPath(metaClass, property);
+                if (mpp != null) {
+                    formattedValue = mpp.getRange().asDatatype().format(value, getUserLocale());
                 } else {
-                    formatStr = messages.getMainMessage("dateTimeFormat");
+                    formattedValue = getDateTimeFormattedValue(value, getUserLocale());
                 }
             } else {
-                formatStr = messages.getMainMessage("dateTimeFormat");
+                formattedValue = getDateTimeFormattedValue(value, getUserLocale());
             }
 
-            SimpleDateFormat dateFormat = new SimpleDateFormat(formatStr);
-            formattedValue = dateFormat.format((Date) value);
         } else if (value instanceof Boolean) {
             formattedValue = BooleanUtils.isTrue((Boolean) value)
                     ? messages.getMainMessage("boolean.yes")
@@ -95,5 +87,25 @@ public class PivotDataItemsSerializer {
         }
 
         jsonObject.add(context.getLocalizedPropertyName(property), context.serialize(formattedValue));
+    }
+
+    protected MetaPropertyPath resolveMetaPropertyPath(MetaClass metaClass, String property) {
+        MetaPropertyPath mpp = metaClass.getPropertyPath(property);
+
+        if (mpp == null && DynamicAttributesUtils.isDynamicAttribute(property)) {
+            mpp = DynamicAttributesUtils.getMetaPropertyPath(metaClass, property);
+        }
+
+        return mpp;
+    }
+
+    protected String getDateTimeFormattedValue(Object value, Locale locale) {
+        return Datatypes.getNN(Date.class).format(value, locale);
+    }
+
+    protected Locale getUserLocale() {
+        return userSessionSource.checkCurrentUserSession() ?
+                userSessionSource.getUserSession().getLocale() :
+                messages.getTools().getDefaultLocale();
     }
 }
