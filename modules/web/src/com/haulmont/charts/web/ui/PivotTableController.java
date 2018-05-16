@@ -140,7 +140,7 @@ public class PivotTableController extends AbstractFrame {
                     .filter(e -> Strings.isNullOrEmpty(e.function))
                     .collect(Collectors.toMap(
                             PivotTableDescription.PropertyDescription::getName,
-                            PivotTableDescription.PropertyDescription::getCaption));
+                            PivotTableDescription.PropertyDescription::getCaption, (e1, e2) -> e1));
         }
         return Collections.emptyMap();
     }
@@ -152,7 +152,7 @@ public class PivotTableController extends AbstractFrame {
                     .filter(e -> !Strings.isNullOrEmpty(e.function))
                     .collect(Collectors.toMap(
                             PivotTableDescription.PropertyDescription::getName,
-                            e -> new JsFunction(e.function))));
+                            e -> new JsFunction(e.function), (e1, e2) -> e1)));
         }
         return derivedProperties;
     }
