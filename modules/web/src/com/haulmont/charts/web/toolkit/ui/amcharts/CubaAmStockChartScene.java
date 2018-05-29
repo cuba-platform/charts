@@ -18,6 +18,7 @@ import com.haulmont.charts.web.toolkit.ui.client.amstockcharts.CubaAmStockChartS
 import com.haulmont.charts.web.toolkit.ui.client.amstockcharts.CubaAmStockChartSceneState;
 import com.haulmont.charts.web.toolkit.ui.client.amstockcharts.CubaAmStockChartServerRpc;
 import com.haulmont.cuba.web.sys.WebJarResource;
+import com.haulmont.cuba.web.sys.WebJarResourceUtils;
 import com.vaadin.server.KeyMapper;
 import com.vaadin.ui.AbstractComponent;
 import org.apache.commons.collections4.CollectionUtils;
@@ -25,7 +26,6 @@ import org.apache.commons.lang.StringUtils;
 import org.apache.commons.lang.builder.HashCodeBuilder;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-import org.webjars.WebJarAssetLocator;
 
 import javax.annotation.Nullable;
 import java.lang.reflect.Method;
@@ -379,10 +379,10 @@ public class CubaAmStockChartScene extends AbstractComponent {
         }
 
         if (chart.getPath() == null || chart.getPath().isEmpty()) {
-            String amchartsPath = new WebJarAssetLocator()
-                    .getFullPath("amcharts", "amcharts.js");
-            String path = amchartsPath.substring(0, amchartsPath.lastIndexOf("/"))
-                    .replace("META-INF/resources", "VAADIN") + "/";
+            String amchartsPath = WebJarResourceUtils
+                    .getWebJarPath("amcharts", "amcharts.js");
+            String path = WebJarResourceUtils
+                    .translateToWebPath(amchartsPath.substring(0, amchartsPath.lastIndexOf("/"))) + "/";
             chart.setPath(path);
         }
     }
