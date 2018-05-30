@@ -6,72 +6,10 @@
 
 <xs:schema targetNamespace="http://schemas.haulmont.com/charts/charts.xsd"
            xmlns:xs="http://www.w3.org/2001/XMLSchema"
+           xmlns:cuba="http://schemas.haulmont.com/cuba/window.xsd"
            xmlns="http://schemas.haulmont.com/charts/charts.xsd"
            elementFormDefault="qualified"
            attributeFormDefault="unqualified">
-
-    <!-- BaseComponent -->
-    <xs:complexType name="baseComponent">
-        <xs:attributeGroup ref="hasId"/>
-        <xs:attributeGroup ref="hasCaption"/>
-        <xs:attributeGroup ref="hasIcon"/>
-        <xs:attributeGroup ref="hasSize"/>
-        <xs:attributeGroup ref="hasStyle"/>
-        <xs:attributeGroup ref="hasVisibility"/>
-        <xs:attributeGroup ref="hasAlign"/>
-        <xs:attributeGroup ref="hasEnableProp"/>
-    </xs:complexType>
-
-    <xs:attributeGroup name="hasId">
-        <xs:attribute name="id" type="xs:string"/>
-        <xs:anyAttribute namespace="##other" processContents="lax"/>
-    </xs:attributeGroup>
-
-    <xs:attributeGroup name="hasCaption">
-        <xs:attribute name="caption" type="resourceString"/>
-        <xs:attribute name="description" type="resourceString"/>
-    </xs:attributeGroup>
-
-    <xs:attributeGroup name="hasIcon">
-        <xs:attribute name="icon" type="xs:string"/>
-    </xs:attributeGroup>
-
-    <xs:attributeGroup name="hasSize">
-        <xs:attribute name="width" type="componentSize"/>
-        <xs:attribute name="height" type="componentSize"/>
-        <xs:attribute name="colspan" type="xs:integer"/>
-        <xs:attribute name="rowspan" type="xs:integer"/>
-    </xs:attributeGroup>
-
-    <xs:simpleType name="componentSize">
-        <xs:union>
-            <xs:simpleType>
-                <xs:restriction base="xs:string"/>
-            </xs:simpleType>
-            <xs:simpleType>
-                <xs:restriction base="xs:string">
-                    <xs:enumeration value="AUTO"/>
-                    <xs:enumeration value="100%"/>
-                </xs:restriction>
-            </xs:simpleType>
-        </xs:union>
-    </xs:simpleType>
-
-    <xs:attributeGroup name="hasStyle">
-        <xs:attribute name="stylename" type="xs:string"/>
-    </xs:attributeGroup>
-
-    <xs:attributeGroup name="hasVisibility">
-        <xs:attribute name="visible" type="xs:boolean"/>
-    </xs:attributeGroup>
-
-    <xs:attributeGroup name="hasAlign">
-        <xs:attribute name="align" type="align"/>
-    </xs:attributeGroup>
-
-    <xs:attributeGroup name="hasEnableProp">
-        <xs:attribute name="enable" type="xs:boolean"/>
-    </xs:attributeGroup>
 
     <!-- Enums -->
 
@@ -242,20 +180,6 @@
         </xs:restriction>
     </xs:simpleType>
 
-    <xs:simpleType name="align">
-        <xs:restriction base="xs:string">
-            <xs:enumeration value="TOP_RIGHT"/>
-            <xs:enumeration value="TOP_LEFT"/>
-            <xs:enumeration value="TOP_CENTER"/>
-            <xs:enumeration value="MIDDLE_RIGHT"/>
-            <xs:enumeration value="MIDDLE_LEFT"/>
-            <xs:enumeration value="MIDDLE_CENTER"/>
-            <xs:enumeration value="BOTTOM_RIGHT"/>
-            <xs:enumeration value="BOTTOM_LEFT"/>
-            <xs:enumeration value="BOTTOM_CENTER"/>
-        </xs:restriction>
-    </xs:simpleType>
-
     <xs:simpleType name="animationEffect">
         <xs:restriction base="xs:string">
             <xs:enumeration value="EASE_OUT_SINE"/>
@@ -263,20 +187,6 @@
             <xs:enumeration value="ELASTIC"/>
             <xs:enumeration value="BOUNCE"/>
         </xs:restriction>
-    </xs:simpleType>
-
-    <xs:simpleType name="resourceString">
-        <xs:union>
-            <xs:simpleType>
-                <xs:restriction base="xs:string"/>
-            </xs:simpleType>
-            <xs:simpleType>
-                <xs:restriction base="xs:string">
-                    <xs:enumeration value="msg://"/>
-                    <xs:enumeration value="mainMsg://"/>
-                </xs:restriction>
-            </xs:simpleType>
-        </xs:union>
     </xs:simpleType>
 
     <xs:simpleType name="showPositionOnCandle">
@@ -601,7 +511,7 @@
         <xs:attribute name="format" type="exportFormat"/>
         <xs:attribute name="label" type="xs:string"/>
         <xs:attribute name="title" type="xs:string"/>
-        <xs:attribute name="fileName" type="resourceString"/>
+        <xs:attribute name="fileName" type="cuba:resourceString"/>
         <xs:attribute name="pageOrientation" type="pageOrientation"/>
         <xs:attribute name="pageSize" type="pageSize"/>
         <xs:attribute name="pageOrigin" type="xs:boolean"/>
@@ -976,7 +886,7 @@
             <xs:element name="valueFunction" minOccurs="0" maxOccurs="1"/>
         </xs:all>
 
-        <xs:attribute name="accessibleLabel" type="resourceString"/>
+        <xs:attribute name="accessibleLabel" type="cuba:resourceString"/>
         <xs:attribute name="align" type="hAlign"/>
         <xs:attribute name="autoMargins" type="xs:boolean"/>
         <xs:attribute name="backgroundAlpha" type="xs:double"/>
@@ -1177,7 +1087,7 @@
     </xs:complexType>
 
     <xs:complexType name="chartScrollbar">
-        <xs:attribute name="accessibleLabel" type="resourceString"/>
+        <xs:attribute name="accessibleLabel" type="cuba:resourceString"/>
         <xs:attribute name="autoGridCount" type="xs:boolean"/>
         <xs:attribute name="backgroundAlpha" type="xs:double"/>
         <xs:attribute name="backgroundColor" type="color"/>
@@ -1257,7 +1167,7 @@
         <xs:attribute name="id" type="xs:string"/>
         <xs:attribute name="type" type="chartGraphType"/>
 
-        <xs:attribute name="accessibleLabel" type="resourceString"/>
+        <xs:attribute name="accessibleLabel" type="cuba:resourceString"/>
         <xs:attribute name="alphaField" type="xs:string"/>
         <xs:attribute name="animationPlayed" type="xs:boolean"/>
         <xs:attribute name="balloonColor" type="color"/>
@@ -1367,7 +1277,7 @@
 
     <xs:complexType name="abstractChart" abstract="true">
         <xs:complexContent>
-            <xs:extension base="baseComponent">
+            <xs:extension base="cuba:baseComponent">
                 <xs:all>
                     <xs:element name="allLabels" minOccurs="0" maxOccurs="1">
                         <xs:complexType>
@@ -1566,7 +1476,7 @@
                     <xs:element name="data" minOccurs="0" maxOccurs="1" type="dataSetValues"/>
                 </xs:all>
 
-                <xs:attribute name="accessibleLabel" type="resourceString"/>
+                <xs:attribute name="accessibleLabel" type="cuba:resourceString"/>
                 <xs:attribute name="alpha" type="xs:double"/>
                 <xs:attribute name="alphaField" type="xs:double"/>
                 <xs:attribute name="baseColor" type="color"/>
@@ -1806,7 +1716,7 @@
     <xs:element name="customChart">
         <xs:complexType>
             <xs:complexContent>
-                <xs:extension base="baseComponent">
+                <xs:extension base="cuba:baseComponent">
                     <xs:sequence>
                         <xs:element name="nativeJson" minOccurs="0" maxOccurs="1"/>
                     </xs:sequence>
@@ -1819,7 +1729,7 @@
     <xs:element name="mapViewer">
         <xs:complexType>
             <xs:complexContent>
-                <xs:extension base="baseComponent">
+                <xs:extension base="cuba:baseComponent">
                     <xs:attribute name="mapType" type="mapTypeType" default="roadmap"/>
                 </xs:extension>
             </xs:complexContent>
@@ -2374,7 +2284,7 @@
     <xs:element name="stockChart">
         <xs:complexType>
             <xs:complexContent>
-                <xs:extension base="baseComponent">
+                <xs:extension base="cuba:baseComponent">
                     <xs:all>
                         <xs:element name="colors" minOccurs="0" maxOccurs="1">
                             <xs:complexType>
@@ -2596,7 +2506,7 @@
                             </xs:complexType>
                         </xs:element>
                     </xs:sequence>
-                    <xs:attribute name="name" type="resourceString"/>
+                    <xs:attribute name="name" type="cuba:resourceString"/>
                 </xs:complexType>
             </xs:element>
         </xs:sequence>
@@ -2606,7 +2516,7 @@
         <xs:sequence>
             <xs:element name="property" minOccurs="0" maxOccurs="unbounded">
                 <xs:complexType>
-                    <xs:attribute name="name" type="resourceString" use="required"/>
+                    <xs:attribute name="name" type="cuba:resourceString" use="required"/>
                 </xs:complexType>
             </xs:element>
         </xs:sequence>
@@ -2620,7 +2530,7 @@
                         <xs:sequence>
                             <xs:element name="row" minOccurs="0" maxOccurs="unbounded">
                                 <xs:complexType>
-                                    <xs:attribute name="value" type="resourceString"/>
+                                    <xs:attribute name="value" type="cuba:resourceString"/>
                                 </xs:complexType>
                             </xs:element>
                         </xs:sequence>
@@ -2632,7 +2542,7 @@
                         <xs:sequence>
                             <xs:element name="column" minOccurs="0" maxOccurs="unbounded">
                                 <xs:complexType>
-                                    <xs:attribute name="value" type="resourceString"/>
+                                    <xs:attribute name="value" type="cuba:resourceString"/>
                                 </xs:complexType>
                             </xs:element>
                         </xs:sequence>
@@ -2657,14 +2567,14 @@
                         <xs:sequence>
                             <xs:element name="property" minOccurs="0" maxOccurs="unbounded">
                                 <xs:complexType>
-                                    <xs:attribute name="name" type="resourceString"/>
+                                    <xs:attribute name="name" type="cuba:resourceString"/>
                                 </xs:complexType>
                             </xs:element>
                             <xs:element name="function" minOccurs="0" maxOccurs="1"/>
                         </xs:sequence>
 
                         <xs:attribute name="mode" type="aggregationMode"/>
-                        <xs:attribute name="caption" type="resourceString"/>
+                        <xs:attribute name="caption" type="cuba:resourceString"/>
                         <xs:attribute name="custom" type="xs:boolean"/>
                     </xs:complexType>
                 </xs:element>
@@ -2678,7 +2588,7 @@
                                         <xs:element name="function" minOccurs="0" maxOccurs="1"/>
                                     </xs:sequence>
 
-                                    <xs:attribute name="caption" type="resourceString"/>
+                                    <xs:attribute name="caption" type="cuba:resourceString"/>
                                     <xs:attribute name="mode" type="aggregationMode"/>
                                     <xs:attribute name="custom" type="xs:boolean"/>
                                 </xs:complexType>
@@ -2723,7 +2633,7 @@
                                     <xs:sequence minOccurs="1" maxOccurs="1">
                                         <xs:element name="function"/>
                                     </xs:sequence>
-                                    <xs:attribute name="caption" type="resourceString" use="required"/>
+                                    <xs:attribute name="caption" type="cuba:resourceString" use="required"/>
                                 </xs:complexType>
                             </xs:element>
                         </xs:sequence>
@@ -2736,7 +2646,7 @@
                             <xs:element name="property" minOccurs="0" maxOccurs="unbounded">
                                 <xs:complexType>
                                     <xs:attribute name="name" type="xs:string" use="required"/>
-                                    <xs:attribute name="localizedName" type="resourceString"/>
+                                    <xs:attribute name="localizedName" type="cuba:resourceString"/>
                                 </xs:complexType>
                             </xs:element>
                         </xs:sequence>
@@ -2760,12 +2670,12 @@
             <xs:attribute name="menuLimit" type="xs:integer"/>
             <xs:attribute name="autoSortUnusedProperties" type="xs:boolean"/>
             <xs:attribute name="unusedPropertiesVertical" type="xs:string"/>
-            <xs:attribute name="emptyDataMessage" type="resourceString"/>
+            <xs:attribute name="emptyDataMessage" type="cuba:resourceString"/>
 
-            <xs:attributeGroup ref="hasId"/>
-            <xs:attributeGroup ref="hasSize"/>
-            <xs:attributeGroup ref="hasStyle"/>
-            <xs:attributeGroup ref="hasVisibility"/>
+            <xs:attributeGroup ref="cuba:hasId"/>
+            <xs:attributeGroup ref="cuba:hasSize"/>
+            <xs:attributeGroup ref="cuba:hasStyle"/>
+            <xs:attributeGroup ref="cuba:hasVisibility"/>
             <xs:attributeGroup ref="hasEditState"/>
         </xs:complexType>
     </xs:element>
