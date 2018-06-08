@@ -14,7 +14,7 @@ import com.haulmont.charts.gui.components.charts.SeriesBasedChart;
 import com.haulmont.chile.core.model.MetaProperty;
 import com.haulmont.cuba.core.global.DevelopmentException;
 import com.haulmont.cuba.gui.data.CollectionDatasource;
-import org.apache.commons.lang.StringUtils;
+import org.apache.commons.lang3.StringUtils;
 
 import java.util.Date;
 

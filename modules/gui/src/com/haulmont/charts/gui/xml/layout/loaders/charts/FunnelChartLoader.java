@@ -8,7 +8,7 @@ package com.haulmont.charts.gui.xml.layout.loaders.charts;
 import com.haulmont.charts.gui.amcharts.model.FunnelValueRepresentation;
 import com.haulmont.charts.gui.amcharts.model.LabelPosition;
 import com.haulmont.charts.gui.components.charts.FunnelChart;
-import org.apache.commons.lang.StringUtils;
+import org.apache.commons.lang3.StringUtils;
 import org.dom4j.Element;
 
 public class FunnelChartLoader extends SlicedChartLoader<FunnelChart> {

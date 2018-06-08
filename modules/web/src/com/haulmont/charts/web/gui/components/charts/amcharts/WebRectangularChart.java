@@ -10,7 +10,7 @@ import com.haulmont.charts.gui.amcharts.model.Cursor;
 import com.haulmont.charts.gui.amcharts.model.Scrollbar;
 import com.haulmont.charts.gui.amcharts.model.TrendLine;
 import com.haulmont.charts.gui.components.charts.RectangularChart;
-import org.apache.commons.lang.StringUtils;
+import org.apache.commons.lang3.StringUtils;
 
 import java.util.List;
 

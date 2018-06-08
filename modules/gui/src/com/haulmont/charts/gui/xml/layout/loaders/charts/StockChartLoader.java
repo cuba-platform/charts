@@ -18,7 +18,7 @@ import com.haulmont.cuba.gui.GuiDevelopmentException;
 import com.haulmont.cuba.gui.data.CollectionDatasource;
 import com.haulmont.cuba.gui.data.Datasource;
 import org.apache.commons.collections4.CollectionUtils;
-import org.apache.commons.lang.StringUtils;
+import org.apache.commons.lang3.StringUtils;
 import org.dom4j.Element;
 
 import java.util.ArrayList;

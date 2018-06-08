@@ -16,7 +16,7 @@ import com.haulmont.chile.core.model.utils.InstanceUtils;
 import com.haulmont.cuba.core.entity.Entity;
 import com.haulmont.cuba.core.global.Messages;
 import org.apache.commons.collections4.CollectionUtils;
-import org.apache.commons.lang.StringUtils;
+import org.apache.commons.lang3.StringUtils;
 import org.springframework.beans.factory.config.BeanDefinition;
 import org.springframework.context.annotation.Scope;
 import org.springframework.stereotype.Component;

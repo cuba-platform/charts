@@ -17,13 +17,13 @@ import com.haulmont.charts.web.toolkit.ui.amcharts.events.*;
 import com.haulmont.charts.web.toolkit.ui.client.amstockcharts.CubaAmStockChartSceneClientRpc;
 import com.haulmont.charts.web.toolkit.ui.client.amstockcharts.CubaAmStockChartSceneState;
 import com.haulmont.charts.web.toolkit.ui.client.amstockcharts.CubaAmStockChartServerRpc;
-import com.haulmont.cuba.web.sys.WebJarResource;
 import com.haulmont.cuba.web.sys.WebJarResourceUtils;
+import com.haulmont.cuba.web.widgets.WebJarResource;
 import com.vaadin.server.KeyMapper;
 import com.vaadin.ui.AbstractComponent;
 import org.apache.commons.collections4.CollectionUtils;
-import org.apache.commons.lang.StringUtils;
-import org.apache.commons.lang.builder.HashCodeBuilder;
+import org.apache.commons.lang3.StringUtils;
+import org.apache.commons.lang3.builder.HashCodeBuilder;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 

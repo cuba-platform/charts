@@ -22,8 +22,8 @@ import com.haulmont.cuba.core.global.Messages;
 import com.haulmont.cuba.core.global.Metadata;
 import com.haulmont.cuba.core.global.UserSessionSource;
 import com.haulmont.cuba.gui.GuiDevelopmentException;
-import org.apache.commons.lang.BooleanUtils;
-import org.apache.commons.lang.StringUtils;
+import org.apache.commons.lang3.BooleanUtils;
+import org.apache.commons.lang3.StringUtils;
 
 import java.util.*;
 

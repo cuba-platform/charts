@@ -19,14 +19,17 @@ import com.haulmont.cuba.gui.GuiDevelopmentException;
 import com.haulmont.cuba.gui.components.Component;
 import com.haulmont.cuba.gui.xml.layout.loaders.AbstractComponentLoader;
 import org.apache.commons.collections4.CollectionUtils;
-import org.apache.commons.lang.StringUtils;
+import org.apache.commons.lang3.StringUtils;
 import org.dom4j.Element;
 
 import javax.annotation.Nullable;
 import java.math.BigDecimal;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
-import java.util.*;
+import java.util.ArrayList;
+import java.util.Date;
+import java.util.List;
+import java.util.UUID;
 
 public abstract class ChartModelLoader<C extends Component> extends AbstractComponentLoader<C> {
 

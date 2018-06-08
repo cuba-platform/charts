@@ -8,7 +8,7 @@ package com.haulmont.charts.web.toolkit.ui.client.amcharts;
 import com.google.gwt.core.client.JavaScriptObject;
 import com.google.gwt.dom.client.Element;
 import com.haulmont.charts.web.toolkit.ui.client.amcharts.events.*;
-import com.haulmont.cuba.web.toolkit.ui.client.JsDate;
+import com.haulmont.cuba.web.widgets.client.JsDate;
 
 import java.util.function.Consumer;
 

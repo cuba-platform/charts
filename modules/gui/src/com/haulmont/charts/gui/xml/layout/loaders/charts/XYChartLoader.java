@@ -6,7 +6,7 @@
 package com.haulmont.charts.gui.xml.layout.loaders.charts;
 
 import com.haulmont.charts.gui.components.charts.XYChart;
-import org.apache.commons.lang.StringUtils;
+import org.apache.commons.lang3.StringUtils;
 import org.dom4j.Element;
 
 public class XYChartLoader extends RectangularChartLoader<XYChart> {

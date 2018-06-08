@@ -11,7 +11,7 @@ import com.google.gwt.dom.client.Document;
 import com.google.gwt.user.client.Event;
 import com.google.gwt.user.client.ui.Widget;
 import com.haulmont.charts.web.toolkit.ui.client.amcharts.events.JsChartClickEvent;
-import com.haulmont.cuba.web.toolkit.ui.client.JsDate;
+import com.haulmont.cuba.web.widgets.client.JsDate;
 
 import java.util.function.Consumer;
 

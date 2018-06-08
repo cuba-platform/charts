@@ -11,7 +11,7 @@ import com.google.gwt.dom.client.NativeEvent;
 import com.google.gwt.json.client.JSONParser;
 import com.haulmont.charts.web.toolkit.ui.amcharts.CubaAmStockChartScene;
 import com.haulmont.charts.web.toolkit.ui.client.amcharts.MouseHelper;
-import com.haulmont.cuba.web.toolkit.ui.client.JsDate;
+import com.haulmont.cuba.web.widgets.client.JsDate;
 import com.vaadin.client.communication.RpcProxy;
 import com.vaadin.client.ui.AbstractComponentConnector;
 import com.vaadin.client.ui.layout.ElementResizeListener;

@@ -9,7 +9,7 @@ import com.haulmont.charts.gui.amcharts.model.AnimationEffect;
 import com.haulmont.charts.gui.amcharts.model.Color;
 import com.haulmont.charts.gui.components.charts.SlicedChart;
 import com.haulmont.charts.gui.model.JsFunction;
-import org.apache.commons.lang.StringUtils;
+import org.apache.commons.lang3.StringUtils;
 import org.dom4j.Element;
 
 public abstract class SlicedChartLoader<T extends SlicedChart> extends AbstractChartLoader<T> {

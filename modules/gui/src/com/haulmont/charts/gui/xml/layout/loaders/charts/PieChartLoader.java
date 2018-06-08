@@ -8,7 +8,7 @@ package com.haulmont.charts.gui.xml.layout.loaders.charts;
 import com.haulmont.charts.gui.amcharts.model.GradientType;
 import com.haulmont.charts.gui.components.charts.PieChart;
 import com.haulmont.charts.gui.model.JsFunction;
-import org.apache.commons.lang.StringUtils;
+import org.apache.commons.lang3.StringUtils;
 import org.dom4j.Element;
 
 public class PieChartLoader extends SlicedChartLoader<PieChart> {

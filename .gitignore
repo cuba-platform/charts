@@ -9,3 +9,7 @@ modules/global/build/*
 modules/gui/build/*
 modules/web/build/*
 modules/web-toolkit/build/*
+
+.idea/
+build/
+classes/

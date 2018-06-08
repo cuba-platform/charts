@@ -13,7 +13,7 @@ import com.haulmont.charts.gui.amcharts.model.charts.ChartModel;
 import com.haulmont.charts.gui.components.charts.GanttChart;
 import com.haulmont.charts.gui.data.ListDataProvider;
 import com.haulmont.charts.gui.data.MapDataItem;
-import org.apache.commons.lang.StringUtils;
+import org.apache.commons.lang3.StringUtils;
 import org.dom4j.Element;
 
 import java.util.ArrayList;

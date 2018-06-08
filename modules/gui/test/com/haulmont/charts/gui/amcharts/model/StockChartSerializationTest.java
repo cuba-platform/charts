@@ -12,7 +12,7 @@ import com.haulmont.charts.gui.amcharts.model.gson.StockChartSerializer;
 import com.haulmont.charts.gui.data.DataProvider;
 import com.haulmont.charts.gui.data.ListDataProvider;
 import com.haulmont.charts.gui.data.MapDataItem;
-import org.apache.commons.lang.time.DateUtils;
+import org.apache.commons.lang3.time.DateUtils;
 import org.junit.Test;
 
 import java.io.IOException;

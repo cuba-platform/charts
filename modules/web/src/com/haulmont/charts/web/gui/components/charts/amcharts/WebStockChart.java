@@ -28,8 +28,8 @@ import com.haulmont.cuba.core.global.UserSessionSource;
 import com.haulmont.cuba.gui.data.CollectionDatasource;
 import com.haulmont.cuba.gui.data.impl.CollectionDsHelper;
 import com.haulmont.cuba.web.gui.components.WebAbstractComponent;
-import org.apache.commons.lang.BooleanUtils;
-import org.apache.commons.lang.StringUtils;
+import org.apache.commons.lang3.BooleanUtils;
+import org.apache.commons.lang3.StringUtils;
 
 import javax.annotation.Nullable;
 import java.text.DecimalFormatSymbols;

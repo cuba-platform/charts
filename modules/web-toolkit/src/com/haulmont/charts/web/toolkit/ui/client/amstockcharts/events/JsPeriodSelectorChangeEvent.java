@@ -7,7 +7,7 @@ package com.haulmont.charts.web.toolkit.ui.client.amstockcharts.events;
 
 import com.google.gwt.core.client.JavaScriptObject;
 import com.google.gwt.dom.client.NativeEvent;
-import com.haulmont.cuba.web.toolkit.ui.client.JsDate;
+import com.haulmont.cuba.web.widgets.client.JsDate;
 
 public class JsPeriodSelectorChangeEvent extends JavaScriptObject {
 

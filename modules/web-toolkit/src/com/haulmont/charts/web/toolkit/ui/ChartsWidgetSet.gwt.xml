@@ -4,6 +4,6 @@
   ~ Use is subject to license terms, see http://www.cuba-platform.com/commercial-software-license for details.
   -->
 <module>
-    <inherits name="com.haulmont.cuba.web.toolkit.ui.WidgetSet" />
+    <inherits name="com.haulmont.cuba.web.widgets.WidgetSet" />
     <inherits name="com.vaadin.tapio.googlemaps.WidgetSet" />
 </module>

@@ -7,7 +7,7 @@ package com.haulmont.charts.gui.xml.layout.loaders.charts;
 
 import com.haulmont.charts.gui.amcharts.model.CategoryAxis;
 import com.haulmont.charts.gui.components.charts.SeriesBasedChart;
-import org.apache.commons.lang.StringUtils;
+import org.apache.commons.lang3.StringUtils;
 import org.dom4j.Element;
 
 public abstract class AbstractSerialChartLoader<T extends SeriesBasedChart> extends RectangularChartLoader<T> {

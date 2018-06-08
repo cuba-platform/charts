@@ -15,15 +15,18 @@ import com.haulmont.charts.web.toolkit.ui.pivottable.events.RefreshEvent;
 import com.haulmont.charts.web.toolkit.ui.pivottable.events.RefreshListener;
 import com.haulmont.cuba.core.global.AppBeans;
 import com.haulmont.cuba.core.global.Messages;
-import com.haulmont.cuba.web.sys.WebJarResource;
+import com.haulmont.cuba.web.widgets.WebJarResource;
 import com.vaadin.ui.AbstractComponent;
-import org.apache.commons.lang.StringUtils;
+import org.apache.commons.lang3.StringUtils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 import javax.annotation.Nullable;
 import java.lang.reflect.Method;
-import java.util.*;
+import java.util.HashMap;
+import java.util.List;
+import java.util.Locale;
+import java.util.Map;
 
 import static com.vaadin.util.ReflectTools.findMethod;
 

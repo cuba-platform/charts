@@ -20,8 +20,8 @@ import com.haulmont.cuba.core.global.AppBeans;
 import com.haulmont.cuba.core.global.Messages;
 import com.haulmont.cuba.core.global.UserSessionSource;
 import com.haulmont.cuba.web.gui.components.WebAbstractComponent;
-import org.apache.commons.lang.BooleanUtils;
-import org.apache.commons.lang.StringUtils;
+import org.apache.commons.lang3.BooleanUtils;
+import org.apache.commons.lang3.StringUtils;
 
 import java.text.DecimalFormatSymbols;
 import java.util.*;

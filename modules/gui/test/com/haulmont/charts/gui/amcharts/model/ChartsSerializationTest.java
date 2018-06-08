@@ -13,7 +13,7 @@ import com.haulmont.charts.gui.data.DataItem;
 import com.haulmont.charts.gui.data.DataProvider;
 import com.haulmont.charts.gui.data.ListDataProvider;
 import com.haulmont.charts.gui.data.MapDataItem;
-import org.apache.commons.lang.StringUtils;
+import org.apache.commons.lang3.StringUtils;
 import org.junit.Test;
 
 import java.io.IOException;

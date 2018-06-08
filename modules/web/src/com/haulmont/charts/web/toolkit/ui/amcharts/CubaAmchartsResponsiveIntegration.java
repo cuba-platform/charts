@@ -5,7 +5,7 @@
 
 package com.haulmont.charts.web.toolkit.ui.amcharts;
 
-import com.haulmont.cuba.web.sys.WebJarResource;
+import com.haulmont.cuba.web.widgets.WebJarResource;
 import com.vaadin.server.AbstractExtension;
 import com.vaadin.server.Extension;
 import com.vaadin.ui.UI;
