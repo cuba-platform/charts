@@ -17,7 +17,9 @@ import com.haulmont.charts.web.toolkit.ui.amcharts.events.*;
 import com.haulmont.charts.web.toolkit.ui.client.amstockcharts.CubaAmStockChartSceneClientRpc;
 import com.haulmont.charts.web.toolkit.ui.client.amstockcharts.CubaAmStockChartSceneState;
 import com.haulmont.charts.web.toolkit.ui.client.amstockcharts.CubaAmStockChartServerRpc;
-import com.haulmont.cuba.web.sys.WebJarResourceUtils;
+import com.haulmont.cuba.core.global.AppBeans;
+import com.haulmont.cuba.web.sys.WebJarResourceResolver;
+import com.haulmont.cuba.web.widgets.EnhancedUI;
 import com.haulmont.cuba.web.widgets.WebJarResource;
 import com.vaadin.server.KeyMapper;
 import com.vaadin.ui.AbstractComponent;
@@ -379,10 +381,9 @@ public class CubaAmStockChartScene extends AbstractComponent {
         }
 
         if (chart.getPath() == null || chart.getPath().isEmpty()) {
-            String amchartsPath = WebJarResourceUtils
-                    .getWebJarPath("amcharts", "amcharts.js");
-            String path = WebJarResourceUtils
-                    .translateToWebPath(amchartsPath.substring(0, amchartsPath.lastIndexOf("/"))) + "/";
+            EnhancedUI ui = ((EnhancedUI) getUI());
+            String amchartsPath = ui.getWebJarPath("amcharts", "amcharts.js");
+            String path = ui.translateToWebPath(amchartsPath.substring(0, amchartsPath.lastIndexOf("/"))) + "/";
             chart.setPath(path);
         }
     }
