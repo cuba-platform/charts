@@ -259,7 +259,7 @@ configure(chartsWebModule) {
             exclude(group: 'junit', module: 'junit')
         }
 
-        provided(bom['javax.servlet:javax.servlet-api'])
+        compileOnly(bom['javax.servlet:javax.servlet-api'])
     }
 
     jar {
