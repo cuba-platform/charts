@@ -41,7 +41,7 @@ import static com.vaadin.util.ReflectTools.findMethod;
 
 @WebJarResource(value = "amcharts:style.css", overridePath = "amcharts/")
 public class CubaAmStockChartScene extends AbstractComponent {
-    private final Logger log = LoggerFactory.getLogger(CubaAmStockChartScene.class);
+    private static final Logger log = LoggerFactory.getLogger(CubaAmStockChartScene.class);
 
     protected final static Method chartClickMethod =
             findMethod(StockChartClickListener.class, "onClick", StockChartClickEvent.class);

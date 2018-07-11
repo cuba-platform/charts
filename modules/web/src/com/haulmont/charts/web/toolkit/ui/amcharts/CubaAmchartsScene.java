@@ -39,7 +39,7 @@ import java.util.function.Function;
 import static com.vaadin.util.ReflectTools.findMethod;
 
 public class CubaAmchartsScene extends AbstractComponent {
-    private final Logger log = LoggerFactory.getLogger(CubaAmchartsScene.class);
+    private static final Logger log = LoggerFactory.getLogger(CubaAmchartsScene.class);
 
     protected final static Method chartClickMethod =
             findMethod(ChartClickListener.class, "onClick", ChartClickEvent.class);
