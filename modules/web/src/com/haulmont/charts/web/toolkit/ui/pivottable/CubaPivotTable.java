@@ -63,7 +63,11 @@ public class CubaPivotTable extends AbstractComponent {
         pivotTable = new PivotTableModel();
         registerRpc(new CubaPivotTableServerRpcImpl(), CubaPivotTableServerRpc.class);
 
-        addRefreshListener(event -> {
+        addRefreshListener(createRefreshListener());
+    }
+
+    protected RefreshListener createRefreshListener() {
+        return event -> {
             pivotTable.setRows(event.getRows());
             pivotTable.setCols(event.getCols());
 
@@ -93,7 +97,7 @@ public class CubaPivotTable extends AbstractComponent {
             }
 
             pivotTable.setAggregationProperties(event.getAggregationProperties());
-        });
+        };
     }
 
     @Override
