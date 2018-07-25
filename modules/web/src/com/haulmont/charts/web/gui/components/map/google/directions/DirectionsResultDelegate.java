@@ -13,22 +13,22 @@ import com.haulmont.charts.web.gui.components.map.google.DelegateHelper;
 import java.util.List;
 
 public class DirectionsResultDelegate implements DirectionsResult {
-    private com.vaadin.tapio.googlemaps.client.services.DirectionsResult result;
+    private com.haulmont.charts.web.toolkit.ui.client.addons.googlemap.services.DirectionsResult result;
 
-    public static DirectionsResultDelegate fromDirectionsResult(com.vaadin.tapio.googlemaps.client.services.DirectionsResult result) {
+    public static DirectionsResultDelegate fromDirectionsResult(com.haulmont.charts.web.toolkit.ui.client.addons.googlemap.services.DirectionsResult result) {
         return result != null ? new DirectionsResultDelegate(result) : null;
     }
 
-    public DirectionsResultDelegate(com.vaadin.tapio.googlemaps.client.services.DirectionsResult result) {
+    public DirectionsResultDelegate(com.haulmont.charts.web.toolkit.ui.client.addons.googlemap.services.DirectionsResult result) {
         Preconditions.checkNotNullArgument(result);
         this.result = result;
     }
 
-    public com.vaadin.tapio.googlemaps.client.services.DirectionsResult getResult() {
+    public com.haulmont.charts.web.toolkit.ui.client.addons.googlemap.services.DirectionsResult getResult() {
         return result;
     }
 
-    public void setResult(com.vaadin.tapio.googlemaps.client.services.DirectionsResult result) {
+    public void setResult(com.haulmont.charts.web.toolkit.ui.client.addons.googlemap.services.DirectionsResult result) {
         this.result = result;
     }
 

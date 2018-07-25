@@ -10,7 +10,7 @@ import com.haulmont.charts.gui.map.model.GeoPoint;
 import com.haulmont.charts.gui.map.model.Marker;
 import com.haulmont.charts.gui.map.model.base.MarkerImage;
 import com.haulmont.charts.web.gui.components.map.google.base.MarkerImageDelegate;
-import com.vaadin.tapio.googlemaps.client.overlays.*;
+import com.haulmont.charts.web.toolkit.ui.client.addons.googlemap.overlays.GoogleMapMarker;
 
 public class MarkerDelegate implements Marker {
 

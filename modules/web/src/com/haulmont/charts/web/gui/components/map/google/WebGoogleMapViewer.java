@@ -51,14 +51,14 @@ import com.haulmont.charts.web.gui.components.map.google.directions.DirectionsRe
 import com.haulmont.charts.web.gui.components.map.google.directions.DirectionsWaypointDelegate;
 import com.haulmont.charts.web.gui.components.map.google.layer.HeatMapLayerDelegate;
 import com.haulmont.charts.web.gui.components.map.google.maptype.ImageMapTypeDelegate;
+import com.haulmont.charts.web.widgets.addon.googlemap.GoogleMap;
 import com.haulmont.cuba.core.global.AppBeans;
 import com.haulmont.cuba.core.global.Configuration;
 import com.haulmont.cuba.core.global.Messages;
 import com.haulmont.cuba.web.gui.components.WebAbstractComponent;
-import com.vaadin.tapio.googlemaps.GoogleMap;
-import com.vaadin.tapio.googlemaps.client.base.LatLon;
-import com.vaadin.tapio.googlemaps.client.layers.GoogleMapHeatMapLayer;
-import com.vaadin.tapio.googlemaps.client.overlays.*;
+import com.haulmont.charts.web.toolkit.ui.client.addons.googlemap.base.LatLon;
+import com.haulmont.charts.web.toolkit.ui.client.addons.googlemap.layers.GoogleMapHeatMapLayer;
+import com.haulmont.charts.web.toolkit.ui.client.addons.googlemap.overlays.*;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -81,53 +81,53 @@ public class WebGoogleMapViewer extends WebAbstractComponent<GoogleMap> implemen
     protected MapConfig mapConfig = AppBeans.get(Configuration.class).getConfig(MapConfig.class);
 
     protected List<MapMoveListener> mapMoveListeners;
-    protected com.vaadin.tapio.googlemaps.client.events.MapMoveListener mapMoveHandler;
+    protected com.haulmont.charts.web.toolkit.ui.client.addons.googlemap.events.MapMoveListener mapMoveHandler;
 
     protected List<MapClickListener> mapClickListeners;
-    protected com.vaadin.tapio.googlemaps.client.events.click.MapClickListener mapClickHandler;
-    protected com.vaadin.tapio.googlemaps.client.events.rightclick.MapRightClickListener mapRightClickHandler;
+    protected com.haulmont.charts.web.toolkit.ui.client.addons.googlemap.events.click.MapClickListener mapClickHandler;
+    protected com.haulmont.charts.web.toolkit.ui.client.addons.googlemap.events.rightclick.MapRightClickListener mapRightClickHandler;
 
     protected List<MarkerDragListener> markerDragListeners;
-    protected com.vaadin.tapio.googlemaps.client.events.MarkerDragListener markerDragHandler;
+    protected com.haulmont.charts.web.toolkit.ui.client.addons.googlemap.events.MarkerDragListener markerDragHandler;
 
     protected List<MarkerClickListener> markerClickListeners;
-    protected com.vaadin.tapio.googlemaps.client.events.click.MarkerClickListener markerClickHandler;
+    protected com.haulmont.charts.web.toolkit.ui.client.addons.googlemap.events.click.MarkerClickListener markerClickHandler;
 
     protected List<MarkerDoubleClickListener> markerDoubleClickListeners;
-    protected com.vaadin.tapio.googlemaps.client.events.doubleclick.MarkerDoubleClickListener markerDoubleClickHandler;
-    protected com.vaadin.tapio.googlemaps.client.events.rightclick.MarkerRightClickListener markerRightClickHandler;
+    protected com.haulmont.charts.web.toolkit.ui.client.addons.googlemap.events.doubleclick.MarkerDoubleClickListener markerDoubleClickHandler;
+    protected com.haulmont.charts.web.toolkit.ui.client.addons.googlemap.events.rightclick.MarkerRightClickListener markerRightClickHandler;
 
     protected List<InfoWindowClosedListener> infoWindowClosedListeners;
-    protected com.vaadin.tapio.googlemaps.client.events.InfoWindowClosedListener infoWindowClosedHandler;
+    protected com.haulmont.charts.web.toolkit.ui.client.addons.googlemap.events.InfoWindowClosedListener infoWindowClosedHandler;
 
     protected List<PolygonCompleteListener> polygonCompleteListeners;
-    protected com.vaadin.tapio.googlemaps.client.events.overlaycomplete.PolygonCompleteListener polygonCompleteHandler;
+    protected com.haulmont.charts.web.toolkit.ui.client.addons.googlemap.events.overlaycomplete.PolygonCompleteListener polygonCompleteHandler;
 
     protected List<PolygonEditListener> polygonEditListeners;
-    protected com.vaadin.tapio.googlemaps.client.events.PolygonEditListener polygonEditHandler;
+    protected com.haulmont.charts.web.toolkit.ui.client.addons.googlemap.events.PolygonEditListener polygonEditHandler;
 
     protected List<PolygonClickListener> polygonClickListeners;
-    protected com.vaadin.tapio.googlemaps.client.events.click.PolygonClickListener polygonClickHandler;
-    protected com.vaadin.tapio.googlemaps.client.events.rightclick.PolygonRightClickListener polygonRightClickHandler;
+    protected com.haulmont.charts.web.toolkit.ui.client.addons.googlemap.events.click.PolygonClickListener polygonClickHandler;
+    protected com.haulmont.charts.web.toolkit.ui.client.addons.googlemap.events.rightclick.PolygonRightClickListener polygonRightClickHandler;
 
     protected List<MapInitListener> mapInitListeners;
-    protected com.vaadin.tapio.googlemaps.client.events.MapInitListener mapInitHandler;
+    protected com.haulmont.charts.web.toolkit.ui.client.addons.googlemap.events.MapInitListener mapInitHandler;
 
     protected List<CircleClickListener> circleClickListeners;
-    protected com.vaadin.tapio.googlemaps.client.events.click.CircleClickListener circleClickHandler;
+    protected com.haulmont.charts.web.toolkit.ui.client.addons.googlemap.events.click.CircleClickListener circleClickHandler;
 
     protected List<CircleDoubleClickListener> circleDoubleClickListeners;
-    protected com.vaadin.tapio.googlemaps.client.events.doubleclick.CircleDoubleClickListener circleDoubleClickHandler;
+    protected com.haulmont.charts.web.toolkit.ui.client.addons.googlemap.events.doubleclick.CircleDoubleClickListener circleDoubleClickHandler;
 
     protected List<CircleRadiusChangeListener> circleRadiusChangeListeners;
-    protected com.vaadin.tapio.googlemaps.client.events.radiuschange.CircleRadiusChangeListener circleRadiusChangeHandler;
+    protected com.haulmont.charts.web.toolkit.ui.client.addons.googlemap.events.radiuschange.CircleRadiusChangeListener circleRadiusChangeHandler;
 
     protected List<CircleCenterChangeListener> circleCenterChangeListeners;
-    protected com.vaadin.tapio.googlemaps.client.events.centerchange.CircleCenterChangeListener circleCenterChangeHandler;
+    protected com.haulmont.charts.web.toolkit.ui.client.addons.googlemap.events.centerchange.CircleCenterChangeListener circleCenterChangeHandler;
 
     protected List<CircleCompleteListener> circleCompleteListeners;
-    protected com.vaadin.tapio.googlemaps.client.events.overlaycomplete.CircleCompleteListener circleCompleteHandler;
-    protected com.vaadin.tapio.googlemaps.client.events.rightclick.CircleRightClickListener circleRightClickHandler;
+    protected com.haulmont.charts.web.toolkit.ui.client.addons.googlemap.events.overlaycomplete.CircleCompleteListener circleCompleteHandler;
+    protected com.haulmont.charts.web.toolkit.ui.client.addons.googlemap.events.rightclick.CircleRightClickListener circleRightClickHandler;
 
     public WebGoogleMapViewer() {
         String clientId = mapConfig.getClientId();
@@ -801,7 +801,7 @@ public class WebGoogleMapViewer extends WebAbstractComponent<GoogleMap> implemen
     }
 
     private PolygonEditListener.ActionType toCubaActionType(
-            com.vaadin.tapio.googlemaps.client.events.PolygonEditListener.ActionType actionType) {
+            com.haulmont.charts.web.toolkit.ui.client.addons.googlemap.events.PolygonEditListener.ActionType actionType) {
         if (actionType == null) {
             return null;
         }
@@ -1079,7 +1079,7 @@ public class WebGoogleMapViewer extends WebAbstractComponent<GoogleMap> implemen
 
     @Override
     public DirectionsRequest createDirectionsRequest() {
-        return new DirectionsRequestDelegate(new com.vaadin.tapio.googlemaps.client.services.DirectionsRequest());
+        return new DirectionsRequestDelegate(new com.haulmont.charts.web.toolkit.ui.client.addons.googlemap.services.DirectionsRequest());
     }
 
     @Override
@@ -1087,10 +1087,11 @@ public class WebGoogleMapViewer extends WebAbstractComponent<GoogleMap> implemen
         Preconditions.checkNotNullArgument(origin);
         Preconditions.checkNotNullArgument(destination);
 
-        com.vaadin.tapio.googlemaps.client.services.DirectionsRequest googleDirectionsRequest = new com.vaadin.tapio.googlemaps.client.services.DirectionsRequest(
+        com.haulmont.charts.web.toolkit.ui.client.addons.googlemap.services.DirectionsRequest googleDirectionsRequest
+                = new com.haulmont.charts.web.toolkit.ui.client.addons.googlemap.services.DirectionsRequest(
                 ((GeoPointDelegate) origin).getLatLon(),
                 ((GeoPointDelegate) destination).getLatLon(),
-                travelMode != null ? com.vaadin.tapio.googlemaps.client.services.TravelMode.fromValue(travelMode.value()) : null
+                travelMode != null ? com.haulmont.charts.web.toolkit.ui.client.addons.googlemap.services.TravelMode.fromValue(travelMode.value()) : null
         );
 
         return new DirectionsRequestDelegate(googleDirectionsRequest);
@@ -1098,13 +1099,13 @@ public class WebGoogleMapViewer extends WebAbstractComponent<GoogleMap> implemen
 
     @Override
     public DirectionsWaypoint createDirectionsWaypoint() {
-        return new DirectionsWaypointDelegate(new com.vaadin.tapio.googlemaps.client.services.DirectionsWaypoint());
+        return new DirectionsWaypointDelegate(new com.haulmont.charts.web.toolkit.ui.client.addons.googlemap.services.DirectionsWaypoint());
     }
 
     @Override
     public DirectionsWaypoint createDirectionsWaypoint(GeoPoint location, boolean stopOver) {
         Preconditions.checkNotNullArgument(location);
-        return new DirectionsWaypointDelegate(new com.vaadin.tapio.googlemaps.client.services.DirectionsWaypoint(((GeoPointDelegate)location).getLatLon(), stopOver));
+        return new DirectionsWaypointDelegate(new com.haulmont.charts.web.toolkit.ui.client.addons.googlemap.services.DirectionsWaypoint(((GeoPointDelegate)location).getLatLon(), stopOver));
     }
 
     @Override
@@ -1118,22 +1119,22 @@ public class WebGoogleMapViewer extends WebAbstractComponent<GoogleMap> implemen
 
     @Override
     public Size createSize(double width, double height) {
-        return new SizeDelegate(new com.vaadin.tapio.googlemaps.client.base.Size(width, height));
+        return new SizeDelegate(new com.haulmont.charts.web.toolkit.ui.client.addons.googlemap.base.Size(width, height));
     }
 
     @Override
     public Point createPoint(double x, double y) {
-        return new PointDelegate(new com.vaadin.tapio.googlemaps.client.base.Point(x, y));
+        return new PointDelegate(new com.haulmont.charts.web.toolkit.ui.client.addons.googlemap.base.Point(x, y));
     }
 
     @Override
     public MarkerImage createMarkerImage() {
-        return new MarkerImageDelegate(new com.vaadin.tapio.googlemaps.client.base.MarkerImage());
+        return new MarkerImageDelegate(new com.haulmont.charts.web.toolkit.ui.client.addons.googlemap.base.MarkerImage());
     }
 
     @Override
     public MarkerImage createMarkerImage(String url) {
-        return new MarkerImageDelegate(new com.vaadin.tapio.googlemaps.client.base.MarkerImage(url));
+        return new MarkerImageDelegate(new com.haulmont.charts.web.toolkit.ui.client.addons.googlemap.base.MarkerImage(url));
     }
 
     @Override

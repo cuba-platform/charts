@@ -18,18 +18,18 @@ import java.util.List;
 
 public class DirectionsRequestDelegate implements DirectionsRequest {
 
-    private com.vaadin.tapio.googlemaps.client.services.DirectionsRequest request;
+    private com.haulmont.charts.web.toolkit.ui.client.addons.googlemap.services.DirectionsRequest request;
 
-    public DirectionsRequestDelegate(com.vaadin.tapio.googlemaps.client.services.DirectionsRequest request) {
+    public DirectionsRequestDelegate(com.haulmont.charts.web.toolkit.ui.client.addons.googlemap.services.DirectionsRequest request) {
         Preconditions.checkNotNullArgument(request);
         this.request = request;
     }
 
-    public com.vaadin.tapio.googlemaps.client.services.DirectionsRequest getRequest() {
+    public com.haulmont.charts.web.toolkit.ui.client.addons.googlemap.services.DirectionsRequest getRequest() {
         return request;
     }
 
-    public void setRequest(com.vaadin.tapio.googlemaps.client.services.DirectionsRequest request) {
+    public void setRequest(com.haulmont.charts.web.toolkit.ui.client.addons.googlemap.services.DirectionsRequest request) {
         this.request = request;
     }
 
@@ -121,7 +121,7 @@ public class DirectionsRequestDelegate implements DirectionsRequest {
     @Override
     public void setTravelMode(TravelMode travelMode) {
         request.setTravelMode(travelMode != null
-                ? com.vaadin.tapio.googlemaps.client.services.TravelMode.fromValue(travelMode.value())
+                ? com.haulmont.charts.web.toolkit.ui.client.addons.googlemap.services.TravelMode.fromValue(travelMode.value())
                 : null);
     }
 
@@ -133,7 +133,7 @@ public class DirectionsRequestDelegate implements DirectionsRequest {
     @Override
     public void setUnitSystem(UnitSystem unitSystem) {
         request.setUnitSystem(unitSystem != null
-                ? com.vaadin.tapio.googlemaps.client.services.UnitSystem.fromValue(unitSystem.value())
+                ? com.haulmont.charts.web.toolkit.ui.client.addons.googlemap.services.UnitSystem.fromValue(unitSystem.value())
                 : null);
     }
 

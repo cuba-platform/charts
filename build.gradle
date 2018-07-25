@@ -212,6 +212,11 @@ configure(chartsWebToolkitModule) {
     dependencies {
         compile(chartsWebModule)
         compile(cubaWebToolkit)
+        compile(bom['com.github.branflake2267:gwt-maps-api']) {
+            exclude(group: 'com.google.gwt', module: 'gwt-user')
+            exclude(group: 'com.google.gwt', module: 'gwt-servlet')
+            exclude(group: 'com.google.gwt', module: 'gwt-dev')
+        }
     }
 
     task buildWidgetSet(type: CubaWidgetSetBuilding) {
@@ -254,10 +259,6 @@ configure(chartsWebModule) {
 
         compile(bom['org.webjars.bower:pivottable'])
         compile(bom['org.webjars:amcharts'])
-
-        compile(bom['com.haulmont.thirdparty:googlemaps']) {
-            exclude(group: 'junit', module: 'junit')
-        }
 
         compileOnly(bom['javax.servlet:javax.servlet-api'])
     }

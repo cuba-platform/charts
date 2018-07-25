@@ -18,23 +18,23 @@ import java.util.List;
 
 public class DirectionsStepDelegate implements DirectionsStep {
 
-    private com.vaadin.tapio.googlemaps.client.services.DirectionsStep directionsStep;
+    private com.haulmont.charts.web.toolkit.ui.client.addons.googlemap.services.DirectionsStep directionsStep;
 
     public static DirectionsStepDelegate fromDirectionsStep(
-            com.vaadin.tapio.googlemaps.client.services.DirectionsStep step) {
+            com.haulmont.charts.web.toolkit.ui.client.addons.googlemap.services.DirectionsStep step) {
         return step != null ? new DirectionsStepDelegate(step) : null;
     }
 
-    public DirectionsStepDelegate(com.vaadin.tapio.googlemaps.client.services.DirectionsStep directionsStep) {
+    public DirectionsStepDelegate(com.haulmont.charts.web.toolkit.ui.client.addons.googlemap.services.DirectionsStep directionsStep) {
         Preconditions.checkNotNullArgument(directionsStep);
         this.directionsStep = directionsStep;
     }
 
-    public com.vaadin.tapio.googlemaps.client.services.DirectionsStep getDirectionsStep() {
+    public com.haulmont.charts.web.toolkit.ui.client.addons.googlemap.services.DirectionsStep getDirectionsStep() {
         return directionsStep;
     }
 
-    public void setDirectionsStep(com.vaadin.tapio.googlemaps.client.services.DirectionsStep directionsStep) {
+    public void setDirectionsStep(com.haulmont.charts.web.toolkit.ui.client.addons.googlemap.services.DirectionsStep directionsStep) {
         this.directionsStep = directionsStep;
     }
 
@@ -108,7 +108,8 @@ public class DirectionsStepDelegate implements DirectionsStep {
         if (travelMode == null) {
             directionsStep.setTravelMode(null);
         } else {
-            directionsStep.setTravelMode(com.vaadin.tapio.googlemaps.client.services.TravelMode.fromValue(travelMode.value()));
+            directionsStep.setTravelMode(
+                    com.haulmont.charts.web.toolkit.ui.client.addons.googlemap.services.TravelMode.fromValue(travelMode.value()));
         }
     }
 

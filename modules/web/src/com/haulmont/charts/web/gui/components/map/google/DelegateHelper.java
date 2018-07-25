@@ -13,19 +13,19 @@ import com.haulmont.charts.web.gui.components.map.google.directions.DirectionsLe
 import com.haulmont.charts.web.gui.components.map.google.directions.DirectionsRouteDelegate;
 import com.haulmont.charts.web.gui.components.map.google.directions.DirectionsStepDelegate;
 import com.haulmont.charts.web.gui.components.map.google.directions.DirectionsWaypointDelegate;
-import com.vaadin.tapio.googlemaps.GoogleMap;
-import com.vaadin.tapio.googlemaps.client.base.LatLon;
-import com.vaadin.tapio.googlemaps.client.drawing.ControlPosition;
-import com.vaadin.tapio.googlemaps.client.drawing.DrawingControlOptions;
-import com.vaadin.tapio.googlemaps.client.services.DirectionsLeg;
-import com.vaadin.tapio.googlemaps.client.services.DirectionsRoute;
-import com.vaadin.tapio.googlemaps.client.services.DirectionsStep;
-import com.vaadin.tapio.googlemaps.client.services.DirectionsWaypoint;
+import com.haulmont.charts.web.toolkit.ui.client.addons.googlemap.base.LatLon;
+import com.haulmont.charts.web.widgets.addon.googlemap.GoogleMap;
+import com.haulmont.charts.web.toolkit.ui.client.addons.googlemap.drawing.ControlPosition;
+import com.haulmont.charts.web.toolkit.ui.client.addons.googlemap.drawing.DrawingControlOptions;
+import com.haulmont.charts.web.toolkit.ui.client.addons.googlemap.services.DirectionsLeg;
+import com.haulmont.charts.web.toolkit.ui.client.addons.googlemap.services.DirectionsRoute;
+import com.haulmont.charts.web.toolkit.ui.client.addons.googlemap.services.DirectionsStep;
+import com.haulmont.charts.web.toolkit.ui.client.addons.googlemap.services.DirectionsWaypoint;
 
 import java.util.ArrayList;
 import java.util.List;
 
-import static com.vaadin.tapio.googlemaps.GoogleMap.MapType.Roadmap;
+import static com.haulmont.charts.web.widgets.addon.googlemap.GoogleMap.MapType.Roadmap;
 
 public class DelegateHelper {
 
@@ -49,14 +49,14 @@ public class DelegateHelper {
         }
     }
 
-    public static com.vaadin.tapio.googlemaps.client.drawing.DrawingOptions
+    public static com.haulmont.charts.web.toolkit.ui.client.addons.googlemap.drawing.DrawingOptions
         toGoogleDrawingOptions(DrawingOptions options) {
         if (options == null) {
             return null;
         }
 
-        com.vaadin.tapio.googlemaps.client.drawing.DrawingOptions gOptions
-                = new com.vaadin.tapio.googlemaps.client.drawing.DrawingOptions();
+        com.haulmont.charts.web.toolkit.ui.client.addons.googlemap.drawing.DrawingOptions gOptions
+                = new com.haulmont.charts.web.toolkit.ui.client.addons.googlemap.drawing.DrawingOptions();
 
         gOptions.setPolygonOptions(toGooglePolygonOptions(options.getPolygonOptions()));
         gOptions.setCircleOptions(toGoogleCircleOptions(options.getCircleOptions()));
@@ -67,15 +67,15 @@ public class DelegateHelper {
         return gOptions;
     }
 
-    private static com.vaadin.tapio.googlemaps.client.drawing.OverlayType
+    private static com.haulmont.charts.web.toolkit.ui.client.addons.googlemap.drawing.OverlayType
         toGoogleOverlayType(OverlayType overlayType) {
         if (overlayType == null) {
             return null;
         }
 
         switch (overlayType) {
-            case POLYGON: return com.vaadin.tapio.googlemaps.client.drawing.OverlayType.POLYGON;
-            case CIRCLE: return com.vaadin.tapio.googlemaps.client.drawing.OverlayType.CIRCLE;
+            case POLYGON: return com.haulmont.charts.web.toolkit.ui.client.addons.googlemap.drawing.OverlayType.POLYGON;
+            case CIRCLE: return com.haulmont.charts.web.toolkit.ui.client.addons.googlemap.drawing.OverlayType.CIRCLE;
 //            case POLYLINE: return com.vaadin.tapio.googlemaps.client.drawing.OverlayType.POLYLINE;
 //            case MARKER: return com.vaadin.tapio.googlemaps.client.drawing.OverlayType.MARKER;
 //            case RECTANGLE: return com.vaadin.tapio.googlemaps.client.drawing.OverlayType.RECTANGLE;
@@ -84,13 +84,13 @@ public class DelegateHelper {
         throw new IllegalArgumentException("Unknown overlay type: " + overlayType);
     }
 
-    private static List<com.vaadin.tapio.googlemaps.client.drawing.OverlayType>
+    private static List<com.haulmont.charts.web.toolkit.ui.client.addons.googlemap.drawing.OverlayType>
                 toGoogleOverlayType(List<OverlayType> overlayTypes) {
         if (overlayTypes == null) {
             return null;
         }
 
-        List<com.vaadin.tapio.googlemaps.client.drawing.OverlayType>
+        List<com.haulmont.charts.web.toolkit.ui.client.addons.googlemap.drawing.OverlayType>
                 gOverlayTypes = new ArrayList<>(overlayTypes.size()*2);
 
         for (OverlayType overlayType : overlayTypes) {
@@ -134,14 +134,14 @@ public class DelegateHelper {
         throw new IllegalArgumentException("Unknown postition: " + position);
     }
 
-    private static com.vaadin.tapio.googlemaps.client.drawing.PolygonOptions
+    private static com.haulmont.charts.web.toolkit.ui.client.addons.googlemap.drawing.PolygonOptions
     toGooglePolygonOptions(PolygonOptions options) {
         if (options == null) {
             return null;
         }
 
-        com.vaadin.tapio.googlemaps.client.drawing.PolygonOptions gOptions
-                = new com.vaadin.tapio.googlemaps.client.drawing.PolygonOptions();
+        com.haulmont.charts.web.toolkit.ui.client.addons.googlemap.drawing.PolygonOptions gOptions
+                = new com.haulmont.charts.web.toolkit.ui.client.addons.googlemap.drawing.PolygonOptions();
 
         gOptions.setEditable(options.isEditable());
         gOptions.setStrokeOpacity(options.getStrokeOpacity());
@@ -157,13 +157,13 @@ public class DelegateHelper {
         return gOptions;
     }
 
-    private static com.vaadin.tapio.googlemaps.client.drawing.CircleOptions toGoogleCircleOptions(CircleOptions options) {
+    private static com.haulmont.charts.web.toolkit.ui.client.addons.googlemap.drawing.CircleOptions toGoogleCircleOptions(CircleOptions options) {
         if (options == null) {
             return null;
         }
 
-        com.vaadin.tapio.googlemaps.client.drawing.CircleOptions gOptions
-                = new com.vaadin.tapio.googlemaps.client.drawing.CircleOptions();
+        com.haulmont.charts.web.toolkit.ui.client.addons.googlemap.drawing.CircleOptions gOptions
+                = new com.haulmont.charts.web.toolkit.ui.client.addons.googlemap.drawing.CircleOptions();
         gOptions.setRadius(options.getRadius());
         gOptions.setCenter(options.getCenter() != null ? ((GeoPointDelegate)options.getCenter()).getLatLon() : null);
         gOptions.setEditable(options.isEditable());
@@ -206,31 +206,32 @@ public class DelegateHelper {
         }
     }
 
-    public static List<com.vaadin.tapio.googlemaps.client.base.WeightedLocation> toGoogleWeightedLocations(
+    public static List<com.haulmont.charts.web.toolkit.ui.client.addons.googlemap.base.WeightedLocation> toGoogleWeightedLocations(
             List<WeightedLocation> weightedLocations) {
         if (weightedLocations == null) {
             return null;
         }
 
-        List<com.vaadin.tapio.googlemaps.client.base.WeightedLocation> gWeightedLocations
+        List<com.haulmont.charts.web.toolkit.ui.client.addons.googlemap.base.WeightedLocation> gWeightedLocations
                 = new ArrayList<>(weightedLocations.size()*2);
         for (WeightedLocation w : weightedLocations) {
             LatLon location = new LatLon(w.getLocation().getLatitude(), w.getLocation().getLongitude());
             Double weight = w.getWeight();
-            gWeightedLocations.add(new com.vaadin.tapio.googlemaps.client.base.WeightedLocation(location, weight));
+            gWeightedLocations.add(new com.haulmont.charts.web.toolkit.ui.client.addons.googlemap.base.WeightedLocation
+                    (location, weight));
         }
 
         return gWeightedLocations;
     }
 
     public static List<WeightedLocation> toWeightedLocations(
-            List<com.vaadin.tapio.googlemaps.client.base.WeightedLocation> gWeightedLocations) {
+            List<com.haulmont.charts.web.toolkit.ui.client.addons.googlemap.base.WeightedLocation> gWeightedLocations) {
         if (gWeightedLocations == null) {
             return null;
         }
 
         List<WeightedLocation> weightedLocations = new ArrayList<>(gWeightedLocations.size()*2);
-        for (com.vaadin.tapio.googlemaps.client.base.WeightedLocation w : gWeightedLocations) {
+        for (com.haulmont.charts.web.toolkit.ui.client.addons.googlemap.base.WeightedLocation w : gWeightedLocations) {
             weightedLocations.add(new WeightedLocationDelegate(w));
         }
 

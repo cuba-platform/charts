@@ -6,8 +6,8 @@
 package com.haulmont.charts.web.gui.components.map.google.maptype;
 
 import com.haulmont.charts.gui.map.model.maptype.ImageMapType;
-import com.vaadin.tapio.googlemaps.client.base.Size;
-import com.vaadin.tapio.googlemaps.client.maptypes.GoogleImageMapType;
+import com.haulmont.charts.web.toolkit.ui.client.addons.googlemap.base.Size;
+import com.haulmont.charts.web.toolkit.ui.client.addons.googlemap.maptypes.GoogleImageMapType;
 
 public class ImageMapTypeDelegate implements ImageMapType {
     protected GoogleImageMapType mapType;

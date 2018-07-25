@@ -10,22 +10,22 @@ import com.haulmont.charts.gui.map.model.directions.Duration;
 
 public class DurationDelegate implements Duration {
 
-    private com.vaadin.tapio.googlemaps.client.services.Duration duration;
+    private com.haulmont.charts.web.toolkit.ui.client.addons.googlemap.services.Duration duration;
 
-    public static DurationDelegate fromDuration(com.vaadin.tapio.googlemaps.client.services.Duration duration) {
+    public static DurationDelegate fromDuration(com.haulmont.charts.web.toolkit.ui.client.addons.googlemap.services.Duration duration) {
         return duration != null ? new DurationDelegate(duration) : null;
     }
 
-    public DurationDelegate(com.vaadin.tapio.googlemaps.client.services.Duration duration) {
+    public DurationDelegate(com.haulmont.charts.web.toolkit.ui.client.addons.googlemap.services.Duration duration) {
         Preconditions.checkNotNullArgument(duration);
         this.duration = duration;
     }
 
-    public com.vaadin.tapio.googlemaps.client.services.Duration getDuration() {
+    public com.haulmont.charts.web.toolkit.ui.client.addons.googlemap.services.Duration getDuration() {
         return duration;
     }
 
-    public void setDuration(com.vaadin.tapio.googlemaps.client.services.Duration duration) {
+    public void setDuration(com.haulmont.charts.web.toolkit.ui.client.addons.googlemap.services.Duration duration) {
         this.duration = duration;
     }
 

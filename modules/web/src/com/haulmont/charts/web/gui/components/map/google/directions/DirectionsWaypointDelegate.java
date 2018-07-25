@@ -12,23 +12,23 @@ import com.haulmont.charts.web.gui.components.map.google.GeoPointDelegate;
 
 public class DirectionsWaypointDelegate implements DirectionsWaypoint {
 
-    private com.vaadin.tapio.googlemaps.client.services.DirectionsWaypoint directionsWaypoint;
+    private com.haulmont.charts.web.toolkit.ui.client.addons.googlemap.services.DirectionsWaypoint directionsWaypoint;
 
     public static DirectionsWaypointDelegate fromDirectionsWaypoint(
-            com.vaadin.tapio.googlemaps.client.services.DirectionsWaypoint directionsWaypoint) {
+            com.haulmont.charts.web.toolkit.ui.client.addons.googlemap.services.DirectionsWaypoint directionsWaypoint) {
         return directionsWaypoint != null ? new DirectionsWaypointDelegate(directionsWaypoint) : null;
     }
 
-    public DirectionsWaypointDelegate(com.vaadin.tapio.googlemaps.client.services.DirectionsWaypoint directionsWaypoint) {
+    public DirectionsWaypointDelegate(com.haulmont.charts.web.toolkit.ui.client.addons.googlemap.services.DirectionsWaypoint directionsWaypoint) {
         Preconditions.checkNotNullArgument(directionsWaypoint);
         this.directionsWaypoint = directionsWaypoint;
     }
 
-    public com.vaadin.tapio.googlemaps.client.services.DirectionsWaypoint getDirectionsWaypoint() {
+    public com.haulmont.charts.web.toolkit.ui.client.addons.googlemap.services.DirectionsWaypoint getDirectionsWaypoint() {
         return directionsWaypoint;
     }
 
-    public void setDirectionsWaypoint(com.vaadin.tapio.googlemaps.client.services.DirectionsWaypoint directionsWaypoint) {
+    public void setDirectionsWaypoint(com.haulmont.charts.web.toolkit.ui.client.addons.googlemap.services.DirectionsWaypoint directionsWaypoint) {
         this.directionsWaypoint = directionsWaypoint;
     }
 

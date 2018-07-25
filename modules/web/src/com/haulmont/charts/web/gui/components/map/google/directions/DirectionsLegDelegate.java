@@ -18,22 +18,22 @@ import java.util.List;
 
 public class DirectionsLegDelegate implements DirectionsLeg {
 
-    private com.vaadin.tapio.googlemaps.client.services.DirectionsLeg directionsLeg;
+    private com.haulmont.charts.web.toolkit.ui.client.addons.googlemap.services.DirectionsLeg directionsLeg;
 
-    public static DirectionsLegDelegate fromDirectionsLeg(com.vaadin.tapio.googlemaps.client.services.DirectionsLeg leg) {
+    public static DirectionsLegDelegate fromDirectionsLeg(com.haulmont.charts.web.toolkit.ui.client.addons.googlemap.services.DirectionsLeg leg) {
         return leg != null ? new DirectionsLegDelegate(leg) : null;
     }
 
-    public DirectionsLegDelegate(com.vaadin.tapio.googlemaps.client.services.DirectionsLeg directionsLeg) {
+    public DirectionsLegDelegate(com.haulmont.charts.web.toolkit.ui.client.addons.googlemap.services.DirectionsLeg directionsLeg) {
         Preconditions.checkNotNullArgument(directionsLeg);
         this.directionsLeg = directionsLeg;
     }
 
-    public com.vaadin.tapio.googlemaps.client.services.DirectionsLeg getDirectionsLeg() {
+    public com.haulmont.charts.web.toolkit.ui.client.addons.googlemap.services.DirectionsLeg getDirectionsLeg() {
         return directionsLeg;
     }
 
-    public void setDirectionsLeg(com.vaadin.tapio.googlemaps.client.services.DirectionsLeg directionsLeg) {
+    public void setDirectionsLeg(com.haulmont.charts.web.toolkit.ui.client.addons.googlemap.services.DirectionsLeg directionsLeg) {
         this.directionsLeg = directionsLeg;
     }
 

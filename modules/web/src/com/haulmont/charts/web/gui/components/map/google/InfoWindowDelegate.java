@@ -9,7 +9,7 @@ import com.haulmont.bali.util.Preconditions;
 import com.haulmont.charts.gui.map.model.GeoPoint;
 import com.haulmont.charts.gui.map.model.InfoWindow;
 import com.haulmont.charts.gui.map.model.Marker;
-import com.vaadin.tapio.googlemaps.client.overlays.*;
+import com.haulmont.charts.web.toolkit.ui.client.addons.googlemap.overlays.GoogleMapInfoWindow;
 
 public class InfoWindowDelegate implements InfoWindow {
 

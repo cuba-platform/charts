@@ -5,5 +5,5 @@
   -->
 <module>
     <inherits name="com.haulmont.cuba.web.widgets.WidgetSet" />
-    <inherits name="com.vaadin.tapio.googlemaps.WidgetSet" />
+    <inherits name='com.google.gwt.maps.Maps'/>
 </module>

@@ -8,7 +8,7 @@ package com.haulmont.charts.web.gui.components.map.google;
 import com.haulmont.bali.util.Preconditions;
 import com.haulmont.charts.gui.map.model.GeoPoint;
 import com.haulmont.charts.gui.map.model.Label;
-import com.vaadin.tapio.googlemaps.client.overlays.GoogleMapLabel;
+import com.haulmont.charts.web.toolkit.ui.client.addons.googlemap.overlays.GoogleMapLabel;
 
 public class LabelDelegate implements Label {
 

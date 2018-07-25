@@ -7,7 +7,7 @@ package com.haulmont.charts.web.gui.components.map.google;
 
 import com.haulmont.charts.gui.map.model.Circle;
 import com.haulmont.charts.gui.map.model.GeoPoint;
-import com.vaadin.tapio.googlemaps.client.overlays.GoogleMapCircle;
+import com.haulmont.charts.web.toolkit.ui.client.addons.googlemap.overlays.GoogleMapCircle;
 
 public class CircleDelegate implements Circle {
 

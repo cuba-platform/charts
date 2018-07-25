@@ -11,22 +11,22 @@ import com.haulmont.charts.gui.map.model.base.Point;
 import com.haulmont.charts.gui.map.model.base.Size;
 
 public class MarkerImageDelegate implements MarkerImage {
-    private com.vaadin.tapio.googlemaps.client.base.MarkerImage markerImage;
+    private com.haulmont.charts.web.toolkit.ui.client.addons.googlemap.base.MarkerImage markerImage;
 
-    public static MarkerImageDelegate fromMarkerImage(com.vaadin.tapio.googlemaps.client.base.MarkerImage image) {
+    public static MarkerImageDelegate fromMarkerImage(com.haulmont.charts.web.toolkit.ui.client.addons.googlemap.base.MarkerImage image) {
         return image != null ? new MarkerImageDelegate(image) : null;
     }
 
-    public MarkerImageDelegate(com.vaadin.tapio.googlemaps.client.base.MarkerImage markerImage) {
+    public MarkerImageDelegate(com.haulmont.charts.web.toolkit.ui.client.addons.googlemap.base.MarkerImage markerImage) {
         Preconditions.checkNotNullArgument(markerImage);
         this.markerImage = markerImage;
     }
 
-    public com.vaadin.tapio.googlemaps.client.base.MarkerImage getMarkerImage() {
+    public com.haulmont.charts.web.toolkit.ui.client.addons.googlemap.base.MarkerImage getMarkerImage() {
         return markerImage;
     }
 
-    public void setMarkerImage(com.vaadin.tapio.googlemaps.client.base.MarkerImage markerImage) {
+    public void setMarkerImage(com.haulmont.charts.web.toolkit.ui.client.addons.googlemap.base.MarkerImage markerImage) {
         this.markerImage = markerImage;
     }
 

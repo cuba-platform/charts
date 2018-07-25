@@ -8,7 +8,7 @@ package com.haulmont.charts.web.gui.components.map.google;
 import com.haulmont.bali.util.Preconditions;
 import com.haulmont.charts.gui.map.model.Bounds;
 import com.haulmont.charts.gui.map.model.GeoPoint;
-import com.vaadin.tapio.googlemaps.client.base.LatLonBounds;
+import com.haulmont.charts.web.toolkit.ui.client.addons.googlemap.services.LatLonBounds;
 
 public class BoundsDelegate implements Bounds {
     private LatLonBounds bounds;
