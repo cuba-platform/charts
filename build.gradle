@@ -60,7 +60,8 @@ def chartsGuiModule = project(':charts-gui')
 def chartsWebModule = project(':charts-web')
 def chartsWebToolkitModule = project(':charts-web-toolkit')
 
-def baseVersion = cuba.artifact.version + (cuba.artifact.isSnapshot ? '-SNAPSHOT' : '')
+def artifactVersion = cuba.artifact.version + (cuba.artifact.isSnapshot ? '-SNAPSHOT' : '')
+def baseVersion = rootProject.hasProperty('cuba.version') ? rootProject['cuba.version'] : artifactVersion
 
 def cubaWeb = [group: 'com.haulmont.cuba', name: 'cuba-web', version: baseVersion]
 def cubaGui = [group: 'com.haulmont.cuba', name: 'cuba-gui', version: baseVersion]
@@ -91,7 +92,7 @@ configure([chartsGlobalModule, chartsGuiModule, chartsWebModule]) {
 
     jar {
         manifest {
-            attributes("Implementation-Version": cubaVersion)
+            attributes("Implementation-Version": artifactVersion)
         }
     }
 
@@ -194,7 +195,7 @@ configure(chartsGlobalModule) {
     jar {
         manifest {
             attributes('App-Component-Id': cuba.artifact.group)
-            attributes('App-Component-Version': cubaVersion)
+            attributes('App-Component-Version': artifactVersion)
         }
     }
 }
