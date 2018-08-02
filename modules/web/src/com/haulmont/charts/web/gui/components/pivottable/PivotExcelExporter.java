@@ -5,6 +5,7 @@
 
 package com.haulmont.charts.web.gui.components.pivottable;
 
+import com.haulmont.bali.util.Preconditions;
 import com.google.common.base.Strings;
 import com.haulmont.charts.gui.components.pivot.PivotTable;
 import com.haulmont.charts.gui.pivottable.extentsion.model.PivotData;
@@ -62,6 +63,8 @@ public final class PivotExcelExporter {
      * @param fileName  file name
      */
     public void exportPivotTable(PivotData pivotData, String fileName) {
+        Preconditions.checkNotNullArgument(pivotData);
+
         if (Strings.isNullOrEmpty(fileName)) {
             this.fileName = messages.getTools().getEntityCaption(datasource.getMetaClass());
         } else {
@@ -88,6 +91,8 @@ public final class PivotExcelExporter {
      * @param display   ExportDisplay implementation
      */
     public void exportPivotTable(PivotData pivotData, String fileName, ExportDisplay display) {
+        Preconditions.checkNotNullArgument(pivotData);
+
         if (display == null) {
             throw new IllegalArgumentException("ExportDisplay is null");
         }

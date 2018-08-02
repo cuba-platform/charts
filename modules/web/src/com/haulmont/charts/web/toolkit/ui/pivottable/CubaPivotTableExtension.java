@@ -8,6 +8,7 @@ package com.haulmont.charts.web.toolkit.ui.pivottable;
 import com.google.gson.Gson;
 import com.haulmont.charts.gui.components.pivot.PivotTable;
 import com.haulmont.charts.gui.pivottable.extentsion.model.PivotData;
+import com.haulmont.charts.gui.pivottable.model.Renderer;
 import com.haulmont.charts.web.toolkit.ui.client.pivottable.extension.CubaPivotTableExtensionServerRpc;
 import com.vaadin.server.AbstractExtension;
 
@@ -17,6 +18,8 @@ public class CubaPivotTableExtension extends AbstractExtension {
 
     protected String pivotDataJSON = null;
 
+    protected Renderer currentRenderer;
+
     protected Gson gson = new Gson();
 
     public CubaPivotTableExtension(PivotTable pivotTable) {
@@ -24,8 +27,17 @@ public class CubaPivotTableExtension extends AbstractExtension {
 
         extend(this.pivotTable);
 
-        CubaPivotTableExtensionServerRpc serverRpc =
-                (CubaPivotTableExtensionServerRpc) json -> pivotDataJSON = json;
+        CubaPivotTableExtensionServerRpc serverRpc = new CubaPivotTableExtensionServerRpc() {
+            @Override
+            public void updatePivotDataJSON(String json) {
+                pivotDataJSON = json;
+            }
+
+            @Override
+            public void updateCurrentRenderer(String renderer) {
+                currentRenderer = Renderer.fromId(renderer);
+            }
+        };
 
         registerRpc(serverRpc);
     }
@@ -36,5 +48,9 @@ public class CubaPivotTableExtension extends AbstractExtension {
 
     public PivotData getPivotData() {
         return gson.fromJson(pivotDataJSON, PivotData.class);
+    }
+
+    public Renderer getCurrentRenderer() {
+        return currentRenderer;
     }
 }

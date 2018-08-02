@@ -10,4 +10,6 @@ import com.vaadin.shared.communication.ServerRpc;
 public interface CubaPivotTableExtensionServerRpc extends ServerRpc {
 
     void updatePivotDataJSON(String json);
+
+    void updateCurrentRenderer(String renderer);
 }

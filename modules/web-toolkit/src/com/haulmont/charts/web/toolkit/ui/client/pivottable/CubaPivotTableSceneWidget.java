@@ -41,6 +41,11 @@ public class CubaPivotTableSceneWidget extends Widget implements HasEnabled {
         jsOverlay = CubaPivotTableJsOverlay.makePivot(getElement(), config,
                 refreshHandler, events.getCellClickHandler(), enabled);
         setShowEmptyDataMessage(!config.hasData());
+
+        // as non editable pivotTable doesn't send refresh event, we send it manually
+        if (refreshHandlerSubscriber != null && !isEditable(config)) {
+            refreshHandlerSubscriber.accept(null);
+        }
     }
 
     @Override
@@ -64,4 +69,8 @@ public class CubaPivotTableSceneWidget extends Widget implements HasEnabled {
     public void setRefreshHandler(Consumer<JsRefreshEvent> handler) {
         refreshHandlerSubscriber = handler;
     }
+
+    protected native boolean isEditable(PivotTableConfig config) /*-{
+        return config.options.editable;
+    }-*/;
 }

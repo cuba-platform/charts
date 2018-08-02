@@ -24,6 +24,10 @@ public class CubaPivotTableExtensionConnector extends AbstractExtensionConnector
         pivotWidget.setRefreshHandler(jsRefreshEvent -> {
             String json = jsOverlay.getPivotDataJSON();
             getRpcProxy(CubaPivotTableExtensionServerRpc.class).updatePivotDataJSON(json);
+
+            if (jsRefreshEvent != null) {
+                getRpcProxy(CubaPivotTableExtensionServerRpc.class).updateCurrentRenderer(jsRefreshEvent.getRenderer());
+            }
         });
     }
 }

@@ -70,6 +70,12 @@ public class CubaPivotTableExtensionJsOverlay {
                         cell.value = rowCell.outerText;
                     }
 
+                    if (rowCell.attributes['data-value']) {
+                        if (rowCell.attributes['data-value'].value !== 'null') {
+                            cell.value = rowCell.attributes['data-value'].value;
+                        }
+                    }
+
                     // check for numeric or string
                     if (isNumeric(cell.value)) {
                         cell.type = 'NUMERIC'
