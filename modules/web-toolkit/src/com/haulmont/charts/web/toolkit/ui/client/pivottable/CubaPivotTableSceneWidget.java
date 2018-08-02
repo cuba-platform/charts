@@ -8,6 +8,9 @@ package com.haulmont.charts.web.toolkit.ui.client.pivottable;
 import com.google.gwt.dom.client.Document;
 import com.google.gwt.user.client.ui.HasEnabled;
 import com.google.gwt.user.client.ui.Widget;
+import com.haulmont.charts.web.toolkit.ui.client.pivottable.events.JsRefreshEvent;
+
+import java.util.function.Consumer;
 
 public class CubaPivotTableSceneWidget extends Widget implements HasEnabled {
 
@@ -16,14 +19,27 @@ public class CubaPivotTableSceneWidget extends Widget implements HasEnabled {
     protected CubaPivotTableJsOverlay jsOverlay;
     protected boolean enabled = true;
 
+    protected Consumer<JsRefreshEvent> refreshHandler;
+    protected Consumer<JsRefreshEvent> refreshHandlerSubscriber;
+
     public CubaPivotTableSceneWidget() {
         setElement(Document.get().createDivElement());
         setStyleName("c-pivot-table");
     }
 
     public void init(PivotTableConfig config, PivotTableEvents events) {
+
+        refreshHandler = jsRefreshEvent -> {
+            if (refreshHandlerSubscriber != null) {
+                refreshHandlerSubscriber.accept(jsRefreshEvent);
+            }
+        };
+        // it is important to do this order of handlers,
+        // first handler for extension that should be before original component's handler
+        refreshHandler = refreshHandler.andThen(events.getRefreshHandler());
+
         jsOverlay = CubaPivotTableJsOverlay.makePivot(getElement(), config,
-                events.getRefreshHandler(), events.getCellClickHandler(), enabled);
+                refreshHandler, events.getCellClickHandler(), enabled);
         setShowEmptyDataMessage(!config.hasData());
     }
 
@@ -43,5 +59,9 @@ public class CubaPivotTableSceneWidget extends Widget implements HasEnabled {
         } else {
             removeStyleDependentName(EMPTY_DATA_STYLE);
         }
+    }
+
+    public void setRefreshHandler(Consumer<JsRefreshEvent> handler) {
+        refreshHandlerSubscriber = handler;
     }
 }
