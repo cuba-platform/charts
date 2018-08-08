@@ -17,7 +17,6 @@ package com.haulmont.charts.web.toolkit.ui.client.addons.googlemap;
 import com.google.gwt.ajaxloader.client.AjaxLoader;
 import com.google.gwt.core.client.GWT;
 import com.google.gwt.maps.client.LoadApi;
-import com.google.gwt.maps.client.MapTypeId;
 import com.google.gwt.maps.client.MapWidget;
 import com.google.gwt.maps.client.base.LatLng;
 import com.google.gwt.user.client.ui.Widget;
@@ -169,7 +168,10 @@ public class GoogleMapConnector extends AbstractComponentContainerConnector impl
                     }
                 });
         MapWidget map = googleMap.getMap();
-        forceStateChange();
+        if (deferred) {
+            forceStateChange();
+            deferred = false;
+        }
         for (GoogleMapInitListener listener : initListeners) {
             listener.mapWidgetInitiated(map);
         }
@@ -263,10 +265,13 @@ public class GoogleMapConnector extends AbstractComponentContainerConnector impl
     public void onStateChanged(StateChangeEvent stateChangeEvent) {
         super.onStateChanged(stateChangeEvent);
         if (!apiLoaded) {
+            deferred = true;
             loadMapApi();
             return;
         } else if (getWidget().getMap() == null) {
+            deferred = true;
             initMap();
+            return;
         }
 
         updateVisibleAreaAndCenterBoundLimits();

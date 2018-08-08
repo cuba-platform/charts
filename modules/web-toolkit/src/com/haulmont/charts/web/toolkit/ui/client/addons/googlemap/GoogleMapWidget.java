@@ -755,11 +755,6 @@ public class GoogleMapWidget extends FlowPanel implements RequiresResize {
     }
 
     public void setPolygonOverlays(Map<Long, GoogleMapPolygon> polyOverlays) {
-        if (polygonMap.size() == polyOverlays.size()
-                && polygonMap.values().containsAll(polyOverlays.values())) {
-            return;
-        }
-
         for (Polygon polygon : polygonMap.keySet()) {
             polygon.setMap(null);
         }
