@@ -32,6 +32,7 @@ import static com.vaadin.util.ReflectTools.findMethod;
 @WebJarResource({
         "jquery:jquery.min.js",
         "jquery-ui:jquery-ui.min.js",
+        "jquery-ui-touch-punch:jquery.ui.touch-punch.min.js",
         "pivottable:pivot.min.js",
         "pivottable:tips_data.min.js",
         "pivottable:plugins/d3/d3.min.js",

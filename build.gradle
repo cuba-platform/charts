@@ -270,6 +270,7 @@ configure(chartsWebWidgetsModule) {
 
         compile(bom['org.webjars.bower:pivottable'])
         compile(bom['org.webjars:amcharts'])
+        compile(bom['org.webjars:jquery-ui-touch-punch'])
         compile(bom['com.google.code.gson:gson'])
     }
 
