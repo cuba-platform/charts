@@ -13,7 +13,7 @@ import com.haulmont.charts.gui.amcharts.model.ValueAxis;
 import java.util.*;
 
 /**
- * Creates stock panels (charts). {@link StockChart} can have multiple Stock panels.
+ * Creates stock panels (charts). {@link StockChartModel} can have multiple Stock panels.
  * <br>
  * See documentation for properties of StockPanel JS object. <br>
  * <br>

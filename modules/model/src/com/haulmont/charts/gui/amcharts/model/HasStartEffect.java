@@ -5,7 +5,9 @@
 
 package com.haulmont.charts.gui.amcharts.model;
 
+import com.haulmont.charts.gui.amcharts.model.charts.AngularGaugeChart;
 import com.haulmont.charts.gui.amcharts.model.charts.CoordinateChartModel;
+import com.haulmont.charts.gui.amcharts.model.charts.SlicedChart;
 
 public interface HasStartEffect<T> {
 

@@ -5,6 +5,7 @@
 
 package com.haulmont.charts.gui.amcharts.model;
 
+import com.haulmont.charts.gui.amcharts.model.charts.SerialChart;
 import com.haulmont.charts.gui.model.JsFunction;
 
 /**
@@ -381,7 +382,6 @@ public class Cursor extends AbstractChartObject {
     }
 
     /**
-     *
      * Set to oneBalloonOnly true if only one balloon at a time should be displayed. Note, this is quite CPU consuming.
      * If not set the default value is false.
      *

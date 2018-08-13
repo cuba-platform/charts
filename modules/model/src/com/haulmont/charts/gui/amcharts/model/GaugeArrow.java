@@ -5,6 +5,8 @@
 
 package com.haulmont.charts.gui.amcharts.model;
 
+import com.haulmont.charts.gui.amcharts.model.charts.AngularGaugeChart;
+
 /**
  * Creates an arrow for {@link AngularGaugeChart} chart, multiple can be assigned.
  * <br>

@@ -5,13 +5,15 @@
 
 package com.haulmont.charts.gui.amcharts.model;
 
+import com.haulmont.charts.gui.amcharts.model.charts.StockChartModel;
+
 import java.util.Date;
 import java.util.UUID;
 
 /**
  * StockEvent is object which holds information about event (bullet). Values from {@link StockEventsSettings} will be
  * used if not set. Stock event bullet's size depends on it's {@link StockGraph#fontSize}. When user rolls-over,
- * clicks or rolls-out of the event bullet, {@link StockChart} dispatches events.
+ * clicks or rolls-out of the event bullet, {@link StockChartModel} dispatches events.
  * <br>
  * See documentation for properties of StockEvent JS object. <br>
  *

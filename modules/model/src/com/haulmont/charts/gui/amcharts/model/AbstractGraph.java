@@ -5,10 +5,11 @@
 
 package com.haulmont.charts.gui.amcharts.model;
 
+import com.haulmont.charts.gui.amcharts.model.charts.CoordinateChart;
+import com.haulmont.charts.gui.amcharts.model.charts.SerialChart;
+import com.haulmont.charts.gui.data.DataItem;
 import com.haulmont.charts.gui.model.JsFunction;
 import org.apache.commons.lang3.StringUtils;
-import com.haulmont.charts.gui.amcharts.model.charts.CoordinateChart;
-import com.haulmont.charts.gui.data.DataItem;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -730,9 +731,9 @@ public class AbstractGraph<T extends AbstractGraph> extends AbstractChartObject 
     }
 
     /**
-     *  Sets opacity of each graphs bullet. If bulletsEnabled of Cursor is true, a bullet on each graph follows the
-     *  cursor. In case you want to disable these bullets for a certain graph, set opacity to 0. If not set the
-     *  default value is 1.
+     * Sets opacity of each graphs bullet. If bulletsEnabled of Cursor is true, a bullet on each graph follows the
+     * cursor. In case you want to disable these bullets for a certain graph, set opacity to 0. If not set the
+     * default value is 1.
      *
      * @param cursorBulletAlpha opacity of each graphs bullet
      */
@@ -1104,7 +1105,7 @@ public class AbstractGraph<T extends AbstractGraph> extends AbstractChartObject 
     /**
      * Sets value label text. You can use tags like [[value]], [[description]], [[percents]], [[open", [[category".
      *
-     * @param labelText  value label text
+     * @param labelText value label text
      */
     public T setLabelText(String labelText) {
         this.labelText = labelText;

@@ -5,6 +5,7 @@
 
 package com.haulmont.charts.gui.amcharts.model;
 
+import com.haulmont.charts.gui.amcharts.model.charts.AngularGaugeChart;
 import com.haulmont.charts.gui.model.JsFunction;
 
 import java.util.ArrayList;

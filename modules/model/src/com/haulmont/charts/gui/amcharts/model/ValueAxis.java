@@ -5,8 +5,11 @@
 
 package com.haulmont.charts.gui.amcharts.model;
 
-import com.haulmont.charts.gui.model.JsFunction;
 import com.haulmont.charts.gui.amcharts.model.charts.AbstractChart;
+import com.haulmont.charts.gui.amcharts.model.charts.RadarChart;
+import com.haulmont.charts.gui.amcharts.model.charts.SerialChart;
+import com.haulmont.charts.gui.amcharts.model.charts.XYChart;
+import com.haulmont.charts.gui.model.JsFunction;
 
 import java.util.Date;
 import java.util.Map;

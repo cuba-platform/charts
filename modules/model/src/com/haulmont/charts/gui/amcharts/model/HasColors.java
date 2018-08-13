@@ -5,6 +5,10 @@
 
 package com.haulmont.charts.gui.amcharts.model;
 
+import com.haulmont.charts.gui.amcharts.model.charts.CoordinateChart;
+import com.haulmont.charts.gui.amcharts.model.charts.SlicedChart;
+import com.haulmont.charts.gui.amcharts.model.charts.StockChartModel;
+
 import java.util.List;
 
 public interface HasColors<T> {
@@ -21,7 +25,7 @@ public interface HasColors<T> {
      * not set. If there are more slices than colors in this array, the chart picks random color.
      *
      * <p>
-     * If you use charts based on {@link CoordinateChart} or {@link StockChart} it specifies the colors of the graphs
+     * If you use charts based on {@link CoordinateChart} or {@link StockChartModel} it specifies the colors of the graphs
      * if the lineColor of a graph is not set. If there are more graphs then colors in this array, the chart picks a
      * random color. If not set the default value is
      * <pre>{@code

@@ -5,6 +5,9 @@
 
 package com.haulmont.charts.gui.amcharts.model;
 
+import com.haulmont.charts.gui.amcharts.model.charts.SerialChart;
+import com.haulmont.charts.gui.amcharts.model.charts.XYChart;
+
 import java.util.Date;
 
 /**
