@@ -9,11 +9,12 @@ import com.google.gson.JsonParser;
 import com.google.gson.JsonSyntaxException;
 import com.haulmont.bali.util.Dom4j;
 import com.haulmont.charts.gui.amcharts.model.*;
-import com.haulmont.charts.gui.amcharts.model.charts.StockPanel;
 import com.haulmont.charts.gui.components.charts.StockChart;
 import com.haulmont.charts.gui.data.EntityDataProvider;
 import com.haulmont.charts.gui.data.ListDataProvider;
 import com.haulmont.charts.gui.data.MapDataItem;
+import com.haulmont.charts.gui.model.JsFunction;
+import com.haulmont.charts.gui.amcharts.model.charts.StockPanel;
 import com.haulmont.cuba.gui.GuiDevelopmentException;
 import com.haulmont.cuba.gui.data.CollectionDatasource;
 import com.haulmont.cuba.gui.data.Datasource;
@@ -1728,7 +1729,7 @@ public class StockChartLoader extends ChartModelLoader<StockChart> {
 
         String compareGraphBalloonFunction = stockGraphElement.elementText("compareGraphBalloonFunction");
         if (StringUtils.isNotBlank(compareGraphBalloonFunction)) {
-            stockGraph.setCompareGraphBalloonFunction(new com.haulmont.charts.gui.model.JsFunction(compareGraphBalloonFunction));
+            stockGraph.setCompareGraphBalloonFunction(new JsFunction(compareGraphBalloonFunction));
         }
 
         String compareGraphBalloonText = stockGraphElement.attributeValue("compareGraphBalloonText");

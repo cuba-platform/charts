@@ -14,13 +14,13 @@ import java.util.List;
 public abstract class WebCoordinateChart<T extends CoordinateChart,
         M extends com.haulmont.charts.gui.amcharts.model.charts.CoordinateChart> extends WebChart<T, M> implements CoordinateChart<T> {
 
-    protected com.haulmont.charts.web.toolkit.ui.amcharts.events.AxisZoomListener axisZoomHandler;
+    protected com.haulmont.charts.web.widgets.amcharts.events.AxisZoomListener axisZoomHandler;
 
-    protected com.haulmont.charts.web.toolkit.ui.amcharts.events.GraphClickListener graphClickHandler;
+    protected com.haulmont.charts.web.widgets.amcharts.events.GraphClickListener graphClickHandler;
 
-    protected com.haulmont.charts.web.toolkit.ui.amcharts.events.GraphItemClickListener graphItemClickHandler;
+    protected com.haulmont.charts.web.widgets.amcharts.events.GraphItemClickListener graphItemClickHandler;
 
-    protected com.haulmont.charts.web.toolkit.ui.amcharts.events.GraphItemRightClickListener graphItemRightClickHandler;
+    protected com.haulmont.charts.web.widgets.amcharts.events.GraphItemRightClickListener graphItemRightClickHandler;
 
     @Override
     public List<Color> getColors() {

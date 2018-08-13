@@ -9,7 +9,7 @@ import com.haulmont.charts.gui.map.model.GeoPoint;
 import com.haulmont.charts.gui.map.model.WeightedLocation;
 import com.haulmont.charts.gui.map.model.layer.HeatMapLayer;
 import com.haulmont.charts.web.gui.components.map.google.DelegateHelper;
-import com.haulmont.charts.web.toolkit.ui.client.addons.googlemap.layers.GoogleMapHeatMapLayer;
+import com.haulmont.charts.web.widgets.client.addons.googlemap.layers.GoogleMapHeatMapLayer;
 
 import java.util.ArrayList;
 import java.util.List;

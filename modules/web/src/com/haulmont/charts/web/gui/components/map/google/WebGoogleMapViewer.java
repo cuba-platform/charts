@@ -51,14 +51,14 @@ import com.haulmont.charts.web.gui.components.map.google.directions.DirectionsRe
 import com.haulmont.charts.web.gui.components.map.google.directions.DirectionsWaypointDelegate;
 import com.haulmont.charts.web.gui.components.map.google.layer.HeatMapLayerDelegate;
 import com.haulmont.charts.web.gui.components.map.google.maptype.ImageMapTypeDelegate;
-import com.haulmont.charts.web.widgets.addon.googlemap.GoogleMap;
+import com.haulmont.charts.web.widgets.addons.googlemap.GoogleMap;
+import com.haulmont.charts.web.widgets.client.addons.googlemap.base.LatLon;
+import com.haulmont.charts.web.widgets.client.addons.googlemap.layers.GoogleMapHeatMapLayer;
+import com.haulmont.charts.web.widgets.client.addons.googlemap.overlays.*;
 import com.haulmont.cuba.core.global.AppBeans;
 import com.haulmont.cuba.core.global.Configuration;
 import com.haulmont.cuba.core.global.Messages;
 import com.haulmont.cuba.web.gui.components.WebAbstractComponent;
-import com.haulmont.charts.web.toolkit.ui.client.addons.googlemap.base.LatLon;
-import com.haulmont.charts.web.toolkit.ui.client.addons.googlemap.layers.GoogleMapHeatMapLayer;
-import com.haulmont.charts.web.toolkit.ui.client.addons.googlemap.overlays.*;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -81,53 +81,53 @@ public class WebGoogleMapViewer extends WebAbstractComponent<GoogleMap> implemen
     protected MapConfig mapConfig = AppBeans.get(Configuration.class).getConfig(MapConfig.class);
 
     protected List<MapMoveListener> mapMoveListeners;
-    protected com.haulmont.charts.web.toolkit.ui.client.addons.googlemap.events.MapMoveListener mapMoveHandler;
+    protected com.haulmont.charts.web.widgets.client.addons.googlemap.events.MapMoveListener mapMoveHandler;
 
     protected List<MapClickListener> mapClickListeners;
-    protected com.haulmont.charts.web.toolkit.ui.client.addons.googlemap.events.click.MapClickListener mapClickHandler;
-    protected com.haulmont.charts.web.toolkit.ui.client.addons.googlemap.events.rightclick.MapRightClickListener mapRightClickHandler;
+    protected com.haulmont.charts.web.widgets.client.addons.googlemap.events.click.MapClickListener mapClickHandler;
+    protected com.haulmont.charts.web.widgets.client.addons.googlemap.events.rightclick.MapRightClickListener mapRightClickHandler;
 
     protected List<MarkerDragListener> markerDragListeners;
-    protected com.haulmont.charts.web.toolkit.ui.client.addons.googlemap.events.MarkerDragListener markerDragHandler;
+    protected com.haulmont.charts.web.widgets.client.addons.googlemap.events.MarkerDragListener markerDragHandler;
 
     protected List<MarkerClickListener> markerClickListeners;
-    protected com.haulmont.charts.web.toolkit.ui.client.addons.googlemap.events.click.MarkerClickListener markerClickHandler;
+    protected com.haulmont.charts.web.widgets.client.addons.googlemap.events.click.MarkerClickListener markerClickHandler;
 
     protected List<MarkerDoubleClickListener> markerDoubleClickListeners;
-    protected com.haulmont.charts.web.toolkit.ui.client.addons.googlemap.events.doubleclick.MarkerDoubleClickListener markerDoubleClickHandler;
-    protected com.haulmont.charts.web.toolkit.ui.client.addons.googlemap.events.rightclick.MarkerRightClickListener markerRightClickHandler;
+    protected com.haulmont.charts.web.widgets.client.addons.googlemap.events.doubleclick.MarkerDoubleClickListener markerDoubleClickHandler;
+    protected com.haulmont.charts.web.widgets.client.addons.googlemap.events.rightclick.MarkerRightClickListener markerRightClickHandler;
 
     protected List<InfoWindowClosedListener> infoWindowClosedListeners;
-    protected com.haulmont.charts.web.toolkit.ui.client.addons.googlemap.events.InfoWindowClosedListener infoWindowClosedHandler;
+    protected com.haulmont.charts.web.widgets.client.addons.googlemap.events.InfoWindowClosedListener infoWindowClosedHandler;
 
     protected List<PolygonCompleteListener> polygonCompleteListeners;
-    protected com.haulmont.charts.web.toolkit.ui.client.addons.googlemap.events.overlaycomplete.PolygonCompleteListener polygonCompleteHandler;
+    protected com.haulmont.charts.web.widgets.client.addons.googlemap.events.overlaycomplete.PolygonCompleteListener polygonCompleteHandler;
 
     protected List<PolygonEditListener> polygonEditListeners;
-    protected com.haulmont.charts.web.toolkit.ui.client.addons.googlemap.events.PolygonEditListener polygonEditHandler;
+    protected com.haulmont.charts.web.widgets.client.addons.googlemap.events.PolygonEditListener polygonEditHandler;
 
     protected List<PolygonClickListener> polygonClickListeners;
-    protected com.haulmont.charts.web.toolkit.ui.client.addons.googlemap.events.click.PolygonClickListener polygonClickHandler;
-    protected com.haulmont.charts.web.toolkit.ui.client.addons.googlemap.events.rightclick.PolygonRightClickListener polygonRightClickHandler;
+    protected com.haulmont.charts.web.widgets.client.addons.googlemap.events.click.PolygonClickListener polygonClickHandler;
+    protected com.haulmont.charts.web.widgets.client.addons.googlemap.events.rightclick.PolygonRightClickListener polygonRightClickHandler;
 
     protected List<MapInitListener> mapInitListeners;
-    protected com.haulmont.charts.web.toolkit.ui.client.addons.googlemap.events.MapInitListener mapInitHandler;
+    protected com.haulmont.charts.web.widgets.client.addons.googlemap.events.MapInitListener mapInitHandler;
 
     protected List<CircleClickListener> circleClickListeners;
-    protected com.haulmont.charts.web.toolkit.ui.client.addons.googlemap.events.click.CircleClickListener circleClickHandler;
+    protected com.haulmont.charts.web.widgets.client.addons.googlemap.events.click.CircleClickListener circleClickHandler;
 
     protected List<CircleDoubleClickListener> circleDoubleClickListeners;
-    protected com.haulmont.charts.web.toolkit.ui.client.addons.googlemap.events.doubleclick.CircleDoubleClickListener circleDoubleClickHandler;
+    protected com.haulmont.charts.web.widgets.client.addons.googlemap.events.doubleclick.CircleDoubleClickListener circleDoubleClickHandler;
 
     protected List<CircleRadiusChangeListener> circleRadiusChangeListeners;
-    protected com.haulmont.charts.web.toolkit.ui.client.addons.googlemap.events.radiuschange.CircleRadiusChangeListener circleRadiusChangeHandler;
+    protected com.haulmont.charts.web.widgets.client.addons.googlemap.events.radiuschange.CircleRadiusChangeListener circleRadiusChangeHandler;
 
     protected List<CircleCenterChangeListener> circleCenterChangeListeners;
-    protected com.haulmont.charts.web.toolkit.ui.client.addons.googlemap.events.centerchange.CircleCenterChangeListener circleCenterChangeHandler;
+    protected com.haulmont.charts.web.widgets.client.addons.googlemap.events.centerchange.CircleCenterChangeListener circleCenterChangeHandler;
 
     protected List<CircleCompleteListener> circleCompleteListeners;
-    protected com.haulmont.charts.web.toolkit.ui.client.addons.googlemap.events.overlaycomplete.CircleCompleteListener circleCompleteHandler;
-    protected com.haulmont.charts.web.toolkit.ui.client.addons.googlemap.events.rightclick.CircleRightClickListener circleRightClickHandler;
+    protected com.haulmont.charts.web.widgets.client.addons.googlemap.events.overlaycomplete.CircleCompleteListener circleCompleteHandler;
+    protected com.haulmont.charts.web.widgets.client.addons.googlemap.events.rightclick.CircleRightClickListener circleRightClickHandler;
 
     public WebGoogleMapViewer() {
         String clientId = mapConfig.getClientId();
@@ -180,17 +180,17 @@ public class WebGoogleMapViewer extends WebAbstractComponent<GoogleMap> implemen
 
     @Override
     public Marker addMarker(String caption, GeoPoint position, boolean draggable, String iconUrl) {
-        return new MarkerDelegate(component.addMarker(caption, ((GeoPointDelegate)position).getLatLon(), draggable, iconUrl));
+        return new MarkerDelegate(component.addMarker(caption, ((GeoPointDelegate) position).getLatLon(), draggable, iconUrl));
     }
 
     @Override
     public void addMarker(Marker marker) {
-        component.addMarker(((MarkerDelegate)marker).getMarker());
+        component.addMarker(((MarkerDelegate) marker).getMarker());
     }
 
     @Override
     public void removeMarker(Marker marker) {
-        component.removeMarker(((MarkerDelegate)marker).getMarker());
+        component.removeMarker(((MarkerDelegate) marker).getMarker());
     }
 
     @Override
@@ -200,13 +200,13 @@ public class WebGoogleMapViewer extends WebAbstractComponent<GoogleMap> implemen
 
     @Override
     public boolean hasMarker(Marker marker) {
-        return component.hasMarker(((MarkerDelegate)marker).getMarker());
+        return component.hasMarker(((MarkerDelegate) marker).getMarker());
     }
 
     @Override
     public Collection<Marker> getMarkers() {
         Collection<GoogleMapMarker> googleMarkers = component.getMarkers();
-        Collection<Marker> markers = new ArrayList<>(googleMarkers.size()*2);
+        Collection<Marker> markers = new ArrayList<>(googleMarkers.size() * 2);
         for (GoogleMapMarker googleMarker : googleMarkers) {
             markers.add(new MarkerDelegate(googleMarker));
         }
@@ -220,23 +220,23 @@ public class WebGoogleMapViewer extends WebAbstractComponent<GoogleMap> implemen
 
     @Override
     public void setCenter(GeoPoint center) {
-        component.setCenter(((GeoPointDelegate)center).getLatLon());
+        component.setCenter(((GeoPointDelegate) center).getLatLon());
     }
 
     @Override
     public void removePolyline(Polyline polyline) {
-        component.removePolyline(((PolylineDelegate)polyline).getPolyline());
+        component.removePolyline(((PolylineDelegate) polyline).getPolyline());
     }
 
     @Override
     public void addPolyline(Polyline polyline) {
-        component.addPolyline(((PolylineDelegate)polyline).getPolyline());
+        component.addPolyline(((PolylineDelegate) polyline).getPolyline());
     }
 
     @Override
     public void setCenterBoundLimits(GeoPoint limitNE, GeoPoint limitSW) {
-        component.setCenterBoundLimits(((GeoPointDelegate)limitNE).getLatLon(),
-                ((GeoPointDelegate)limitSW).getLatLon());
+        component.setCenterBoundLimits(((GeoPointDelegate) limitNE).getLatLon(),
+                ((GeoPointDelegate) limitSW).getLatLon());
     }
 
     @Override
@@ -301,8 +301,8 @@ public class WebGoogleMapViewer extends WebAbstractComponent<GoogleMap> implemen
 
     @Override
     public void setVisibleAreaBoundLimits(GeoPoint limitNE, GeoPoint limitSW) {
-        component.setVisibleAreaBoundLimits(((GeoPointDelegate)limitNE).getLatLon(),
-                ((GeoPointDelegate)limitSW).getLatLon());
+        component.setVisibleAreaBoundLimits(((GeoPointDelegate) limitNE).getLatLon(),
+                ((GeoPointDelegate) limitSW).getLatLon());
     }
 
     @Override
@@ -312,7 +312,7 @@ public class WebGoogleMapViewer extends WebAbstractComponent<GoogleMap> implemen
 
     @Override
     public void fitToBounds(GeoPoint boundsNE, GeoPoint boundsSW) {
-        component.fitToBounds(((GeoPointDelegate)boundsNE).getLatLon(), ((GeoPointDelegate)boundsSW).getLatLon());
+        component.fitToBounds(((GeoPointDelegate) boundsNE).getLatLon(), ((GeoPointDelegate) boundsSW).getLatLon());
     }
 
     @Override
@@ -322,22 +322,22 @@ public class WebGoogleMapViewer extends WebAbstractComponent<GoogleMap> implemen
 
     @Override
     public void removePolygonOverlay(Polygon polygon) {
-        component.removePolygonOverlay(((PolygonDelegate)polygon).getPolygon());
+        component.removePolygonOverlay(((PolygonDelegate) polygon).getPolygon());
     }
 
     @Override
     public void addPolygonOverlay(Polygon polygon) {
-        component.addPolygonOverlay(((PolygonDelegate)polygon).getPolygon());
+        component.addPolygonOverlay(((PolygonDelegate) polygon).getPolygon());
     }
 
     @Override
     public void addCircleOverlay(Circle circle) {
-        component.addCircleOverlay(((CircleDelegate)circle).getCircle());
+        component.addCircleOverlay(((CircleDelegate) circle).getCircle());
     }
 
     @Override
     public void removeCircleOverlay(Circle circle) {
-        component.removeCircleOverlay(((CircleDelegate)circle).getCircle());
+        component.removeCircleOverlay(((CircleDelegate) circle).getCircle());
     }
 
     @Override
@@ -357,13 +357,13 @@ public class WebGoogleMapViewer extends WebAbstractComponent<GoogleMap> implemen
 
     @Override
     public Marker createMarker(String caption, GeoPoint position, boolean draggable) {
-        return new MarkerDelegate(new GoogleMapMarker(caption, ((GeoPointDelegate)position).getLatLon(), draggable));
+        return new MarkerDelegate(new GoogleMapMarker(caption, ((GeoPointDelegate) position).getLatLon(), draggable));
     }
 
     @Override
     public Marker createMarker(String caption, GeoPoint position, boolean draggable, String iconUrl) {
         return new MarkerDelegate(new GoogleMapMarker(caption,
-                position != null ? ((GeoPointDelegate)position).getLatLon() : null,
+                position != null ? ((GeoPointDelegate) position).getLatLon() : null,
                 draggable,
                 iconUrl));
     }
@@ -372,9 +372,9 @@ public class WebGoogleMapViewer extends WebAbstractComponent<GoogleMap> implemen
     public Marker createMarker(String caption, GeoPoint position, boolean draggable, MarkerImage icon) {
         return new MarkerDelegate(new GoogleMapMarker(
                 caption,
-                position != null ? ((GeoPointDelegate)position).getLatLon() : null,
+                position != null ? ((GeoPointDelegate) position).getLatLon() : null,
                 draggable,
-                icon != null ? ((MarkerImageDelegate)icon).getMarkerImage() : null));
+                icon != null ? ((MarkerImageDelegate) icon).getMarkerImage() : null));
     }
 
     @Override
@@ -401,7 +401,7 @@ public class WebGoogleMapViewer extends WebAbstractComponent<GoogleMap> implemen
 
     @Override
     public Circle createCircle(GeoPoint center, double radius) {
-        return new CircleDelegate(new GoogleMapCircle(((GeoPointDelegate)center).getLatLon(), radius));
+        return new CircleDelegate(new GoogleMapCircle(((GeoPointDelegate) center).getLatLon(), radius));
     }
 
     @Override
@@ -432,7 +432,7 @@ public class WebGoogleMapViewer extends WebAbstractComponent<GoogleMap> implemen
 
     @Override
     public InfoWindow createInfoWindow(String content, Marker anchorMarker) {
-        return new InfoWindowDelegate(new GoogleMapInfoWindow(content, ((MarkerDelegate)anchorMarker).getMarker()));
+        return new InfoWindowDelegate(new GoogleMapInfoWindow(content, ((MarkerDelegate) anchorMarker).getMarker()));
     }
 
     @Override
@@ -442,7 +442,7 @@ public class WebGoogleMapViewer extends WebAbstractComponent<GoogleMap> implemen
 
     @Override
     public void addHeatMapLayer(HeatMapLayer layer) {
-        component.addHeatMapLayer(((HeatMapLayerDelegate)layer).getLayer());
+        component.addHeatMapLayer(((HeatMapLayerDelegate) layer).getLayer());
     }
 
     @Override
@@ -467,24 +467,24 @@ public class WebGoogleMapViewer extends WebAbstractComponent<GoogleMap> implemen
 
     @Override
     public void addImageMapType(ImageMapType imageMapType) {
-        component.addImageMapType(((ImageMapTypeDelegate)imageMapType).getMapType());
+        component.addImageMapType(((ImageMapTypeDelegate) imageMapType).getMapType());
     }
 
     @Override
     public void removeImageMapType(ImageMapType imageMapType) {
         Preconditions.checkNotNullArgument(imageMapType);
-        component.removeImageMapType(((ImageMapTypeDelegate)imageMapType).getMapType());
+        component.removeImageMapType(((ImageMapTypeDelegate) imageMapType).getMapType());
     }
 
     @Override
     public void addOverlayImageMapType(ImageMapType imageMapType) {
-        component.addOverlayImageMapType(((ImageMapTypeDelegate)imageMapType).getMapType());
+        component.addOverlayImageMapType(((ImageMapTypeDelegate) imageMapType).getMapType());
     }
 
     @Override
     public void removeOverlayImageMapType(ImageMapType imageMapType) {
         Preconditions.checkNotNullArgument(imageMapType);
-        component.removeOverlayImageMapType(((ImageMapTypeDelegate)imageMapType).getMapType());
+        component.removeOverlayImageMapType(((ImageMapTypeDelegate) imageMapType).getMapType());
     }
 
     @Override
@@ -801,15 +801,18 @@ public class WebGoogleMapViewer extends WebAbstractComponent<GoogleMap> implemen
     }
 
     private PolygonEditListener.ActionType toCubaActionType(
-            com.haulmont.charts.web.toolkit.ui.client.addons.googlemap.events.PolygonEditListener.ActionType actionType) {
+            com.haulmont.charts.web.widgets.client.addons.googlemap.events.PolygonEditListener.ActionType actionType) {
         if (actionType == null) {
             return null;
         }
 
         switch (actionType) {
-            case INSERT: return PolygonEditListener.ActionType.INSERT;
-            case REMOVE: return PolygonEditListener.ActionType.REMOVE;
-            case SET: return PolygonEditListener.ActionType.SET;
+            case INSERT:
+                return PolygonEditListener.ActionType.INSERT;
+            case REMOVE:
+                return PolygonEditListener.ActionType.REMOVE;
+            case SET:
+                return PolygonEditListener.ActionType.SET;
         }
 
         throw new IllegalArgumentException("Unknown edit action type: " + actionType);
@@ -1059,7 +1062,7 @@ public class WebGoogleMapViewer extends WebAbstractComponent<GoogleMap> implemen
 
     @Override
     public boolean isInfoWindowOpen(InfoWindow infoWindow) {
-        return component.isInfoWindowOpen(((InfoWindowDelegate)infoWindow).getInfoWindow());
+        return component.isInfoWindowOpen(((InfoWindowDelegate) infoWindow).getInfoWindow());
     }
 
     @Override
@@ -1069,17 +1072,17 @@ public class WebGoogleMapViewer extends WebAbstractComponent<GoogleMap> implemen
 
     @Override
     public void closeInfoWindow(InfoWindow infoWindow) {
-        component.closeInfoWindow(((InfoWindowDelegate)infoWindow).getInfoWindow());
+        component.closeInfoWindow(((InfoWindowDelegate) infoWindow).getInfoWindow());
     }
 
     @Override
     public void openInfoWindow(InfoWindow infoWindow) {
-        component.openInfoWindow(((InfoWindowDelegate)infoWindow).getInfoWindow());
+        component.openInfoWindow(((InfoWindowDelegate) infoWindow).getInfoWindow());
     }
 
     @Override
     public DirectionsRequest createDirectionsRequest() {
-        return new DirectionsRequestDelegate(new com.haulmont.charts.web.toolkit.ui.client.addons.googlemap.services.DirectionsRequest());
+        return new DirectionsRequestDelegate(new com.haulmont.charts.web.widgets.client.addons.googlemap.services.DirectionsRequest());
     }
 
     @Override
@@ -1087,11 +1090,11 @@ public class WebGoogleMapViewer extends WebAbstractComponent<GoogleMap> implemen
         Preconditions.checkNotNullArgument(origin);
         Preconditions.checkNotNullArgument(destination);
 
-        com.haulmont.charts.web.toolkit.ui.client.addons.googlemap.services.DirectionsRequest googleDirectionsRequest
-                = new com.haulmont.charts.web.toolkit.ui.client.addons.googlemap.services.DirectionsRequest(
+        com.haulmont.charts.web.widgets.client.addons.googlemap.services.DirectionsRequest googleDirectionsRequest
+                = new com.haulmont.charts.web.widgets.client.addons.googlemap.services.DirectionsRequest(
                 ((GeoPointDelegate) origin).getLatLon(),
                 ((GeoPointDelegate) destination).getLatLon(),
-                travelMode != null ? com.haulmont.charts.web.toolkit.ui.client.addons.googlemap.services.TravelMode.fromValue(travelMode.value()) : null
+                travelMode != null ? com.haulmont.charts.web.widgets.client.addons.googlemap.services.TravelMode.fromValue(travelMode.value()) : null
         );
 
         return new DirectionsRequestDelegate(googleDirectionsRequest);
@@ -1099,13 +1102,13 @@ public class WebGoogleMapViewer extends WebAbstractComponent<GoogleMap> implemen
 
     @Override
     public DirectionsWaypoint createDirectionsWaypoint() {
-        return new DirectionsWaypointDelegate(new com.haulmont.charts.web.toolkit.ui.client.addons.googlemap.services.DirectionsWaypoint());
+        return new DirectionsWaypointDelegate(new com.haulmont.charts.web.widgets.client.addons.googlemap.services.DirectionsWaypoint());
     }
 
     @Override
     public DirectionsWaypoint createDirectionsWaypoint(GeoPoint location, boolean stopOver) {
         Preconditions.checkNotNullArgument(location);
-        return new DirectionsWaypointDelegate(new com.haulmont.charts.web.toolkit.ui.client.addons.googlemap.services.DirectionsWaypoint(((GeoPointDelegate)location).getLatLon(), stopOver));
+        return new DirectionsWaypointDelegate(new com.haulmont.charts.web.widgets.client.addons.googlemap.services.DirectionsWaypoint(((GeoPointDelegate) location).getLatLon(), stopOver));
     }
 
     @Override
@@ -1119,22 +1122,22 @@ public class WebGoogleMapViewer extends WebAbstractComponent<GoogleMap> implemen
 
     @Override
     public Size createSize(double width, double height) {
-        return new SizeDelegate(new com.haulmont.charts.web.toolkit.ui.client.addons.googlemap.base.Size(width, height));
+        return new SizeDelegate(new com.haulmont.charts.web.widgets.client.addons.googlemap.base.Size(width, height));
     }
 
     @Override
     public Point createPoint(double x, double y) {
-        return new PointDelegate(new com.haulmont.charts.web.toolkit.ui.client.addons.googlemap.base.Point(x, y));
+        return new PointDelegate(new com.haulmont.charts.web.widgets.client.addons.googlemap.base.Point(x, y));
     }
 
     @Override
     public MarkerImage createMarkerImage() {
-        return new MarkerImageDelegate(new com.haulmont.charts.web.toolkit.ui.client.addons.googlemap.base.MarkerImage());
+        return new MarkerImageDelegate(new com.haulmont.charts.web.widgets.client.addons.googlemap.base.MarkerImage());
     }
 
     @Override
     public MarkerImage createMarkerImage(String url) {
-        return new MarkerImageDelegate(new com.haulmont.charts.web.toolkit.ui.client.addons.googlemap.base.MarkerImage(url));
+        return new MarkerImageDelegate(new com.haulmont.charts.web.widgets.client.addons.googlemap.base.MarkerImage(url));
     }
 
     @Override

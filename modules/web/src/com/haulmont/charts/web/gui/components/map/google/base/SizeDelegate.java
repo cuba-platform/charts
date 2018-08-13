@@ -9,22 +9,22 @@ import com.haulmont.bali.util.Preconditions;
 import com.haulmont.charts.gui.map.model.base.Size;
 
 public class SizeDelegate implements Size {
-    private com.haulmont.charts.web.toolkit.ui.client.addons.googlemap.base.Size size;
+    private com.haulmont.charts.web.widgets.client.addons.googlemap.base.Size size;
 
-    public static SizeDelegate fromSize(com.haulmont.charts.web.toolkit.ui.client.addons.googlemap.base.Size size) {
+    public static SizeDelegate fromSize(com.haulmont.charts.web.widgets.client.addons.googlemap.base.Size size) {
         return size != null ? new SizeDelegate(size) : null;
     }
 
-    public SizeDelegate(com.haulmont.charts.web.toolkit.ui.client.addons.googlemap.base.Size size) {
+    public SizeDelegate(com.haulmont.charts.web.widgets.client.addons.googlemap.base.Size size) {
         Preconditions.checkNotNullArgument(size);
         this.size = size;
     }
 
-    public com.haulmont.charts.web.toolkit.ui.client.addons.googlemap.base.Size getSize() {
+    public com.haulmont.charts.web.widgets.client.addons.googlemap.base.Size getSize() {
         return size;
     }
 
-    public void setSize(com.haulmont.charts.web.toolkit.ui.client.addons.googlemap.base.Size size) {
+    public void setSize(com.haulmont.charts.web.widgets.client.addons.googlemap.base.Size size) {
         this.size = size;
     }
 

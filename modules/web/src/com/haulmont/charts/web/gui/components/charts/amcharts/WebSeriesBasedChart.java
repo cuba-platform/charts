@@ -9,7 +9,7 @@ import com.haulmont.charts.gui.amcharts.model.CategoryAxis;
 import com.haulmont.charts.gui.amcharts.model.DayOfWeek;
 import com.haulmont.charts.gui.amcharts.model.Scrollbar;
 import com.haulmont.charts.gui.amcharts.model.charts.AbstractSerialChart;
-import com.haulmont.charts.gui.amcharts.model.gson.ChartJsonSerializationContext;
+import com.haulmont.charts.web.widgets.amcharts.serialization.ChartJsonSerializationContext;
 import com.haulmont.charts.gui.components.charts.SeriesBasedChart;
 import com.haulmont.chile.core.model.MetaProperty;
 import com.haulmont.cuba.core.global.DevelopmentException;
@@ -22,9 +22,9 @@ import java.util.Date;
 public abstract class WebSeriesBasedChart<T extends SeriesBasedChart, M extends AbstractSerialChart> extends WebRectangularChart<T, M>
         implements SeriesBasedChart<T> {
 
-    protected com.haulmont.charts.web.toolkit.ui.amcharts.events.ZoomListener zoomHandler;
+    protected com.haulmont.charts.web.widgets.amcharts.events.ZoomListener zoomHandler;
 
-    protected com.haulmont.charts.web.toolkit.ui.amcharts.events.CategoryItemClickListener categoryItemClickHandler;
+    protected com.haulmont.charts.web.widgets.amcharts.events.CategoryItemClickListener categoryItemClickHandler;
 
     @Override
     protected void setupDefaults(M chart) {

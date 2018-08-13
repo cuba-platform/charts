@@ -16,13 +16,13 @@ import java.util.List;
 public abstract class WebSlicedChart<T extends SlicedChart,
         M extends com.haulmont.charts.gui.amcharts.model.charts.SlicedChart> extends WebChart<T, M> implements SlicedChart<T> {
 
-    protected com.haulmont.charts.web.toolkit.ui.amcharts.events.SliceClickListener sliceClickHandler;
+    protected com.haulmont.charts.web.widgets.amcharts.events.SliceClickListener sliceClickHandler;
 
-    protected com.haulmont.charts.web.toolkit.ui.amcharts.events.SliceRightClickListener sliceRightClickHandler;
+    protected com.haulmont.charts.web.widgets.amcharts.events.SliceRightClickListener sliceRightClickHandler;
 
-    protected com.haulmont.charts.web.toolkit.ui.amcharts.events.SlicePullInListener slicePullInHandler;
+    protected com.haulmont.charts.web.widgets.amcharts.events.SlicePullInListener slicePullInHandler;
 
-    protected com.haulmont.charts.web.toolkit.ui.amcharts.events.SlicePullOutListener slicePullOutHandler;
+    protected com.haulmont.charts.web.widgets.amcharts.events.SlicePullOutListener slicePullOutHandler;
 
     @Override
     public Double getAlpha() {

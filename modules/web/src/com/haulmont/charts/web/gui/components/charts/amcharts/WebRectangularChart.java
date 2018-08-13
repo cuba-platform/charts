@@ -19,9 +19,9 @@ public abstract class WebRectangularChart<T extends RectangularChart,
         M extends com.haulmont.charts.gui.amcharts.model.charts.RectangularChart> extends WebCoordinateChart<T, M>
         implements RectangularChart<T> {
 
-    protected com.haulmont.charts.web.toolkit.ui.amcharts.events.CursorPeriodSelectListener periodSelectHandler;
+    protected com.haulmont.charts.web.widgets.amcharts.events.CursorPeriodSelectListener periodSelectHandler;
 
-    protected com.haulmont.charts.web.toolkit.ui.amcharts.events.CursorZoomListener cursorZoomHandler;
+    protected com.haulmont.charts.web.widgets.amcharts.events.CursorZoomListener cursorZoomHandler;
 
     @Override
     protected void setupDefaults(M chart) {

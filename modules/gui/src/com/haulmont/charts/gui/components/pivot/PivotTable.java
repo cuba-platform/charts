@@ -5,10 +5,10 @@
 
 package com.haulmont.charts.gui.components.pivot;
 
-import com.haulmont.charts.gui.data.DataItem;
-import com.haulmont.charts.gui.data.DataProvider;
 import com.haulmont.charts.gui.model.JsFunction;
 import com.haulmont.charts.gui.pivottable.model.*;
+import com.haulmont.charts.gui.data.DataItem;
+import com.haulmont.charts.gui.data.DataProvider;
 import com.haulmont.cuba.gui.components.Component;
 import com.haulmont.cuba.gui.data.CollectionDatasource;
 
@@ -22,6 +22,7 @@ public interface PivotTable extends Component, Component.BelongToFrame, Componen
     String NAME = "pivotTable";
 
     CollectionDatasource getDatasource();
+
     void setDatasource(CollectionDatasource datasource);
 
     /**
@@ -529,6 +530,7 @@ public interface PivotTable extends Component, Component.BelongToFrame, Componen
     void setEmptyDataMessage(String emptyDataMessage);
 
     void addRefreshListener(RefreshListener refreshListener);
+
     void removeRefreshListener(RefreshListener refreshListener);
 
     /**

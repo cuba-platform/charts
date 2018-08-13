@@ -110,7 +110,7 @@ public class EntityDataProvider implements DataProvider {
      * @throws UnsupportedOperationException use datasource for changing data items of EntityDataProvider
      */
     @Override
-    public void addItems(Collection<DataItem> items) {
+    public void addItems(Collection<? extends DataItem> items) {
         throw new UnsupportedOperationException("Use datasource for changing data items of EntityDataProvider");
     }
 

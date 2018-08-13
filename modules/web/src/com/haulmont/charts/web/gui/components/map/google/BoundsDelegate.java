@@ -8,7 +8,7 @@ package com.haulmont.charts.web.gui.components.map.google;
 import com.haulmont.bali.util.Preconditions;
 import com.haulmont.charts.gui.map.model.Bounds;
 import com.haulmont.charts.gui.map.model.GeoPoint;
-import com.haulmont.charts.web.toolkit.ui.client.addons.googlemap.services.LatLonBounds;
+import com.haulmont.charts.web.widgets.client.addons.googlemap.services.LatLonBounds;
 
 public class BoundsDelegate implements Bounds {
     private LatLonBounds bounds;
@@ -37,7 +37,7 @@ public class BoundsDelegate implements Bounds {
 
     @Override
     public void setSw(GeoPoint sw) {
-        bounds.setSw(sw != null ? ((GeoPointDelegate)sw).getLatLon() : null);
+        bounds.setSw(sw != null ? ((GeoPointDelegate) sw).getLatLon() : null);
     }
 
     @Override
@@ -47,6 +47,6 @@ public class BoundsDelegate implements Bounds {
 
     @Override
     public void setNe(GeoPoint ne) {
-        bounds.setNe(ne != null ? ((GeoPointDelegate)ne).getLatLon() : null);
+        bounds.setNe(ne != null ? ((GeoPointDelegate) ne).getLatLon() : null);
     }
 }

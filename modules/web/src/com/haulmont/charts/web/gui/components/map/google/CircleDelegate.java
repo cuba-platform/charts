@@ -7,7 +7,7 @@ package com.haulmont.charts.web.gui.components.map.google;
 
 import com.haulmont.charts.gui.map.model.Circle;
 import com.haulmont.charts.gui.map.model.GeoPoint;
-import com.haulmont.charts.web.toolkit.ui.client.addons.googlemap.overlays.GoogleMapCircle;
+import com.haulmont.charts.web.widgets.client.addons.googlemap.overlays.GoogleMapCircle;
 
 public class CircleDelegate implements Circle {
 
@@ -24,7 +24,7 @@ public class CircleDelegate implements Circle {
 
     @Override
     public void setCenter(GeoPoint center) {
-        circle.setCenter(center != null ? ((GeoPointDelegate)center).getLatLon() : null);
+        circle.setCenter(center != null ? ((GeoPointDelegate) center).getLatLon() : null);
     }
 
     @Override

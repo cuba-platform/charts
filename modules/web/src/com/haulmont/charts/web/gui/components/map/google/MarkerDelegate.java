@@ -10,7 +10,7 @@ import com.haulmont.charts.gui.map.model.GeoPoint;
 import com.haulmont.charts.gui.map.model.Marker;
 import com.haulmont.charts.gui.map.model.base.MarkerImage;
 import com.haulmont.charts.web.gui.components.map.google.base.MarkerImageDelegate;
-import com.haulmont.charts.web.toolkit.ui.client.addons.googlemap.overlays.GoogleMapMarker;
+import com.haulmont.charts.web.widgets.client.addons.googlemap.overlays.GoogleMapMarker;
 
 public class MarkerDelegate implements Marker {
 
@@ -105,7 +105,7 @@ public class MarkerDelegate implements Marker {
 
     @Override
     public void setPosition(GeoPoint position) {
-        marker.setPosition(position != null ? ((GeoPointDelegate)position).getLatLon() : null);
+        marker.setPosition(position != null ? ((GeoPointDelegate) position).getLatLon() : null);
     }
 
     @Override
@@ -115,7 +115,7 @@ public class MarkerDelegate implements Marker {
 
     @Override
     public void setIcon(MarkerImage icon) {
-        marker.setMarkerImage(icon != null ? ((MarkerImageDelegate)icon).getMarkerImage() : null);
+        marker.setMarkerImage(icon != null ? ((MarkerImageDelegate) icon).getMarkerImage() : null);
     }
 
     @Override

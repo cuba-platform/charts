@@ -8,13 +8,13 @@ package com.haulmont.charts.gui.xml.layout.loaders.charts;
 import com.google.common.base.Splitter;
 import com.haulmont.bali.util.Dom4j;
 import com.haulmont.charts.gui.amcharts.model.*;
+import com.haulmont.charts.gui.data.ListDataProvider;
+import com.haulmont.charts.gui.data.MapDataItem;
+import com.haulmont.charts.gui.model.JsFunction;
 import com.haulmont.charts.gui.amcharts.model.charts.ChartModel;
 import com.haulmont.charts.gui.amcharts.model.charts.CoordinateChartModel;
 import com.haulmont.charts.gui.amcharts.model.charts.RectangularChartModel;
 import com.haulmont.charts.gui.amcharts.model.charts.SeriesBasedChartModel;
-import com.haulmont.charts.gui.data.ListDataProvider;
-import com.haulmont.charts.gui.data.MapDataItem;
-import com.haulmont.charts.gui.model.JsFunction;
 import com.haulmont.cuba.gui.GuiDevelopmentException;
 import com.haulmont.cuba.gui.components.Component;
 import com.haulmont.cuba.gui.xml.layout.loaders.AbstractComponentLoader;
@@ -682,7 +682,7 @@ public abstract class ChartModelLoader<C extends Component> extends AbstractComp
 
         String valueFunction = legendElement.elementText("valueFunction");
         if (StringUtils.isNotBlank(valueFunction)) {
-            legend.setValueFunction(new com.haulmont.charts.gui.model.JsFunction(valueFunction));
+            legend.setValueFunction(new JsFunction(valueFunction));
         }
 
         String valueText = legendElement.attributeValue("valueText");
@@ -1218,7 +1218,7 @@ public abstract class ChartModelLoader<C extends Component> extends AbstractComp
 
         String labelFunction = valueAxisElement.elementText("labelFunction");
         if (StringUtils.isNotBlank(labelFunction)) {
-            axis.setLabelFunction(new com.haulmont.charts.gui.model.JsFunction(labelFunction));
+            axis.setLabelFunction(new JsFunction(labelFunction));
         }
 
         String axisFrequency = valueAxisElement.attributeValue("axisFrequency");
@@ -1233,7 +1233,7 @@ public abstract class ChartModelLoader<C extends Component> extends AbstractComp
 
         String balloonTextFunction = valueAxisElement.elementText("balloonTextFunction");
         if (StringUtils.isNotBlank(balloonTextFunction)) {
-            axis.setBalloonTextFunction(new com.haulmont.charts.gui.model.JsFunction(balloonTextFunction));
+            axis.setBalloonTextFunction(new JsFunction(balloonTextFunction));
         }
 
         String baseValue = valueAxisElement.attributeValue("baseValue");

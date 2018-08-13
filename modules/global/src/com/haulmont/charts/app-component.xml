@@ -27,7 +27,7 @@
         <property name="cuba.mainMessagePack" value="+com.haulmont.charts.web"/>
         <property name="cuba.dispatcherSpringContextConfig" value="+charts-dispatcher-spring.xml"/>
         <property name="cuba.windowConfig" value="+charts-web-screens.xml"/>
-        <property name="cuba.web.widgetSet" value="com.haulmont.charts.web.toolkit.ui.ChartsWidgetSet"/>
+        <property name="cuba.web.widgetSet" value="com.haulmont.charts.web.widgets.ChartsWidgetSet"/>
         <property name="cuba.web.componentsConfig" value="+charts-web-components.xml"/>
     </module>
 

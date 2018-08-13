@@ -18,22 +18,22 @@ import java.util.List;
 
 public class DirectionsLegDelegate implements DirectionsLeg {
 
-    private com.haulmont.charts.web.toolkit.ui.client.addons.googlemap.services.DirectionsLeg directionsLeg;
+    private com.haulmont.charts.web.widgets.client.addons.googlemap.services.DirectionsLeg directionsLeg;
 
-    public static DirectionsLegDelegate fromDirectionsLeg(com.haulmont.charts.web.toolkit.ui.client.addons.googlemap.services.DirectionsLeg leg) {
+    public static DirectionsLegDelegate fromDirectionsLeg(com.haulmont.charts.web.widgets.client.addons.googlemap.services.DirectionsLeg leg) {
         return leg != null ? new DirectionsLegDelegate(leg) : null;
     }
 
-    public DirectionsLegDelegate(com.haulmont.charts.web.toolkit.ui.client.addons.googlemap.services.DirectionsLeg directionsLeg) {
+    public DirectionsLegDelegate(com.haulmont.charts.web.widgets.client.addons.googlemap.services.DirectionsLeg directionsLeg) {
         Preconditions.checkNotNullArgument(directionsLeg);
         this.directionsLeg = directionsLeg;
     }
 
-    public com.haulmont.charts.web.toolkit.ui.client.addons.googlemap.services.DirectionsLeg getDirectionsLeg() {
+    public com.haulmont.charts.web.widgets.client.addons.googlemap.services.DirectionsLeg getDirectionsLeg() {
         return directionsLeg;
     }
 
-    public void setDirectionsLeg(com.haulmont.charts.web.toolkit.ui.client.addons.googlemap.services.DirectionsLeg directionsLeg) {
+    public void setDirectionsLeg(com.haulmont.charts.web.widgets.client.addons.googlemap.services.DirectionsLeg directionsLeg) {
         this.directionsLeg = directionsLeg;
     }
 
@@ -44,7 +44,7 @@ public class DirectionsLegDelegate implements DirectionsLeg {
 
     @Override
     public void setDistance(Distance distance) {
-        directionsLeg.setDistance(distance != null ? ((DistanceDelegate)distance).getDistance() : null);
+        directionsLeg.setDistance(distance != null ? ((DistanceDelegate) distance).getDistance() : null);
     }
 
     @Override
@@ -84,7 +84,7 @@ public class DirectionsLegDelegate implements DirectionsLeg {
 
     @Override
     public void setStartLocation(GeoPoint startLocation) {
-        directionsLeg.setStartLocation(startLocation != null ? ((GeoPointDelegate)startLocation).getLatLon() : null);
+        directionsLeg.setStartLocation(startLocation != null ? ((GeoPointDelegate) startLocation).getLatLon() : null);
     }
 
     @Override
@@ -114,7 +114,7 @@ public class DirectionsLegDelegate implements DirectionsLeg {
 
     @Override
     public void setEndLocation(GeoPoint endLocation) {
-        directionsLeg.setEndLocation(endLocation != null ? ((GeoPointDelegate)endLocation).getLatLon() : null);
+        directionsLeg.setEndLocation(endLocation != null ? ((GeoPointDelegate) endLocation).getLatLon() : null);
     }
 
     @Override

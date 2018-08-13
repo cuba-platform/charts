@@ -6,14 +6,16 @@
 package com.haulmont.charts.web.gui.components.charts.amcharts;
 
 import com.haulmont.charts.gui.amcharts.model.*;
-import com.haulmont.charts.gui.amcharts.model.charts.AbstractChart;
 import com.haulmont.charts.gui.components.charts.Chart;
+import com.haulmont.charts.gui.data.EntityDataProvider;
+import com.haulmont.charts.gui.amcharts.model.charts.AbstractChart;
 import com.haulmont.charts.gui.data.DataItem;
 import com.haulmont.charts.gui.data.DataProvider;
-import com.haulmont.charts.gui.data.EntityDataProvider;
 import com.haulmont.charts.web.gui.ChartLocaleHelper;
-import com.haulmont.charts.web.toolkit.ui.amcharts.CubaAmchartsIntegration;
-import com.haulmont.charts.web.toolkit.ui.amcharts.CubaAmchartsScene;
+import com.haulmont.charts.web.gui.serialization.CubaChartSerializer;
+import com.haulmont.charts.web.widgets.amcharts.CubaAmchartsIntegration;
+import com.haulmont.charts.web.widgets.amcharts.CubaAmchartsScene;
+import com.haulmont.charts.web.widgets.amcharts.serialization.ChartSerializer;
 import com.haulmont.chile.core.datatypes.Datatypes;
 import com.haulmont.chile.core.datatypes.FormatStrings;
 import com.haulmont.cuba.core.global.AppBeans;
@@ -22,7 +24,9 @@ import com.haulmont.cuba.core.global.UserSessionSource;
 import com.haulmont.cuba.gui.data.CollectionDatasource;
 import com.haulmont.cuba.gui.data.impl.CollectionDsHelper;
 import com.haulmont.cuba.web.gui.components.WebAbstractComponent;
+import org.springframework.beans.factory.InitializingBean;
 
+import javax.inject.Inject;
 import java.text.DecimalFormatSymbols;
 import java.util.ArrayList;
 import java.util.List;
@@ -31,28 +35,36 @@ import java.util.Objects;
 
 @SuppressWarnings("unchecked")
 public abstract class WebChart<T extends Chart, M extends AbstractChart>
-        extends WebAbstractComponent<CubaAmchartsScene> implements Chart<T> {
+        extends WebAbstractComponent<CubaAmchartsScene> implements Chart<T>, InitializingBean {
 
-    protected Messages messages = AppBeans.get(Messages.class);
+    protected Messages messages;
+    protected UserSessionSource userSessionSource;
 
     protected CollectionDatasource datasource;
 
-    protected com.haulmont.charts.web.toolkit.ui.amcharts.events.ChartClickListener clickHandler;
-
-    protected com.haulmont.charts.web.toolkit.ui.amcharts.events.ChartRightClickListener rightClickHandler;
-
-    protected com.haulmont.charts.web.toolkit.ui.amcharts.events.LegendItemHideListener legendItemHideHandler;
-
-    protected com.haulmont.charts.web.toolkit.ui.amcharts.events.LegendItemShowListener legendItemShowHandler;
-
-    protected com.haulmont.charts.web.toolkit.ui.amcharts.events.LegendLabelClickListener legendLabelClickHandler;
-
-    protected com.haulmont.charts.web.toolkit.ui.amcharts.events.LegendMarkerClickListener legendMarkerClickHandler;
+    protected com.haulmont.charts.web.widgets.amcharts.events.ChartClickListener clickHandler;
+    protected com.haulmont.charts.web.widgets.amcharts.events.ChartRightClickListener rightClickHandler;
+    protected com.haulmont.charts.web.widgets.amcharts.events.LegendItemHideListener legendItemHideHandler;
+    protected com.haulmont.charts.web.widgets.amcharts.events.LegendItemShowListener legendItemShowHandler;
+    protected com.haulmont.charts.web.widgets.amcharts.events.LegendLabelClickListener legendLabelClickHandler;
+    protected com.haulmont.charts.web.widgets.amcharts.events.LegendMarkerClickListener legendMarkerClickHandler;
 
     public WebChart() {
+        component = createComponent();
+    }
+
+    protected CubaAmchartsScene createComponent() {
+        return new CubaAmchartsScene(createChartSerializer());
+    }
+
+    protected ChartSerializer createChartSerializer() {
+        return AppBeans.getPrototype(CubaChartSerializer.NAME);
+    }
+
+    @Override
+    public void afterPropertiesSet() throws Exception {
         initLocale();
 
-        component = new CubaAmchartsScene();
         component.addAttachListener(event -> {
             if (datasource != null) {
                 CollectionDsHelper.autoRefreshInvalid(datasource, true);
@@ -64,6 +76,16 @@ public abstract class WebChart<T extends Chart, M extends AbstractChart>
         component.drawChart(configuration);
     }
 
+    @Inject
+    public void setMessages(Messages messages) {
+        this.messages = messages;
+    }
+
+    @Inject
+    public void setUserSessionSource(UserSessionSource userSessionSource) {
+        this.userSessionSource = userSessionSource;
+    }
+
     protected abstract M createChartConfiguration();
 
     protected M getModel() {
@@ -71,7 +93,6 @@ public abstract class WebChart<T extends Chart, M extends AbstractChart>
     }
 
     protected void initLocale() {
-        UserSessionSource userSessionSource = AppBeans.get(UserSessionSource.class);
         CubaAmchartsIntegration amchartsIntegration = CubaAmchartsIntegration.get();
         if (amchartsIntegration.getSettings() == null
                 || !Objects.equals(userSessionSource.getLocale(), amchartsIntegration.getLocale())) {
@@ -95,7 +116,6 @@ public abstract class WebChart<T extends Chart, M extends AbstractChart>
     }
 
     protected void setupChartLocale(AbstractChart chart) {
-        UserSessionSource userSessionSource = AppBeans.get(UserSessionSource.class);
         chart.setLanguage(messages.getTools().localeToString(userSessionSource.getLocale()));
 
         // number formatting
@@ -144,7 +164,6 @@ public abstract class WebChart<T extends Chart, M extends AbstractChart>
                 component.getChart().setDataProvider(null);
             } else {
                 CollectionDsHelper.autoRefreshInvalid(datasource, true);
-
                 setDataProvider(new EntityDataProvider(datasource));
             }
         }

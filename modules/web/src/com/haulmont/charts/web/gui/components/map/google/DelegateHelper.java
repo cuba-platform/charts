@@ -13,50 +13,60 @@ import com.haulmont.charts.web.gui.components.map.google.directions.DirectionsLe
 import com.haulmont.charts.web.gui.components.map.google.directions.DirectionsRouteDelegate;
 import com.haulmont.charts.web.gui.components.map.google.directions.DirectionsStepDelegate;
 import com.haulmont.charts.web.gui.components.map.google.directions.DirectionsWaypointDelegate;
-import com.haulmont.charts.web.toolkit.ui.client.addons.googlemap.base.LatLon;
-import com.haulmont.charts.web.widgets.addon.googlemap.GoogleMap;
-import com.haulmont.charts.web.toolkit.ui.client.addons.googlemap.drawing.ControlPosition;
-import com.haulmont.charts.web.toolkit.ui.client.addons.googlemap.drawing.DrawingControlOptions;
-import com.haulmont.charts.web.toolkit.ui.client.addons.googlemap.services.DirectionsLeg;
-import com.haulmont.charts.web.toolkit.ui.client.addons.googlemap.services.DirectionsRoute;
-import com.haulmont.charts.web.toolkit.ui.client.addons.googlemap.services.DirectionsStep;
-import com.haulmont.charts.web.toolkit.ui.client.addons.googlemap.services.DirectionsWaypoint;
+import com.haulmont.charts.web.widgets.addons.googlemap.GoogleMap;
+import com.haulmont.charts.web.widgets.client.addons.googlemap.base.LatLon;
+import com.haulmont.charts.web.widgets.client.addons.googlemap.drawing.ControlPosition;
+import com.haulmont.charts.web.widgets.client.addons.googlemap.drawing.DrawingControlOptions;
+import com.haulmont.charts.web.widgets.client.addons.googlemap.services.DirectionsLeg;
+import com.haulmont.charts.web.widgets.client.addons.googlemap.services.DirectionsRoute;
+import com.haulmont.charts.web.widgets.client.addons.googlemap.services.DirectionsStep;
+import com.haulmont.charts.web.widgets.client.addons.googlemap.services.DirectionsWaypoint;
 
 import java.util.ArrayList;
 import java.util.List;
 
-import static com.haulmont.charts.web.widgets.addon.googlemap.GoogleMap.MapType.Roadmap;
+import static com.haulmont.charts.web.widgets.addons.googlemap.GoogleMap.MapType.Roadmap;
 
 public class DelegateHelper {
 
     public static GoogleMap.MapType toGoogleMapType(MapViewer.Type type) {
         switch (type) {
-            case ROADMAP: return Roadmap;
-            case SATELLITE: return GoogleMap.MapType.Satellite;
-            case HYBRID: return GoogleMap.MapType.Hybrid;
-            case TERRAIN: return GoogleMap.MapType.Terrain;
-            default: throw new IllegalArgumentException("Unsupported map type: " + type);
+            case ROADMAP:
+                return Roadmap;
+            case SATELLITE:
+                return GoogleMap.MapType.Satellite;
+            case HYBRID:
+                return GoogleMap.MapType.Hybrid;
+            case TERRAIN:
+                return GoogleMap.MapType.Terrain;
+            default:
+                throw new IllegalArgumentException("Unsupported map type: " + type);
         }
     }
 
     public static MapViewer.Type toCubaMapType(GoogleMap.MapType type) {
         switch (type) {
-            case Roadmap: return MapViewer.Type.ROADMAP;
-            case Satellite: return MapViewer.Type.SATELLITE;
-            case Hybrid: return MapViewer.Type.HYBRID;
-            case Terrain: return MapViewer.Type.TERRAIN;
-            default: throw new IllegalArgumentException("Unsupported map type: " + type);
+            case Roadmap:
+                return MapViewer.Type.ROADMAP;
+            case Satellite:
+                return MapViewer.Type.SATELLITE;
+            case Hybrid:
+                return MapViewer.Type.HYBRID;
+            case Terrain:
+                return MapViewer.Type.TERRAIN;
+            default:
+                throw new IllegalArgumentException("Unsupported map type: " + type);
         }
     }
 
-    public static com.haulmont.charts.web.toolkit.ui.client.addons.googlemap.drawing.DrawingOptions
-        toGoogleDrawingOptions(DrawingOptions options) {
+    public static com.haulmont.charts.web.widgets.client.addons.googlemap.drawing.DrawingOptions
+    toGoogleDrawingOptions(DrawingOptions options) {
         if (options == null) {
             return null;
         }
 
-        com.haulmont.charts.web.toolkit.ui.client.addons.googlemap.drawing.DrawingOptions gOptions
-                = new com.haulmont.charts.web.toolkit.ui.client.addons.googlemap.drawing.DrawingOptions();
+        com.haulmont.charts.web.widgets.client.addons.googlemap.drawing.DrawingOptions gOptions
+                = new com.haulmont.charts.web.widgets.client.addons.googlemap.drawing.DrawingOptions();
 
         gOptions.setPolygonOptions(toGooglePolygonOptions(options.getPolygonOptions()));
         gOptions.setCircleOptions(toGoogleCircleOptions(options.getCircleOptions()));
@@ -67,15 +77,17 @@ public class DelegateHelper {
         return gOptions;
     }
 
-    private static com.haulmont.charts.web.toolkit.ui.client.addons.googlemap.drawing.OverlayType
-        toGoogleOverlayType(OverlayType overlayType) {
+    private static com.haulmont.charts.web.widgets.client.addons.googlemap.drawing.OverlayType
+    toGoogleOverlayType(OverlayType overlayType) {
         if (overlayType == null) {
             return null;
         }
 
         switch (overlayType) {
-            case POLYGON: return com.haulmont.charts.web.toolkit.ui.client.addons.googlemap.drawing.OverlayType.POLYGON;
-            case CIRCLE: return com.haulmont.charts.web.toolkit.ui.client.addons.googlemap.drawing.OverlayType.CIRCLE;
+            case POLYGON:
+                return com.haulmont.charts.web.widgets.client.addons.googlemap.drawing.OverlayType.POLYGON;
+            case CIRCLE:
+                return com.haulmont.charts.web.widgets.client.addons.googlemap.drawing.OverlayType.CIRCLE;
 //            case POLYLINE: return com.vaadin.tapio.googlemaps.client.drawing.OverlayType.POLYLINE;
 //            case MARKER: return com.vaadin.tapio.googlemaps.client.drawing.OverlayType.MARKER;
 //            case RECTANGLE: return com.vaadin.tapio.googlemaps.client.drawing.OverlayType.RECTANGLE;
@@ -84,14 +96,14 @@ public class DelegateHelper {
         throw new IllegalArgumentException("Unknown overlay type: " + overlayType);
     }
 
-    private static List<com.haulmont.charts.web.toolkit.ui.client.addons.googlemap.drawing.OverlayType>
-                toGoogleOverlayType(List<OverlayType> overlayTypes) {
+    private static List<com.haulmont.charts.web.widgets.client.addons.googlemap.drawing.OverlayType>
+    toGoogleOverlayType(List<OverlayType> overlayTypes) {
         if (overlayTypes == null) {
             return null;
         }
 
-        List<com.haulmont.charts.web.toolkit.ui.client.addons.googlemap.drawing.OverlayType>
-                gOverlayTypes = new ArrayList<>(overlayTypes.size()*2);
+        List<com.haulmont.charts.web.widgets.client.addons.googlemap.drawing.OverlayType>
+                gOverlayTypes = new ArrayList<>(overlayTypes.size() * 2);
 
         for (OverlayType overlayType : overlayTypes) {
             gOverlayTypes.add(toGoogleOverlayType(overlayType));
@@ -101,7 +113,7 @@ public class DelegateHelper {
     }
 
     private static DrawingControlOptions
-            toGoogleDrawingControlOptions(ControlOptions options) {
+    toGoogleDrawingControlOptions(ControlOptions options) {
         DrawingControlOptions gOptions = new DrawingControlOptions();
         gOptions.setPosition(toGoogleControlPosition(options.getPosition()));
         gOptions.setDrawingModes(toGoogleOverlayType(options.getDrawingModes()));
@@ -114,34 +126,46 @@ public class DelegateHelper {
         }
 
         switch (position) {
-            case BOTTOM_CENTER: return ControlPosition.BOTTOM_CENTER;
-            case BOTTOM_LEFT: return ControlPosition.BOTTOM_LEFT;
-            case BOTTOM_RIGHT: return ControlPosition.BOTTOM_RIGHT;
+            case BOTTOM_CENTER:
+                return ControlPosition.BOTTOM_CENTER;
+            case BOTTOM_LEFT:
+                return ControlPosition.BOTTOM_LEFT;
+            case BOTTOM_RIGHT:
+                return ControlPosition.BOTTOM_RIGHT;
 
-            case TOP_CENTER: return ControlPosition.TOP_CENTER;
-            case TOP_LEFT: return ControlPosition.TOP_LEFT;
-            case TOP_RIGHT: return ControlPosition.TOP_RIGHT;
+            case TOP_CENTER:
+                return ControlPosition.TOP_CENTER;
+            case TOP_LEFT:
+                return ControlPosition.TOP_LEFT;
+            case TOP_RIGHT:
+                return ControlPosition.TOP_RIGHT;
 
-            case LEFT_CENTER: return ControlPosition.LEFT_CENTER;
-            case LEFT_TOP: return ControlPosition.LEFT_TOP;
-            case LEFT_BOTTOM: return ControlPosition.LEFT_BOTTOM;
+            case LEFT_CENTER:
+                return ControlPosition.LEFT_CENTER;
+            case LEFT_TOP:
+                return ControlPosition.LEFT_TOP;
+            case LEFT_BOTTOM:
+                return ControlPosition.LEFT_BOTTOM;
 
-            case RIGHT_CENTER: return ControlPosition.RIGHT_CENTER;
-            case RIGHT_TOP: return ControlPosition.RIGHT_TOP;
-            case RIGHT_BOTTOM: return ControlPosition.RIGHT_BOTTOM;
+            case RIGHT_CENTER:
+                return ControlPosition.RIGHT_CENTER;
+            case RIGHT_TOP:
+                return ControlPosition.RIGHT_TOP;
+            case RIGHT_BOTTOM:
+                return ControlPosition.RIGHT_BOTTOM;
         }
 
         throw new IllegalArgumentException("Unknown postition: " + position);
     }
 
-    private static com.haulmont.charts.web.toolkit.ui.client.addons.googlemap.drawing.PolygonOptions
+    private static com.haulmont.charts.web.widgets.client.addons.googlemap.drawing.PolygonOptions
     toGooglePolygonOptions(PolygonOptions options) {
         if (options == null) {
             return null;
         }
 
-        com.haulmont.charts.web.toolkit.ui.client.addons.googlemap.drawing.PolygonOptions gOptions
-                = new com.haulmont.charts.web.toolkit.ui.client.addons.googlemap.drawing.PolygonOptions();
+        com.haulmont.charts.web.widgets.client.addons.googlemap.drawing.PolygonOptions gOptions
+                = new com.haulmont.charts.web.widgets.client.addons.googlemap.drawing.PolygonOptions();
 
         gOptions.setEditable(options.isEditable());
         gOptions.setStrokeOpacity(options.getStrokeOpacity());
@@ -157,15 +181,15 @@ public class DelegateHelper {
         return gOptions;
     }
 
-    private static com.haulmont.charts.web.toolkit.ui.client.addons.googlemap.drawing.CircleOptions toGoogleCircleOptions(CircleOptions options) {
+    private static com.haulmont.charts.web.widgets.client.addons.googlemap.drawing.CircleOptions toGoogleCircleOptions(CircleOptions options) {
         if (options == null) {
             return null;
         }
 
-        com.haulmont.charts.web.toolkit.ui.client.addons.googlemap.drawing.CircleOptions gOptions
-                = new com.haulmont.charts.web.toolkit.ui.client.addons.googlemap.drawing.CircleOptions();
+        com.haulmont.charts.web.widgets.client.addons.googlemap.drawing.CircleOptions gOptions
+                = new com.haulmont.charts.web.widgets.client.addons.googlemap.drawing.CircleOptions();
         gOptions.setRadius(options.getRadius());
-        gOptions.setCenter(options.getCenter() != null ? ((GeoPointDelegate)options.getCenter()).getLatLon() : null);
+        gOptions.setCenter(options.getCenter() != null ? ((GeoPointDelegate) options.getCenter()).getLatLon() : null);
         gOptions.setEditable(options.isEditable());
         gOptions.setStrokeOpacity(options.getStrokeOpacity());
         gOptions.setStrokeColor(options.getStrokeColor());
@@ -184,9 +208,9 @@ public class DelegateHelper {
         } else if (coordinates.isEmpty()) {
             return new ArrayList<>();
         } else {
-            List<LatLon> result = new ArrayList<>(coordinates.size()*2);
+            List<LatLon> result = new ArrayList<>(coordinates.size() * 2);
             for (GeoPoint coordinate : coordinates) {
-                result.add(((GeoPointDelegate)coordinate).getLatLon());
+                result.add(((GeoPointDelegate) coordinate).getLatLon());
             }
             return result;
         }
@@ -198,7 +222,7 @@ public class DelegateHelper {
         } else if (coordinates.isEmpty()) {
             return new ArrayList<>();
         } else {
-            List<GeoPoint> result = new ArrayList<>(coordinates.size()*2);
+            List<GeoPoint> result = new ArrayList<>(coordinates.size() * 2);
             for (LatLon coordinate : coordinates) {
                 result.add(new GeoPointDelegate(coordinate));
             }
@@ -206,18 +230,18 @@ public class DelegateHelper {
         }
     }
 
-    public static List<com.haulmont.charts.web.toolkit.ui.client.addons.googlemap.base.WeightedLocation> toGoogleWeightedLocations(
+    public static List<com.haulmont.charts.web.widgets.client.addons.googlemap.base.WeightedLocation> toGoogleWeightedLocations(
             List<WeightedLocation> weightedLocations) {
         if (weightedLocations == null) {
             return null;
         }
 
-        List<com.haulmont.charts.web.toolkit.ui.client.addons.googlemap.base.WeightedLocation> gWeightedLocations
-                = new ArrayList<>(weightedLocations.size()*2);
+        List<com.haulmont.charts.web.widgets.client.addons.googlemap.base.WeightedLocation> gWeightedLocations
+                = new ArrayList<>(weightedLocations.size() * 2);
         for (WeightedLocation w : weightedLocations) {
             LatLon location = new LatLon(w.getLocation().getLatitude(), w.getLocation().getLongitude());
             Double weight = w.getWeight();
-            gWeightedLocations.add(new com.haulmont.charts.web.toolkit.ui.client.addons.googlemap.base.WeightedLocation
+            gWeightedLocations.add(new com.haulmont.charts.web.widgets.client.addons.googlemap.base.WeightedLocation
                     (location, weight));
         }
 
@@ -225,13 +249,13 @@ public class DelegateHelper {
     }
 
     public static List<WeightedLocation> toWeightedLocations(
-            List<com.haulmont.charts.web.toolkit.ui.client.addons.googlemap.base.WeightedLocation> gWeightedLocations) {
+            List<com.haulmont.charts.web.widgets.client.addons.googlemap.base.WeightedLocation> gWeightedLocations) {
         if (gWeightedLocations == null) {
             return null;
         }
 
-        List<WeightedLocation> weightedLocations = new ArrayList<>(gWeightedLocations.size()*2);
-        for (com.haulmont.charts.web.toolkit.ui.client.addons.googlemap.base.WeightedLocation w : gWeightedLocations) {
+        List<WeightedLocation> weightedLocations = new ArrayList<>(gWeightedLocations.size() * 2);
+        for (com.haulmont.charts.web.widgets.client.addons.googlemap.base.WeightedLocation w : gWeightedLocations) {
             weightedLocations.add(new WeightedLocationDelegate(w));
         }
 
@@ -242,7 +266,7 @@ public class DelegateHelper {
         if (gLegs == null) {
             return null;
         } else {
-            List<com.haulmont.charts.gui.map.model.directions.DirectionsLeg> legs = new ArrayList<>(gLegs.size()*2);
+            List<com.haulmont.charts.gui.map.model.directions.DirectionsLeg> legs = new ArrayList<>(gLegs.size() * 2);
             for (DirectionsLeg gLeg : gLegs) {
                 legs.add(new DirectionsLegDelegate(gLeg));
             }
@@ -254,9 +278,9 @@ public class DelegateHelper {
         if (legs == null) {
             return null;
         } else {
-            List<DirectionsLeg> gLegs = new ArrayList<>(legs.size()*2);
+            List<DirectionsLeg> gLegs = new ArrayList<>(legs.size() * 2);
             for (com.haulmont.charts.gui.map.model.directions.DirectionsLeg leg : legs) {
-                gLegs.add(((DirectionsLegDelegate)leg).getDirectionsLeg());
+                gLegs.add(((DirectionsLegDelegate) leg).getDirectionsLeg());
             }
             return gLegs;
         }
@@ -266,7 +290,7 @@ public class DelegateHelper {
         if (gSteps == null) {
             return null;
         } else {
-            List<com.haulmont.charts.gui.map.model.directions.DirectionsStep> steps = new ArrayList<>(gSteps.size()*2);
+            List<com.haulmont.charts.gui.map.model.directions.DirectionsStep> steps = new ArrayList<>(gSteps.size() * 2);
             for (DirectionsStep gStep : gSteps) {
                 steps.add(new DirectionsStepDelegate(gStep));
             }
@@ -278,7 +302,7 @@ public class DelegateHelper {
         if (steps == null) {
             return null;
         } else {
-            List<DirectionsStep> gSteps = new ArrayList<>(steps.size()*2);
+            List<DirectionsStep> gSteps = new ArrayList<>(steps.size() * 2);
             for (com.haulmont.charts.gui.map.model.directions.DirectionsStep step : steps) {
                 gSteps.add(((DirectionsStepDelegate) step).getDirectionsStep());
             }
@@ -290,7 +314,7 @@ public class DelegateHelper {
         if (gRoutes == null) {
             return null;
         } else {
-            List<com.haulmont.charts.gui.map.model.directions.DirectionsRoute> routes = new ArrayList<>(gRoutes.size()*2);
+            List<com.haulmont.charts.gui.map.model.directions.DirectionsRoute> routes = new ArrayList<>(gRoutes.size() * 2);
             for (DirectionsRoute gRoute : gRoutes) {
                 routes.add(new DirectionsRouteDelegate(gRoute));
             }
@@ -302,7 +326,7 @@ public class DelegateHelper {
         if (gWaypoints == null) {
             return null;
         } else {
-            List<com.haulmont.charts.gui.map.model.directions.DirectionsWaypoint> waypoints = new ArrayList<>(gWaypoints.size()*2);
+            List<com.haulmont.charts.gui.map.model.directions.DirectionsWaypoint> waypoints = new ArrayList<>(gWaypoints.size() * 2);
             for (DirectionsWaypoint gWaypoint : gWaypoints) {
                 waypoints.add(new DirectionsWaypointDelegate(gWaypoint));
             }
@@ -314,7 +338,7 @@ public class DelegateHelper {
         if (waypoints == null) {
             return null;
         } else {
-            List<DirectionsWaypoint> gWaypoints = new ArrayList<>(waypoints.size()*2);
+            List<DirectionsWaypoint> gWaypoints = new ArrayList<>(waypoints.size() * 2);
             for (com.haulmont.charts.gui.map.model.directions.DirectionsWaypoint waypoint : waypoints) {
                 gWaypoints.add(((DirectionsWaypointDelegate) waypoint).getDirectionsWaypoint());
             }

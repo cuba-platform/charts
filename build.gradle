@@ -58,6 +58,8 @@ Use is subject to license terms, see http://www.cuba-platform.com/commercial-sof
 def chartsGlobalModule = project(':charts-global')
 def chartsGuiModule = project(':charts-gui')
 def chartsWebModule = project(':charts-web')
+def chartsModel = project(':charts-model')
+def chartsWebWidgetsModule = project(':charts-web-widgets')
 def chartsWebToolkitModule = project(':charts-web-toolkit')
 
 def artifactVersion = cuba.artifact.version + (cuba.artifact.isSnapshot ? '-SNAPSHOT' : '')
@@ -66,6 +68,7 @@ def baseVersion = rootProject.hasProperty('cuba.version') ? rootProject['cuba.ve
 def cubaWeb = [group: 'com.haulmont.cuba', name: 'cuba-web', version: baseVersion]
 def cubaGui = [group: 'com.haulmont.cuba', name: 'cuba-gui', version: baseVersion]
 def cubaWebToolkit = [group: 'com.haulmont.cuba', name: 'cuba-web-toolkit', version: baseVersion]
+def cubaWebWidgets = [group: 'com.haulmont.cuba', name: 'cuba-web-widgets', version: baseVersion]
 
 configure([chartsGlobalModule, chartsGuiModule, chartsWebModule]) {
     apply(plugin: 'java')
@@ -168,7 +171,7 @@ configure([chartsGlobalModule, chartsGuiModule, chartsWebModule]) {
     }
 }
 
-configure(chartsWebToolkitModule) {
+configure([chartsWebWidgetsModule, chartsWebToolkitModule, chartsModel]) {
     apply(plugin: 'java')
     apply(plugin: 'idea')
     apply(plugin: 'maven')
@@ -190,8 +193,6 @@ configure(chartsWebToolkitModule) {
 }
 
 configure(chartsGlobalModule) {
-    task enhance(type: CubaEnhancing)
-
     jar {
         manifest {
             attributes('App-Component-Id': cuba.artifact.group)
@@ -204,6 +205,7 @@ configure(chartsGuiModule) {
     dependencies {
         compile(cubaGui)
         compile(chartsGlobalModule)
+        compile(chartsModel)
 
         compile(bom['com.google.code.gson:gson'])
     }
@@ -211,7 +213,7 @@ configure(chartsGuiModule) {
 
 configure(chartsWebToolkitModule) {
     dependencies {
-        compile(chartsWebModule)
+        compile(chartsWebWidgetsModule)
         compile(cubaWebToolkit)
         compile(bom['com.github.branflake2267:gwt-maps-api']) {
             exclude(group: 'com.google.gwt', module: 'gwt-user')
@@ -221,12 +223,12 @@ configure(chartsWebToolkitModule) {
     }
 
     task buildWidgetSet(type: CubaWidgetSetBuilding) {
-        widgetSetClass = 'com.haulmont.charts.web.toolkit.ui.ChartsWidgetSet'
+        widgetSetClass = 'com.haulmont.charts.web.widgets.ChartsWidgetSet'
     }
 
     task buildDebugWidgetSet(type: CubaWidgetSetBuilding) {
         widgetSetsDir = "$project.buildDir/web-debug/VAADIN/widgetsets"
-        widgetSetClass = 'com.haulmont.charts.web.toolkit.ui.ChartsWidgetSet'
+        widgetSetClass = 'com.haulmont.charts.web.widgets.ChartsWidgetSet'
         style = 'PRETTY'
     }
 
@@ -252,23 +254,41 @@ configure(chartsWebToolkitModule) {
     }
 }
 
-configure(chartsWebModule) {
+configure(chartsModel) {
     dependencies {
-        compile(chartsGlobalModule)
-        compile(chartsGuiModule)
-        compile(cubaWeb)
+        compile(bom['com.google.code.gson:gson'])
+        compile(bom['com.google.code.findbugs:jsr305'])
+        compile(bom['org.apache.commons:commons-lang3'])
+        compile(bom['org.apache.commons:commons-collections4'])
+    }
+}
+
+configure(chartsWebWidgetsModule) {
+    dependencies {
+        compile(chartsModel)
+        compile(cubaWebWidgets)
 
         compile(bom['org.webjars.bower:pivottable'])
         compile(bom['org.webjars:amcharts'])
-
-        compileOnly(bom['javax.servlet:javax.servlet-api'])
+        compile(bom['com.google.code.gson:gson'])
     }
 
     jar {
         with copySpec {
             from sourceSets.main.allJava
-            include 'com/haulmont/charts/web/toolkit/ui/client/**'
+            include "com/haulmont/charts/web/widgets/client/**"
         }
+    }
+}
+
+configure(chartsWebModule) {
+    dependencies {
+        compile(chartsGlobalModule)
+        compile(chartsGuiModule)
+        compile(chartsWebWidgetsModule)
+        compile(cubaWeb)
+
+        compileOnly(bom['javax.servlet:javax.servlet-api'])
     }
 }
 

@@ -6,16 +6,18 @@
 package com.haulmont.charts.web.gui.components.charts.amcharts;
 
 import com.haulmont.charts.gui.amcharts.model.*;
+import com.haulmont.charts.gui.components.charts.StockChart;
+import com.haulmont.charts.gui.data.EntityDataProvider;
 import com.haulmont.charts.gui.amcharts.model.charts.StockChartGroup;
 import com.haulmont.charts.gui.amcharts.model.charts.StockPanel;
-import com.haulmont.charts.gui.amcharts.model.gson.ChartJsonSerializationContext;
-import com.haulmont.charts.gui.components.charts.StockChart;
 import com.haulmont.charts.gui.data.DataProvider;
-import com.haulmont.charts.gui.data.EntityDataProvider;
 import com.haulmont.charts.web.gui.ChartLocaleHelper;
-import com.haulmont.charts.web.toolkit.ui.amcharts.CubaAmStockChartScene;
-import com.haulmont.charts.web.toolkit.ui.amcharts.CubaAmchartsIntegration;
-import com.haulmont.charts.web.toolkit.ui.amcharts.events.*;
+import com.haulmont.charts.web.gui.serialization.CubaStockChartSerializer;
+import com.haulmont.charts.web.widgets.amcharts.CubaAmStockChartScene;
+import com.haulmont.charts.web.widgets.amcharts.CubaAmchartsIntegration;
+import com.haulmont.charts.web.widgets.amcharts.events.StockPanelZoomEvent;
+import com.haulmont.charts.web.widgets.amcharts.serialization.ChartJsonSerializationContext;
+import com.haulmont.charts.web.widgets.amcharts.serialization.StockChartSerializer;
 import com.haulmont.chile.core.datatypes.Datatype;
 import com.haulmont.chile.core.datatypes.Datatypes;
 import com.haulmont.chile.core.datatypes.FormatStrings;
@@ -30,27 +32,59 @@ import com.haulmont.cuba.gui.data.impl.CollectionDsHelper;
 import com.haulmont.cuba.web.gui.components.WebAbstractComponent;
 import org.apache.commons.lang3.BooleanUtils;
 import org.apache.commons.lang3.StringUtils;
+import org.springframework.beans.factory.InitializingBean;
 
 import javax.annotation.Nullable;
+import javax.inject.Inject;
 import java.text.DecimalFormatSymbols;
 import java.text.ParseException;
 import java.util.*;
 
-public class WebStockChart extends WebAbstractComponent<CubaAmStockChartScene> implements StockChart {
+public class WebStockChart extends WebAbstractComponent<CubaAmStockChartScene>
+        implements StockChart, InitializingBean {
 
-    protected Messages messages = AppBeans.get(Messages.class);
-
-    protected Metadata metadata = AppBeans.get(Metadata.class);
-
-    protected UserSessionSource userSessionSource = AppBeans.get(UserSessionSource.class);
+    protected Messages messages;
+    protected Metadata metadata;
+    protected UserSessionSource userSessionSource;
 
     protected StockChartEventsForwarder stockChartEventsForwarder = new StockChartEventsForwarder();
 
     public WebStockChart() {
+        component = createComponent();
+    }
+
+    protected StockChartGroup createConfiguration() {
+        return new StockChartGroup();
+    }
+
+    protected CubaAmStockChartScene createComponent() {
+        return new CubaAmStockChartScene(createChartSerializer());
+    }
+
+    protected StockChartSerializer createChartSerializer() {
+        return AppBeans.getPrototype(CubaStockChartSerializer.NAME);
+    }
+
+    @Inject
+    public void setMessages(Messages messages) {
+        this.messages = messages;
+    }
+
+    @Inject
+    public void setMetadata(Metadata metadata) {
+        this.metadata = metadata;
+    }
+
+    @Inject
+    public void setUserSessionSource(UserSessionSource userSessionSource) {
+        this.userSessionSource = userSessionSource;
+    }
+
+    @Override
+    public void afterPropertiesSet() throws Exception {
         initLocale();
 
-        component = new CubaAmStockChartScene();
-        StockChartGroup configuration = new StockChartGroup();
+        StockChartGroup configuration = createConfiguration();
         setupDefaults(configuration);
 
         component.drawChart(configuration);
@@ -370,7 +404,7 @@ public class WebStockChart extends WebAbstractComponent<CubaAmStockChartScene> i
     @Override
     public void removeStockGraphRollOverListener(StockGraphRollOverListener rollOverListener) {
         getEventRouter().removeListener(StockGraphRollOverListener.class, rollOverListener,
-                 () -> component.removeStockGraphRollOverListener(stockChartEventsForwarder)
+                () -> component.removeStockGraphRollOverListener(stockChartEventsForwarder)
         );
     }
 
@@ -855,33 +889,33 @@ public class WebStockChart extends WebAbstractComponent<CubaAmStockChartScene> i
     }
 
     protected class StockChartEventsForwarder
-            implements com.haulmont.charts.web.toolkit.ui.amcharts.events.StockChartClickListener,
-                       com.haulmont.charts.web.toolkit.ui.amcharts.events.StockChartRightClickListener,
-                       com.haulmont.charts.web.toolkit.ui.amcharts.events.StockEventClickListener,
-                       com.haulmont.charts.web.toolkit.ui.amcharts.events.StockEventRollOutListener,
-                       com.haulmont.charts.web.toolkit.ui.amcharts.events.StockEventRollOverListener,
-                       com.haulmont.charts.web.toolkit.ui.amcharts.events.StockPanelZoomListener,
-                       com.haulmont.charts.web.toolkit.ui.amcharts.events.PeriodSelectorChangeListener,
-                       com.haulmont.charts.web.toolkit.ui.amcharts.events.DataSetSelectorCompareListener,
-                       com.haulmont.charts.web.toolkit.ui.amcharts.events.DataSetSelectorSelectListener,
-                       com.haulmont.charts.web.toolkit.ui.amcharts.events.DataSetSelectorUnCompareListener,
-                       com.haulmont.charts.web.toolkit.ui.amcharts.events.StockGraphClickListener,
-                       com.haulmont.charts.web.toolkit.ui.amcharts.events.StockGraphRollOutListener,
-                       com.haulmont.charts.web.toolkit.ui.amcharts.events.StockGraphRollOverListener,
-                       com.haulmont.charts.web.toolkit.ui.amcharts.events.StockGraphItemClickListener,
-                       com.haulmont.charts.web.toolkit.ui.amcharts.events.StockGraphItemRightClickListener,
-                       com.haulmont.charts.web.toolkit.ui.amcharts.events.StockGraphItemRollOutListener,
-                       com.haulmont.charts.web.toolkit.ui.amcharts.events.StockGraphItemRollOverListener {
+            implements com.haulmont.charts.web.widgets.amcharts.events.StockChartClickListener,
+            com.haulmont.charts.web.widgets.amcharts.events.StockChartRightClickListener,
+            com.haulmont.charts.web.widgets.amcharts.events.StockEventClickListener,
+            com.haulmont.charts.web.widgets.amcharts.events.StockEventRollOutListener,
+            com.haulmont.charts.web.widgets.amcharts.events.StockEventRollOverListener,
+            com.haulmont.charts.web.widgets.amcharts.events.StockPanelZoomListener,
+            com.haulmont.charts.web.widgets.amcharts.events.PeriodSelectorChangeListener,
+            com.haulmont.charts.web.widgets.amcharts.events.DataSetSelectorCompareListener,
+            com.haulmont.charts.web.widgets.amcharts.events.DataSetSelectorSelectListener,
+            com.haulmont.charts.web.widgets.amcharts.events.DataSetSelectorUnCompareListener,
+            com.haulmont.charts.web.widgets.amcharts.events.StockGraphClickListener,
+            com.haulmont.charts.web.widgets.amcharts.events.StockGraphRollOutListener,
+            com.haulmont.charts.web.widgets.amcharts.events.StockGraphRollOverListener,
+            com.haulmont.charts.web.widgets.amcharts.events.StockGraphItemClickListener,
+            com.haulmont.charts.web.widgets.amcharts.events.StockGraphItemRightClickListener,
+            com.haulmont.charts.web.widgets.amcharts.events.StockGraphItemRollOutListener,
+            com.haulmont.charts.web.widgets.amcharts.events.StockGraphItemRollOverListener {
 
         @Override
-        public void onClick(com.haulmont.charts.web.toolkit.ui.amcharts.events.StockChartClickEvent e) {
+        public void onClick(com.haulmont.charts.web.widgets.amcharts.events.StockChartClickEvent e) {
             StockChartClickEvent cubaEvent = new StockChartClickEvent(
                     e.getX(), e.getY(), e.getAbsoluteX(), e.getAbsoluteY());
             getEventRouter().fireEvent(StockChartClickListener.class, StockChartClickListener::onClick, cubaEvent);
         }
 
         @Override
-        public void onClick(com.haulmont.charts.web.toolkit.ui.amcharts.events.StockGraphClickEvent e) {
+        public void onClick(com.haulmont.charts.web.widgets.amcharts.events.StockGraphClickEvent e) {
             StockGraphClickEvent cubaEvent = new StockGraphClickEvent(e.getPanelId(), e.getGraphId(),
                     e.getX(), e.getY(), e.getAbsoluteX(), e.getAbsoluteY());
             getEventRouter().fireEvent(StockGraphClickListener.class, StockGraphClickListener::onClick, cubaEvent);
@@ -894,42 +928,42 @@ public class WebStockChart extends WebAbstractComponent<CubaAmStockChartScene> i
         }
 
         @Override
-        public void onClick(com.haulmont.charts.web.toolkit.ui.amcharts.events.StockEventClickEvent e) {
+        public void onClick(com.haulmont.charts.web.widgets.amcharts.events.StockEventClickEvent e) {
             StockEventClickEvent cubaEvent = new StockEventClickEvent(e.getGraphId(), e.getDate(),
                     getStockEvent(e.getStockEventId()));
             getEventRouter().fireEvent(StockEventClickListener.class, StockEventClickListener::onClick, cubaEvent);
         }
 
         @Override
-        public void onRollOut(com.haulmont.charts.web.toolkit.ui.amcharts.events.StockEventRollOutEvent e) {
+        public void onRollOut(com.haulmont.charts.web.widgets.amcharts.events.StockEventRollOutEvent e) {
             StockEventRollOutEvent cubaEvent = new StockEventRollOutEvent(e.getGraphId(), e.getDate(),
                     getStockEvent(e.getStockEventId()));
             getEventRouter().fireEvent(StockEventRollOutListener.class, StockEventRollOutListener::onRollOut, cubaEvent);
         }
 
         @Override
-        public void onRollOut(com.haulmont.charts.web.toolkit.ui.amcharts.events.StockGraphRollOutEvent e) {
+        public void onRollOut(com.haulmont.charts.web.widgets.amcharts.events.StockGraphRollOutEvent e) {
             StockGraphRollOutEvent cubaEvent = new StockGraphRollOutEvent(e.getPanelId(), e.getGraphId(),
                     e.getX(), e.getY(), e.getAbsoluteX(), e.getAbsoluteY());
             getEventRouter().fireEvent(StockGraphRollOutListener.class, StockGraphRollOutListener::onRollOut, cubaEvent);
         }
 
         @Override
-        public void onRollOver(com.haulmont.charts.web.toolkit.ui.amcharts.events.StockEventRollOverEvent e) {
+        public void onRollOver(com.haulmont.charts.web.widgets.amcharts.events.StockEventRollOverEvent e) {
             StockEventRollOverEvent cubaEvent = new StockEventRollOverEvent(e.getGraphId(), e.getDate(),
                     getStockEvent(e.getStockEventId()));
             getEventRouter().fireEvent(StockEventRollOverListener.class, StockEventRollOverListener::onRollOver, cubaEvent);
         }
 
         @Override
-        public void onRollOver(com.haulmont.charts.web.toolkit.ui.amcharts.events.StockGraphRollOverEvent e) {
+        public void onRollOver(com.haulmont.charts.web.widgets.amcharts.events.StockGraphRollOverEvent e) {
             StockGraphRollOverEvent cubaEvent = new StockGraphRollOverEvent(e.getPanelId(), e.getGraphId(),
                     e.getX(), e.getY(), e.getAbsoluteX(), e.getAbsoluteY());
             getEventRouter().fireEvent(StockGraphRollOverListener.class, StockGraphRollOverListener::onRollOver, cubaEvent);
         }
 
         @Override
-        public void onChange(com.haulmont.charts.web.toolkit.ui.amcharts.events.PeriodSelectorChangeEvent e) {
+        public void onChange(com.haulmont.charts.web.widgets.amcharts.events.PeriodSelectorChangeEvent e) {
             PeriodSelectorChangeEvent cubaEvent = new PeriodSelectorChangeEvent(e.getStartDate(), e.getEndDate(),
                     PeriodType.fromId(e.getPredefinedPeriod()), e.getCount(),
                     e.getX(), e.getY(), e.getAbsoluteX(), e.getAbsoluteY());
@@ -937,14 +971,14 @@ public class WebStockChart extends WebAbstractComponent<CubaAmStockChartScene> i
         }
 
         @Override
-        public void onClick(com.haulmont.charts.web.toolkit.ui.amcharts.events.StockChartRightClickEvent e) {
+        public void onClick(com.haulmont.charts.web.widgets.amcharts.events.StockChartRightClickEvent e) {
             StockChartRightClickEvent cubaEvent = new StockChartRightClickEvent(
                     e.getX(), e.getY(), e.getAbsoluteX(), e.getAbsoluteY());
             getEventRouter().fireEvent(StockChartRightClickListener.class, StockChartRightClickListener::onRightClick, cubaEvent);
         }
 
         @Override
-        public void onClick(com.haulmont.charts.web.toolkit.ui.amcharts.events.StockGraphItemClickEvent e) {
+        public void onClick(com.haulmont.charts.web.widgets.amcharts.events.StockGraphItemClickEvent e) {
             StockGraphItemClickEvent cubaEvent = new StockGraphItemClickEvent(e.getPanelId(), e.getGraphId(),
                     e.getDataItem(), e.getItemIndex(),
                     e.getX(), e.getY(), e.getAbsoluteX(), e.getAbsoluteY());
@@ -952,13 +986,13 @@ public class WebStockChart extends WebAbstractComponent<CubaAmStockChartScene> i
         }
 
         @Override
-        public void onSelect(com.haulmont.charts.web.toolkit.ui.amcharts.events.DataSetSelectorSelectEvent e) {
+        public void onSelect(com.haulmont.charts.web.widgets.amcharts.events.DataSetSelectorSelectEvent e) {
             DataSetSelectorSelectEvent cubaEvent = new DataSetSelectorSelectEvent(e.getDataSetId());
             getEventRouter().fireEvent(DataSetSelectorSelectListener.class, DataSetSelectorSelectListener::onSelect, cubaEvent);
         }
 
         @Override
-        public void onRollOut(com.haulmont.charts.web.toolkit.ui.amcharts.events.StockGraphItemRollOutEvent e) {
+        public void onRollOut(com.haulmont.charts.web.widgets.amcharts.events.StockGraphItemRollOutEvent e) {
             StockGraphItemRollOutEvent cubaEvent = new StockGraphItemRollOutEvent(e.getPanelId(), e.getGraphId(),
                     e.getDataItem(), e.getItemIndex(),
                     e.getX(), e.getY(), e.getAbsoluteX(), e.getAbsoluteY());
@@ -966,13 +1000,13 @@ public class WebStockChart extends WebAbstractComponent<CubaAmStockChartScene> i
         }
 
         @Override
-        public void onCompare(com.haulmont.charts.web.toolkit.ui.amcharts.events.DataSetSelectorCompareEvent e) {
+        public void onCompare(com.haulmont.charts.web.widgets.amcharts.events.DataSetSelectorCompareEvent e) {
             DataSetSelectorCompareEvent cubaEvent = new DataSetSelectorCompareEvent(e.getDataSetId());
             getEventRouter().fireEvent(DataSetSelectorCompareListener.class, DataSetSelectorCompareListener::onCompare, cubaEvent);
         }
 
         @Override
-        public void onRollOver(com.haulmont.charts.web.toolkit.ui.amcharts.events.StockGraphItemRollOverEvent e) {
+        public void onRollOver(com.haulmont.charts.web.widgets.amcharts.events.StockGraphItemRollOverEvent e) {
             StockGraphItemRollOverEvent cubaEvent = new StockGraphItemRollOverEvent(e.getPanelId(), e.getGraphId(),
                     e.getDataItem(), e.getItemIndex(),
                     e.getX(), e.getY(), e.getAbsoluteX(), e.getAbsoluteY());
@@ -980,13 +1014,13 @@ public class WebStockChart extends WebAbstractComponent<CubaAmStockChartScene> i
         }
 
         @Override
-        public void onUnCompare(com.haulmont.charts.web.toolkit.ui.amcharts.events.DataSetSelectorUnCompareEvent e) {
+        public void onUnCompare(com.haulmont.charts.web.widgets.amcharts.events.DataSetSelectorUnCompareEvent e) {
             DataSetSelectorUnCompareEvent cubaEvent = new DataSetSelectorUnCompareEvent(e.getDataSetId());
             getEventRouter().fireEvent(DataSetSelectorUnCompareListener.class, DataSetSelectorUnCompareListener::onUnCompare, cubaEvent);
         }
 
         @Override
-        public void onClick(com.haulmont.charts.web.toolkit.ui.amcharts.events.StockGraphItemRightClickEvent e) {
+        public void onClick(com.haulmont.charts.web.widgets.amcharts.events.StockGraphItemRightClickEvent e) {
             StockGraphItemRightClickEvent cubaEvent = new StockGraphItemRightClickEvent(e.getPanelId(), e.getGraphId(),
                     e.getDataItem(), e.getItemIndex(),
                     e.getX(), e.getY(), e.getAbsoluteX(), e.getAbsoluteY());

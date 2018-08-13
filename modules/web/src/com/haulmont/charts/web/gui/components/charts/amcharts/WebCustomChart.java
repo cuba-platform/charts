@@ -9,11 +9,13 @@ import com.haulmont.charts.gui.amcharts.model.*;
 import com.haulmont.charts.gui.amcharts.model.charts.AbstractChart;
 import com.haulmont.charts.gui.amcharts.model.charts.AbstractSerialChart;
 import com.haulmont.charts.gui.amcharts.model.charts.RectangularChart;
-import com.haulmont.charts.gui.amcharts.model.gson.ChartJsonSerializationContext;
+import com.haulmont.charts.web.gui.serialization.CubaChartSerializer;
+import com.haulmont.charts.web.widgets.amcharts.serialization.ChartJsonSerializationContext;
 import com.haulmont.charts.gui.components.charts.CustomChart;
 import com.haulmont.charts.web.gui.ChartLocaleHelper;
-import com.haulmont.charts.web.toolkit.ui.amcharts.CubaAmchartsIntegration;
-import com.haulmont.charts.web.toolkit.ui.amcharts.CubaAmchartsScene;
+import com.haulmont.charts.web.widgets.amcharts.CubaAmchartsIntegration;
+import com.haulmont.charts.web.widgets.amcharts.CubaAmchartsScene;
+import com.haulmont.charts.web.widgets.amcharts.serialization.ChartSerializer;
 import com.haulmont.chile.core.datatypes.Datatypes;
 import com.haulmont.chile.core.datatypes.FormatStrings;
 import com.haulmont.cuba.core.global.AppBeans;
@@ -34,7 +36,15 @@ public class WebCustomChart extends WebAbstractComponent<CubaAmchartsScene> impl
     public WebCustomChart() {
         initLocale();
 
-        component = new CubaAmchartsScene();
+        component = createComponent();
+    }
+
+    protected CubaAmchartsScene createComponent() {
+        return new CubaAmchartsScene(createChartSerializer());
+    }
+
+    protected ChartSerializer createChartSerializer() {
+        return AppBeans.getPrototype(CubaChartSerializer.NAME);
     }
 
     @Override

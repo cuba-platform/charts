@@ -8,7 +8,7 @@ package com.haulmont.charts.web.gui.components.map.google;
 import com.haulmont.bali.util.Preconditions;
 import com.haulmont.charts.gui.map.model.GeoPoint;
 import com.haulmont.charts.gui.map.model.Polyline;
-import com.haulmont.charts.web.toolkit.ui.client.addons.googlemap.overlays.GoogleMapPolyline;
+import com.haulmont.charts.web.widgets.client.addons.googlemap.overlays.GoogleMapPolyline;
 
 import java.util.List;
 

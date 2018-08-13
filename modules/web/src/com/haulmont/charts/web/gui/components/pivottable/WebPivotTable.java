@@ -6,45 +6,68 @@
 package com.haulmont.charts.web.gui.components.pivottable;
 
 import com.haulmont.charts.gui.components.pivot.PivotTable;
-import com.haulmont.charts.gui.data.DataItem;
-import com.haulmont.charts.gui.data.DataProvider;
 import com.haulmont.charts.gui.data.EntityDataProvider;
 import com.haulmont.charts.gui.model.JsFunction;
 import com.haulmont.charts.gui.pivottable.model.*;
+import com.haulmont.charts.gui.data.DataItem;
+import com.haulmont.charts.gui.data.DataProvider;
 import com.haulmont.charts.web.gui.PivotTableLocaleHelper;
-import com.haulmont.charts.web.toolkit.ui.pivottable.CubaPivotTable;
+import com.haulmont.charts.web.gui.serialization.CubaPivotTableSerializer;
+import com.haulmont.charts.web.widgets.pivottable.CubaPivotTable;
+import com.haulmont.charts.web.widgets.pivottable.serialization.PivotTableSerializer;
 import com.haulmont.cuba.core.global.AppBeans;
 import com.haulmont.cuba.core.global.Messages;
 import com.haulmont.cuba.core.global.UserSessionSource;
 import com.haulmont.cuba.gui.data.CollectionDatasource;
 import com.haulmont.cuba.gui.data.impl.CollectionDsHelper;
 import com.haulmont.cuba.web.gui.components.WebAbstractComponent;
+import org.springframework.beans.factory.InitializingBean;
 
-import java.util.*;
+import javax.inject.Inject;
+import java.util.List;
+import java.util.Locale;
+import java.util.Map;
+import java.util.Objects;
 
-public class WebPivotTable extends WebAbstractComponent<CubaPivotTable> implements PivotTable {
+public class WebPivotTable extends WebAbstractComponent<CubaPivotTable> implements PivotTable, InitializingBean {
 
     protected CollectionDatasource datasource;
 
-    protected com.haulmont.charts.web.toolkit.ui.pivottable.events.RefreshListener refreshHandler;
-    protected com.haulmont.charts.web.toolkit.ui.pivottable.events.CellClickListener cellClickHandler;
+    protected com.haulmont.charts.web.widgets.pivottable.events.RefreshListener refreshHandler;
+    protected com.haulmont.charts.web.widgets.pivottable.events.CellClickListener cellClickHandler;
+
+    protected Messages messages;
 
     public WebPivotTable() {
-        component = new CubaPivotTable();
+        component = createComponent();
+    }
+
+    protected CubaPivotTable createComponent() {
+        return new CubaPivotTable(createPivotTableSerializer());
+    }
+
+    protected PivotTableSerializer createPivotTableSerializer() {
+        return AppBeans.getPrototype(CubaPivotTableSerializer.NAME);
+    }
+
+    @Inject
+    public void setMessages(Messages messages) {
+        this.messages = messages;
+    }
+
+    @Override
+    public void afterPropertiesSet() throws Exception {
         initLocale();
     }
 
     protected void initLocale() {
         UserSessionSource userSessionSource = AppBeans.get(UserSessionSource.class);
         Locale locale = userSessionSource.getLocale();
+        String localeString = messages.getTools().localeToString(locale);
 
-        if (!Objects.equals(userSessionSource.getLocale(), component.getLocale())) {
-            Messages messages = AppBeans.get(Messages.class);
-            String localeString = messages.getTools().localeToString(locale);
+        if (!Objects.equals(localeString, component.getLocaleString())) {
             component.setPivotTableMessages(localeString, PivotTableLocaleHelper.getPivotTableLocaleMap(locale));
-
-            component.setLocale(locale);
-
+            component.setLocaleString(localeString);
             component.setEmptyDataMessage(messages.getMainMessage("pivottable.emptyDataMessage", locale));
         }
     }

@@ -10,22 +10,22 @@ import com.haulmont.charts.gui.map.model.directions.Distance;
 
 public class DistanceDelegate implements Distance {
 
-    private com.haulmont.charts.web.toolkit.ui.client.addons.googlemap.services.Distance distance;
+    private com.haulmont.charts.web.widgets.client.addons.googlemap.services.Distance distance;
 
-    public static DistanceDelegate fromDistance(com.haulmont.charts.web.toolkit.ui.client.addons.googlemap.services.Distance distance) {
+    public static DistanceDelegate fromDistance(com.haulmont.charts.web.widgets.client.addons.googlemap.services.Distance distance) {
         return  distance != null ? new DistanceDelegate(distance) : null;
     }
 
-    public DistanceDelegate(com.haulmont.charts.web.toolkit.ui.client.addons.googlemap.services.Distance distance) {
+    public DistanceDelegate(com.haulmont.charts.web.widgets.client.addons.googlemap.services.Distance distance) {
         Preconditions.checkNotNullArgument(distance);
         this.distance = distance;
     }
 
-    public com.haulmont.charts.web.toolkit.ui.client.addons.googlemap.services.Distance getDistance() {
+    public com.haulmont.charts.web.widgets.client.addons.googlemap.services.Distance getDistance() {
         return distance;
     }
 
-    public void setDistance(com.haulmont.charts.web.toolkit.ui.client.addons.googlemap.services.Distance distance) {
+    public void setDistance(com.haulmont.charts.web.widgets.client.addons.googlemap.services.Distance distance) {
         this.distance = distance;
     }
 

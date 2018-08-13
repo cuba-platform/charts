@@ -7,7 +7,7 @@ package com.haulmont.charts.web.gui.components.map.google;
 
 import com.haulmont.bali.util.Preconditions;
 import com.haulmont.charts.gui.map.model.GeoPoint;
-import com.haulmont.charts.web.toolkit.ui.client.addons.googlemap.base.LatLon;
+import com.haulmont.charts.web.widgets.client.addons.googlemap.base.LatLon;
 
 public class GeoPointDelegate implements GeoPoint {
 

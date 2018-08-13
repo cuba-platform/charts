@@ -18,23 +18,23 @@ import java.util.List;
 
 public class DirectionsStepDelegate implements DirectionsStep {
 
-    private com.haulmont.charts.web.toolkit.ui.client.addons.googlemap.services.DirectionsStep directionsStep;
+    private com.haulmont.charts.web.widgets.client.addons.googlemap.services.DirectionsStep directionsStep;
 
     public static DirectionsStepDelegate fromDirectionsStep(
-            com.haulmont.charts.web.toolkit.ui.client.addons.googlemap.services.DirectionsStep step) {
+            com.haulmont.charts.web.widgets.client.addons.googlemap.services.DirectionsStep step) {
         return step != null ? new DirectionsStepDelegate(step) : null;
     }
 
-    public DirectionsStepDelegate(com.haulmont.charts.web.toolkit.ui.client.addons.googlemap.services.DirectionsStep directionsStep) {
+    public DirectionsStepDelegate(com.haulmont.charts.web.widgets.client.addons.googlemap.services.DirectionsStep directionsStep) {
         Preconditions.checkNotNullArgument(directionsStep);
         this.directionsStep = directionsStep;
     }
 
-    public com.haulmont.charts.web.toolkit.ui.client.addons.googlemap.services.DirectionsStep getDirectionsStep() {
+    public com.haulmont.charts.web.widgets.client.addons.googlemap.services.DirectionsStep getDirectionsStep() {
         return directionsStep;
     }
 
-    public void setDirectionsStep(com.haulmont.charts.web.toolkit.ui.client.addons.googlemap.services.DirectionsStep directionsStep) {
+    public void setDirectionsStep(com.haulmont.charts.web.widgets.client.addons.googlemap.services.DirectionsStep directionsStep) {
         this.directionsStep = directionsStep;
     }
 
@@ -109,7 +109,7 @@ public class DirectionsStepDelegate implements DirectionsStep {
             directionsStep.setTravelMode(null);
         } else {
             directionsStep.setTravelMode(
-                    com.haulmont.charts.web.toolkit.ui.client.addons.googlemap.services.TravelMode.fromValue(travelMode.value()));
+                    com.haulmont.charts.web.widgets.client.addons.googlemap.services.TravelMode.fromValue(travelMode.value()));
         }
     }
 

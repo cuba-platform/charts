@@ -7,7 +7,7 @@ package com.haulmont.charts.web.gui.components.map.google;
 
 import com.haulmont.bali.util.Preconditions;
 import com.haulmont.charts.gui.map.model.GeoPoint;
-import com.haulmont.charts.web.toolkit.ui.client.addons.googlemap.base.WeightedLocation;
+import com.haulmont.charts.web.widgets.client.addons.googlemap.base.WeightedLocation;
 
 import java.util.Objects;
 
@@ -26,7 +26,7 @@ public class WeightedLocationDelegate implements com.haulmont.charts.gui.map.mod
 
     @Override
     public void setLocation(GeoPoint location) {
-        this.location.setLocation(location != null ? ((GeoPointDelegate)location).getLatLon() : null);
+        this.location.setLocation(location != null ? ((GeoPointDelegate) location).getLatLon() : null);
     }
 
     @Override

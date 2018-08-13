@@ -17,18 +17,18 @@ import java.util.List;
 
 public class DirectionsRouteDelegate implements DirectionsRoute {
 
-    private com.haulmont.charts.web.toolkit.ui.client.addons.googlemap.services.DirectionsRoute directionsRoute;
+    private com.haulmont.charts.web.widgets.client.addons.googlemap.services.DirectionsRoute directionsRoute;
 
-    public DirectionsRouteDelegate(com.haulmont.charts.web.toolkit.ui.client.addons.googlemap.services.DirectionsRoute directionsRoute) {
+    public DirectionsRouteDelegate(com.haulmont.charts.web.widgets.client.addons.googlemap.services.DirectionsRoute directionsRoute) {
         Preconditions.checkNotNullArgument(directionsRoute);
         this.directionsRoute = directionsRoute;
     }
 
-    public com.haulmont.charts.web.toolkit.ui.client.addons.googlemap.services.DirectionsRoute getDirectionsRoute() {
+    public com.haulmont.charts.web.widgets.client.addons.googlemap.services.DirectionsRoute getDirectionsRoute() {
         return directionsRoute;
     }
 
-    public void setDirectionsRoute(com.haulmont.charts.web.toolkit.ui.client.addons.googlemap.services.DirectionsRoute directionsRoute) {
+    public void setDirectionsRoute(com.haulmont.charts.web.widgets.client.addons.googlemap.services.DirectionsRoute directionsRoute) {
         this.directionsRoute = directionsRoute;
     }
 
@@ -39,7 +39,7 @@ public class DirectionsRouteDelegate implements DirectionsRoute {
 
     @Override
     public void setBounds(Bounds bounds) {
-        directionsRoute.setBounds(bounds != null ? ((BoundsDelegate)bounds).getBounds() : null);
+        directionsRoute.setBounds(bounds != null ? ((BoundsDelegate) bounds).getBounds() : null);
     }
 
     @Override

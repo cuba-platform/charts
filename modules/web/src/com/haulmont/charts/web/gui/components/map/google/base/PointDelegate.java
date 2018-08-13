@@ -9,22 +9,22 @@ import com.haulmont.bali.util.Preconditions;
 import com.haulmont.charts.gui.map.model.base.Point;
 
 public class PointDelegate implements Point {
-    private com.haulmont.charts.web.toolkit.ui.client.addons.googlemap.base.Point point;
+    private com.haulmont.charts.web.widgets.client.addons.googlemap.base.Point point;
 
-    public static PointDelegate fromPoint(com.haulmont.charts.web.toolkit.ui.client.addons.googlemap.base.Point point) {
+    public static PointDelegate fromPoint(com.haulmont.charts.web.widgets.client.addons.googlemap.base.Point point) {
         return point != null ? new PointDelegate(point) : null;
     }
 
-    public PointDelegate(com.haulmont.charts.web.toolkit.ui.client.addons.googlemap.base.Point point) {
+    public PointDelegate(com.haulmont.charts.web.widgets.client.addons.googlemap.base.Point point) {
         Preconditions.checkNotNullArgument(point);
         this.point = point;
     }
 
-    public com.haulmont.charts.web.toolkit.ui.client.addons.googlemap.base.Point getPoint() {
+    public com.haulmont.charts.web.widgets.client.addons.googlemap.base.Point getPoint() {
         return point;
     }
 
-    public void setPoint(com.haulmont.charts.web.toolkit.ui.client.addons.googlemap.base.Point point) {
+    public void setPoint(com.haulmont.charts.web.widgets.client.addons.googlemap.base.Point point) {
         this.point = point;
     }
 

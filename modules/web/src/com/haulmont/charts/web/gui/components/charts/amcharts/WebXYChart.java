@@ -5,7 +5,7 @@
 
 package com.haulmont.charts.web.gui.components.charts.amcharts;
 
-import com.haulmont.charts.gui.amcharts.model.gson.ChartJsonSerializationContext;
+import com.haulmont.charts.web.widgets.amcharts.serialization.ChartJsonSerializationContext;
 import com.haulmont.charts.gui.components.charts.XYChart;
 
 public class WebXYChart extends WebRectangularChart<XYChart, com.haulmont.charts.gui.amcharts.model.charts.XYChart>
