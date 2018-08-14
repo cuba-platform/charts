@@ -8,9 +8,14 @@ package com.haulmont.charts.web.gui.components.pivottable;
 import com.haulmont.bali.util.Preconditions;
 import com.google.common.base.Strings;
 import com.haulmont.charts.gui.components.pivot.PivotTable;
+import com.haulmont.charts.gui.data.DataItem;
+import com.haulmont.charts.gui.data.DataProvider;
+import com.haulmont.charts.gui.data.EntityDataItem;
 import com.haulmont.charts.gui.pivottable.extentsion.model.PivotData;
 import com.haulmont.charts.gui.pivottable.extentsion.model.PivotDataCell;
 import com.haulmont.charts.gui.pivottable.extentsion.model.PivotDataSeparatedCell;
+import com.haulmont.chile.core.model.MetaClass;
+import com.haulmont.cuba.core.entity.Entity;
 import com.haulmont.cuba.core.global.AppBeans;
 import com.haulmont.cuba.core.global.Messages;
 import com.haulmont.cuba.gui.AppConfig;
@@ -34,6 +39,8 @@ public final class PivotExcelExporter {
 
     public static final int MAX_ROW_INDEX = 65535;
 
+    protected static final String DEFAULT_FILE_NAME = "pivotData";
+
     protected HSSFWorkbook wb;
 
     protected HSSFSheet sheet;
@@ -43,17 +50,35 @@ public final class PivotExcelExporter {
     protected ExportDisplay display;
 
     protected String fileName;
-    protected CollectionDatasource datasource;
+    protected MetaClass entityMetaClass;
     protected Frame frame;
 
     protected Messages messages;
 
     public PivotExcelExporter(PivotTable pivotTable) {
-        this.datasource = pivotTable.getDatasource();
+        initEntityMetaClass(pivotTable);
 
         messages = AppBeans.get(Messages.NAME);
         frame = pivotTable.getFrame();
         display = AppConfig.createExportDisplay(frame);
+    }
+
+    protected void initEntityMetaClass(PivotTable pivotTable) {
+        CollectionDatasource datasource = pivotTable.getDatasource();
+        if (datasource != null) {
+            entityMetaClass = datasource.getMetaClass();
+        } else if (pivotTable.getDataProvider() != null) {
+            DataProvider dataProvider = pivotTable.getDataProvider();
+
+            if (!dataProvider.getItems().isEmpty()) {
+                DataItem dataItem = dataProvider.getItems().get(0);
+
+                if (dataItem instanceof EntityDataItem) {
+                    Entity entity = ((EntityDataItem) dataItem).getItem();
+                    entityMetaClass = entity.getMetaClass();
+                }
+            }
+        }
     }
 
     /**
@@ -65,10 +90,12 @@ public final class PivotExcelExporter {
     public void exportPivotTable(PivotData pivotData, String fileName) {
         Preconditions.checkNotNullArgument(pivotData);
 
-        if (Strings.isNullOrEmpty(fileName)) {
-            this.fileName = messages.getTools().getEntityCaption(datasource.getMetaClass());
-        } else {
+        if (!Strings.isNullOrEmpty(fileName)) {
             this.fileName = fileName;
+        } else if (entityMetaClass != null) {
+            this.fileName = messages.getTools().getEntityCaption(entityMetaClass);
+        } else {
+            this.fileName = DEFAULT_FILE_NAME;
         }
 
         createWorkbookWithSheet();
@@ -97,10 +124,12 @@ public final class PivotExcelExporter {
             throw new IllegalArgumentException("ExportDisplay is null");
         }
 
-        if (Strings.isNullOrEmpty(fileName)) {
-            this.fileName = messages.getTools().getEntityCaption(datasource.getMetaClass());
-        } else {
+        if (!Strings.isNullOrEmpty(fileName)) {
             this.fileName = fileName;
+        } else if (entityMetaClass != null) {
+            this.fileName = messages.getTools().getEntityCaption(entityMetaClass);
+        } else {
+            this.fileName = DEFAULT_FILE_NAME;
         }
 
         createWorkbookWithSheet();

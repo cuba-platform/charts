@@ -13,13 +13,13 @@ import com.vaadin.server.AbstractExtension;
 
 public class CubaPivotTableExtension extends AbstractExtension {
 
+    public static final Gson gson = new Gson();
+
     protected CubaPivotTable pivotTable;
 
     protected String pivotDataJSON = null;
 
     protected Renderer currentRenderer;
-
-    protected Gson gson = new Gson();
 
     public CubaPivotTableExtension(CubaPivotTable pivotTable) {
         this.pivotTable = pivotTable;

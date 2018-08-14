@@ -80,11 +80,36 @@ public class WebPivotTableExtension implements PivotTableExtension {
     }
 
     protected void checkSupportedRenderer() {
-        Renderer currentRenderer = pivotTableExtension.getCurrentRenderer() == null ?
-                pivotTable.getRenderers().getDefaultRenderer() : pivotTableExtension.getCurrentRenderer();
+        String json = pivotTable.getNativeJson();
+        Boolean editable = PivotNativeJsonUtils.isEditable(json);
 
-        if (!supportedRenderers.contains(currentRenderer)) {
-            throw new IllegalStateException(messages.getMainMessage("pivottable.extension.notSupportedRenderer"));
+        if (!Boolean.FALSE.equals(editable)) {
+            Renderer currentRenderer = pivotTableExtension.getCurrentRenderer();
+
+            if (currentRenderer != null) {
+                checkRenderer(currentRenderer);
+            } else if (pivotTable.getRenderers() != null) {
+                Renderer defaultRenderer = pivotTable.getRenderers().getDefaultRenderer();
+                if (defaultRenderer != null) {
+                    checkRenderer(defaultRenderer);
+                }
+            }
+        }
+
+        if ((editable == null && !pivotTable.isEditable()) || Boolean.FALSE.equals(editable)) {
+            String rendererId = PivotNativeJsonUtils.getRenderer(json);
+
+            if (Renderer.fromId(rendererId) != null) { // check render in native json
+                checkRenderer(Renderer.fromId(rendererId));
+            } else if (pivotTable.getRenderer() != null) { // check in server configuration
+                checkRenderer(pivotTable.getRenderer());
+            }
+        }
+    }
+
+    protected void checkRenderer(Renderer renderer) {
+        if (!supportedRenderers.contains(renderer)) {
+            throw new IllegalStateException("Given renderer is not supported for data export");
         }
     }
 }
