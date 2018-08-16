@@ -1,0 +1,21 @@
+<!--
+  ~ Copyright (c) 2008-2018 Haulmont. All rights reserved.
+  ~ Use is subject to license terms, see http://www.cuba-platform.com/commercial-software-license for details.
+  -->
+
+<window xmlns="http://schemas.haulmont.com/cuba/window.xsd"
+        class="com.haulmont.charts.web.ui.PivotTableScreen"
+        xmlns:chart="http://schemas.haulmont.com/charts/charts.xsd">
+    <layout expand="pivotTable"
+            spacing="true">
+        <button id="exportExcel"
+                caption="msg://showPivotScreen.button.exportExcel"
+                icon="icons/excel.png"
+                invoke="exportExcel"/>
+        <chart:pivotTable id="pivotTable"
+                          editable="true"
+                          width="100%">
+            <chart:properties/>
+        </chart:pivotTable>
+    </layout>
+</window>
