@@ -222,11 +222,11 @@ public class PivotTableModel extends AbstractPivotObject {
     public PivotTableModel() {
     }
 
-    public Boolean getEditable() {
+    public boolean getEditable() {
         return editable;
     }
 
-    public PivotTableModel setEditable(Boolean editable) {
+    public PivotTableModel setEditable(boolean editable) {
         this.editable = editable;
         return this;
     }

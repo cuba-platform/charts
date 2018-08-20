@@ -102,7 +102,11 @@ public class WebPivotTable extends WebAbstractComponent<CubaPivotTable> implemen
 
     @Override
     public void setEditable(boolean editable) {
-        component.getPivotTable().setEditable(editable);
+        if (editable != component.getPivotTable().getEditable()) {
+            component.getPivotTable().setEditable(editable);
+
+            component.repaint();
+        }
     }
 
     @Override
