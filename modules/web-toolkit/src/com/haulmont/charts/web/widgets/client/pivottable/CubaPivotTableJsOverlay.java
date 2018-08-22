@@ -56,6 +56,9 @@ public class CubaPivotTableJsOverlay {
 
         var pivot;
         if (configObject.options.editable) {
+            // The 3rd input parameter is `overwrite`, which controls what happens
+            // if `pivotUI` is called repeatedly on the same element. We set `overwrite=true`
+            // so that the options object overwrites the current state of the UI.
             pivot = $wnd.jQuery(placeHolder).pivotUI(configObject.data,
                 configObject.options, true, configObject.options.localeCode);
 
