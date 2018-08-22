@@ -11,7 +11,6 @@ import com.haulmont.charts.gui.data.DataItem;
 import com.haulmont.charts.web.gui.components.pivottable.WebPivotTableExtension;
 import com.haulmont.cuba.gui.WindowParam;
 import com.haulmont.cuba.gui.components.AbstractWindow;
-import com.haulmont.cuba.gui.data.CollectionDatasource;
 
 import javax.inject.Inject;
 import java.util.List;
@@ -45,9 +44,7 @@ public class PivotTableScreen extends AbstractWindow {
             }
         }
 
-        for (Map.Entry<String, String> entry : properties.entrySet()) {
-            pivotTable.addProperty(entry.getKey(), entry.getValue());
-        }
+        pivotTable.addProperties(properties);
 
         if (nativeJson != null) {
             pivotTable.setNativeJson(nativeJson);

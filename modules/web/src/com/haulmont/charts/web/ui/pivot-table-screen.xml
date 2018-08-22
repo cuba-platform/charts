@@ -5,6 +5,7 @@
 
 <window xmlns="http://schemas.haulmont.com/cuba/window.xsd"
         class="com.haulmont.charts.web.ui.PivotTableScreen"
+        caption="msg://showPivotScreenCaption"
         xmlns:chart="http://schemas.haulmont.com/charts/charts.xsd">
     <layout expand="pivotTable"
             spacing="true">

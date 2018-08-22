@@ -13,14 +13,13 @@ import com.haulmont.charts.gui.data.EntityDataItem;
 import com.haulmont.chile.core.model.MetaClass;
 import com.haulmont.chile.core.model.MetaProperty;
 import com.haulmont.chile.core.model.MetaPropertyPath;
+import com.haulmont.chile.core.model.utils.InstanceUtils;
 import com.haulmont.cuba.core.entity.Entity;
-import com.haulmont.cuba.core.global.AppBeans;
-import com.haulmont.cuba.core.global.Metadata;
-import com.haulmont.cuba.core.global.View;
-import com.haulmont.cuba.core.global.ViewProperty;
+import com.haulmont.cuba.core.global.*;
 import com.haulmont.cuba.gui.WindowManager;
 import com.haulmont.cuba.gui.components.*;
 import com.haulmont.cuba.gui.components.actions.BaseAction;
+import com.haulmont.cuba.security.entity.EntityAttrAccess;
 import org.springframework.context.annotation.Scope;
 
 import java.util.*;
@@ -52,9 +51,15 @@ public class ShowPivotAction extends BaseAction implements Action.HasBeforeActio
     protected List<String> includedProperties = new ArrayList<>();
     protected List<String> excludedProperties = new ArrayList<>();
 
+    protected List<String> appliedProperties;
+
     protected String nativeJson;
 
     protected Metadata metadata = AppBeans.get(Metadata.NAME);
+
+    protected Security security = AppBeans.get(Security.NAME);
+
+    protected ViewRepository viewRepository = AppBeans.get(ViewRepository.NAME);
 
     protected BeforeActionPerformedHandler beforeActionPerformedHandler;
 
@@ -65,7 +70,7 @@ public class ShowPivotAction extends BaseAction implements Action.HasBeforeActio
     /**
      * Creates an action with default id.
      *
-     * @param target table from which will be exported data
+     * @param target component containing data to export
      */
     public static ShowPivotAction create(ListComponent target) {
         return AppBeans.getPrototype(NAME, target);
@@ -74,7 +79,7 @@ public class ShowPivotAction extends BaseAction implements Action.HasBeforeActio
     /**
      * Creates an action with specified id.
      *
-     * @param target table from which will be exported data
+     * @param target component containing data to export
      * @param id     action's id
      */
     public static ShowPivotAction create(ListComponent target, String id) {
@@ -84,7 +89,7 @@ public class ShowPivotAction extends BaseAction implements Action.HasBeforeActio
     /**
      * The simplest constructor. The action uses default id and other parameters.
      *
-     * @param target table from which will be exported data
+     * @param target component containing data to export
      */
     public ShowPivotAction(ListComponent target) {
         this(target, ACTION_ID);
@@ -93,7 +98,7 @@ public class ShowPivotAction extends BaseAction implements Action.HasBeforeActio
     /**
      * Constructor allows to specify action's name.
      *
-     * @param target table from which will be exported data
+     * @param target component containing data to export
      * @param id     action's name
      */
     public ShowPivotAction(ListComponent target, String id) {
@@ -154,13 +159,17 @@ public class ShowPivotAction extends BaseAction implements Action.HasBeforeActio
     }
 
     /**
-     * Set included properties list using fluent API method.
+     * Set included properties list using fluent API method. If included properties aren't set, all properties in the
+     * view will be shown, otherwise only included properties will be shown in the pivot table unless
+     * {@link ShowPivotAction#withExcludedProperties(List)} is not set.
      *
      * @param includedProperties list of included properties
      * @return current instance of action
      */
     public ShowPivotAction withIncludedProperties(List<String> includedProperties) {
         this.includedProperties = includedProperties;
+
+        appliedProperties = new ArrayList<>(includedProperties);
 
         return this;
     }
@@ -174,14 +183,15 @@ public class ShowPivotAction extends BaseAction implements Action.HasBeforeActio
 
     /**
      * Set excluded properties list using fluent API method.
+     * <br>
+     * Note, if it is used without {@link ShowPivotAction#withIncludedProperties(List)}, excluded properties will be
+     * applied for all properties in the view.
      *
      * @param excludedProperties list of excluded properties
      * @return current instance of action
      */
     public ShowPivotAction withExcludedProperties(List<String> excludedProperties) {
         this.excludedProperties = excludedProperties;
-
-        applyExcludedProperties(excludedProperties);
 
         return this;
     }
@@ -274,37 +284,118 @@ public class ShowPivotAction extends BaseAction implements Action.HasBeforeActio
         return dataItems;
     }
 
-    protected void applyExcludedProperties(List<String> excludedProperties) {
-        if (includedProperties.isEmpty()) {
+    protected void applyExcludedProperties(List<String> propertiesList, List<String> excludedProperties) {
+        if (propertiesList == null || propertiesList.isEmpty()) {
             return;
         }
 
         for (String property : excludedProperties) {
-            includedProperties.remove(property);
+            propertiesList.remove(property);
         }
     }
 
-    protected Map<String, String> getPropertiesWithLocale() {
-        if (target.getDatasource().getView() == null) {
-            return Collections.emptyMap();
-        }
-
-        Map<String, String> resultMap = new HashMap<>();
-
+    protected List<String> getAllProperties(MetaClass metaClass) {
         View view = target.getDatasource().getView();
-        MetaClass metaClass = metadata.getClassNN(view.getEntityClass());
-
-        List<String> properties;
-
-        if (includedProperties.isEmpty()) {
-            properties = view.getProperties().stream()
+        if (view != null && !view.getProperties().isEmpty()) {
+            return view.getProperties().stream()
                     .map(ViewProperty::getName)
                     .collect(Collectors.toList());
-        } else {
-            properties = new ArrayList<>(includedProperties);
         }
 
-        for (String property : properties) {
+        if (metadata.getTools().isNotPersistent(metaClass)) {
+            return metaClass.getProperties().stream()
+                    .map(MetaProperty::getName)
+                    .collect(Collectors.toList());
+        }
+
+        view = getView(metaClass);
+        return view.getProperties().stream()
+                .map(ViewProperty::getName)
+                .collect(Collectors.toList());
+    }
+
+    protected List<String> removeNonExistingProperties(List<String> propertiesList, MetaClass metaClass) {
+        List<String> result = new ArrayList<>();
+
+        View view = target.getDatasource().getView();
+        if (view != null && !view.getProperties().isEmpty()) {
+            for (String property : propertiesList) {
+                if (isPropertyPath(property) && viewContainsPropertyPath(view, property)) {
+                    result.add(property);
+                } else if (view.containsProperty(property)) {
+                    result.add(property);
+                }
+            }
+            return result;
+        }
+
+        if (metadata.getTools().isNotPersistent(metaClass)) {
+            for (String property : propertiesList) {
+                if (metaClass.getPropertyPath(property) != null) {
+                    result.add(property);
+                }
+            }
+
+            return result;
+        }
+
+        view = getView(metaClass);
+        for (String property : propertiesList) {
+            if (isPropertyPath(property) && viewContainsPropertyPath(view, property)) {
+                result.add(property);
+            } else if (view.containsProperty(property)) {
+                result.add(property);
+            }
+        }
+
+        return result;
+    }
+
+    protected boolean isPropertyPath(String property) {
+        String[] strings = InstanceUtils.parseValuePath(property);
+        return strings.length > 1;
+    }
+
+    protected boolean viewContainsPropertyPath(View view, String property) {
+        String[] properties = InstanceUtils.parseValuePath(property);
+        View currentView = view;
+        for (int i = 0; i < properties.length; i++) {
+            if (currentView == null) {
+                return false;
+            }
+
+            ViewProperty viewProperty = currentView.getProperty(properties[i]);
+            if (viewProperty == null) {
+                return false;
+            }
+
+            currentView = viewProperty.getView();
+            if (currentView == null && (i + 1 == properties.length)) {
+                return true;
+            }
+        }
+        return false;
+    }
+
+    protected Map<String, String> getPropertiesWithLocale() {
+        Map<String, String> resultMap = new HashMap<>();
+
+        MetaClass metaClass = target.getDatasource().getMetaClass();
+
+        if (appliedProperties == null || appliedProperties.isEmpty()) {
+            appliedProperties = getAllProperties(metaClass);
+        }
+
+        if (!excludedProperties.isEmpty()) {
+            applyExcludedProperties(appliedProperties, excludedProperties);
+        }
+
+        appliedProperties = removeNonExistingProperties(appliedProperties, metaClass);
+        if (appliedProperties.isEmpty()) {
+            appliedProperties = getAllProperties(metaClass);
+        }
+
+        for (String property : appliedProperties) {
             MetaPropertyPath metaPropertyPath = metaClass.getPropertyPath(property);
 
             if (metaPropertyPath == null) {
@@ -312,7 +403,7 @@ public class ShowPivotAction extends BaseAction implements Action.HasBeforeActio
             }
 
             MetaProperty metaProperty = metaPropertyPath.getMetaProperty();
-            if (metaProperty.getRange().getCardinality().isMany()) {
+            if (!isManagedProperty(metaProperty, metaClass)) {
                 continue;
             }
 
@@ -320,5 +411,52 @@ public class ShowPivotAction extends BaseAction implements Action.HasBeforeActio
         }
 
         return resultMap;
+    }
+
+    protected boolean isManagedProperty(MetaProperty metaProperty, MetaClass metaClass) {
+        if (metadata.getTools().isSystem(metaProperty)
+                || metadata.getTools().isSystemLevel(metaProperty)
+                || metaProperty.getRange().getCardinality().isMany()
+                || !isPermitted(metaClass, metaProperty)) {
+            return false;
+        }
+
+        if (metaProperty.getRange().isDatatype() && (isByteArray(metaProperty) || isUuid(metaProperty))) {
+            return false;
+        }
+
+        return true;
+    }
+
+    protected boolean isPermitted(MetaClass metaClass, MetaProperty metaProperty) {
+        return security.isEntityAttrPermitted(metaClass, metaProperty.getName(), EntityAttrAccess.VIEW);
+    }
+
+    protected boolean isByteArray(MetaProperty metaProperty) {
+        return metaProperty.getRange().asDatatype().getJavaClass().equals(byte[].class);
+    }
+
+    protected boolean isUuid(MetaProperty metaProperty) {
+        return metaProperty.getRange().asDatatype().getJavaClass().equals(UUID.class);
+    }
+
+    protected View getView(MetaClass metaClass) {
+        View localView = viewRepository.getView(metaClass, View.LOCAL);
+        View minimalView = viewRepository.getView(metaClass, View.MINIMAL);
+        View view = new View(localView.getEntityClass(), "entitiesView", false);
+        copyViewProperties(localView, view, metaClass);
+        copyViewProperties(minimalView, view, metaClass);
+        return view;
+    }
+
+    protected void copyViewProperties(View src, View target, MetaClass metaClass) {
+        for (ViewProperty viewProperty : src.getProperties()) {
+            MetaProperty metaProperty = metaClass.getProperty(viewProperty.getName());
+            if (metaProperty == null || !metadata.getTools().isSystemLevel(metaProperty)) {
+                if (!target.containsProperty(viewProperty.getName())) {
+                    target.addProperty(viewProperty.getName(), viewProperty.getView(), viewProperty.getFetchMode());
+                }
+            }
+        }
     }
 }
