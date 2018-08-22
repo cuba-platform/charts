@@ -57,7 +57,7 @@ public class CubaPivotTableJsOverlay {
         var pivot;
         if (configObject.options.editable) {
             pivot = $wnd.jQuery(placeHolder).pivotUI(configObject.data,
-                configObject.options, false, configObject.options.localeCode);
+                configObject.options, true, configObject.options.localeCode);
 
             if (!enabled) {
                 pivot.find("select").attr('disabled', 'disabled');
