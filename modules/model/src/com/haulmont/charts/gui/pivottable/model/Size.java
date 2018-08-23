@@ -5,6 +5,9 @@
 
 package com.haulmont.charts.gui.pivottable.model;
 
+/**
+ * An object that describes the size.
+ */
 public class Size extends AbstractPivotObject {
 
     private static final long serialVersionUID = -7892174283356404245L;
@@ -13,19 +16,37 @@ public class Size extends AbstractPivotObject {
 
     private Double height;
 
+    /**
+     * @return the width value
+     */
     public Double getWidth() {
         return width;
     }
 
+    /**
+     * Sets the width value.
+     *
+     * @param width the width value
+     * @return a reference to this object
+     */
     public Size setWidth(Double width) {
         this.width = width;
         return this;
     }
 
+    /**
+     * @return the height value
+     */
     public Double getHeight() {
         return height;
     }
 
+    /**
+     * Sets the height value.
+     *
+     * @param height the height value
+     * @return a reference to this object
+     */
     public Size setHeight(Double height) {
         this.height = height;
         return this;

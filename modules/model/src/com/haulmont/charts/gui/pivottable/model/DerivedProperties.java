@@ -19,15 +19,30 @@ public class DerivedProperties extends AbstractPivotObject {
 
     private Map<String, JsFunction> properties;
 
+    /**
+     * @return a map of derived properties
+     */
     public Map<String, JsFunction> getProperties() {
         return properties;
     }
 
+    /**
+     * Sets a map of derived properties.
+     *
+     * @param derivedProperties a map of derived properties
+     * @return a reference to this object
+     */
     public DerivedProperties setProperties(Map<String, JsFunction> derivedProperties) {
         this.properties = derivedProperties;
         return this;
     }
 
+    /**
+     * Adds a map of derived properties.
+     *
+     * @param derivedProperties a map of derived properties
+     * @return a reference to this object
+     */
     public DerivedProperties addAttributes(Map<String, JsFunction> derivedProperties) {
         if (this.properties == null) {
             this.properties = new HashMap<>();
@@ -36,6 +51,13 @@ public class DerivedProperties extends AbstractPivotObject {
         return this;
     }
 
+    /**
+     * Adds a function that calculated a derived property to the given localized attribute name.
+     *
+     * @param caption  a localized attribute name
+     * @param function a function that calculated a derived property
+     * @return a reference to this object
+     */
     public DerivedProperties addAttribute(String caption, JsFunction function) {
         if (this.properties == null) {
             this.properties = new HashMap<>();

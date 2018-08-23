@@ -24,222 +24,103 @@ import java.util.*;
 public class PivotTableModel extends AbstractPivotObject {
     private static final long serialVersionUID = -1569394634634321813L;
 
-    /**
-     * If {@code editable=false} then {@code pivot()} function
-     * will be called to generate PivotTable, {@code pivotUI()} otherwise.
-     */
     private boolean editable = false;                           // Haulmont API
 
-    /**
-     * Properties to serialize
-     */
     @Expose(serialize = false, deserialize = false)
     private Map<String, String> properties;                     // Haulmont API
 
-    /**
-     * Collection of attribute names to use as rows.
-     */
     private List<String> rows;                                  // pivot() and pivotUI()
 
-    /**
-     * Collection of attribute names to use as columns.
-     */
     private List<String> cols;                                  // pivot() and pivotUI()
 
-    /**
-     * Origin property name: {@code aggregator}.
-     * <p>
-     * Constructor for an object which will aggregate results per cell
-     * (see <a href="https://github.com/nicolaskruchten/pivottable/wiki/Aggregators">documentation</a>).
-     * <p>
-     * Applies only when {@code editable=false}.
-     */
     private Aggregation aggregation;                            // pivot()
 
-    /**
-     * Generates output from pivot data structure
-     * (see <a href="https://github.com/nicolaskruchten/pivottable/wiki/Renderers">documentation</a>).
-     * <p>
-     * Applies only when {@code editable=false}.
-     */
     private Renderer renderer;                                  // pivot()
 
-    /**
-     * Origin property name: {@code vals}.
-     * <p>
-     * Attribute names to prepopulate in vals area (gets passed to aggregator generating function).
-     * <p>
-     * Applies only when {@code editable=true}.
-     */
     private List<String> aggregationProperties;                 // pivotUI()
 
-    /**
-     * Origin property name: {@code aggregators}.
-     * <p>
-     * Dictionary of generators for aggregation functions in dropdown
-     * (see <a href="https://github.com/nicolaskruchten/pivottable/wiki/Aggregators">documentation</a>).
-     * <p>
-     * Applies only when {@code editable=true}.
-     */
     private Aggregations aggregations;                          // pivotUI()
 
-    /**
-     * Dictionary of rendering functions
-     * (see <a href="https://github.com/nicolaskruchten/pivottable/wiki/Renderers">documentation</a>).
-     * <p>
-     * Applies only when {@code editable=true}.
-     */
     private Renderers renderers;                                // pivotUI()
 
-    /**
-     * Contains attribute names to omit from the UI.
-     * <p>
-     * Applies only when {@code editable=true}.
-     */
     private List<String> hiddenProperties;                      // pivotUI()
 
-    /**
-     * Contains attribute names to omit from the aggregation arguments dropdowns.
-     * <p>
-     * Applies only when {@code editable=true}.
-     */
     private List<String> hiddenFromAggregations;                // pivotUI()
 
-    /**
-     * Contains attribute names to omit from the drag'n'drop portion of the UI.
-     * <p>
-     * Applies only when {@code editable=true}.
-     */
     private List<String> hiddenFromDragDrop;                    // pivotUI()
 
-    /**
-     * The order in which column data is provided to the renderer.
-     * <p>
-     * Ordering by value orders by column total.
-     */
-    private ColumnOrder columnOrder;
+    private ColumnOrder columnOrder;                            // pivot() and pivotUI()
 
-    /**
-     * The order in which row data is provided to the renderer.
-     * <p>
-     * Ordering by value orders by row total.
-     */
-    private RowOrder rowOrder;
+    private RowOrder rowOrder;                                  // pivot() and pivotUI()
 
-    /**
-     * Maximum number of values to list in the double-click menu.
-     * <p>
-     * Applies only when {@code editable=true}.
-     */
     private Integer menuLimit;                                  // pivotUI()
 
-    /**
-     * Origin property name: {@code autoSortUnusedAttrs}.
-     * <p>
-     * Controls whether or not unused attributes are kept sorted in the UI.
-     * <p>
-     * Applies only when {@code editable=true}.
-     */
     private Boolean autoSortUnusedProperties;                   // pivotUI()
 
-    /**
-     * Origin property name: {@code unusedAttrsVertical}.
-     * <p>
-     * Controls whether or not unused attributes are shown vertically
-     * instead of the default which is horizontally. {@code true} means
-     * always vertical, {@code false} means always horizontal. If set to
-     * a number (as is the default) then if the attributes' names' combined
-     * length in characters exceeds the number then the attributes will be shown vertically.
-     * <p>
-     * Applies only when {@code editable=true}.
-     */
     private UnusedPropertiesVertical unusedPropertiesVertical;  // pivotUI()
 
-    /**
-     * Origin property name: {@code filter}.
-     * <p>
-     * Called on each record, returns {@code false} if the record
-     * is to be excluded from the input before rendering or {@code true} otherwise.
-     */
-    private JsFunction filterFunction;                     // pivot() and pivotUI()
+    private JsFunction filterFunction;                          // pivot() and pivotUI()
 
-    /**
-     * Origin property name: {@code sorters}.
-     * <p>
-     * Called with an attribute name and can return a function which can be used
-     * as an argument to {@code Array.sort} for output purposes. If no function
-     * is returned, the default sorting mechanism is a built-in "natural sort"
-     * implementation. Useful for sorting attributes like month names.
-     */
-    private JsFunction sortersFunction;                    // pivot() and pivotUI()
+    private JsFunction sortersFunction;                         // pivot() and pivotUI()
 
-    /**
-     * Object passed through to renderer as options.
-     */
     private RendererOptions rendererOptions;                    // pivot() and pivotUI()
 
-    /**
-     * Object whose keys are attribute names and values are arrays of attribute values
-     * which denote records to include in rendering; used to prepopulate the filter menus
-     * that appear on double-click (overrides {@link #exclusions}).
-     * <p>
-     * Applies only when {@code editable=true}.
-     *
-     * @see #exclusions
-     */
     private Map<String, List<String>> inclusions;               // pivotUI()
 
-    /**
-     * Object whose keys are attribute names and values are arrays of attribute values
-     * which denote records to exclude from rendering; used to prepopulate the filter menus
-     * that appear on double-click.
-     * <p>
-     * Applies only when {@code editable=true}.
-     *
-     * @see #inclusions
-     */
     private Map<String, List<String>> exclusions;               // pivotUI()
 
-    /**
-     * Origin property name: {@code derivedAttributes}.
-     * <p>
-     * Object to define derived properties
-     * (see <a href="https://github.com/nicolaskruchten/pivottable/wiki/Derived-Attributes">documentation</a>).
-     */
     private DerivedProperties derivedProperties;                // pivot() and pivotUI()
 
-    /**
-     * Determines localization
-     */
     private String localeCode;                                  // Haulmont API
 
-    /**
-     * Data provider for PivotTable. Contains items which will be shown on PivotTable.
-     */
     @Expose(serialize = false, deserialize = false)
-    private DataProvider dataProvider;                     // Haulmont API - object to be serialized as input data
+    private DataProvider dataProvider;                          // Haulmont API - object to be serialized as input data
 
     public PivotTableModel() {
     }
 
+    /**
+     * @return if {@code false} then {@code pivot()} function will
+     * be called to generate PivotTable, {@code pivotUI()} otherwise
+     */
     public boolean getEditable() {
         return editable;
     }
 
+    /**
+     * @param editable if {@code false} then {@code pivot()} function will be
+     *                 called to generate PivotTable, {@code pivotUI()} otherwise
+     * @return a reference to this object
+     */
     public PivotTableModel setEditable(boolean editable) {
         this.editable = editable;
         return this;
     }
 
+    /**
+     * @return data provider properties to serialize
+     */
     public Map<String, String> getProperties() {
         return properties;
     }
 
+    /**
+     * Sets data provider properties to serialize.
+     *
+     * @param properties data provider properties to serialize
+     * @return a reference to this object
+     */
     public PivotTableModel setProperties(Map<String, String> properties) {
         this.properties = properties;
         return this;
     }
 
+    /**
+     * Adds data provider properties to serialize.
+     *
+     * @param properties data provider properties to serialize
+     * @return a reference to this object
+     */
     public PivotTableModel addProperties(Map<String, String> properties) {
         if (properties != null) {
             if (this.properties == null) {
@@ -250,6 +131,13 @@ public class PivotTableModel extends AbstractPivotObject {
         return this;
     }
 
+    /**
+     * Sets data provider property to serialize.
+     *
+     * @param property data provider property to serialize
+     * @param value    a property value
+     * @return a reference to this object
+     */
     public PivotTableModel addProperty(String property, String value) {
         if (this.properties == null) {
             this.properties = new HashMap<>();
@@ -259,15 +147,30 @@ public class PivotTableModel extends AbstractPivotObject {
         return this;
     }
 
+    /**
+     * @return a collection of attribute names to use as rows
+     */
     public List<String> getRows() {
         return rows;
     }
 
+    /**
+     * Sets a collection of attribute names to use as rows.
+     *
+     * @param rows a collection of attribute names to use as rows
+     * @return a reference to this object
+     */
     public PivotTableModel setRows(List<String> rows) {
         this.rows = rows;
         return this;
     }
 
+    /**
+     * Adds an array of attribute names to use as rows.
+     *
+     * @param rows an array of attribute names to add
+     * @return a reference to this object
+     */
     public PivotTableModel addRows(String... rows) {
         if (rows != null) {
             if (this.rows == null) {
@@ -278,15 +181,30 @@ public class PivotTableModel extends AbstractPivotObject {
         return this;
     }
 
+    /**
+     * @return a collection of attribute names to use as columns
+     */
     public List<String> getCols() {
         return cols;
     }
 
+    /**
+     * Sets a collection of attribute names to use as columns.
+     *
+     * @param cols a collection of attribute names to use as columns
+     * @return a reference to this object
+     */
     public PivotTableModel setCols(List<String> cols) {
         this.cols = cols;
         return this;
     }
 
+    /**
+     * Adds an array of attribute names to use as columns.
+     *
+     * @param cols an array of attribute names to add
+     * @return a reference to this object
+     */
     public PivotTableModel addCols(String... cols) {
         if (cols != null) {
             if (this.cols == null) {
@@ -297,33 +215,82 @@ public class PivotTableModel extends AbstractPivotObject {
         return this;
     }
 
+    /**
+     * @return an object which will aggregate results per cell
+     */
     public Aggregation getAggregation() {
         return aggregation;
     }
 
+    /**
+     * Original property name: {@code aggregator}.
+     * <p>
+     * Sets a descriptor of an object which will aggregate results per cell
+     * (see <a href="https://github.com/nicolaskruchten/pivottable/wiki/Aggregators">documentation</a>).
+     * <p>
+     * Applies only when {@code editable=false}.
+     *
+     * @param aggregation an object which will aggregate results per cell
+     * @return a reference to this object
+     */
     public PivotTableModel setAggregation(Aggregation aggregation) {
         this.aggregation = aggregation;
         return this;
     }
 
+    /**
+     * @return an object which will generate output from pivot data structure
+     */
     public Renderer getRenderer() {
         return renderer;
     }
 
+    /**
+     * Sets a descriptor of an object which will generate output from pivot data structure
+     * (see <a href="https://github.com/nicolaskruchten/pivottable/wiki/Renderers">documentation</a>).
+     * <p>
+     * Applies only when {@code editable=false}.
+     *
+     * @param renderer an object which will generate output from pivot data structure
+     * @return a reference to this object
+     */
     public PivotTableModel setRenderer(Renderer renderer) {
         this.renderer = renderer;
         return this;
     }
 
+    /**
+     * @return attribute names to prepopulate in vals area
+     */
     public List<String> getAggregationProperties() {
         return aggregationProperties;
     }
 
+    /**
+     * Original property name: {@code vals}.
+     * <p>
+     * Sets attribute names to prepopulate in vals area (gets passed to aggregator generating function).
+     * <p>
+     * Applies only when {@code editable=true}.
+     *
+     * @param aggregationProperties attribute names to prepopulate in vals area
+     * @return a reference to this object
+     */
     public PivotTableModel setAggregationProperties(List<String> aggregationProperties) {
         this.aggregationProperties = aggregationProperties;
         return this;
     }
 
+    /**
+     * Original property name: {@code vals}.
+     * <p>
+     * Adds attribute names to prepopulate in vals area (gets passed to aggregator generating function).
+     * <p>
+     * Applies only when {@code editable=true}.
+     *
+     * @param aggregationProperties attribute names to prepopulate in vals area
+     * @return a reference to this object
+     */
     public PivotTableModel addAggregationProperties(String... aggregationProperties) {
         if (aggregationProperties != null) {
             if (this.aggregationProperties == null) {
@@ -334,33 +301,78 @@ public class PivotTableModel extends AbstractPivotObject {
         return this;
     }
 
+    /**
+     * @return an object that represents a list of generators for aggregation functions in dropdown
+     */
     public Aggregations getAggregations() {
         return aggregations;
     }
 
+    /**
+     * Original property name: {@code aggregators}.
+     * <p>
+     * Sets an object that represents a list of generators for aggregation functions in dropdown
+     * (see <a href="https://github.com/nicolaskruchten/pivottable/wiki/Aggregators">documentation</a>).
+     * <p>
+     * Applies only when {@code editable=true}.
+     *
+     * @param aggregations an object that represents a list of generators for aggregation functions in dropdown
+     * @return a reference to this object
+     */
     public PivotTableModel setAggregations(Aggregations aggregations) {
         this.aggregations = aggregations;
         return this;
     }
 
+    /**
+     * @return n object that represents a list of rendering functions
+     */
     public Renderers getRenderers() {
         return renderers;
     }
 
+    /**
+     * Sets an object that represents a list of rendering functions
+     * (see <a href="https://github.com/nicolaskruchten/pivottable/wiki/Renderers">documentation</a>).
+     * <p>
+     * Applies only when {@code editable=true}.
+     *
+     * @param renderers n object that represents a list of rendering functions
+     * @return a reference to this object
+     */
     public PivotTableModel setRenderers(Renderers renderers) {
         this.renderers = renderers;
         return this;
     }
 
+    /**
+     * @return attribute names to omit from the UI
+     */
     public List<String> getHiddenProperties() {
         return hiddenProperties;
     }
 
+    /**
+     * Sets attribute names to omit from the UI.
+     * <p>
+     * Applies only when {@code editable=true}.
+     *
+     * @param hiddenProperties attribute names to omit from the UI
+     * @return a reference to this object
+     */
     public PivotTableModel setHiddenProperties(List<String> hiddenProperties) {
         this.hiddenProperties = hiddenProperties;
         return this;
     }
 
+    /**
+     * Adds attribute names to omit from the UI.
+     * <p>
+     * Applies only when {@code editable=true}.
+     *
+     * @param hiddenProperties attribute names to omit from the UI
+     * @return a reference to this object
+     */
     public PivotTableModel addHiddenProperties(String... hiddenProperties) {
         if (hiddenProperties != null) {
             if (this.hiddenProperties == null) {
@@ -371,15 +383,34 @@ public class PivotTableModel extends AbstractPivotObject {
         return this;
     }
 
+    /**
+     * @return attribute names to omit from the aggregation arguments dropdowns
+     */
     public List<String> getHiddenFromAggregations() {
         return hiddenFromAggregations;
     }
 
+    /**
+     * Sets attribute names to omit from the aggregation arguments dropdowns.
+     * <p>
+     * Applies only when {@code editable=true}.
+     *
+     * @param hiddenFromAggregations attribute names to omit from the aggregation arguments dropdowns
+     * @return a reference to this object
+     */
     public PivotTableModel setHiddenFromAggregations(List<String> hiddenFromAggregations) {
         this.hiddenFromAggregations = hiddenFromAggregations;
         return this;
     }
 
+    /**
+     * Adds attribute names to omit from the aggregation arguments dropdowns.
+     * <p>
+     * Applies only when {@code editable=true}.
+     *
+     * @param hiddenFromAggregations attribute names to omit from the aggregation arguments dropdowns
+     * @return a reference to this object
+     */
     public PivotTableModel addHiddenFromAggregations(String... hiddenFromAggregations) {
         if (hiddenFromAggregations != null) {
             if (this.hiddenFromAggregations == null) {
@@ -390,15 +421,34 @@ public class PivotTableModel extends AbstractPivotObject {
         return this;
     }
 
+    /**
+     * @return attribute names to omit from the drag'n'drop portion of the UI
+     */
     public List<String> getHiddenFromDragDrop() {
         return hiddenFromDragDrop;
     }
 
+    /**
+     * Sets attribute names to omit from the drag'n'drop portion of the UI.
+     * <p>
+     * Applies only when {@code editable=true}.
+     *
+     * @param hiddenFromDragDrop attribute names to omit from the drag'n'drop portion of the UI
+     * @return a reference to this object
+     */
     public PivotTableModel setHiddenFromDragDrop(List<String> hiddenFromDragDrop) {
         this.hiddenFromDragDrop = hiddenFromDragDrop;
         return this;
     }
 
+    /**
+     * Adds attribute names to omit from the drag'n'drop portion of the UI.
+     * <p>
+     * Applies only when {@code editable=true}.
+     *
+     * @param hiddenFromDragDrop attribute names to omit from the drag'n'drop portion of the UI
+     * @return a reference to this object
+     */
     public PivotTableModel addHiddenFromDragDrop(String... hiddenFromDragDrop) {
         if (hiddenFromDragDrop != null) {
             if (this.hiddenFromDragDrop == null) {
@@ -409,60 +459,138 @@ public class PivotTableModel extends AbstractPivotObject {
         return this;
     }
 
+    /**
+     * @return the order in which column data is provided to the renderer
+     */
     public ColumnOrder getColumnOrder() {
         return columnOrder;
     }
 
+    /**
+     * Sets the order in which column data is provided to the renderer.
+     * <p>
+     * Ordering by value orders by column total.
+     *
+     * @param columnOrder the order in which column data is provided to the renderer
+     * @return a reference to this object
+     */
     public PivotTableModel setColumnOrder(ColumnOrder columnOrder) {
         this.columnOrder = columnOrder;
         return this;
     }
 
+    /**
+     * @return the order in which row data is provided to the renderer
+     */
     public RowOrder getRowOrder() {
         return rowOrder;
     }
 
+    /**
+     * Sets the order in which row data is provided to the renderer.
+     * <p>
+     * Ordering by value orders by row total.
+     *
+     * @param rowOrder the order in which row data is provided to the renderer
+     * @return a reference to this object
+     */
     public PivotTableModel setRowOrder(RowOrder rowOrder) {
         this.rowOrder = rowOrder;
         return this;
     }
 
+    /**
+     * @return the maximum number of values to list in the double-click menu
+     */
     public Integer getMenuLimit() {
         return menuLimit;
     }
 
+    /**
+     * Sets the maximum number of values to list in the double-click menu.
+     * <p>
+     * Applies only when {@code editable=true}.
+     *
+     * @param menuLimit the maximum number of values to list in the double-click menu
+     * @return a reference to this object
+     */
     public PivotTableModel setMenuLimit(Integer menuLimit) {
         this.menuLimit = menuLimit;
         return this;
     }
 
+    /**
+     * @return whether or not unused attributes are kept sorted in the UI
+     */
     public Boolean getAutoSortUnusedProperties() {
         return autoSortUnusedProperties;
     }
 
+    /**
+     * Original property name: {@code autoSortUnusedAttrs}.
+     * <p>
+     * Sets whether or not unused attributes are kept sorted in the UI.
+     * <p>
+     * Applies only when {@code editable=true}.
+     *
+     * @param autoSortUnusedProperties whether or not unused attributes are kept sorted in the UI
+     * @return a reference to this object
+     */
     public PivotTableModel setAutoSortUnusedProperties(Boolean autoSortUnusedProperties) {
         this.autoSortUnusedProperties = autoSortUnusedProperties;
         return this;
     }
 
+    /**
+     * @return whether or not unused attributes are shown vertically
+     */
     public UnusedPropertiesVertical getUnusedPropertiesVertical() {
         return unusedPropertiesVertical;
     }
 
+    /**
+     * Original property name: {@code unusedAttrsVertical}.
+     * <p>
+     * Sets whether or not unused attributes are shown vertically
+     * instead of the default which is horizontally. {@code true} means
+     * always vertical, {@code false} means always horizontal. If set to
+     * a number (as is the default) then if the attributes' names' combined
+     * length in characters exceeds the number then the attributes will be shown vertically.
+     * <p>
+     * Applies only when {@code editable=true}.
+     *
+     * @param unusedPropertiesVertical whether or not unused attributes are shown vertically
+     * @return a reference to this object
+     */
     public PivotTableModel setUnusedPropertiesVertical(UnusedPropertiesVertical unusedPropertiesVertical) {
         this.unusedPropertiesVertical = unusedPropertiesVertical;
         return this;
     }
 
+    /**
+     * @return a data provider that contains items which will be shown on PivotTable
+     */
     public DataProvider getDataProvider() {
         return dataProvider;
     }
 
+    /**
+     * Sets a data provider for PivotTable. Contains items which will be shown on PivotTable.
+     *
+     * @param dataProvider a data provider that contains items which will be shown on PivotTable
+     * @return a reference to this object
+     */
     public PivotTableModel setDataProvider(DataProvider dataProvider) {
         this.dataProvider = dataProvider;
         return this;
     }
 
+    /**
+     * Adds a data item to the data provider.
+     *
+     * @param dataItems a data item to add
+     * @return a reference to this object
+     */
     public PivotTableModel addData(DataItem... dataItems) {
         if (dataItems != null) {
             if (this.dataProvider == null) {
@@ -473,42 +601,104 @@ public class PivotTableModel extends AbstractPivotObject {
         return this;
     }
 
+    /**
+     * @return a filter function that is called on each record
+     */
     public JsFunction getFilterFunction() {
         return filterFunction;
     }
 
+    /**
+     * Original property name: {@code filter}.
+     * <p>
+     * Sets a filter function that is called on each record, returns {@code false} if the record
+     * is to be excluded from the input before rendering or {@code true} otherwise.
+     *
+     * @param filter a filter function that is called on each record
+     * @return a reference to this object
+     */
     public PivotTableModel setFilterFunction(JsFunction filter) {
         this.filterFunction = filter;
         return this;
     }
 
+    /**
+     * @return a sorter function
+     */
     public JsFunction getSortersFunction() {
         return sortersFunction;
     }
 
+    /**
+     * Original property name: {@code sorters}.
+     * <p>
+     * Sets a sorter function that is called with an attribute name and can return
+     * a function which can be used as an argument to {@code Array.sort} for output
+     * purposes. If no function is returned, the default sorting mechanism is a built-in
+     * "natural sort" implementation. Useful for sorting attributes like month names.
+     *
+     * @param sorters a sorter function
+     * @return a reference to this object
+     */
     public PivotTableModel setSortersFunction(JsFunction sorters) {
         this.sortersFunction = sorters;
         return this;
     }
 
+    /**
+     * @return an object that is passed through to renderer as options
+     */
     public RendererOptions getRendererOptions() {
         return rendererOptions;
     }
 
+    /**
+     * Sets an object that is passed through to renderer as options.
+     *
+     * @param rendererOptions an object that is passed through to renderer as options
+     * @return a reference to this object
+     */
     public PivotTableModel setRendererOptions(RendererOptions rendererOptions) {
         this.rendererOptions = rendererOptions;
         return this;
     }
 
+    /**
+     * @return a map whose keys are attribute names and values are arrays of attribute values
+     * @see #getExclusions()
+     */
     public Map<String, List<String>> getInclusions() {
         return inclusions;
     }
 
+    /**
+     * Sets a map whose keys are attribute names and values are arrays of attribute values
+     * which denote records to include in rendering; used to prepopulate the filter menus
+     * that appear on double-click (overrides {@link #exclusions}).
+     * <p>
+     * Applies only when {@code editable=true}.
+     *
+     * @param inclusions a map whose keys are attribute names and values are arrays of attribute values
+     * @return a reference to this object
+     * @see #setExclusions(Map)
+     */
     public PivotTableModel setInclusions(Map<String, List<String>> inclusions) {
         this.inclusions = inclusions;
         return this;
     }
 
+    /**
+     * Sets a list whose values are arrays of attribute values
+     * which denote records to include in rendering; used to prepopulate the filter menus
+     * that appear on double-click (overrides {@link #exclusions}).
+     * <p>
+     * Applies only when {@code editable=true}.
+     *
+     * @param property   a property for which set inclusions
+     * @param inclusions a list of property values
+     * @return a reference to this object
+     * @see #setExclusions(String, List)
+     */
     public PivotTableModel setInclusions(String property, List<String> inclusions) {
         if (this.inclusions == null) {
             this.inclusions = new HashMap<>();
@@ -517,6 +707,18 @@ public class PivotTableModel extends AbstractPivotObject {
         return this;
     }
 
+    /**
+     * Adds property values to a given property
+     * which denote records to include in rendering; used to prepopulate the filter menus
+     * that appear on double-click (overrides {@link #exclusions}).
+     * <p>
+     * Applies only when {@code editable=true}.
+     *
+     * @param property   a property for which set inclusions
+     * @param inclusions an array of property values
+     * @return a reference to this object
+     * @see #addExclusions(String, String...)
+     */
     public PivotTableModel addInclusions(String property, String... inclusions) {
         if (inclusions != null) {
             if (this.inclusions == null) {
@@ -531,15 +733,41 @@ public class PivotTableModel extends AbstractPivotObject {
         return this;
     }
 
+    /**
+     * @return a map whose keys are attribute names and values are arrays of attribute values
+     */
     public Map<String, List<String>> getExclusions() {
         return exclusions;
     }
 
+    /**
+     * Sets a map whose keys are attribute names and values are arrays of attribute values
+     * which denote records to exclude from rendering; used to prepopulate the filter menus
+     * that appear on double-click.
+     * <p>
+     * Applies only when {@code editable=true}.
+     *
+     * @param exclusions a map whose keys are attribute names and values are arrays of attribute values
+     * @return a reference to this object
+     * @see #setInclusions(Map)
+     */
     public PivotTableModel setExclusions(Map<String, List<String>> exclusions) {
         this.exclusions = exclusions;
         return this;
     }
 
+    /**
+     * Sets a list whose values are arrays of attribute values
+     * which denote records to exclude from rendering; used to prepopulate the filter menus
+     * that appear on double-click.
+     * <p>
+     * Applies only when {@code editable=true}.
+     *
+     * @param property   a property for which set exclusions
+     * @param exclusions a map whose keys are attribute names and values are arrays of attribute values
+     * @return a reference to this object
+     * @see #setInclusions(Map)
+     */
     public PivotTableModel setExclusions(String property, List<String> exclusions) {
         if (this.exclusions == null) {
             this.exclusions = new HashMap<>();
@@ -548,6 +776,18 @@ public class PivotTableModel extends AbstractPivotObject {
         return this;
     }
 
+    /**
+     * Adds property values to a given property
+     * which denote records to exclude from rendering; used to prepopulate the filter menus
+     * that appear on double-click.
+     * <p>
+     * Applies only when {@code editable=true}.
+     *
+     * @param property   a property for which set exclusions
+     * @param exclusions a map whose keys are attribute names and values are arrays of attribute values
+     * @return a reference to this object
+     * @see #setInclusions(Map)
+     */
     public PivotTableModel addExclusions(String property, String... exclusions) {
         if (exclusions != null) {
             if (this.exclusions == null) {
@@ -562,19 +802,40 @@ public class PivotTableModel extends AbstractPivotObject {
         return this;
     }
 
+    /**
+     * @return an object that represents derived properties
+     */
     public DerivedProperties getDerivedProperties() {
         return derivedProperties;
     }
 
+    /**
+     * Original property name: {@code derivedAttributes}.
+     * <p>
+     * Sets an object that represents derived properties
+     * (see <a href="https://github.com/nicolaskruchten/pivottable/wiki/Derived-Attributes">documentation</a>).
+     *
+     * @param derivedProperties an object that represents derived properties
+     * @return a reference to this object
+     */
     public PivotTableModel setDerivedProperties(DerivedProperties derivedProperties) {
         this.derivedProperties = derivedProperties;
         return this;
     }
 
+    /**
+     * @return a locale code
+     */
     public String getLocaleCode() {
         return localeCode;
     }
 
+    /**
+     * Sets a locale code
+     *
+     * @param localeCode a locale code
+     * @return a reference to this object
+     */
     public PivotTableModel setLocaleCode(String localeCode) {
         this.localeCode = localeCode;
         return this;

@@ -9,15 +9,21 @@ public class C3RendererOptions extends AbstractPivotObject {
 
     private static final long serialVersionUID = -5273273454206199279L;
 
-    /**
-     * Defines size of chart renderer
-     */
     private Size size;
 
+    /**
+     * @return size of chart renderer
+     */
     public Size getSize() {
         return size;
     }
 
+    /**
+     * Sets size of chart renderer.
+     *
+     * @param size size of chart renderer
+     * @return a reference to this object
+     */
     public C3RendererOptions setSize(Size size) {
         this.size = size;
         return this;

@@ -13,10 +13,19 @@ public class HeatmapRendererOptions extends AbstractPivotObject {
 
     private JsFunction colorScaleGeneratorFunction;
 
+    /**
+     * @return a function that is used in color scale generator of heatmap renderer
+     */
     public JsFunction getColorScaleGeneratorFunction() {
         return colorScaleGeneratorFunction;
     }
 
+    /**
+     * Sets a function that is used in color scale generator of heatmap renderer.
+     *
+     * @param colorScaleGeneratorFunction a function that is used in color scale generator of heatmap renderer
+     * @return a refrence to this object
+     */
     public HeatmapRendererOptions setColorScaleGeneratorFunction(JsFunction colorScaleGeneratorFunction) {
         this.colorScaleGeneratorFunction = colorScaleGeneratorFunction;
         return this;

@@ -29,10 +29,17 @@ public class UnusedPropertiesVertical extends AbstractPivotObject {
         this.boolVal = boolVal;
     }
 
+    /**
+     * @return if the attributes' names' combined length in characters exceeds
+     * this number then the attributes will be shown vertically
+     */
     public Integer getIntVal() {
         return intVal;
     }
 
+    /**
+     * @return {@code true} means always vertical, {@code false} means always horizontal
+     */
     public Boolean getBoolVal() {
         return boolVal;
     }
