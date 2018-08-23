@@ -79,7 +79,7 @@ public class CubaPivotTable extends AbstractComponent {
             if (pivotTable.getRenderers() == null) {
                 pivotTable.setRenderers(new Renderers());
             }
-            pivotTable.getRenderers().setDefaultRenderer(event.getRenderer());
+            pivotTable.getRenderers().setSelectedRenderer(event.getRenderer());
 
             pivotTable.setInclusions(event.getInclusions());
             pivotTable.setExclusions(event.getExclusions());
@@ -92,7 +92,7 @@ public class CubaPivotTable extends AbstractComponent {
             if (pivotTable.getAggregations() == null) {
                 pivotTable.setAggregations(new Aggregations());
             }
-            pivotTable.getAggregations().setDefaultAggregation(hasMode ? aggregation.getMode() : null);
+            pivotTable.getAggregations().setSelectedAggregation(hasMode ? aggregation.getMode() : null);
             if (aggregation != null && Boolean.TRUE.equals(aggregation.getCustom())) {
                 // Due to impossibility to set a custom aggregation as the default
                 // we need to set a custom aggregation as the first one and clear

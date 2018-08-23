@@ -263,9 +263,12 @@ public class PivotTableLoader extends AbstractComponentLoader<PivotTable> {
                 }
             }
 
-            String defaultRenderer = renderersElement.attributeValue("default");
-            if (StringUtils.isNotEmpty(defaultRenderer)) {
-                renderers.setDefaultRenderer(Renderer.valueOf(defaultRenderer));
+            String selectedRenderer = renderersElement.attributeValue("selected");
+            if (StringUtils.isEmpty(selectedRenderer)) {
+                selectedRenderer = renderersElement.attributeValue("default");
+            }
+            if (StringUtils.isNotEmpty(selectedRenderer)) {
+                renderers.setSelectedRenderer(Renderer.valueOf(selectedRenderer));
             }
 
             pivot.setRenderers(renderers);
@@ -322,9 +325,12 @@ public class PivotTableLoader extends AbstractComponentLoader<PivotTable> {
                 aggregations.addAggregations(aggregation);
             }
 
-            String defaultAggregation = aggregationsElement.attributeValue("default");
-            if (StringUtils.isNotEmpty(defaultAggregation)) {
-                aggregations.setDefaultAggregation(AggregationMode.valueOf(defaultAggregation));
+            String selectedAggregation = aggregationsElement.attributeValue("selected");
+            if (StringUtils.isEmpty(selectedAggregation)) {
+                selectedAggregation = aggregationsElement.attributeValue("default");
+            }
+            if (StringUtils.isNotEmpty(selectedAggregation)) {
+                aggregations.setSelectedAggregation(AggregationMode.valueOf(selectedAggregation));
             }
 
             pivot.setAggregations(aggregations);

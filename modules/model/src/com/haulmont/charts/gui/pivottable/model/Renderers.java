@@ -25,7 +25,7 @@ public class Renderers extends AbstractPivotObject {
      * converted to {@code rendererName} - an renderer to
      * prepopulate in dropdown i.e. key to {@code renderers} object.
      */
-    private Renderer defaultRenderer;
+    private Renderer selectedRenderer;
 
     public List<Renderer> getRenderers() {
         return renderers;
@@ -46,12 +46,22 @@ public class Renderers extends AbstractPivotObject {
         return this;
     }
 
-    public Renderer getDefaultRenderer() {
-        return defaultRenderer;
+    public Renderer getSelectedRenderer() {
+        return selectedRenderer;
     }
 
-    public Renderers setDefaultRenderer(Renderer defaultRenderer) {
-        this.defaultRenderer = defaultRenderer;
+    public Renderers setSelectedRenderer(Renderer selectedRenderer) {
+        this.selectedRenderer = selectedRenderer;
         return this;
+    }
+
+    @Deprecated
+    public Renderer getDefaultRenderer() {
+        return getSelectedRenderer();
+    }
+
+    @Deprecated
+    public Renderers setDefaultRenderer(Renderer defaultRenderer) {
+        return setSelectedRenderer(defaultRenderer);
     }
 }

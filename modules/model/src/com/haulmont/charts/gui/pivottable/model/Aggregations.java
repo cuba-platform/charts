@@ -26,7 +26,7 @@ public class Aggregations extends AbstractPivotObject {
      * converted to {@code aggregatorName} - an aggregator to
      * prepopulate in dropdown i.e. key to {@code aggregators} object.
      */
-    private AggregationMode defaultAggregation;
+    private AggregationMode selectedAggregation;
 
     public List<Aggregation> getAggregations() {
         return aggregations;
@@ -47,12 +47,22 @@ public class Aggregations extends AbstractPivotObject {
         return this;
     }
 
-    public AggregationMode getDefaultAggregation() {
-        return defaultAggregation;
+    public AggregationMode getSelectedAggregation() {
+        return selectedAggregation;
     }
 
-    public Aggregations setDefaultAggregation(AggregationMode defaultAggregation) {
-        this.defaultAggregation = defaultAggregation;
+    public Aggregations setSelectedAggregation(AggregationMode selectedAggregation) {
+        this.selectedAggregation = selectedAggregation;
         return this;
+    }
+
+    @Deprecated
+    public AggregationMode getDefaultAggregation() {
+        return getSelectedAggregation();
+    }
+
+    @Deprecated
+    public Aggregations setDefaultAggregation(AggregationMode defaultAggregation) {
+        return setSelectedAggregation(defaultAggregation);
     }
 }

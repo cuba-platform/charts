@@ -67,8 +67,8 @@ public class PivotTableConfig extends JavaScriptObject {
 
         if (config.editable) {
             if (config.renderers) {
-                if (config.renderers.defaultRenderer) {
-                    config.rendererName = localeMapping[config.renderers.defaultRenderer];
+                if (config.renderers.selectedRenderer) {
+                    config.rendererName = localeMapping[config.renderers.selectedRenderer];
                 }
 
                 if (config.renderers.renderers) {
@@ -100,8 +100,8 @@ public class PivotTableConfig extends JavaScriptObject {
 
         if (config.editable) {
             if (config.aggregations) {
-                if (config.aggregations.defaultAggregation) {
-                    config.aggregatorName = localeMapping[config.aggregations.defaultAggregation];
+                if (config.aggregations.selectedAggregation) {
+                    config.aggregatorName = localeMapping[config.aggregations.selectedAggregation];
                 }
 
                 var aggregations = config.aggregations.aggregations;

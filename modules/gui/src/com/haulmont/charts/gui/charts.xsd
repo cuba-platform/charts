@@ -2559,6 +2559,9 @@
                             </xs:element>
                         </xs:sequence>
                         <xs:attribute name="default" type="renderer"/>
+                        <!-- An alias for the 'default' property, with a
+                        more meaningful name corresponding to its purpose -->
+                        <xs:attribute name="selected" type="renderer"/>
                     </xs:complexType>
                 </xs:element>
 
@@ -2596,6 +2599,9 @@
                         </xs:sequence>
 
                         <xs:attribute name="default" type="aggregationMode"/>
+                        <!-- An alias for the 'default' property, with a
+                        more meaningful name corresponding to its purpose -->
+                        <xs:attribute name="selected" type="aggregationMode"/>
                     </xs:complexType>
                 </xs:element>
 
