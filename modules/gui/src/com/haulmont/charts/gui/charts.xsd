@@ -2681,6 +2681,7 @@
             <xs:attributeGroup ref="cuba:hasId"/>
             <xs:attributeGroup ref="cuba:hasSize"/>
             <xs:attributeGroup ref="cuba:hasStyle"/>
+            <xs:attributeGroup ref="cuba:hasCaption"/>
             <xs:attributeGroup ref="cuba:hasVisibility"/>
             <xs:attributeGroup ref="hasEditState"/>
         </xs:complexType>
