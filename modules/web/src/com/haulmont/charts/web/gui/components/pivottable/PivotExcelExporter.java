@@ -90,6 +90,11 @@ public final class PivotExcelExporter {
     public void exportPivotTable(PivotData pivotData, String fileName) {
         Preconditions.checkNotNullArgument(pivotData);
 
+        if (isPivotDataEmpty(pivotData)) {
+            showNoDataWarning();
+            return;
+        }
+
         if (!Strings.isNullOrEmpty(fileName)) {
             this.fileName = fileName;
         } else if (entityMetaClass != null) {
@@ -119,6 +124,11 @@ public final class PivotExcelExporter {
      */
     public void exportPivotTable(PivotData pivotData, String fileName, ExportDisplay display) {
         Preconditions.checkNotNullArgument(pivotData);
+
+        if (isPivotDataEmpty(pivotData)) {
+            showNoDataWarning();
+            return;
+        }
 
         if (display == null) {
             throw new IllegalArgumentException("ExportDisplay is null");
@@ -231,6 +241,17 @@ public final class PivotExcelExporter {
 
         display.show(new ByteArrayDataProvider(out.toByteArray()), fileName + ".xls", ExportFormat.XLS);
     }
+
+    protected void showNoDataWarning() {
+        frame.showNotification(messages.getMainMessage("warningNotification.caption"),
+                Frame.NotificationType.WARNING);
+    }
+
+    protected boolean isPivotDataEmpty(PivotData pivotData) {
+        return pivotData.getDataNumCols() == 0
+                || pivotData.getDataNumRows() == 0;
+    }
+
 
     /**
      * @param pivotData pivot with aggregated data

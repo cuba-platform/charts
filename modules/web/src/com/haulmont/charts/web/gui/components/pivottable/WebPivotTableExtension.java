@@ -99,8 +99,10 @@ public class WebPivotTableExtension implements PivotTableExtension {
         if ((editable == null && !pivotTable.isEditable()) || Boolean.FALSE.equals(editable)) {
             String rendererId = PivotNativeJsonUtils.getRenderer(json);
 
-            if (Renderer.fromId(rendererId) != null) { // check render in native json
-                checkRenderer(Renderer.fromId(rendererId));
+            if (rendererId != null) {
+                if (Renderer.fromId(rendererId) != null) { // check render in native json
+                    checkRenderer(Renderer.fromId(rendererId));
+                }
             } else if (pivotTable.getRenderer() != null) { // check in server configuration
                 checkRenderer(pivotTable.getRenderer());
             }
@@ -109,7 +111,7 @@ public class WebPivotTableExtension implements PivotTableExtension {
 
     protected void checkRenderer(Renderer renderer) {
         if (!supportedRenderers.contains(renderer)) {
-            throw new IllegalStateException("Given renderer is not supported for data export");
+            throw new IllegalStateException(String.format("'%s' renderer is not supported for data export", renderer.name()));
         }
     }
 }

@@ -68,10 +68,13 @@ public class CubaPivotTableExtensionJsOverlay {
 
                     if (rowCell.outerText) {
                         cell.value = rowCell.outerText;
+                    } else if (rowCell.innerText) {
+                        cell.value = rowCell.innerText;
                     }
 
                     if (rowCell.attributes['data-value']) {
-                        if (rowCell.attributes['data-value'].value !== 'null') {
+                        if (rowCell.attributes['data-value'].value !== 'null'
+                                && rowCell.attributes['data-value'].value !== "") {
                             cell.value = rowCell.attributes['data-value'].value;
                         }
                     }
