@@ -11,6 +11,7 @@ import com.haulmont.bali.util.ParamsMap;
 import com.haulmont.charts.gui.data.DataItem;
 import com.haulmont.charts.gui.data.EntityDataItem;
 import com.haulmont.chile.core.model.MetaClass;
+import com.haulmont.chile.core.model.MetaModel;
 import com.haulmont.chile.core.model.MetaProperty;
 import com.haulmont.chile.core.model.MetaPropertyPath;
 import com.haulmont.chile.core.model.utils.InstanceUtils;
@@ -227,12 +228,12 @@ public class ShowPivotAction extends BaseAction implements Action.HasBeforeActio
      * 	"rows": ["localized property"],
      * 	"editable": true,
      * 	"renderers": {
-     * 		"defaultRenderer": "barChart"
+     * 		"selectedRenderer": "barChart"
      * 	},
      * 	"autoSortUnusedProperties": true,
      * 	"aggregationProperties": ["localized property", "localized property"],
      * 	"aggregations": {
-     * 		"defaultAggregation": "count",
+     * 		"selectedAggregation": "count",
      * 		"aggregations": [{
      * 			"id": "647780f0-c6d0-6ade-a63a-542b5c8cdbd5",
      * 			"mode": "count",
@@ -391,9 +392,6 @@ public class ShowPivotAction extends BaseAction implements Action.HasBeforeActio
         }
 
         appliedProperties = removeNonExistingProperties(appliedProperties, metaClass);
-        if (appliedProperties.isEmpty()) {
-            appliedProperties = getAllProperties(metaClass);
-        }
 
         for (String property : appliedProperties) {
             MetaPropertyPath metaPropertyPath = metaClass.getPropertyPath(property);
@@ -403,7 +401,13 @@ public class ShowPivotAction extends BaseAction implements Action.HasBeforeActio
             }
 
             MetaProperty metaProperty = metaPropertyPath.getMetaProperty();
-            if (!isManagedProperty(metaProperty, metaClass)) {
+            MetaModel metaModel = metaProperty.getModel();
+            MetaClass propertyMetaClass;
+
+            propertyMetaClass = metaModel == null ?
+                    metaClass : metaModel.getClass(metaProperty.getDeclaringClass());
+
+            if (!isManagedProperty(metaProperty, propertyMetaClass)) {
                 continue;
             }
 
