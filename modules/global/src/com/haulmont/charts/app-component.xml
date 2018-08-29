@@ -18,7 +18,15 @@
         <artifact name="charts-gui" appJar="true"/>
     </module>
 
-    <module name="web" dependsOn="gui" blocks="web">
+    <module name="model" blocks="web">
+        <artifact name="charts-model" appJar="true"/>
+    </module>
+
+    <module name="web-widgets" blocks="web" dependsOn="model">
+        <artifact name="charts-web-widgets" appJar="true"/>
+    </module>
+
+    <module name="web" dependsOn="gui,web-widgets" blocks="web">
         <artifact name="charts-web" appJar="true"/>
         <artifact name="charts-web-toolkit" classifier="web" ext="zip" configuration="webcontent"
                   skipIfExists="web-toolkit"/>
