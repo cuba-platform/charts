@@ -151,6 +151,21 @@ public class PivotTableLoader extends AbstractComponentLoader<PivotTable> {
         if (StringUtils.isNotBlank(sorters)) {
             pivot.setSortersFunction(new JsFunction(sorters));
         }
+
+        String showUI = element.elementText("showUI");
+        if (StringUtils.isNotBlank(showUI)) {
+            pivot.setShowUI(Boolean.valueOf(showUI));
+        }
+
+        String showRowTotals = element.elementText("showRowTotals");
+        if (StringUtils.isNotBlank(showRowTotals)) {
+            pivot.setShowRowTotals(Boolean.valueOf(showRowTotals));
+        }
+
+        String showColTotals = element.elementText("showColTotals");
+        if (StringUtils.isNotBlank(showColTotals)) {
+            pivot.setShowColTotals(Boolean.valueOf(showColTotals));
+        }
     }
 
     protected void loadProperties(PivotTable pivot, Element element) {

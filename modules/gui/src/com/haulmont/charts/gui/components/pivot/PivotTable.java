@@ -524,6 +524,46 @@ public interface PivotTable extends Component, Component.BelongToFrame, Componen
     String getEmptyDataMessage();
 
     /**
+     * Hides or shows UI elements in the editable pivot table. {@code true} by default.
+     * <br>
+     * Applies only when {@code editable=true}.
+     *
+     * @param showUI {@code true} if UI elements should be shown and {@code false} otherwise
+     */
+    void setShowUI(Boolean showUI);
+
+    /**
+     * @return {@code true} if {@code pivotUI()} should be shown and {@code false} otherwise
+     */
+    Boolean isShowUI();
+
+    /**
+     * Set {@code false} if row totals shouldn't be shown and {@code true} otherwise. Works only for table renderers.
+     * {@code true} by default.
+     *
+     * @param showRowTotals {@code false} if row totals shouldn't be shown and {@code true} otherwise
+     */
+    void setShowRowTotals(Boolean showRowTotals);
+
+    /**
+     * @return {@code false} if row totals shouldn't be shown and {@code true} otherwise
+     */
+    Boolean isRowTotalsShown();
+
+    /**
+     * Set {@code false} if col totals shouldn't be shown and {@code true} otherwise. Works only for table renderers.
+     * {@code true} by default.
+     *
+     * @param showColTotals {@code false} if col totals shouldn't be shown and {@code true} otherwise
+     */
+    void setShowColTotals(Boolean showColTotals);
+
+    /**
+     * @return {@code false} if col totals shouldn't be shown and {@code true} otherwise
+     */
+    Boolean isColTotalsShown();
+
+    /**
      * Sets the message that will be displayed in case of empty data.
      *
      * @param emptyDataMessage the message that will be displayed in case of empty data

@@ -73,6 +73,12 @@ public class PivotTableModel extends AbstractPivotObject {
 
     private String localeCode;                                  // Haulmont API
 
+    private Boolean showUI;                                     // pivotUI()
+
+    private Boolean rowTotals;                                  // pivot() and pivotUI()
+
+    private Boolean colTotals;                                  // pivot() and pivotUI()
+
     @Expose(serialize = false, deserialize = false)
     private DataProvider dataProvider;                          // Haulmont API - object to be serialized as input data
 
@@ -828,6 +834,56 @@ public class PivotTableModel extends AbstractPivotObject {
      */
     public String getLocaleCode() {
         return localeCode;
+    }
+
+    /**
+     * Shows or hides UI. {@code true} by default.
+     * <br>
+     * Applies only when {@code editable=true}.
+     *
+     * @param showUI show UI option
+     */
+    public void setShowUI(Boolean showUI) {
+        this.showUI = showUI;
+    }
+
+    /**
+     * @return whether or not UI is shown
+     */
+    public Boolean isShowUI() {
+        return showUI;
+    }
+
+    /**
+     * Shows or hides row totals. {@code true} by default.
+     *
+     * @param rowTotals row totals option
+     */
+    public void setShowRowTotals(Boolean rowTotals) {
+        this.rowTotals = rowTotals;
+    }
+
+    /**
+     * @return whether or not row totals is shown
+     */
+    public Boolean isShowRowTotals() {
+        return rowTotals;
+    }
+
+    /**
+     * Shows or hides col totals. {@code true} by default.
+     *
+     * @param colTotals col total options
+     */
+    public void setShowColTotals(Boolean colTotals) {
+        this.colTotals = colTotals;
+    }
+
+    /**
+     * @return whether or not col totals is shown
+     */
+    public Boolean isShowColTotals() {
+        return colTotals;
     }
 
     /**

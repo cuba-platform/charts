@@ -29,6 +29,7 @@ public class PivotTableConfig extends JavaScriptObject {
         replaceProperties(optionsObject);
         applyLocaleStrings(optionsObject);
         JsUtils.activateFunctions(optionsObject, true);
+        setShowTotals(optionsObject);
         setOptions(configObject, optionsObject);
         setEmptyDataMessage(configObject, emptyDataMessage);
 
@@ -162,5 +163,31 @@ public class PivotTableConfig extends JavaScriptObject {
             config.rendererOptions = {};
         }
         config.rendererOptions.localeStrings = config.localeStrings;
+    }-*/;
+
+    private static native void setShowTotals(JavaScriptObject config) /*-{
+        var rowTotalsExist = config.hasOwnProperty('rowTotals');
+        var colTotalsExist = config.hasOwnProperty('colTotals');
+
+        if (rowTotalsExist || colTotalsExist) {
+
+            if (!config.rendererOptions) {
+                config.rendererOptions = { table: {} };
+            } else if (!config.rendererOptions.table) {
+                config.rendererOptions.table = {};
+            }
+
+            if (rowTotalsExist) {
+                config.rendererOptions.table.rowTotals = config.rowTotals;
+
+                delete config.rowTotals;
+            }
+
+            if (colTotalsExist) {
+                config.rendererOptions.table.colTotals = config.colTotals;
+
+                delete config.colTotals;
+            }
+        }
     }-*/;
 }

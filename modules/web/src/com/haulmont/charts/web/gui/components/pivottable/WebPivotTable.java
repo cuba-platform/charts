@@ -475,4 +475,34 @@ public class WebPivotTable extends WebAbstractComponent<CubaPivotTable> implemen
             cellClickHandler = null;
         }
     }
+
+    @Override
+    public void setShowUI(Boolean showUI) {
+        component.setShowUI(showUI);
+    }
+
+    @Override
+    public Boolean isShowUI() {
+        return component.isShowUI();
+    }
+
+    @Override
+    public void setShowRowTotals(Boolean showRowTotals) {
+        component.setShowRowTotals(showRowTotals);
+    }
+
+    @Override
+    public Boolean isRowTotalsShown() {
+        return component.isShowRowTotals();
+    }
+
+    @Override
+    public void setShowColTotals(Boolean showColTotals) {
+        component.setShowColTotals(showColTotals);
+    }
+
+    @Override
+    public Boolean isColTotalsShown() {
+        return component.isShowColTotals();
+    }
 }

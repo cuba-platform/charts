@@ -245,6 +245,30 @@ public class CubaPivotTable extends AbstractComponent {
         getState().emptyDataMessage = emptyDataMessage;
     }
 
+    public void setShowUI(Boolean showUI) {
+        pivotTable.setShowUI(showUI);
+    }
+
+    public Boolean isShowUI() {
+        return pivotTable.isShowUI();
+    }
+
+    public void setShowRowTotals(Boolean rowTotals) {
+        pivotTable.setShowRowTotals(rowTotals);
+    }
+
+    public Boolean isShowRowTotals() {
+        return pivotTable.isShowRowTotals();
+    }
+
+    public void setShowColTotals(Boolean colTotals) {
+        pivotTable.setShowColTotals(colTotals);
+    }
+
+    public Boolean isShowColTotals() {
+        return pivotTable.isShowColTotals();
+    }
+
     protected class CubaPivotTableServerRpcImpl implements CubaPivotTableServerRpc {
 
         private static final long serialVersionUID = 4789102026045383363L;

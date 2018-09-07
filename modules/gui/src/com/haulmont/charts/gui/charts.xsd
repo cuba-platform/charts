@@ -2677,6 +2677,9 @@
             <xs:attribute name="autoSortUnusedProperties" type="xs:boolean"/>
             <xs:attribute name="unusedPropertiesVertical" type="xs:string"/>
             <xs:attribute name="emptyDataMessage" type="cuba:resourceString"/>
+            <xs:attribute name="showUI" type="xs:boolean"/>
+            <xs:attribute name="showRowTotals" type="xs:boolean"/>
+            <xs:attribute name="showColTotals" type="xs:boolean"/>
 
             <xs:attributeGroup ref="cuba:hasId"/>
             <xs:attributeGroup ref="cuba:hasSize"/>
