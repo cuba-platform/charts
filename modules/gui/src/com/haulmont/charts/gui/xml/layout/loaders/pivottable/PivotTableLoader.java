@@ -184,7 +184,7 @@ public class PivotTableLoader extends AbstractComponentLoader<PivotTable> {
                     } else {
                         if (pivot.getDatasource() != null) {
                             MetaClass metaClass = pivot.getDatasource().getMetaClass();
-                            localizedName = messageTools.getPropertyCaption(metaClass, name);
+                            localizedName = getMessageTools().getPropertyCaption(metaClass, name);
                         } else {
                             localizedName = name;
                         }

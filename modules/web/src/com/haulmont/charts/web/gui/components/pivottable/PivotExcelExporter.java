@@ -5,8 +5,8 @@
 
 package com.haulmont.charts.web.gui.components.pivottable;
 
-import com.haulmont.bali.util.Preconditions;
 import com.google.common.base.Strings;
+import com.haulmont.bali.util.Preconditions;
 import com.haulmont.charts.gui.components.pivot.PivotTable;
 import com.haulmont.charts.gui.data.DataItem;
 import com.haulmont.charts.gui.data.DataProvider;
@@ -33,7 +33,7 @@ import java.io.IOException;
 import java.util.List;
 
 /**
- * Exports {@link PivotData} to Xls.
+ * Exports {@link PivotData} to XLS.
  */
 public final class PivotExcelExporter {
 
@@ -222,7 +222,7 @@ public final class PivotExcelExporter {
     }
 
     protected void showWarnNotification() {
-        frame.showNotification(
+        frame.getWindowManager().showNotification(
                 messages.getMainMessage("actions.warningExport.title"),
                 messages.getMainMessage("actions.warningExport.message"),
                 Frame.NotificationType.WARNING);
@@ -243,7 +243,8 @@ public final class PivotExcelExporter {
     }
 
     protected void showNoDataWarning() {
-        frame.showNotification(messages.getMainMessage("warningNotification.caption"),
+        frame.getWindowManager().showNotification(
+                messages.getMainMessage("warningNotification.caption"),
                 Frame.NotificationType.WARNING);
     }
 

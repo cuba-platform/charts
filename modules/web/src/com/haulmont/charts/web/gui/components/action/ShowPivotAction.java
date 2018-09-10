@@ -20,6 +20,7 @@ import com.haulmont.cuba.core.global.*;
 import com.haulmont.cuba.gui.WindowManager;
 import com.haulmont.cuba.gui.components.*;
 import com.haulmont.cuba.gui.components.actions.BaseAction;
+import com.haulmont.cuba.gui.config.WindowConfig;
 import com.haulmont.cuba.security.entity.EntityAttrAccess;
 import org.springframework.context.annotation.Scope;
 
@@ -115,6 +116,8 @@ public class ShowPivotAction extends BaseAction implements Action.HasBeforeActio
                 return;
         }
 
+        Messages messages = AppBeans.get(Messages.NAME);
+
         if (target.getSelected().isEmpty()
                 || target.getDatasource().size() <= 1) {
             showPivotTable(ALL_ROWS);
@@ -129,7 +132,8 @@ public class ShowPivotAction extends BaseAction implements Action.HasBeforeActio
                     new DialogAction(DialogAction.Type.CANCEL)
             };
 
-            target.getFrame().showOptionDialog(
+            WindowManager wm = target.getFrame().getWindowManager();
+            wm.showOptionDialog(
                     messages.getMainMessage("actions.showPivotAction.dialogTitle"),
                     messages.getMainMessage("actions.showPivotAction.dialogMessage"),
                     Frame.MessageType.CONFIRMATION,
@@ -149,7 +153,10 @@ public class ShowPivotAction extends BaseAction implements Action.HasBeforeActio
         paramsMap.pair("properties", getPropertiesWithLocale());
         paramsMap.pair("nativeJson", nativeJson);
 
-        target.getFrame().openWindow(SCREEN_ID, WindowManager.OpenType.NEW_TAB, paramsMap.create());
+        WindowManager wm = target.getFrame().getWindowManager();
+        WindowConfig windowConfig = AppBeans.get(WindowConfig.NAME);
+
+        wm.openWindow(windowConfig.getWindowInfo(SCREEN_ID), WindowManager.OpenType.NEW_TAB, paramsMap.create());
     }
 
     /**
@@ -411,6 +418,7 @@ public class ShowPivotAction extends BaseAction implements Action.HasBeforeActio
                 continue;
             }
 
+            Messages messages = AppBeans.get(Messages.NAME);
             resultMap.put(property, messages.getTools().getPropertyCaption(metaProperty));
         }
 
