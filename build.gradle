@@ -236,14 +236,14 @@ configure(chartsWebToolkitModule) {
         from sourceSets.main.allJava
     }
 
-    task webArchive(dependsOn: buildWidgetSet, type: Zip) {
+    task webArchive(dependsOn: buildWidgetSet, type: Jar) {
         from file("$buildDir/web")
-        classifier = 'web'
+        classifier = 'client'
     }
 
-    task webDebugArchive(dependsOn: buildDebugWidgetSet, type: Zip) {
+    task webDebugArchive(dependsOn: buildDebugWidgetSet, type: Jar) {
         from file("$buildDir/web-debug")
-        classifier = 'debug'
+        classifier = 'debug-client'
     }
 
     artifacts {
