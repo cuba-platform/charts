@@ -13,7 +13,7 @@ public class RadarChartLoader extends CoordinateChartLoader<RadarChart> {
 
     @Override
     public void createComponent() {
-        resultComponent = factory.createComponent(RadarChart.class);
+        resultComponent = factory.create(RadarChart.NAME);
         loadId(resultComponent, element);
     }
 

@@ -15,7 +15,7 @@ import org.dom4j.Element;
 public class CustomChartLoader extends AbstractComponentLoader<CustomChart> {
     @Override
     public void createComponent() {
-        resultComponent = factory.createComponent(CustomChart.class);
+        resultComponent = factory.create(CustomChart.NAME);
         loadId(resultComponent, element);
     }
 

@@ -15,7 +15,7 @@ public class PieChartLoader extends SlicedChartLoader<PieChart> {
 
     @Override
     public void createComponent() {
-        resultComponent = factory.createComponent(PieChart.class);
+        resultComponent = factory.create(PieChart.NAME);
         loadId(resultComponent, element);
     }
 

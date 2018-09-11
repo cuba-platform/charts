@@ -6,7 +6,6 @@
 package com.haulmont.charts.gui.xml.layout.loaders.charts;
 
 import com.google.common.base.Splitter;
-import com.haulmont.bali.util.Dom4j;
 import com.haulmont.charts.gui.amcharts.model.DatePeriod;
 import com.haulmont.charts.gui.amcharts.model.Graph;
 import com.haulmont.charts.gui.amcharts.model.charts.ChartModel;
@@ -23,7 +22,7 @@ public class GanttChartLoader extends AbstractSerialChartLoader<GanttChart> {
 
     @Override
     public void createComponent() {
-        resultComponent = factory.createComponent(GanttChart.class);
+        resultComponent = factory.create(GanttChart.class);
         loadId(resultComponent, element);
     }
 
@@ -37,7 +36,7 @@ public class GanttChartLoader extends AbstractSerialChartLoader<GanttChart> {
                 Element itemElement = (Element) item;
                 MapDataItem dataItem = new MapDataItem();
 
-                for (Element property : Dom4j.elements(itemElement, "property")) {
+                for (Element property : itemElement.elements("property")) {
                     if (property.elements().size() > 0) {
                         List<MapDataItem> innerItems = new ArrayList<>();
 
@@ -45,7 +44,7 @@ public class GanttChartLoader extends AbstractSerialChartLoader<GanttChart> {
                             Element innerItemElement = (Element) innerItem;
                             MapDataItem innerDataItem = new MapDataItem();
 
-                            for (Element innerProperty : Dom4j.elements(innerItemElement, "property")) {
+                            for (Element innerProperty : innerItemElement.elements("property")) {
                                 innerDataItem = loadDataItem(innerProperty, innerDataItem);
                             }
 

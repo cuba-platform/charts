@@ -15,7 +15,7 @@ public class FunnelChartLoader extends SlicedChartLoader<FunnelChart> {
 
     @Override
     public void createComponent() {
-        resultComponent = factory.createComponent(FunnelChart.class);
+        resultComponent = factory.create(FunnelChart.NAME);
         loadId(resultComponent, element);
     }
 

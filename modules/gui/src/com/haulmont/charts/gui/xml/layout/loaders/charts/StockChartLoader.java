@@ -30,7 +30,7 @@ public class StockChartLoader extends ChartModelLoader<StockChart> {
 
     @Override
     public void createComponent() {
-        resultComponent = factory.createComponent(StockChart.class);
+        resultComponent = factory.create(StockChart.NAME);
         loadId(resultComponent, element);
     }
 

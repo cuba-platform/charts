@@ -12,7 +12,7 @@ public class SerialChartLoader extends AbstractSerialChartLoader<SerialChart> {
 
     @Override
     public void createComponent() {
-        resultComponent = factory.createComponent(SerialChart.class);
+        resultComponent = factory.create(SerialChart.NAME);
         loadId(resultComponent, element);
     }
 

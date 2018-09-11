@@ -12,7 +12,7 @@ import org.dom4j.Element;
 public class XYChartLoader extends RectangularChartLoader<XYChart> {
     @Override
     public void createComponent() {
-        resultComponent = factory.createComponent(XYChart.class);
+        resultComponent = factory.create(XYChart.NAME);
         loadId(resultComponent, element);
     }
 

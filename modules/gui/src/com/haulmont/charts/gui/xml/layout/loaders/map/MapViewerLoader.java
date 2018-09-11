@@ -14,7 +14,7 @@ public class MapViewerLoader extends AbstractComponentLoader<MapViewer> {
 
     @Override
     public void createComponent() {
-        resultComponent = (MapViewer) factory.createComponent(MapViewer.NAME);
+        resultComponent = factory.create(MapViewer.NAME);
         loadId(resultComponent, element);
     }
 

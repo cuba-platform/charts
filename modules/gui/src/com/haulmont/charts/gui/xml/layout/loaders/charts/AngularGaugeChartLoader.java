@@ -20,7 +20,7 @@ public class AngularGaugeChartLoader extends AbstractChartLoader<AngularGaugeCha
 
     @Override
     public void createComponent() {
-        resultComponent = factory.createComponent(AngularGaugeChart.class);
+        resultComponent = factory.create(AngularGaugeChart.NAME);
         loadId(resultComponent, element);
     }
 

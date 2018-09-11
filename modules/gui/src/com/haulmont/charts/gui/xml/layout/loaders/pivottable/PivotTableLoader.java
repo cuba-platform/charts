@@ -29,7 +29,7 @@ public class PivotTableLoader extends AbstractComponentLoader<PivotTable> {
 
     @Override
     public void createComponent() {
-        resultComponent = factory.createComponent(PivotTable.class);
+        resultComponent = factory.create(PivotTable.NAME);
         loadId(resultComponent, element);
     }
 
