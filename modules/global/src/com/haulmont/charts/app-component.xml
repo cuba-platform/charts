@@ -28,8 +28,7 @@
 
     <module name="web" dependsOn="gui,web-widgets" blocks="web">
         <artifact name="charts-web" appJar="true"/>
-        <artifact name="charts-web-toolkit" classifier="web" ext="zip" configuration="webcontent"
-                  skipIfExists="web-toolkit"/>
+        <artifact name="charts-web-toolkit" appJar="true" classifier="client" ext="jar" skipIfExists="web-toolkit"/>
 
         <property name="cuba.springContextConfig" value="+charts-web-spring.xml"/>
         <property name="cuba.mainMessagePack" value="+com.haulmont.charts.web"/>
