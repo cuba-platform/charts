@@ -36,7 +36,6 @@ dependencies {
     bom("com.haulmont.cuba:cuba-global:$cubaVersion")
 }
 
-apply(plugin: 'idea')
 apply(plugin: 'cuba')
 
 bom.load file('modules/global/src/com/haulmont/charts/bom.properties')
@@ -58,7 +57,7 @@ Use is subject to license terms, see http://www.cuba-platform.com/commercial-sof
 def chartsGlobalModule = project(':charts-global')
 def chartsGuiModule = project(':charts-gui')
 def chartsWebModule = project(':charts-web')
-def chartsModel = project(':charts-model')
+def chartsModelModule = project(':charts-model')
 def chartsWebWidgetsModule = project(':charts-web-widgets')
 def chartsWebToolkitModule = project(':charts-web-toolkit')
 
@@ -72,7 +71,6 @@ def cubaWebWidgets = [group: 'com.haulmont.cuba', name: 'cuba-web-widgets', vers
 
 configure([chartsGlobalModule, chartsGuiModule, chartsWebModule]) {
     apply(plugin: 'java')
-    apply(plugin: 'idea')
     apply(plugin: 'maven')
     apply(plugin: 'findbugs')
     apply(plugin: 'pmd')
@@ -171,9 +169,8 @@ configure([chartsGlobalModule, chartsGuiModule, chartsWebModule]) {
     }
 }
 
-configure([chartsWebWidgetsModule, chartsWebToolkitModule, chartsModel]) {
+configure([chartsWebWidgetsModule, chartsWebToolkitModule, chartsModelModule]) {
     apply(plugin: 'java')
-    apply(plugin: 'idea')
     apply(plugin: 'maven')
     apply(plugin: 'cuba')
 
@@ -205,7 +202,7 @@ configure(chartsGuiModule) {
     dependencies {
         compile(cubaGui)
         compile(chartsGlobalModule)
-        compile(chartsModel)
+        compile(chartsModelModule)
 
         compile(bom['com.google.code.gson:gson'])
     }
@@ -254,7 +251,7 @@ configure(chartsWebToolkitModule) {
     }
 }
 
-configure(chartsModel) {
+configure(chartsModelModule) {
     dependencies {
         compile(bom['com.google.code.gson:gson'])
         compile(bom['com.google.code.findbugs:jsr305'])
@@ -265,7 +262,7 @@ configure(chartsModel) {
 
 configure(chartsWebWidgetsModule) {
     dependencies {
-        compile(chartsModel)
+        compile(chartsModelModule)
         compile(cubaWebWidgets)
 
         compile(bom['org.webjars.bower:pivottable'])
