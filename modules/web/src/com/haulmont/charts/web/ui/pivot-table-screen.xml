@@ -21,7 +21,7 @@
     <layout expand="pivotTable"
             spacing="true">
         <button id="exportExcel"
-                caption="msg://showPivotScreen.button.exportExcel"
+                caption="msg://exportExcel"
                 icon="icons/excel.png"
                 invoke="exportExcel"/>
         <chart:pivotTable id="pivotTable"

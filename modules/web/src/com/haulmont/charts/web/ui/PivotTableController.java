@@ -18,8 +18,10 @@ package com.haulmont.charts.web.ui;
 import com.google.common.base.Strings;
 import com.google.gson.*;
 import com.haulmont.charts.gui.components.pivot.PivotTable;
+import com.haulmont.charts.gui.components.pivot.PivotTableExtension;
 import com.haulmont.charts.gui.model.JsFunction;
 import com.haulmont.charts.gui.pivottable.model.*;
+import com.haulmont.charts.web.gui.components.pivottable.WebPivotTableExtension;
 import com.haulmont.cuba.core.entity.KeyValueEntity;
 import com.haulmont.cuba.gui.WindowParam;
 import com.haulmont.cuba.gui.components.AbstractFrame;
@@ -42,6 +44,8 @@ public class PivotTableController extends AbstractFrame {
     protected PivotTable pivotTable;
 
     protected PivotTableDescription pivotTableDescription;
+
+    protected PivotTableExtension pivotTableExtension;
 
     @WindowParam(required = true)
     protected String pivotTableJson;
@@ -75,6 +79,9 @@ public class PivotTableController extends AbstractFrame {
             pivotTable.setHiddenProperties(pivotTableDescription.hiddenProperties);
         }
         pivotTableDs.refresh(Collections.singletonMap(PivotTableDatasource.VALUES_PARAM, values));
+
+        pivotTableExtension = new WebPivotTableExtension(pivotTable);
+        pivotTableExtension.setFileName(getMessage("pivotTableFileName"));
     }
 
     protected PivotTableDescription fromJsonString(String json) {
@@ -166,6 +173,10 @@ public class PivotTableController extends AbstractFrame {
                             e -> new JsFunction(e.function), (e1, e2) -> e1)));
         }
         return derivedProperties;
+    }
+
+    public void exportExcel() {
+        pivotTableExtension.exportTableToXls();
     }
 
     @SuppressWarnings("WeakerAccess")
