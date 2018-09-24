@@ -6,10 +6,9 @@
 
 <xs:schema targetNamespace="http://schemas.haulmont.com/charts/charts.xsd"
            xmlns:xs="http://www.w3.org/2001/XMLSchema"
-           xmlns:cuba="http://schemas.haulmont.com/cuba/window.xsd"
+           xmlns:layout="http://schemas.haulmont.com/cuba/screen/layout.xsd"
            xmlns="http://schemas.haulmont.com/charts/charts.xsd"
-           elementFormDefault="qualified"
-           attributeFormDefault="unqualified">
+           elementFormDefault="qualified">
 
     <!-- Enums -->
 
@@ -511,7 +510,7 @@
         <xs:attribute name="format" type="exportFormat"/>
         <xs:attribute name="label" type="xs:string"/>
         <xs:attribute name="title" type="xs:string"/>
-        <xs:attribute name="fileName" type="cuba:resourceString"/>
+        <xs:attribute name="fileName" type="layout:resourceString"/>
         <xs:attribute name="pageOrientation" type="pageOrientation"/>
         <xs:attribute name="pageSize" type="pageSize"/>
         <xs:attribute name="pageOrigin" type="xs:boolean"/>
@@ -598,8 +597,8 @@
 
     <xs:complexType name="amExport">
         <xs:all>
-            <xs:element name="libs" type="exportLibs" minOccurs="0" maxOccurs="1"/>
-            <xs:element name="menu" minOccurs="0" maxOccurs="1">
+            <xs:element name="libs" type="exportLibs" minOccurs="0"/>
+            <xs:element name="menu" minOccurs="0">
                 <xs:complexType>
                     <xs:sequence>
                         <xs:element name="item" type="exportMenuItem" minOccurs="0" maxOccurs="unbounded"/>
@@ -622,14 +621,14 @@
 
     <xs:complexType name="gaugeAxis">
         <xs:all>
-            <xs:element name="bands" minOccurs="1" maxOccurs="1">
+            <xs:element name="bands">
                 <xs:complexType>
                     <xs:sequence>
                         <xs:element name="band" type="gaugeBand" minOccurs="0" maxOccurs="unbounded"/>
                     </xs:sequence>
                 </xs:complexType>
             </xs:element>
-            <xs:element name="labelFunction" minOccurs="0" maxOccurs="1"/>
+            <xs:element name="labelFunction" minOccurs="0"/>
         </xs:all>
 
         <xs:attribute name="axisAlpha" type="xs:double"/>
@@ -748,17 +747,17 @@
 
     <xs:complexType name="abstractAxis" abstract="true">
         <xs:all>
-            <xs:element name="balloon" minOccurs="0" maxOccurs="1" type="balloon"/>
-            <xs:element name="guides" minOccurs="0" maxOccurs="1">
+            <xs:element name="balloon" minOccurs="0" type="balloon"/>
+            <xs:element name="guides" minOccurs="0">
                 <xs:complexType>
-                    <xs:sequence minOccurs="0" maxOccurs="1">
+                    <xs:sequence minOccurs="0">
                         <xs:element name="guide" minOccurs="0" maxOccurs="unbounded" type="guide"/>
                     </xs:sequence>
                 </xs:complexType>
             </xs:element>
-            <xs:element name="dateFormats" minOccurs="0" maxOccurs="1">
+            <xs:element name="dateFormats" minOccurs="0">
                 <xs:complexType>
-                    <xs:sequence minOccurs="0" maxOccurs="1">
+                    <xs:sequence minOccurs="0">
                         <xs:element name="dateFormat" minOccurs="0" maxOccurs="unbounded" type="dateFormat"/>
                     </xs:sequence>
                 </xs:complexType>
@@ -813,7 +812,7 @@
         <xs:complexContent>
             <xs:extension base="abstractAxis">
                 <xs:all>
-                    <xs:element name="categoryFunction" minOccurs="0" maxOccurs="1"/>
+                    <xs:element name="categoryFunction" minOccurs="0"/>
                 </xs:all>
 
                 <xs:attribute name="autoWrap" type="xs:boolean"/>
@@ -855,9 +854,9 @@
 
     <xs:complexType name="responsive">
         <xs:all>
-            <xs:element name="rules" maxOccurs="1">
+            <xs:element name="rules">
                 <xs:complexType>
-                    <xs:sequence minOccurs="0" maxOccurs="1">
+                    <xs:sequence minOccurs="0">
                         <xs:element name="rule" minOccurs="0" maxOccurs="unbounded">
                             <xs:complexType mixed="true">
                                 <xs:attribute name="minWidth" type="xs:integer"/>
@@ -876,17 +875,17 @@
 
     <xs:complexType name="legend">
         <xs:all>
-            <xs:element name="data" minOccurs="0" maxOccurs="1">
+            <xs:element name="data" minOccurs="0">
                 <xs:complexType>
-                    <xs:sequence minOccurs="0" maxOccurs="1">
+                    <xs:sequence minOccurs="0">
                         <xs:element name="item" minOccurs="0" maxOccurs="unbounded" type="legendItem"/>
                     </xs:sequence>
                 </xs:complexType>
             </xs:element>
-            <xs:element name="valueFunction" minOccurs="0" maxOccurs="1"/>
+            <xs:element name="valueFunction" minOccurs="0"/>
         </xs:all>
 
-        <xs:attribute name="accessibleLabel" type="cuba:resourceString"/>
+        <xs:attribute name="accessibleLabel" type="layout:resourceString"/>
         <xs:attribute name="align" type="hAlign"/>
         <xs:attribute name="autoMargins" type="xs:boolean"/>
         <xs:attribute name="backgroundAlpha" type="xs:double"/>
@@ -976,8 +975,8 @@
         <xs:complexContent>
             <xs:extension base="abstractAxis">
                 <xs:all>
-                    <xs:element name="labelFunction" minOccurs="0" maxOccurs="1"/>
-                    <xs:element name="balloonTextFunction" minOccurs="0" maxOccurs="1"/>
+                    <xs:element name="labelFunction" minOccurs="0"/>
+                    <xs:element name="balloonTextFunction" minOccurs="0"/>
                 </xs:all>
 
                 <xs:attribute name="id" type="xs:string"/>
@@ -1024,7 +1023,7 @@
 
     <xs:complexType name="chartCursor">
         <xs:all>
-            <xs:element name="categoryBalloonFunction" minOccurs="0" maxOccurs="1"/>
+            <xs:element name="categoryBalloonFunction" minOccurs="0"/>
         </xs:all>
 
         <xs:attribute name="adjustment" type="xs:integer"/>
@@ -1087,7 +1086,7 @@
     </xs:complexType>
 
     <xs:complexType name="chartScrollbar">
-        <xs:attribute name="accessibleLabel" type="cuba:resourceString"/>
+        <xs:attribute name="accessibleLabel" type="layout:resourceString"/>
         <xs:attribute name="autoGridCount" type="xs:boolean"/>
         <xs:attribute name="backgroundAlpha" type="xs:double"/>
         <xs:attribute name="backgroundColor" type="color"/>
@@ -1134,14 +1133,14 @@
 
     <xs:complexType name="chartGraph">
         <xs:all>
-            <xs:element name="balloon" minOccurs="0" maxOccurs="1" type="balloon"/>
-            <xs:element name="balloonFunction" minOccurs="0" maxOccurs="1"/>
-            <xs:element name="pattern" minOccurs="0" maxOccurs="1" type="pattern"/>
-            <xs:element name="labelFunction" minOccurs="0" maxOccurs="1"/>
-            <xs:element name="legendColorFunction" minOccurs="0" maxOccurs="1"/>
-            <xs:element name="fillColors" minOccurs="0" maxOccurs="1">
+            <xs:element name="balloon" minOccurs="0" type="balloon"/>
+            <xs:element name="balloonFunction" minOccurs="0"/>
+            <xs:element name="pattern" minOccurs="0" type="pattern"/>
+            <xs:element name="labelFunction" minOccurs="0"/>
+            <xs:element name="legendColorFunction" minOccurs="0"/>
+            <xs:element name="fillColors" minOccurs="0">
                 <xs:complexType>
-                    <xs:sequence minOccurs="0" maxOccurs="1">
+                    <xs:sequence minOccurs="0">
                         <xs:element name="color" minOccurs="0" maxOccurs="unbounded">
                             <xs:complexType>
                                 <xs:attribute name="value" type="color"/>
@@ -1150,9 +1149,9 @@
                     </xs:sequence>
                 </xs:complexType>
             </xs:element>
-            <xs:element name="negativeFillColors" minOccurs="0" maxOccurs="1">
+            <xs:element name="negativeFillColors" minOccurs="0">
                 <xs:complexType>
-                    <xs:sequence minOccurs="0" maxOccurs="1">
+                    <xs:sequence minOccurs="0">
                         <xs:element name="color" minOccurs="0" maxOccurs="unbounded">
                             <xs:complexType>
                                 <xs:attribute name="value" type="color"/>
@@ -1167,7 +1166,7 @@
         <xs:attribute name="id" type="xs:string"/>
         <xs:attribute name="type" type="chartGraphType"/>
 
-        <xs:attribute name="accessibleLabel" type="cuba:resourceString"/>
+        <xs:attribute name="accessibleLabel" type="layout:resourceString"/>
         <xs:attribute name="alphaField" type="xs:string"/>
         <xs:attribute name="animationPlayed" type="xs:boolean"/>
         <xs:attribute name="balloonColor" type="color"/>
@@ -1277,27 +1276,27 @@
 
     <xs:complexType name="abstractChart" abstract="true">
         <xs:complexContent>
-            <xs:extension base="cuba:baseComponent">
+            <xs:extension base="layout:baseComponent">
                 <xs:all>
-                    <xs:element name="allLabels" minOccurs="0" maxOccurs="1">
+                    <xs:element name="allLabels" minOccurs="0">
                         <xs:complexType>
-                            <xs:sequence minOccurs="0" maxOccurs="1">
+                            <xs:sequence minOccurs="0">
                                 <xs:element name="label" minOccurs="0" maxOccurs="unbounded" type="label"/>
                             </xs:sequence>
                         </xs:complexType>
                     </xs:element>
-                    <xs:element name="export" minOccurs="0" maxOccurs="1" type="amExport"/>
-                    <xs:element name="titles" minOccurs="0" maxOccurs="1">
+                    <xs:element name="export" minOccurs="0" type="amExport"/>
+                    <xs:element name="titles" minOccurs="0">
                         <xs:complexType>
-                            <xs:sequence minOccurs="0" maxOccurs="1">
+                            <xs:sequence minOccurs="0">
                                 <xs:element name="title" minOccurs="0" maxOccurs="unbounded" type="title"/>
                             </xs:sequence>
                         </xs:complexType>
                     </xs:element>
-                    <xs:element name="balloon" minOccurs="0" maxOccurs="1" type="balloon"/>
-                    <xs:element name="legend" minOccurs="0" maxOccurs="1" type="legend"/>
-                    <xs:element name="responsive" minOccurs="0" maxOccurs="1" type="responsive"/>
-                    <xs:element name="nativeJson" minOccurs="0" maxOccurs="1"/>
+                    <xs:element name="balloon" minOccurs="0" type="balloon"/>
+                    <xs:element name="legend" minOccurs="0" type="legend"/>
+                    <xs:element name="responsive" minOccurs="0" type="responsive"/>
+                    <xs:element name="nativeJson" minOccurs="0"/>
                 </xs:all>
 
                 <xs:attribute name="accessible" type="xs:boolean"/>
@@ -1347,9 +1346,9 @@
         <xs:complexContent>
             <xs:extension base="abstractChart">
                 <xs:all>
-                    <xs:element name="colors" minOccurs="0" maxOccurs="1">
+                    <xs:element name="colors" minOccurs="0">
                         <xs:complexType>
-                            <xs:sequence minOccurs="0" maxOccurs="1">
+                            <xs:sequence minOccurs="0">
                                 <xs:element name="color" minOccurs="0" maxOccurs="unbounded">
                                     <xs:complexType>
                                         <xs:attribute name="value" type="color"/>
@@ -1358,28 +1357,28 @@
                             </xs:sequence>
                         </xs:complexType>
                     </xs:element>
-                    <xs:element name="graphs" minOccurs="0" maxOccurs="1">
+                    <xs:element name="graphs" minOccurs="0">
                         <xs:complexType>
-                            <xs:sequence minOccurs="0" maxOccurs="1">
+                            <xs:sequence minOccurs="0">
                                 <xs:element name="graph" minOccurs="0" maxOccurs="unbounded" type="chartGraph"/>
                             </xs:sequence>
                         </xs:complexType>
                     </xs:element>
-                    <xs:element name="guides" minOccurs="0" maxOccurs="1">
+                    <xs:element name="guides" minOccurs="0">
                         <xs:complexType>
-                            <xs:sequence minOccurs="0" maxOccurs="1">
+                            <xs:sequence minOccurs="0">
                                 <xs:element name="guide" minOccurs="0" maxOccurs="unbounded" type="guide"/>
                             </xs:sequence>
                         </xs:complexType>
                     </xs:element>
-                    <xs:element name="valueAxes" minOccurs="0" maxOccurs="1">
+                    <xs:element name="valueAxes" minOccurs="0">
                         <xs:complexType>
-                            <xs:sequence minOccurs="0" maxOccurs="1">
+                            <xs:sequence minOccurs="0">
                                 <xs:element name="axis" minOccurs="0" maxOccurs="unbounded" type="valueAxis"/>
                             </xs:sequence>
                         </xs:complexType>
                     </xs:element>
-                    <xs:element name="data" minOccurs="0" maxOccurs="1" type="dataSetValues"/>
+                    <xs:element name="data" minOccurs="0" type="dataSetValues"/>
                 </xs:all>
 
                 <xs:attributeGroup ref="hasStartEffect"/>
@@ -1395,16 +1394,16 @@
         <xs:complexContent>
             <xs:extension base="coordinateChart">
                 <xs:all>
-                    <xs:element name="trendLines" minOccurs="0" maxOccurs="1">
+                    <xs:element name="trendLines" minOccurs="0">
                         <xs:complexType>
-                            <xs:sequence minOccurs="0" maxOccurs="1">
+                            <xs:sequence minOccurs="0">
                                 <xs:element name="trendLine" minOccurs="0" maxOccurs="unbounded" type="trendLine"/>
                             </xs:sequence>
                         </xs:complexType>
                     </xs:element>
-                    <xs:element name="plotAreaFillColors" minOccurs="0" maxOccurs="1">
+                    <xs:element name="plotAreaFillColors" minOccurs="0">
                         <xs:complexType>
-                            <xs:sequence minOccurs="0" maxOccurs="1">
+                            <xs:sequence minOccurs="0">
                                 <xs:element name="color" minOccurs="0" maxOccurs="unbounded">
                                     <xs:complexType>
                                         <xs:attribute name="value" type="color"/>
@@ -1413,8 +1412,8 @@
                             </xs:sequence>
                         </xs:complexType>
                     </xs:element>
-                    <xs:element name="chartCursor" minOccurs="0" maxOccurs="1" type="chartCursor"/>
-                    <xs:element name="chartScrollbar" minOccurs="0" maxOccurs="1" type="chartScrollbar"/>
+                    <xs:element name="chartCursor" minOccurs="0" type="chartCursor"/>
+                    <xs:element name="chartScrollbar" minOccurs="0" type="chartScrollbar"/>
                 </xs:all>
 
                 <xs:attribute name="angle" type="xs:integer"/>
@@ -1450,9 +1449,9 @@
         <xs:complexContent>
             <xs:extension base="abstractChart">
                 <xs:all>
-                    <xs:element name="colors" minOccurs="0" maxOccurs="1">
+                    <xs:element name="colors" minOccurs="0">
                         <xs:complexType>
-                            <xs:sequence minOccurs="0" maxOccurs="1">
+                            <xs:sequence minOccurs="0">
                                 <xs:element name="color" minOccurs="0" maxOccurs="unbounded">
                                     <xs:complexType>
                                         <xs:attribute name="value" type="color"/>
@@ -1461,9 +1460,9 @@
                             </xs:sequence>
                         </xs:complexType>
                     </xs:element>
-                    <xs:element name="gradientRatios" minOccurs="0" maxOccurs="1">
+                    <xs:element name="gradientRatios" minOccurs="0">
                         <xs:complexType>
-                            <xs:sequence minOccurs="0" maxOccurs="1">
+                            <xs:sequence minOccurs="0">
                                 <xs:element name="ratio" minOccurs="0" maxOccurs="unbounded">
                                     <xs:complexType>
                                         <xs:attribute name="value" type="xs:double"/>
@@ -1472,11 +1471,11 @@
                             </xs:sequence>
                         </xs:complexType>
                     </xs:element>
-                    <xs:element name="labelFunction" minOccurs="0" maxOccurs="1"/>
-                    <xs:element name="data" minOccurs="0" maxOccurs="1" type="dataSetValues"/>
+                    <xs:element name="labelFunction" minOccurs="0"/>
+                    <xs:element name="data" minOccurs="0" type="dataSetValues"/>
                 </xs:all>
 
-                <xs:attribute name="accessibleLabel" type="cuba:resourceString"/>
+                <xs:attribute name="accessibleLabel" type="layout:resourceString"/>
                 <xs:attribute name="alpha" type="xs:double"/>
                 <xs:attribute name="alphaField" type="xs:double"/>
                 <xs:attribute name="baseColor" type="color"/>
@@ -1527,8 +1526,8 @@
         <xs:complexContent>
             <xs:extension base="rectangularChart">
                 <xs:all>
-                    <xs:element name="categoryAxis" minOccurs="0" maxOccurs="1" type="categoryAxis"/>
-                    <xs:element name="valueScrollbar" minOccurs="0" maxOccurs="1" type="chartScrollbar"/>
+                    <xs:element name="categoryAxis" minOccurs="0" type="categoryAxis"/>
+                    <xs:element name="valueScrollbar" minOccurs="0" type="chartScrollbar"/>
                 </xs:all>
 
                 <xs:attribute name="byDate" type="xs:boolean"/>
@@ -1558,21 +1557,21 @@
             <xs:complexContent>
                 <xs:extension base="abstractChart">
                     <xs:all>
-                        <xs:element name="arrows" minOccurs="0" maxOccurs="1">
+                        <xs:element name="arrows" minOccurs="0">
                             <xs:complexType>
-                                <xs:sequence minOccurs="0" maxOccurs="1">
+                                <xs:sequence minOccurs="0">
                                     <xs:element name="arrow" minOccurs="0" maxOccurs="unbounded" type="gaugeArrow"/>
                                 </xs:sequence>
                             </xs:complexType>
                         </xs:element>
-                        <xs:element name="axes" minOccurs="0" maxOccurs="1">
+                        <xs:element name="axes" minOccurs="0">
                             <xs:complexType>
-                                <xs:sequence minOccurs="0" maxOccurs="1">
+                                <xs:sequence minOccurs="0">
                                     <xs:element name="axis" minOccurs="0" maxOccurs="unbounded" type="gaugeAxis"/>
                                 </xs:sequence>
                             </xs:complexType>
                         </xs:element>
-                        <xs:element name="facePattern" minOccurs="0" maxOccurs="1" type="pattern"/>
+                        <xs:element name="facePattern" minOccurs="0" type="pattern"/>
                     </xs:all>
 
                     <xs:attribute name="adjustSize" type="xs:boolean"/>
@@ -1622,7 +1621,7 @@
             <xs:complexContent>
                 <xs:extension base="slicedChart">
                     <xs:all>
-                        <xs:element name="balloonFunction" minOccurs="0" maxOccurs="1"/>
+                        <xs:element name="balloonFunction" minOccurs="0"/>
                     </xs:all>
 
                     <xs:attribute name="adjustPrecision" type="xs:boolean"/>
@@ -1677,9 +1676,9 @@
             <xs:complexContent>
                 <xs:extension base="serialChartType">
                     <xs:all>
-                        <xs:element name="valueAxis" minOccurs="0" maxOccurs="1" type="valueAxis"/>
-                        <xs:element name="graph" minOccurs="0" maxOccurs="1" type="chartGraph"/>
-                        <xs:element name="data" minOccurs="0" maxOccurs="1" type="ganttDataSet"/>
+                        <xs:element name="valueAxis" minOccurs="0" type="valueAxis"/>
+                        <xs:element name="graph" minOccurs="0" type="chartGraph"/>
+                        <xs:element name="data" minOccurs="0" type="ganttDataSet"/>
                     </xs:all>
 
                     <xs:attribute name="additionalSegmentFields" type="xs:string"/>
@@ -1716,9 +1715,9 @@
     <xs:element name="customChart">
         <xs:complexType>
             <xs:complexContent>
-                <xs:extension base="cuba:baseComponent">
+                <xs:extension base="layout:baseComponent">
                     <xs:sequence>
-                        <xs:element name="nativeJson" minOccurs="0" maxOccurs="1"/>
+                        <xs:element name="nativeJson" minOccurs="0"/>
                     </xs:sequence>
                 </xs:extension>
             </xs:complexContent>
@@ -1729,7 +1728,7 @@
     <xs:element name="mapViewer">
         <xs:complexType>
             <xs:complexContent>
-                <xs:extension base="cuba:baseComponent">
+                <xs:extension base="layout:baseComponent">
                     <xs:attribute name="mapType" type="mapTypeType" default="roadmap"/>
                 </xs:extension>
             </xs:complexContent>
@@ -1857,9 +1856,9 @@
 
     <xs:complexType name="categoryAxesSettings">
         <xs:all>
-            <xs:element name="dateFormats" minOccurs="0" maxOccurs="1">
+            <xs:element name="dateFormats" minOccurs="0">
                 <xs:complexType>
-                    <xs:sequence minOccurs="0" maxOccurs="1">
+                    <xs:sequence minOccurs="0">
                         <xs:element name="dateFormat" minOccurs="0" maxOccurs="unbounded" type="dateFormat"/>
                     </xs:sequence>
                 </xs:complexType>
@@ -1903,9 +1902,9 @@
 
     <xs:complexType name="chartCursorSettings">
         <xs:all>
-            <xs:element name="categoryBalloonDateFormats" minOccurs="0" maxOccurs="1">
+            <xs:element name="categoryBalloonDateFormats" minOccurs="0">
                 <xs:complexType>
-                    <xs:sequence minOccurs="0" maxOccurs="1">
+                    <xs:sequence minOccurs="0">
                         <xs:element name="dateFormat" minOccurs="0" maxOccurs="unbounded" type="dateFormat"/>
                     </xs:sequence>
                 </xs:complexType>
@@ -1993,11 +1992,11 @@
         <xs:complexContent>
             <xs:extension base="chartGraph">
                 <xs:all>
-                    <xs:element name="compareGraphBalloonFunction" minOccurs="0" maxOccurs="1"/>
-                    <xs:element name="compareGraph" minOccurs="0" maxOccurs="1" type="chartGraph"/>
-                    <xs:element name="compareGraphFillColors" minOccurs="0" maxOccurs="1">
+                    <xs:element name="compareGraphBalloonFunction" minOccurs="0"/>
+                    <xs:element name="compareGraph" minOccurs="0" type="chartGraph"/>
+                    <xs:element name="compareGraphFillColors" minOccurs="0">
                         <xs:complexType>
-                            <xs:sequence minOccurs="0" maxOccurs="1">
+                            <xs:sequence minOccurs="0">
                                 <xs:element name="color" minOccurs="0" maxOccurs="unbounded">
                                     <xs:complexType>
                                         <xs:attribute name="value" type="color"/>
@@ -2058,16 +2057,16 @@
 
     <xs:complexType name="dataSet">
         <xs:all>
-            <xs:element name="fieldMappings" minOccurs="0" maxOccurs="1">
+            <xs:element name="fieldMappings" minOccurs="0">
                 <xs:complexType>
-                    <xs:sequence minOccurs="0" maxOccurs="1">
+                    <xs:sequence minOccurs="0">
                         <xs:element name="fieldMapping" minOccurs="0" maxOccurs="unbounded" type="fieldMapping"/>
                     </xs:sequence>
                 </xs:complexType>
             </xs:element>
-            <xs:element name="stockEvents" minOccurs="0" maxOccurs="1">
+            <xs:element name="stockEvents" minOccurs="0">
                 <xs:complexType>
-                    <xs:sequence minOccurs="0" maxOccurs="1">
+                    <xs:sequence minOccurs="0">
                         <xs:element name="stockEvent" minOccurs="0" maxOccurs="unbounded" type="stockEvent"/>
                     </xs:sequence>
                 </xs:complexType>
@@ -2124,9 +2123,9 @@
 
     <xs:complexType name="panelsSettings">
         <xs:all>
-            <xs:element name="plotAreaFillColors" minOccurs="0" maxOccurs="1">
+            <xs:element name="plotAreaFillColors" minOccurs="0">
                 <xs:complexType>
-                    <xs:sequence minOccurs="0" maxOccurs="1">
+                    <xs:sequence minOccurs="0">
                         <xs:element name="color" minOccurs="0" maxOccurs="unbounded" type="color"/>
                     </xs:sequence>
                 </xs:complexType>
@@ -2172,9 +2171,9 @@
 
     <xs:complexType name="periodSelector">
         <xs:all>
-            <xs:element name="periods" minOccurs="0" maxOccurs="1">
+            <xs:element name="periods" minOccurs="0">
                 <xs:complexType>
-                    <xs:sequence minOccurs="0" maxOccurs="1">
+                    <xs:sequence minOccurs="0">
                         <xs:element name="period" minOccurs="0" maxOccurs="unbounded" type="period"/>
                     </xs:sequence>
                 </xs:complexType>
@@ -2250,15 +2249,15 @@
         <xs:complexContent>
             <xs:extension base="serialChartType">
                 <xs:all>
-                    <xs:element name="stockGraphs" minOccurs="0" maxOccurs="1">
+                    <xs:element name="stockGraphs" minOccurs="0">
                         <xs:complexType>
-                            <xs:sequence minOccurs="0" maxOccurs="1">
+                            <xs:sequence minOccurs="0">
                                 <xs:element name="stockGraph" minOccurs="0" maxOccurs="unbounded" type="stockGraph"/>
                             </xs:sequence>
                         </xs:complexType>
                     </xs:element>
-                    <xs:element name="drawOnAxis" minOccurs="0" maxOccurs="1" type="valueAxis"/>
-                    <xs:element name="stockLegend" minOccurs="0" maxOccurs="1" type="stockLegend"/>
+                    <xs:element name="drawOnAxis" minOccurs="0" type="valueAxis"/>
+                    <xs:element name="stockLegend" minOccurs="0" type="stockLegend"/>
                 </xs:all>
 
                 <xs:attribute name="allowTurningOff" type="xs:boolean"/>
@@ -2284,11 +2283,11 @@
     <xs:element name="stockChart">
         <xs:complexType>
             <xs:complexContent>
-                <xs:extension base="cuba:baseComponent">
+                <xs:extension base="layout:baseComponent">
                     <xs:all>
-                        <xs:element name="colors" minOccurs="0" maxOccurs="1">
+                        <xs:element name="colors" minOccurs="0">
                             <xs:complexType>
-                                <xs:sequence minOccurs="0" maxOccurs="1">
+                                <xs:sequence minOccurs="0">
                                     <xs:element name="color" minOccurs="0" maxOccurs="unbounded">
                                         <xs:complexType>
                                             <xs:attribute name="value" type="color"/>
@@ -2298,37 +2297,37 @@
                             </xs:complexType>
                         </xs:element>
 
-                        <xs:element name="dataSets" minOccurs="0" maxOccurs="1">
+                        <xs:element name="dataSets" minOccurs="0">
                             <xs:complexType>
-                                <xs:sequence minOccurs="0" maxOccurs="1">
+                                <xs:sequence minOccurs="0">
                                     <xs:element name="dataSet" minOccurs="0" maxOccurs="unbounded" type="dataSet"/>
                                 </xs:sequence>
                             </xs:complexType>
                         </xs:element>
 
-                        <xs:element name="panels" minOccurs="0" maxOccurs="1">
+                        <xs:element name="panels" minOccurs="0">
                             <xs:complexType>
-                                <xs:sequence minOccurs="0" maxOccurs="1">
+                                <xs:sequence minOccurs="0">
                                     <xs:element name="panel" minOccurs="0" maxOccurs="unbounded" type="stockPanelType"/>
                                 </xs:sequence>
                             </xs:complexType>
                         </xs:element>
 
-                        <xs:element name="data" minOccurs="0" maxOccurs="1" type="data"/>
-                        <xs:element name="export" minOccurs="0" maxOccurs="1" type="amExport"/>
-                        <xs:element name="balloon" minOccurs="0" maxOccurs="1" type="balloon"/>
-                        <xs:element name="categoryAxesSettings" minOccurs="0" maxOccurs="1"
+                        <xs:element name="data" minOccurs="0" type="data"/>
+                        <xs:element name="export" minOccurs="0" type="amExport"/>
+                        <xs:element name="balloon" minOccurs="0" type="balloon"/>
+                        <xs:element name="categoryAxesSettings" minOccurs="0"
                                     type="categoryAxesSettings"/>
-                        <xs:element name="chartCursorSettings" minOccurs="0" maxOccurs="1" type="chartCursorSettings"/>
-                        <xs:element name="chartScrollbarSettings" minOccurs="0" maxOccurs="1"
+                        <xs:element name="chartCursorSettings" minOccurs="0" type="chartCursorSettings"/>
+                        <xs:element name="chartScrollbarSettings" minOccurs="0"
                                     type="chartScrollbarSettings"/>
-                        <xs:element name="dataSetSelector" minOccurs="0" maxOccurs="1" type="dataSetSelector"/>
-                        <xs:element name="legendSettings" minOccurs="0" maxOccurs="1" type="legendSettings"/>
-                        <xs:element name="panelsSettings" minOccurs="0" maxOccurs="1" type="panelsSettings"/>
-                        <xs:element name="periodSelector" minOccurs="0" maxOccurs="1" type="periodSelector"/>
-                        <xs:element name="stockEventsSettings" minOccurs="0" maxOccurs="1" type="stockEventsSettings"/>
-                        <xs:element name="valueAxesSettings" minOccurs="0" maxOccurs="1" type="valueAxesSettings"/>
-                        <xs:element name="nativeJson" minOccurs="0" maxOccurs="1"/>
+                        <xs:element name="dataSetSelector" minOccurs="0" type="dataSetSelector"/>
+                        <xs:element name="legendSettings" minOccurs="0" type="legendSettings"/>
+                        <xs:element name="panelsSettings" minOccurs="0" type="panelsSettings"/>
+                        <xs:element name="periodSelector" minOccurs="0" type="periodSelector"/>
+                        <xs:element name="stockEventsSettings" minOccurs="0" type="stockEventsSettings"/>
+                        <xs:element name="valueAxesSettings" minOccurs="0" type="valueAxesSettings"/>
+                        <xs:element name="nativeJson" minOccurs="0"/>
                     </xs:all>
 
                     <xs:attribute name="addClassNames" type="xs:boolean"/>
@@ -2352,7 +2351,7 @@
     </xs:element>
 
     <xs:complexType name="item">
-        <xs:sequence minOccurs="1" maxOccurs="unbounded">
+        <xs:sequence maxOccurs="unbounded">
             <xs:element name="property">
                 <xs:complexType>
                     <xs:attribute name="name" type="xs:string" use="required"/>
@@ -2365,13 +2364,13 @@
 
     <xs:complexType name="dataSetValues">
         <xs:sequence>
-            <xs:element name="item" type="item" minOccurs="1" maxOccurs="unbounded"/>
+            <xs:element name="item" type="item" maxOccurs="unbounded"/>
         </xs:sequence>
     </xs:complexType>
 
     <xs:complexType name="dataSetStockValues">
         <xs:sequence>
-            <xs:element name="item" type="item" minOccurs="1" maxOccurs="unbounded"/>
+            <xs:element name="item" type="item" maxOccurs="unbounded"/>
         </xs:sequence>
 
         <xs:attribute name="id" type="xs:string" use="required"/>
@@ -2385,9 +2384,9 @@
 
     <xs:complexType name="ganttDataSet">
         <xs:all>
-            <xs:element name="item" minOccurs="1">
+            <xs:element name="item">
                 <xs:complexType>
-                    <xs:all minOccurs="1">
+                    <xs:all>
                         <xs:element name="property" type="ganttChartProperty"/>
                     </xs:all>
                 </xs:complexType>
@@ -2414,7 +2413,7 @@
         <xs:sequence>
             <xs:element name="item">
                 <xs:complexType>
-                    <xs:sequence minOccurs="1" maxOccurs="unbounded">
+                    <xs:sequence maxOccurs="unbounded">
                         <xs:element name="property">
                             <xs:complexType>
                                 <xs:attribute name="name" type="xs:string" use="required"/>
@@ -2506,7 +2505,7 @@
                             </xs:complexType>
                         </xs:element>
                     </xs:sequence>
-                    <xs:attribute name="name" type="cuba:resourceString"/>
+                    <xs:attribute name="name" type="layout:resourceString"/>
                 </xs:complexType>
             </xs:element>
         </xs:sequence>
@@ -2516,7 +2515,7 @@
         <xs:sequence>
             <xs:element name="property" minOccurs="0" maxOccurs="unbounded">
                 <xs:complexType>
-                    <xs:attribute name="name" type="cuba:resourceString" use="required"/>
+                    <xs:attribute name="name" type="layout:resourceString" use="required"/>
                 </xs:complexType>
             </xs:element>
         </xs:sequence>
@@ -2525,31 +2524,31 @@
     <xs:element name="pivotTable">
         <xs:complexType>
             <xs:all>
-                <xs:element name="rows" minOccurs="0" maxOccurs="1">
+                <xs:element name="rows" minOccurs="0">
                     <xs:complexType>
                         <xs:sequence>
                             <xs:element name="row" minOccurs="0" maxOccurs="unbounded">
                                 <xs:complexType>
-                                    <xs:attribute name="value" type="cuba:resourceString"/>
+                                    <xs:attribute name="value" type="layout:resourceString"/>
                                 </xs:complexType>
                             </xs:element>
                         </xs:sequence>
                     </xs:complexType>
                 </xs:element>
 
-                <xs:element name="columns" minOccurs="0" maxOccurs="1">
+                <xs:element name="columns" minOccurs="0">
                     <xs:complexType>
                         <xs:sequence>
                             <xs:element name="column" minOccurs="0" maxOccurs="unbounded">
                                 <xs:complexType>
-                                    <xs:attribute name="value" type="cuba:resourceString"/>
+                                    <xs:attribute name="value" type="layout:resourceString"/>
                                 </xs:complexType>
                             </xs:element>
                         </xs:sequence>
                     </xs:complexType>
                 </xs:element>
 
-                <xs:element name="renderers" minOccurs="0" maxOccurs="1">
+                <xs:element name="renderers" minOccurs="0">
                     <xs:complexType>
                         <xs:sequence>
                             <xs:element name="renderer" minOccurs="0" maxOccurs="unbounded">
@@ -2565,33 +2564,33 @@
                     </xs:complexType>
                 </xs:element>
 
-                <xs:element name="aggregation" minOccurs="0" maxOccurs="1">
+                <xs:element name="aggregation" minOccurs="0">
                     <xs:complexType>
                         <xs:sequence>
                             <xs:element name="property" minOccurs="0" maxOccurs="unbounded">
                                 <xs:complexType>
-                                    <xs:attribute name="name" type="cuba:resourceString"/>
+                                    <xs:attribute name="name" type="layout:resourceString"/>
                                 </xs:complexType>
                             </xs:element>
-                            <xs:element name="function" minOccurs="0" maxOccurs="1"/>
+                            <xs:element name="function" minOccurs="0"/>
                         </xs:sequence>
 
                         <xs:attribute name="mode" type="aggregationMode"/>
-                        <xs:attribute name="caption" type="cuba:resourceString"/>
+                        <xs:attribute name="caption" type="layout:resourceString"/>
                         <xs:attribute name="custom" type="xs:boolean"/>
                     </xs:complexType>
                 </xs:element>
 
-                <xs:element name="aggregations" minOccurs="0" maxOccurs="1">
+                <xs:element name="aggregations" minOccurs="0">
                     <xs:complexType>
                         <xs:sequence>
                             <xs:element name="aggregation" minOccurs="0" maxOccurs="unbounded">
                                 <xs:complexType>
                                     <xs:sequence>
-                                        <xs:element name="function" minOccurs="0" maxOccurs="1"/>
+                                        <xs:element name="function" minOccurs="0"/>
                                     </xs:sequence>
 
-                                    <xs:attribute name="caption" type="cuba:resourceString"/>
+                                    <xs:attribute name="caption" type="layout:resourceString"/>
                                     <xs:attribute name="mode" type="aggregationMode"/>
                                     <xs:attribute name="custom" type="xs:boolean"/>
                                 </xs:complexType>
@@ -2605,20 +2604,20 @@
                     </xs:complexType>
                 </xs:element>
 
-                <xs:element name="rendererOptions" minOccurs="0" maxOccurs="1">
+                <xs:element name="rendererOptions" minOccurs="0">
                     <xs:complexType>
                         <xs:sequence>
-                            <xs:element name="heatmap" minOccurs="0" maxOccurs="1">
+                            <xs:element name="heatmap" minOccurs="0">
                                 <xs:complexType>
                                     <xs:sequence>
-                                        <xs:element name="colorScaleGeneratorFunction" minOccurs="0" maxOccurs="1"/>
+                                        <xs:element name="colorScaleGeneratorFunction" minOccurs="0"/>
                                     </xs:sequence>
                                 </xs:complexType>
                             </xs:element>
-                            <xs:element name="c3" minOccurs="0" maxOccurs="1">
+                            <xs:element name="c3" minOccurs="0">
                                 <xs:complexType>
                                     <xs:sequence>
-                                        <xs:element name="size" minOccurs="0" maxOccurs="1">
+                                        <xs:element name="size" minOccurs="0">
                                             <xs:complexType>
                                                 <xs:attribute name="width" type="xs:double"/>
                                                 <xs:attribute name="height" type="xs:double"/>
@@ -2631,42 +2630,42 @@
                     </xs:complexType>
                 </xs:element>
 
-                <xs:element name="derivedProperties" minOccurs="0" maxOccurs="1">
+                <xs:element name="derivedProperties" minOccurs="0">
                     <xs:complexType>
                         <xs:sequence>
                             <xs:element name="derivedProperty" minOccurs="0" maxOccurs="unbounded">
                                 <xs:complexType>
-                                    <xs:sequence minOccurs="1" maxOccurs="1">
+                                    <xs:sequence>
                                         <xs:element name="function"/>
                                     </xs:sequence>
-                                    <xs:attribute name="caption" type="cuba:resourceString" use="required"/>
+                                    <xs:attribute name="caption" type="layout:resourceString" use="required"/>
                                 </xs:complexType>
                             </xs:element>
                         </xs:sequence>
                     </xs:complexType>
                 </xs:element>
 
-                <xs:element name="properties" minOccurs="1" maxOccurs="1">
+                <xs:element name="properties">
                     <xs:complexType>
                         <xs:sequence>
                             <xs:element name="property" minOccurs="0" maxOccurs="unbounded">
                                 <xs:complexType>
                                     <xs:attribute name="name" type="xs:string" use="required"/>
-                                    <xs:attribute name="localizedName" type="cuba:resourceString"/>
+                                    <xs:attribute name="localizedName" type="layout:resourceString"/>
                                 </xs:complexType>
                             </xs:element>
                         </xs:sequence>
                     </xs:complexType>
                 </xs:element>
 
-                <xs:element name="aggregationProperties" minOccurs="0" maxOccurs="1" type="propertiesListType"/>
-                <xs:element name="hiddenProperties" minOccurs="0" maxOccurs="1" type="propertiesListType"/>
-                <xs:element name="hiddenFromAggregations" minOccurs="0" maxOccurs="1" type="propertiesListType"/>
-                <xs:element name="hiddenFromDragDrop" minOccurs="0" maxOccurs="1" type="propertiesListType"/>
-                <xs:element name="inclusions" minOccurs="0" maxOccurs="1" type="propertiesWithValueListsType"/>
-                <xs:element name="exclusions" minOccurs="0" maxOccurs="1" type="propertiesWithValueListsType"/>
-                <xs:element name="filterFunction" minOccurs="0" maxOccurs="1"/>
-                <xs:element name="sortersFunction" minOccurs="0" maxOccurs="1"/>
+                <xs:element name="aggregationProperties" minOccurs="0" type="propertiesListType"/>
+                <xs:element name="hiddenProperties" minOccurs="0" type="propertiesListType"/>
+                <xs:element name="hiddenFromAggregations" minOccurs="0" type="propertiesListType"/>
+                <xs:element name="hiddenFromDragDrop" minOccurs="0" type="propertiesListType"/>
+                <xs:element name="inclusions" minOccurs="0" type="propertiesWithValueListsType"/>
+                <xs:element name="exclusions" minOccurs="0" type="propertiesWithValueListsType"/>
+                <xs:element name="filterFunction" minOccurs="0"/>
+                <xs:element name="sortersFunction" minOccurs="0"/>
             </xs:all>
 
             <xs:attribute name="datasource" type="xs:string"/>
@@ -2676,16 +2675,16 @@
             <xs:attribute name="menuLimit" type="xs:integer"/>
             <xs:attribute name="autoSortUnusedProperties" type="xs:boolean"/>
             <xs:attribute name="unusedPropertiesVertical" type="xs:string"/>
-            <xs:attribute name="emptyDataMessage" type="cuba:resourceString"/>
+            <xs:attribute name="emptyDataMessage" type="layout:resourceString"/>
             <xs:attribute name="showUI" type="xs:boolean"/>
             <xs:attribute name="showRowTotals" type="xs:boolean"/>
             <xs:attribute name="showColTotals" type="xs:boolean"/>
 
-            <xs:attributeGroup ref="cuba:hasId"/>
-            <xs:attributeGroup ref="cuba:hasSize"/>
-            <xs:attributeGroup ref="cuba:hasStyle"/>
-            <xs:attributeGroup ref="cuba:hasCaption"/>
-            <xs:attributeGroup ref="cuba:hasVisibility"/>
+            <xs:attributeGroup ref="layout:hasId"/>
+            <xs:attributeGroup ref="layout:hasSize"/>
+            <xs:attributeGroup ref="layout:hasStyle"/>
+            <xs:attributeGroup ref="layout:hasCaption"/>
+            <xs:attributeGroup ref="layout:hasVisibility"/>
             <xs:attributeGroup ref="hasEditState"/>
         </xs:complexType>
     </xs:element>
