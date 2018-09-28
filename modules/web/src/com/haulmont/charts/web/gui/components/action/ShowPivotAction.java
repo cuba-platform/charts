@@ -20,6 +20,7 @@ import com.haulmont.cuba.core.global.*;
 import com.haulmont.cuba.gui.WindowManager;
 import com.haulmont.cuba.gui.components.*;
 import com.haulmont.cuba.gui.components.actions.BaseAction;
+import com.haulmont.cuba.gui.components.actions.ListAction;
 import com.haulmont.cuba.gui.config.WindowConfig;
 import com.haulmont.cuba.security.entity.EntityAttrAccess;
 import org.springframework.context.annotation.Scope;
@@ -44,7 +45,7 @@ import static com.haulmont.charts.web.gui.components.action.ShowPivotAction.Show
  */
 @org.springframework.stereotype.Component(ShowPivotAction.NAME)
 @Scope("prototype")
-public class ShowPivotAction extends BaseAction implements Action.HasBeforeActionPerformedHandler {
+public class ShowPivotAction extends ListAction implements Action.HasBeforeActionPerformedHandler {
 
     public static final String NAME = "charts_ShowPivotAction";
     public static final String ACTION_ID = "showPivotAction";
