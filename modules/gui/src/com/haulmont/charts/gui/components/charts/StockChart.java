@@ -5,13 +5,18 @@
 
 package com.haulmont.charts.gui.components.charts;
 
+import com.haulmont.charts.gui.amcharts.model.DataSet;
 import com.haulmont.charts.gui.amcharts.model.DatePeriod;
 import com.haulmont.charts.gui.amcharts.model.PeriodType;
 import com.haulmont.charts.gui.amcharts.model.StockEvent;
 import com.haulmont.charts.gui.amcharts.model.charts.StockChartGroup;
 import com.haulmont.charts.gui.amcharts.model.charts.StockChartModel;
+import com.haulmont.charts.gui.data.ContainerDataProvider;
 import com.haulmont.charts.gui.data.DataItem;
+import com.haulmont.charts.gui.data.DataProvider;
 import com.haulmont.charts.gui.data.EntityDataItem;
+import com.haulmont.charts.gui.data.EntityDataProvider;
+import com.haulmont.charts.gui.data.ListDataProvider;
 import com.haulmont.cuba.core.entity.Entity;
 import com.haulmont.cuba.gui.components.Component;
 import com.haulmont.cuba.gui.data.CollectionDatasource;
@@ -42,16 +47,38 @@ public interface StockChart extends Component, StockChartModel<StockChart>, Comp
      *
      * @param id         dataset id
      * @param datasource instance of datasource
+     * @see ContainerDataProvider
+     * @see EntityDataProvider
+     * @see ListDataProvider
+     * @deprecated use {@link DataSet#setDataProvider(DataProvider)} instead.
      */
-    void setDataSetDatasource(String id, CollectionDatasource datasource);
+    @Deprecated
+    default void setDataSetDatasource(String id, CollectionDatasource datasource) {
+        DataSet dataSet = getDataSet(id);
+        if (dataSet != null) {
+            dataSet.setDataProvider(datasource != null ? new EntityDataProvider(datasource) : null);
+        }
+    }
 
     /**
      * Returns datasource of dataset.
      *
      * @param id dataset id.
      * @return datasource of dataset
+     * @deprecated use {@link DataSet#getDataProvider()} instead.
      */
-    CollectionDatasource getDataSetDatasource(String id);
+    @Deprecated
+    default CollectionDatasource getDataSetDatasource(String id) {
+        DataSet dataSet = getDataSet(id);
+        if (dataSet != null) {
+            DataProvider dataProvider = dataSet.getDataProvider();
+            if (dataProvider != null) {
+                return dataProvider instanceof EntityDataProvider ?
+                        ((EntityDataProvider) dataProvider).getDatasource() : null;
+            }
+        }
+        return null;
+    }
 
     /**
      * Resend all items and properties to client and repaint chart.

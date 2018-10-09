@@ -11,9 +11,15 @@ import com.haulmont.bali.util.Dom4j;
 import com.haulmont.charts.gui.amcharts.model.Responsive;
 import com.haulmont.charts.gui.amcharts.model.Rule;
 import com.haulmont.charts.gui.components.charts.Chart;
+import com.haulmont.charts.gui.data.ContainerDataProvider;
 import com.haulmont.cuba.gui.GuiDevelopmentException;
 import com.haulmont.cuba.gui.data.CollectionDatasource;
 import com.haulmont.cuba.gui.data.Datasource;
+import com.haulmont.cuba.gui.model.CollectionContainer;
+import com.haulmont.cuba.gui.model.InstanceContainer;
+import com.haulmont.cuba.gui.model.ScreenData;
+import com.haulmont.cuba.gui.screen.FrameOwner;
+import com.haulmont.cuba.gui.screen.UiControllerUtils;
 import org.apache.commons.lang3.StringUtils;
 import org.dom4j.Element;
 
@@ -35,7 +41,7 @@ public abstract class AbstractChartLoader<T extends Chart> extends ChartModelLoa
         loadCaption(resultComponent, element);
         loadDescription(resultComponent, element);
 
-        loadDatasource(resultComponent, element);
+        loadDataContainer(resultComponent, element);
     }
 
     protected void loadDatasource(Chart chart, Element element) {
@@ -54,14 +60,41 @@ public abstract class AbstractChartLoader<T extends Chart> extends ChartModelLoa
         }
     }
 
-    protected void checkDatasource(Element element) {
+    protected void loadDataContainer(Chart chart, Element element) {
+        String dataContainerId = element.attributeValue("dataContainer");
+
+        if (StringUtils.isNotEmpty(dataContainerId)) {
+            FrameOwner frameOwner = context.getFrame().getFrameOwner();
+            ScreenData screenData = UiControllerUtils.getScreenData(frameOwner);
+
+            CollectionContainer dataContainer;
+
+            InstanceContainer container = screenData.getContainer(dataContainerId);
+            if (container instanceof CollectionContainer) {
+                dataContainer = (CollectionContainer) container;
+            } else {
+                throw new GuiDevelopmentException("Not a CollectionContainer: " + dataContainerId, context.getCurrentFrameId());
+            }
+
+            chart.setDataProvider(new ContainerDataProvider(dataContainer));
+        } else {
+            loadDatasource(resultComponent, element);
+        }
+    }
+
+    protected void checkMultipleDatasources(Element element) {
         String datasource = element.attributeValue("datasource");
-        Element dataSetElement = element.element("dataSet");
-        if (dataSetElement != null && StringUtils.isNotEmpty(datasource)) {
+        String dataContainer = element.attributeValue("dataContainer");
+        Element dataSetElement = element.element("data");
+
+        boolean isDatasourceProperty = StringUtils.isNotEmpty(datasource);
+        boolean isDataContainerProperty = StringUtils.isNotEmpty(dataContainer);
+
+        if ((isDatasourceProperty && isDataContainerProperty)
+                || (dataSetElement != null && (isDatasourceProperty || isDataContainerProperty))) {
             throw new GuiDevelopmentException(
-                    String.format("You cannot use chart '%s' with both data element and datasource property defined",
-                            resultComponent.getId()),
-                    context.getCurrentFrameId()
+                    String.format("You cannot use chart '%s' with simultaneously defined: data element, datasource and "
+                            + "dataContainer properties", resultComponent.getId()), context.getCurrentFrameId()
             );
         }
     }

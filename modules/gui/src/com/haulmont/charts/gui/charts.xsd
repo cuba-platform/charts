@@ -1304,6 +1304,7 @@
                 <xs:attribute name="accessibleDescription" type="xs:string"/>
                 <xs:attribute name="addClassNames" type="xs:boolean"/>
                 <xs:attribute name="datasource" type="xs:string"/>
+                <xs:attribute name="dataContainer" type="xs:string"/>
 
                 <xs:attribute name="additionalFields" type="xs:string"/>
                 <xs:attribute name="autoDisplay" type="xs:boolean"/>
@@ -2078,6 +2079,7 @@
         <xs:attribute name="color" type="color"/>
         <xs:attribute name="compared" type="xs:boolean"/>
         <xs:attribute name="datasource" type="xs:string"/>
+        <xs:attribute name="dataContainer" type="xs:string"/>
         <xs:attribute name="showInCompare" type="xs:boolean"/>
         <xs:attribute name="showInSelect" type="xs:boolean"/>
         <xs:attribute name="title" type="xs:string"/>
@@ -2669,6 +2671,7 @@
             </xs:all>
 
             <xs:attribute name="datasource" type="xs:string"/>
+            <xs:attribute name="dataContainer" type="xs:string"/>
             <xs:attribute name="renderer" type="renderer"/>
             <xs:attribute name="columnOrder" type="columnOrder"/>
             <xs:attribute name="rowOrder" type="rowOrder"/>

@@ -7,7 +7,11 @@ package com.haulmont.charts.gui.components.charts;
 import com.haulmont.charts.gui.amcharts.model.charts.AbstractChart;
 import com.haulmont.charts.gui.amcharts.model.charts.ChartModel;
 import com.haulmont.charts.gui.data.DataItem;
+import com.haulmont.charts.gui.data.DataProvider;
 import com.haulmont.charts.gui.data.EntityDataItem;
+import com.haulmont.charts.gui.data.EntityDataProvider;
+import com.haulmont.charts.gui.data.ContainerDataProvider;
+import com.haulmont.charts.gui.data.ListDataProvider;
 import com.haulmont.cuba.core.entity.Entity;
 import com.haulmont.cuba.gui.components.Component;
 import com.haulmont.cuba.gui.data.CollectionDatasource;
@@ -37,8 +41,43 @@ public interface Chart<T extends Chart> extends Component, ChartModel<T>, Compon
     @Deprecated
     AbstractChart getConfiguration();
 
-    CollectionDatasource getDatasource();
-    void setDatasource(CollectionDatasource datasource);
+    /**
+     * @deprecated use {@link Chart#getDataProvider()} instead.
+     */
+    @Deprecated
+    default CollectionDatasource getDatasource() {
+        DataProvider dataProvider = getDataProvider();
+
+        return dataProvider instanceof EntityDataProvider ?
+                ((EntityDataProvider) dataProvider).getDatasource() : null;
+    }
+
+    /**
+     * @see ContainerDataProvider
+     * @see EntityDataProvider
+     * @see ListDataProvider
+     * @deprecated use {@link Chart#setDataProvider(DataProvider)} instead.
+     */
+    @Deprecated
+    default void setDatasource(CollectionDatasource datasource) {
+        setDataProvider(datasource != null ? new EntityDataProvider(datasource) : null);
+    }
+
+    /**
+     * @return the data provider
+     */
+    @Override
+    DataProvider getDataProvider();
+
+    /**
+     * @param dataProvider the data provider
+     * @return chart
+     * @see ContainerDataProvider
+     * @see EntityDataProvider
+     * @see ListDataProvider
+     */
+    @Override
+    T setDataProvider(DataProvider dataProvider);
 
     /**
      * Resend all items and properties to client and repaint chart.

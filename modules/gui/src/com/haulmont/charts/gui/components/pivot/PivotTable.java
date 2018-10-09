@@ -5,6 +5,9 @@
 
 package com.haulmont.charts.gui.components.pivot;
 
+import com.haulmont.charts.gui.data.ContainerDataProvider;
+import com.haulmont.charts.gui.data.EntityDataProvider;
+import com.haulmont.charts.gui.data.ListDataProvider;
 import com.haulmont.charts.gui.model.JsFunction;
 import com.haulmont.charts.gui.pivottable.model.*;
 import com.haulmont.charts.gui.data.DataItem;
@@ -22,9 +25,27 @@ public interface PivotTable extends Component, Component.BelongToFrame, Componen
 
     String NAME = "pivotTable";
 
-    CollectionDatasource getDatasource();
+    /**
+     * @deprecated use {@link #getDataProvider()} instead.
+     */
+    @Deprecated
+    default CollectionDatasource getDatasource(){
+        DataProvider dataProvider = getDataProvider();
 
-    void setDatasource(CollectionDatasource datasource);
+        return dataProvider instanceof EntityDataProvider ?
+                ((EntityDataProvider) dataProvider).getDatasource() : null;
+    }
+
+    /**
+     * @see ContainerDataProvider
+     * @see EntityDataProvider
+     * @see ListDataProvider
+     * @deprecated use {@link #setDataProvider(DataProvider)} instead.
+     */
+    @Deprecated
+    default void setDatasource(CollectionDatasource datasource) {
+        setDataProvider(datasource != null ? new EntityDataProvider(datasource) : null);
+    }
 
     /**
      * Resend all items and properties to client and repaint pivot table.

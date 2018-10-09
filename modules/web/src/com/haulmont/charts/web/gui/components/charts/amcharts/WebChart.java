@@ -7,7 +7,6 @@ package com.haulmont.charts.web.gui.components.charts.amcharts;
 
 import com.haulmont.charts.gui.amcharts.model.*;
 import com.haulmont.charts.gui.components.charts.Chart;
-import com.haulmont.charts.gui.data.EntityDataProvider;
 import com.haulmont.charts.gui.amcharts.model.charts.AbstractChart;
 import com.haulmont.charts.gui.data.DataItem;
 import com.haulmont.charts.gui.data.DataProvider;
@@ -21,8 +20,6 @@ import com.haulmont.chile.core.datatypes.FormatStrings;
 import com.haulmont.cuba.core.global.AppBeans;
 import com.haulmont.cuba.core.global.Messages;
 import com.haulmont.cuba.core.global.UserSessionSource;
-import com.haulmont.cuba.gui.data.CollectionDatasource;
-import com.haulmont.cuba.gui.data.impl.CollectionDsHelper;
 import com.haulmont.cuba.web.gui.components.WebAbstractComponent;
 import org.springframework.beans.factory.InitializingBean;
 
@@ -39,8 +36,6 @@ public abstract class WebChart<T extends Chart, M extends AbstractChart>
 
     protected Messages messages;
     protected UserSessionSource userSessionSource;
-
-    protected CollectionDatasource datasource;
 
     protected com.haulmont.charts.web.widgets.amcharts.events.ChartClickListener clickHandler;
     protected com.haulmont.charts.web.widgets.amcharts.events.ChartRightClickListener rightClickHandler;
@@ -64,12 +59,6 @@ public abstract class WebChart<T extends Chart, M extends AbstractChart>
     @Override
     public void afterPropertiesSet() throws Exception {
         initLocale();
-
-        component.addAttachListener(event -> {
-            if (datasource != null) {
-                CollectionDsHelper.autoRefreshInvalid(datasource, true);
-            }
-        });
 
         M configuration = createChartConfiguration();
         setupDefaults(configuration);
@@ -148,25 +137,6 @@ public abstract class WebChart<T extends Chart, M extends AbstractChart>
     @Override
     public AbstractChart getConfiguration() {
         return component.getChart();
-    }
-
-    @Override
-    public CollectionDatasource getDatasource() {
-        return datasource;
-    }
-
-    @Override
-    public void setDatasource(CollectionDatasource datasource) {
-        if (this.datasource != datasource) {
-            this.datasource = datasource;
-
-            if (datasource == null) {
-                component.getChart().setDataProvider(null);
-            } else {
-                CollectionDsHelper.autoRefreshInvalid(datasource, true);
-                setDataProvider(new EntityDataProvider(datasource));
-            }
-        }
     }
 
     @Override

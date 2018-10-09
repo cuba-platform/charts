@@ -5,8 +5,10 @@
 
 package com.haulmont.charts.gui.data;
 
+import com.haulmont.chile.core.model.MetaClass;
 import com.haulmont.cuba.core.entity.Entity;
 import com.haulmont.cuba.gui.data.CollectionDatasource;
+import com.haulmont.cuba.gui.data.impl.CollectionDsHelper;
 import com.haulmont.cuba.gui.data.impl.WeakCollectionChangeListener;
 import org.apache.commons.collections4.CollectionUtils;
 
@@ -17,8 +19,10 @@ import java.util.List;
 
 /**
  * Data provider which contains {@link CollectionDatasource} with items.
+ * @deprecated use {@link ContainerDataProvider} instead.
  */
-public class EntityDataProvider implements DataProvider {
+@Deprecated
+public class EntityDataProvider implements DataProvider, HasMetaClass {
 
     private static final long serialVersionUID = -4215045539824729753L;
 
@@ -28,6 +32,7 @@ public class EntityDataProvider implements DataProvider {
 
     @SuppressWarnings("unchecked")
     public EntityDataProvider(CollectionDatasource datasource) {
+        CollectionDsHelper.autoRefreshInvalid(datasource, true);
         this.datasource = datasource;
 
         collectionChangeListener = e -> {
@@ -158,5 +163,10 @@ public class EntityDataProvider implements DataProvider {
     @Override
     public void removeChangeListener(DataChangeListener listener) {
         changeListeners.remove(listener);
+    }
+
+    @Override
+    public MetaClass getMetaClass() {
+        return datasource.getMetaClass();
     }
 }

@@ -9,8 +9,10 @@ import com.haulmont.charts.gui.amcharts.model.CategoryAxis;
 import com.haulmont.charts.gui.amcharts.model.DayOfWeek;
 import com.haulmont.charts.gui.amcharts.model.Scrollbar;
 import com.haulmont.charts.gui.amcharts.model.charts.AbstractSerialChart;
+import com.haulmont.charts.gui.data.HasMetaClass;
 import com.haulmont.charts.web.widgets.amcharts.serialization.ChartJsonSerializationContext;
 import com.haulmont.charts.gui.components.charts.SeriesBasedChart;
+import com.haulmont.chile.core.model.MetaClass;
 import com.haulmont.chile.core.model.MetaProperty;
 import com.haulmont.cuba.core.global.DevelopmentException;
 import com.haulmont.cuba.gui.data.CollectionDatasource;
@@ -48,15 +50,17 @@ public abstract class WebSeriesBasedChart<T extends SeriesBasedChart, M extends 
     }
 
     protected void detectDateBasedCategoryAxis() {
-        if (datasource != null
+        MetaClass metaClass = getDataProvider() instanceof HasMetaClass ?
+                ((HasMetaClass) getDataProvider()).getMetaClass() : null;
+
+        if (metaClass != null
                 && StringUtils.isNotEmpty(getCategoryField())
                 && getCategoryAxis() != null
                 && getCategoryAxis().getParseDates() == null) {
-            MetaProperty property = datasource.getMetaClass().getProperty(getCategoryField());
+            MetaProperty property = metaClass.getProperty(getCategoryField());
             if (property == null) {
                 throw new DevelopmentException(
-                        String.format("Unable to find metaproperty '%s' for class '%s'", getCategoryField(),
-                                datasource.getMetaClass()));
+                        String.format("Unable to find metaproperty '%s' for class '%s'", getCategoryField(), metaClass));
             }
             if (Date.class.isAssignableFrom(property.getJavaType())) {
                 getCategoryAxis().setParseDates(true);

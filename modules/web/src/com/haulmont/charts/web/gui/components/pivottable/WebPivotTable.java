@@ -6,7 +6,6 @@
 package com.haulmont.charts.web.gui.components.pivottable;
 
 import com.haulmont.charts.gui.components.pivot.PivotTable;
-import com.haulmont.charts.gui.data.EntityDataProvider;
 import com.haulmont.charts.gui.model.JsFunction;
 import com.haulmont.charts.gui.pivottable.model.*;
 import com.haulmont.charts.gui.data.DataItem;
@@ -18,8 +17,6 @@ import com.haulmont.charts.web.widgets.pivottable.serialization.PivotTableSerial
 import com.haulmont.cuba.core.global.AppBeans;
 import com.haulmont.cuba.core.global.Messages;
 import com.haulmont.cuba.core.global.UserSessionSource;
-import com.haulmont.cuba.gui.data.CollectionDatasource;
-import com.haulmont.cuba.gui.data.impl.CollectionDsHelper;
 import com.haulmont.cuba.web.gui.components.WebAbstractComponent;
 import org.springframework.beans.factory.InitializingBean;
 
@@ -30,8 +27,6 @@ import java.util.Map;
 import java.util.Objects;
 
 public class WebPivotTable extends WebAbstractComponent<CubaPivotTable> implements PivotTable, InitializingBean {
-
-    protected CollectionDatasource datasource;
 
     protected com.haulmont.charts.web.widgets.pivottable.events.RefreshListener refreshHandler;
     protected com.haulmont.charts.web.widgets.pivottable.events.CellClickListener cellClickHandler;
@@ -70,24 +65,6 @@ public class WebPivotTable extends WebAbstractComponent<CubaPivotTable> implemen
             component.setLocaleString(localeString);
             component.setEmptyDataMessage(messages.getMainMessage("pivottable.emptyDataMessage", locale));
         }
-    }
-
-    @Override
-    public CollectionDatasource getDatasource() {
-        return datasource;
-    }
-
-    @Override
-    public void setDatasource(CollectionDatasource datasource) {
-        this.datasource = datasource;
-
-        if (datasource == null) {
-            component.getPivotTable().setDataProvider(null);
-        } else {
-            CollectionDsHelper.autoRefreshInvalid(datasource, true);
-        }
-
-        setDataProvider(new EntityDataProvider(datasource));
     }
 
     @Override

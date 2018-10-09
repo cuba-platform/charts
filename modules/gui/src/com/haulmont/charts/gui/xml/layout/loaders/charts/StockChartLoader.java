@@ -10,6 +10,7 @@ import com.google.gson.JsonSyntaxException;
 import com.haulmont.bali.util.Dom4j;
 import com.haulmont.charts.gui.amcharts.model.*;
 import com.haulmont.charts.gui.components.charts.StockChart;
+import com.haulmont.charts.gui.data.ContainerDataProvider;
 import com.haulmont.charts.gui.data.EntityDataProvider;
 import com.haulmont.charts.gui.data.ListDataProvider;
 import com.haulmont.charts.gui.data.MapDataItem;
@@ -18,6 +19,11 @@ import com.haulmont.charts.gui.amcharts.model.charts.StockPanel;
 import com.haulmont.cuba.gui.GuiDevelopmentException;
 import com.haulmont.cuba.gui.data.CollectionDatasource;
 import com.haulmont.cuba.gui.data.Datasource;
+import com.haulmont.cuba.gui.model.CollectionContainer;
+import com.haulmont.cuba.gui.model.InstanceContainer;
+import com.haulmont.cuba.gui.model.ScreenData;
+import com.haulmont.cuba.gui.screen.FrameOwner;
+import com.haulmont.cuba.gui.screen.UiControllerUtils;
 import org.apache.commons.collections4.CollectionUtils;
 import org.apache.commons.lang3.StringUtils;
 import org.dom4j.Element;
@@ -240,6 +246,8 @@ public class StockChartLoader extends ChartModelLoader<StockChart> {
             dataSet.setId(id);
         }
 
+        checkMultipleDatasources(dataSetElement);
+
         String categoryField = dataSetElement.attributeValue("categoryField");
         if (StringUtils.isNotEmpty(categoryField)) {
             dataSet.setCategoryField(categoryField);
@@ -255,29 +263,35 @@ public class StockChartLoader extends ChartModelLoader<StockChart> {
             dataSet.setCompared(Boolean.valueOf(compared));
         }
 
-        String datasource = dataSetElement.attributeValue("datasource");
-        if (StringUtils.isNotEmpty(datasource)) {
-            if (element.element("data") != null) {
-                throw new GuiDevelopmentException(
-                        String.format(
-                                "You cannot use chart '%s' with both data element and datasource property defined. " +
-                                        "Datasource ID: '%s'",
-                                resultComponent.getId(), datasource
-                        ),
-                        context.getCurrentFrameId()
-                );
+        String dataContainerId = dataSetElement.attributeValue("dataContainer");
+        if (StringUtils.isNotEmpty(dataContainerId)) {
+            FrameOwner frameOwner = context.getFrame().getFrameOwner();
+            ScreenData screenData = UiControllerUtils.getScreenData(frameOwner);
+
+            CollectionContainer dataContainer;
+
+            InstanceContainer container = screenData.getContainer(dataContainerId);
+            if (container instanceof CollectionContainer) {
+                dataContainer = (CollectionContainer) container;
+            } else {
+                throw new GuiDevelopmentException("Not a CollectionContainer: " + dataContainerId, context.getCurrentFrameId());
             }
 
-            Datasource ds = context.getDsContext().get(datasource);
-            if (ds == null) {
-                throw new GuiDevelopmentException("Can't find datasource by name: " + datasource, context.getCurrentFrameId());
-            }
+            dataSet.setDataProvider(new ContainerDataProvider(dataContainer));
+        } else {
+            String datasource = dataSetElement.attributeValue("datasource");
+            if (StringUtils.isNotEmpty(datasource)) {
+                Datasource ds = context.getDsContext().get(datasource);
+                if (ds == null) {
+                    throw new GuiDevelopmentException("Can't find datasource by name: " + datasource, context.getCurrentFrameId());
+                }
 
-            if (!(ds instanceof CollectionDatasource)) {
-                throw new GuiDevelopmentException("Not a CollectionDatasource: " + datasource, context.getCurrentFrameId());
-            }
+                if (!(ds instanceof CollectionDatasource)) {
+                    throw new GuiDevelopmentException("Not a CollectionDatasource: " + datasource, context.getCurrentFrameId());
+                }
 
-            dataSet.setDataProvider(new EntityDataProvider((CollectionDatasource) ds));
+                dataSet.setDataProvider(new EntityDataProvider((CollectionDatasource) ds));
+            }
         }
 
         String showInCompare = dataSetElement.attributeValue("showInCompare");
@@ -293,6 +307,23 @@ public class StockChartLoader extends ChartModelLoader<StockChart> {
         String title = dataSetElement.attributeValue("title");
         if (StringUtils.isNotEmpty(title)) {
             dataSet.setTitle(title);
+        }
+    }
+
+    protected void checkMultipleDatasources(Element dataSetElement) {
+        String datasource = dataSetElement.attributeValue("datasource");
+        String dataContainer = dataSetElement.attributeValue("dataContainer");
+        Element dataElement = element.element("data");
+
+        boolean isDatasourceProperty = StringUtils.isNotEmpty(datasource);
+        boolean isDataContainerProperty = StringUtils.isNotEmpty(dataContainer);
+
+        if ((isDatasourceProperty && isDataContainerProperty)
+                || (dataElement != null && (isDatasourceProperty || isDataContainerProperty))) {
+            throw new GuiDevelopmentException(
+                    String.format("You cannot use chart '%s' with simultaneously defined: data element, datasource and "
+                            + "dataContainer properties", resultComponent.getId()), context.getCurrentFrameId()
+            );
         }
     }
 

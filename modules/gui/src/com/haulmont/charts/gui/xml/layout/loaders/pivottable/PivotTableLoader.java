@@ -6,6 +6,7 @@
 package com.haulmont.charts.gui.xml.layout.loaders.pivottable;
 
 import com.haulmont.charts.gui.components.pivot.PivotTable;
+import com.haulmont.charts.gui.data.*;
 import com.haulmont.charts.gui.model.JsFunction;
 import com.haulmont.charts.gui.pivottable.model.*;
 import com.haulmont.chile.core.model.MetaClass;
@@ -13,6 +14,11 @@ import com.haulmont.chile.core.model.MetaProperty;
 import com.haulmont.cuba.gui.GuiDevelopmentException;
 import com.haulmont.cuba.gui.data.CollectionDatasource;
 import com.haulmont.cuba.gui.data.Datasource;
+import com.haulmont.cuba.gui.model.CollectionContainer;
+import com.haulmont.cuba.gui.model.InstanceContainer;
+import com.haulmont.cuba.gui.model.ScreenData;
+import com.haulmont.cuba.gui.screen.FrameOwner;
+import com.haulmont.cuba.gui.screen.UiControllerUtils;
 import com.haulmont.cuba.gui.xml.layout.loaders.AbstractComponentLoader;
 import org.apache.commons.collections4.CollectionUtils;
 import org.apache.commons.collections4.MapUtils;
@@ -47,9 +53,30 @@ public class PivotTableLoader extends AbstractComponentLoader<PivotTable> {
         loadEnable(resultComponent, element);
         loadStyleName(resultComponent, element);
 
-        loadDatasource(resultComponent, element);
+        loadDataContainer(resultComponent, element);
 
         loadConfiguration(resultComponent, element);
+    }
+
+    protected void loadDataContainer(PivotTable pivotTable, Element element) {
+        String dataContainerId = element.attributeValue("dataContainer");
+        if (StringUtils.isNotEmpty(dataContainerId)) {
+            FrameOwner frameOwner = context.getFrame().getFrameOwner();
+            ScreenData screenData = UiControllerUtils.getScreenData(frameOwner);
+
+            CollectionContainer dataContainer;
+
+            InstanceContainer container = screenData.getContainer(dataContainerId);
+            if (container instanceof CollectionContainer) {
+                dataContainer = (CollectionContainer) container;
+            } else {
+                throw new GuiDevelopmentException("Not a CollectionContainer: " + dataContainerId, context.getCurrentFrameId());
+            }
+
+            pivotTable.setDataProvider(new ContainerDataProvider(dataContainer));
+        } else {
+            loadDatasource(pivotTable, element);
+        }
     }
 
     protected void loadDatasource(PivotTable pivotTable, Element element) {
@@ -176,18 +203,19 @@ public class PivotTableLoader extends AbstractComponentLoader<PivotTable> {
 
                 String name = propertyElement.attributeValue("name");
                 if (StringUtils.isNotEmpty(name)) {
-                    checkValidProperty(pivot.getDatasource(), name);
+
+                    MetaClass metaClass = pivot.getDataProvider() instanceof HasMetaClass ?
+                            ((HasMetaClass) pivot.getDataProvider()).getMetaClass() : null;
+
+                    checkValidProperty(metaClass, name);
 
                     String localizedName = propertyElement.attributeValue("localizedName");
                     if (StringUtils.isNotEmpty(localizedName)) {
                         localizedName = loadResourceString(localizedName);
+                    } else if (metaClass != null) {
+                        localizedName = getMessageTools().getPropertyCaption(metaClass, name);
                     } else {
-                        if (pivot.getDatasource() != null) {
-                            MetaClass metaClass = pivot.getDatasource().getMetaClass();
-                            localizedName = getMessageTools().getPropertyCaption(metaClass, name);
-                        } else {
-                            localizedName = name;
-                        }
+                        localizedName = name;
                     }
 
                     pivot.addProperty(name, localizedName);
@@ -196,9 +224,9 @@ public class PivotTableLoader extends AbstractComponentLoader<PivotTable> {
         }
     }
 
-    protected void checkValidProperty(@Nullable CollectionDatasource datasource, String name) {
-        if (datasource != null) {
-            MetaProperty property = datasource.getMetaClass().getProperty(name);
+    protected void checkValidProperty(@Nullable MetaClass metaClass, String name) {
+        if (metaClass != null) {
+            MetaProperty property = metaClass.getProperty(name);
             if (property != null
                     && property.getRange().getCardinality() != null
                     && property.getRange().getCardinality().isMany()) {

@@ -8,19 +8,15 @@ package com.haulmont.charts.web.gui.components.pivottable;
 import com.google.common.base.Strings;
 import com.haulmont.bali.util.Preconditions;
 import com.haulmont.charts.gui.components.pivot.PivotTable;
-import com.haulmont.charts.gui.data.DataItem;
-import com.haulmont.charts.gui.data.DataProvider;
-import com.haulmont.charts.gui.data.EntityDataItem;
+import com.haulmont.charts.gui.data.HasMetaClass;
 import com.haulmont.charts.gui.pivottable.extentsion.model.PivotData;
 import com.haulmont.charts.gui.pivottable.extentsion.model.PivotDataCell;
 import com.haulmont.charts.gui.pivottable.extentsion.model.PivotDataSeparatedCell;
 import com.haulmont.chile.core.model.MetaClass;
-import com.haulmont.cuba.core.entity.Entity;
 import com.haulmont.cuba.core.global.AppBeans;
 import com.haulmont.cuba.core.global.Messages;
 import com.haulmont.cuba.gui.AppConfig;
 import com.haulmont.cuba.gui.components.Frame;
-import com.haulmont.cuba.gui.data.CollectionDatasource;
 import com.haulmont.cuba.gui.export.ByteArrayDataProvider;
 import com.haulmont.cuba.gui.export.ExportDisplay;
 import com.haulmont.cuba.gui.export.ExportFormat;
@@ -56,29 +52,12 @@ public final class PivotExcelExporter {
     protected Messages messages;
 
     public PivotExcelExporter(PivotTable pivotTable) {
-        initEntityMetaClass(pivotTable);
+        entityMetaClass = pivotTable.getDataProvider() instanceof HasMetaClass ?
+                ((HasMetaClass) pivotTable.getDataProvider()).getMetaClass() : null;
 
         messages = AppBeans.get(Messages.NAME);
         frame = pivotTable.getFrame();
         display = AppConfig.createExportDisplay(frame);
-    }
-
-    protected void initEntityMetaClass(PivotTable pivotTable) {
-        CollectionDatasource datasource = pivotTable.getDatasource();
-        if (datasource != null) {
-            entityMetaClass = datasource.getMetaClass();
-        } else if (pivotTable.getDataProvider() != null) {
-            DataProvider dataProvider = pivotTable.getDataProvider();
-
-            if (!dataProvider.getItems().isEmpty()) {
-                DataItem dataItem = dataProvider.getItems().get(0);
-
-                if (dataItem instanceof EntityDataItem) {
-                    Entity entity = ((EntityDataItem) dataItem).getItem();
-                    entityMetaClass = entity.getMetaClass();
-                }
-            }
-        }
     }
 
     /**

@@ -7,10 +7,8 @@ package com.haulmont.charts.web.gui.components.charts.amcharts;
 
 import com.haulmont.charts.gui.amcharts.model.*;
 import com.haulmont.charts.gui.components.charts.StockChart;
-import com.haulmont.charts.gui.data.EntityDataProvider;
 import com.haulmont.charts.gui.amcharts.model.charts.StockChartGroup;
 import com.haulmont.charts.gui.amcharts.model.charts.StockPanel;
-import com.haulmont.charts.gui.data.DataProvider;
 import com.haulmont.charts.web.gui.ChartLocaleHelper;
 import com.haulmont.charts.web.gui.serialization.CubaStockChartSerializer;
 import com.haulmont.charts.web.widgets.amcharts.CubaAmStockChartScene;
@@ -28,7 +26,6 @@ import com.haulmont.cuba.core.global.Messages;
 import com.haulmont.cuba.core.global.Metadata;
 import com.haulmont.cuba.core.global.UserSessionSource;
 import com.haulmont.cuba.gui.data.CollectionDatasource;
-import com.haulmont.cuba.gui.data.impl.CollectionDsHelper;
 import com.haulmont.cuba.web.gui.components.WebAbstractComponent;
 import org.apache.commons.lang3.BooleanUtils;
 import org.apache.commons.lang3.StringUtils;
@@ -148,35 +145,6 @@ public class WebStockChart extends WebAbstractComponent<CubaAmStockChartScene>
 
     protected StockChartGroup getModel() {
         return component.getChart();
-    }
-
-    @Override
-    public void setDataSetDatasource(String id, CollectionDatasource datasource) {
-        DataSet dataSet = component.getChart().getDataSet(id);
-        if (dataSet != null) {
-            if (datasource == null) {
-                dataSet.setDataProvider(null);
-            } else {
-                CollectionDsHelper.autoRefreshInvalid(datasource, true);
-                dataSet.setDataProvider(new EntityDataProvider(datasource));
-            }
-        }
-    }
-
-    @Override
-    public CollectionDatasource getDataSetDatasource(String id) {
-        DataSet dataSet = component.getChart().getDataSet(id);
-        if (dataSet != null) {
-            DataProvider dataProvider = dataSet.getDataProvider();
-            if (dataProvider != null) {
-                if (dataProvider instanceof EntityDataProvider) {
-                    return ((EntityDataProvider) dataProvider).getDatasource();
-                } else {
-                    throw new IllegalArgumentException("Trying to get datasource from non EntityDataProvider");
-                }
-            }
-        }
-        return null;
     }
 
     @Override
