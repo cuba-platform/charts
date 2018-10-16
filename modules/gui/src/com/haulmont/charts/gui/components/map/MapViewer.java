@@ -5,6 +5,7 @@
 
 package com.haulmont.charts.gui.components.map;
 
+import com.haulmont.bali.events.Subscription;
 import com.haulmont.charts.gui.map.model.*;
 import com.haulmont.charts.gui.map.model.base.MarkerImage;
 import com.haulmont.charts.gui.map.model.base.Point;
@@ -15,30 +16,13 @@ import com.haulmont.charts.gui.map.model.directions.DirectionsWaypoint;
 import com.haulmont.charts.gui.map.model.directions.TravelMode;
 import com.haulmont.charts.gui.map.model.drawing.DrawingOptions;
 import com.haulmont.charts.gui.map.model.layer.HeatMapLayer;
-import com.haulmont.charts.gui.map.model.listeners.InfoWindowClosedListener;
-import com.haulmont.charts.gui.map.model.listeners.MapInitListener;
-import com.haulmont.charts.gui.map.model.listeners.MapMoveListener;
-import com.haulmont.charts.gui.map.model.listeners.PolygonEditListener;
-import com.haulmont.charts.gui.map.model.listeners.centerchange.CircleCenterChangeListener;
-import com.haulmont.charts.gui.map.model.listeners.click.CircleClickListener;
-import com.haulmont.charts.gui.map.model.listeners.click.MapClickListener;
-import com.haulmont.charts.gui.map.model.listeners.click.MarkerClickListener;
-import com.haulmont.charts.gui.map.model.listeners.click.PolygonClickListener;
-import com.haulmont.charts.gui.map.model.listeners.doubleclick.CircleDoubleClickListener;
-import com.haulmont.charts.gui.map.model.listeners.doubleclick.MarkerDoubleClickListener;
-import com.haulmont.charts.gui.map.model.listeners.drag.MarkerDragListener;
-import com.haulmont.charts.gui.map.model.listeners.overlaycomplete.CircleCompleteListener;
-import com.haulmont.charts.gui.map.model.listeners.overlaycomplete.PolygonCompleteListener;
-import com.haulmont.charts.gui.map.model.listeners.radiuschange.CircleRadiusChangeListener;
-import com.haulmont.charts.gui.map.model.listeners.rightclick.CircleRightClickListener;
-import com.haulmont.charts.gui.map.model.listeners.rightclick.MapRightClickListener;
-import com.haulmont.charts.gui.map.model.listeners.rightclick.MarkerRightClickListener;
-import com.haulmont.charts.gui.map.model.listeners.rightclick.PolygonRightClickListener;
 import com.haulmont.charts.gui.map.model.maptype.ImageMapType;
 import com.haulmont.cuba.gui.components.Component;
 
 import java.util.Collection;
+import java.util.EventObject;
 import java.util.List;
+import java.util.function.Consumer;
 
 /**
  * Google map component.
@@ -96,62 +80,254 @@ public interface MapViewer extends Component, Component.BelongToFrame, Component
         }
     }
 
-    void addMarkerClickListener(MarkerClickListener listener);
-    void removeMarkerClickListener(MarkerClickListener listener);
+    /**
+     * Adds a listener to a marker. Called when user clicks on the marker.
+     *
+     * @param listener a listener to add
+     */
+    Subscription addMarkerClickListener(Consumer<MarkerClickEvent> listener);
 
-    void addMarkerDoubleClickListener(MarkerDoubleClickListener listener);
-    void removeMarkerDoubleClickListener(MarkerDoubleClickListener listener);
+    /**
+     * @deprecated Use {@link Subscription} instead
+     */
+    @Deprecated
+    void removeMarkerClickListener(Consumer<MarkerClickEvent> listener);
 
-    void addMarkerDragListener(MarkerDragListener listener);
-    void removeMarkerDragListener(MarkerDragListener listener);
+    /**
+     * Adds a listener to a marker. Called when user double clicks on the marker.
+     *
+     * @param listener a listener to add
+     */
+    Subscription addMarkerDoubleClickListener(Consumer<MarkerDoubleClickEvent> listener);
 
-    void addMarkerRightClickListener(MarkerRightClickListener listener);
-    void removeMarkerRightClickListener(MarkerRightClickListener listener);
+    /**
+     * @deprecated Use {@link Subscription} instead
+     */
+    @Deprecated
+    void removeMarkerDoubleClickListener(Consumer<MarkerDoubleClickEvent> listener);
 
-    void addMapMoveListener(MapMoveListener listener);
-    void removeMapMoveListener(MapMoveListener listener);
+    /**
+     * Adds a listener to a marker. Called when user drags marker on the map.
+     *
+     * @param listener a listener to add
+     */
+    Subscription addMarkerDragListener(Consumer<MarkerDragEvent> listener);
 
-    void addMapClickListener(MapClickListener listener);
-    void removeMapClickListener(MapClickListener listener);
+    /**
+     * @deprecated Use {@link Subscription} instead
+     */
+    @Deprecated
+    void removeMarkerDragListener(Consumer<MarkerDragEvent> listener);
 
-    void addMapRightClickListener(MapRightClickListener listener);
-    void removeMapRightClickListener(MapRightClickListener listener);
+    /**
+     * Adds a listener to a marker. Called when user clicks on the marker.
+     *
+     * @param listener a listener to add
+     */
+    Subscription addMarkerRightClickListener(Consumer<MarkerRightClickEvent> listener);
 
-    void addInfoWindowClosedListener(InfoWindowClosedListener listener);
-    void removeInfoWindowClosedListener(InfoWindowClosedListener listener);
+    /**
+     * @deprecated Use {@link Subscription} instead
+     */
+    @Deprecated
+    void removeMarkerRightClickListener(Consumer<MarkerRightClickEvent> listener);
 
-    void addPolygonCompleteListener(PolygonCompleteListener listener);
-    void removePolygonCompleteListener(PolygonCompleteListener listener);
+    /**
+     * Adds a listener to map. The listener fired when map's center or bounds have been moved. If map's center or
+     * bounds are being changed continuously (when the user is dragging the map for example), then listener will be
+     * fired up only once, on moving finished.
+     *
+     * @param listener a listener to add
+     */
+    Subscription addMapMoveListener(Consumer<MapMoveEvent> listener);
 
-    void addPolygonEditListener(PolygonEditListener listener);
-    void removePolygonEditListener(PolygonEditListener listener);
+    /**
+     * @deprecated Use {@link Subscription} instead
+     */
+    @Deprecated
+    void removeMapMoveListener(Consumer<MapMoveEvent> listener);
 
-    void addPolygonClickListener(PolygonClickListener listener);
-    void removePolygonClickListener(PolygonClickListener listener);
+    /**
+     * Adds a listener to map. Called when user clicks on map.
+     *
+     * @param listener a listener to add
+     */
+    Subscription addMapClickListener(Consumer<MapClickEvent> listener);
 
-    void addPolygonRightClickListener(PolygonRightClickListener listener);
-    void removePolygonRightClickListener(PolygonRightClickListener listener);
+    /**
+     * @deprecated Use {@link Subscription} instead
+     */
+    @Deprecated
+    void removeMapClickListener(Consumer<MapClickEvent> listener);
 
-    void addMapInitListener(MapInitListener listener);
-    void removeMapInitListener(MapInitListener listener);
+    /**
+     * Adds a listener to map. Called when user clicks o the map.
+     *
+     * @param listener a listener to add
+     */
+    Subscription addMapRightClickListener(Consumer<MapRightClickEvent> listener);
 
-    void addCircleClickListener(CircleClickListener listener);
-    void removeCircleClickListener(CircleClickListener listener);
+    /**
+     * @deprecated Use {@link Subscription} instead
+     */
+    @Deprecated
+    void removeMapRightClickListener(Consumer<MapRightClickEvent> listener);
 
-    void addCircleDoubleClickListener(CircleDoubleClickListener listener);
-    void removeCircleDoubleClickListener(CircleDoubleClickListener listener);
+    /**
+     * Adds a listener to info window. The listener to be fired up on info window closing.
+     *
+     * @param listener a listener to add
+     */
+    Subscription addInfoWindowClosedListener(Consumer<InfoWindowCloseEvent> listener);
 
-    void addCircleRadiusChangeListener(CircleRadiusChangeListener listener);
-    void removeCircleRadiusChangeListener(CircleRadiusChangeListener listener);
+    /**
+     * @deprecated Use {@link Subscription} instead
+     */
+    @Deprecated
+    void removeInfoWindowClosedListener(Consumer<InfoWindowCloseEvent> listener);
 
-    void addCircleCenterChangeListener(CircleCenterChangeListener listener);
-    void removeCircleCenterChangeListener(CircleCenterChangeListener listener);
+    /**
+     * Adds a listener to a polygon. Called when user finished drawing polygon, i.e. made the first and the last
+     * vertices of the polygon connected.
+     *
+     * @param listener a listener to add
+     */
+    Subscription addPolygonCompleteListener(Consumer<PolygonCompleteEvent> listener);
 
-    void addCircleCompleteListener(CircleCompleteListener listener);
-    void removeCircleCompleteListener(CircleCompleteListener listener);
+    /**
+     * @deprecated Use {@link Subscription} instead
+     */
+    @Deprecated
+    void removePolygonCompleteListener(Consumer<PolygonCompleteEvent> listener);
 
-    void addCircleRightClickListener(CircleRightClickListener listener);
-    void removeCircleRightClickListener(CircleRightClickListener listener);
+    /**
+     * Adds a listener to a polygon. Called when user adds/removes/moves polygon vertex.
+     *
+     * @param listener a listener to add
+     */
+    Subscription addPolygonEditListener(Consumer<PolygonEditEvent> listener);
+
+    /**
+     * @deprecated Use {@link Subscription} instead
+     */
+    @Deprecated
+    void removePolygonEditListener(Consumer<PolygonEditEvent> listener);
+
+    /**
+     * Adds a listener to a polygon. Called when user clicks on the polygon.
+     *
+     * @param listener a listener to add
+     */
+    Subscription addPolygonClickListener(Consumer<PolygonClickEvent> listener);
+
+    /**
+     * @deprecated Use {@link Subscription} instead
+     */
+    @Deprecated
+    void removePolygonClickListener(Consumer<PolygonClickEvent> listener);
+
+    /**
+     * Adds a listener to a polygon. Called when user clicks on the polygon.
+     *
+     * @param listener a listener to add
+     */
+    Subscription addPolygonRightClickListener(Consumer<PolygonRightClickEvent> listener);
+
+    /**
+     * @deprecated Use {@link Subscription} instead
+     */
+    @Deprecated
+    void removePolygonRightClickListener(Consumer<PolygonRightClickEvent> listener);
+
+    /**
+     * Adds a listener to map. Called when map initialization is finished: tiles are loaded up, coordinates of
+     * center and borders are known etc.
+     *
+     * @param listener a listener to add
+     */
+    Subscription addMapInitListener(Consumer<MapInitEvent> listener);
+
+    /**
+     * @deprecated Use {@link Subscription} instead
+     */
+    @Deprecated
+    void removeMapInitListener(Consumer<MapInitEvent> listener);
+
+    /**
+     * Adds a listener to circle. Called when user clicks on the circle.
+     *
+     * @param listener a listener to add
+     */
+    Subscription addCircleClickListener(Consumer<CircleClickEvent> listener);
+
+    /**
+     * @deprecated Use {@link Subscription} instead
+     */
+    @Deprecated
+    void removeCircleClickListener(Consumer<CircleClickEvent> listener);
+
+    /**
+     * Adds a listener to circle. Called when user double clicks on the circle.
+     *
+     * @param listener a listener to add
+     */
+    Subscription addCircleDoubleClickListener(Consumer<CircleDoubleClickEvent> listener);
+
+    /**
+     * @deprecated Use {@link Subscription} instead
+     */
+    @Deprecated
+    void removeCircleDoubleClickListener(Consumer<CircleDoubleClickEvent> listener);
+
+    /**
+     * Adds a listener to circle. Called when user change
+     *
+     * @param listener a listener to add
+     */
+    Subscription addCircleRadiusChangeListener(Consumer<CircleRadiusChangeEvent> listener);
+
+    /**
+     * @deprecated Use {@link Subscription} instead
+     */
+    @Deprecated
+    void removeCircleRadiusChangeListener(Consumer<CircleRadiusChangeEvent> listener);
+
+    /**
+     * Adds a listener to circle. Called when user changes center of the circle.
+     */
+    Subscription addCircleCenterChangeListener(Consumer<CircleCenterChangeEvent> listener);
+
+    /**
+     * @deprecated Use {@link Subscription} instead
+     */
+    @Deprecated
+    void removeCircleCenterChangeListener(Consumer<CircleCenterChangeEvent> listener);
+
+    /**
+     * Adds a listener to circle. Called when user finished drawing circle.
+     *
+     * @param listener a listener to add
+     */
+    Subscription addCircleCompleteListener(Consumer<CircleCompleteEvent> listener);
+
+    /**
+     * @deprecated Use {@link Subscription} instead
+     */
+    @Deprecated
+    void removeCircleCompleteListener(Consumer<CircleCompleteEvent> listener);
+
+    /**
+     * Adds a listener to circle. Called when user clicks on the circle.
+     *
+     * @param listener a listener to add
+     */
+    Subscription addCircleRightClickListener(Consumer<CircleRightClickEvent> listener);
+
+    /**
+     * @deprecated Use {@link Subscription} instead
+     */
+    @Deprecated
+    void removeCircleRightClickListener(Consumer<CircleRightClickEvent> listener);
 
     /**
      * Creates geo point with no coordinates
@@ -486,14 +662,14 @@ public interface MapViewer extends Component, Component.BelongToFrame, Component
     /**
      * @return coordinate of a north-east map corner. Note that border coordinates are not known
      * before map fully initialized. If you need to know border during screen initialization,
-     * use {@link com.haulmont.charts.gui.components.map.MapViewer#addMapInitListener(com.haulmont.charts.gui.map.model.listeners.MapInitListener)}
+     * use {@link com.haulmont.charts.gui.components.map.MapViewer#addMapInitListener(Consumer)}
      */
     GeoPoint getBoundNorthEast();
 
     /**
      * @return coordinate of a south-west map corner. Note that border coordinates are not known
      * before map fully initialized. If you need to know border during screen initialization,
-     * use {@link com.haulmont.charts.gui.components.map.MapViewer#addMapInitListener(com.haulmont.charts.gui.map.model.listeners.MapInitListener)}
+     * use {@link com.haulmont.charts.gui.components.map.MapViewer#addMapInitListener(Consumer)}
      */
     GeoPoint getBoundSouthWest();
 
@@ -760,4 +936,407 @@ public interface MapViewer extends Component, Component.BelongToFrame, Component
      * @return whether vertex removing is available or not
      */
     boolean isVertexRemovingEnabled();
+
+    abstract class AbstractMapEvent extends EventObject {
+
+        public AbstractMapEvent(MapViewer source) {
+            super(source);
+        }
+
+        @Override
+        public MapViewer getSource() {
+            return (MapViewer) super.getSource();
+        }
+    }
+
+    /**
+     * Describes marker click event.
+     */
+    class MarkerClickEvent extends AbstractMapEvent {
+        private Marker marker;
+
+        public MarkerClickEvent(MapViewer mapViewer, Marker marker) {
+            super(mapViewer);
+            this.marker = marker;
+        }
+
+        public Marker getMarker() {
+            return marker;
+        }
+    }
+
+    /**
+     * Describes marker double click event.
+     */
+    class MarkerDoubleClickEvent extends AbstractMapEvent {
+        private Marker marker;
+
+        public MarkerDoubleClickEvent(MapViewer mapViewer, Marker marker) {
+            super(mapViewer);
+            this.marker = marker;
+        }
+
+        public Marker getMarker() {
+            return marker;
+        }
+    }
+
+    /**
+     * Describes marker drag event.
+     */
+    class MarkerDragEvent extends AbstractMapEvent {
+        private Marker marker;
+        private GeoPoint oldPosition;
+
+        public MarkerDragEvent(MapViewer mapViewer, Marker marker, GeoPoint oldPosition) {
+            super(mapViewer);
+            this.marker = marker;
+            this.oldPosition = oldPosition;
+        }
+
+        public Marker getMarker() {
+            return marker;
+        }
+
+        public GeoPoint getOldPosition() {
+            return oldPosition;
+        }
+    }
+
+    /**
+     * Describes marker right click event.
+     */
+    class MarkerRightClickEvent extends AbstractMapEvent {
+        protected Marker marker;
+
+        public MarkerRightClickEvent(MapViewer mapViewer, Marker marker) {
+            super(mapViewer);
+            this.marker = marker;
+        }
+
+        public Marker getMarker() {
+            return marker;
+        }
+    }
+
+    /**
+     * Describes map move event.
+     */
+    class MapMoveEvent extends AbstractMapEvent {
+        private double zoom;
+        private GeoPoint center;
+        private GeoPoint boundsNE;
+        private GeoPoint boundsSW;
+
+        public MapMoveEvent(MapViewer mapViewer, double zoom, GeoPoint center, GeoPoint boundsNE, GeoPoint boundsSW) {
+            super(mapViewer);
+            this.zoom = zoom;
+            this.center = center;
+            this.boundsNE = boundsNE;
+            this.boundsSW = boundsSW;
+        }
+
+        public double getZoom() {
+            return zoom;
+        }
+
+        public GeoPoint getCenter() {
+            return center;
+        }
+
+        public GeoPoint getBoundsNE() {
+            return boundsNE;
+        }
+
+        public GeoPoint getBoundsSW() {
+            return boundsSW;
+        }
+    }
+
+    /**
+     * Describes map click event.
+     */
+    class MapClickEvent extends AbstractMapEvent {
+        private GeoPoint position;
+
+        public MapClickEvent(MapViewer mapViewer, GeoPoint position) {
+            super(mapViewer);
+            this.position = position;
+        }
+
+        public GeoPoint getPosition() {
+            return position;
+        }
+    }
+
+    /**
+     * Describes map right click event.
+     */
+    class MapRightClickEvent extends AbstractMapEvent {
+        protected GeoPoint position;
+
+        public MapRightClickEvent(MapViewer mapViewer, GeoPoint position) {
+            super(mapViewer);
+            this.position = position;
+        }
+
+        public GeoPoint getPosition() {
+            return position;
+        }
+    }
+
+    /**
+     * Describes info window close event.
+     */
+    class InfoWindowCloseEvent extends AbstractMapEvent {
+        private InfoWindow infoWindow;
+
+        public InfoWindowCloseEvent(MapViewer mapViewer, InfoWindow infoWindow) {
+            super(mapViewer);
+            this.infoWindow = infoWindow;
+        }
+
+        public InfoWindow getInfoWindow() {
+            return infoWindow;
+        }
+    }
+
+    /**
+     * Describes polygon complete event.
+     */
+    class PolygonCompleteEvent extends AbstractMapEvent {
+        private Polygon polygon;
+
+        public PolygonCompleteEvent(MapViewer mapViewer, Polygon polygon) {
+            super(mapViewer);
+            this.polygon = polygon;
+        }
+
+        public Polygon getPolygon() {
+            return polygon;
+        }
+    }
+
+    /**
+     * Describes polygon edit event.
+     */
+    class PolygonEditEvent extends AbstractMapEvent {
+        private Polygon polygon;
+        private ActionType actionType;
+        private int index;
+        private GeoPoint geoPoint;
+
+        /**
+         * Polygon edit action type
+         *
+         * <br> {@link #INSERT} - vertex have been inserted into polygon
+         * <br> {@link #REMOVE} - vertex have been removed from polygon
+         * <br> {@link #SET} - vertex coordinates have been changed
+         */
+        public enum ActionType {
+            INSERT,
+            REMOVE,
+            SET
+        }
+
+        public PolygonEditEvent(MapViewer mapViewer, Polygon polygon, ActionType actionType, int index,
+                                GeoPoint geoPoint) {
+            super(mapViewer);
+            this.polygon = polygon;
+            this.actionType = actionType;
+            this.index = index;
+            this.geoPoint = geoPoint;
+        }
+
+        public Polygon getPolygon() {
+            return polygon;
+        }
+
+        public ActionType getActionType() {
+            return actionType;
+        }
+
+        public int getIndex() {
+            return index;
+        }
+
+        public GeoPoint getGeoPoint() {
+            return geoPoint;
+        }
+    }
+
+    /**
+     * Describes polygon click event.
+     */
+    class PolygonClickEvent extends AbstractMapEvent {
+        protected Polygon polygon;
+
+        public PolygonClickEvent(MapViewer mapViewer, Polygon polygon) {
+            super(mapViewer);
+            this.polygon = polygon;
+        }
+
+        public Polygon getPolygon() {
+            return polygon;
+        }
+    }
+
+    /**
+     * Describes polygon right click event.
+     */
+    class PolygonRightClickEvent extends AbstractMapEvent {
+        protected Polygon polygon;
+
+        public PolygonRightClickEvent(MapViewer mapViewer, Polygon polygon) {
+            super(mapViewer);
+            this.polygon = polygon;
+        }
+
+        public Polygon getPolygon() {
+            return polygon;
+        }
+    }
+
+    /**
+     * Describes map init event.
+     */
+    class MapInitEvent extends AbstractMapEvent {
+        protected GeoPoint center;
+        protected int zoom;
+        protected GeoPoint boundNE;
+        protected GeoPoint boundSW;
+
+        public MapInitEvent(MapViewer mapViewer, GeoPoint center, int zoom, GeoPoint boundNE, GeoPoint boundSW) {
+            super(mapViewer);
+            this.center = center;
+            this.zoom = zoom;
+            this.boundNE = boundNE;
+            this.boundSW = boundSW;
+        }
+
+        public GeoPoint getCenter() {
+            return center;
+        }
+
+        public int getZoom() {
+            return zoom;
+        }
+
+        public GeoPoint getBoundNE() {
+            return boundNE;
+        }
+
+        public GeoPoint getBoundSW() {
+            return boundSW;
+        }
+    }
+
+    /**
+     * Describes circle click event.
+     */
+    class CircleClickEvent extends AbstractMapEvent {
+        private Circle circle;
+
+        public CircleClickEvent(MapViewer mapViewer, Circle circle) {
+            super(mapViewer);
+            this.circle = circle;
+        }
+
+        public Circle getCircle() {
+            return circle;
+        }
+    }
+
+    /**
+     * Describes circle double click event.
+     */
+    class CircleDoubleClickEvent extends AbstractMapEvent {
+        private Circle circle;
+
+        public CircleDoubleClickEvent(MapViewer mapViewer, Circle circle) {
+            super(mapViewer);
+            this.circle = circle;
+        }
+
+        public Circle getCircle() {
+            return circle;
+        }
+    }
+
+    /**
+     * Describes circle radius change event.
+     */
+    class CircleRadiusChangeEvent extends AbstractMapEvent {
+
+        private Circle circle;
+        private double oldRadius;
+
+        public CircleRadiusChangeEvent(MapViewer mapViewer, Circle circle, double oldRadius) {
+            super(mapViewer);
+            this.circle = circle;
+            this.oldRadius = oldRadius;
+        }
+
+        public Circle getCircle() {
+            return circle;
+        }
+
+        public double getOldRadius() {
+            return oldRadius;
+        }
+    }
+
+    /**
+     * Describes circle center change event.
+     */
+    class CircleCenterChangeEvent extends AbstractMapEvent {
+        private Circle circle;
+        private GeoPoint oldCenter;
+
+        public CircleCenterChangeEvent(MapViewer mapViewer, Circle circle, GeoPoint oldCenter) {
+            super(mapViewer);
+            this.circle = circle;
+            this.oldCenter = oldCenter;
+        }
+
+        public Circle getCircle() {
+            return circle;
+        }
+
+        public GeoPoint getOldCenter() {
+            return oldCenter;
+        }
+    }
+
+    /**
+     * Describes circle complete event.
+     */
+    class CircleCompleteEvent extends AbstractMapEvent {
+        private Circle circle;
+
+        public CircleCompleteEvent(MapViewer mapViewer, Circle circle) {
+            super(mapViewer);
+            this.circle = circle;
+        }
+
+        public Circle getCircle() {
+            return circle;
+        }
+    }
+
+    /**
+     * Describes circle right click event.
+     */
+    class CircleRightClickEvent extends AbstractMapEvent {
+        protected Circle circle;
+
+        public CircleRightClickEvent(MapViewer mapViewer, Circle circle) {
+            super(mapViewer);
+            this.circle = circle;
+        }
+
+        public Circle getCircle() {
+            return circle;
+        }
+    }
 }

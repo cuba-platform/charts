@@ -5,6 +5,7 @@
 
 package com.haulmont.charts.web.gui.components.charts.amcharts;
 
+import com.haulmont.bali.events.Subscription;
 import com.haulmont.charts.gui.amcharts.model.*;
 import com.haulmont.charts.gui.components.charts.Chart;
 import com.haulmont.charts.gui.amcharts.model.charts.AbstractChart;
@@ -29,6 +30,7 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Locale;
 import java.util.Objects;
+import java.util.function.Consumer;
 
 @SuppressWarnings("unchecked")
 public abstract class WebChart<T extends Chart, M extends AbstractChart>
@@ -694,126 +696,142 @@ public abstract class WebChart<T extends Chart, M extends AbstractChart>
     }
 
     @Override
-    public void addClickListener(ChartClickListener listener) {
-        getEventRouter().addListener(ChartClickListener.class, listener);
+    public Subscription addClickListener(Consumer<ChartClickEvent> listener) {
         if (clickHandler == null) {
-            clickHandler = e -> {
-                ChartClickEvent event = new ChartClickEvent(e.getX(), e.getY(), e.getAbsoluteX(), e.getAbsoluteY(),
-                        e.getXAxis(), e.getYAxis());
-                getEventRouter().fireEvent(ChartClickListener.class, ChartClickListener::onClick, event);
-            };
+            clickHandler = this::onChartClick;
             component.addChartClickListener(clickHandler);
         }
+
+        return getEventHub().subscribe(ChartClickEvent.class, listener);
+    }
+
+    protected void onChartClick(com.haulmont.charts.web.widgets.amcharts.events.ChartClickEvent e) {
+        publish(ChartClickEvent.class,
+                new ChartClickEvent(this, e.getX(), e.getY(), e.getAbsoluteX(),
+                        e.getAbsoluteY(), e.getXAxis(), e.getYAxis()));
     }
 
     @Override
-    public void removeClickListener(ChartClickListener listener) {
-        getEventRouter().removeListener(ChartClickListener.class, listener);
-        if (clickHandler != null && !getEventRouter().hasListeners(ChartClickListener.class)) {
+    public void removeClickListener(Consumer<ChartClickEvent> listener) {
+        unsubscribe(ChartClickEvent.class, listener);
+        if (clickHandler != null && !hasSubscriptions(ChartClickEvent.class)) {
             component.removeChartClickListener(clickHandler);
             clickHandler = null;
         }
     }
 
     @Override
-    public void addRightClickListener(ChartRightClickListener listener) {
-        getEventRouter().addListener(ChartRightClickListener.class, listener);
-        rightClickHandler = e -> {
-            ChartRightClickEvent event = new ChartRightClickEvent(e.getX(), e.getY(), e.getAbsoluteX(), e.getAbsoluteY(),
-                    e.getXAxis(), e.getYAxis());
-            getEventRouter().fireEvent(ChartRightClickListener.class, ChartRightClickListener::onRightClick, event);
-        };
-        component.addChartRightClickListener(rightClickHandler);
+    public Subscription addRightClickListener(Consumer<ChartRightClickEvent> listener) {
+        if (rightClickHandler == null) {
+            rightClickHandler = this::onChartRightClick;
+            component.addChartRightClickListener(rightClickHandler);
+        }
+
+        return getEventHub().subscribe(ChartRightClickEvent.class, listener);
+    }
+
+    protected void onChartRightClick(com.haulmont.charts.web.widgets.amcharts.events.ChartRightClickEvent e) {
+        publish(ChartRightClickEvent.class,
+                new ChartRightClickEvent(this, e.getX(), e.getY(), e.getAbsoluteX(),
+                        e.getAbsoluteY(), e.getXAxis(), e.getYAxis()));
     }
 
     @Override
-    public void removeRightClickListener(ChartRightClickListener listener) {
-        getEventRouter().removeListener(ChartRightClickListener.class, listener);
-        if (rightClickHandler != null && !getEventRouter().hasListeners(ChartRightClickListener.class)) {
+    public void removeRightClickListener(Consumer<ChartRightClickEvent> listener) {
+        unsubscribe(ChartRightClickEvent.class, listener);
+        if (rightClickHandler != null && !hasSubscriptions(ChartRightClickEvent.class)) {
             component.removeChartRightClickListener(rightClickHandler);
             rightClickHandler = null;
         }
     }
 
     @Override
-    public void addLegendItemHideListener(LegendItemHideListener listener) {
-        getEventRouter().addListener(LegendItemHideListener.class, listener);
+    public Subscription addLegendItemHideListener(Consumer<LegendItemHideEvent> listener) {
         if (legendItemHideHandler == null) {
-            legendItemHideHandler = e -> {
-                LegendItemHideEvent event = new LegendItemHideEvent(this, e.getItemIndex(), e.getDataItem());
-                getEventRouter().fireEvent(LegendItemHideListener.class, LegendItemHideListener::onHide, event);
-            };
+            legendItemHideHandler = this::onLegendItemHide;
             component.addLegendItemHideListener(legendItemHideHandler);
         }
+
+        return getEventHub().subscribe(LegendItemHideEvent.class, listener);
+    }
+
+    protected void onLegendItemHide(com.haulmont.charts.web.widgets.amcharts.events.LegendItemHideEvent e) {
+        publish(LegendItemHideEvent.class, new LegendItemHideEvent(this, e.getItemIndex(), e.getDataItem()));
     }
 
     @Override
-    public void removeLegendItemHideListener(LegendItemHideListener listener) {
-        getEventRouter().removeListener(LegendItemHideListener.class, listener);
-        if (legendItemHideHandler != null && !getEventRouter().hasListeners(LegendItemHideListener.class)) {
+    public void removeLegendItemHideListener(Consumer<LegendItemHideEvent> listener) {
+        unsubscribe(LegendItemHideEvent.class, listener);
+        if (legendItemHideHandler != null && !hasSubscriptions(LegendItemHideEvent.class)) {
             component.removeLegendItemHideListener(legendItemHideHandler);
             legendItemHideHandler = null;
         }
     }
 
     @Override
-    public void addLegendItemShowListener(LegendItemShowListener listener) {
-        getEventRouter().addListener(LegendItemShowListener.class, listener);
+    public Subscription addLegendItemShowListener(Consumer<LegendItemShowEvent> listener) {
         if (legendItemShowHandler == null) {
-            legendItemShowHandler = e -> {
-                LegendItemShowEvent event = new LegendItemShowEvent(this, e.getItemIndex(), e.getDataItem());
-                getEventRouter().fireEvent(LegendItemShowListener.class, LegendItemShowListener::onShow, event);
-            };
+            legendItemShowHandler = this::onLegendItemShow;
             component.addLegendItemShowListener(legendItemShowHandler);
         }
+
+        return getEventHub().subscribe(LegendItemShowEvent.class, listener);
+    }
+
+    protected void onLegendItemShow(com.haulmont.charts.web.widgets.amcharts.events.LegendItemShowEvent e) {
+        publish(LegendItemShowEvent.class, new LegendItemShowEvent(this, e.getItemIndex(), e.getDataItem()));
     }
 
     @Override
-    public void removeLegendItemShowListener(LegendItemShowListener listener) {
-        getEventRouter().removeListener(LegendItemShowListener.class, listener);
-        if (legendItemShowHandler != null && !getEventRouter().hasListeners(LegendItemShowListener.class)) {
+    public void removeLegendItemShowListener(Consumer<LegendItemShowEvent> listener) {
+        unsubscribe(LegendItemShowEvent.class, listener);
+        if (legendItemShowHandler != null && !hasSubscriptions(LegendItemShowEvent.class)) {
             component.removeLegendItemShowListener(legendItemShowHandler);
             legendItemShowHandler = null;
         }
     }
 
     @Override
-    public void addLegendLabelClickListener(LegendItemClickListener listener) {
-        getEventRouter().addListener(LegendItemClickListener.class, listener);
+    public Subscription addLegendLabelClickListener(Consumer<LegendItemClickEvent> listener) {
         if (legendLabelClickHandler == null) {
-            legendLabelClickHandler = e -> {
-                LegendItemClickEvent event = new LegendItemClickEvent(this, e.getItemIndex(), e.getDataItem());
-                getEventRouter().fireEvent(LegendItemClickListener.class, LegendItemClickListener::onClick, event);
-            };
+            legendLabelClickHandler = this::onLegendLabelClick;
             component.addLegendLabelClickListener(legendLabelClickHandler);
         }
+
+        return getEventHub().subscribe(LegendItemClickEvent.class, listener);
+    }
+
+    protected void onLegendLabelClick(com.haulmont.charts.web.widgets.amcharts.events.LegendLabelClickEvent e) {
+        publish(LegendItemClickEvent.class, new LegendItemClickEvent(this, e.getItemIndex(), e.getDataItem()));
     }
 
     @Override
-    public void removeLegendLabelClickListener(LegendItemClickListener listener) {
-        getEventRouter().removeListener(LegendItemClickListener.class, listener);
-        if (legendLabelClickHandler != null && !getEventRouter().hasListeners(LegendItemClickListener.class)) {
+    public void removeLegendLabelClickListener(Consumer<LegendItemClickEvent> listener) {
+        unsubscribe(LegendItemClickEvent.class, listener);
+        if (legendLabelClickHandler != null && !hasSubscriptions(LegendItemClickEvent.class)) {
             component.removeLegendLabelClickListener(legendLabelClickHandler);
             legendLabelClickHandler = null;
         }
     }
 
     @Override
-    public void addLegendMarkerClickListener(LegendMarkerClickListener listener) {
-        getEventRouter().addListener(LegendMarkerClickListener.class, listener);
+    public Subscription addLegendMarkerClickListener(Consumer<LegendMarkerClickEvent> listener) {
         if (legendMarkerClickHandler == null) {
-            legendMarkerClickHandler = e -> {
-                LegendMarkerClickEvent event = new LegendMarkerClickEvent(this, e.getItemIndex(), e.getDataItem());
-                getEventRouter().fireEvent(LegendMarkerClickListener.class, LegendMarkerClickListener::onMarkerClick, event);
-            };
+            legendMarkerClickHandler = this::onLegendMarkerClick;
             component.addLegendMarkerClickListener(legendMarkerClickHandler);
         }
+
+        return getEventHub().subscribe(LegendMarkerClickEvent.class, listener);
+    }
+
+    protected void onLegendMarkerClick(com.haulmont.charts.web.widgets.amcharts.events.LegendMarkerClickEvent e) {
+        publish(LegendMarkerClickEvent.class, new LegendMarkerClickEvent(this, e.getItemIndex(), e.getDataItem()));
     }
 
     @Override
-    public void removeLegendMarkerClickListener(LegendMarkerClickListener listener) {
-        getEventRouter().removeListener(LegendMarkerClickListener.class, listener);
-        if (legendMarkerClickHandler != null && !getEventRouter().hasListeners(LegendMarkerClickListener.class)) {
+    public void removeLegendMarkerClickListener(Consumer<LegendMarkerClickEvent> listener) {
+        unsubscribe(LegendMarkerClickEvent.class, listener);
+        if (legendMarkerClickHandler != null && !hasSubscriptions(LegendMarkerClickEvent.class)) {
             component.removeLegendMarkerClickListener(legendMarkerClickHandler);
             legendMarkerClickHandler = null;
         }

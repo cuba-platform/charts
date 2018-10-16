@@ -5,6 +5,7 @@
 
 package com.haulmont.charts.gui.components.pivot;
 
+import com.haulmont.bali.events.Subscription;
 import com.haulmont.charts.gui.data.ContainerDataProvider;
 import com.haulmont.charts.gui.data.EntityDataProvider;
 import com.haulmont.charts.gui.data.ListDataProvider;
@@ -19,6 +20,7 @@ import javax.annotation.Nullable;
 import java.util.EventObject;
 import java.util.List;
 import java.util.Map;
+import java.util.function.Consumer;
 
 public interface PivotTable extends Component, Component.BelongToFrame, Component.HasXmlDescriptor, Component.Editable,
         Component.HasCaption {
@@ -591,9 +593,17 @@ public interface PivotTable extends Component, Component.BelongToFrame, Componen
      */
     void setEmptyDataMessage(String emptyDataMessage);
 
-    void addRefreshListener(RefreshListener refreshListener);
+    /**
+     * Adds a listener to the pivot table refresh events. Fired only for editable PivotTable.
+     * @param refreshListener a listener to add
+     */
+    Subscription addRefreshListener(Consumer<RefreshEvent> refreshListener);
 
-    void removeRefreshListener(RefreshListener refreshListener);
+    /**
+     * @deprecated Use {@link Subscription} instead
+     */
+    @Deprecated
+    void removeRefreshListener(Consumer<RefreshEvent> refreshListener);
 
     /**
      * Describes PivotTable refresh event.
@@ -711,25 +721,19 @@ public interface PivotTable extends Component, Component.BelongToFrame, Componen
     }
 
     /**
-     * Listener to the pivot table refresh events. Fired only for editable PivotTable.
-     */
-    @FunctionalInterface
-    interface RefreshListener {
-        void onRefresh(RefreshEvent event);
-    }
-
-    /**
      * Adds a listener to the pivot table cell click events. Fired only for table
      * renderers (table, heatmap, table barchart, col heatmap, row heatmap).
      *
      * @param listener a listener to add
      */
-    void addCellClickListener(CellClickListener listener);
+    Subscription addCellClickListener(Consumer<CellClickEvent> listener);
 
     /**
      * @param listener a listener to remove
+     * @deprecated Use {@link Subscription} instead
      */
-    void removeCellClickListener(CellClickListener listener);
+    @Deprecated
+    void removeCellClickListener(Consumer<CellClickEvent> listener);
 
     /**
      * Describes PivotTable cell click event.
@@ -765,14 +769,5 @@ public interface PivotTable extends Component, Component.BelongToFrame, Componen
         public Map<String, String> getFilters() {
             return filters;
         }
-    }
-
-    /**
-     * Listener to the pivot table cell click events. Fired only for table
-     * renderers (table, heatmap, table barchart, col heatmap, row heatmap).
-     */
-    @FunctionalInterface
-    interface CellClickListener {
-        void onCellClick(CellClickEvent event);
     }
 }

@@ -5,6 +5,7 @@
 
 package com.haulmont.charts.web.gui.components.pivottable;
 
+import com.haulmont.bali.events.Subscription;
 import com.haulmont.charts.gui.components.pivot.PivotTable;
 import com.haulmont.charts.gui.model.JsFunction;
 import com.haulmont.charts.gui.pivottable.model.*;
@@ -25,6 +26,7 @@ import java.util.List;
 import java.util.Locale;
 import java.util.Map;
 import java.util.Objects;
+import java.util.function.Consumer;
 
 public class WebPivotTable extends WebAbstractComponent<CubaPivotTable> implements PivotTable, InitializingBean {
 
@@ -407,47 +409,50 @@ public class WebPivotTable extends WebAbstractComponent<CubaPivotTable> implemen
     }
 
     @Override
-    public void addRefreshListener(RefreshListener refreshListener) {
-        getEventRouter().addListener(RefreshListener.class, refreshListener);
+    public Subscription addRefreshListener(Consumer<RefreshEvent> refreshListener) {
         if (refreshHandler == null) {
-            refreshHandler = e -> {
-                RefreshEvent event = new RefreshEvent(WebPivotTable.this,
-                        e.getRows(), e.getCols(), e.getRenderer(),
-                        e.getAggregation(), e.getAggregationProperties(),
-                        e.getInclusions(), e.getExclusions(),
-                        e.getColumnOrder(), e.getRowOrder());
-
-                getEventRouter().fireEvent(RefreshListener.class, RefreshListener::onRefresh, event);
-            };
+            refreshHandler = this::onRefresh;
             component.addRefreshListener(refreshHandler);
         }
+        return getEventHub().subscribe(RefreshEvent.class, refreshListener);
+    }
+
+    protected void onRefresh(com.haulmont.charts.web.widgets.pivottable.events.RefreshEvent e) {
+        RefreshEvent event = new RefreshEvent(WebPivotTable.this,
+                e.getRows(), e.getCols(), e.getRenderer(),
+                e.getAggregation(), e.getAggregationProperties(),
+                e.getInclusions(), e.getExclusions(),
+                e.getColumnOrder(), e.getRowOrder());
+
+        publish(RefreshEvent.class, event);
     }
 
     @Override
-    public void removeRefreshListener(RefreshListener refreshListener) {
-        getEventRouter().removeListener(RefreshListener.class, refreshListener);
-        if (refreshHandler != null && !getEventRouter().hasListeners(RefreshListener.class)) {
+    public void removeRefreshListener(Consumer<RefreshEvent> refreshListener) {
+        unsubscribe(RefreshEvent.class, refreshListener);
+        if (refreshHandler != null && !hasSubscriptions(RefreshEvent.class)) {
             component.removeRefreshListener(refreshHandler);
             refreshHandler = null;
         }
     }
 
     @Override
-    public void addCellClickListener(CellClickListener listener) {
-        getEventRouter().addListener(CellClickListener.class, listener);
+    public Subscription addCellClickListener(Consumer<CellClickEvent> listener) {
         if (cellClickHandler == null) {
-            cellClickHandler = e -> {
-                CellClickEvent event = new CellClickEvent(WebPivotTable.this, e.getValue(), e.getFilters());
-                getEventRouter().fireEvent(CellClickListener.class, CellClickListener::onCellClick, event);
-            };
+            cellClickHandler = this::onCellClick;
             component.addCellClickListener(cellClickHandler);
         }
+        return getEventHub().subscribe(CellClickEvent.class, listener);
+    }
+
+    protected void onCellClick(com.haulmont.charts.web.widgets.pivottable.events.CellClickEvent e) {
+        publish(CellClickEvent.class, new CellClickEvent(WebPivotTable.this, e.getValue(), e.getFilters()));
     }
 
     @Override
-    public void removeCellClickListener(CellClickListener listener) {
-        getEventRouter().removeListener(CellClickListener.class, listener);
-        if (cellClickHandler != null && !getEventRouter().hasListeners(CellClickListener.class)) {
+    public void removeCellClickListener(Consumer<CellClickEvent> listener) {
+        unsubscribe(CellClickEvent.class, listener);
+        if (cellClickHandler != null && !hasSubscriptions(CellClickEvent.class)) {
             component.removeCellClickListener(cellClickHandler);
             cellClickHandler = null;
         }

@@ -5,6 +5,7 @@
 
 package com.haulmont.charts.web.gui.components.map.google;
 
+import com.haulmont.bali.events.Subscription;
 import com.haulmont.bali.util.Preconditions;
 import com.haulmont.charts.core.global.MapConfig;
 import com.haulmont.charts.gui.components.map.GoogleMapViewer;
@@ -19,29 +20,6 @@ import com.haulmont.charts.gui.map.model.directions.DirectionsWaypoint;
 import com.haulmont.charts.gui.map.model.directions.TravelMode;
 import com.haulmont.charts.gui.map.model.drawing.DrawingOptions;
 import com.haulmont.charts.gui.map.model.layer.HeatMapLayer;
-import com.haulmont.charts.gui.map.model.listeners.InfoWindowClosedListener;
-import com.haulmont.charts.gui.map.model.listeners.MapInitListener;
-import com.haulmont.charts.gui.map.model.listeners.MapMoveListener;
-import com.haulmont.charts.gui.map.model.listeners.PolygonEditListener;
-import com.haulmont.charts.gui.map.model.listeners.centerchange.CircleCenterChangeListener;
-import com.haulmont.charts.gui.map.model.listeners.click.CircleClickListener;
-import com.haulmont.charts.gui.map.model.listeners.click.MapClickListener;
-import com.haulmont.charts.gui.map.model.listeners.click.MarkerClickListener;
-import com.haulmont.charts.gui.map.model.listeners.click.PolygonClickListener;
-import com.haulmont.charts.gui.map.model.listeners.doubleclick.CircleDoubleClickListener;
-import com.haulmont.charts.gui.map.model.listeners.doubleclick.MarkerDoubleClickListener;
-import com.haulmont.charts.gui.map.model.listeners.drag.MarkerDragListener;
-import com.haulmont.charts.gui.map.model.listeners.overlaycomplete.CircleCompleteListener;
-import com.haulmont.charts.gui.map.model.listeners.overlaycomplete.PolygonCompleteListener;
-import com.haulmont.charts.gui.map.model.listeners.radiuschange.CircleRadiusChangeListener;
-import com.haulmont.charts.gui.map.model.listeners.rightclick.CircleRightClickListener;
-import com.haulmont.charts.gui.map.model.listeners.rightclick.CircleRightClickListener.CircleRightClickEvent;
-import com.haulmont.charts.gui.map.model.listeners.rightclick.MapRightClickListener;
-import com.haulmont.charts.gui.map.model.listeners.rightclick.MapRightClickListener.MapRightClickEvent;
-import com.haulmont.charts.gui.map.model.listeners.rightclick.MarkerRightClickListener;
-import com.haulmont.charts.gui.map.model.listeners.rightclick.MarkerRightClickListener.MarkerRightClickEvent;
-import com.haulmont.charts.gui.map.model.listeners.rightclick.PolygonRightClickListener;
-import com.haulmont.charts.gui.map.model.listeners.rightclick.PolygonRightClickListener.PolygonRightClickEvent;
 import com.haulmont.charts.gui.map.model.maptype.ImageMapType;
 import com.haulmont.charts.web.gui.components.map.google.base.MarkerImageDelegate;
 import com.haulmont.charts.web.gui.components.map.google.base.PointDelegate;
@@ -53,6 +31,7 @@ import com.haulmont.charts.web.gui.components.map.google.layer.HeatMapLayerDeleg
 import com.haulmont.charts.web.gui.components.map.google.maptype.ImageMapTypeDelegate;
 import com.haulmont.charts.web.widgets.addons.googlemap.GoogleMap;
 import com.haulmont.charts.web.widgets.client.addons.googlemap.base.LatLon;
+import com.haulmont.charts.web.widgets.client.addons.googlemap.events.PolygonEditListener;
 import com.haulmont.charts.web.widgets.client.addons.googlemap.layers.GoogleMapHeatMapLayer;
 import com.haulmont.charts.web.widgets.client.addons.googlemap.overlays.*;
 import com.haulmont.cuba.core.global.AppBeans;
@@ -65,14 +44,7 @@ import org.slf4j.LoggerFactory;
 import java.util.ArrayList;
 import java.util.Collection;
 import java.util.List;
-
-import static com.haulmont.charts.gui.map.model.listeners.InfoWindowClosedListener.InfoWindowCloseEvent;
-import static com.haulmont.charts.gui.map.model.listeners.MapMoveListener.MapMoveEvent;
-import static com.haulmont.charts.gui.map.model.listeners.click.MapClickListener.MapClickEvent;
-import static com.haulmont.charts.gui.map.model.listeners.click.MarkerClickListener.MarkerClickEvent;
-import static com.haulmont.charts.gui.map.model.listeners.doubleclick.MarkerDoubleClickListener.MarkerDoubleClickEvent;
-import static com.haulmont.charts.gui.map.model.listeners.drag.MarkerDragListener.MarkerDragEvent;
-import static com.haulmont.charts.gui.map.model.listeners.overlaycomplete.PolygonCompleteListener.PolygonCompleteEvent;
+import java.util.function.Consumer;
 
 public class WebGoogleMapViewer extends WebAbstractComponent<GoogleMap> implements MapViewer, GoogleMapViewer {
 
@@ -80,52 +52,27 @@ public class WebGoogleMapViewer extends WebAbstractComponent<GoogleMap> implemen
 
     protected MapConfig mapConfig = AppBeans.get(Configuration.class).getConfig(MapConfig.class);
 
-    protected List<MapMoveListener> mapMoveListeners;
     protected com.haulmont.charts.web.widgets.client.addons.googlemap.events.MapMoveListener mapMoveHandler;
-
-    protected List<MapClickListener> mapClickListeners;
     protected com.haulmont.charts.web.widgets.client.addons.googlemap.events.click.MapClickListener mapClickHandler;
     protected com.haulmont.charts.web.widgets.client.addons.googlemap.events.rightclick.MapRightClickListener mapRightClickHandler;
+    protected com.haulmont.charts.web.widgets.client.addons.googlemap.events.MapInitListener mapInitHandler;
 
-    protected List<MarkerDragListener> markerDragListeners;
     protected com.haulmont.charts.web.widgets.client.addons.googlemap.events.MarkerDragListener markerDragHandler;
-
-    protected List<MarkerClickListener> markerClickListeners;
     protected com.haulmont.charts.web.widgets.client.addons.googlemap.events.click.MarkerClickListener markerClickHandler;
-
-    protected List<MarkerDoubleClickListener> markerDoubleClickListeners;
     protected com.haulmont.charts.web.widgets.client.addons.googlemap.events.doubleclick.MarkerDoubleClickListener markerDoubleClickHandler;
     protected com.haulmont.charts.web.widgets.client.addons.googlemap.events.rightclick.MarkerRightClickListener markerRightClickHandler;
 
-    protected List<InfoWindowClosedListener> infoWindowClosedListeners;
     protected com.haulmont.charts.web.widgets.client.addons.googlemap.events.InfoWindowClosedListener infoWindowClosedHandler;
 
-    protected List<PolygonCompleteListener> polygonCompleteListeners;
     protected com.haulmont.charts.web.widgets.client.addons.googlemap.events.overlaycomplete.PolygonCompleteListener polygonCompleteHandler;
-
-    protected List<PolygonEditListener> polygonEditListeners;
     protected com.haulmont.charts.web.widgets.client.addons.googlemap.events.PolygonEditListener polygonEditHandler;
-
-    protected List<PolygonClickListener> polygonClickListeners;
     protected com.haulmont.charts.web.widgets.client.addons.googlemap.events.click.PolygonClickListener polygonClickHandler;
     protected com.haulmont.charts.web.widgets.client.addons.googlemap.events.rightclick.PolygonRightClickListener polygonRightClickHandler;
 
-    protected List<MapInitListener> mapInitListeners;
-    protected com.haulmont.charts.web.widgets.client.addons.googlemap.events.MapInitListener mapInitHandler;
-
-    protected List<CircleClickListener> circleClickListeners;
     protected com.haulmont.charts.web.widgets.client.addons.googlemap.events.click.CircleClickListener circleClickHandler;
-
-    protected List<CircleDoubleClickListener> circleDoubleClickListeners;
     protected com.haulmont.charts.web.widgets.client.addons.googlemap.events.doubleclick.CircleDoubleClickListener circleDoubleClickHandler;
-
-    protected List<CircleRadiusChangeListener> circleRadiusChangeListeners;
     protected com.haulmont.charts.web.widgets.client.addons.googlemap.events.radiuschange.CircleRadiusChangeListener circleRadiusChangeHandler;
-
-    protected List<CircleCenterChangeListener> circleCenterChangeListeners;
     protected com.haulmont.charts.web.widgets.client.addons.googlemap.events.centerchange.CircleCenterChangeListener circleCenterChangeHandler;
-
-    protected List<CircleCompleteListener> circleCompleteListeners;
     protected com.haulmont.charts.web.widgets.client.addons.googlemap.events.overlaycomplete.CircleCompleteListener circleCompleteHandler;
     protected com.haulmont.charts.web.widgets.client.addons.googlemap.events.rightclick.CircleRightClickListener circleRightClickHandler;
 
@@ -134,23 +81,22 @@ public class WebGoogleMapViewer extends WebAbstractComponent<GoogleMap> implemen
         String key = mapConfig.getApiKey();
         String lang = mapConfig.getLanguage();
 
-        mapInitHandler = (center, zoom, boundsNE, boundsSW) -> {
-            if (mapInitListeners == null) {
-                return;
-            }
-            GeoPointDelegate geoPointCenter = center != null ? new GeoPointDelegate(center) : null;
-            GeoPointDelegate geoPointBoundNE = boundsNE != null ? new GeoPointDelegate(boundsNE) : null;
-            GeoPointDelegate geoPointBoundSW = boundsSW != null ? new GeoPointDelegate(boundsSW) : null;
-            for (MapInitListener l : new ArrayList<>(mapInitListeners)) {
-                l.init(geoPointCenter, zoom, geoPointBoundNE, geoPointBoundSW);
-            }
-        };
+        mapInitHandler = this::onMapInit;
 
         component = new GoogleMap(new LatLon(mapConfig.getDefLatitude(), mapConfig.getDefLongitude()),
                 mapConfig.getDefZoom().intValue(), key, clientId, lang, mapInitHandler, mapConfig.getMapsApiVersion());
 
         String deleteMessage = AppBeans.get(Messages.class).getMainMessage("actions.Remove");
         component.setRemoveMessage(deleteMessage);
+    }
+
+    protected void onMapInit(LatLon center, int zoom, LatLon boundsNE, LatLon boundsSW) {
+        GeoPointDelegate geoPointCenter = center != null ? new GeoPointDelegate(center) : null;
+        GeoPointDelegate geoPointBoundNE = boundsNE != null ? new GeoPointDelegate(boundsNE) : null;
+        GeoPointDelegate geoPointBoundSW = boundsSW != null ? new GeoPointDelegate(boundsSW) : null;
+
+        MapInitEvent event = new MapInitEvent(this, geoPointCenter, zoom, geoPointBoundNE, geoPointBoundSW);
+        publish(MapInitEvent.class, event);
     }
 
     @Override
@@ -488,319 +434,240 @@ public class WebGoogleMapViewer extends WebAbstractComponent<GoogleMap> implemen
     }
 
     @Override
-    public void addMapMoveListener(MapMoveListener listener) {
-        if (mapMoveListeners == null) {
-            mapMoveListeners = new ArrayList<>();
-            mapMoveListeners.add(listener);
-
-            mapMoveHandler = (zoom, center, boundsNE, boundsSW) -> {
-                GeoPointDelegate geoPointCenter = center != null ? new GeoPointDelegate(center) : null;
-                GeoPointDelegate geoPointBoundNE = boundsNE != null ? new GeoPointDelegate(boundsNE) : null;
-                GeoPointDelegate geoPointBoundSW = boundsSW != null ? new GeoPointDelegate(boundsSW) : null;
-                MapMoveEvent event = new MapMoveEvent(zoom, geoPointCenter, geoPointBoundNE, geoPointBoundSW);
-                for (MapMoveListener l : new ArrayList<>(mapMoveListeners)) {
-                    l.onMove(event);
-                }
-            };
-
+    public Subscription addMapMoveListener(Consumer<MapMoveEvent> listener) {
+        if (mapMoveHandler == null) {
+            mapMoveHandler = this::onMapMove;
             component.addMapMoveListener(mapMoveHandler);
-        } else {
-            mapMoveListeners.add(listener);
+        }
+        return getEventHub().subscribe(MapMoveEvent.class, listener);
+    }
+
+    protected void onMapMove(int zoomLevel, LatLon center, LatLon boundsNE, LatLon boundsSW) {
+        GeoPointDelegate geoPointCenter = center != null ? new GeoPointDelegate(center) : null;
+        GeoPointDelegate geoPointBoundNE = boundsNE != null ? new GeoPointDelegate(boundsNE) : null;
+        GeoPointDelegate geoPointBoundSW = boundsSW != null ? new GeoPointDelegate(boundsSW) : null;
+        MapMoveEvent event = new MapMoveEvent(this, zoomLevel, geoPointCenter, geoPointBoundNE, geoPointBoundSW);
+
+        publish(MapMoveEvent.class, event);
+    }
+
+    @Override
+    public void removeMapMoveListener(Consumer<MapMoveEvent> listener) {
+        unsubscribe(MapMoveEvent.class, listener);
+        if (mapMoveHandler != null && !hasSubscriptions(MapMoveEvent.class)) {
+            component.removeMapMoveListener(mapMoveHandler);
+            mapMoveHandler = null;
         }
     }
 
     @Override
-    public void removeMapMoveListener(MapMoveListener listener) {
-        if (mapMoveListeners != null) {
-            mapMoveListeners.remove(listener);
-
-            if (mapMoveListeners.isEmpty()) {
-                component.removeMapMoveListener(mapMoveHandler);
-                mapMoveHandler = null;
-                mapMoveListeners = null;
-            }
-        }
-    }
-
-    @Override
-    public void addMapClickListener(MapClickListener listener) {
-        if (mapClickListeners == null) {
-            mapClickListeners = new ArrayList<>();
-            mapClickListeners.add(listener);
-
-            mapClickHandler = position -> {
-                GeoPointDelegate geoPoint = position != null ? new GeoPointDelegate(position) : null;
-                MapClickEvent event = new MapClickEvent(geoPoint);
-                for (MapClickListener l : new ArrayList<>(mapClickListeners)) {
-                    l.onClick(event);
-                }
-            };
-
+    public Subscription addMapClickListener(Consumer<MapClickEvent> listener) {
+        if (mapClickHandler == null) {
+            mapClickHandler = this::onMapClick;
             component.addMapClickListener(mapClickHandler);
-        } else {
-            mapClickListeners.add(listener);
+        }
+        return getEventHub().subscribe(MapClickEvent.class, listener);
+    }
+
+    protected void onMapClick(LatLon position) {
+        GeoPointDelegate geoPoint = position != null ? new GeoPointDelegate(position) : null;
+
+        publish(MapClickEvent.class, new MapClickEvent(this, geoPoint));
+    }
+
+    @Override
+    public void removeMapClickListener(Consumer<MapClickEvent> listener) {
+        unsubscribe(MapClickEvent.class, listener);
+        if (mapClickHandler != null && !hasSubscriptions(MapClickEvent.class)) {
+            component.removeMapClickListener(mapClickHandler);
+            mapClickHandler = null;
         }
     }
 
     @Override
-    public void removeMapClickListener(MapClickListener listener) {
-        if (mapClickListeners != null) {
-            mapClickListeners.remove(listener);
-
-            if (mapClickListeners.isEmpty()) {
-                component.removeMapClickListener(mapClickHandler);
-                mapClickHandler = null;
-                mapClickListeners = null;
-            }
+    public void removePolygonClickListener(Consumer<PolygonClickEvent> listener) {
+        unsubscribe(PolygonClickEvent.class, listener);
+        if (polygonClickHandler != null && !hasSubscriptions(PolygonClickEvent.class)) {
+            component.removePolygonClickListener(polygonClickHandler);
+            polygonClickHandler = null;
         }
     }
 
     @Override
-    public void removePolygonClickListener(PolygonClickListener listener) {
-        if (polygonClickListeners != null) {
-            polygonClickListeners.remove(listener);
-
-            if (polygonClickListeners.isEmpty()) {
-                component.removePolygonClickListener(polygonClickHandler);
-                polygonClickHandler = null;
-                polygonClickListeners = null;
-            }
-        }
-    }
-
-    @Override
-    public void addPolygonClickListener(PolygonClickListener listener) {
-        if (polygonClickListeners == null) {
-            polygonClickListeners = new ArrayList<>();
-            polygonClickListeners.add(listener);
-
-            polygonClickHandler = polygon -> {
-                if (polygon == null) {
-                    log.warn("Polygon clicked listener have been fired but no polygon received");
-                    return;
-                }
-                PolygonClickListener.PolygonClickEvent event =
-                        new PolygonClickListener.PolygonClickEvent(new PolygonDelegate(polygon));
-                for (PolygonClickListener l : new ArrayList<>(polygonClickListeners)) {
-                    l.onClick(event);
-                }
-            };
-
+    public Subscription addPolygonClickListener(Consumer<PolygonClickEvent> listener) {
+        if (polygonClickHandler == null) {
+            polygonClickHandler = this::onPolygonClick;
             component.addPolygonClickListener(polygonClickHandler);
-        } else {
-            polygonClickListeners.add(listener);
         }
+        return getEventHub().subscribe(PolygonClickEvent.class, listener);
+    }
+
+    protected void onPolygonClick(GoogleMapPolygon polygon) {
+        if (polygon == null) {
+            log.warn("Polygon clicked listener have been fired but no polygon received");
+            return;
+        }
+        publish(PolygonClickEvent.class, new PolygonClickEvent(this, new PolygonDelegate(polygon)));
     }
 
     @Override
-    public void addMarkerDragListener(MarkerDragListener listener) {
-        if (markerDragListeners == null) {
-            markerDragListeners = new ArrayList<>();
-            markerDragListeners.add(listener);
-
-            markerDragHandler = (marker, oldPosition) -> {
-                if (marker == null) {
-                    log.warn("Marker dragged listener have been fired but no marker received");
-                    return;
-                }
-                GeoPointDelegate geoPoint = oldPosition != null ? new GeoPointDelegate(oldPosition) : null;
-                MarkerDragEvent event = new MarkerDragEvent(new MarkerDelegate(marker), geoPoint);
-
-                for (MarkerDragListener l : new ArrayList<>(markerDragListeners)) {
-                    l.onDrag(event);
-                }
-            };
-
+    public Subscription addMarkerDragListener(Consumer<MarkerDragEvent> listener) {
+        if (markerDragHandler == null) {
+            markerDragHandler = this::onMarkerDrag;
             component.addMarkerDragListener(markerDragHandler);
-        } else {
-            markerDragListeners.add(listener);
+        }
+        return getEventHub().subscribe(MarkerDragEvent.class, listener);
+    }
+
+    protected void onMarkerDrag(GoogleMapMarker marker, LatLon oldPosition) {
+        if (marker == null) {
+            log.warn("Marker dragged listener have been fired but no marker received");
+            return;
+        }
+        GeoPointDelegate geoPoint = oldPosition != null ? new GeoPointDelegate(oldPosition) : null;
+        MarkerDragEvent event = new MarkerDragEvent(this, new MarkerDelegate(marker), geoPoint);
+
+        publish(MarkerDragEvent.class, event);
+    }
+
+    @Override
+    public void removeMarkerDragListener(Consumer<MarkerDragEvent> listener) {
+        unsubscribe(MarkerDragEvent.class, listener);
+        if (markerDragHandler != null && !hasSubscriptions(MarkerDragEvent.class)) {
+            component.removeMarkerDragListener(markerDragHandler);
+            markerDragHandler = null;
         }
     }
 
     @Override
-    public void removeMarkerDragListener(MarkerDragListener listener) {
-        if (markerDragListeners != null) {
-            markerDragListeners.remove(listener);
-
-            if (markerDragListeners.isEmpty()) {
-                component.removeMarkerDragListener(markerDragHandler);
-                markerDragHandler = null;
-                markerDragListeners = null;
-            }
-        }
-    }
-
-    @Override
-    public void addMarkerClickListener(MarkerClickListener listener) {
-        if (markerClickListeners == null) {
-            markerClickListeners = new ArrayList<>();
-            markerClickListeners.add(listener);
-
-            markerClickHandler = marker -> {
-                if (marker == null) {
-                    log.warn("Marker clicked listener have been fired but no marker received");
-                    return;
-                }
-                MarkerClickEvent event = new MarkerClickEvent(new MarkerDelegate(marker));
-                for (MarkerClickListener l : new ArrayList<>(markerClickListeners)) {
-                    l.onClick(event);
-                }
-            };
-
+    public Subscription addMarkerClickListener(Consumer<MarkerClickEvent> listener) {
+        if (markerClickHandler == null) {
+            markerClickHandler = this::onMarkerClick;
             component.addMarkerClickListener(markerClickHandler);
-        } else {
-            markerClickListeners.add(listener);
+        }
+        return getEventHub().subscribe(MarkerClickEvent.class, listener);
+    }
+
+    protected void onMarkerClick(GoogleMapMarker marker) {
+        if (marker == null) {
+            log.warn("Marker clicked listener have been fired but no marker received");
+            return;
+        }
+        publish(MarkerClickEvent.class, new MarkerClickEvent(this, new MarkerDelegate(marker)));
+    }
+
+    @Override
+    public void removeMarkerClickListener(Consumer<MarkerClickEvent> listener) {
+        unsubscribe(MarkerClickEvent.class, listener);
+        if (markerClickHandler != null && !hasSubscriptions(MarkerClickEvent.class)) {
+            component.removeMarkerClickListener(markerClickHandler);
+            markerClickHandler = null;
         }
     }
 
     @Override
-    public void removeMarkerClickListener(MarkerClickListener listener) {
-        if (markerClickListeners != null) {
-            markerClickListeners.remove(listener);
-
-            if (markerClickListeners.isEmpty()) {
-                component.removeMarkerClickListener(markerClickHandler);
-                markerClickHandler = null;
-                markerClickListeners = null;
-            }
-        }
-    }
-
-    @Override
-    public void addMarkerDoubleClickListener(MarkerDoubleClickListener listener) {
-        if (markerDoubleClickListeners == null) {
-            markerDoubleClickListeners = new ArrayList<>();
-            markerDoubleClickListeners.add(listener);
-
-            markerDoubleClickHandler = marker -> {
-                if (marker == null) {
-                    log.warn("Marker double clicked listener have been fired but no marker received");
-                    return;
-                }
-                MarkerDoubleClickEvent event = new MarkerDoubleClickEvent(new MarkerDelegate(marker));
-                for (MarkerDoubleClickListener l : new ArrayList<>(markerDoubleClickListeners)) {
-                    l.onClick(event);
-                }
-            };
-
+    public Subscription addMarkerDoubleClickListener(Consumer<MarkerDoubleClickEvent> listener) {
+        if (markerDoubleClickHandler == null) {
+            markerDoubleClickHandler = this::onMarkerDoubleClick;
             component.addMarkerDoubleClickListener(markerDoubleClickHandler);
-        } else {
-            markerDoubleClickListeners.add(listener);
+        }
+        return getEventHub().subscribe(MarkerDoubleClickEvent.class, listener);
+    }
+
+    protected void onMarkerDoubleClick(GoogleMapMarker marker) {
+        if (marker == null) {
+            log.warn("Marker double clicked listener have been fired but no marker received");
+            return;
+        }
+        MarkerDoubleClickEvent event = new MarkerDoubleClickEvent(this, new MarkerDelegate(marker));
+        publish(MarkerDoubleClickEvent.class, event);
+    }
+
+    @Override
+    public void removeMarkerDoubleClickListener(Consumer<MarkerDoubleClickEvent> listener) {
+        unsubscribe(MarkerDoubleClickEvent.class, listener);
+        if (markerDoubleClickHandler != null && !hasSubscriptions(MarkerDoubleClickEvent.class)) {
+            component.removeMarkerDoubleClickListener(markerDoubleClickHandler);
+            markerDoubleClickHandler = null;
         }
     }
 
     @Override
-    public void removeMarkerDoubleClickListener(MarkerDoubleClickListener listener) {
-        if (markerDoubleClickListeners != null) {
-            markerDoubleClickListeners.remove(listener);
-
-            if (markerDoubleClickListeners.isEmpty()) {
-                component.removeMarkerDoubleClickListener(markerDoubleClickHandler);
-                markerDoubleClickHandler = null;
-                markerDoubleClickListeners = null;
-            }
-        }
-    }
-
-    @Override
-    public void addInfoWindowClosedListener(InfoWindowClosedListener listener) {
-        if (infoWindowClosedListeners == null) {
-            infoWindowClosedListeners = new ArrayList<>();
-            infoWindowClosedListeners.add(listener);
-
-            infoWindowClosedHandler = infoWindow -> {
-                if (infoWindow == null) {
-                    log.warn("InfoWindow close listener have been fired but no info window received");
-                    return;
-                }
-                InfoWindowCloseEvent event = new InfoWindowCloseEvent(new InfoWindowDelegate(infoWindow));
-                for (InfoWindowClosedListener l : new ArrayList<>(infoWindowClosedListeners)) {
-                    l.onClose(event);
-                }
-            };
-
+    public Subscription addInfoWindowClosedListener(Consumer<InfoWindowCloseEvent> listener) {
+        if (infoWindowClosedHandler == null) {
+            infoWindowClosedHandler = this::onInfoWindowClose;
             component.addInfoWindowClosedListener(infoWindowClosedHandler);
-        } else {
-            infoWindowClosedListeners.add(listener);
+        }
+        return getEventHub().subscribe(InfoWindowCloseEvent.class, listener);
+    }
+
+    protected void onInfoWindowClose(GoogleMapInfoWindow infoWindow) {
+        if (infoWindow == null) {
+            log.warn("InfoWindow close listener have been fired but no info window received");
+            return;
+        }
+        InfoWindowCloseEvent event = new InfoWindowCloseEvent(this, new InfoWindowDelegate(infoWindow));
+        publish(InfoWindowCloseEvent.class, event);
+    }
+
+    @Override
+    public void removeInfoWindowClosedListener(Consumer<InfoWindowCloseEvent> listener) {
+        unsubscribe(InfoWindowCloseEvent.class, listener);
+        if (infoWindowClosedHandler != null && !hasSubscriptions(InfoWindowCloseEvent.class)) {
+            component.removeInfoWindowClosedListener(infoWindowClosedHandler);
+            infoWindowClosedHandler = null;
         }
     }
 
     @Override
-    public void removeInfoWindowClosedListener(InfoWindowClosedListener listener) {
-        if (infoWindowClosedListeners != null) {
-            infoWindowClosedListeners.remove(listener);
-
-            if (infoWindowClosedListeners.isEmpty()) {
-                component.removeInfoWindowClosedListener(infoWindowClosedHandler);
-                infoWindowClosedHandler = null;
-                infoWindowClosedListeners = null;
-            }
-        }
-    }
-
-    @Override
-    public void addPolygonCompleteListener(PolygonCompleteListener listener) {
-        if (polygonCompleteListeners == null) {
-            polygonCompleteListeners = new ArrayList<>();
-            polygonCompleteListeners.add(listener);
-
-            polygonCompleteHandler = polygon -> {
-                if (polygon == null) {
-                    log.warn("Polygon complete listener have been fired but no polygon received");
-                    return;
-                }
-                PolygonCompleteEvent event = new PolygonCompleteEvent(new PolygonDelegate(polygon));
-                for (PolygonCompleteListener l : new ArrayList<>(polygonCompleteListeners)) {
-                    l.onComplete(event);
-                }
-            };
-
+    public Subscription addPolygonCompleteListener(Consumer<PolygonCompleteEvent> listener) {
+        if (polygonCompleteHandler == null) {
+            polygonCompleteHandler = this::onPolygonComplete;
             component.addPolygonCompleteListener(polygonCompleteHandler);
-        } else {
-            polygonCompleteListeners.add(listener);
+        }
+        return getEventHub().subscribe(PolygonCompleteEvent.class, listener);
+    }
+
+    protected void onPolygonComplete(GoogleMapPolygon polygon) {
+        if (polygon == null) {
+            log.warn("Polygon complete listener have been fired but no polygon received");
+            return;
+        }
+        PolygonCompleteEvent event = new PolygonCompleteEvent(this, new PolygonDelegate(polygon));
+        publish(PolygonCompleteEvent.class, event);
+    }
+
+    @Override
+    public void removePolygonCompleteListener(Consumer<PolygonCompleteEvent> listener) {
+        unsubscribe(PolygonCompleteEvent.class, listener);
+        if (polygonCompleteHandler != null && !hasSubscriptions(PolygonCompleteEvent.class)) {
+            component.removePolygonCompleteListener(polygonCompleteHandler);
+            polygonCompleteHandler = null;
         }
     }
 
     @Override
-    public void removePolygonCompleteListener(PolygonCompleteListener listener) {
-        if (polygonCompleteListeners != null) {
-            polygonCompleteListeners.remove(listener);
-
-            if (polygonCompleteListeners.isEmpty()) {
-                component.removePolygonCompleteListener(polygonCompleteHandler);
-                polygonCompleteHandler = null;
-                polygonCompleteListeners = null;
-            }
-        }
-    }
-
-    @Override
-    public void addPolygonEditListener(PolygonEditListener listener) {
-        if (polygonEditListeners == null) {
-            polygonEditListeners = new ArrayList<>();
-            polygonEditListeners.add(listener);
-
-            polygonEditHandler = (polygon, actionType, idx, latLon) -> {
-                if (polygon == null) {
-                    log.warn("Polygon edited listener have been fired but no polygon received");
-                    return;
-                }
-                GeoPointDelegate geoPoint = latLon != null ? new GeoPointDelegate(latLon) : null;
-                PolygonEditListener.PolygonEditEvent event =
-                        new PolygonEditListener.PolygonEditEvent(new PolygonDelegate(polygon),
-                                toCubaActionType(actionType), idx, geoPoint);
-                for (PolygonEditListener l : new ArrayList<>(polygonEditListeners)) {
-                    l.onEdit(event);
-                }
-            };
-
+    public Subscription addPolygonEditListener(Consumer<PolygonEditEvent> listener) {
+        if (polygonEditHandler == null) {
+            polygonEditHandler = this::onPolygonEdit;
             component.addPolygonEditListener(polygonEditHandler);
-        } else {
-            polygonEditListeners.add(listener);
         }
+        return getEventHub().subscribe(PolygonEditEvent.class, listener);
     }
 
-    private PolygonEditListener.ActionType toCubaActionType(
+    protected void onPolygonEdit(GoogleMapPolygon polygon, PolygonEditListener.ActionType actionType, int idx, LatLon latLon) {
+        if (polygon == null) {
+            log.warn("Polygon edited listener have been fired but no polygon received");
+            return;
+        }
+        GeoPointDelegate geoPoint = latLon != null ? new GeoPointDelegate(latLon) : null;
+        PolygonEditEvent event = new PolygonEditEvent(this, new PolygonDelegate(polygon),
+                toCubaActionType(actionType), idx, geoPoint);
+
+        publish(PolygonEditEvent.class, event);
+    }
+
+    private PolygonEditEvent.ActionType toCubaActionType(
             com.haulmont.charts.web.widgets.client.addons.googlemap.events.PolygonEditListener.ActionType actionType) {
         if (actionType == null) {
             return null;
@@ -808,236 +675,174 @@ public class WebGoogleMapViewer extends WebAbstractComponent<GoogleMap> implemen
 
         switch (actionType) {
             case INSERT:
-                return PolygonEditListener.ActionType.INSERT;
+                return PolygonEditEvent.ActionType.INSERT;
             case REMOVE:
-                return PolygonEditListener.ActionType.REMOVE;
+                return PolygonEditEvent.ActionType.REMOVE;
             case SET:
-                return PolygonEditListener.ActionType.SET;
+                return PolygonEditEvent.ActionType.SET;
         }
 
         throw new IllegalArgumentException("Unknown edit action type: " + actionType);
     }
 
     @Override
-    public void removePolygonEditListener(PolygonEditListener listener) {
-        if (polygonEditListeners != null) {
-            polygonEditListeners.remove(listener);
-
-            if (polygonEditListeners.isEmpty()) {
-                component.removePolygonEditListener(polygonEditHandler);
-                polygonEditHandler = null;
-                polygonEditListeners = null;
-            }
+    public void removePolygonEditListener(Consumer<PolygonEditEvent> listener) {
+        unsubscribe(PolygonEditEvent.class, listener);
+        if (polygonEditHandler != null && !hasSubscriptions(PolygonEditEvent.class)) {
+            component.removePolygonEditListener(polygonEditHandler);
+            polygonEditHandler = null;
         }
     }
 
     @Override
-    public void addCircleClickListener(CircleClickListener listener) {
-        if (circleClickListeners == null) {
-            circleClickListeners = new ArrayList<>();
-            circleClickListeners.add(listener);
-
-            circleClickHandler = circle -> {
-                if (circle == null) {
-                    log.warn("Circle clicked listener have been fired but no circle received");
-                    return;
-                }
-                CircleClickListener.CircleClickEvent event = new CircleClickListener.CircleClickEvent(new CircleDelegate(circle));
-                for (CircleClickListener l : new ArrayList<>(circleClickListeners)) {
-                    l.onClick(event);
-                }
-            };
-
+    public Subscription addCircleClickListener(Consumer<CircleClickEvent> listener) {
+        if (circleClickHandler == null) {
+            circleClickHandler = this::onCircleClick;
             component.addCircleClickListener(circleClickHandler);
-        } else {
-            circleClickListeners.add(listener);
+        }
+        return getEventHub().subscribe(CircleClickEvent.class, listener);
+    }
+
+    protected void onCircleClick(GoogleMapCircle circle) {
+        if (circle == null) {
+            log.warn("Circle clicked listener have been fired but no circle received");
+            return;
+        }
+        CircleClickEvent event = new CircleClickEvent(this, new CircleDelegate(circle));
+        publish(CircleClickEvent.class, event);
+    }
+
+    @Override
+    public void removeCircleClickListener(Consumer<CircleClickEvent> listener) {
+        unsubscribe(CircleClickEvent.class, listener);
+        if (circleClickHandler != null && !hasSubscriptions(CircleClickEvent.class)) {
+            component.removeCircleClickListener(circleClickHandler);
+            circleClickHandler = null;
         }
     }
 
     @Override
-    public void removeCircleClickListener(CircleClickListener listener) {
-        if (circleClickListeners != null) {
-            circleClickListeners.remove(listener);
-
-            if (circleClickListeners.isEmpty()) {
-                component.removeCircleClickListener(circleClickHandler);
-                circleClickHandler = null;
-                circleClickListeners = null;
-            }
-        }
-    }
-
-    @Override
-    public void addCircleDoubleClickListener(CircleDoubleClickListener listener) {
-        if (circleDoubleClickListeners == null) {
-            circleDoubleClickListeners = new ArrayList<>();
-            circleDoubleClickListeners.add(listener);
-
-            circleDoubleClickHandler = circle -> {
-                if (circle == null) {
-                    log.warn("Circle double clicked listener have been fired but no circle received");
-                    return;
-                }
-                CircleDoubleClickListener.CircleDoubleClickEvent event =
-                        new CircleDoubleClickListener.CircleDoubleClickEvent(new CircleDelegate(circle));
-                for (CircleDoubleClickListener l : new ArrayList<>(circleDoubleClickListeners)) {
-                    l.onDoubleClick(event);
-                }
-            };
-
+    public Subscription addCircleDoubleClickListener(Consumer<CircleDoubleClickEvent> listener) {
+        if (circleDoubleClickHandler == null) {
+            circleDoubleClickHandler = this::onCircleDoubleClick;
             component.addCircleDoubleClickListener(circleDoubleClickHandler);
-        } else {
-            circleDoubleClickListeners.add(listener);
+        }
+        return getEventHub().subscribe(CircleDoubleClickEvent.class, listener);
+    }
+
+    protected void onCircleDoubleClick(GoogleMapCircle circle) {
+        if (circle == null) {
+            log.warn("Circle double clicked listener have been fired but no circle received");
+            return;
+        }
+        CircleDoubleClickEvent event = new CircleDoubleClickEvent(this, new CircleDelegate(circle));
+        publish(CircleDoubleClickEvent.class, event);
+    }
+
+    @Override
+    public void removeCircleDoubleClickListener(Consumer<CircleDoubleClickEvent> listener) {
+        unsubscribe(CircleDoubleClickEvent.class, listener);
+        if (circleDoubleClickHandler != null && !hasSubscriptions(CircleDoubleClickEvent.class)) {
+            component.removeCircleDoubleClickListener(circleDoubleClickHandler);
+            circleDoubleClickHandler = null;
         }
     }
 
     @Override
-    public void removeCircleDoubleClickListener(CircleDoubleClickListener listener) {
-        if (circleDoubleClickListeners != null) {
-            circleDoubleClickListeners.remove(listener);
-
-            if (circleDoubleClickListeners.isEmpty()) {
-                component.removeCircleDoubleClickListener(circleDoubleClickHandler);
-                circleDoubleClickHandler = null;
-                circleDoubleClickListeners = null;
-            }
-        }
-    }
-
-    @Override
-    public void addCircleRadiusChangeListener(CircleRadiusChangeListener listener) {
-        if (circleRadiusChangeListeners == null) {
-            circleRadiusChangeListeners = new ArrayList<>();
-            circleRadiusChangeListeners.add(listener);
-
-            circleRadiusChangeHandler = (circle, oldRadius) -> {
-                if (circle == null) {
-                    log.warn("Circle radius changed listener have been fired but no circle received");
-                    return;
-                }
-                CircleRadiusChangeListener.CircleRadiusChangeEvent event =
-                        new CircleRadiusChangeListener.CircleRadiusChangeEvent(new CircleDelegate(circle), oldRadius);
-                for (CircleRadiusChangeListener l : new ArrayList<>(circleRadiusChangeListeners)) {
-                    l.onRadiusChange(event);
-                }
-            };
-
+    public Subscription addCircleRadiusChangeListener(Consumer<CircleRadiusChangeEvent> listener) {
+        if (circleRadiusChangeHandler == null) {
+            circleRadiusChangeHandler = this::onCircleRadiusChange;
             component.addCircleRadiusChangeListener(circleRadiusChangeHandler);
-        } else {
-            circleRadiusChangeListeners.add(listener);
+        }
+        return getEventHub().subscribe(CircleRadiusChangeEvent.class, listener);
+    }
+
+    protected void onCircleRadiusChange(GoogleMapCircle circle, double oldRadius) {
+        if (circle == null) {
+            log.warn("Circle radius changed listener have been fired but no circle received");
+            return;
+        }
+        CircleRadiusChangeEvent event =
+                new CircleRadiusChangeEvent(this, new CircleDelegate(circle), oldRadius);
+        publish(CircleRadiusChangeEvent.class, event);
+    }
+
+    @Override
+    public void removeCircleRadiusChangeListener(Consumer<CircleRadiusChangeEvent> listener) {
+        unsubscribe(CircleRadiusChangeEvent.class, listener);
+        if (circleRadiusChangeHandler != null && !hasSubscriptions(CircleRadiusChangeEvent.class)) {
+            component.removeCircleRadiusChangeListener(circleRadiusChangeHandler);
+            circleRadiusChangeHandler = null;
         }
     }
 
     @Override
-    public void removeCircleRadiusChangeListener(CircleRadiusChangeListener listener) {
-        if (circleRadiusChangeListeners != null) {
-            circleRadiusChangeListeners.remove(listener);
-
-            if (circleRadiusChangeListeners.isEmpty()) {
-                component.removeCircleRadiusChangeListener(circleRadiusChangeHandler);
-                circleRadiusChangeHandler = null;
-                circleRadiusChangeListeners = null;
-            }
-        }
-    }
-
-    @Override
-    public void addCircleCenterChangeListener(CircleCenterChangeListener listener) {
-        if (circleCenterChangeListeners == null) {
-            circleCenterChangeListeners = new ArrayList<>();
-            circleCenterChangeListeners.add(listener);
-
-            circleCenterChangeHandler = (circle, oldCenter) -> {
-                if (circle == null) {
-                    log.warn("Circle center changed listener have been fired but no circle received");
-                    return;
-                }
-                if (oldCenter == null) {
-                    log.warn("Circle center changed listener have been fired but old center point is null");
-                    return;
-                }
-                CircleCenterChangeListener.CircleCenterChangeEvent event =
-                        new CircleCenterChangeListener.CircleCenterChangeEvent(new CircleDelegate(circle), new GeoPointDelegate(oldCenter));
-                for (CircleCenterChangeListener l : new ArrayList<>(circleCenterChangeListeners)) {
-                    l.onCenterChange(event);
-                }
-            };
-
+    public Subscription addCircleCenterChangeListener(Consumer<CircleCenterChangeEvent> listener) {
+        if (circleCenterChangeHandler == null) {
+            circleCenterChangeHandler = this::onCircleCenterChange;
             component.addCircleCenterChangeListener(circleCenterChangeHandler);
-        } else {
-            circleCenterChangeListeners.add(listener);
+        }
+        return getEventHub().subscribe(CircleCenterChangeEvent.class, listener);
+    }
+
+    protected void onCircleCenterChange(GoogleMapCircle circle, LatLon oldCenter) {
+        if (circle == null) {
+            log.warn("Circle center changed listener have been fired but no circle received");
+            return;
+        }
+        if (oldCenter == null) {
+            log.warn("Circle center changed listener have been fired but old center point is null");
+            return;
+        }
+        CircleCenterChangeEvent event = new CircleCenterChangeEvent(this,
+                new CircleDelegate(circle), new GeoPointDelegate(oldCenter));
+        publish(CircleCenterChangeEvent.class, event);
+    }
+
+    @Override
+    public void removeCircleCenterChangeListener(Consumer<CircleCenterChangeEvent> listener) {
+        unsubscribe(CircleCenterChangeEvent.class, listener);
+        if (circleCenterChangeHandler != null && !hasSubscriptions(CircleCenterChangeEvent.class)) {
+            component.removeCircleCenterChangeListener(circleCenterChangeHandler);
+            circleCenterChangeHandler = null;
         }
     }
 
     @Override
-    public void removeCircleCenterChangeListener(CircleCenterChangeListener listener) {
-        if (circleCenterChangeListeners != null) {
-            circleCenterChangeListeners.remove(listener);
-
-            if (circleCenterChangeListeners.isEmpty()) {
-                component.removeCircleCenterChangeListener(circleCenterChangeHandler);
-                circleCenterChangeHandler = null;
-                circleCenterChangeListeners = null;
-            }
-        }
-    }
-
-    @Override
-    public void addCircleCompleteListener(CircleCompleteListener listener) {
-        if (circleCompleteListeners == null) {
-            circleCompleteListeners = new ArrayList<>();
-            circleCompleteListeners.add(listener);
-
-            circleCompleteHandler = circle -> {
-                if (circle == null) {
-                    log.warn("Circle complete listener have been fired but no circle received");
-                    return;
-                }
-                CircleCompleteListener.CircleCompleteEvent event =
-                        new CircleCompleteListener.CircleCompleteEvent(new CircleDelegate(circle));
-                for (CircleCompleteListener l : new ArrayList<>(circleCompleteListeners)) {
-                    l.onCircleComplete(event);
-                }
-            };
-
+    public Subscription addCircleCompleteListener(Consumer<CircleCompleteEvent> listener) {
+        if (circleCompleteHandler == null) {
+            circleCompleteHandler = this::onCircleComplete;
             component.addCircleCompleteListener(circleCompleteHandler);
-        } else {
-            circleCompleteListeners.add(listener);
+        }
+        return getEventHub().subscribe(CircleCompleteEvent.class, listener);
+    }
+
+    protected void onCircleComplete(GoogleMapCircle circle) {
+        if (circle == null) {
+            log.warn("Circle complete listener have been fired but no circle received");
+            return;
+        }
+        CircleCompleteEvent event = new CircleCompleteEvent(this, new CircleDelegate(circle));
+        publish(CircleCompleteEvent.class, event);
+    }
+
+    @Override
+    public void removeCircleCompleteListener(Consumer<CircleCompleteEvent> listener) {
+        unsubscribe(CircleCompleteEvent.class, listener);
+        if (circleCompleteHandler != null && !hasSubscriptions(CircleCompleteEvent.class)) {
+            component.removeCircleCompleteListener(circleCompleteHandler);
+            circleCompleteHandler = null;
         }
     }
 
     @Override
-    public void removeCircleCompleteListener(CircleCompleteListener listener) {
-        if (circleCompleteListeners != null) {
-            circleCompleteListeners.remove(listener);
-
-            if (circleCompleteListeners.isEmpty()) {
-                component.removeCircleCompleteListener(circleCompleteHandler);
-                circleCompleteHandler = null;
-                circleCompleteListeners = null;
-            }
-        }
+    public Subscription addMapInitListener(Consumer<MapInitEvent> listener) {
+        return getEventHub().subscribe(MapInitEvent.class, listener);
     }
 
     @Override
-    public void addMapInitListener(MapInitListener listener) {
-        if (mapInitListeners == null) {
-            mapInitListeners = new ArrayList<>();
-            mapInitListeners.add(listener);
-        } else {
-            mapInitListeners.add(listener);
-        }
-    }
-
-    @Override
-    public void removeMapInitListener(MapInitListener listener) {
-        if (mapInitListeners != null) {
-            mapInitListeners.remove(listener);
-
-            if (mapInitListeners.isEmpty()) {
-                mapInitListeners = null;
-            }
-        }
+    public void removeMapInitListener(Consumer<MapInitEvent> listener) {
+        unsubscribe(MapInitEvent.class, listener);
     }
 
     @Override
@@ -1141,110 +946,109 @@ public class WebGoogleMapViewer extends WebAbstractComponent<GoogleMap> implemen
     }
 
     @Override
-    public void addMarkerRightClickListener(MarkerRightClickListener listener) {
-        getEventRouter().addListener(MarkerRightClickListener.class, listener);
-
+    public Subscription addMarkerRightClickListener(Consumer<MarkerRightClickEvent> listener) {
         if (markerRightClickHandler == null) {
-            markerRightClickHandler = marker -> {
-                if (marker == null) {
-                    log.warn("Marker right clicked listener have been fired but no marker received");
-                    return;
-                }
-
-                MarkerRightClickEvent event = new MarkerRightClickEvent(new MarkerDelegate(marker));
-                getEventRouter().fireEvent(MarkerRightClickListener.class, MarkerRightClickListener::onRightClick, event);
-            };
+            markerRightClickHandler = this::onMarkerRightClick;
             component.addMarkerRightClickListener(markerRightClickHandler);
         }
+        return getEventHub().subscribe(MarkerRightClickEvent.class, listener);
+    }
+
+    protected void onMarkerRightClick(GoogleMapMarker marker) {
+        if (marker == null) {
+            log.warn("Marker right clicked listener have been fired but no marker received");
+            return;
+        }
+
+        MarkerRightClickEvent event = new MarkerRightClickEvent(this, new MarkerDelegate(marker));
+        publish(MarkerRightClickEvent.class, event);
     }
 
     @Override
-    public void removeMarkerRightClickListener(MarkerRightClickListener listener) {
-        getEventRouter().removeListener(MarkerRightClickListener.class, listener);
-
-        if (!getEventRouter().hasListeners(MarkerRightClickListener.class)) {
+    public void removeMarkerRightClickListener(Consumer<MarkerRightClickEvent> listener) {
+        unsubscribe(MarkerRightClickEvent.class, listener);
+        if (markerRightClickHandler != null && !hasSubscriptions(MarkerRightClickEvent.class)) {
             component.removeMarkerRightClickListener(markerRightClickHandler);
             markerRightClickHandler = null;
         }
     }
 
     @Override
-    public void addMapRightClickListener(MapRightClickListener listener) {
-        getEventRouter().addListener(MapRightClickListener.class, listener);
-
+    public Subscription addMapRightClickListener(Consumer<MapRightClickEvent> listener) {
         if (mapRightClickHandler == null) {
-            mapRightClickHandler = position -> {
-                GeoPointDelegate geoPoint = position != null ? new GeoPointDelegate(position) : null;
-                MapRightClickEvent event = new MapRightClickEvent(geoPoint);
-
-                getEventRouter().fireEvent(MapRightClickListener.class, MapRightClickListener::onRightClick, event);
-            };
-
+            mapRightClickHandler = this::onMapRightClick;
             component.addMapRightClickListener(mapRightClickHandler);
         }
+        return getEventHub().subscribe(MapRightClickEvent.class, listener);
+    }
+
+    protected void onMapRightClick(LatLon position) {
+        GeoPointDelegate geoPoint = position != null ? new GeoPointDelegate(position) : null;
+        MapRightClickEvent event = new MapRightClickEvent(this, geoPoint);
+
+        publish(MapRightClickEvent.class, event);
     }
 
     @Override
-    public void removeMapRightClickListener(MapRightClickListener listener) {
-        getEventRouter().removeListener(MapRightClickListener.class, listener);
-
-        if (!getEventRouter().hasListeners(MapRightClickListener.class)) {
+    public void removeMapRightClickListener(Consumer<MapRightClickEvent> listener) {
+        unsubscribe(MapRightClickEvent.class, listener);
+        if (markerRightClickHandler != null && !hasSubscriptions(MapRightClickEvent.class)) {
             component.removeMapRightClickListener(mapRightClickHandler);
             markerRightClickHandler = null;
         }
     }
 
     @Override
-    public void addPolygonRightClickListener(PolygonRightClickListener listener) {
-        getEventRouter().addListener(PolygonRightClickListener.class, listener);
-
+    public Subscription addPolygonRightClickListener(Consumer<PolygonRightClickEvent> listener) {
         if (polygonRightClickHandler == null) {
-            polygonRightClickHandler = polygon -> {
-                if (polygon == null) {
-                    log.warn("Polygon right clicked listener have been fired but no polygon received");
-                    return;
-                }
-
-                PolygonRightClickEvent event = new PolygonRightClickEvent(new PolygonDelegate(polygon));
-                getEventRouter().fireEvent(PolygonRightClickListener.class, PolygonRightClickListener::onRightClick, event);
-            };
+            polygonRightClickHandler = this::onPolygonRightClick;
             component.addPolygonRightClickListener(polygonRightClickHandler);
         }
+        return getEventHub().subscribe(PolygonRightClickEvent.class, listener);
+    }
+
+    protected void onPolygonRightClick(GoogleMapPolygon polygon) {
+        if (polygon == null) {
+            log.warn("Polygon right clicked listener have been fired but no polygon received");
+            return;
+        }
+
+        PolygonRightClickEvent event = new PolygonRightClickEvent(this, new PolygonDelegate(polygon));
+        publish(PolygonRightClickEvent.class, event);
     }
 
     @Override
-    public void removePolygonRightClickListener(PolygonRightClickListener listener) {
-        getEventRouter().removeListener(PolygonRightClickListener.class, listener);
-
-        if (!getEventRouter().hasListeners(PolygonRightClickListener.class)) {
+    public void removePolygonRightClickListener(Consumer<PolygonRightClickEvent> listener) {
+        unsubscribe(PolygonRightClickEvent.class, listener);
+        if (polygonRightClickHandler != null && !hasSubscriptions(PolygonRightClickEvent.class)) {
             component.removePolygonRightClickListener(polygonRightClickHandler);
             polygonRightClickHandler = null;
         }
     }
 
     @Override
-    public void addCircleRightClickListener(CircleRightClickListener listener) {
-        getEventRouter().addListener(CircleRightClickListener.class, listener);
-
+    public Subscription addCircleRightClickListener(Consumer<CircleRightClickEvent> listener) {
         if (circleRightClickHandler == null) {
-            circleRightClickHandler = circle -> {
-                if (circle == null) {
-                    log.warn("Circle right clicked listener have been fired but no circle received");
-                    return;
-                }
-
-                CircleRightClickEvent event = new CircleRightClickEvent(new CircleDelegate(circle));
-                getEventRouter().fireEvent(CircleRightClickListener.class, CircleRightClickListener::onRightClick, event);
-            };
+            circleRightClickHandler = this::onCircleRightClick;
             component.addCircleRightClickListener(circleRightClickHandler);
         }
+        return getEventHub().subscribe(CircleRightClickEvent.class, listener);
+    }
+
+    protected void onCircleRightClick(GoogleMapCircle circle) {
+        if (circle == null) {
+            log.warn("Circle right clicked listener have been fired but no circle received");
+            return;
+        }
+
+        CircleRightClickEvent event = new CircleRightClickEvent(this, new CircleDelegate(circle));
+        publish(CircleRightClickEvent.class, event);
     }
 
     @Override
-    public void removeCircleRightClickListener(CircleRightClickListener listener) {
-        getEventRouter().removeListener(CircleRightClickListener.class, listener);
-
-        if (!getEventRouter().hasListeners(CircleRightClickListener.class)) {
+    public void removeCircleRightClickListener(Consumer<CircleRightClickEvent> listener) {
+        unsubscribe(CircleRightClickEvent.class, listener);
+        if (circleRightClickHandler != null && !hasSubscriptions(CircleRightClickEvent.class)) {
             component.removeCircleRightClickListener(circleRightClickHandler);
             circleRightClickHandler = null;
         }

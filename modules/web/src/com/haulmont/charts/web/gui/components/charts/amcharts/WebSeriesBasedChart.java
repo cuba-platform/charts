@@ -5,6 +5,7 @@
 
 package com.haulmont.charts.web.gui.components.charts.amcharts;
 
+import com.haulmont.bali.events.Subscription;
 import com.haulmont.charts.gui.amcharts.model.CategoryAxis;
 import com.haulmont.charts.gui.amcharts.model.DayOfWeek;
 import com.haulmont.charts.gui.amcharts.model.Scrollbar;
@@ -19,6 +20,7 @@ import com.haulmont.cuba.gui.data.CollectionDatasource;
 import org.apache.commons.lang3.StringUtils;
 
 import java.util.Date;
+import java.util.function.Consumer;
 
 @SuppressWarnings("unchecked")
 public abstract class WebSeriesBasedChart<T extends SeriesBasedChart, M extends AbstractSerialChart> extends WebRectangularChart<T, M>
@@ -267,44 +269,50 @@ public abstract class WebSeriesBasedChart<T extends SeriesBasedChart, M extends 
     }
 
     @Override
-    public void addZoomListener(ZoomListener listener) {
-        getEventRouter().addListener(ZoomListener.class, listener);
+    public Subscription addZoomListener(Consumer<ZoomEvent> listener) {
         if (zoomHandler == null) {
-            zoomHandler = e -> {
-                ZoomEvent event = new ZoomEvent(e.getStartIndex(), e.getEndIndex(), e.getStartDate(), e.getEndDate(),
-                        e.getStartValue(), e.getEndValue());
-                getEventRouter().fireEvent(ZoomListener.class, ZoomListener::onZoom, event);
-            };
+            zoomHandler = this::onZoomEvent;
             component.addZoomListener(zoomHandler);
         }
+
+        return getEventHub().subscribe(ZoomEvent.class, listener);
+    }
+
+    protected void onZoomEvent(com.haulmont.charts.web.widgets.amcharts.events.ZoomEvent e) {
+        publish(ZoomEvent.class,
+                new ZoomEvent(this, e.getStartIndex(), e.getEndIndex(), e.getStartDate(),
+                        e.getEndDate(), e.getStartValue(), e.getEndValue()));
     }
 
     @Override
-    public void removeZoomListener(ZoomListener listener) {
-        getEventRouter().removeListener(ZoomListener.class, listener);
-        if (zoomHandler != null && !getEventRouter().hasListeners(ZoomListener.class)) {
+    public void removeZoomListener(Consumer<ZoomEvent> listener) {
+        unsubscribe(ZoomEvent.class, listener);
+        if (zoomHandler != null && !hasSubscriptions(ZoomEvent.class)) {
             component.removeZoomListener(zoomHandler);
             zoomHandler = null;
         }
     }
 
     @Override
-    public void addCategoryItemClickListener(CategoryItemClickListener listener) {
-        getEventRouter().addListener(CategoryItemClickListener.class, listener);
+    public Subscription addCategoryItemClickListener(Consumer<CategoryItemClickEvent> listener) {
         if (categoryItemClickHandler == null) {
-            categoryItemClickHandler = e -> {
-                CategoryItemClickEvent event = new CategoryItemClickEvent(e.getValue(), e.getX(), e.getY(),
-                        e.getOffsetX(), e.getOffsetY(), e.getXAxis(), e.getYAxis());
-                getEventRouter().fireEvent(CategoryItemClickListener.class, CategoryItemClickListener::onClick, event);
-            };
+            categoryItemClickHandler = this::onCategoryItemClick;
             component.addCategoryItemClickListener(categoryItemClickHandler);
         }
+
+        return getEventHub().subscribe(CategoryItemClickEvent.class, listener);
+    }
+
+    protected void onCategoryItemClick(com.haulmont.charts.web.widgets.amcharts.events.CategoryItemClickEvent e) {
+        publish(CategoryItemClickEvent.class,
+                new CategoryItemClickEvent(this, e.getValue(), e.getX(), e.getY(),
+                        e.getOffsetX(), e.getOffsetY(), e.getXAxis(), e.getYAxis()));
     }
 
     @Override
-    public void removeCategoryItemClickListener(CategoryItemClickListener listener) {
-        getEventRouter().removeListener(CategoryItemClickListener.class, listener);
-        if (categoryItemClickHandler != null && !getEventRouter().hasListeners(CategoryItemClickListener.class)) {
+    public void removeCategoryItemClickListener(Consumer<CategoryItemClickEvent> listener) {
+        unsubscribe(CategoryItemClickEvent.class, listener);
+        if (categoryItemClickHandler != null && !hasSubscriptions(CategoryItemClickEvent.class)) {
             component.removeCategoryItemClickListener(categoryItemClickHandler);
             categoryItemClickHandler = null;
         }

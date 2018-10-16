@@ -5,12 +5,11 @@
 
 package com.haulmont.charts.gui.components.charts;
 
-import com.haulmont.charts.gui.amcharts.model.DataSet;
-import com.haulmont.charts.gui.amcharts.model.DatePeriod;
-import com.haulmont.charts.gui.amcharts.model.PeriodType;
-import com.haulmont.charts.gui.amcharts.model.StockEvent;
+import com.haulmont.bali.events.Subscription;
+import com.haulmont.charts.gui.amcharts.model.*;
 import com.haulmont.charts.gui.amcharts.model.charts.StockChartGroup;
 import com.haulmont.charts.gui.amcharts.model.charts.StockChartModel;
+import com.haulmont.charts.gui.amcharts.model.charts.StockPanel;
 import com.haulmont.charts.gui.data.ContainerDataProvider;
 import com.haulmont.charts.gui.data.DataItem;
 import com.haulmont.charts.gui.data.DataProvider;
@@ -23,6 +22,8 @@ import com.haulmont.cuba.gui.data.CollectionDatasource;
 
 import javax.annotation.Nullable;
 import java.util.Date;
+import java.util.EventObject;
+import java.util.function.Consumer;
 
 /**
  * Stock chart component.
@@ -36,8 +37,8 @@ public interface StockChart extends Component, StockChartModel<StockChart>, Comp
     String NAME = "stockChart";
 
     /**
-     * @deprecated Use properties of StockChart directly
      * @return client-specific implementation of chart
+     * @deprecated Use properties of StockChart directly
      */
     @Deprecated
     StockChartGroup getConfiguration();
@@ -86,74 +87,259 @@ public interface StockChart extends Component, StockChartModel<StockChart>, Comp
      */
     void repaint();
 
-    void addClickListener(StockChartClickListener clickListener);
-    void removeClickListener(StockChartClickListener clickListener);
+    /**
+     * Adds a listener to stock chart click events. Called when user clicks on the stock chart.
+     *
+     * @param clickListener a listener to add
+     */
+    Subscription addClickListener(Consumer<StockChartClickEvent> clickListener);
 
-    void addRightClickListener(StockChartRightClickListener clickListener);
-    void removeRightClickListener(StockChartRightClickListener clickListener);
+    /**
+     * @deprecated Use {@link Subscription} instead
+     */
+    @Deprecated
+    void removeClickListener(Consumer<StockChartClickEvent> clickListener);
 
-    void addStockEventClickListener(StockEventClickListener clickListener);
-    void removeStockEventClickListener(StockEventClickListener clickListener);
+    /**
+     * Adds listener to stock chart right click events. Called when user clicks on the stock chart.
+     *
+     * @param clickListener a listener to add
+     */
+    Subscription addRightClickListener(Consumer<StockChartRightClickEvent> clickListener);
 
-    void addStockEventRollOutListener(StockEventRollOutListener rollOutListener);
-    void removeStockEventRollOutListener(StockEventRollOutListener rollOutListener);
+    /**
+     * @deprecated Use {@link Subscription} instead
+     */
+    @Deprecated
+    void removeRightClickListener(Consumer<StockChartRightClickEvent> clickListener);
 
-    void addStockEventRollOverListener(StockEventRollOverListener rollOverListener);
-    void removeStockEventRollOverListener(StockEventRollOverListener rollOverListener);
+    /**
+     * Adds listener to stock event click events. Called when user clicks on the stock event.
+     *
+     * @param clickListener a listener to add
+     */
+    Subscription addStockEventClickListener(Consumer<StockEventClickEvent> clickListener);
 
-    void addZoomListener(ZoomListener zoomListener);
-    void removeZoomListener(ZoomListener zoomListener);
+    /**
+     * @deprecated Use {@link Subscription} instead
+     */
+    @Deprecated
+    void removeStockEventClickListener(Consumer<StockEventClickEvent> clickListener);
 
-    void addPeriodSelectorChangeListener(PeriodSelectorChangeListener changeListener);
-    void removePeriodSelectorChangeListener(PeriodSelectorChangeListener changeListener);
+    /**
+     * Adds a listener to stock event roll-out events. Called when the stock event did roll-out.
+     *
+     * @param rollOutListener a listener to add
+     */
+    Subscription addStockEventRollOutListener(Consumer<StockEventRollOutEvent> rollOutListener);
 
-    void addDataSetSelectorCompareListener(DataSetSelectorCompareListener compareListener);
-    void removeDataSetSelectorCompareListener(DataSetSelectorCompareListener compareListener);
+    /**
+     * @deprecated Use {@link Subscription} instead
+     */
+    @Deprecated
+    void removeStockEventRollOutListener(Consumer<StockEventRollOutEvent> rollOutListener);
 
-    void addDataSetSelectorSelectListener(DataSetSelectorSelectListener selectListener);
-    void removeDataSetSelectorSelectListener(DataSetSelectorSelectListener selectListener);
+    /**
+     * Adds listener to stock event roll-over events. Called when the stock event did roll-over.
+     *
+     * @param rollOverListener a listener to add
+     */
+    Subscription addStockEventRollOverListener(Consumer<StockEventRollOverEvent> rollOverListener);
 
-    void addDataSetSelectorUnCompareListener(DataSetSelectorUnCompareListener unCompareListener);
-    void removeDataSetSelectorUnCompareListener(DataSetSelectorUnCompareListener unCompareListener);
+    /**
+     * @deprecated Use {@link Subscription} instead
+     */
+    @Deprecated
+    void removeStockEventRollOverListener(Consumer<StockEventRollOverEvent> rollOverListener);
 
-    void addStockGraphClickListener(StockGraphClickListener clickListener);
-    void removeStockGraphClickListener(StockGraphClickListener clickListener);
+    /**
+     * Adds listener to stock chart zoom events.
+     *
+     * @param zoomListener a listener to add
+     */
+    Subscription addZoomListener(Consumer<ZoomEvent> zoomListener);
 
-    void addStockGraphRollOutListener(StockGraphRollOutListener rollOutListener);
-    void removeStockGraphRollOutListener(StockGraphRollOutListener rollOutListener);
+    /**
+     * @deprecated Use {@link Subscription} instead
+     */
+    @Deprecated
+    void removeZoomListener(Consumer<ZoomEvent> zoomListener);
 
-    void addStockGraphRollOverListener(StockGraphRollOverListener rollOverListener);
-    void removeStockGraphRollOverListener(StockGraphRollOverListener rollOverListener);
+    /**
+     * Adds a listener to period selector change events. Called when the period selector changed.
+     *
+     * @param changeListener a listener
+     */
+    Subscription addPeriodSelectorChangeListener(Consumer<PeriodSelectorChangeEvent> changeListener);
 
-    void addStockGraphItemClickListener(StockGraphItemClickListener clickListener);
-    void removeStockGraphItemClickListener(StockGraphItemClickListener clickListener);
+    /**
+     * @deprecated Use {@link Subscription} instead
+     */
+    @Deprecated
+    void removePeriodSelectorChangeListener(Consumer<PeriodSelectorChangeEvent> changeListener);
 
-    void addStockGraphItemRightClickListener(StockGraphItemRightClickListener clickListener);
-    void removeStockGraphItemRightClickListener(StockGraphItemRightClickListener clickListener);
+    /**
+     * Adds a listener to dataset selector compare events. Called when the data set is selected for comparing.
+     *
+     * @param compareListener a listener to add
+     */
+    Subscription addDataSetSelectorCompareListener(Consumer<DataSetSelectorCompareEvent> compareListener);
 
-    void addStockGraphItemRollOutListener(StockGraphItemRollOutListener rollOutListener);
-    void removeStockGraphItemRollOutListener(StockGraphItemRollOutListener rollOutListener);
+    /**
+     * @deprecated Use {@link Subscription} instead
+     */
+    @Deprecated
+    void removeDataSetSelectorCompareListener(Consumer<DataSetSelectorCompareEvent> compareListener);
 
-    void addStockGraphItemRollOverListener(StockGraphItemRollOverListener rollOverListener);
-    void removeStockGraphItemRollOverListener(StockGraphItemRollOverListener rollOverListener);
+    /**
+     * Adds a listener to dataset selector select events. Called when the dataset selector selected.
+     *
+     * @param selectListener a listener to add
+     */
+    Subscription addDataSetSelectorSelectListener(Consumer<DataSetSelectorSelectEvent> selectListener);
+
+    /**
+     * @deprecated Use {@link Subscription} instead
+     */
+    @Deprecated
+    void removeDataSetSelectorSelectListener(Consumer<DataSetSelectorSelectEvent> selectListener);
+
+    /**
+     * Adds a listener to dataset selector uncompare events. Called when the dataset selector removed from
+     * comparison.
+     *
+     * @param unCompareListener a listener to add
+     */
+    Subscription addDataSetSelectorUnCompareListener(Consumer<DataSetSelectorUnCompareEvent> unCompareListener);
+
+    /**
+     * @deprecated Use {@link Subscription} instead
+     */
+    @Deprecated
+    void removeDataSetSelectorUnCompareListener(Consumer<DataSetSelectorUnCompareEvent> unCompareListener);
+
+    /**
+     * Adds a listener to stock graph click events. Called when user clicks on the stock graph.
+     *
+     * @param clickListener a listener to add
+     */
+    Subscription addStockGraphClickListener(Consumer<StockGraphClickEvent> clickListener);
+
+    /**
+     * @deprecated Use {@link Subscription} instead
+     */
+    @Deprecated
+    void removeStockGraphClickListener(Consumer<StockGraphClickEvent> clickListener);
+
+    /**
+     * Adds a listener to stock graph roll-out events. Called when the stock graph did roll-out.
+     *
+     * @param rollOutListener a listener to add
+     */
+    Subscription addStockGraphRollOutListener(Consumer<StockGraphRollOutEvent> rollOutListener);
+
+    /**
+     * @deprecated Use {@link Subscription} instead
+     */
+    @Deprecated
+    void removeStockGraphRollOutListener(Consumer<StockGraphRollOutEvent> rollOutListener);
+
+    /**
+     * Adds a listener to stock graph roll-over events. Called when the stock graph did roll-over.
+     *
+     * @param rollOverListener a listener to add
+     */
+    Subscription addStockGraphRollOverListener(Consumer<StockGraphRollOverEvent> rollOverListener);
+
+    /**
+     * @deprecated Use {@link Subscription} instead
+     */
+    @Deprecated
+    void removeStockGraphRollOverListener(Consumer<StockGraphRollOverEvent> rollOverListener);
+
+    /**
+     * Adds a listener to stock graph item click events. Called when user clicks on the stock graph item.
+     *
+     * @param clickListener a listener to add
+     */
+    Subscription addStockGraphItemClickListener(Consumer<StockGraphItemClickEvent> clickListener);
+
+    /**
+     * @deprecated Use {@link Subscription} instead
+     */
+    @Deprecated
+    void removeStockGraphItemClickListener(Consumer<StockGraphItemClickEvent> clickListener);
+
+    /**
+     * Adds a listener to stock graph item right click events. Called when user clicks on the stock graph item.
+     *
+     * @param clickListener a listener to add
+     */
+    Subscription addStockGraphItemRightClickListener(Consumer<StockGraphItemRightClickEvent> clickListener);
+
+    /**
+     * @deprecated Use {@link Subscription} instead
+     */
+    @Deprecated
+    void removeStockGraphItemRightClickListener(Consumer<StockGraphItemRightClickEvent> clickListener);
+
+    /**
+     * Adds a listener to stock graph item roll-out events. Called when the stock graph item did roll-out.
+     *
+     * @param rollOutListener a listener to add
+     */
+    Subscription addStockGraphItemRollOutListener(Consumer<StockGraphItemRollOutEvent> rollOutListener);
+
+    /**
+     * @deprecated Use {@link Subscription} instead
+     */
+    @Deprecated
+    void removeStockGraphItemRollOutListener(Consumer<StockGraphItemRollOutEvent> rollOutListener);
+
+    /**
+     * Adds a listener to stock graph item roll-over events.
+     *
+     * @param rollOverListener a listener to add
+     */
+    Subscription addStockGraphItemRollOverListener(Consumer<StockGraphItemRollOverEvent> rollOverListener);
+
+    /**
+     * @deprecated Use {@link Subscription} instead
+     */
+    @Deprecated
+    void removeStockGraphItemRollOverListener(Consumer<StockGraphItemRollOverEvent> rollOverListener);
 
     /**
      * Set additional JSON configuration as a string.
      * This JSON can override configuration loaded from XML and from Component API.
      */
     void setNativeJson(String json);
+
     /**
      * @return additional JSON configuration as a string.
      */
     String getNativeJson();
 
-    abstract class AbstractStockChartClickEvent {
+    abstract class AbstractStockChartEvent extends EventObject {
+
+        public AbstractStockChartEvent(StockChart stockChart) {
+            super(stockChart);
+        }
+
+        @Override
+        public StockChart getSource() {
+            return (StockChart) super.getSource();
+        }
+    }
+
+    abstract class AbstractStockChartClickEvent extends AbstractStockChartEvent {
         private final int x;
         private final int y;
         private final int absoluteX;
         private final int absoluteY;
 
-        public AbstractStockChartClickEvent(int x, int y, int absoluteX, int absoluteY) {
+        public AbstractStockChartClickEvent(StockChart stockChart, int x, int y, int absoluteX, int absoluteY) {
+            super(stockChart);
             this.x = x;
             this.y = y;
             this.absoluteX = absoluteX;
@@ -193,53 +379,33 @@ public interface StockChart extends Component, StockChartModel<StockChart>, Comp
      * Describes stock chart click event.
      */
     class StockChartClickEvent extends AbstractStockChartClickEvent {
-        public StockChartClickEvent(int x, int y, int absoluteX, int absoluteY) {
-            super(x, y, absoluteX, absoluteY);
+        public StockChartClickEvent(StockChart stockChart, int x, int y, int absoluteX, int absoluteY) {
+            super(stockChart, x, y, absoluteX, absoluteY);
         }
-    }
-
-    /**
-     * Listener to the stock chart click events.
-     */
-    interface StockChartClickListener {
-        /**
-         * Called when user clicks on the stock chart.
-         *
-         * @param event event object
-         */
-        void onClick(StockChartClickEvent event);
     }
 
     /**
      * Describes stock chart right click event.
      */
     class StockChartRightClickEvent extends AbstractStockChartClickEvent {
-        public StockChartRightClickEvent(int x, int y, int absoluteX, int absoluteY) {
-            super(x, y, absoluteX, absoluteY);
+        public StockChartRightClickEvent(StockChart stockChart, int x, int y, int absoluteX, int absoluteY) {
+            super(stockChart, x, y, absoluteX, absoluteY);
         }
-    }
-
-    /**
-     * Listener to the stock chart right click events.
-     */
-    interface StockChartRightClickListener {
-        /**
-         * Called when user clicks on the stock chart.
-         *
-         * @param event event object
-         */
-        void onRightClick(StockChartRightClickEvent event);
     }
 
     /**
      * Describes StockEvent event.
      */
-    abstract class AbstractStockEventEvent {
+    abstract class AbstractStockEventEvent extends AbstractStockChartEvent {
         private final String graphId;
         private final Date date;
         private final StockEvent stockEvent;
+        private final StockGraph graph;
 
-        protected AbstractStockEventEvent(String graphId, Date date, StockEvent stockEvent) {
+        protected AbstractStockEventEvent(StockChart stockChart, StockGraph graph, String graphId, Date date,
+                                          StockEvent stockEvent) {
+            super(stockChart);
+            this.graph = graph;
             this.graphId = graphId;
             this.date = date;
             this.stockEvent = stockEvent;
@@ -265,80 +431,53 @@ public interface StockChart extends Component, StockChartModel<StockChart>, Comp
         public StockEvent getStockEvent() {
             return stockEvent;
         }
+
+        /**
+         * @return null or stock graph
+         */
+        public StockGraph getStockGraph() {
+            return graph;
+        }
     }
 
     /**
      * Describes StockEvent click event.
      */
     class StockEventClickEvent extends AbstractStockEventEvent {
-        public StockEventClickEvent(String graphId, Date date, StockEvent stockEvent) {
-            super(graphId, date, stockEvent);
+        public StockEventClickEvent(StockChart stockChart, StockGraph graph, String graphId, Date date,
+                                    StockEvent stockEvent) {
+            super(stockChart, graph, graphId, date, stockEvent);
         }
-    }
-
-    /**
-     * Listener to the stock event click events.
-     */
-    interface StockEventClickListener {
-        /**
-         * Called when user clicks on the stock event.
-         *
-         * @param event event object
-         */
-        void onClick(StockEventClickEvent event);
     }
 
     /**
      * Describes StockEvent roll-out event.
      */
     class StockEventRollOutEvent extends AbstractStockEventEvent {
-        public StockEventRollOutEvent(String graphId, Date date, StockEvent stockEvent) {
-            super(graphId, date, stockEvent);
+        public StockEventRollOutEvent(StockChart stockChart, StockGraph graph, String graphId, Date date, StockEvent stockEvent) {
+            super(stockChart, graph, graphId, date, stockEvent);
         }
-    }
-
-    /**
-     * Listener to the stock event roll-out events.
-     */
-    interface StockEventRollOutListener {
-        /**
-         * Called when the stock event did roll-out
-         *
-         * @param event event object
-         */
-        void onRollOut(StockEventRollOutEvent event);
     }
 
     /**
      * Describes StockEvent roll-over event.
      */
     class StockEventRollOverEvent extends AbstractStockEventEvent {
-        public StockEventRollOverEvent(String graphId, Date date, StockEvent stockEvent) {
-            super(graphId, date, stockEvent);
+        public StockEventRollOverEvent(StockChart stockChart, StockGraph graph, String graphId, Date date, StockEvent stockEvent) {
+            super(stockChart, graph, graphId, date, stockEvent);
         }
-    }
-
-    /**
-     * Listener to the stock event roll-over events.
-     */
-    interface StockEventRollOverListener {
-        /**
-         * Called when the stock event did roll-over
-         *
-         * @param event event object
-         */
-        void onRollOver(StockEventRollOverEvent event);
     }
 
     /**
      * Describes zoom event.
      */
-    class ZoomEvent {
+    class ZoomEvent extends AbstractStockChartEvent {
         private final Date startDate;
         private final Date endDate;
         private final DatePeriod period;
 
-        public ZoomEvent(Date startDate, Date endDate, DatePeriod period) {
+        public ZoomEvent(StockChart stockChart, Date startDate, Date endDate, DatePeriod period) {
+            super(stockChart);
             this.startDate = startDate;
             this.endDate = endDate;
             this.period = period;
@@ -367,21 +506,9 @@ public interface StockChart extends Component, StockChartModel<StockChart>, Comp
     }
 
     /**
-     * Listener to the stock chart zoom events.
-     */
-    interface ZoomListener {
-        /**
-         * Called when value of the stock chart zoom changed.
-         *
-         * @param event event object
-         */
-        void onZoom(ZoomEvent event);
-    }
-
-    /**
      * Describes period selector change event.
      */
-    class PeriodSelectorChangeEvent {
+    class PeriodSelectorChangeEvent extends AbstractStockChartEvent {
         private final Date startDate;
         private final Date endDate;
 
@@ -393,8 +520,10 @@ public interface StockChart extends Component, StockChartModel<StockChart>, Comp
         private final int absoluteX;
         private final int absoluteY;
 
-        public PeriodSelectorChangeEvent(Date startDate, Date endDate, PeriodType predefinedPeriod,
-                                         Integer count, int x, int y, int absoluteX, int absoluteY) {
+        public PeriodSelectorChangeEvent(StockChart stockChart, Date startDate, Date endDate,
+                                         PeriodType predefinedPeriod, Integer count, int x, int y, int absoluteX,
+                                         int absoluteY) {
+            super(stockChart);
             this.startDate = startDate;
             this.endDate = endDate;
             this.predefinedPeriod = predefinedPeriod;
@@ -460,24 +589,13 @@ public interface StockChart extends Component, StockChartModel<StockChart>, Comp
     }
 
     /**
-     * Listener to the period selector change events.
-     */
-    interface PeriodSelectorChangeListener {
-        /**
-         * Called when the period selector changed
-         *
-         * @param event event object
-         */
-        void onChange(PeriodSelectorChangeEvent event);
-    }
-
-    /**
      * Describes dataset selector event.
      */
-    abstract class AbstractDataSetSelectorEvent {
+    abstract class AbstractDataSetSelectorEvent extends AbstractStockChartEvent {
         private final String dataSetId;
 
-        protected AbstractDataSetSelectorEvent(String dataSetId) {
+        protected AbstractDataSetSelectorEvent(StockChart stockChart, String dataSetId) {
+            super(stockChart);
             this.dataSetId = dataSetId;
         }
 
@@ -493,75 +611,51 @@ public interface StockChart extends Component, StockChartModel<StockChart>, Comp
      * Describes dataset selector compare event.
      */
     class DataSetSelectorCompareEvent extends AbstractDataSetSelectorEvent {
-        public DataSetSelectorCompareEvent(String dataSetId) {
-            super(dataSetId);
+        public DataSetSelectorCompareEvent(StockChart stockChart, String dataSetId) {
+            super(stockChart, dataSetId);
         }
-    }
-
-    /**
-     * Listener to dataset selector compare events.
-     */
-    interface DataSetSelectorCompareListener {
-        void onCompare(DataSetSelectorCompareEvent event);
     }
 
     /**
      * Describes dataset selector select event.
      */
     class DataSetSelectorSelectEvent extends AbstractDataSetSelectorEvent {
-        public DataSetSelectorSelectEvent(String dataSetId) {
-            super(dataSetId);
+        public DataSetSelectorSelectEvent(StockChart stockChart, String dataSetId) {
+            super(stockChart, dataSetId);
         }
-    }
-
-    /**
-     * Listener to dataset selector select events.
-     */
-    interface DataSetSelectorSelectListener {
-        /**
-         * Called when the dataset selector selected.
-         *
-         * @param event event object
-         */
-        void onSelect(DataSetSelectorSelectEvent event);
     }
 
     /**
      * Describes dataset selector uncompare event.
      */
     class DataSetSelectorUnCompareEvent extends AbstractDataSetSelectorEvent {
-        public DataSetSelectorUnCompareEvent(String dataSetId) {
-            super(dataSetId);
+        public DataSetSelectorUnCompareEvent(StockChart stockChart, String dataSetId) {
+            super(stockChart, dataSetId);
         }
-    }
-
-    /**
-     * Listener to the dataset selector uncompare events.
-     */
-    interface DataSetSelectorUnCompareListener {
-        /**
-         * Called when the dataset selector removed from comparison.
-         *
-         * @param event event object
-         */
-        void onUnCompare(DataSetSelectorUnCompareEvent event);
     }
 
     /**
      * Describes stock graph event.
      */
-    abstract class AbstractStockGraphEvent {
+    abstract class AbstractStockGraphEvent extends AbstractStockChartEvent {
 
         private final String panelId;
         private final String graphId;
+        private final StockGraph stockGraph;
+        private final StockPanel stockPanel;
         private final int x;
         private final int y;
         private final int absoluteX;
         private final int absoluteY;
 
-        protected AbstractStockGraphEvent(String panelId, String graphId, int x, int y, int absoluteX, int absoluteY) {
+        protected AbstractStockGraphEvent(StockChart stockChart, StockPanel stockPanel, String panelId,
+                                          StockGraph stockGraph, String graphId, int x, int y,
+                                          int absoluteX, int absoluteY) {
+            super(stockChart);
             this.panelId = panelId;
             this.graphId = graphId;
+            this.stockGraph = stockGraph;
+            this.stockPanel = stockPanel;
             this.x = x;
             this.y = y;
             this.absoluteX = absoluteX;
@@ -609,77 +703,63 @@ public interface StockChart extends Component, StockChartModel<StockChart>, Comp
         public int getAbsoluteY() {
             return absoluteY;
         }
+
+        /**
+         * @return null or stock graph
+         */
+        public StockGraph getStockGraph() {
+            return stockGraph;
+        }
+
+        /**
+         * @return null or stock panel
+         */
+        public StockPanel getStockPanel() {
+            return stockPanel;
+        }
     }
 
     /**
      * Describes stock graph click event.
      */
     class StockGraphClickEvent extends AbstractStockGraphEvent {
-        public StockGraphClickEvent(String panelId, String graphId, int x, int y, int absoluteX, int absoluteY) {
-            super(panelId, graphId, x, y, absoluteX, absoluteY);
+        public StockGraphClickEvent(StockChart stockChart, StockPanel stockPanel, String panelId,
+                                    StockGraph stockGraph, String graphId, int x, int y, int absoluteX, int absoluteY) {
+            super(stockChart, stockPanel, panelId, stockGraph, graphId, x, y, absoluteX, absoluteY);
         }
-    }
-
-    /**
-     * Listener to the stock graph click events.
-     */
-    interface StockGraphClickListener {
-        /**
-         * Called when user clicks on the stock graph.
-         *
-         * @param event event object
-         */
-        void onClick(StockGraphClickEvent event);
     }
 
     /**
      * Describes stock graph roll-out event.
      */
     class StockGraphRollOutEvent extends AbstractStockGraphEvent {
-        public StockGraphRollOutEvent(String panelId, String graphId, int x, int y, int absoluteX, int absoluteY) {
-            super(panelId, graphId, x, y, absoluteX, absoluteY);
+        public StockGraphRollOutEvent(StockChart stockChart, StockPanel stockPanel, String panelId,
+                                      StockGraph stockGraph, String graphId, int x, int y, int absoluteX,
+                                      int absoluteY) {
+            super(stockChart, stockPanel, panelId, stockGraph, graphId, x, y, absoluteX, absoluteY);
         }
-    }
-
-    /**
-     * Listener to the stock graph roll-out events.
-     */
-    interface StockGraphRollOutListener {
-        /**
-         * Called when the stock graph did roll-out.
-         *
-         * @param event event object
-         */
-        void onRollOut(StockGraphRollOutEvent event);
     }
 
     /**
      * Describes stock graph roll over event.
      */
     class StockGraphRollOverEvent extends AbstractStockGraphEvent {
-        public StockGraphRollOverEvent(String panelId, String graphId, int x, int y, int absoluteX, int absoluteY) {
-            super(panelId, graphId, x, y, absoluteX, absoluteY);
+        public StockGraphRollOverEvent(StockChart stockChart, StockPanel stockPanel, String panelId,
+                                       StockGraph stockGraph, String graphId, int x, int y, int absoluteX,
+                                       int absoluteY) {
+            super(stockChart, stockPanel, panelId, stockGraph, graphId, x, y, absoluteX, absoluteY);
         }
-    }
-
-    /**
-     * Listener to the stock graph roll-over events.
-     */
-    interface StockGraphRollOverListener {
-        /**
-         * Called when the stock graph did roll-over.
-         *
-         * @param event event object
-         */
-        void onRollOver(StockGraphRollOverEvent event);
     }
 
     /**
      * Describes stock graph item event.
      */
-    abstract class AbstractStockGraphItemEvent {
+    abstract class AbstractStockGraphItemEvent extends AbstractStockChartEvent {
         private final String panelId;
         private final String graphId;
+
+        private final StockPanel stockPanel;
+        private final StockGraph stockGraph;
 
         private final int x;
         private final int y;
@@ -689,10 +769,14 @@ public interface StockChart extends Component, StockChartModel<StockChart>, Comp
         private final DataItem dataItem;
         private final int itemIndex;
 
-        protected AbstractStockGraphItemEvent(String panelId, String graphId, DataItem dataItem, int itemIndex,
-                                              int x, int y, int absoluteX, int absoluteY) {
+        protected AbstractStockGraphItemEvent(StockChart stockChart, StockPanel stockPanel, String panelId,
+                                              StockGraph stockGraph, String graphId, DataItem dataItem,
+                                              int itemIndex, int x, int y, int absoluteX, int absoluteY) {
+            super(stockChart);
             this.panelId = panelId;
             this.dataItem = dataItem;
+            this.stockPanel = stockPanel;
+            this.stockGraph = stockGraph;
             this.itemIndex = itemIndex;
             this.absoluteY = absoluteY;
             this.absoluteX = absoluteX;
@@ -785,93 +869,63 @@ public interface StockChart extends Component, StockChartModel<StockChart>, Comp
         public int getAbsoluteY() {
             return absoluteY;
         }
+
+        /**
+         * @return null or panel that contains clicked stock graph item
+         */
+        public StockPanel getStockPanel() {
+            return stockPanel;
+        }
+
+        /**
+         * @return null or stock graph that contains clicked item
+         */
+        public StockGraph getStockGraph() {
+            return stockGraph;
+        }
     }
 
     /**
      * Describes stock graph item click event.
      */
     class StockGraphItemClickEvent extends AbstractStockGraphItemEvent {
-        public StockGraphItemClickEvent(String panelId, String graphId, DataItem item, int itemIndex,
-                                        int x, int y, int absoluteX, int absoluteY) {
-            super(panelId, graphId, item, itemIndex, x, y, absoluteX, absoluteY);
+        public StockGraphItemClickEvent(StockChart stockChart, StockPanel stockPanel, String panelId,
+                                        StockGraph stockGraph, String graphId, DataItem item, int itemIndex, int x,
+                                        int y, int absoluteX, int absoluteY) {
+            super(stockChart, stockPanel, panelId, stockGraph, graphId, item, itemIndex, x, y, absoluteX, absoluteY);
         }
-    }
-
-    /**
-     * Listener to the stock graph item click events.
-     */
-    interface StockGraphItemClickListener {
-        /**
-         * Called when user clicks on the stock graph item.
-         *
-         * @param event event object
-         */
-        void onClick(StockGraphItemClickEvent event);
     }
 
     /**
      * Describes stock graph item click event.
      */
     class StockGraphItemRightClickEvent extends AbstractStockGraphItemEvent {
-        public StockGraphItemRightClickEvent(String panelId, String graphId, DataItem item, int itemIndex,
-                                             int x, int y, int absoluteX, int absoluteY) {
-            super(panelId, graphId, item, itemIndex, x, y, absoluteX, absoluteY);
+        public StockGraphItemRightClickEvent(StockChart stockChart, StockPanel stockPanel, String panelId,
+                                             StockGraph stockGraph, String graphId, DataItem item,
+                                             int itemIndex, int x, int y, int absoluteX, int absoluteY) {
+            super(stockChart, stockPanel, panelId, stockGraph, graphId, item, itemIndex, x, y, absoluteX, absoluteY);
         }
-    }
-
-    /**
-     * Listener to the stock graph item right click events.
-     */
-    interface StockGraphItemRightClickListener {
-        /**
-         * Called when user clicks on the stock graph item.
-         *
-         * @param event event object
-         */
-        void onClick(StockGraphItemRightClickEvent event);
     }
 
     /**
      * Describes stock graph item roll-out event.
      */
     class StockGraphItemRollOutEvent extends AbstractStockGraphItemEvent {
-        public StockGraphItemRollOutEvent(String panelId, String graphId, DataItem item, int itemIndex,
-                                          int x, int y, int absoluteX, int absoluteY) {
-            super(panelId, graphId, item, itemIndex, x, y, absoluteX, absoluteY);
+        public StockGraphItemRollOutEvent(StockChart stockChart, StockPanel stockPanel, String panelId,
+                                          StockGraph stockGraph, String graphId, DataItem item, int itemIndex, int x,
+                                          int y, int absoluteX, int absoluteY) {
+            super(stockChart, stockPanel, panelId, stockGraph, graphId, item, itemIndex, x, y, absoluteX, absoluteY);
         }
-    }
-
-    /**
-     * Listener to the stock graph item roll-out events.
-     */
-    interface StockGraphItemRollOutListener {
-        /**
-         * Called when the stock graph item did roll-out.
-         *
-         * @param event event object
-         */
-        void onRollOut(StockGraphItemRollOutEvent event);
     }
 
     /**
      * Describes stock graph item roll-over event.
      */
     class StockGraphItemRollOverEvent extends AbstractStockGraphItemEvent {
-        public StockGraphItemRollOverEvent(String panelId, String graphId, DataItem item, int itemIndex,
-                                           int x, int y, int absoluteX, int absoluteY) {
-            super(panelId, graphId, item, itemIndex, x, y, absoluteX, absoluteY);
+        public StockGraphItemRollOverEvent(StockChart stockChart, StockPanel stockPanel, String panelId,
+                                           StockGraph stockGraph, String graphId, DataItem item,
+                                           int itemIndex, int x, int y, int absoluteX, int absoluteY) {
+            super(stockChart, stockPanel, panelId, stockGraph, graphId, item, itemIndex, x, y, absoluteX, absoluteY);
         }
-    }
-
-    /**
-     * Listener to the stock graph item roll-over events.
-     */
-    interface StockGraphItemRollOverListener {
-        /**
-         * Called when the stock graph item did roll-over.
-         *
-         * @param event event object
-         */
-        void onRollOver(StockGraphItemRollOverEvent event);
     }
 }

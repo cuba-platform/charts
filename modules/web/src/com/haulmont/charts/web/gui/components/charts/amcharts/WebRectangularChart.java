@@ -5,6 +5,7 @@
 
 package com.haulmont.charts.web.gui.components.charts.amcharts;
 
+import com.haulmont.bali.events.Subscription;
 import com.haulmont.charts.gui.amcharts.model.Color;
 import com.haulmont.charts.gui.amcharts.model.Cursor;
 import com.haulmont.charts.gui.amcharts.model.Scrollbar;
@@ -13,6 +14,7 @@ import com.haulmont.charts.gui.components.charts.RectangularChart;
 import org.apache.commons.lang3.StringUtils;
 
 import java.util.List;
+import java.util.function.Consumer;
 
 @SuppressWarnings("unchecked")
 public abstract class WebRectangularChart<T extends RectangularChart,
@@ -378,42 +380,46 @@ public abstract class WebRectangularChart<T extends RectangularChart,
     }
 
     @Override
-    public void addCursorPeriodSelectListener(CursorPeriodSelectListener listener) {
-        getEventRouter().addListener(CursorPeriodSelectListener.class, listener);
+    public Subscription addCursorPeriodSelectListener(Consumer<CursorPeriodSelectEvent> listener) {
         if (periodSelectHandler == null) {
-            periodSelectHandler = e -> {
-                CursorPeriodSelectEvent event = new CursorPeriodSelectEvent(e.getStart(), e.getEnd());
-                getEventRouter().fireEvent(CursorPeriodSelectListener.class, CursorPeriodSelectListener::onSelect, event);
-            };
+            periodSelectHandler = this::onCursorPeriodSelect;
             component.addCursorPeriodSelectListener(periodSelectHandler);
         }
+
+        return getEventHub().subscribe(CursorPeriodSelectEvent.class, listener);
+    }
+
+    protected void onCursorPeriodSelect(com.haulmont.charts.web.widgets.amcharts.events.CursorPeriodSelectEvent e) {
+        publish(CursorPeriodSelectEvent.class, new CursorPeriodSelectEvent(this, e.getStart(), e.getEnd()));
     }
 
     @Override
-    public void removeCursorPeriodSelectListener(CursorPeriodSelectListener listener) {
-        getEventRouter().removeListener(CursorPeriodSelectListener.class, listener);
-        if (periodSelectHandler != null && !getEventRouter().hasListeners(CursorPeriodSelectListener.class)) {
+    public void removeCursorPeriodSelectListener(Consumer<CursorPeriodSelectEvent> listener) {
+        unsubscribe(CursorPeriodSelectEvent.class, listener);
+        if (periodSelectHandler != null && !hasSubscriptions(CursorPeriodSelectEvent.class)) {
             component.removeCursorPeriodSelectListener(periodSelectHandler);
             periodSelectHandler = null;
         }
     }
 
     @Override
-    public void addCursorZoomListener(CursorZoomListener listener) {
-        getEventRouter().addListener(CursorZoomListener.class, listener);
+    public Subscription addCursorZoomListener(Consumer<CursorZoomEvent> listener) {
         if (cursorZoomHandler == null) {
-            cursorZoomHandler = e -> {
-                CursorZoomEvent event = new CursorZoomEvent(e.getStart(), e.getEnd());
-                getEventRouter().fireEvent(CursorZoomListener.class, CursorZoomListener::onZoom, event);
-            };
+            cursorZoomHandler = this::onCursorZoom;
             component.addCursorZoomListener(cursorZoomHandler);
         }
+
+        return getEventHub().subscribe(CursorZoomEvent.class, listener);
+    }
+
+    protected void onCursorZoom(com.haulmont.charts.web.widgets.amcharts.events.CursorZoomEvent e) {
+        publish(CursorZoomEvent.class, new CursorZoomEvent(this, e.getStart(), e.getEnd()));
     }
 
     @Override
-    public void removeCursorZoomListener(CursorZoomListener listener) {
-        getEventRouter().removeListener(CursorZoomListener.class, listener);
-        if (cursorZoomHandler != null && !getEventRouter().hasListeners(CursorZoomListener.class)) {
+    public void removeCursorZoomListener(Consumer<CursorZoomEvent> listener) {
+        unsubscribe(CursorZoomEvent.class, listener);
+        if (cursorZoomHandler != null && !hasSubscriptions(CursorZoomEvent.class)) {
             component.removeCursorZoomListener(cursorZoomHandler);
             cursorZoomHandler = null;
         }

@@ -5,7 +5,10 @@
 
 package com.haulmont.charts.gui.components.charts;
 
+import com.haulmont.bali.events.Subscription;
 import com.haulmont.charts.gui.amcharts.model.charts.SlicedChartModel;
+
+import java.util.function.Consumer;
 
 /**
  * Base interface for {@link PieChart} and {@link FunnelChart}.
@@ -15,15 +18,55 @@ import com.haulmont.charts.gui.amcharts.model.charts.SlicedChartModel;
  * <a href="http://docs.amcharts.com/3/javascriptcharts/AmSlicedChart">http://docs.amcharts.com/3/javascriptcharts/AmSlicedChart</a>
  */
 public interface SlicedChart<T extends SlicedChart> extends Chart<T>, SlicedChartModel<T> {
-    void addSliceClickListener(SliceClickListener listener);
-    void removeSliceClickListener(SliceClickListener listener);
+    /**
+     * Adds a listener for a slice. Called when user clicks on the slice.
+     *
+     * @param listener a listener to add
+     */
+    Subscription addSliceClickListener(Consumer<SliceClickEvent> listener);
 
-    void addSliceRightClickListener(SliceRightClickListener listener);
-    void removeSliceRightClickListener(SliceRightClickListener listener);
+    /**
+     * @deprecated Use {@link Subscription} instead
+     */
+    @Deprecated
+    void removeSliceClickListener(Consumer<SliceClickEvent> listener);
 
-    void addSlicePullInListener(SlicePullInListener listener);
-    void removeSlicePullInListener(SlicePullInListener listener);
+    /**
+     * Adds a listener for a slice. Called when user clicks on the slice.
+     *
+     * @param listener a listener to add
+     */
+    Subscription addSliceRightClickListener(Consumer<SliceRightClickEvent> listener);
 
-    void addSlicePullOutListener(SlicePullOutListener listener);
-    void removeSlicePullOutListener(SlicePullOutListener listener);
+    /**
+     * @deprecated Use {@link Subscription} instead
+     */
+    @Deprecated
+    void removeSliceRightClickListener(Consumer<SliceRightClickEvent> listener);
+
+    /**
+     * Adds a listener for a slice. Called when the slice did pull-in.
+     *
+     * @param listener a listener to add
+     */
+    Subscription addSlicePullInListener(Consumer<SlicePullInEvent> listener);
+
+    /**
+     * @deprecated Use {@link Subscription} instead
+     */
+    @Deprecated
+    void removeSlicePullInListener(Consumer<SlicePullInEvent> listener);
+
+    /**
+     * Adds a listener for a slice. Called when the slice did pull-out.
+     *
+     * @param listener a listener to add
+     */
+    Subscription addSlicePullOutListener(Consumer<SlicePullOutEvent> listener);
+
+    /**
+     * @deprecated Use {@link Subscription} instead
+     */
+    @Deprecated
+    void removeSlicePullOutListener(Consumer<SlicePullOutEvent> listener);
 }

@@ -5,7 +5,10 @@
 
 package com.haulmont.charts.gui.components.charts;
 
+import com.haulmont.bali.events.Subscription;
 import com.haulmont.charts.gui.amcharts.model.charts.CoordinateChartModel;
+
+import java.util.function.Consumer;
 
 /**
  * Base interface for {@link GanttChart}, {@link SerialChart}, {@link RadarChart} and {@link XYChart}.
@@ -15,17 +18,58 @@ import com.haulmont.charts.gui.amcharts.model.charts.CoordinateChartModel;
  * <a href="http://docs.amcharts.com/3/javascriptcharts/AmCoordinateChart">http://docs.amcharts.com/3/javascriptcharts/AmCoordinateChart</a>
  */
 public interface CoordinateChart<T extends CoordinateChart> extends Chart<T>, CoordinateChartModel<T> {
-    void addGraphClickListener(GraphClickListener listener);
-    void removeGraphClickListener(GraphClickListener listener);
 
-    void addGraphItemClickListener(GraphItemClickListener listener);
-    void removeGraphItemClickListener(GraphItemClickListener listener);
+    /**
+     * Adds a listener for graph. Called when user clicks on the graph item.
+     *
+     * @param listener a listener to add
+     */
+    Subscription addGraphClickListener(Consumer<GraphClickEvent> listener);
 
-    void addGraphItemRightClickListener(GraphItemRightClickListener clickListener);
-    void removeGraphItemRightClickListener(GraphItemRightClickListener clickListener);
+    /**
+     * @deprecated Use {@link Subscription} instead
+     */
+    @Deprecated
+    void removeGraphClickListener(Consumer<GraphClickEvent> listener);
 
-    void addAxisZoomListener(AxisZoomListener listener);
-    void removeAxisZoomListener(AxisZoomListener listener);
+    /**
+     * Adds a listener for graph item. Called when user clicks on the graph item.
+     *
+     * @param listener a listener to add
+     */
+    Subscription addGraphItemClickListener(Consumer<GraphItemClickEvent> listener);
+
+    /**
+     * @deprecated Use {@link Subscription} instead
+     */
+    @Deprecated
+    void removeGraphItemClickListener(Consumer<GraphItemClickEvent> listener);
+
+    /**
+     * Adds a listener for graph item. Called when user clicks on the graph item.
+     *
+     * @param clickListener a listener to add
+     */
+    Subscription addGraphItemRightClickListener(Consumer<GraphItemRightClickEvent> clickListener);
+
+    /**
+     * @deprecated Use {@link Subscription} instead
+     */
+    @Deprecated
+    void removeGraphItemRightClickListener(Consumer<GraphItemRightClickEvent> clickListener);
+
+    /**
+     * Adds a listener to axis. Called when value of the axis zoom changed.
+     *
+     * @param listener a listener to add
+     */
+    Subscription addAxisZoomListener(Consumer<AxisZoomEvent> listener);
+
+    /**
+     * @deprecated Use {@link Subscription} instead
+     */
+    @Deprecated
+    void removeAxisZoomListener(Consumer<AxisZoomEvent> listener);
 
     /**
      * Zooms out value axes, value axes shows all available data.

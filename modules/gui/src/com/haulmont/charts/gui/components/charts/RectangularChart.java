@@ -5,7 +5,10 @@
 
 package com.haulmont.charts.gui.components.charts;
 
+import com.haulmont.bali.events.Subscription;
 import com.haulmont.charts.gui.amcharts.model.charts.RectangularChartModel;
+
+import java.util.function.Consumer;
 
 /**
  * Base interface for {@link GanttChart}, {@link SerialChart} and {@link XYChart}.
@@ -15,9 +18,29 @@ import com.haulmont.charts.gui.amcharts.model.charts.RectangularChartModel;
  * <a href="http://docs.amcharts.com/3/javascriptcharts/AmRectangularChart">http://docs.amcharts.com/3/javascriptcharts/AmRectangularChart</a>
  */
 public interface RectangularChart<T extends RectangularChart> extends CoordinateChart<T>, RectangularChartModel<T> {
-    void addCursorZoomListener(CursorZoomListener listener);
-    void removeCursorZoomListener(CursorZoomListener listener);
+    /**
+     * Adds a listener for cursor zoom. Called when value of the cursor zoom changed.
+     *
+     * @param listener a listener to add
+     */
+    Subscription addCursorZoomListener(Consumer<CursorZoomEvent> listener);
 
-    void addCursorPeriodSelectListener(CursorPeriodSelectListener listener);
-    void removeCursorPeriodSelectListener(CursorPeriodSelectListener listener);
+    /**
+     * @deprecated Use {@link Subscription} instead
+     */
+    @Deprecated
+    void removeCursorZoomListener(Consumer<CursorZoomEvent> listener);
+
+    /**
+     * Adds a listener for period selection by cursor. Called when value of the cursor period changed.
+     *
+     * @param listener a listener to add
+     */
+    Subscription addCursorPeriodSelectListener(Consumer<CursorPeriodSelectEvent> listener);
+
+    /**
+     * @deprecated Use {@link Subscription} instead
+     */
+    @Deprecated
+    void removeCursorPeriodSelectListener(Consumer<CursorPeriodSelectEvent> listener);
 }

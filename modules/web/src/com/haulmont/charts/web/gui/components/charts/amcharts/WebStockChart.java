@@ -5,6 +5,8 @@
 
 package com.haulmont.charts.web.gui.components.charts.amcharts;
 
+import com.google.common.base.Strings;
+import com.haulmont.bali.events.Subscription;
 import com.haulmont.charts.gui.amcharts.model.*;
 import com.haulmont.charts.gui.components.charts.StockChart;
 import com.haulmont.charts.gui.amcharts.model.charts.StockChartGroup;
@@ -36,6 +38,7 @@ import javax.inject.Inject;
 import java.text.DecimalFormatSymbols;
 import java.text.ParseException;
 import java.util.*;
+import java.util.function.Consumer;
 
 public class WebStockChart extends WebAbstractComponent<CubaAmStockChartScene>
         implements StockChart, InitializingBean {
@@ -195,241 +198,275 @@ public class WebStockChart extends WebAbstractComponent<CubaAmStockChartScene>
     }
 
     @Override
-    public void addClickListener(StockChartClickListener clickListener) {
-        getEventRouter().addListener(StockChartClickListener.class, clickListener,
-                () -> component.addChartClickListener(stockChartEventsForwarder)
-        );
+    public Subscription addClickListener(Consumer<StockChartClickEvent> clickListener) {
+        if (!hasSubscriptions(StockChartClickEvent.class)) {
+            component.addChartClickListener(stockChartEventsForwarder);
+        }
+        return getEventHub().subscribe(StockChartClickEvent.class, clickListener);
     }
 
     @Override
-    public void removeClickListener(StockChartClickListener clickListener) {
-        getEventRouter().removeListener(StockChartClickListener.class, clickListener,
-                () -> component.removeChartClickListener(stockChartEventsForwarder)
-        );
+    public void removeClickListener(Consumer<StockChartClickEvent> clickListener) {
+        unsubscribe(StockChartClickEvent.class, clickListener);
+        if (!hasSubscriptions(StockChartClickEvent.class)) {
+            component.removeChartClickListener(stockChartEventsForwarder);
+        }
     }
 
     @Override
-    public void addRightClickListener(StockChartRightClickListener clickListener) {
-        getEventRouter().addListener(StockChartRightClickListener.class, clickListener,
-                () -> component.addChartRightClickListener(stockChartEventsForwarder)
-        );
+    public Subscription addRightClickListener(Consumer<StockChartRightClickEvent> clickListener) {
+        if (!hasSubscriptions(StockChartRightClickEvent.class)) {
+            component.addChartRightClickListener(stockChartEventsForwarder);
+        }
+        return getEventHub().subscribe(StockChartRightClickEvent.class, clickListener);
     }
 
     @Override
-    public void removeRightClickListener(StockChartRightClickListener clickListener) {
-        getEventRouter().removeListener(StockChartRightClickListener.class, clickListener,
-                () -> component.removeChartRightClickListener(stockChartEventsForwarder)
-        );
+    public void removeRightClickListener(Consumer<StockChartRightClickEvent> clickListener) {
+        unsubscribe(StockChartRightClickEvent.class, clickListener);
+        if (!hasSubscriptions(StockChartRightClickEvent.class)) {
+            component.removeChartRightClickListener(stockChartEventsForwarder);
+        }
     }
 
     @Override
-    public void addStockEventClickListener(StockEventClickListener clickListener) {
-        getEventRouter().addListener(StockEventClickListener.class, clickListener,
-                () -> component.addStockEventClickListener(stockChartEventsForwarder)
-        );
+    public Subscription addStockEventClickListener(Consumer<StockEventClickEvent> clickListener) {
+        if (!hasSubscriptions(StockEventClickEvent.class)) {
+            component.addStockEventClickListener(stockChartEventsForwarder);
+        }
+        return getEventHub().subscribe(StockEventClickEvent.class, clickListener);
     }
 
     @Override
-    public void removeStockEventClickListener(StockEventClickListener clickListener) {
-        getEventRouter().removeListener(StockEventClickListener.class, clickListener,
-                () -> component.removeStockEventClickListener(stockChartEventsForwarder)
-        );
+    public void removeStockEventClickListener(Consumer<StockEventClickEvent> clickListener) {
+        unsubscribe(StockEventClickEvent.class, clickListener);
+        if (!hasSubscriptions(StockEventClickEvent.class)) {
+            component.removeStockEventClickListener(stockChartEventsForwarder);
+        }
     }
 
     @Override
-    public void addStockEventRollOutListener(StockEventRollOutListener rollOutListener) {
-        getEventRouter().addListener(StockEventRollOutListener.class, rollOutListener,
-                () -> component.addStockEventRollOutListener(stockChartEventsForwarder)
-        );
+    public Subscription addStockEventRollOutListener(Consumer<StockEventRollOutEvent> rollOutListener) {
+        if (!hasSubscriptions(StockEventRollOutEvent.class)) {
+            component.addStockEventRollOutListener(stockChartEventsForwarder);
+        }
+        return getEventHub().subscribe(StockEventRollOutEvent.class, rollOutListener);
     }
 
     @Override
-    public void removeStockEventRollOutListener(StockEventRollOutListener rollOutListener) {
-        getEventRouter().removeListener(StockEventRollOutListener.class, rollOutListener,
-                () -> component.removeStockEventRollOutListener(stockChartEventsForwarder)
-        );
+    public void removeStockEventRollOutListener(Consumer<StockEventRollOutEvent> rollOutListener) {
+        unsubscribe(StockEventRollOutEvent.class, rollOutListener);
+        if (!hasSubscriptions(StockEventRollOutEvent.class)) {
+            component.removeStockEventRollOutListener(stockChartEventsForwarder);
+        }
     }
 
     @Override
-    public void addStockEventRollOverListener(StockEventRollOverListener rollOverListener) {
-        getEventRouter().addListener(StockEventRollOverListener.class, rollOverListener,
-                () -> component.addStockEventRollOverListener(stockChartEventsForwarder)
-        );
+    public Subscription addStockEventRollOverListener(Consumer<StockEventRollOverEvent> rollOverListener) {
+        if (!hasSubscriptions(StockEventRollOverEvent.class)) {
+            component.addStockEventRollOverListener(stockChartEventsForwarder);
+        }
+        return getEventHub().subscribe(StockEventRollOverEvent.class, rollOverListener);
     }
 
     @Override
-    public void removeStockEventRollOverListener(StockEventRollOverListener rollOverListener) {
-        getEventRouter().removeListener(StockEventRollOverListener.class, rollOverListener,
-                () -> component.removeStockEventRollOverListener(stockChartEventsForwarder)
-        );
+    public void removeStockEventRollOverListener(Consumer<StockEventRollOverEvent> rollOverListener) {
+        unsubscribe(StockEventRollOverEvent.class, rollOverListener);
+        if (!hasSubscriptions(StockEventRollOverEvent.class)) {
+            component.removeStockEventRollOverListener(stockChartEventsForwarder);
+        }
     }
 
     @Override
-    public void addZoomListener(ZoomListener zoomListener) {
-        getEventRouter().addListener(ZoomListener.class, zoomListener,
-                () -> component.addStockPanelZoomListener(stockChartEventsForwarder)
-        );
+    public Subscription addZoomListener(Consumer<ZoomEvent> zoomListener) {
+        if (!hasSubscriptions(ZoomEvent.class)) {
+            component.addStockPanelZoomListener(stockChartEventsForwarder);
+        }
+        return getEventHub().subscribe(ZoomEvent.class, zoomListener);
     }
 
     @Override
-    public void removeZoomListener(ZoomListener zoomListener) {
-        getEventRouter().removeListener(ZoomListener.class, zoomListener,
-                () -> component.removeStockPanelZoomListener(stockChartEventsForwarder)
-        );
+    public void removeZoomListener(Consumer<ZoomEvent> zoomListener) {
+        unsubscribe(ZoomEvent.class, zoomListener);
+        if (!hasSubscriptions(ZoomEvent.class)) {
+            component.removeStockPanelZoomListener(stockChartEventsForwarder);
+        }
     }
 
     @Override
-    public void addPeriodSelectorChangeListener(PeriodSelectorChangeListener changeListener) {
-        getEventRouter().addListener(PeriodSelectorChangeListener.class, changeListener,
-                () -> component.addPeriodSelectorChangeListener(stockChartEventsForwarder)
-        );
+    public Subscription addPeriodSelectorChangeListener(Consumer<PeriodSelectorChangeEvent> changeListener) {
+        if (!hasSubscriptions(PeriodSelectorChangeEvent.class)) {
+            component.addPeriodSelectorChangeListener(stockChartEventsForwarder);
+        }
+        return getEventHub().subscribe(PeriodSelectorChangeEvent.class, changeListener);
     }
 
     @Override
-    public void removePeriodSelectorChangeListener(PeriodSelectorChangeListener changeListener) {
-        getEventRouter().removeListener(PeriodSelectorChangeListener.class, changeListener,
-                () -> component.removePeriodSelectorChangeListener(stockChartEventsForwarder)
-        );
+    public void removePeriodSelectorChangeListener(Consumer<PeriodSelectorChangeEvent> changeListener) {
+        unsubscribe(PeriodSelectorChangeEvent.class, changeListener);
+        if (!hasSubscriptions(PeriodSelectorChangeEvent.class)) {
+            component.removePeriodSelectorChangeListener(stockChartEventsForwarder);
+        }
     }
 
     @Override
-    public void addDataSetSelectorCompareListener(DataSetSelectorCompareListener compareListener) {
-        getEventRouter().addListener(DataSetSelectorCompareListener.class, compareListener,
-                () -> component.addDataSetSelectorCompareListener(stockChartEventsForwarder)
-        );
+    public Subscription addDataSetSelectorCompareListener(Consumer<DataSetSelectorCompareEvent> compareListener) {
+        if (!hasSubscriptions(DataSetSelectorCompareEvent.class)) {
+            component.addDataSetSelectorCompareListener(stockChartEventsForwarder);
+        }
+        return getEventHub().subscribe(DataSetSelectorCompareEvent.class, compareListener);
     }
 
     @Override
-    public void removeDataSetSelectorCompareListener(DataSetSelectorCompareListener compareListener) {
-        getEventRouter().removeListener(DataSetSelectorCompareListener.class, compareListener,
-                () -> component.removeDataSetSelectorCompareListener(stockChartEventsForwarder)
-        );
+    public void removeDataSetSelectorCompareListener(Consumer<DataSetSelectorCompareEvent> compareListener) {
+        unsubscribe(DataSetSelectorCompareEvent.class, compareListener);
+        if (!hasSubscriptions(DataSetSelectorCompareEvent.class)) {
+            component.removeDataSetSelectorCompareListener(stockChartEventsForwarder);
+        }
     }
 
     @Override
-    public void addDataSetSelectorSelectListener(DataSetSelectorSelectListener selectListener) {
-        getEventRouter().addListener(DataSetSelectorSelectListener.class, selectListener,
-                () -> component.addDataSetSelectorSelectListener(stockChartEventsForwarder)
-        );
+    public Subscription addDataSetSelectorSelectListener(Consumer<DataSetSelectorSelectEvent> selectListener) {
+        if (!hasSubscriptions(DataSetSelectorSelectEvent.class)) {
+            component.addDataSetSelectorSelectListener(stockChartEventsForwarder);
+        }
+        return getEventHub().subscribe(DataSetSelectorSelectEvent.class, selectListener);
     }
 
     @Override
-    public void removeDataSetSelectorSelectListener(DataSetSelectorSelectListener selectListener) {
-        getEventRouter().removeListener(DataSetSelectorSelectListener.class, selectListener,
-                () -> component.removeDataSetSelectorSelectListener(stockChartEventsForwarder)
-        );
+    public void removeDataSetSelectorSelectListener(Consumer<DataSetSelectorSelectEvent> selectListener) {
+        unsubscribe(DataSetSelectorSelectEvent.class, selectListener);
+        if (!hasSubscriptions(DataSetSelectorSelectEvent.class)) {
+            component.removeDataSetSelectorSelectListener(stockChartEventsForwarder);
+        }
     }
 
     @Override
-    public void addDataSetSelectorUnCompareListener(DataSetSelectorUnCompareListener unCompareListener) {
-        getEventRouter().addListener(DataSetSelectorUnCompareListener.class, unCompareListener,
-                () -> component.addDataSetSelectorUnCompareListener(stockChartEventsForwarder)
-        );
+    public Subscription addDataSetSelectorUnCompareListener(Consumer<DataSetSelectorUnCompareEvent> unCompareListener) {
+        if (!hasSubscriptions(DataSetSelectorUnCompareEvent.class)) {
+            component.addDataSetSelectorUnCompareListener(stockChartEventsForwarder);
+        }
+        return getEventHub().subscribe(DataSetSelectorUnCompareEvent.class, unCompareListener);
     }
 
     @Override
-    public void removeDataSetSelectorUnCompareListener(DataSetSelectorUnCompareListener unCompareListener) {
-        getEventRouter().removeListener(DataSetSelectorUnCompareListener.class, unCompareListener,
-                () -> component.removeDataSetSelectorUnCompareListener(stockChartEventsForwarder)
-        );
+    public void removeDataSetSelectorUnCompareListener(Consumer<DataSetSelectorUnCompareEvent> unCompareListener) {
+        unsubscribe(DataSetSelectorUnCompareEvent.class, unCompareListener);
+        if (!hasSubscriptions(DataSetSelectorUnCompareEvent.class)) {
+            component.removeDataSetSelectorUnCompareListener(stockChartEventsForwarder);
+        }
     }
 
     @Override
-    public void addStockGraphClickListener(StockGraphClickListener clickListener) {
-        getEventRouter().addListener(StockGraphClickListener.class, clickListener,
-                () -> component.addStockGraphClickListener(stockChartEventsForwarder)
-        );
+    public Subscription addStockGraphClickListener(Consumer<StockGraphClickEvent> clickListener) {
+        if (!hasSubscriptions(StockGraphClickEvent.class)) {
+            component.addStockGraphClickListener(stockChartEventsForwarder);
+        }
+        return getEventHub().subscribe(StockGraphClickEvent.class, clickListener);
     }
 
     @Override
-    public void removeStockGraphClickListener(StockGraphClickListener clickListener) {
-        getEventRouter().removeListener(StockGraphClickListener.class, clickListener,
-                () -> component.removeStockGraphClickListener(stockChartEventsForwarder)
-        );
+    public void removeStockGraphClickListener(Consumer<StockGraphClickEvent> clickListener) {
+        unsubscribe(StockGraphClickEvent.class, clickListener);
+        if (!hasSubscriptions(StockGraphClickEvent.class)) {
+            component.removeStockGraphClickListener(stockChartEventsForwarder);
+        }
     }
 
     @Override
-    public void addStockGraphRollOutListener(StockGraphRollOutListener rollOutListener) {
-        getEventRouter().addListener(StockGraphRollOutListener.class, rollOutListener,
-                () -> component.addStockGraphRollOutListener(stockChartEventsForwarder)
-        );
+    public Subscription addStockGraphRollOutListener(Consumer<StockGraphRollOutEvent> rollOutListener) {
+        if (!hasSubscriptions(StockGraphRollOutEvent.class)) {
+            component.addStockGraphRollOutListener(stockChartEventsForwarder);
+        }
+        return getEventHub().subscribe(StockGraphRollOutEvent.class, rollOutListener);
     }
 
     @Override
-    public void removeStockGraphRollOutListener(StockGraphRollOutListener rollOutListener) {
-        getEventRouter().removeListener(StockGraphRollOutListener.class, rollOutListener,
-                () -> component.removeStockGraphRollOutListener(stockChartEventsForwarder)
-        );
+    public void removeStockGraphRollOutListener(Consumer<StockGraphRollOutEvent> rollOutListener) {
+        unsubscribe(StockGraphRollOutEvent.class, rollOutListener);
+        if (!hasSubscriptions(StockGraphRollOutEvent.class)) {
+            component.removeStockGraphRollOutListener(stockChartEventsForwarder);
+        }
     }
 
     @Override
-    public void addStockGraphRollOverListener(StockGraphRollOverListener rollOverListener) {
-        getEventRouter().addListener(StockGraphRollOverListener.class, rollOverListener,
-                () -> component.addStockGraphRollOverListener(stockChartEventsForwarder)
-        );
+    public Subscription addStockGraphRollOverListener(Consumer<StockGraphRollOverEvent> rollOverListener) {
+        if (!hasSubscriptions(StockGraphRollOverEvent.class)) {
+            component.addStockGraphRollOverListener(stockChartEventsForwarder);
+        }
+        return getEventHub().subscribe(StockGraphRollOverEvent.class, rollOverListener);
     }
 
     @Override
-    public void removeStockGraphRollOverListener(StockGraphRollOverListener rollOverListener) {
-        getEventRouter().removeListener(StockGraphRollOverListener.class, rollOverListener,
-                () -> component.removeStockGraphRollOverListener(stockChartEventsForwarder)
-        );
+    public void removeStockGraphRollOverListener(Consumer<StockGraphRollOverEvent> rollOverListener) {
+        unsubscribe(StockGraphRollOverEvent.class, rollOverListener);
+        if (!hasSubscriptions(StockGraphRollOverEvent.class)) {
+            component.removeStockGraphRollOverListener(stockChartEventsForwarder);
+        }
     }
 
     @Override
-    public void addStockGraphItemClickListener(StockGraphItemClickListener clickListener) {
-        getEventRouter().addListener(StockGraphItemClickListener.class, clickListener,
-                () -> component.addStockGraphItemClickListener(stockChartEventsForwarder)
-        );
+    public Subscription addStockGraphItemClickListener(Consumer<StockGraphItemClickEvent> clickListener) {
+        if (!hasSubscriptions(StockGraphItemClickEvent.class)) {
+            component.addStockGraphItemClickListener(stockChartEventsForwarder);
+        }
+        return getEventHub().subscribe(StockGraphItemClickEvent.class, clickListener);
     }
 
     @Override
-    public void removeStockGraphItemClickListener(StockGraphItemClickListener clickListener) {
-        getEventRouter().removeListener(StockGraphItemClickListener.class, clickListener,
-                () -> component.removeStockGraphItemClickListener(stockChartEventsForwarder)
-        );
+    public void removeStockGraphItemClickListener(Consumer<StockGraphItemClickEvent> clickListener) {
+        unsubscribe(StockGraphItemClickEvent.class, clickListener);
+        if (!hasSubscriptions(StockGraphItemClickEvent.class)) {
+            component.removeStockGraphItemClickListener(stockChartEventsForwarder);
+        }
     }
 
     @Override
-    public void addStockGraphItemRightClickListener(StockGraphItemRightClickListener clickListener) {
-        getEventRouter().addListener(StockGraphItemRightClickListener.class, clickListener,
-                () -> component.addStockGraphItemRightClickListener(stockChartEventsForwarder)
-        );
+    public Subscription addStockGraphItemRightClickListener(Consumer<StockGraphItemRightClickEvent> clickListener) {
+        if (!hasSubscriptions(StockGraphItemRightClickEvent.class)) {
+            component.addStockGraphItemRightClickListener(stockChartEventsForwarder);
+        }
+        return getEventHub().subscribe(StockGraphItemRightClickEvent.class, clickListener);
     }
 
     @Override
-    public void removeStockGraphItemRightClickListener(StockGraphItemRightClickListener clickListener) {
-        getEventRouter().removeListener(StockGraphItemRightClickListener.class, clickListener,
-                () -> component.removeStockGraphItemRightClickListener(stockChartEventsForwarder)
-        );
+    public void removeStockGraphItemRightClickListener(Consumer<StockGraphItemRightClickEvent> clickListener) {
+        unsubscribe(StockGraphItemRightClickEvent.class, clickListener);
+        if (!hasSubscriptions(StockGraphItemRightClickEvent.class)) {
+            component.removeStockGraphItemRightClickListener(stockChartEventsForwarder);
+        }
     }
 
     @Override
-    public void addStockGraphItemRollOutListener(StockGraphItemRollOutListener rollOutListener) {
-        getEventRouter().addListener(StockGraphItemRollOutListener.class, rollOutListener,
-                () -> component.addStockGraphItemRollOutListener(stockChartEventsForwarder)
-        );
+    public Subscription addStockGraphItemRollOutListener(Consumer<StockGraphItemRollOutEvent> rollOutListener) {
+        if (!hasSubscriptions(StockGraphItemRollOutEvent.class)) {
+            component.addStockGraphItemRollOutListener(stockChartEventsForwarder);
+        }
+        return getEventHub().subscribe(StockGraphItemRollOutEvent.class, rollOutListener);
     }
 
     @Override
-    public void removeStockGraphItemRollOutListener(StockGraphItemRollOutListener rollOutListener) {
-        getEventRouter().removeListener(StockGraphItemRollOutListener.class, rollOutListener,
-                () -> component.removeStockGraphItemRollOutListener(stockChartEventsForwarder)
-        );
+    public void removeStockGraphItemRollOutListener(Consumer<StockGraphItemRollOutEvent> rollOutListener) {
+        unsubscribe(StockGraphItemRollOutEvent.class, rollOutListener);
+        if (!hasSubscriptions(StockGraphItemRollOutEvent.class)) {
+            component.removeStockGraphItemRollOutListener(stockChartEventsForwarder);
+        }
     }
 
     @Override
-    public void addStockGraphItemRollOverListener(StockGraphItemRollOverListener rollOverListener) {
-        getEventRouter().addListener(StockGraphItemRollOverListener.class, rollOverListener,
-                () -> component.addStockGraphItemRollOverListener(stockChartEventsForwarder)
-        );
+    public Subscription addStockGraphItemRollOverListener(Consumer<StockGraphItemRollOverEvent> rollOverListener) {
+        if (!hasSubscriptions(StockGraphItemRollOverEvent.class)) {
+            component.addStockGraphItemRollOverListener(stockChartEventsForwarder);
+        }
+        return getEventHub().subscribe(StockGraphItemRollOverEvent.class, rollOverListener);
     }
 
     @Override
-    public void removeStockGraphItemRollOverListener(StockGraphItemRollOverListener rollOverListener) {
-        getEventRouter().removeListener(StockGraphItemRollOverListener.class, rollOverListener,
-                () -> component.removeStockGraphItemRollOverListener(stockChartEventsForwarder)
-        );
+    public void removeStockGraphItemRollOverListener(Consumer<StockGraphItemRollOverEvent> rollOverListener) {
+        unsubscribe(StockGraphItemRollOverEvent.class, rollOverListener);
+        if (!hasSubscriptions(StockGraphItemRollOverEvent.class)) {
+            component.removeStockGraphItemRollOverListener(stockChartEventsForwarder);
+        }
     }
 
     @Override
@@ -856,6 +893,52 @@ public class WebStockChart extends WebAbstractComponent<CubaAmStockChartScene>
         return this;
     }
 
+    protected StockPanel getStockPanelById(String id) {
+        if (!StringUtils.isNotEmpty(id)
+                || (getPanels() == null || getPanels().isEmpty())) {
+            return null;
+        }
+
+        for (StockPanel stockPanel : getPanels()) {
+            if (id.equals(stockPanel.getId())) {
+                return stockPanel;
+            }
+        }
+        return null;
+    }
+
+    protected StockGraph getStockGraphById(String graphId) {
+        if (!StringUtils.isNotEmpty(graphId)
+                || (getPanels() == null || getPanels().isEmpty())) {
+            return null;
+        }
+
+        for (StockPanel stockPanel : getPanels()) {
+            StockGraph graph = getStockGraphById(stockPanel, graphId);
+            if (graph != null) {
+                return graph;
+            }
+        }
+        return null;
+    }
+
+    protected StockGraph getStockGraphById(StockPanel panel, String graphId) {
+        if (panel == null || Strings.isNullOrEmpty(graphId)) {
+            return null;
+        }
+
+        if (panel.getStockGraphs() == null || panel.getStockGraphs().isEmpty()) {
+            return null;
+        }
+
+        for (StockGraph stockGraph : panel.getStockGraphs()) {
+            if (graphId.equals(stockGraph.getId())) {
+                return stockGraph;
+            }
+        }
+        return null;
+    }
+
     protected class StockChartEventsForwarder
             implements com.haulmont.charts.web.widgets.amcharts.events.StockChartClickListener,
             com.haulmont.charts.web.widgets.amcharts.events.StockChartRightClickListener,
@@ -877,122 +960,144 @@ public class WebStockChart extends WebAbstractComponent<CubaAmStockChartScene>
 
         @Override
         public void onClick(com.haulmont.charts.web.widgets.amcharts.events.StockChartClickEvent e) {
-            StockChartClickEvent cubaEvent = new StockChartClickEvent(
-                    e.getX(), e.getY(), e.getAbsoluteX(), e.getAbsoluteY());
-            getEventRouter().fireEvent(StockChartClickListener.class, StockChartClickListener::onClick, cubaEvent);
+            publish(StockChartClickEvent.class,
+                    new StockChartClickEvent(WebStockChart.this, e.getX(), e.getY(), e.getAbsoluteX(),
+                            e.getAbsoluteY()));
         }
 
         @Override
         public void onClick(com.haulmont.charts.web.widgets.amcharts.events.StockGraphClickEvent e) {
-            StockGraphClickEvent cubaEvent = new StockGraphClickEvent(e.getPanelId(), e.getGraphId(),
-                    e.getX(), e.getY(), e.getAbsoluteX(), e.getAbsoluteY());
-            getEventRouter().fireEvent(StockGraphClickListener.class, StockGraphClickListener::onClick, cubaEvent);
+            StockPanel stockPanel = getStockPanelById(e.getPanelId());
+            StockGraph stockGraph = getStockGraphById(stockPanel, e.getGraphId());
+
+            publish(StockGraphClickEvent.class,
+                    new StockGraphClickEvent(WebStockChart.this, stockPanel, e.getPanelId(), stockGraph,
+                            e.getGraphId(), e.getX(), e.getY(), e.getAbsoluteX(), e.getAbsoluteY()));
         }
 
         @Override
         public void onZoom(StockPanelZoomEvent e) {
-            ZoomEvent cubaEvent = new ZoomEvent(e.getStartDate(), e.getEndDate(), DatePeriod.fromId(e.getPeriod()));
-            getEventRouter().fireEvent(ZoomListener.class, ZoomListener::onZoom, cubaEvent);
+            ZoomEvent cubaEvent = new ZoomEvent(WebStockChart.this, e.getStartDate(), e.getEndDate(),
+                    DatePeriod.fromId(e.getPeriod()));
+            publish(ZoomEvent.class, cubaEvent);
         }
 
         @Override
         public void onClick(com.haulmont.charts.web.widgets.amcharts.events.StockEventClickEvent e) {
-            StockEventClickEvent cubaEvent = new StockEventClickEvent(e.getGraphId(), e.getDate(),
-                    getStockEvent(e.getStockEventId()));
-            getEventRouter().fireEvent(StockEventClickListener.class, StockEventClickListener::onClick, cubaEvent);
+            publish(StockEventClickEvent.class,
+                    new StockEventClickEvent(WebStockChart.this, getStockGraphById(e.getGraphId()),
+                            e.getGraphId(), e.getDate(), getStockEvent(e.getStockEventId())));
         }
 
         @Override
         public void onRollOut(com.haulmont.charts.web.widgets.amcharts.events.StockEventRollOutEvent e) {
-            StockEventRollOutEvent cubaEvent = new StockEventRollOutEvent(e.getGraphId(), e.getDate(),
-                    getStockEvent(e.getStockEventId()));
-            getEventRouter().fireEvent(StockEventRollOutListener.class, StockEventRollOutListener::onRollOut, cubaEvent);
+            publish(StockEventRollOutEvent.class,
+                    new StockEventRollOutEvent(WebStockChart.this, getStockGraphById(e.getGraphId()),
+                            e.getGraphId(), e.getDate(), getStockEvent(e.getStockEventId())));
         }
 
         @Override
         public void onRollOut(com.haulmont.charts.web.widgets.amcharts.events.StockGraphRollOutEvent e) {
-            StockGraphRollOutEvent cubaEvent = new StockGraphRollOutEvent(e.getPanelId(), e.getGraphId(),
-                    e.getX(), e.getY(), e.getAbsoluteX(), e.getAbsoluteY());
-            getEventRouter().fireEvent(StockGraphRollOutListener.class, StockGraphRollOutListener::onRollOut, cubaEvent);
+            StockPanel stockPanel = getStockPanelById(e.getPanelId());
+            StockGraph stockGraph = getStockGraphById(stockPanel, e.getGraphId());
+
+            publish(StockGraphRollOutEvent.class,
+                    new StockGraphRollOutEvent(WebStockChart.this, stockPanel, e.getPanelId(), stockGraph,
+                            e.getGraphId(), e.getX(), e.getY(), e.getAbsoluteX(), e.getAbsoluteY()));
         }
 
         @Override
         public void onRollOver(com.haulmont.charts.web.widgets.amcharts.events.StockEventRollOverEvent e) {
-            StockEventRollOverEvent cubaEvent = new StockEventRollOverEvent(e.getGraphId(), e.getDate(),
-                    getStockEvent(e.getStockEventId()));
-            getEventRouter().fireEvent(StockEventRollOverListener.class, StockEventRollOverListener::onRollOver, cubaEvent);
+            publish(StockEventRollOverEvent.class,
+                    new StockEventRollOverEvent(WebStockChart.this, getStockGraphById(e.getGraphId()),
+                            e.getGraphId(), e.getDate(), getStockEvent(e.getStockEventId())));
         }
 
         @Override
         public void onRollOver(com.haulmont.charts.web.widgets.amcharts.events.StockGraphRollOverEvent e) {
-            StockGraphRollOverEvent cubaEvent = new StockGraphRollOverEvent(e.getPanelId(), e.getGraphId(),
-                    e.getX(), e.getY(), e.getAbsoluteX(), e.getAbsoluteY());
-            getEventRouter().fireEvent(StockGraphRollOverListener.class, StockGraphRollOverListener::onRollOver, cubaEvent);
+            StockPanel stockPanel = getStockPanelById(e.getPanelId());
+            StockGraph stockGraph = getStockGraphById(stockPanel, e.getGraphId());
+
+            publish(StockGraphRollOverEvent.class,
+                    new StockGraphRollOverEvent(WebStockChart.this, stockPanel, e.getPanelId(), stockGraph,
+                            e.getGraphId(), e.getX(), e.getY(), e.getAbsoluteX(), e.getAbsoluteY()));
         }
 
         @Override
         public void onChange(com.haulmont.charts.web.widgets.amcharts.events.PeriodSelectorChangeEvent e) {
-            PeriodSelectorChangeEvent cubaEvent = new PeriodSelectorChangeEvent(e.getStartDate(), e.getEndDate(),
-                    PeriodType.fromId(e.getPredefinedPeriod()), e.getCount(),
-                    e.getX(), e.getY(), e.getAbsoluteX(), e.getAbsoluteY());
-            getEventRouter().fireEvent(PeriodSelectorChangeListener.class, PeriodSelectorChangeListener::onChange, cubaEvent);
+            publish(PeriodSelectorChangeEvent.class,
+                    new PeriodSelectorChangeEvent(WebStockChart.this,
+                            e.getStartDate(), e.getEndDate(), PeriodType.fromId(e.getPredefinedPeriod()),
+                            e.getCount(), e.getX(), e.getY(), e.getAbsoluteX(), e.getAbsoluteY()));
         }
 
         @Override
         public void onClick(com.haulmont.charts.web.widgets.amcharts.events.StockChartRightClickEvent e) {
-            StockChartRightClickEvent cubaEvent = new StockChartRightClickEvent(
-                    e.getX(), e.getY(), e.getAbsoluteX(), e.getAbsoluteY());
-            getEventRouter().fireEvent(StockChartRightClickListener.class, StockChartRightClickListener::onRightClick, cubaEvent);
+            publish(StockChartRightClickEvent.class,
+                    new StockChartRightClickEvent(WebStockChart.this, e.getX(), e.getY(), e.getAbsoluteX(),
+                            e.getAbsoluteY()));
         }
 
         @Override
         public void onClick(com.haulmont.charts.web.widgets.amcharts.events.StockGraphItemClickEvent e) {
-            StockGraphItemClickEvent cubaEvent = new StockGraphItemClickEvent(e.getPanelId(), e.getGraphId(),
-                    e.getDataItem(), e.getItemIndex(),
-                    e.getX(), e.getY(), e.getAbsoluteX(), e.getAbsoluteY());
-            getEventRouter().fireEvent(StockGraphItemClickListener.class, StockGraphItemClickListener::onClick, cubaEvent);
+            StockPanel stockPanel = getStockPanelById(e.getPanelId());
+            StockGraph stockGraph = getStockGraphById(stockPanel, e.getGraphId());
+
+            publish(StockGraphItemClickEvent.class,
+                    new StockGraphItemClickEvent(WebStockChart.this, stockPanel,
+                            e.getPanelId(), stockGraph, e.getGraphId(), e.getDataItem(), e.getItemIndex(),
+                            e.getX(), e.getY(), e.getAbsoluteX(), e.getAbsoluteY()));
         }
 
         @Override
         public void onSelect(com.haulmont.charts.web.widgets.amcharts.events.DataSetSelectorSelectEvent e) {
-            DataSetSelectorSelectEvent cubaEvent = new DataSetSelectorSelectEvent(e.getDataSetId());
-            getEventRouter().fireEvent(DataSetSelectorSelectListener.class, DataSetSelectorSelectListener::onSelect, cubaEvent);
+            publish(DataSetSelectorSelectEvent.class,
+                    new DataSetSelectorSelectEvent(WebStockChart.this, e.getDataSetId()));
         }
 
         @Override
         public void onRollOut(com.haulmont.charts.web.widgets.amcharts.events.StockGraphItemRollOutEvent e) {
-            StockGraphItemRollOutEvent cubaEvent = new StockGraphItemRollOutEvent(e.getPanelId(), e.getGraphId(),
-                    e.getDataItem(), e.getItemIndex(),
-                    e.getX(), e.getY(), e.getAbsoluteX(), e.getAbsoluteY());
-            getEventRouter().fireEvent(StockGraphItemRollOutListener.class, StockGraphItemRollOutListener::onRollOut, cubaEvent);
+            StockPanel stockPanel = getStockPanelById(e.getPanelId());
+            StockGraph stockGraph = getStockGraphById(stockPanel, e.getGraphId());
+
+            publish(StockGraphItemRollOutEvent.class,
+                    new StockGraphItemRollOutEvent(WebStockChart.this, stockPanel, e.getPanelId(), stockGraph,
+                            e.getGraphId(), e.getDataItem(), e.getItemIndex(), e.getX(), e.getY(), e.getAbsoluteX(),
+                            e.getAbsoluteY()));
         }
 
         @Override
         public void onCompare(com.haulmont.charts.web.widgets.amcharts.events.DataSetSelectorCompareEvent e) {
-            DataSetSelectorCompareEvent cubaEvent = new DataSetSelectorCompareEvent(e.getDataSetId());
-            getEventRouter().fireEvent(DataSetSelectorCompareListener.class, DataSetSelectorCompareListener::onCompare, cubaEvent);
+            publish(DataSetSelectorCompareEvent.class,
+                    new DataSetSelectorCompareEvent(WebStockChart.this, e.getDataSetId()));
         }
 
         @Override
         public void onRollOver(com.haulmont.charts.web.widgets.amcharts.events.StockGraphItemRollOverEvent e) {
-            StockGraphItemRollOverEvent cubaEvent = new StockGraphItemRollOverEvent(e.getPanelId(), e.getGraphId(),
-                    e.getDataItem(), e.getItemIndex(),
-                    e.getX(), e.getY(), e.getAbsoluteX(), e.getAbsoluteY());
-            getEventRouter().fireEvent(StockGraphItemRollOverListener.class, StockGraphItemRollOverListener::onRollOver, cubaEvent);
+            StockPanel stockPanel = getStockPanelById(e.getPanelId());
+            StockGraph stockGraph = getStockGraphById(stockPanel, e.getGraphId());
+
+            publish(StockGraphItemRollOverEvent.class,
+                    new StockGraphItemRollOverEvent(WebStockChart.this, stockPanel,
+                            e.getPanelId(), stockGraph, e.getGraphId(), e.getDataItem(), e.getItemIndex(),
+                            e.getX(), e.getY(), e.getAbsoluteX(), e.getAbsoluteY()));
         }
 
         @Override
         public void onUnCompare(com.haulmont.charts.web.widgets.amcharts.events.DataSetSelectorUnCompareEvent e) {
-            DataSetSelectorUnCompareEvent cubaEvent = new DataSetSelectorUnCompareEvent(e.getDataSetId());
-            getEventRouter().fireEvent(DataSetSelectorUnCompareListener.class, DataSetSelectorUnCompareListener::onUnCompare, cubaEvent);
+            publish(DataSetSelectorUnCompareEvent.class,
+                    new DataSetSelectorUnCompareEvent(WebStockChart.this, e.getDataSetId()));
         }
 
         @Override
         public void onClick(com.haulmont.charts.web.widgets.amcharts.events.StockGraphItemRightClickEvent e) {
-            StockGraphItemRightClickEvent cubaEvent = new StockGraphItemRightClickEvent(e.getPanelId(), e.getGraphId(),
-                    e.getDataItem(), e.getItemIndex(),
-                    e.getX(), e.getY(), e.getAbsoluteX(), e.getAbsoluteY());
-            getEventRouter().fireEvent(StockGraphItemRightClickListener.class, StockGraphItemRightClickListener::onClick, cubaEvent);
+            StockPanel stockPanel = getStockPanelById(e.getPanelId());
+            StockGraph stockGraph = getStockGraphById(stockPanel, e.getGraphId());
+
+            publish(StockGraphItemRightClickEvent.class,
+                    new StockGraphItemRightClickEvent(WebStockChart.this, stockPanel,
+                            e.getPanelId(), stockGraph, e.getGraphId(), e.getDataItem(), e.getItemIndex(),
+                            e.getX(), e.getY(), e.getAbsoluteX(), e.getAbsoluteY()));
         }
     }
 }

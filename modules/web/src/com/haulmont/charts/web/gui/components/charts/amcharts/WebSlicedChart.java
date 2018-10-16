@@ -5,12 +5,14 @@
 
 package com.haulmont.charts.web.gui.components.charts.amcharts;
 
+import com.haulmont.bali.events.Subscription;
 import com.haulmont.charts.gui.amcharts.model.AnimationEffect;
 import com.haulmont.charts.gui.amcharts.model.Color;
 import com.haulmont.charts.gui.components.charts.SlicedChart;
 import com.haulmont.charts.gui.model.JsFunction;
 
 import java.util.List;
+import java.util.function.Consumer;
 
 @SuppressWarnings("unchecked")
 public abstract class WebSlicedChart<T extends SlicedChart,
@@ -543,86 +545,96 @@ public abstract class WebSlicedChart<T extends SlicedChart,
     }
 
     @Override
-    public void addSliceClickListener(SliceClickListener listener) {
-        getEventRouter().addListener(SliceClickListener.class, listener);
+    public Subscription addSliceClickListener(Consumer<SliceClickEvent> listener) {
         if (sliceClickHandler == null) {
-            sliceClickHandler = e -> {
-                SliceClickEvent event = new SliceClickEvent(e.getDataItem(), e.getX(), e.getY(),
-                        e.getAbsoluteX(), e.getAbsoluteY());
-                getEventRouter().fireEvent(SliceClickListener.class, SliceClickListener::onClick, event);
-            };
+            sliceClickHandler = this::onSliceClick;
             component.addSliceClickListener(sliceClickHandler);
         }
+
+        return getEventHub().subscribe(SliceClickEvent.class, listener);
+    }
+
+    protected void onSliceClick(com.haulmont.charts.web.widgets.amcharts.events.SliceClickEvent e) {
+        publish(SliceClickEvent.class,
+                new SliceClickEvent(this, e.getDataItem(), e.getX(), e.getY(),
+                        e.getAbsoluteX(), e.getAbsoluteY()));
     }
 
     @Override
-    public void removeSliceClickListener(SliceClickListener listener) {
-        getEventRouter().removeListener(SliceClickListener.class, listener);
-        if (sliceClickHandler != null && !getEventRouter().hasListeners(SliceClickListener.class)) {
+    public void removeSliceClickListener(Consumer<SliceClickEvent> listener) {
+        unsubscribe(SliceClickEvent.class, listener);
+        if (sliceClickHandler != null && !hasSubscriptions(SliceClickEvent.class)) {
             component.removeSliceClickListener(sliceClickHandler);
             sliceClickHandler = null;
         }
     }
 
     @Override
-    public void addSliceRightClickListener(SliceRightClickListener listener) {
-        getEventRouter().addListener(SliceRightClickListener.class, listener);
+    public Subscription addSliceRightClickListener(Consumer<SliceRightClickEvent> listener) {
         if (sliceRightClickHandler == null) {
-            sliceRightClickHandler = e -> {
-                SliceRightClickEvent event = new SliceRightClickEvent(e.getDataItem(), e.getX(), e.getY(),
-                        e.getAbsoluteX(), e.getAbsoluteY());
-                getEventRouter().fireEvent(SliceRightClickListener.class, SliceRightClickListener::onRightClick, event);
-            };
+            sliceRightClickHandler = this::onSliceRightClick;
             component.addSliceRightClickListener(sliceRightClickHandler);
         }
+
+        return getEventHub().subscribe(SliceRightClickEvent.class, listener);
+    }
+
+    protected void onSliceRightClick(com.haulmont.charts.web.widgets.amcharts.events.SliceRightClickEvent e) {
+        publish(SliceRightClickEvent.class,
+                new SliceRightClickEvent(this, e.getDataItem(), e.getX(), e.getY(),
+                        e.getAbsoluteX(), e.getAbsoluteY()));
     }
 
     @Override
-    public void removeSliceRightClickListener(SliceRightClickListener listener) {
-        getEventRouter().removeListener(SliceRightClickListener.class, listener);
-        if (sliceRightClickHandler != null && !getEventRouter().hasListeners(SliceRightClickListener.class)) {
+    public void removeSliceRightClickListener(Consumer<SliceRightClickEvent> listener) {
+        unsubscribe(SliceRightClickEvent.class, listener);
+        if (sliceRightClickHandler != null && !hasSubscriptions(SliceRightClickEvent.class)) {
             component.removeSliceRightClickListener(sliceRightClickHandler);
             sliceRightClickHandler = null;
         }
     }
 
     @Override
-    public void addSlicePullInListener(SlicePullInListener listener) {
-        getEventRouter().addListener(SlicePullInListener.class, listener);
+    public Subscription addSlicePullInListener(Consumer<SlicePullInEvent> listener) {
         if (slicePullInHandler == null) {
-            slicePullInHandler = e -> {
-                SlicePullInEvent event = new SlicePullInEvent(e.getDataItem());
-                getEventRouter().fireEvent(SlicePullInListener.class, SlicePullInListener::onPullIn, event);
-            };
+            slicePullInHandler = this::onSlicePullIn;
             component.addSlicePullInListener(slicePullInHandler);
         }
+
+        return getEventHub().subscribe(SlicePullInEvent.class, listener);
+    }
+
+    protected void onSlicePullIn(com.haulmont.charts.web.widgets.amcharts.events.SlicePullInEvent e) {
+        publish(SlicePullInEvent.class, new SlicePullInEvent(this, e.getDataItem()));
     }
 
     @Override
-    public void removeSlicePullInListener(SlicePullInListener listener) {
-        getEventRouter().removeListener(SlicePullInListener.class, listener);
-        if (slicePullInHandler != null && !getEventRouter().hasListeners(SlicePullInListener.class)) {
+    public void removeSlicePullInListener(Consumer<SlicePullInEvent> listener) {
+        unsubscribe(SlicePullInEvent.class, listener);
+        if (slicePullInHandler != null && !hasSubscriptions(SlicePullInEvent.class)) {
             component.removeSlicePullInListener(slicePullInHandler);
             slicePullInHandler = null;
         }
     }
 
     @Override
-    public void addSlicePullOutListener(SlicePullOutListener listener) {
-        getEventRouter().addListener(SlicePullOutListener.class, listener);
+    public Subscription addSlicePullOutListener(Consumer<SlicePullOutEvent> listener) {
         if (slicePullOutHandler == null) {
-            slicePullOutHandler = e -> {
-                SlicePullOutEvent event = new SlicePullOutEvent(e.getDataItem());
-                getEventRouter().fireEvent(SlicePullOutListener.class, SlicePullOutListener::onPullOut, event);
-            };
+            slicePullOutHandler = this::onSlicePullOut;
             component.addSlicePullOutListener(slicePullOutHandler);
         }
+
+        return getEventHub().subscribe(SlicePullOutEvent.class, listener);
+    }
+
+    protected void onSlicePullOut(com.haulmont.charts.web.widgets.amcharts.events.SlicePullOutEvent e) {
+        publish(SlicePullOutEvent.class, new SlicePullOutEvent(this, e.getDataItem()));
     }
 
     @Override
-    public void removeSlicePullOutListener(SlicePullOutListener listener) {
-        getEventRouter().removeListener(SlicePullOutListener.class, listener);
-        if (slicePullOutHandler != null && !getEventRouter().hasListeners(SlicePullOutListener.class)) {
+    public void removeSlicePullOutListener(Consumer<SlicePullOutEvent> listener) {
+        unsubscribe(SlicePullOutEvent.class, listener);
+        if (slicePullOutHandler != null && !hasSubscriptions(SlicePullOutEvent.class)) {
             component.removeSlicePullOutListener(slicePullOutHandler);
             slicePullOutHandler = null;
         }

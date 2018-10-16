@@ -5,19 +5,41 @@
 
 package com.haulmont.charts.gui.components.charts;
 
+import com.haulmont.bali.events.Subscription;
 import com.haulmont.charts.gui.amcharts.model.charts.SeriesBasedChartModel;
 
 import java.util.Date;
+import java.util.function.Consumer;
 
 /**
  * Base interface for {@link SerialChart} and {@link GanttChart}.
  */
 public interface SeriesBasedChart<T extends SeriesBasedChart> extends RectangularChart<T>, SeriesBasedChartModel<T> {
-    void addZoomListener(ZoomListener listener);
-    void removeZoomListener(ZoomListener listener);
+    /**
+     * Adds a listener for zoom. Called when value of the chart zoom changed.
+     *
+     * @param listener a listener to add
+     */
+    Subscription addZoomListener(Consumer<ZoomEvent> listener);
 
-    void addCategoryItemClickListener(CategoryItemClickListener listener);
-    void removeCategoryItemClickListener(CategoryItemClickListener listener);
+    /**
+     * @deprecated Use {@link Subscription} instead
+     */
+    @Deprecated
+    void removeZoomListener(Consumer<ZoomEvent> listener);
+
+    /**
+     * Adds a listener for category item click. Called when user clicks on the category.
+     *
+     * @param listener a listener to add
+     */
+    Subscription addCategoryItemClickListener(Consumer<CategoryItemClickEvent> listener);
+
+    /**
+     * @deprecated Use {@link Subscription} instead
+     */
+    @Deprecated
+    void removeCategoryItemClickListener(Consumer<CategoryItemClickEvent> listener);
 
     /**
      * Zooms out, charts shows all available data.
@@ -47,7 +69,7 @@ public interface SeriesBasedChart<T extends SeriesBasedChart> extends Rectangula
      * <br>
      * <a href="https://docs.amcharts.com/3/javascriptcharts/CategoryAxis#clickItem">https://docs.amcharts.com/3/javascriptcharts/CategoryAxis#clickItem</a>
      */
-    class CategoryItemClickEvent {
+    class CategoryItemClickEvent extends AbstractChartEvent {
         private String value;
 
         private int offsetX;
@@ -59,7 +81,9 @@ public interface SeriesBasedChart<T extends SeriesBasedChart> extends Rectangula
         private int xAxis;
         private int yAxis;
 
-        public CategoryItemClickEvent(String value, int x, int y, int offsetX, int offsetY, int xAxis, int yAxis) {
+        public CategoryItemClickEvent(Chart chart, String value, int x, int y, int offsetX, int offsetY, int xAxis,
+                                      int yAxis) {
+            super(chart);
             this.value = value;
             this.x = x;
             this.y = y;
@@ -147,18 +171,5 @@ public interface SeriesBasedChart<T extends SeriesBasedChart> extends Rectangula
         public void setYAxis(int yAxis) {
             this.yAxis = yAxis;
         }
-    }
-
-    /**
-     * Listener to the click events on categories.
-     */
-    interface CategoryItemClickListener {
-
-        /**
-         * Called when user clicks on the category.
-         *
-         * @param event event object
-         */
-        void onClick(CategoryItemClickEvent event);
     }
 }

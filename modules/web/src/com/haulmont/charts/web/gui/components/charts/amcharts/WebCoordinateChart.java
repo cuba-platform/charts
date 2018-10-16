@@ -5,10 +5,13 @@
 
 package com.haulmont.charts.web.gui.components.charts.amcharts;
 
+import com.google.common.base.Strings;
+import com.haulmont.bali.events.Subscription;
 import com.haulmont.charts.gui.amcharts.model.*;
 import com.haulmont.charts.gui.components.charts.CoordinateChart;
 
 import java.util.List;
+import java.util.function.Consumer;
 
 @SuppressWarnings("unchecked")
 public abstract class WebCoordinateChart<T extends CoordinateChart,
@@ -182,89 +185,113 @@ public abstract class WebCoordinateChart<T extends CoordinateChart,
     }
 
     @Override
-    public void addAxisZoomListener(AxisZoomListener listener) {
-        getEventRouter().addListener(AxisZoomListener.class, listener);
+    public Subscription addAxisZoomListener(Consumer<AxisZoomEvent> listener) {
         if (axisZoomHandler == null) {
-            axisZoomHandler = e -> {
-                AxisZoomEvent event = new AxisZoomEvent(e.getAxisId(), e.getStartValue(), e.getEndValue());
-                getEventRouter().fireEvent(AxisZoomListener.class, AxisZoomListener::onZoom, event);
-            };
+            axisZoomHandler = this::onAxisZoomListener;
             component.addAxisZoomListener(axisZoomHandler);
         }
+        return getEventHub().subscribe(AxisZoomEvent.class, listener);
+    }
+
+    protected void onAxisZoomListener(com.haulmont.charts.web.widgets.amcharts.events.AxisZoomEvent e) {
+        publish(AxisZoomEvent.class, new AxisZoomEvent(e.getAxisId(), e.getStartValue(), e.getEndValue()));
     }
 
     @Override
-    public void removeAxisZoomListener(AxisZoomListener listener) {
-        getEventRouter().removeListener(AxisZoomListener.class, listener);
-        if (axisZoomHandler != null && !getEventRouter().hasListeners(AxisZoomListener.class)) {
+    public void removeAxisZoomListener(Consumer<AxisZoomEvent> listener) {
+        unsubscribe(AxisZoomEvent.class, listener);
+        if (axisZoomHandler != null && !hasSubscriptions(AxisZoomEvent.class)) {
             component.removeAxisZoomListener(axisZoomHandler);
             axisZoomHandler = null;
         }
     }
 
     @Override
-    public void addGraphClickListener(GraphClickListener listener) {
-        getEventRouter().addListener(GraphClickListener.class, listener);
+    public Subscription addGraphClickListener(Consumer<GraphClickEvent> listener) {
         if (graphClickHandler == null) {
-            graphClickHandler = e -> {
-                GraphClickEvent event = new GraphClickEvent(e.getGraphId(), e.getX(), e.getY(),
-                        e.getAbsoluteX(), e.getAbsoluteY());
-                getEventRouter().fireEvent(GraphClickListener.class, GraphClickListener::onClick, event);
-            };
+            graphClickHandler = this::onGraphClick;
             component.addGraphClickListener(graphClickHandler);
         }
+
+        return getEventHub().subscribe(GraphClickEvent.class, listener);
+    }
+
+    protected void onGraphClick(com.haulmont.charts.web.widgets.amcharts.events.GraphClickEvent e) {
+        publish(GraphClickEvent.class,
+                new GraphClickEvent(this, e.getGraphId(), e.getX(), e.getY(),
+                        e.getAbsoluteX(), e.getAbsoluteY()));
     }
 
     @Override
-    public void removeGraphClickListener(GraphClickListener listener) {
-        getEventRouter().removeListener(GraphClickListener.class, listener);
-        if (graphClickHandler != null && !getEventRouter().hasListeners(GraphClickListener.class)) {
+    public void removeGraphClickListener(Consumer<GraphClickEvent> listener) {
+        unsubscribe(GraphClickEvent.class, listener);
+        if (graphClickHandler != null && !hasSubscriptions(GraphClickEvent.class)) {
             component.removeGraphClickListener(graphClickHandler);
             graphClickHandler = null;
         }
     }
 
     @Override
-    public void addGraphItemClickListener(GraphItemClickListener listener) {
-        getEventRouter().addListener(GraphItemClickListener.class, listener);
+    public Subscription addGraphItemClickListener(Consumer<GraphItemClickEvent> listener) {
         if (graphItemClickHandler == null) {
-            graphItemClickHandler = e -> {
-                GraphItemClickEvent event = new GraphItemClickEvent(e.getGraphId(), e.getDataItem(),
-                        e.getItemIndex(), e.getX(), e.getY(), e.getAbsoluteX(), e.getAbsoluteY());
-                getEventRouter().fireEvent(GraphItemClickListener.class, GraphItemClickListener::onClick, event);
-            };
+            graphItemClickHandler = this::onGraphItemClick;
             component.addGraphItemClickListener(graphItemClickHandler);
         }
+
+        return getEventHub().subscribe(GraphItemClickEvent.class, listener);
+    }
+
+    protected void onGraphItemClick(com.haulmont.charts.web.widgets.amcharts.events.GraphItemClickEvent e) {
+        publish(GraphItemClickEvent.class,
+                new GraphItemClickEvent(this, getGraphById(e.getGraphId()), e.getGraphId(), e.getDataItem(),
+                        e.getItemIndex(), e.getX(), e.getY(), e.getAbsoluteX(), e.getAbsoluteY()));
     }
 
     @Override
-    public void removeGraphItemClickListener(GraphItemClickListener listener) {
-        getEventRouter().removeListener(GraphItemClickListener.class, listener);
-        if (graphItemClickHandler != null && !getEventRouter().hasListeners(GraphItemClickListener.class)) {
+    public void removeGraphItemClickListener(Consumer<GraphItemClickEvent> listener) {
+        unsubscribe(GraphItemClickEvent.class, listener);
+        if (graphItemClickHandler != null && !hasSubscriptions(GraphItemClickEvent.class)) {
             component.removeGraphItemClickListener(graphItemClickHandler);
             graphItemClickHandler = null;
         }
     }
 
     @Override
-    public void addGraphItemRightClickListener(GraphItemRightClickListener listener) {
-        getEventRouter().addListener(GraphItemRightClickListener.class, listener);
+    public Subscription addGraphItemRightClickListener(Consumer<GraphItemRightClickEvent> listener) {
         if (graphItemRightClickHandler == null) {
-            graphItemRightClickHandler = e -> {
-                GraphItemRightClickEvent event = new GraphItemRightClickEvent(e.getGraphId(), e.getDataItem(),
-                        e.getItemIndex(), e.getX(), e.getY(), e.getAbsoluteX(), e.getAbsoluteY());
-                getEventRouter().fireEvent(GraphItemRightClickListener.class, GraphItemRightClickListener::onRightClick, event);
-            };
+            graphItemRightClickHandler = this::onGraphItemRightClick;
             component.addGraphItemRightClickListener(graphItemRightClickHandler);
         }
+
+        return getEventHub().subscribe(GraphItemRightClickEvent.class, listener);
+    }
+
+    protected void onGraphItemRightClick(com.haulmont.charts.web.widgets.amcharts.events.GraphItemRightClickEvent e) {
+        publish(GraphItemRightClickEvent.class,
+                new GraphItemRightClickEvent(this, getGraphById(e.getGraphId()), e.getGraphId(), e.getDataItem(),
+                        e.getItemIndex(), e.getX(), e.getY(), e.getAbsoluteX(), e.getAbsoluteY()));
     }
 
     @Override
-    public void removeGraphItemRightClickListener(GraphItemRightClickListener listener) {
-        getEventRouter().removeListener(GraphItemRightClickListener.class, listener);
-        if (graphItemRightClickHandler != null && !getEventRouter().hasListeners(GraphItemRightClickListener.class)) {
+    public void removeGraphItemRightClickListener(Consumer<GraphItemRightClickEvent> listener) {
+        unsubscribe(GraphItemRightClickEvent.class, listener);
+        if (graphItemRightClickHandler != null && !hasSubscriptions(GraphItemRightClickEvent.class)) {
             component.removeGraphItemRightClickListener(graphItemRightClickHandler);
             graphItemRightClickHandler = null;
         }
+    }
+
+    protected Graph getGraphById(String id) {
+        if (Strings.isNullOrEmpty(id)
+                || (getGraphs() == null || getGraphs().isEmpty())) {
+            return null;
+        }
+
+        for (Graph graph : getGraphs()) {
+            if (id.equals(graph.getId())) {
+                return graph;
+            }
+        }
+        return null;
     }
 }
