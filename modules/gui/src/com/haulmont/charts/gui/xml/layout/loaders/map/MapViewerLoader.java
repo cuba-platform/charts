@@ -31,6 +31,7 @@ public class MapViewerLoader extends AbstractComponentLoader<MapViewer> {
         loadIcon(resultComponent, element);
         loadCaption(resultComponent, element);
         loadDescription(resultComponent, element);
+        loadCss(resultComponent, element);
 
         loadMapType(resultComponent, element);
     }

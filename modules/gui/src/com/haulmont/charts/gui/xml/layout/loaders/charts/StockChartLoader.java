@@ -54,6 +54,7 @@ public class StockChartLoader extends ChartModelLoader<StockChart> {
         loadIcon(resultComponent, element);
         loadCaption(resultComponent, element);
         loadDescription(resultComponent, element);
+        loadCss(resultComponent, element);
 
         loadConfiguration(resultComponent, element);
         loadChartData(resultComponent, element);

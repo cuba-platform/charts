@@ -34,6 +34,7 @@ public class CustomChartLoader extends AbstractComponentLoader<CustomChart> {
         loadIcon(resultComponent, element);
         loadCaption(resultComponent, element);
         loadDescription(resultComponent, element);
+        loadCss(resultComponent, element);
 
         loadNativeJson(resultComponent, element);
     }

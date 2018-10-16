@@ -52,6 +52,7 @@ public class PivotTableLoader extends AbstractComponentLoader<PivotTable> {
         loadVisible(resultComponent, element);
         loadEnable(resultComponent, element);
         loadStyleName(resultComponent, element);
+        loadCss(resultComponent, element);
 
         loadDataContainer(resultComponent, element);
 

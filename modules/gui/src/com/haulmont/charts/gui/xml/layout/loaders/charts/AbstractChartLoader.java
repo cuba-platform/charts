@@ -41,6 +41,8 @@ public abstract class AbstractChartLoader<T extends Chart> extends ChartModelLoa
         loadCaption(resultComponent, element);
         loadDescription(resultComponent, element);
 
+        loadCss(resultComponent, element);
+
         loadDataContainer(resultComponent, element);
     }
 
