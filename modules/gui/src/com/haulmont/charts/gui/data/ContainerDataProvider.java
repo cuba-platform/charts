@@ -146,7 +146,9 @@ public class ContainerDataProvider implements DataProvider, HasMetaClass {
 
     @Override
     public void addChangeListener(DataChangeListener listener) {
-        changeListeners.add(listener);
+        if (!changeListeners.contains(listener)) {
+            changeListeners.add(listener);
+        }
     }
 
     @Override
