@@ -13,7 +13,6 @@ import com.haulmont.charts.gui.pivottable.model.Renderer;
 import com.haulmont.charts.web.widgets.pivottable.CubaPivotTable;
 import com.haulmont.charts.web.widgets.pivottable.CubaPivotTableExtension;
 import com.haulmont.cuba.core.global.AppBeans;
-import com.haulmont.cuba.core.global.Messages;
 import com.haulmont.cuba.gui.export.ExportDisplay;
 
 import java.util.Set;
@@ -31,18 +30,14 @@ public class WebPivotTableExtension implements PivotTableExtension {
 
     protected PivotExcelExporter excelExporter;
 
-    protected Messages messages;
-
     protected PivotTable pivotTable;
 
     public WebPivotTableExtension(PivotTable pivotTable) {
         this.pivotTable = pivotTable;
+        excelExporter = AppBeans.getPrototype(PivotExcelExporter.NAME, pivotTable);
 
         CubaPivotTable cubaPivotTable = pivotTable.unwrap(CubaPivotTable.class);
         pivotTableExtension = new CubaPivotTableExtension(cubaPivotTable);
-        excelExporter = new PivotExcelExporter(pivotTable);
-
-        messages = AppBeans.get(Messages.NAME);
     }
 
     @Override

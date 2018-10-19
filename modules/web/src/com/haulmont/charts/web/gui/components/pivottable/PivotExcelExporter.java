@@ -13,17 +13,19 @@ import com.haulmont.charts.gui.pivottable.extentsion.model.PivotData;
 import com.haulmont.charts.gui.pivottable.extentsion.model.PivotDataCell;
 import com.haulmont.charts.gui.pivottable.extentsion.model.PivotDataSeparatedCell;
 import com.haulmont.chile.core.model.MetaClass;
-import com.haulmont.cuba.core.global.AppBeans;
 import com.haulmont.cuba.core.global.Messages;
-import com.haulmont.cuba.gui.AppConfig;
-import com.haulmont.cuba.gui.components.Frame;
+import com.haulmont.cuba.gui.Notifications;
 import com.haulmont.cuba.gui.export.ByteArrayDataProvider;
 import com.haulmont.cuba.gui.export.ExportDisplay;
 import com.haulmont.cuba.gui.export.ExportFormat;
 import org.apache.poi.hssf.usermodel.*;
 import org.apache.poi.ss.usermodel.CellType;
 import org.apache.poi.ss.util.CellRangeAddress;
+import org.springframework.beans.factory.config.BeanDefinition;
+import org.springframework.context.annotation.Scope;
+import org.springframework.stereotype.Component;
 
+import javax.inject.Inject;
 import java.io.ByteArrayOutputStream;
 import java.io.IOException;
 import java.util.List;
@@ -31,33 +33,45 @@ import java.util.List;
 /**
  * Exports {@link PivotData} to XLS.
  */
-public final class PivotExcelExporter {
+@Component(PivotExcelExporter.NAME)
+@Scope(BeanDefinition.SCOPE_PROTOTYPE)
+public class PivotExcelExporter {
+
+    public static final String NAME = "charts_pivotExcelExporter";
 
     public static final int MAX_ROW_INDEX = 65535;
 
-    protected static final String DEFAULT_FILE_NAME = "pivotData";
+    public static final String DEFAULT_FILE_NAME = "pivotData";
 
     protected HSSFWorkbook wb;
-
     protected HSSFSheet sheet;
-
     protected HSSFCellStyle boldStyle;
-
-    protected ExportDisplay display;
 
     protected String fileName;
     protected MetaClass entityMetaClass;
-    protected Frame frame;
 
     protected Messages messages;
+    protected Notifications notifications;
+    protected ExportDisplay display;
 
     public PivotExcelExporter(PivotTable pivotTable) {
         entityMetaClass = pivotTable.getDataProvider() instanceof HasMetaClass ?
                 ((HasMetaClass) pivotTable.getDataProvider()).getMetaClass() : null;
+    }
 
-        messages = AppBeans.get(Messages.NAME);
-        frame = pivotTable.getFrame();
-        display = AppConfig.createExportDisplay(frame);
+    @Inject
+    public void setMessages(Messages messages){
+        this.messages = messages;
+    }
+
+    @Inject
+    public void setNotifications(Notifications notifications) {
+        this.notifications = notifications;
+    }
+
+    @Inject
+    public void setExportDisplay(ExportDisplay display) {
+        this.display = display;
     }
 
     /**
@@ -201,10 +215,12 @@ public final class PivotExcelExporter {
     }
 
     protected void showWarnNotification() {
-        frame.getWindowManager().showNotification(
-                messages.getMainMessage("actions.warningExport.title"),
-                messages.getMainMessage("actions.warningExport.message"),
-                Frame.NotificationType.WARNING);
+        notifications.create()
+                .setCaption(messages.getMainMessage("actions.warningExport.title"))
+                .setDescription(messages.getMainMessage("actions.warningExport.message"))
+                .setType(Notifications.NotificationType.WARNING)
+                .setPosition(Notifications.Position.MIDDLE_CENTER)
+                .show();
     }
 
     protected void export(ExportDisplay display) {
@@ -215,16 +231,18 @@ public final class PivotExcelExporter {
             throw new RuntimeException("Unable to write document", e);
         }
         if (fileName == null) {
-            fileName = "default";
+            fileName = DEFAULT_FILE_NAME;
         }
 
         display.show(new ByteArrayDataProvider(out.toByteArray()), fileName + ".xls", ExportFormat.XLS);
     }
 
     protected void showNoDataWarning() {
-        frame.getWindowManager().showNotification(
-                messages.getMainMessage("warningNotification.caption"),
-                Frame.NotificationType.WARNING);
+        notifications.create()
+                .setCaption(messages.getMainMessage("warningNotification.caption"))
+                .setType(Notifications.NotificationType.WARNING)
+                .setPosition(Notifications.Position.MIDDLE_CENTER)
+                .show();
     }
 
     protected boolean isPivotDataEmpty(PivotData pivotData) {

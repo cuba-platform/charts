@@ -75,11 +75,27 @@ configure([chartsGlobalModule, chartsGuiModule, chartsWebModule]) {
     apply(plugin: 'findbugs')
     apply(plugin: 'pmd')
     apply(plugin: 'cuba')
+    apply(plugin: 'groovy')
 
     dependencies {
         compile(group: 'com.haulmont.cuba', name: 'cuba-global', version: baseVersion)
 
         testCompile(bom['junit:junit'])
+        testCompile(bom['org.spockframework:spock-core']) {
+            exclude(group: 'org.codehaus.groovy', module: 'groovy-all')
+        }
+    }
+
+    sourceSets {
+        test {
+            java {
+                include '**/testmodel/**'
+            }
+            groovy {
+                exclude '**/testmodel/**'
+                srcDir 'test'
+            }
+        }
     }
 
     task sourceJar(type: Jar) {
