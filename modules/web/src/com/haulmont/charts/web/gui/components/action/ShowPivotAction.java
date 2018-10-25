@@ -53,6 +53,7 @@ public class ShowPivotAction extends ListAction implements Action.HasBeforeActio
 
     protected List<String> includedProperties = new ArrayList<>();
     protected List<String> excludedProperties = new ArrayList<>();
+    protected List<String> additionalProperties = new ArrayList<>();
 
     protected List<String> appliedProperties;
 
@@ -178,8 +179,6 @@ public class ShowPivotAction extends ListAction implements Action.HasBeforeActio
     public ShowPivotAction withIncludedProperties(List<String> includedProperties) {
         this.includedProperties = includedProperties;
 
-        appliedProperties = new ArrayList<>(includedProperties);
-
         return this;
     }
 
@@ -203,6 +202,26 @@ public class ShowPivotAction extends ListAction implements Action.HasBeforeActio
         this.excludedProperties = excludedProperties;
 
         return this;
+    }
+
+    /**
+     * Set properties which should be additionally included. Additional property doesn't applied if excluded
+     * properties list contains it.
+     *
+     * @param additionalProperties list of additional properties
+     * @return current instance of action
+     */
+    public ShowPivotAction withAdditionalProperties(List<String> additionalProperties) {
+        this.additionalProperties = additionalProperties;
+
+        return this;
+    }
+
+    /**
+     * @return list of additionally included properties
+     */
+    public List<String> getAdditinalProperties() {
+        return additionalProperties;
     }
 
     /**
@@ -304,40 +323,41 @@ public class ShowPivotAction extends ListAction implements Action.HasBeforeActio
     }
 
     protected List<String> getAllProperties(MetaClass metaClass) {
+        List<String> result;
         View view = target.getDatasource().getView();
         if (view != null && !view.getProperties().isEmpty()) {
-            return view.getProperties().stream()
+            result = view.getProperties().stream()
                     .map(ViewProperty::getName)
                     .collect(Collectors.toList());
-        }
 
-        if (metadata.getTools().isNotPersistent(metaClass)) {
-            return metaClass.getProperties().stream()
-                    .map(MetaProperty::getName)
-                    .collect(Collectors.toList());
-        }
-
-        view = getView(metaClass);
-        return view.getProperties().stream()
-                .map(ViewProperty::getName)
-                .collect(Collectors.toList());
-    }
-
-    protected List<String> removeNonExistingProperties(List<String> propertiesList, MetaClass metaClass) {
-        List<String> result = new ArrayList<>();
-
-        View view = target.getDatasource().getView();
-        if (view != null && !view.getProperties().isEmpty()) {
-            for (String property : propertiesList) {
-                if (isPropertyPath(property) && viewContainsPropertyPath(view, property)) {
-                    result.add(property);
-                } else if (view.containsProperty(property)) {
-                    result.add(property);
-                }
-            }
+            result.addAll(getEmbeddedIdProperties(metaClass));
             return result;
         }
 
+        if (metadata.getTools().isNotPersistent(metaClass)) {
+            result = metaClass.getProperties().stream()
+                    .map(MetaProperty::getName)
+                    .collect(Collectors.toList());
+            result.addAll(getEmbeddedIdProperties(metaClass));
+            return result;
+        }
+
+        view = getView(metaClass);
+        result = view.getProperties().stream()
+                .map(ViewProperty::getName)
+                .collect(Collectors.toList());
+        result.addAll(getEmbeddedIdProperties(metaClass));
+
+        return result;
+    }
+
+    protected List<String> removeNonExistingProperties(List<String> propertiesList, MetaClass metaClass) {
+        View view = target.getDatasource().getView();
+        if (view != null && !view.getProperties().isEmpty()) {
+            return getUnRemovedProperties(propertiesList, view, metaClass);
+        }
+
+        List<String> result = new ArrayList<>();
         if (metadata.getTools().isNotPersistent(metaClass)) {
             for (String property : propertiesList) {
                 if (metaClass.getPropertyPath(property) != null) {
@@ -349,15 +369,46 @@ public class ShowPivotAction extends ListAction implements Action.HasBeforeActio
         }
 
         view = getView(metaClass);
+        return getUnRemovedProperties(propertiesList, view, metaClass);
+    }
+
+    protected List<String> getUnRemovedProperties(List<String> propertiesList, View view, MetaClass metaClass) {
+        List<String> result = new ArrayList<>();
+
         for (String property : propertiesList) {
+            // is propertyPath and view contains it
             if (isPropertyPath(property) && viewContainsPropertyPath(view, property)) {
                 result.add(property);
+                // simple property
             } else if (view.containsProperty(property)) {
                 result.add(property);
+                // EmbeddedId's property
+            } else if (hasEmbeddedId(metaClass)
+                    && isEmbeddedIdProperty(property, metaClass)) {
+                result.add(property);
+                // EmbeddedId's property of nested entity in view
+            } else if (metaClass.getPropertyPath(property) != null) {
+                MetaPropertyPath metaPropertyPath = metaClass.getPropertyPath(property);
+                for (MetaProperty metaProperty : metaPropertyPath.getMetaProperties()) {
+                    MetaClass propertyMetaClass = getPropertyMetaClass(metaProperty);
+                    if (propertyMetaClass == null) {
+                        propertyMetaClass = metaClass;
+                    }
+
+                    if (isEmbeddedIdProperty(property, propertyMetaClass)) {
+                        result.add(property);
+                    }
+                }
             }
         }
-
         return result;
+    }
+
+    protected MetaClass getPropertyMetaClass(MetaProperty metaProperty) {
+        MetaModel metaModel = metaProperty.getModel();
+
+        return metaModel == null ?
+                null : metaModel.getClass(metaProperty.getDeclaringClass());
     }
 
     protected boolean isPropertyPath(String property) {
@@ -386,14 +437,66 @@ public class ShowPivotAction extends ListAction implements Action.HasBeforeActio
         return false;
     }
 
+    protected MetaClass getEmbeddedIdMetaClass(MetaClass metaClass) {
+        String primaryKey = metadata.getTools().getPrimaryKeyName(metaClass);
+        if (primaryKey == null) {
+            return null;
+        }
+
+        MetaProperty metaProperty = metaClass.getPropertyNN(primaryKey);
+
+        MetaModel metaModel = metaProperty.getModel();
+        // in this case we should use `metaProperty.getJavaType()` because
+        // we need to get class type of EmbeddedId property and then get MetaClass of it
+        return metaModel == null ?
+                null : metaModel.getClass(metaProperty.getJavaType());
+    }
+
+    protected List<String> getEmbeddedIdProperties(MetaClass metaClass) {
+        List<String> result = new ArrayList<>();
+
+        if (hasEmbeddedId(metaClass)) {
+            MetaClass embeddedMetaClass = getEmbeddedIdMetaClass(metaClass);
+            if (embeddedMetaClass == null) {
+                return null;
+            }
+
+            String primaryKey = metadata.getTools().getPrimaryKeyName(metaClass);
+            for (MetaProperty metaProperty : embeddedMetaClass.getOwnProperties()) {
+                result.add(primaryKey + "." + metaProperty.getName());
+            }
+        }
+        return result;
+    }
+
+    protected boolean isEmbeddedIdProperty(String property, MetaClass metaClass) {
+        MetaClass embeddedMetaClass = getEmbeddedIdMetaClass(metaClass);
+        if (embeddedMetaClass == null) {
+            return false;
+        }
+
+        String[] propertyPathParts = property.split("\\.");
+        String propertyName = propertyPathParts[propertyPathParts.length - 1];
+
+        MetaProperty metaProperty = embeddedMetaClass.getProperty(propertyName);
+
+        return embeddedMetaClass.getOwnProperties().contains(metaProperty);
+    }
+
     protected Map<String, String> getPropertiesWithLocale() {
         Map<String, String> resultMap = new HashMap<>();
+
+        if (!includedProperties.isEmpty()) {
+            appliedProperties = new ArrayList<>(includedProperties);
+        }
 
         MetaClass metaClass = target.getDatasource().getMetaClass();
 
         if (appliedProperties == null || appliedProperties.isEmpty()) {
             appliedProperties = getAllProperties(metaClass);
         }
+
+        appliedProperties.addAll(additionalProperties);
 
         if (!excludedProperties.isEmpty()) {
             applyExcludedProperties(appliedProperties, excludedProperties);
@@ -471,5 +574,9 @@ public class ShowPivotAction extends ListAction implements Action.HasBeforeActio
                 }
             }
         }
+    }
+
+    protected boolean hasEmbeddedId(MetaClass metaClass) {
+        return metadata.getTools().hasCompositePrimaryKey(metaClass);
     }
 }
