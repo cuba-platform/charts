@@ -924,10 +924,11 @@ public class GoogleMapWidget extends FlowPanel implements RequiresResize {
                     @Override
                     public void execute() {
                         GoogleMapCircle vCircle = circleMap.get(circle);
-                        vCircle.setCenter(GoogleMapAdapterUtils.fromLatLng(circle.getCenter()));
 
                         LatLon vOldCenter = vCircle.getCenter();
                         LatLng gwtOldCenter = LatLng.newInstance(vOldCenter.getLat(), vOldCenter.getLon());
+
+                        vCircle.setCenter(GoogleMapAdapterUtils.fromLatLng(circle.getCenter()));
 
                         if (circleCenterChangeListener != null && !Objects.equals(gwtOldCenter, circle.getCenter())) {
                             circleCenterChangeListener.centerChanged(vCircle, vOldCenter);
