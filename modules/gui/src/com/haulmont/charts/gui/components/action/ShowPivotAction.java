@@ -3,7 +3,7 @@
  * Use is subject to license terms, see http://www.cuba-platform.com/commercial-software-license for details.
  */
 
-package com.haulmont.charts.web.gui.components.action;
+package com.haulmont.charts.gui.components.action;
 
 import com.google.gson.JsonParser;
 import com.google.gson.JsonSyntaxException;
@@ -28,8 +28,8 @@ import org.springframework.context.annotation.Scope;
 import java.util.*;
 import java.util.stream.Collectors;
 
-import static com.haulmont.charts.web.gui.components.action.ShowPivotAction.ShowPivotMode.ALL_ROWS;
-import static com.haulmont.charts.web.gui.components.action.ShowPivotAction.ShowPivotMode.SELECTED_ROWS;
+import static com.haulmont.charts.gui.components.action.ShowPivotAction.ShowPivotMode.ALL_ROWS;
+import static com.haulmont.charts.gui.components.action.ShowPivotAction.ShowPivotMode.SELECTED_ROWS;
 
 /**
  * Gets all or selected rows from {@link ListComponent} and shows them in new screen with pivot table component.
