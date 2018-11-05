@@ -9,9 +9,9 @@
     <module name="global" blocks="*">
         <artifact name="charts-global" appJar="true"/>
 
-        <property name="cuba.metadataConfig" value="+charts-metadata.xml"/>
-        <property name="cuba.creditsConfig" value="+charts-credits.xml"/>
-        <property name="cuba.persistenceConfig" value="+charts-persistence.xml"/>
+        <property name="cuba.metadataConfig" value="+com/haulmont/charts/metadata.xml"/>
+        <property name="cuba.creditsConfig" value="+com/haulmont/charts/credits.xml"/>
+        <property name="cuba.persistenceConfig" value="+com/haulmont/charts/persistence.xml"/>
     </module>
 
     <module name="gui" dependsOn="global" blocks="web">
@@ -30,12 +30,12 @@
         <artifact name="charts-web" appJar="true"/>
         <artifact name="charts-web-toolkit" appJar="true" classifier="client" ext="jar" skipIfExists="web-toolkit"/>
 
-        <property name="cuba.springContextConfig" value="+charts-web-spring.xml"/>
+        <property name="cuba.springContextConfig" value="+com/haulmont/charts/web-spring.xml"/>
         <property name="cuba.mainMessagePack" value="+com.haulmont.charts.web"/>
-        <property name="cuba.dispatcherSpringContextConfig" value="+charts-dispatcher-spring.xml"/>
-        <property name="cuba.windowConfig" value="+charts-web-screens.xml"/>
+        <property name="cuba.dispatcherSpringContextConfig" value="+com/haulmont/charts/dispatcher-spring.xml"/>
+        <property name="cuba.windowConfig" value="+com/haulmont/charts/web-screens.xml"/>
         <property name="cuba.web.widgetSet" value="com.haulmont.charts.web.widgets.ChartsWidgetSet"/>
-        <property name="cuba.web.componentsConfig" value="+charts-web-components.xml"/>
+        <property name="cuba.web.componentsConfig" value="+com/haulmont/charts/web-components.xml"/>
     </module>
 
     <module name="web-toolkit" dependsOn="web" blocks="web">
