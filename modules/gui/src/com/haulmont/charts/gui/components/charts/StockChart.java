@@ -33,7 +33,7 @@ import java.util.function.Consumer;
  * <a href="http://docs.amcharts.com/3/javascriptstockchart/AmStockChart">http://docs.amcharts.com/3/javascriptstockchart/AmStockChart</a>
  */
 public interface StockChart extends Component, StockChartModel<StockChart>, Component.BelongToFrame,
-                                    Component.HasXmlDescriptor, Component.HasIcon, Component.HasCaption {
+        Component.HasIcon, Component.HasCaption {
     String NAME = "stockChart";
 
     /**

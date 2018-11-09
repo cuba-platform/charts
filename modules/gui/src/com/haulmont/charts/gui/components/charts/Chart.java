@@ -28,8 +28,8 @@ import java.util.function.Consumer;
  *
  * @param <T> type of builder methods
  */
-public interface Chart<T extends Chart> extends Component, ChartModel<T>, Component.BelongToFrame, Component.HasXmlDescriptor, Component.HasIcon,
-                                                Component.HasCaption {
+public interface Chart<T extends Chart> extends Component, ChartModel<T>, Component.BelongToFrame, Component.HasIcon,
+        Component.HasCaption {
 
     /**
      * @deprecated Do not create this Component programmatically. Use concrete Chart implementation.

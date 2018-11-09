@@ -22,8 +22,7 @@ import java.util.List;
 import java.util.Map;
 import java.util.function.Consumer;
 
-public interface PivotTable extends Component, Component.BelongToFrame, Component.HasXmlDescriptor, Component.Editable,
-        Component.HasCaption {
+public interface PivotTable extends Component, Component.BelongToFrame, Component.Editable, Component.HasCaption {
 
     String NAME = "pivotTable";
 

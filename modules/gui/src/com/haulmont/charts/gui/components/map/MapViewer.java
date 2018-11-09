@@ -27,8 +27,7 @@ import java.util.function.Consumer;
 /**
  * Google map component.
  */
-public interface MapViewer extends Component, Component.BelongToFrame, Component.HasXmlDescriptor, Component.HasIcon,
-                                   Component.HasCaption {
+public interface MapViewer extends Component, Component.BelongToFrame, Component.HasIcon, Component.HasCaption {
 
     String NAME = "mapViewer";
 

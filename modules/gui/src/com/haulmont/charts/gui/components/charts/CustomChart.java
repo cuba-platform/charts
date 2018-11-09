@@ -11,8 +11,7 @@ import com.haulmont.cuba.gui.components.Component;
 /**
  * Chart that can show any chart configuration inherited from {@link AbstractChart}.
  */
-public interface CustomChart extends Component, Component.BelongToFrame, Component.HasXmlDescriptor, Component.HasIcon,
-                                     Component.HasCaption {
+public interface CustomChart extends Component, Component.BelongToFrame, Component.HasIcon, Component.HasCaption {
     String NAME = "customChart";
 
     AbstractChart getConfiguration();
