@@ -6,7 +6,6 @@
 package com.haulmont.charts.web.gui.components.pivottable;
 
 import com.google.common.base.Strings;
-import com.haulmont.bali.util.Preconditions;
 import com.haulmont.charts.gui.components.pivot.PivotTable;
 import com.haulmont.charts.gui.data.HasMetaClass;
 import com.haulmont.charts.gui.pivottable.extentsion.model.PivotData;
@@ -15,6 +14,7 @@ import com.haulmont.charts.gui.pivottable.extentsion.model.PivotDataSeparatedCel
 import com.haulmont.chile.core.model.MetaClass;
 import com.haulmont.cuba.core.global.Messages;
 import com.haulmont.cuba.gui.Notifications;
+import com.haulmont.cuba.gui.Notifications.NotificationType;
 import com.haulmont.cuba.gui.export.ByteArrayDataProvider;
 import com.haulmont.cuba.gui.export.ExportDisplay;
 import com.haulmont.cuba.gui.export.ExportFormat;
@@ -30,8 +30,10 @@ import java.io.ByteArrayOutputStream;
 import java.io.IOException;
 import java.util.List;
 
+import static com.haulmont.bali.util.Preconditions.checkNotNullArgument;
+
 /**
- * Exports {@link PivotData} to XLS.
+ * Exports {@link PivotData} to XLS file.
  */
 @Component(PivotExcelExporter.NAME)
 @Scope(BeanDefinition.SCOPE_PROTOTYPE)
@@ -81,7 +83,7 @@ public class PivotExcelExporter {
      * @param fileName  file name
      */
     public void exportPivotTable(PivotData pivotData, String fileName) {
-        Preconditions.checkNotNullArgument(pivotData);
+        checkNotNullArgument(pivotData);
 
         if (isPivotDataEmpty(pivotData)) {
             showNoDataWarning();
@@ -116,7 +118,7 @@ public class PivotExcelExporter {
      * @param display   ExportDisplay implementation
      */
     public void exportPivotTable(PivotData pivotData, String fileName, ExportDisplay display) {
-        Preconditions.checkNotNullArgument(pivotData);
+        checkNotNullArgument(pivotData);
 
         if (isPivotDataEmpty(pivotData)) {
             showNoDataWarning();
@@ -215,11 +217,10 @@ public class PivotExcelExporter {
     }
 
     protected void showWarnNotification() {
-        notifications.create()
-                .setCaption(messages.getMainMessage("actions.warningExport.title"))
-                .setDescription(messages.getMainMessage("actions.warningExport.message"))
-                .setType(Notifications.NotificationType.WARNING)
-                .setPosition(Notifications.Position.MIDDLE_CENTER)
+        notifications.create(NotificationType.WARNING)
+                .withCaption(messages.getMainMessage("actions.warningExport.title"))
+                .withDescription(messages.getMainMessage("actions.warningExport.message"))
+                .withPosition(Notifications.Position.MIDDLE_CENTER)
                 .show();
     }
 
@@ -238,10 +239,9 @@ public class PivotExcelExporter {
     }
 
     protected void showNoDataWarning() {
-        notifications.create()
-                .setCaption(messages.getMainMessage("warningNotification.caption"))
-                .setType(Notifications.NotificationType.WARNING)
-                .setPosition(Notifications.Position.MIDDLE_CENTER)
+        notifications.create(NotificationType.WARNING)
+                .withCaption(messages.getMainMessage("warningNotification.caption"))
+                .withPosition(Notifications.Position.MIDDLE_CENTER)
                 .show();
     }
 
@@ -249,7 +249,6 @@ public class PivotExcelExporter {
         return pivotData.getDataNumCols() == 0
                 || pivotData.getDataNumRows() == 0;
     }
-
 
     /**
      * @param pivotData pivot with aggregated data
