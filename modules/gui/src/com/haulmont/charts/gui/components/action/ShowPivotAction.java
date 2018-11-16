@@ -220,7 +220,7 @@ public class ShowPivotAction extends ListAction implements Action.HasBeforeActio
     /**
      * @return list of additionally included properties
      */
-    public List<String> getAdditinalProperties() {
+    public List<String> getAdditionalProperties() {
         return additionalProperties;
     }
 
