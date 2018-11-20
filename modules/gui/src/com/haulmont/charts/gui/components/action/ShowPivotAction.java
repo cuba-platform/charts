@@ -382,11 +382,14 @@ public class ShowPivotAction extends ListAction implements Action.HasBeforeActio
                 // simple property
             } else if (view.containsProperty(property)) {
                 result.add(property);
+                // id property
+            } else if (isIdProperty(property, metaClass)) {
+                result.add(property);
                 // EmbeddedId's property
             } else if (hasEmbeddedId(metaClass)
                     && isEmbeddedIdProperty(property, metaClass)) {
                 result.add(property);
-                // EmbeddedId's property of nested entity in view
+                // if metaClass contains property path, we need to check nested entities in view
             } else if (metaClass.getPropertyPath(property) != null) {
                 MetaPropertyPath metaPropertyPath = metaClass.getPropertyPath(property);
                 for (MetaProperty metaProperty : metaPropertyPath.getMetaProperties()) {
@@ -394,8 +397,11 @@ public class ShowPivotAction extends ListAction implements Action.HasBeforeActio
                     if (propertyMetaClass == null) {
                         propertyMetaClass = metaClass;
                     }
-
+                    // EmbeddedId's property
                     if (isEmbeddedIdProperty(property, propertyMetaClass)) {
+                        result.add(property);
+                        // Id property
+                    } else if (isIdProperty(metaProperty.getName(), propertyMetaClass)) {
                         result.add(property);
                     }
                 }
@@ -483,6 +489,18 @@ public class ShowPivotAction extends ListAction implements Action.HasBeforeActio
         return embeddedMetaClass.getOwnProperties().contains(metaProperty);
     }
 
+    /**
+     * Checks if current MetaClass contains given id property.
+     *
+     * @param property  property to check
+     * @param metaClass metaClass
+     * @return true if MetaClass contains given id property
+     */
+    protected boolean isIdProperty(String property, MetaClass metaClass) {
+        String primaryId = metadata.getTools().getPrimaryKeyName(metaClass);
+        return property.equals(primaryId);
+    }
+
     protected Map<String, String> getPropertiesWithLocale() {
         Map<String, String> resultMap = new HashMap<>();
 
@@ -525,19 +543,28 @@ public class ShowPivotAction extends ListAction implements Action.HasBeforeActio
             Messages messages = AppBeans.get(Messages.NAME);
             resultMap.put(property, messages.getTools().getPropertyCaption(metaProperty));
         }
+        appliedProperties.clear();
 
         return resultMap;
     }
 
     protected boolean isManagedProperty(MetaProperty metaProperty, MetaClass metaClass) {
-        if (metadata.getTools().isSystem(metaProperty)
-                || metadata.getTools().isSystemLevel(metaProperty)
+        if (metadata.getTools().isSystemLevel(metaProperty)
                 || metaProperty.getRange().getCardinality().isMany()
                 || !isPermitted(metaClass, metaProperty)) {
             return false;
         }
 
         if (metaProperty.getRange().isDatatype() && (isByteArray(metaProperty) || isUuid(metaProperty))) {
+            return false;
+        }
+
+        // id is system property, so it should be before check isSystem()
+        if (isIdProperty(metaProperty.getName(), metaClass)) {
+            return true;
+        }
+
+        if (metadata.getTools().isSystem(metaProperty)) {
             return false;
         }
 
