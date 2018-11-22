@@ -13,11 +13,13 @@ import com.haulmont.charts.gui.pivottable.extentsion.model.PivotDataCell;
 import com.haulmont.charts.gui.pivottable.extentsion.model.PivotDataSeparatedCell;
 import com.haulmont.chile.core.model.MetaClass;
 import com.haulmont.cuba.core.global.Messages;
+import com.haulmont.cuba.gui.ComponentsHelper;
 import com.haulmont.cuba.gui.Notifications;
 import com.haulmont.cuba.gui.Notifications.NotificationType;
 import com.haulmont.cuba.gui.export.ByteArrayDataProvider;
 import com.haulmont.cuba.gui.export.ExportDisplay;
 import com.haulmont.cuba.gui.export.ExportFormat;
+import com.haulmont.cuba.gui.screen.ScreenContext;
 import org.apache.poi.hssf.usermodel.*;
 import org.apache.poi.ss.usermodel.CellType;
 import org.apache.poi.ss.util.CellRangeAddress;
@@ -53,12 +55,15 @@ public class PivotExcelExporter {
     protected MetaClass entityMetaClass;
 
     protected Messages messages;
-    protected Notifications notifications;
     protected ExportDisplay display;
+
+    protected Notifications notifications;
 
     public PivotExcelExporter(PivotTable pivotTable) {
         entityMetaClass = pivotTable.getDataProvider() instanceof HasMetaClass ?
                 ((HasMetaClass) pivotTable.getDataProvider()).getMetaClass() : null;
+
+        initNotifications(pivotTable);
     }
 
     @Inject
@@ -67,13 +72,13 @@ public class PivotExcelExporter {
     }
 
     @Inject
-    public void setNotifications(Notifications notifications) {
-        this.notifications = notifications;
-    }
-
-    @Inject
     public void setExportDisplay(ExportDisplay display) {
         this.display = display;
+    }
+
+    protected void initNotifications(PivotTable pivotTable) {
+        ScreenContext screenContext = ComponentsHelper.getScreenContext(pivotTable);
+        notifications = screenContext.getNotifications();
     }
 
     /**

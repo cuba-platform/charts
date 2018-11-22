@@ -123,6 +123,11 @@ class ExcelExporterTest extends Specification {
         protected void export(ExportDisplay display) {
             //do nothing
         }
+
+        @Override
+        protected void initNotifications(PivotTable pivotTable) {
+            //do nothing
+        }
     }
 
     class TestPivotTable extends WebPivotTable {
