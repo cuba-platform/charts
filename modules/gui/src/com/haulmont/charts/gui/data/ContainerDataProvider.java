@@ -74,7 +74,7 @@ public class ContainerDataProvider implements DataProvider, HasMetaClass {
 
     @Override
     public List<DataItem> getItems() {
-        List<DataItem> dataItems = new ArrayList<>();
+        List<DataItem> dataItems = new ArrayList<>(dataContainer.getItems().size());
 
         for (Object object : dataContainer.getItems()) {
             Entity entity = (Entity) object;
@@ -87,61 +87,57 @@ public class ContainerDataProvider implements DataProvider, HasMetaClass {
 
     @Override
     public DataItem getItem(Object id) {
-        int idx = dataContainer.getItemIndex(id);
-        if (idx == -1) {
-            return null;
-        }
-        Entity entity = dataContainer.getItem(id);
-        return new EntityDataItem(entity);
+        Entity entity = dataContainer.getItemOrNull(id);
+        return entity == null ? null : new EntityDataItem(entity);
     }
 
     /**
      * Unsupported. Always throws an {@link UnsupportedOperationException}.
-     * Use containerCollection for changing data items of ContainerDataProvider
+     * Use CollectionContainer for changing data items of ContainerDataProvider
      *
-     * @throws UnsupportedOperationException use containerCollection for changing data items of ContainerDataProvider
+     * @throws UnsupportedOperationException use CollectionContainer for changing data items of ContainerDataProvider
      */
     @Override
     public void addItem(DataItem item) {
-        throw new UnsupportedOperationException("Use containerCollection for changing data items of ContainerDataProvider");
+        throw new UnsupportedOperationException("Use CollectionContainer for changing data items of ContainerDataProvider");
     }
 
     /**
      * Unsupported. Always throws an {@link UnsupportedOperationException}.
-     * Use containerCollection for changing data items of ContainerDataProvider
+     * Use CollectionContainer for changing data items of ContainerDataProvider
      *
-     * @throws UnsupportedOperationException use containerCollection for changing data items of ContainerDataProvider
+     * @throws UnsupportedOperationException use CollectionContainer for changing data items of ContainerDataProvider
      */
     @Override
     public void addItems(Collection<? extends DataItem> items) {
-        throw new UnsupportedOperationException("Use containerCollection for changing data items of ContainerDataProvider");
+        throw new UnsupportedOperationException("Use CollectionContainer for changing data items of ContainerDataProvider");
     }
 
     /**
      * Unsupported. Always throws an {@link UnsupportedOperationException}.
-     * Use containerCollection for changing data items of ContainerDataProvider
+     * Use CollectionContainer for changing data items of ContainerDataProvider
      *
-     * @throws UnsupportedOperationException use containerCollection for changing data items of ContainerDataProvider
+     * @throws UnsupportedOperationException use CollectionContainer for changing data items of ContainerDataProvider
      */
     @Override
     public void updateItem(DataItem item) {
-        throw new UnsupportedOperationException("Use containerCollection for changing data items of ContainerDataProvider");
+        throw new UnsupportedOperationException("Use CollectionContainer for changing data items of ContainerDataProvider");
     }
 
     /**
      * Unsupported. Always throws an {@link UnsupportedOperationException}.
-     * Use containerCollection for changing data items of ContainerDataProvider
+     * Use CollectionContainer for changing data items of ContainerDataProvider
      *
-     * @throws UnsupportedOperationException use containerCollection for changing data items of ContainerDataProvider
+     * @throws UnsupportedOperationException use CollectionContainer for changing data items of ContainerDataProvider
      */
     @Override
     public void removeItem(DataItem item) {
-        throw new UnsupportedOperationException("Use containerCollection for changing data items of ContainerDataProvider");
+        throw new UnsupportedOperationException("Use CollectionContainer for changing data items of ContainerDataProvider");
     }
 
     @Override
     public void removeAll() {
-        throw new UnsupportedOperationException("Use containerCollection for changing data items of ContainerDataProvider");
+        throw new UnsupportedOperationException("Use CollectionContainer for changing data items of ContainerDataProvider");
     }
 
     @Override
