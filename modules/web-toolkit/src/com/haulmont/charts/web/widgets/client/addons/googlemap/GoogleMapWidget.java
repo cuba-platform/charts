@@ -1452,10 +1452,14 @@ public class GoogleMapWidget extends FlowPanel implements RequiresResize {
         DrawingManagerOptions options = GoogleMapAdapterUtils.toDrawingManagerOptions(vOptions);
 
         final com.haulmont.charts.web.widgets.client.addons.googlemap.drawing.PolygonOptions vPolygonOptions = vOptions.getPolygonOptions();
-        options.setPolygonOptions(GoogleMapAdapterUtils.toPolygonOptions(vPolygonOptions));
+        if (vPolygonOptions != null) {
+            options.setPolygonOptions(GoogleMapAdapterUtils.toPolygonOptions(vPolygonOptions));
+        }
 
         final com.haulmont.charts.web.widgets.client.addons.googlemap.drawing.CircleOptions vCircleOptions = vOptions.getCircleOptions();
-        options.setCircleOptions(GoogleMapAdapterUtils.toCircleOptions(vCircleOptions));
+        if (vCircleOptions != null) {
+            options.setCircleOptions(GoogleMapAdapterUtils.toCircleOptions(vCircleOptions));
+        }
 
         drawingManager = DrawingManager.newInstance(options);
         drawingManager.setMap(map);
