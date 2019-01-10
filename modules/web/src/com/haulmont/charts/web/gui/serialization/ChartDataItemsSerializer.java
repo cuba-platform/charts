@@ -18,13 +18,13 @@ import com.haulmont.cuba.core.global.Messages;
 import com.haulmont.cuba.core.global.Metadata;
 import org.apache.commons.collections4.CollectionUtils;
 import org.apache.commons.lang3.StringUtils;
+import org.apache.commons.lang3.time.FastDateFormat;
 import org.springframework.beans.factory.config.BeanDefinition;
 import org.springframework.context.annotation.Scope;
 import org.springframework.stereotype.Component;
 
 import javax.annotation.Nullable;
 import javax.inject.Inject;
-import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Collection;
 import java.util.Date;
@@ -38,6 +38,8 @@ public class ChartDataItemsSerializer {
     public static final String NAME = "charts_ChartDataItemsSerializer";
 
     protected static final String ITEM_KEY_PROPERTY_NAME = "$k";
+    protected static final FastDateFormat DATE_FORMATTER
+            = FastDateFormat.getInstance(ChartJsonSerializationContext.DEFAULT_DATE_FORMAT);
 
     protected Messages messages;
     protected Metadata metadata;
@@ -57,7 +59,6 @@ public class ChartDataItemsSerializer {
 
         Function<DataItem, String> itemKeyMapper = context.getItemKeyMapper();
 
-        SimpleDateFormat dateFormat = new SimpleDateFormat(ChartJsonSerializationContext.DEFAULT_DATE_FORMAT);
         for (DataItem item : items) {
             JsonObject itemElement = new JsonObject();
 
@@ -69,7 +70,7 @@ public class ChartDataItemsSerializer {
             for (String property : context.getProperties()) {
                 Object propertyValue = item.getValue(property);
 
-                addProperty(itemElement, property, propertyValue, dateFormat, context);
+                addProperty(itemElement, property, propertyValue, context);
             }
 
             if (context.getChartModel() instanceof GanttChart) {
@@ -110,7 +111,7 @@ public class ChartDataItemsSerializer {
                             Object propertyValue = dataItem.getValue(field);
 
                             if (propertyValue != null) {
-                                addProperty(segment, field, propertyValue, dateFormat, context);
+                                addProperty(segment, field, propertyValue, context);
                             }
                         }
                         segments.add(segment);
@@ -127,15 +128,14 @@ public class ChartDataItemsSerializer {
         return serialized;
     }
 
-    protected void addProperty(JsonObject jsonObject, String property, Object value,
-                               SimpleDateFormat dateFormat, JsonSerializationContext context) {
+    protected void addProperty(JsonObject jsonObject, String property, Object value, JsonSerializationContext context) {
         Object formattedValue;
         if (value instanceof Entity) {
             formattedValue = metadata.getTools().getInstanceName((Instance) value);
         } else if (value instanceof EnumClass) {
             formattedValue = messages.getMessage((Enum) value);
         } else if (value instanceof Date) {
-            formattedValue = dateFormat.format((Date) value);
+            formattedValue = DATE_FORMATTER.format((Date) value);
         } else {
             formattedValue = value;
         }

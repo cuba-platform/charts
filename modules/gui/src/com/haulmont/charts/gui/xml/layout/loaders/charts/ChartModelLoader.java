@@ -20,12 +20,12 @@ import com.haulmont.cuba.gui.components.Component;
 import com.haulmont.cuba.gui.xml.layout.loaders.AbstractComponentLoader;
 import org.apache.commons.collections4.CollectionUtils;
 import org.apache.commons.lang3.StringUtils;
+import org.apache.commons.lang3.time.FastDateFormat;
 import org.dom4j.Element;
 
 import javax.annotation.Nullable;
 import java.math.BigDecimal;
 import java.text.ParseException;
-import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
@@ -35,6 +35,9 @@ public abstract class ChartModelLoader<C extends Component> extends AbstractComp
 
     protected static final String CONFIG_DATE_FORMAT = "yyyy-MM-dd";
     protected static final String CONFIG_DATETIME_FORMAT = "yyyy-MM-dd HH:mm";
+
+    protected static final FastDateFormat CONFIG_DATE_FORMATTER = FastDateFormat.getInstance(CONFIG_DATE_FORMAT);
+    protected static final FastDateFormat CONFIG_DATETIME_FORMATTER = FastDateFormat.getInstance(CONFIG_DATETIME_FORMAT);
 
     @Override
     protected void loadWidth(Component component, Element element) {
@@ -117,11 +120,11 @@ public abstract class ChartModelLoader<C extends Component> extends AbstractComp
     }
 
     protected Date parseDateTime(String value) {
-        SimpleDateFormat rangeDF;
+        FastDateFormat rangeDF;
         if (value.length() == 10) {
-            rangeDF = new SimpleDateFormat(CONFIG_DATE_FORMAT);
+            rangeDF = CONFIG_DATE_FORMATTER;
         } else {
-            rangeDF = new SimpleDateFormat(CONFIG_DATETIME_FORMAT);
+            rangeDF = CONFIG_DATETIME_FORMATTER;
         }
         try {
             return rangeDF.parse(value);
@@ -959,9 +962,8 @@ public abstract class ChartModelLoader<C extends Component> extends AbstractComp
     }
 
     protected Date loadDate(String value) {
-        SimpleDateFormat df = new SimpleDateFormat(CONFIG_DATE_FORMAT);
         try {
-            return df.parse(value);
+            return CONFIG_DATE_FORMATTER.parse(value);
         } catch (ParseException e) {
             throw new GuiDevelopmentException("Unable to parse date from XML chart configuration",
                     context.getCurrentFrameId(), "date", value);

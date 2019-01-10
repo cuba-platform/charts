@@ -9,17 +9,18 @@ import com.google.gson.JsonElement;
 import com.google.gson.JsonPrimitive;
 import com.google.gson.JsonSerializationContext;
 import com.google.gson.JsonSerializer;
+import org.apache.commons.lang3.time.FastDateFormat;
 
 import java.lang.reflect.Type;
-import java.text.SimpleDateFormat;
 import java.util.Date;
 
 public class ConfigDateSerializer implements JsonSerializer<Date> {
 
+    protected static final FastDateFormat DATE_FORMATTER
+            = FastDateFormat.getInstance(ChartJsonSerializationContext.DEFAULT_DATE_FORMAT);
+
     @Override
     public JsonElement serialize(Date src, Type typeOfSrc, JsonSerializationContext context) {
-        SimpleDateFormat df = new SimpleDateFormat(ChartJsonSerializationContext.DEFAULT_DATE_FORMAT);
-
-        return new JsonPrimitive(df.format(src));
+        return new JsonPrimitive(DATE_FORMATTER.format(src));
     }
 }
