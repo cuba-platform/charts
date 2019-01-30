@@ -2,10 +2,9 @@
 
 [![license](https://img.shields.io/badge/license-Apache%20License%202.0-blue.svg?style=flat)](http://www.apache.org/licenses/LICENSE-2.0)
 [![Build Status](https://travis-ci.org/cuba-platform/charts.svg?branch=master)](https://travis-ci.org/cuba-platform/charts)
+[![Documentation](https://img.shields.io/badge/documentation-online-03a9f4.svg)](https://doc.cuba-platform.com/charts-latest)
 
 Charts Add-on provides integration with AmCharts and GoogleMaps for applications based on CUBA Platform.
-
-[Documentation](https://doc.cuba-platform.com/charts-latest).
 
 For more information see [github.com/cuba-platform/cuba](https://github.com/cuba-platform/cuba).
 
