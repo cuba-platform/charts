@@ -71,7 +71,7 @@ public interface MapConfig extends Config {
      * Visit the official Google Maps API <a href="https://developers.google.com/maps/documentation/javascript/versions">documentation</a>
      * for more information.
      */
-    @DefaultString("3.28")
+    @DefaultString("3.35")
     @Property("charts.map.apiVersion")
     String getMapsApiVersion();
     void setMapsApiVersion(String apiVersion);
