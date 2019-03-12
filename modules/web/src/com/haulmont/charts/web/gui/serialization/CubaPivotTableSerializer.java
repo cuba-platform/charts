@@ -18,24 +18,22 @@ package com.haulmont.charts.web.gui.serialization;
 
 import com.google.gson.*;
 import com.google.gson.annotations.Expose;
+import com.haulmont.charts.gui.data.DataProvider;
 import com.haulmont.charts.gui.model.JsFunction;
 import com.haulmont.charts.gui.model.JsonEnum;
-import com.haulmont.charts.gui.data.DataProvider;
 import com.haulmont.charts.gui.pivottable.model.DerivedProperties;
 import com.haulmont.charts.gui.pivottable.model.PivotTableModel;
 import com.haulmont.charts.gui.pivottable.model.UnusedPropertiesVertical;
 import com.haulmont.charts.web.serialization.JsFunctionSerializer;
 import com.haulmont.charts.web.serialization.JsonEnumSerializer;
-import com.haulmont.charts.web.widgets.pivottable.serialization.DerivedPropertiesSerializer;
-import com.haulmont.charts.web.widgets.pivottable.serialization.PivotJsonSerializationContext;
-import com.haulmont.charts.web.widgets.pivottable.serialization.PivotTableSerializer;
-import com.haulmont.charts.web.widgets.pivottable.serialization.UnusedPropertiesVerticalSerializer;
+import com.haulmont.charts.web.widgets.pivottable.serialization.*;
 import com.haulmont.cuba.core.global.AppBeans;
 import org.springframework.beans.factory.config.BeanDefinition;
 import org.springframework.context.annotation.Scope;
 import org.springframework.stereotype.Component;
 
 import javax.annotation.Nullable;
+import java.util.function.Consumer;
 
 @Component(CubaPivotTableSerializer.NAME)
 @Scope(BeanDefinition.SCOPE_PROTOTYPE)
@@ -106,10 +104,17 @@ public class CubaPivotTableSerializer implements PivotTableSerializer {
     @Override
     @Nullable
     public String serializeData(PivotTableModel pivotTable) {
+        return serializeData(pivotTable, null);
+    }
+
+    @Override
+    @Nullable
+    public String serializeData(PivotTableModel pivotTable, Consumer<PivotTableSerializationContext> postSerializationHandler) {
         DataProvider dataProvider = pivotTable.getDataProvider();
         if (dataProvider != null) {
             PivotJsonSerializationContext context = createPivotJsonSerializationContext(pivotTable);
-            JsonElement dataProviderElement = itemsSerializer.serialize(dataProvider.getItems(), context);
+            JsonElement dataProviderElement =
+                    itemsSerializer.serialize(dataProvider.getItems(), context, postSerializationHandler);
             return gson.toJson(dataProviderElement);
         }
         return null;

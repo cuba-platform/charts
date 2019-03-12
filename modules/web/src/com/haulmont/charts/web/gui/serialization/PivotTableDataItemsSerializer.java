@@ -19,9 +19,10 @@ package com.haulmont.charts.web.gui.serialization;
 import com.google.gson.JsonArray;
 import com.google.gson.JsonObject;
 import com.google.gson.JsonSerializationContext;
-import com.haulmont.charts.gui.data.EntityDataItem;
 import com.haulmont.charts.gui.data.DataItem;
+import com.haulmont.charts.gui.data.EntityDataItem;
 import com.haulmont.charts.web.widgets.pivottable.serialization.PivotJsonSerializationContext;
+import com.haulmont.charts.web.widgets.pivottable.serialization.PivotTableSerializationContext;
 import com.haulmont.chile.core.datatypes.Datatypes;
 import com.haulmont.chile.core.datatypes.impl.EnumClass;
 import com.haulmont.chile.core.model.Instance;
@@ -44,6 +45,7 @@ import java.util.Collection;
 import java.util.Date;
 import java.util.List;
 import java.util.Locale;
+import java.util.function.Consumer;
 
 @Component(PivotTableDataItemsSerializer.NAME)
 @Scope(BeanDefinition.SCOPE_PROTOTYPE)
@@ -71,6 +73,11 @@ public class PivotTableDataItemsSerializer {
     }
 
     public JsonArray serialize(List<DataItem> items, JsonSerializationContext context) {
+        return serialize(items, context, null);
+    }
+
+    public JsonArray serialize(List<DataItem> items, JsonSerializationContext context,
+                               Consumer<PivotTableSerializationContext> postSerializationHandler) {
         JsonArray serialized = new JsonArray();
 
         if (context instanceof PivotJsonSerializationContext) {
@@ -80,6 +87,10 @@ public class PivotTableDataItemsSerializer {
                 for (String property : pivotContext.getProperties()) {
                     Object value = item.getValue(property);
                     addProperty(itemElement, property, value, pivotContext, item);
+                }
+
+                if (postSerializationHandler != null) {
+                    postSerializationHandler.accept(new PivotTableSerializationContext(item, itemElement, pivotContext));
                 }
 
                 serialized.add(itemElement);

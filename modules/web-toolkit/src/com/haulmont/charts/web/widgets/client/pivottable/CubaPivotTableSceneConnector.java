@@ -17,6 +17,7 @@
 package com.haulmont.charts.web.widgets.client.pivottable;
 
 import com.google.gwt.core.client.JavaScriptObject;
+import com.google.gwt.core.client.JsArrayString;
 import com.google.gwt.core.client.Scheduler;
 import com.google.gwt.dom.client.Element;
 import com.google.gwt.json.client.JSONParser;
@@ -211,7 +212,7 @@ public class CubaPivotTableSceneConnector extends AbstractComponentConnector {
 
             if (events.contains(CubaPivotTableSceneState.CELL_CLICK_EVENT)) {
                 pivotTableEvents.setCellClickHandler(event ->
-                        rpc.onCellClick(event.getValue(), event.getFilters()));
+                        rpc.onCellClick(event.getValue(), event.getFilters(), event.getDataItemKeys()));
             }
         }
 

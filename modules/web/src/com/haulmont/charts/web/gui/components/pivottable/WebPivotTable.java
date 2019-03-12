@@ -457,7 +457,8 @@ public class WebPivotTable extends WebAbstractComponent<CubaPivotTable> implemen
     }
 
     protected void onCellClick(com.haulmont.charts.web.widgets.pivottable.events.CellClickEvent e) {
-        publish(CellClickEvent.class, new CellClickEvent(WebPivotTable.this, e.getValue(), e.getFilters()));
+        publish(CellClickEvent.class,
+                new CellClickEvent(WebPivotTable.this, e.getValue(), e.getFilters(), e.getUsedDataItems()));
     }
 
     @Override

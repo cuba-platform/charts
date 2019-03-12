@@ -17,6 +17,7 @@
 package com.haulmont.charts.web.widgets.pivottable;
 
 import com.google.gson.*;
+import com.haulmont.charts.gui.data.DataItem;
 import com.haulmont.charts.gui.pivottable.model.*;
 import com.haulmont.charts.web.widgets.client.pivottable.CubaPivotTableSceneState;
 import com.haulmont.charts.web.widgets.client.pivottable.CubaPivotTableServerRpc;
@@ -24,8 +25,10 @@ import com.haulmont.charts.web.widgets.pivottable.events.CellClickEvent;
 import com.haulmont.charts.web.widgets.pivottable.events.CellClickListener;
 import com.haulmont.charts.web.widgets.pivottable.events.RefreshEvent;
 import com.haulmont.charts.web.widgets.pivottable.events.RefreshListener;
-import com.haulmont.charts.web.widgets.pivottable.serialization.*;
+import com.haulmont.charts.web.widgets.pivottable.serialization.PivotTableSerializationContext;
+import com.haulmont.charts.web.widgets.pivottable.serialization.PivotTableSerializer;
 import com.haulmont.cuba.web.widgets.WebJarResource;
+import com.vaadin.server.KeyMapper;
 import com.vaadin.ui.AbstractComponent;
 import org.apache.commons.lang3.StringUtils;
 import org.slf4j.Logger;
@@ -33,10 +36,8 @@ import org.slf4j.LoggerFactory;
 
 import javax.annotation.Nullable;
 import java.lang.reflect.Method;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Locale;
-import java.util.Map;
+import java.util.*;
+import java.util.stream.Collectors;
 
 import static com.vaadin.util.ReflectTools.findMethod;
 
@@ -57,6 +58,8 @@ import static com.vaadin.util.ReflectTools.findMethod;
 public class CubaPivotTable extends AbstractComponent {
     private static final long serialVersionUID = 3250758720037122580L;
 
+    protected static final String CUBA_DATA_ITEM_KEY = "cubaDataItemKey";
+
     private static final Logger log = LoggerFactory.getLogger(CubaPivotTable.class);
 
     protected static final Method refreshMethod =
@@ -71,6 +74,8 @@ public class CubaPivotTable extends AbstractComponent {
     protected PivotTableSerializer pivotTableSerializer;
 
     protected String locale;
+
+    protected KeyMapper<DataItem> dataItemMapper;
 
     public CubaPivotTable(PivotTableSerializer pivotTableSerializer) {
         pivotTable = new PivotTableModel();
@@ -166,9 +171,17 @@ public class CubaPivotTable extends AbstractComponent {
             if (pivotTable != null) {
                 // Full repaint
 
-                String dataJsonSting = pivotTableSerializer.serializeData(pivotTable);
-                log.trace("pivotTable data JSON:\n{}", dataJsonSting);
-                getState().data = dataJsonSting;
+                String dataJsonString;
+
+                if (isCellClickListenerPresent()) {
+                    dataItemMapper = new KeyMapper<>();
+                    dataJsonString = pivotTableSerializer.serializeData(pivotTable, this::serializeDataItemKey);
+                } else {
+                    dataJsonString = pivotTableSerializer.serializeData(pivotTable);
+                }
+
+                log.trace("pivotTable data JSON:\n{}", dataJsonString);
+                getState().data = dataJsonString;
 
                 String optionsJsonString = pivotTableSerializer.serialize(pivotTable);
                 log.trace("pivotTable options JSON:\n{}", optionsJsonString);
@@ -177,6 +190,17 @@ public class CubaPivotTable extends AbstractComponent {
 
             dirty = false;
         }
+    }
+
+    protected boolean isCellClickListenerPresent() {
+        return hasListeners(CellClickEvent.class);
+    }
+
+    protected void serializeDataItemKey(PivotTableSerializationContext context) {
+        JsonObject jsonObject = context.getJsonObject();
+        String dataItemKey = dataItemMapper.key(context.getDataItem());
+        JsonElement serializedKey = context.getSerializationContext().serialize(dataItemKey);
+        jsonObject.add(CUBA_DATA_ITEM_KEY, serializedKey);
     }
 
     protected void forceStateChange() {
@@ -285,8 +309,11 @@ public class CubaPivotTable extends AbstractComponent {
         private static final long serialVersionUID = 4789102026045383363L;
 
         @Override
-        public void onCellClick(Double value, Map<String, String> filters) {
-            fireEvent(new CellClickEvent(CubaPivotTable.this, value, filters));
+        public void onCellClick(Double value, Map<String, String> filters, List<String> dataItemKeys) {
+            List<DataItem> usedDataItems = dataItemKeys.stream()
+                    .map(s -> dataItemMapper.get(s))
+                    .collect(Collectors.toList());
+            fireEvent(new CellClickEvent(CubaPivotTable.this, value, filters, usedDataItems));
         }
 
         @Override
