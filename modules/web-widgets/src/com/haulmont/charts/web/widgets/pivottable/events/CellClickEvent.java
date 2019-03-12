@@ -16,19 +16,23 @@
 
 package com.haulmont.charts.web.widgets.pivottable.events;
 
+import com.haulmont.charts.gui.data.DataItem;
 import com.vaadin.ui.Component;
 
 import javax.annotation.Nullable;
+import java.util.List;
 import java.util.Map;
 
 public class CellClickEvent extends Component.Event {
     protected Double value;
     protected Map<String, String> filters;
+    protected List<DataItem> usedDataItems;
 
-    public CellClickEvent(Component source, Double value, Map<String, String> filters) {
+    public CellClickEvent(Component source, Double value, Map<String, String> filters, List<DataItem> usedDataItems) {
         super(source);
         this.value = value;
         this.filters = filters;
+        this.usedDataItems = usedDataItems;
     }
 
     @Nullable
@@ -38,5 +42,9 @@ public class CellClickEvent extends Component.Event {
 
     public Map<String, String> getFilters() {
         return filters;
+    }
+
+    public List<DataItem> getUsedDataItems() {
+        return usedDataItems;
     }
 }

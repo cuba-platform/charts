@@ -17,7 +17,9 @@
 package com.haulmont.charts.web.widgets.client.pivottable.events;
 
 import com.google.gwt.core.client.JavaScriptObject;
+import com.google.gwt.core.client.JsArrayString;
 
+import java.util.List;
 import java.util.Map;
 
 public class JsCellClickEvent extends JavaScriptObject {
@@ -30,5 +32,9 @@ public class JsCellClickEvent extends JavaScriptObject {
 
     public final native Map<String, String> getFilters() /*-{
         return this.filters;
+    }-*/;
+
+    public final native List<String> getDataItemKeys() /*-{
+        return this.dataItemKeys;
     }-*/;
 }

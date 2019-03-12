@@ -19,6 +19,7 @@ package com.haulmont.charts.web.widgets.pivottable.serialization;
 import com.haulmont.charts.gui.pivottable.model.PivotTableModel;
 
 import javax.annotation.Nullable;
+import java.util.function.Consumer;
 
 public interface PivotTableSerializer {
 
@@ -26,6 +27,9 @@ public interface PivotTableSerializer {
 
     @Nullable
     String serializeData(PivotTableModel pivotTable);
+
+    @Nullable
+    String serializeData(PivotTableModel pivotTable, Consumer<PivotTableSerializationContext> postSerializationHandler);
 
     String toJson(Object value);
 }

@@ -752,11 +752,14 @@ public interface PivotTable extends Component, Component.BelongToFrame, Componen
 
         protected Double value;
         protected Map<String, String> filters;
+        protected List<DataItem> usedDataItems;
 
-        public CellClickEvent(PivotTable pivotTable, Double value, Map<String, String> filters) {
+        public CellClickEvent(PivotTable pivotTable, Double value,
+                              Map<String, String> filters, List<DataItem> usedDataItems) {
             super(pivotTable);
             this.value = value;
             this.filters = filters;
+            this.usedDataItems = usedDataItems;
         }
 
         @Override
@@ -774,10 +777,17 @@ public interface PivotTable extends Component, Component.BelongToFrame, Componen
 
         /**
          * @return a map in which keys are localized property names used in columns or rows
-         * and values are localized property values.
+         * and values are localized property values
          */
         public Map<String, String> getFilters() {
             return filters;
+        }
+
+        /**
+         * @return a list of {@link DataItem} used in the clicked cell value generation
+         */
+        public List<DataItem> getUsedDataItems() {
+            return usedDataItems;
         }
     }
 }
