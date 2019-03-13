@@ -32,6 +32,7 @@ import java.util.EventObject;
 import java.util.List;
 import java.util.Map;
 import java.util.function.Consumer;
+import java.util.function.Supplier;
 
 public interface PivotTable extends Component, Component.BelongToFrame, Component.Editable, Component.HasCaption {
 
@@ -753,13 +754,14 @@ public interface PivotTable extends Component, Component.BelongToFrame, Componen
         protected Double value;
         protected Map<String, String> filters;
         protected List<DataItem> usedDataItems;
+        protected Supplier<List<DataItem>> usedDataItemsRetriever;
 
         public CellClickEvent(PivotTable pivotTable, Double value,
-                              Map<String, String> filters, List<DataItem> usedDataItems) {
+                              Map<String, String> filters, Supplier<List<DataItem>> usedDataItemsRetriever) {
             super(pivotTable);
             this.value = value;
             this.filters = filters;
-            this.usedDataItems = usedDataItems;
+            this.usedDataItemsRetriever = usedDataItemsRetriever;
         }
 
         @Override
@@ -787,6 +789,9 @@ public interface PivotTable extends Component, Component.BelongToFrame, Componen
          * @return a list of {@link DataItem} used in the clicked cell value generation
          */
         public List<DataItem> getUsedDataItems() {
+            if (usedDataItems == null) {
+                usedDataItems = usedDataItemsRetriever.get();
+            }
             return usedDataItems;
         }
     }

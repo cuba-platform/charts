@@ -37,6 +37,7 @@ import org.slf4j.LoggerFactory;
 import javax.annotation.Nullable;
 import java.lang.reflect.Method;
 import java.util.*;
+import java.util.function.Supplier;
 import java.util.stream.Collectors;
 
 import static com.vaadin.util.ReflectTools.findMethod;
@@ -58,7 +59,7 @@ import static com.vaadin.util.ReflectTools.findMethod;
 public class CubaPivotTable extends AbstractComponent {
     private static final long serialVersionUID = 3250758720037122580L;
 
-    protected static final String CUBA_DATA_ITEM_KEY = "cubaDataItemKey";
+    protected static final String DATA_ITEM_KEY = "$k";
 
     private static final Logger log = LoggerFactory.getLogger(CubaPivotTable.class);
 
@@ -200,7 +201,7 @@ public class CubaPivotTable extends AbstractComponent {
         JsonObject jsonObject = context.getJsonObject();
         String dataItemKey = dataItemMapper.key(context.getDataItem());
         JsonElement serializedKey = context.getSerializationContext().serialize(dataItemKey);
-        jsonObject.add(CUBA_DATA_ITEM_KEY, serializedKey);
+        jsonObject.add(DATA_ITEM_KEY, serializedKey);
     }
 
     protected void forceStateChange() {
@@ -310,10 +311,11 @@ public class CubaPivotTable extends AbstractComponent {
 
         @Override
         public void onCellClick(Double value, Map<String, String> filters, List<String> dataItemKeys) {
-            List<DataItem> usedDataItems = dataItemKeys.stream()
-                    .map(s -> dataItemMapper.get(s))
-                    .collect(Collectors.toList());
-            fireEvent(new CellClickEvent(CubaPivotTable.this, value, filters, usedDataItems));
+            Supplier<List<DataItem>> usedDataItemsRetriever = () ->
+                    dataItemKeys.stream()
+                            .map(s -> dataItemMapper.get(s))
+                            .collect(Collectors.toList());
+            fireEvent(new CellClickEvent(CubaPivotTable.this, value, filters, usedDataItemsRetriever));
         }
 
         @Override

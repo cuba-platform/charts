@@ -22,17 +22,19 @@ import com.vaadin.ui.Component;
 import javax.annotation.Nullable;
 import java.util.List;
 import java.util.Map;
+import java.util.function.Supplier;
 
 public class CellClickEvent extends Component.Event {
     protected Double value;
     protected Map<String, String> filters;
-    protected List<DataItem> usedDataItems;
+    protected Supplier<List<DataItem>> usedDataItemsRetriever;
 
-    public CellClickEvent(Component source, Double value, Map<String, String> filters, List<DataItem> usedDataItems) {
+    public CellClickEvent(Component source, Double value, Map<String, String> filters,
+                          Supplier<List<DataItem>> usedDataItemsRetriever) {
         super(source);
         this.value = value;
         this.filters = filters;
-        this.usedDataItems = usedDataItems;
+        this.usedDataItemsRetriever = usedDataItemsRetriever;
     }
 
     @Nullable
@@ -44,7 +46,7 @@ public class CellClickEvent extends Component.Event {
         return filters;
     }
 
-    public List<DataItem> getUsedDataItems() {
-        return usedDataItems;
+    public Supplier<List<DataItem>> getUsedDataItemsRetriever() {
+        return usedDataItemsRetriever;
     }
 }
