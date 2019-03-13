@@ -55,7 +55,7 @@ public class CubaPivotTableJsOverlay {
                         clickCallback: $entry(function (e, value, filters, pivotData) {
                             var dataItemKeys = [];
                             var populateDataItemKeys = function (item) {
-                                dataItemKeys.push(item["cubaDataItemKey"]);
+                                dataItemKeys.push(item["$k"]);
                             };
                             pivotData.forEachMatchingRecord(filters, populateDataItemKeys);
                             var event = {
