@@ -19,12 +19,12 @@ package com.haulmont.charts.gui.amcharts.model;
 import com.haulmont.charts.gui.model.JsonEnum;
 
 public enum StockGraphValue implements JsonEnum {
-    OPEN("open"),
-    LOW("low"),
-    HIGH("high"),
-    CLOSE("close"),
-    AVERAGE("average"),
-    SUM("sum");
+    OPEN("Open"),
+    LOW("Low"),
+    HIGH("High"),
+    CLOSE("Close"),
+    AVERAGE("Average"),
+    SUM("Sum");
 
     private String id;
 
