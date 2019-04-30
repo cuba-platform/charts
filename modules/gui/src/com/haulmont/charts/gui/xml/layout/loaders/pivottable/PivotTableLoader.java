@@ -73,7 +73,7 @@ public class PivotTableLoader extends AbstractComponentLoader<PivotTable> {
     protected void loadDataContainer(PivotTable pivotTable, Element element) {
         String dataContainerId = element.attributeValue("dataContainer");
         if (StringUtils.isNotEmpty(dataContainerId)) {
-            FrameOwner frameOwner = context.getFrame().getFrameOwner();
+            FrameOwner frameOwner = getComponentContext().getFrame().getFrameOwner();
             ScreenData screenData = UiControllerUtils.getScreenData(frameOwner);
 
             CollectionContainer dataContainer;
@@ -82,7 +82,7 @@ public class PivotTableLoader extends AbstractComponentLoader<PivotTable> {
             if (container instanceof CollectionContainer) {
                 dataContainer = (CollectionContainer) container;
             } else {
-                throw new GuiDevelopmentException("Not a CollectionContainer: " + dataContainerId, context.getCurrentFrameId());
+                throw new GuiDevelopmentException("Not a CollectionContainer: " + dataContainerId, context);
             }
 
             pivotTable.setDataProvider(new ContainerDataProvider(dataContainer));
@@ -94,15 +94,15 @@ public class PivotTableLoader extends AbstractComponentLoader<PivotTable> {
     protected void loadDatasource(PivotTable pivotTable, Element element) {
         String datasource = element.attributeValue("datasource");
         if (StringUtils.isNotEmpty(datasource)) {
-            Datasource ds = context.getDsContext().get(datasource);
+            Datasource ds = getComponentContext().getDsContext().get(datasource);
             if (ds == null) {
                 throw new GuiDevelopmentException("Can't find datasource by name: "
-                        + datasource, context.getCurrentFrameId());
+                        + datasource, context);
             }
 
             if (!(ds instanceof CollectionDatasource)) {
                 throw new GuiDevelopmentException("Not a CollectionDatasource: "
-                        + datasource, context.getCurrentFrameId());
+                        + datasource, context);
             }
 
             pivotTable.setDatasource((CollectionDatasource) ds);
@@ -243,7 +243,7 @@ public class PivotTableLoader extends AbstractComponentLoader<PivotTable> {
                     && property.getRange().getCardinality() != null
                     && property.getRange().getCardinality().isMany()) {
                 throw new GuiDevelopmentException(String.format("'%s' cannot be added as a property, because " +
-                        "PivotTable doesn't support collections as properties", name), context.getFullFrameId());
+                        "PivotTable doesn't support collections as properties", name), context);
             }
         }
     }

@@ -82,12 +82,12 @@ public abstract class ChartModelLoader<C extends Component> extends AbstractComp
         if (StringUtils.isEmpty(name)) {
             throw new GuiDevelopmentException(
                     "'name' attribute does not exist",
-                    context.getFullFrameId(), "Chart ID", resultComponent.getId());
+                    context, "Chart ID", resultComponent.getId());
         }
         if (StringUtils.isEmpty(value)) {
             throw new GuiDevelopmentException(
                     "'value' attribute does not exist",
-                    context.getFullFrameId(), "Chart ID", resultComponent.getId());
+                    context, "Chart ID", resultComponent.getId());
         }
 
         if (type == null) {
@@ -142,7 +142,7 @@ public abstract class ChartModelLoader<C extends Component> extends AbstractComp
         } catch (ParseException e) {
             throw new GuiDevelopmentException(
                     "'value' parsing error for chart: " +
-                            value, context.getFullFrameId(), "Chart ID", resultComponent.getId());
+                            value, context, "Chart ID", resultComponent.getId());
         }
     }
 
@@ -977,7 +977,7 @@ public abstract class ChartModelLoader<C extends Component> extends AbstractComp
             return CONFIG_DATE_FORMATTER.parse(value);
         } catch (ParseException e) {
             throw new GuiDevelopmentException("Unable to parse date from XML chart configuration",
-                    context.getCurrentFrameId(), "date", value);
+                    context, "date", value);
         }
     }
 

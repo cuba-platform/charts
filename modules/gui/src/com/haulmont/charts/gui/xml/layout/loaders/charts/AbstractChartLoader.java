@@ -60,13 +60,13 @@ public abstract class AbstractChartLoader<T extends Chart> extends ChartModelLoa
     protected void loadDatasource(Chart chart, Element element) {
         String datasource = element.attributeValue("datasource");
         if (StringUtils.isNotEmpty(datasource)) {
-            Datasource ds = context.getDsContext().get(datasource);
+            Datasource ds = getComponentContext().getDsContext().get(datasource);
             if (ds == null) {
-                throw new GuiDevelopmentException("Can't find datasource by name: " + datasource, context.getCurrentFrameId());
+                throw new GuiDevelopmentException("Can't find datasource by name: " + datasource, context);
             }
 
             if (!(ds instanceof CollectionDatasource)) {
-                throw new GuiDevelopmentException("Not a CollectionDatasource: " + datasource, context.getCurrentFrameId());
+                throw new GuiDevelopmentException("Not a CollectionDatasource: " + datasource, context);
             }
 
             chart.setDatasource((CollectionDatasource) ds);
@@ -77,7 +77,7 @@ public abstract class AbstractChartLoader<T extends Chart> extends ChartModelLoa
         String dataContainerId = element.attributeValue("dataContainer");
 
         if (StringUtils.isNotEmpty(dataContainerId)) {
-            FrameOwner frameOwner = context.getFrame().getFrameOwner();
+            FrameOwner frameOwner = getComponentContext().getFrame().getFrameOwner();
             ScreenData screenData = UiControllerUtils.getScreenData(frameOwner);
 
             CollectionContainer dataContainer;
@@ -86,7 +86,7 @@ public abstract class AbstractChartLoader<T extends Chart> extends ChartModelLoa
             if (container instanceof CollectionContainer) {
                 dataContainer = (CollectionContainer) container;
             } else {
-                throw new GuiDevelopmentException("Not a CollectionContainer: " + dataContainerId, context.getCurrentFrameId());
+                throw new GuiDevelopmentException("Not a CollectionContainer: " + dataContainerId, context);
             }
 
             chart.setDataProvider(new ContainerDataProvider(dataContainer));
@@ -107,7 +107,7 @@ public abstract class AbstractChartLoader<T extends Chart> extends ChartModelLoa
                 || (dataSetElement != null && (isDatasourceProperty || isDataContainerProperty))) {
             throw new GuiDevelopmentException(
                     String.format("You cannot use chart '%s' with simultaneously defined: data element, datasource and "
-                            + "dataContainer properties", resultComponent.getId()), context.getCurrentFrameId()
+                            + "dataContainer properties", resultComponent.getId()), context
             );
         }
     }
@@ -129,7 +129,7 @@ public abstract class AbstractChartLoader<T extends Chart> extends ChartModelLoa
                 JsonParser parser = new JsonParser();
                 parser.parse(nativeJsonString);
             } catch (JsonSyntaxException e) {
-                throw new GuiDevelopmentException("Unable to parse JSON from XML chart configuration", context.getFullFrameId());
+                throw new GuiDevelopmentException("Unable to parse JSON from XML chart configuration", context);
             }
 
             resultComponent.setNativeJson(nativeJsonString);

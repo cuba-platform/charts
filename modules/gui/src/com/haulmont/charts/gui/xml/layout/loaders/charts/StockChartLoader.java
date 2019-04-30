@@ -188,7 +188,7 @@ public class StockChartLoader extends ChartModelLoader<StockChart> {
                 JsonParser parser = new JsonParser();
                 parser.parse(nativeJsonString);
             } catch (JsonSyntaxException e) {
-                throw new GuiDevelopmentException("Unable to parse JSON from XML chart configuration", context.getFullFrameId());
+                throw new GuiDevelopmentException("Unable to parse JSON from XML chart configuration", context);
             }
 
             resultComponent.setNativeJson(nativeJsonString);
@@ -277,7 +277,7 @@ public class StockChartLoader extends ChartModelLoader<StockChart> {
 
         String dataContainerId = dataSetElement.attributeValue("dataContainer");
         if (StringUtils.isNotEmpty(dataContainerId)) {
-            FrameOwner frameOwner = context.getFrame().getFrameOwner();
+            FrameOwner frameOwner = getComponentContext().getFrame().getFrameOwner();
             ScreenData screenData = UiControllerUtils.getScreenData(frameOwner);
 
             CollectionContainer dataContainer;
@@ -286,20 +286,20 @@ public class StockChartLoader extends ChartModelLoader<StockChart> {
             if (container instanceof CollectionContainer) {
                 dataContainer = (CollectionContainer) container;
             } else {
-                throw new GuiDevelopmentException("Not a CollectionContainer: " + dataContainerId, context.getCurrentFrameId());
+                throw new GuiDevelopmentException("Not a CollectionContainer: " + dataContainerId, context);
             }
 
             dataSet.setDataProvider(new ContainerDataProvider(dataContainer));
         } else {
             String datasource = dataSetElement.attributeValue("datasource");
             if (StringUtils.isNotEmpty(datasource)) {
-                Datasource ds = context.getDsContext().get(datasource);
+                Datasource ds = getComponentContext().getDsContext().get(datasource);
                 if (ds == null) {
-                    throw new GuiDevelopmentException("Can't find datasource by name: " + datasource, context.getCurrentFrameId());
+                    throw new GuiDevelopmentException("Can't find datasource by name: " + datasource, context);
                 }
 
                 if (!(ds instanceof CollectionDatasource)) {
-                    throw new GuiDevelopmentException("Not a CollectionDatasource: " + datasource, context.getCurrentFrameId());
+                    throw new GuiDevelopmentException("Not a CollectionDatasource: " + datasource, context);
                 }
 
                 dataSet.setDataProvider(new EntityDataProvider((CollectionDatasource) ds));
@@ -334,7 +334,7 @@ public class StockChartLoader extends ChartModelLoader<StockChart> {
                 || (dataElement != null && (isDatasourceProperty || isDataContainerProperty))) {
             throw new GuiDevelopmentException(
                     String.format("You cannot use chart '%s' with simultaneously defined: data element, datasource and "
-                            + "dataContainer properties", resultComponent.getId()), context.getCurrentFrameId()
+                            + "dataContainer properties", resultComponent.getId()), context
             );
         }
     }

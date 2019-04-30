@@ -58,7 +58,7 @@ public class CustomChartLoader extends AbstractComponentLoader<CustomChart> {
                 JsonParser parser = new JsonParser();
                 parser.parse(nativeJsonString);
             } catch (JsonSyntaxException e) {
-                throw new GuiDevelopmentException("Unable to parse JSON from XML chart configuration", context.getFullFrameId());
+                throw new GuiDevelopmentException("Unable to parse JSON from XML chart configuration", context);
             }
 
             customChart.setNativeJson(nativeJsonString);

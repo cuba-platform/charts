@@ -129,7 +129,7 @@ public class PivotTableDataItemsSerializer {
                     : messages.getMainMessage("boolean.no");
         } else if (value instanceof Collection) {
             throw new GuiDevelopmentException(String.format("'%s' cannot be added as a property, because " +
-                    "PivotTable doesn't support collections as properties", property), null);
+                    "PivotTable doesn't support collections as properties", property), (String) null);
         } else {
             formattedValue = value;
         }
