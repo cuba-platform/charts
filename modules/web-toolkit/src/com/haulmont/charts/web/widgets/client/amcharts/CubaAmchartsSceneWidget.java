@@ -22,11 +22,15 @@ import com.google.gwt.dom.client.Document;
 import com.google.gwt.user.client.Event;
 import com.google.gwt.user.client.ui.Widget;
 import com.haulmont.charts.web.widgets.client.amcharts.events.JsChartClickEvent;
+import com.haulmont.charts.web.widgets.client.utils.JsUtils;
 import com.haulmont.cuba.web.widgets.client.JsDate;
 
 import java.util.function.Consumer;
 
 public class CubaAmchartsSceneWidget extends Widget {
+
+    protected static final String PIE_TYPE = "pie";
+    protected static final String FUNNEL_TYPE = "funnel";
 
     protected CubaAmchartsJsOverlay jsOverlay;
 
@@ -132,6 +136,17 @@ public class CubaAmchartsSceneWidget extends Widget {
         }
         if (amchartsEvents.getCategoryItemClickHandler() != null) {
             jsOverlay.addCategoryItemClickHandler(amchartsEvents.getCategoryItemClickHandler());
+        }
+
+        // do animation once for pie or funnel charts, because every call chart.invalidateSize()
+        // breaks animation in these charts
+        String type = config.getChartType();
+        if (PIE_TYPE.equals(type) || FUNNEL_TYPE.equals(type)) {
+            Double startDuration = (Double) JsUtils.getObjectByKey(config, "startDuration");
+            startDuration = startDuration == null ? 1 : startDuration;
+            if (startDuration > 0) {
+                jsOverlay.animateOnce();
+            }
         }
 
         Scheduler.get().scheduleDeferred(this::updateSize);

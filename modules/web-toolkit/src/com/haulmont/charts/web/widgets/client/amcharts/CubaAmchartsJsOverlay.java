@@ -100,15 +100,6 @@ public class CubaAmchartsJsOverlay {
             });
         }
 
-        // need to start animation of sliced charts
-        if ("pie" === chart.type || "funnel" === chart.type) {
-            chart.addListener("drawn", function (event) {
-                if (event.chart.startDuration > 0) {
-                    event.chart.animateAgain();
-                }
-            });
-        }
-
         return chart;
     }-*/;
 
@@ -456,5 +447,18 @@ public class CubaAmchartsJsOverlay {
                 handler.@java.util.function.Consumer::accept(*)(event);
             }));
         }
+    }-*/;
+
+    public void animateOnce() {
+        animateOnce(chart);
+    }
+
+    protected native static void animateOnce(JavaScriptObject chart) /*-{
+        var onDrawn = function (event) {
+            chart.animateAgain();
+            chart.removeListener(chart, "drawn", onDrawn);
+        }
+
+        chart.addListener("drawn", onDrawn);
     }-*/;
 }
