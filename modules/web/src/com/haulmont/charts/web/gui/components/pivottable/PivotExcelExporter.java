@@ -16,7 +16,6 @@
 
 package com.haulmont.charts.web.gui.components.pivottable;
 
-import com.google.common.base.Strings;
 import com.haulmont.charts.gui.components.pivot.PivotTable;
 import com.haulmont.charts.gui.data.HasMetaClass;
 import com.haulmont.charts.gui.pivottable.extentsion.model.PivotData;
@@ -24,10 +23,12 @@ import com.haulmont.charts.gui.pivottable.extentsion.model.PivotDataCell;
 import com.haulmont.charts.gui.pivottable.extentsion.model.PivotDataSeparatedCell;
 import com.haulmont.chile.core.model.MetaClass;
 import com.haulmont.cuba.core.global.Messages;
+import com.haulmont.cuba.core.global.UserSessionSource;
 import com.haulmont.cuba.gui.ComponentsHelper;
 import com.haulmont.cuba.gui.Notifications;
 import com.haulmont.cuba.gui.Notifications.NotificationType;
 import com.haulmont.cuba.gui.export.ByteArrayDataProvider;
+import com.haulmont.cuba.gui.export.ExcelAutoColumnSizer;
 import com.haulmont.cuba.gui.export.ExportDisplay;
 import com.haulmont.cuba.gui.export.ExportFormat;
 import com.haulmont.cuba.gui.screen.ScreenContext;
@@ -38,11 +39,15 @@ import org.springframework.beans.factory.config.BeanDefinition;
 import org.springframework.context.annotation.Scope;
 import org.springframework.stereotype.Component;
 
+import javax.annotation.Nullable;
 import javax.inject.Inject;
 import java.io.ByteArrayOutputStream;
 import java.io.IOException;
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
 import java.util.List;
 
+import static com.google.common.base.Strings.isNullOrEmpty;
 import static com.haulmont.bali.util.Preconditions.checkNotNullArgument;
 
 /**
@@ -56,17 +61,40 @@ public class PivotExcelExporter {
 
     public static final int MAX_ROW_INDEX = 65535;
 
+    /**
+     * CAUTION Magic number! This multiplier is used for calculating column width. Without this multiplier all columns
+     * in the file will be collapsed.
+     */
+    protected static final int COLUMN_WIDTH_MULTIPLIER = 48;
+
     public static final String DEFAULT_FILE_NAME = "pivotData";
 
     protected HSSFWorkbook wb;
     protected HSSFSheet sheet;
-    protected HSSFCellStyle boldStyle;
+
+    protected HSSFFont stdFont;
+
+    protected HSSFCellStyle cellLabelBoldStyle;
+
+    protected HSSFCellStyle cellDateTimeStyle;
+    protected HSSFCellStyle boldCellDateTimeStyle;
+
+    protected HSSFCellStyle cellDateStyle;
+    protected HSSFCellStyle boldCellDateStyle;
+
+    protected HSSFCellStyle cellTimeStyle;
+    protected HSSFCellStyle boldCellTimeStyle;
 
     protected String fileName;
     protected MetaClass entityMetaClass;
 
     protected Messages messages;
     protected ExportDisplay display;
+    protected UserSessionSource userSessionSource;
+
+    protected String dateTimeParseFormat;
+    protected String dateParseFormat;
+    protected String timeParseFormat;
 
     protected Notifications notifications;
 
@@ -78,7 +106,12 @@ public class PivotExcelExporter {
     }
 
     @Inject
-    public void setMessages(Messages messages){
+    protected void setUserSessionSource(UserSessionSource userSessionSource) {
+        this.userSessionSource = userSessionSource;
+    }
+
+    @Inject
+    public void setMessages(Messages messages) {
         this.messages = messages;
     }
 
@@ -106,7 +139,7 @@ public class PivotExcelExporter {
             return;
         }
 
-        if (!Strings.isNullOrEmpty(fileName)) {
+        if (!isNullOrEmpty(fileName)) {
             this.fileName = fileName;
         } else if (entityMetaClass != null) {
             this.fileName = messages.getTools().getEntityCaption(entityMetaClass);
@@ -115,7 +148,7 @@ public class PivotExcelExporter {
         }
 
         createWorkbookWithSheet();
-        createCellStyle();
+        createCellsStyle();
 
         createRows(pivotData);
 
@@ -145,7 +178,7 @@ public class PivotExcelExporter {
             throw new IllegalArgumentException("ExportDisplay is null");
         }
 
-        if (!Strings.isNullOrEmpty(fileName)) {
+        if (!isNullOrEmpty(fileName)) {
             this.fileName = fileName;
         } else if (entityMetaClass != null) {
             this.fileName = messages.getTools().getEntityCaption(entityMetaClass);
@@ -154,7 +187,7 @@ public class PivotExcelExporter {
         }
 
         createWorkbookWithSheet();
-        createCellStyle();
+        createCellsStyle();
 
         createRows(pivotData);
 
@@ -169,29 +202,68 @@ public class PivotExcelExporter {
         PivotDataExcelHelper excelUtils = new PivotDataExcelHelper(pivotData);
         List<List<PivotDataSeparatedCell>> dataRows = excelUtils.getRows();
 
+        SimpleDateFormat dateTimeFormatter = null;
+        if (!isNullOrEmpty(dateTimeParseFormat)) {
+            dateTimeFormatter = new SimpleDateFormat(dateTimeParseFormat);
+        }
+        SimpleDateFormat dateFormatter = null;
+        if (!isNullOrEmpty(dateParseFormat)) {
+            dateFormatter = new SimpleDateFormat(dateParseFormat);
+        }
+        SimpleDateFormat timeFormatter = null;
+        if (!isNullOrEmpty(timeParseFormat)) {
+            timeFormatter = new SimpleDateFormat(timeParseFormat);
+        }
+
+        int columns = excelUtils.getOriginColumnsNumber();
+        ExcelAutoColumnSizer[] sizers = columns != -1 ? new ExcelAutoColumnSizer[columns] : null;
+
         for (int i = 0; i < dataRows.size(); i++) {
             if (i > MAX_ROW_INDEX) {
                 break;
             }
 
             HSSFRow hssfRow = sheet.createRow(i);
-
             List<PivotDataSeparatedCell> row = dataRows.get(i);
-
             for (PivotDataSeparatedCell cell : row) {
                 HSSFCell hssfCell = hssfRow.createCell(cell.getIndexCol());
 
-                if (cell.getType().equals(PivotDataCell.Type.STRING)) {
-                    hssfCell.setCellType(CellType.STRING);
-                    hssfCell.setCellValue(cell.getValue());
-                } else {
-                    hssfCell.setCellType(CellType.NUMERIC);
-                    hssfCell.setCellValue(Double.parseDouble(cell.getValue()));
+                PivotDataCell.Type type = cell.getType();
+                switch (type) {
+                    case NUMERIC:
+                        hssfCell.setCellType(CellType.NUMERIC);
+                        hssfCell.setCellValue(Double.parseDouble(cell.getValue()));
+                        if (cell.isBold()) {
+                            hssfCell.setCellStyle(cellLabelBoldStyle);
+                        }
+                        break;
+                    case DATE_TIME:
+                        initDateTimeCell(hssfCell, cell, dateTimeFormatter, cellDateTimeStyle, boldCellDateTimeStyle);
+                        break;
+                    case DATE:
+                        initDateTimeCell(hssfCell, cell, dateFormatter, cellDateStyle, boldCellDateStyle);
+                        break;
+                    case TIME:
+                        initDateTimeCell(hssfCell, cell, timeFormatter, cellTimeStyle, boldCellTimeStyle);
+                        break;
+                    case STRING:
+                        hssfCell.setCellType(CellType.STRING);
+                        hssfCell.setCellValue(cell.getValue());
+                        if (cell.isBold()) {
+                            hssfCell.setCellStyle(cellLabelBoldStyle);
+                        }
+                        break;
                 }
 
-                if (cell.isBold()) {
-                    hssfCell.setCellStyle(boldStyle);
+                if (sizers != null) {
+                    updateColumnSize(sizers, cell);
                 }
+            }
+        }
+
+        if (sizers != null) {
+            for (int i = 0; i < sizers.length; i++) {
+                sheet.setColumnWidth(i, sizers[i].getWidth() * COLUMN_WIDTH_MULTIPLIER);
             }
         }
 
@@ -218,18 +290,75 @@ public class PivotExcelExporter {
         }
     }
 
+    protected void updateColumnSize(ExcelAutoColumnSizer[] sizers, PivotDataSeparatedCell cell) {
+        if (sizers[cell.getIndexCol()] == null) {
+            ExcelAutoColumnSizer sizer = new ExcelAutoColumnSizer();
+            sizers[cell.getIndexCol()] = sizer;
+            sizers[cell.getIndexCol()].notifyCellValue(cell.getValue(), stdFont);
+        }
+
+        if (sizers[cell.getIndexCol()].isNotificationRequired(cell.getIndexRow())) {
+            sizers[cell.getIndexCol()].notifyCellValue(cell.getValue(), stdFont);
+        }
+    }
+
+    protected void initDateTimeCell(HSSFCell hssfCell, PivotDataSeparatedCell cell, SimpleDateFormat formatter,
+                                    HSSFCellStyle cellStyle, HSSFCellStyle boldCellStyle) {
+        if (formatter != null) {
+            try {
+                hssfCell.setCellValue(formatter.parse(cell.getValue()));
+                if (cell.isBold()) {
+                    hssfCell.setCellStyle(boldCellStyle);
+                } else {
+                    hssfCell.setCellStyle(cellStyle);
+                }
+                return;
+            } catch (ParseException e) {
+                // ignore because we set it as string
+            }
+        }
+        // set as string
+        hssfCell.setCellType(CellType.STRING);
+        hssfCell.setCellValue(cell.getValue());
+        if (cell.isBold()) {
+            hssfCell.setCellStyle(cellLabelBoldStyle);
+        }
+    }
+
     protected void createWorkbookWithSheet() {
         wb = new HSSFWorkbook();
         sheet = wb.createSheet("Export");
-
     }
 
-    protected void createCellStyle() {
+    protected void createCellsStyle() {
         HSSFFont boldFont = wb.createFont();
         boldFont.setBold(true);
 
-        boldStyle = wb.createCellStyle();
-        boldStyle.setFont(boldFont);
+        stdFont = wb.createFont();
+
+        cellLabelBoldStyle = wb.createCellStyle();
+        cellLabelBoldStyle.setFont(boldFont);
+
+        cellDateTimeStyle = wb.createCellStyle();
+        cellDateTimeStyle.setDataFormat(HSSFDataFormat.getBuiltinFormat("m/d/yy h:mm"));
+
+        boldCellDateTimeStyle = wb.createCellStyle();
+        boldCellDateTimeStyle.setDataFormat(HSSFDataFormat.getBuiltinFormat("m/d/yy h:mm"));
+        boldCellDateTimeStyle.setFont(boldFont);
+
+        cellDateStyle = wb.createCellStyle();
+        cellDateStyle.setDataFormat(HSSFDataFormat.getBuiltinFormat("m/d/yy"));
+
+        boldCellDateStyle = wb.createCellStyle();
+        boldCellDateStyle.setDataFormat(HSSFDataFormat.getBuiltinFormat("m/d/yy"));
+        boldCellDateStyle.setFont(boldFont);
+
+        cellTimeStyle = wb.createCellStyle();
+        cellTimeStyle.setDataFormat(HSSFDataFormat.getBuiltinFormat("h:mm"));
+
+        boldCellTimeStyle = wb.createCellStyle();
+        boldCellTimeStyle.setDataFormat(HSSFDataFormat.getBuiltinFormat("h:mm"));
+        boldCellTimeStyle.setFont(boldFont);
     }
 
     protected void showWarnNotification() {
@@ -272,5 +401,58 @@ public class PivotExcelExporter {
      */
     public boolean isXlsMaxRowNumberExceeded(PivotData pivotData) {
         return MAX_ROW_INDEX < pivotData.getAllRows().size();
+    }
+
+    /**
+     * @return dateTime format or null
+     */
+    @Nullable
+    public String getDateTimeParseFormat() {
+        return dateTimeParseFormat;
+    }
+
+    /**
+     * Sets dateTime format that will be used to finding dateTime value and exporting it to excel with dateTime type.
+     *
+     * @param dateTimeParseFormat dateTime format (e.g. dd/MM/yyyy HH:mm)
+     */
+    public void setDateTimeParseFormat(String dateTimeParseFormat) {
+        this.dateTimeParseFormat = dateTimeParseFormat;
+    }
+
+    /**
+     * @return date format or null
+     */
+    @Nullable
+    public String getDateParseFormat() {
+        return dateParseFormat;
+    }
+
+    /**
+     * Sets date format that will be used to finding dateTime value and exporting it to excel with date type. If there
+     * is no format set, date properties will be recognized as text value.
+     *
+     * @param dateParseFormat date format (e.g. dd/MM/yyyy)
+     */
+    public void setDateParseFormat(String dateParseFormat) {
+        this.dateParseFormat = dateParseFormat;
+    }
+
+    /**
+     * @return time format or null
+     */
+    @Nullable
+    public String getTimeParseFormat() {
+        return timeParseFormat;
+    }
+
+    /**
+     * Sets date format that will be used to finding dateTime value and exporting it to excel with date type. If there
+     * is no format set, time properties will be recognized as text value.
+     *
+     * @param timeParseFormat time format (e.g. HH:mm)
+     */
+    public void setTimeParseFormat(String timeParseFormat) {
+        this.timeParseFormat = timeParseFormat;
     }
 }

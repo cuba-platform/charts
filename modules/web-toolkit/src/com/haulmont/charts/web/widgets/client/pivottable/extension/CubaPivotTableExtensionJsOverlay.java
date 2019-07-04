@@ -17,6 +17,7 @@
 package com.haulmont.charts.web.widgets.client.pivottable.extension;
 
 import com.google.gwt.dom.client.Element;
+import com.google.gwt.i18n.client.DateTimeFormat;
 
 public class CubaPivotTableExtensionJsOverlay {
 
@@ -26,11 +27,29 @@ public class CubaPivotTableExtensionJsOverlay {
         this.pivotElement = pivotElement;
     }
 
-    public String getPivotDataJSON() {
-        return getPivotDataJSON(pivotElement);
+    public String convertPivotTableToJson(JsPivotExtensionOptions config) {
+        return convertPivotTableToJson(pivotElement, config);
     }
 
-    public static native String getPivotDataJSON(Element pivotElement) /*-{
+    protected static boolean isDate(String value, String format) {
+        if (value == null || value.isEmpty()) {
+            return false;
+        }
+
+        if (format == null || format.isEmpty()) {
+            return false;
+        }
+
+        DateTimeFormat dateTimeFormat = DateTimeFormat.getFormat(format);
+        try {
+            dateTimeFormat.parse(value);
+            return true;
+        } catch (Exception e) {
+            return false;
+        }
+    }
+
+    protected static native String convertPivotTableToJson(Element pivotElement, JsPivotExtensionOptions config) /*-{
         var tableElements = pivotElement.getElementsByClassName('pvtTable');
         if (tableElements.length === 0) {
             return;
@@ -47,6 +66,13 @@ public class CubaPivotTableExtensionJsOverlay {
         var isNumeric = function(num){
             return !isNaN(num)
         };
+
+        var dateTimeFormat = config.dateTimeParseFormat;
+        var dateFormat = config.dateParseFormat;
+        var timeFormat = config.timeParseFormat;
+        var isDate = $entry(function(value, format){
+            return @com.haulmont.charts.web.widgets.client.pivottable.extension.CubaPivotTableExtensionJsOverlay::isDate(Ljava/lang/String;Ljava/lang/String;)(value, format);
+        });
 
         // appendIndex needs to set the original order of rows in json
         var getRowsAndCells = function (tableRows, appendIndex) {
@@ -93,8 +119,14 @@ public class CubaPivotTableExtensionJsOverlay {
                     // check for numeric or string
                     if (isNumeric(cell.value)) {
                         cell.type = 'NUMERIC'
+                    } else if (isDate(cell.value, dateTimeFormat)) {
+                        cell.type = 'DATE_TIME'
+                    } else if (isDate(cell.value, dateFormat)) {
+                        cell.type = 'DATE'
+                    } else if (isDate(cell.value, timeFormat)) {
+                        cell.type = 'TIME'
                     } else {
-                        cell.type = 'STRING'
+                       cell.type = 'STRING'
                     }
 
                     row.cells.push(cell);

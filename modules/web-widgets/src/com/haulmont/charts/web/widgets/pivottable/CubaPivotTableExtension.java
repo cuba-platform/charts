@@ -20,6 +20,7 @@ import com.google.gson.Gson;
 import com.haulmont.charts.gui.pivottable.extentsion.model.PivotData;
 import com.haulmont.charts.gui.pivottable.model.Renderer;
 import com.haulmont.charts.web.widgets.client.pivottable.extension.CubaPivotTableExtensionServerRpc;
+import com.haulmont.charts.web.widgets.client.pivottable.extension.CubaPivotTableExtensionState;
 import com.vaadin.server.AbstractExtension;
 
 public class CubaPivotTableExtension extends AbstractExtension {
@@ -60,7 +61,41 @@ public class CubaPivotTableExtension extends AbstractExtension {
         return gson.fromJson(pivotDataJSON, PivotData.class);
     }
 
+    @Override
+    protected CubaPivotTableExtensionState getState() {
+        return (CubaPivotTableExtensionState) super.getState();
+    }
+
+    @Override
+    protected CubaPivotTableExtensionState getState(boolean markAsDirty) {
+        return (CubaPivotTableExtensionState) super.getState(markAsDirty);
+    }
+
     public Renderer getCurrentRenderer() {
         return currentRenderer;
+    }
+
+    public String getDateTimeParseFormat() {
+        return getState(false).dateTimeParseFormat;
+    }
+
+    public void setDateTimeParseFormat(String dateTimeParseFormat) {
+        getState().dateTimeParseFormat = dateTimeParseFormat;
+    }
+
+    public String getDateParseFormat() {
+        return getState(false).dateParseFormat;
+    }
+
+    public String setDateParseFormat(String dateParseFormat) {
+        return getState().dateParseFormat = dateParseFormat;
+    }
+
+    public String getTimeParseFormat() {
+        return getState(false).timeParseFormat;
+    }
+
+    public String setTimeParseFormat(String timeParseFormat) {
+        return getState().timeParseFormat = timeParseFormat;
     }
 }

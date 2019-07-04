@@ -55,12 +55,16 @@ public class WebPivotTableExtension implements PivotTableExtension {
     public void exportTableToXls() {
         checkSupportedRenderer();
 
+        setupParseFormats();
+
         excelExporter.exportPivotTable(pivotTableExtension.getPivotData(), fileName);
     }
 
     @Override
     public void exportTableToXls(ExportDisplay display) {
         checkSupportedRenderer();
+
+        setupParseFormats();
 
         excelExporter.exportPivotTable(pivotTableExtension.getPivotData(), fileName, display);
     }
@@ -83,6 +87,44 @@ public class WebPivotTableExtension implements PivotTableExtension {
     @Override
     public PivotData getPivotData() {
         return pivotTableExtension.getPivotData();
+    }
+
+    @Override
+    public String getDateTimeParseFormat() {
+        return pivotTableExtension.getDateTimeParseFormat();
+    }
+
+    @Override
+    public void setDateTimeParseFormat(String dateTimeParseFormat) {
+        pivotTableExtension.setDateTimeParseFormat(dateTimeParseFormat);
+    }
+
+    @Override
+    public String getDateParseFormat() {
+        return pivotTableExtension.getDateParseFormat();
+    }
+
+    @Override
+    public void setDateParseFormat(String dateParseFormat) {
+        pivotTableExtension.setDateParseFormat(dateParseFormat);
+    }
+
+    @Override
+    public String getTimeParseFormat() {
+        return pivotTableExtension.getTimeParseFormat();
+    }
+
+    @Override
+    public void setTimeParseFormat(String timeParseFormat) {
+        pivotTableExtension.setTimeParseFormat(timeParseFormat);
+    }
+
+    protected void setupParseFormats() {
+        if (excelExporter != null) {
+            excelExporter.setDateTimeParseFormat(getDateTimeParseFormat());
+            excelExporter.setDateParseFormat(getDateParseFormat());
+            excelExporter.setTimeParseFormat(getTimeParseFormat());
+        }
     }
 
     protected void checkSupportedRenderer() {

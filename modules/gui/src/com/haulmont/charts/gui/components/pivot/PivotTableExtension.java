@@ -19,6 +19,8 @@ package com.haulmont.charts.gui.components.pivot;
 import com.haulmont.charts.gui.pivottable.extentsion.model.PivotData;
 import com.haulmont.cuba.gui.export.ExportDisplay;
 
+import javax.annotation.Nullable;
+
 public interface PivotTableExtension {
 
     /**
@@ -54,4 +56,46 @@ public interface PivotTableExtension {
      * @return serialized object from JSON which represents PivotTable with aggregated data
      */
     PivotData getPivotData();
+
+    /**
+     * @return dateTime format or null
+     */
+    @Nullable
+    String getDateTimeParseFormat();
+
+    /**
+     * Sets dateTime format that will be used to finding dateTime value and exporting it to excel with dateTime type.
+     *
+     * @param dateTimeParseFormat dateTime format (e.g. dd/MM/yyyy HH:mm)
+     */
+    void setDateTimeParseFormat(String dateTimeParseFormat);
+
+    /**
+     * @return date format or null
+     */
+    @Nullable
+    String getDateParseFormat();
+
+    /**
+     * Sets date format that will be used to finding dateTime value and exporting it to excel with date type. If there
+     * is no format set, date properties will be recognized as text value.
+     *
+     * @param dateParseFormat date format (e.g. dd/MM/yyyy)
+     */
+    void setDateParseFormat(String dateParseFormat);
+
+    /**
+     * @return time format or null
+     */
+    @Nullable
+    String getTimeParseFormat();
+
+    /**
+     * Sets date format that will be used to finding dateTime value and exporting it to excel with date type. If there
+     * is no format set, time properties will be recognized as text value.
+     *
+     * @param timeParseFormat time format (e.g. HH:mm)
+     */
+    void setTimeParseFormat(String timeParseFormat);
+
 }

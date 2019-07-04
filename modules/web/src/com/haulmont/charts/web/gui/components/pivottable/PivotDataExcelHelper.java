@@ -20,6 +20,7 @@ import com.haulmont.charts.gui.pivottable.extentsion.model.PivotData;
 import com.haulmont.charts.gui.pivottable.extentsion.model.PivotDataCell;
 import com.haulmont.charts.gui.pivottable.extentsion.model.PivotDataRow;
 import com.haulmont.charts.gui.pivottable.extentsion.model.PivotDataSeparatedCell;
+import org.apache.commons.collections4.CollectionUtils;
 
 import java.util.*;
 
@@ -66,6 +67,18 @@ public class PivotDataExcelHelper {
      */
     public List<List<PivotDataSeparatedCell>> getRows() {
         return rows;
+    }
+
+    /**
+     * @return number of exactly excel columns and -1 if there is no columns
+     */
+    public int getOriginColumnsNumber() {
+        if (!CollectionUtils.isEmpty(rows)) {
+            // get first row because they have the same size
+            int size = rows.iterator().next().size();
+            return size == 0 ? -1 : size;
+        }
+        return -1;
     }
 
     /**

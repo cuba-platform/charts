@@ -33,12 +33,22 @@ public class CubaPivotTableExtensionConnector extends AbstractExtensionConnector
         CubaPivotTableExtensionJsOverlay jsOverlay = new CubaPivotTableExtensionJsOverlay(pivotWidget.getElement());
 
         pivotWidget.setRefreshHandler(jsRefreshEvent -> {
-            String json = jsOverlay.getPivotDataJSON();
+            JsPivotExtensionOptions options = JsPivotExtensionOptions.get();
+            options.setDateTimeParseFormat(options, getState().dateTimeParseFormat);
+            options.setDateParseFormat(options, getState().dateParseFormat);
+            options.setTimeParseFormat(options, getState().timeParseFormat);
+
+            String json = jsOverlay.convertPivotTableToJson(options);
             getRpcProxy(CubaPivotTableExtensionServerRpc.class).updatePivotDataJSON(json);
 
             if (jsRefreshEvent != null) {
                 getRpcProxy(CubaPivotTableExtensionServerRpc.class).updateCurrentRenderer(jsRefreshEvent.getRenderer());
             }
         });
+    }
+
+    @Override
+    public CubaPivotTableExtensionState getState() {
+        return (CubaPivotTableExtensionState) super.getState();
     }
 }
