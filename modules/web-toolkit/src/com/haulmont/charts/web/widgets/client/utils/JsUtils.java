@@ -79,8 +79,8 @@ public class JsUtils {
         }
     }-*/;
 
-    public static native Object getObjectByKey(JavaScriptObject object, String key) /*-{
-        if (object.hasOwnProperty(key) && object[key]) {
+    public static native Object getValueByKey(JavaScriptObject object, String key) /*-{
+        if (object.hasOwnProperty(key)) {
             return object[key];
         } else {
             return null;
