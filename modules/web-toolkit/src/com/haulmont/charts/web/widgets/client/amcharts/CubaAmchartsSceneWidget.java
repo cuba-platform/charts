@@ -142,7 +142,7 @@ public class CubaAmchartsSceneWidget extends Widget {
         // breaks animation in these charts
         String type = config.getChartType();
         if (PIE_TYPE.equals(type) || FUNNEL_TYPE.equals(type)) {
-            Double startDuration = (Double) JsUtils.getObjectByKey(config, "startDuration");
+            Double startDuration = (Double) JsUtils.getValueByKey(config, "startDuration");
             startDuration = startDuration == null ? 1 : startDuration;
             if (startDuration > 0) {
                 jsOverlay.animateOnce();
