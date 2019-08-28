@@ -1379,18 +1379,11 @@ public class GoogleMapWidget extends FlowPanel implements RequiresResize {
             }
             infoWindow.className += " gm-style-iw-cuba";
 
-            var rootInfoWindow = infoWindow.parentElement;
-            var rootBubble = rootInfoWindow.firstChild;
-            var closeBtn = rootInfoWindow.lastChild;
-            rootInfoWindow.className = "gm-style-iw-cuba-root";
-            rootBubble.className = "gm-style-iw-cuba-bubble";
-            closeBtn.className = "gm-style-iw-cuba-close";
+            var bubble = infoWindow.firstChild;
+            bubble.className += " gm-style-iw-cuba-bubble";
 
-            var e = rootBubble.firstChild;
-            e.className = "gm-style-iw-cuba-bubble-anchor-shadow";
-            e.nextSibling.className = "gm-style-iw-cuba-bubble-shadow";
-            e.nextSibling.nextSibling.className = "gm-style-iw-cuba-bubble-anchor";
-            rootBubble.lastChild.className = "gm-style-iw-cuba-bubble";
+            var closeBtn = infoWindow.lastChild;
+            closeBtn.className += " gm-style-iw-cuba-close";
         }
     }-*/;
 
