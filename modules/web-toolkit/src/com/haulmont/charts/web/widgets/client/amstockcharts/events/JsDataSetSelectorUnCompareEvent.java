@@ -16,7 +16,13 @@
 
 package com.haulmont.charts.web.widgets.client.amstockcharts.events;
 
-public class JsDataSetSelectorUnCompareEvent extends AbstractJsDataSetSelectorEvent {
+import com.google.gwt.core.client.JavaScriptObject;
+
+public class JsDataSetSelectorUnCompareEvent extends JavaScriptObject {
     protected JsDataSetSelectorUnCompareEvent() {
     }
+
+    public final native String getDataSetId() /*-{
+        return this.dataSet.id;
+    }-*/;
 }
