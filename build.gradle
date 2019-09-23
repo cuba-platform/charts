@@ -106,7 +106,9 @@ configure([chartsGlobalModule, chartsGuiModule, chartsWebModule]) {
     dependencies {
         compile(group: 'com.haulmont.cuba', name: 'cuba-global', version: baseVersion)
 
-        testCompile(bom['junit:junit'])
+        testCompile(bom['org.junit.jupiter:junit-jupiter-api'])
+        testCompile(bom['org.junit.jupiter:junit-jupiter-engine'])
+        testCompile(bom['org.junit.vintage:junit-vintage-engine'])
         testCompile(bom['org.spockframework:spock-core']) {
             exclude(group: 'org.codehaus.groovy', module: 'groovy-all')
         }
@@ -207,6 +209,10 @@ configure([chartsGlobalModule, chartsGuiModule, chartsWebModule]) {
 
     check {
         dependsOn += ['pmdReport']
+    }
+
+    test {
+        useJUnitPlatform()
     }
 }
 
