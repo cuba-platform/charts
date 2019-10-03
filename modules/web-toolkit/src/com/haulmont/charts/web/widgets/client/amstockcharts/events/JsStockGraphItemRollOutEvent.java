@@ -48,22 +48,24 @@ public class JsStockGraphItemRollOutEvent extends JavaScriptObject {
 
     public final native String getItemKey() /*-{
         if (this.item && this.item.dataContext) {
-            if (!this.item.dataContext.$k) {
-                return null;
+            if (this.item.dataContext.dataContext) {
+                if (!this.item.dataContext.dataContext.$k) {
+                    return null;
+                }
             }
-
-            return "" + this.item.dataContext.$k;
+            return "" + this.item.dataContext.dataContext.$k;
         }
         return null;
     }-*/;
 
     public final native String getDataSetId() /*-{
         if (this.item && this.item.dataContext) {
-            if (!this.item.dataContext.$d) {
-                return null;
+            if (this.item.dataContext.dataContext) {
+                if (!this.item.dataContext.dataContext.$d) {
+                    return null;
+                }
             }
-
-            return "" + this.item.dataContext.$d;
+            return "" + this.item.dataContext.dataContext.$d;
         }
         return null;
     }-*/;
