@@ -23,16 +23,16 @@ public class JsLegendEvent extends JavaScriptObject {
     }
 
     public final native String getItemKey() /*-{
-        if (this.dataItem && this.dataItem.dataContext) {
+        if (this.dataContext) {
             //noinspection JSUnresolvedVariable
-            return this.dataItem.dataContext.$k;
+            return this.dataContext.$k;
         }
         return null;
     }-*/;
 
     public final native int getItemIndex() /*-{
-        if (this.dataItem && this.dataItem.index) {
-            return this.dataItem.index;
+        if (this.hasOwnProperty('index') && this.index != null) {
+            return this.index;
         }
         return -1;
     }-*/;
