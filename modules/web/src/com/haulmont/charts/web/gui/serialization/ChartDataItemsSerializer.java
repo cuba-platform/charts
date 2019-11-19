@@ -103,6 +103,10 @@ public class ChartDataItemsSerializer {
                 addField(fields, chart.getColumnWidthField());
                 addField(fields, chart.getStartDateField());
                 addField(fields, chart.getEndDateField());
+                if (chart.getGraph() != null) {
+                    addField(fields, chart.getGraph().getAlphaField());
+                }
+
                 if (CollectionUtils.isNotEmpty(chart.getAdditionalSegmentFields())) {
                     for (String field : chart.getAdditionalSegmentFields()) {
                         addField(fields, field);
