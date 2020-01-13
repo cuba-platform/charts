@@ -16,6 +16,7 @@ package com.haulmont.charts.web.widgets.client.addons.googlemap;
 
 import com.google.gwt.ajaxloader.client.AjaxLoader;
 import com.google.gwt.core.client.GWT;
+import com.google.gwt.core.client.Scheduler;
 import com.google.gwt.maps.client.LoadApi;
 import com.google.gwt.maps.client.MapWidget;
 import com.google.gwt.maps.client.base.LatLng;
@@ -426,7 +427,8 @@ public class GoogleMapConnector extends AbstractComponentContainerConnector impl
     @Override
     public void init(LatLon center, int zoom, LatLon boundsNE, LatLon boundsSW) {
         if (isEnabled()) {
-            mapInitRpc.init(center, zoom, boundsNE, boundsSW);
+            // ServerRpcQueue does not send request immediately
+            Scheduler.get().scheduleDeferred(() -> mapInitRpc.init(center, zoom, boundsNE, boundsSW));
         }
     }
 
@@ -537,7 +539,8 @@ public class GoogleMapConnector extends AbstractComponentContainerConnector impl
     @Override
     public void handle(long requestId, DirectionsResult result, DirectionsStatus status) {
         if (isEnabled()) {
-            handleDirectionsResultRpc.handle(result, status, requestId);
+            // ServerRpcQueue does not send request immediately
+            Scheduler.get().scheduleDeferred(() -> handleDirectionsResultRpc.handle(result, status, requestId));
         }
     }
 
