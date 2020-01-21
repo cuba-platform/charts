@@ -461,4 +461,44 @@ public class CubaAmchartsJsOverlay {
 
         chart.addListener("drawn", onDrawn);
     }-*/;
+
+    public void addRollOutGraphHandler(Consumer<JsRollOutGraphEvent> handler) {
+        addRollOutGraphHandler(chart, handler);
+    }
+
+    protected static native void addRollOutGraphHandler(JavaScriptObject chart, Consumer<JsRollOutGraphEvent> handler) /*-{
+        chart.addListener("rollOutGraph", $entry(function (event) {
+            handler.@java.util.function.Consumer::accept(*)(event);
+        }));
+    }-*/;
+
+    public void addRollOutGraphItemHandler(Consumer<JsRollOutGraphItemEvent> handler) {
+        addRollOutGraphItemHandler(chart, handler);
+    }
+
+    protected static native void addRollOutGraphItemHandler(JavaScriptObject chart, Consumer<JsRollOutGraphItemEvent> handler) /*-{
+        chart.addListener("rollOutGraphItem", $entry(function (event) {
+            handler.@java.util.function.Consumer::accept(*)(event);
+        }));
+    }-*/;
+
+    public void addRollOverGraphHandler(Consumer<JsRollOverGraphEvent> handler) {
+        addRollOverGraphHandler(chart, handler);
+    }
+
+    protected static native void addRollOverGraphHandler(JavaScriptObject chart, Consumer<JsRollOverGraphEvent> handler) /*-{
+        chart.addListener("rollOverGraph", $entry(function (event) {
+            handler.@java.util.function.Consumer::accept(*)(event);
+        }));
+    }-*/;
+
+    public void addRollOverGraphItemHandler(Consumer<JsRollOverGraphItemEvent> handler) {
+        addRollOverGraphItemHandler(chart, handler);
+    }
+
+    protected static native void addRollOverGraphItemHandler(JavaScriptObject chart, Consumer<JsRollOverGraphItemEvent> handler) /*-{
+        chart.addListener("rollOverGraphItem", $entry(function (event) {
+            handler.@java.util.function.Consumer::accept(*)(event);
+        }));
+    }-*/;
 }

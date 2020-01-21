@@ -51,6 +51,11 @@ public class CubaAmchartsSceneState extends AbstractComponentState {
 
     public static final String CATEGORY_ITEM_CLICK_EVENT = "cic";
 
+    public static final String ROLL_OUT_GRAPH_EVENT = "roug";
+    public static final String ROLL_OUT_GRAPH_ITEM_EVENT = "rougi";
+    public static final String ROLL_OVER_GRAPH_EVENT = "rovg";
+    public static final String ROLL_OVER_GRAPH_ITEM_EVENT = "rovgi";
+
     // Custom JSON chart configuration
     public String json;
 }

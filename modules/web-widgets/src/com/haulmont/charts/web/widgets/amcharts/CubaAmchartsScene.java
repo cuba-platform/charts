@@ -64,6 +64,18 @@ public class CubaAmchartsScene extends AbstractComponent {
     protected final static Method graphItemRightClickMethod =
             findMethod(GraphItemRightClickListener.class, "onClick", GraphItemRightClickEvent.class);
 
+    protected final static Method rollOutGraphMethod =
+            findMethod(RollOutGraphListener.class, "onRollOut", RollOutGraphEvent.class);
+
+    protected final static Method rollOutGraphItemMethod =
+            findMethod(RollOutGraphItemListener.class, "onRollOut", RollOutGraphItemEvent.class);
+
+    protected final static Method rollOverGraphMethod =
+            findMethod(RollOverGraphListener.class, "onRollOver", RollOverGraphEvent.class);
+
+    protected final static Method rollOverGraphItemMethod =
+            findMethod(RollOverGraphItemListener.class, "onRollOver", RollOverGraphItemEvent.class);
+
     protected final static Method zoomMethod =
             findMethod(ZoomListener.class, "onZoom", ZoomEvent.class);
 
@@ -395,6 +407,22 @@ public class CubaAmchartsScene extends AbstractComponent {
         removeListener(CubaAmchartsSceneState.CATEGORY_ITEM_CLICK_EVENT, CategoryItemClickEvent.class, listener);
     }
 
+    public void addRollOutGraphListener(RollOutGraphListener listener) {
+        addListener(CubaAmchartsSceneState.ROLL_OUT_GRAPH_EVENT, RollOutGraphEvent.class, listener, rollOutGraphMethod);
+    }
+
+    public void addRollOutGraphItemListener(RollOutGraphItemListener listener) {
+        addListener(CubaAmchartsSceneState.ROLL_OUT_GRAPH_ITEM_EVENT, RollOutGraphItemEvent.class, listener, rollOutGraphItemMethod);
+    }
+
+    public void addRollOverGraphListener(RollOverGraphListener listener) {
+        addListener(CubaAmchartsSceneState.ROLL_OVER_GRAPH_EVENT, RollOverGraphEvent.class, listener, rollOverGraphMethod);
+    }
+
+    public void addRollOverGraphItemListener(RollOverGraphItemListener listener) {
+        addListener(CubaAmchartsSceneState.ROLL_OVER_GRAPH_ITEM_EVENT, RollOverGraphItemEvent.class, listener, rollOverGraphItemMethod);
+    }
+
     @Override
     public void beforeClientResponse(boolean initial) {
         super.beforeClientResponse(initial);
@@ -646,6 +674,28 @@ public class CubaAmchartsScene extends AbstractComponent {
         @Override
         public void onCategoryItemClick(String value, int x, int y, int offsetX, int offsetY, int xAxis, int yAxis) {
             fireEvent(new CategoryItemClickEvent(CubaAmchartsScene.this, value, x, y, offsetX, offsetY, xAxis, yAxis));
+        }
+
+        @Override
+        public void onRollOutGraph(String graphId) {
+            fireEvent(new RollOutGraphEvent(CubaAmchartsScene.this, graphId));
+        }
+
+        @Override
+        public void onRollOutGraphItem(String graphId, int itemIndex, String itemKey) {
+            DataItem dataItem = getDataItemByKey(itemKey);
+            fireEvent(new RollOutGraphItemEvent(CubaAmchartsScene.this, graphId, itemIndex, dataItem));
+        }
+
+        @Override
+        public void onRollOverGraph(String graphId) {
+            fireEvent(new RollOverGraphEvent(CubaAmchartsScene.this, graphId));
+        }
+
+        @Override
+        public void onRollOverGraphItem(String graphId, int itemIndex, String itemKey) {
+            DataItem dataItem = getDataItemByKey(itemKey);
+            fireEvent(new RollOverGraphItemEvent(CubaAmchartsScene.this, graphId, itemIndex, dataItem));
         }
     }
 

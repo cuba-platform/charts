@@ -682,6 +682,104 @@ public interface Chart<T extends Chart> extends Component, ChartModel<T>, Compon
     }
 
     /**
+     * Describes the graph roll-out event.
+     */
+    class RollOutGraphEvent extends AbstractChartEvent {
+
+        private final Graph graph;
+
+        public RollOutGraphEvent(Chart chart, Graph graph) {
+            super(chart);
+            this.graph = graph;
+        }
+
+        /**
+         * @return a graph
+         */
+        public Graph getGraph() {
+            return graph;
+        }
+    }
+
+    /**
+     * Describes the data item roll-out event.
+     */
+    class RollOutGraphItemEvent extends RollOutGraphEvent {
+
+        private final DataItem dataItem;
+        private final int itemIndex;
+
+        public RollOutGraphItemEvent(Chart chart, Graph graph, DataItem dataItem, int itemIndex) {
+            super(chart, graph);
+            this.dataItem = dataItem;
+            this.itemIndex = itemIndex;
+        }
+
+        /**
+         * @return a data item
+         */
+        public DataItem getDataItem() {
+            return dataItem;
+        }
+
+        /**
+         * @return an item index
+         */
+        public int getItemIndex() {
+            return itemIndex;
+        }
+    }
+
+    /**
+     * Describes the graph roll-over event.
+     */
+    class RollOverGraphEvent extends AbstractChartEvent {
+
+        private final Graph graph;
+
+        public RollOverGraphEvent(Chart chart, Graph graph) {
+            super(chart);
+            this.graph = graph;
+        }
+
+        /**
+         * @return a graph
+         */
+        public Graph getGraph() {
+            return graph;
+        }
+    }
+
+    /**
+     * Describes the data item roll-over event.
+     */
+    class RollOverGraphItemEvent extends RollOverGraphEvent {
+
+        private final DataItem dataItem;
+        private final int itemIndex;
+
+        public RollOverGraphItemEvent(Chart chart, Graph graph, DataItem dataItem, int itemIndex) {
+            super(chart, graph);
+            this.dataItem = dataItem;
+            this.itemIndex = itemIndex;
+        }
+
+        /**
+         * @return a data item
+         */
+        public DataItem getDataItem() {
+            return dataItem;
+        }
+
+        /**
+         * @return an item index
+         */
+        public int getItemIndex() {
+            return itemIndex;
+        }
+    }
+
+    /**
      * Describes zoom event.
      */
     class ZoomEvent extends AbstractChartEvent {
