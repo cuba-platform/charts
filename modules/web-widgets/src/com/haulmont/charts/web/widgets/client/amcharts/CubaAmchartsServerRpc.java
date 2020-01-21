@@ -58,4 +58,12 @@ public interface CubaAmchartsServerRpc extends ServerRpc {
     void onValueAxisZoom(String axisId, double startValue, double endValue);
 
     void onCategoryItemClick(String value, int x, int y, int offsetX, int offsetY, int xAxis, int yAxis);
+
+    void onRollOutGraph(String graphId);
+
+    void onRollOutGraphItem(String graphId, int itemIndex, String itemKey);
+
+    void onRollOverGraph(String graphId);
+
+    void onRollOverGraphItem(String graphId, int itemIndex, String itemKey);
 }

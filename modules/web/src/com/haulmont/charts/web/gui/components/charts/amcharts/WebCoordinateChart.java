@@ -36,6 +36,11 @@ public abstract class WebCoordinateChart<T extends CoordinateChart,
 
     protected com.haulmont.charts.web.widgets.amcharts.events.GraphItemRightClickListener graphItemRightClickHandler;
 
+    protected com.haulmont.charts.web.widgets.amcharts.events.RollOutGraphListener rollOutGraphListener;
+    protected com.haulmont.charts.web.widgets.amcharts.events.RollOutGraphItemListener rollOutGraphItemListener;
+    protected com.haulmont.charts.web.widgets.amcharts.events.RollOverGraphListener rollOverGraphListener;
+    protected com.haulmont.charts.web.widgets.amcharts.events.RollOverGraphItemListener rollOverGraphItemListener;
+
     @Override
     public List<Color> getColors() {
         return getModel().getColors();
@@ -290,6 +295,66 @@ public abstract class WebCoordinateChart<T extends CoordinateChart,
             component.removeGraphItemRightClickListener(graphItemRightClickHandler);
             graphItemRightClickHandler = null;
         }
+    }
+
+    @Override
+    public Subscription addRollOutGraphListener(Consumer<RollOutGraphEvent> listener) {
+        if (rollOutGraphListener == null) {
+            rollOutGraphListener = this::onRollOutGraphClick;
+            component.addRollOutGraphListener(rollOutGraphListener);
+        }
+
+        return getEventHub().subscribe(RollOutGraphEvent.class, listener);
+    }
+
+    protected void onRollOutGraphClick(com.haulmont.charts.web.widgets.amcharts.events.RollOutGraphEvent e) {
+        publish(RollOutGraphEvent.class,
+                new RollOutGraphEvent(this, getGraphById(e.getGraphId())));
+    }
+
+    @Override
+    public Subscription addRollOutGraphItemListener(Consumer<RollOutGraphItemEvent> listener) {
+        if (rollOutGraphItemListener == null) {
+            rollOutGraphItemListener = this::onRollOutGraphItemClick;
+            component.addRollOutGraphItemListener(rollOutGraphItemListener);
+        }
+
+        return getEventHub().subscribe(RollOutGraphItemEvent.class, listener);
+    }
+
+    protected void onRollOutGraphItemClick(com.haulmont.charts.web.widgets.amcharts.events.RollOutGraphItemEvent e) {
+        publish(RollOutGraphItemEvent.class,
+                new RollOutGraphItemEvent(this, getGraphById(e.getGraphId()), e.getDataItem(), e.getItemIndex()));
+    }
+
+    @Override
+    public Subscription addRollOverGraphListener(Consumer<RollOverGraphEvent> listener) {
+        if (rollOverGraphListener == null) {
+            rollOverGraphListener = this::onRollOverGraphClick;
+            component.addRollOverGraphListener(rollOverGraphListener);
+        }
+
+        return getEventHub().subscribe(RollOverGraphEvent.class, listener);
+    }
+
+    protected void onRollOverGraphClick(com.haulmont.charts.web.widgets.amcharts.events.RollOverGraphEvent e) {
+        publish(RollOverGraphEvent.class,
+                new RollOverGraphEvent(this, getGraphById(e.getGraphId())));
+    }
+
+    @Override
+    public Subscription addRollOverGraphItemListener(Consumer<RollOverGraphItemEvent> listener) {
+        if (rollOverGraphItemListener == null) {
+            rollOverGraphItemListener = this::onRollOverGraphItemClick;
+            component.addRollOverGraphItemListener(rollOverGraphItemListener);
+        }
+
+        return getEventHub().subscribe(RollOverGraphItemEvent.class, listener);
+    }
+
+    protected void onRollOverGraphItemClick(com.haulmont.charts.web.widgets.amcharts.events.RollOverGraphItemEvent e) {
+        publish(RollOverGraphItemEvent.class,
+                new RollOverGraphItemEvent(this, getGraphById(e.getGraphId()), e.getDataItem(), e.getItemIndex()));
     }
 
     protected Graph getGraphById(String id) {

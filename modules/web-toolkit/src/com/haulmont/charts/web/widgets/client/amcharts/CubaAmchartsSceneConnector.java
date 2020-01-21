@@ -382,5 +382,25 @@ public class CubaAmchartsSceneConnector extends AbstractComponentConnector {
                         me.getClientX(), me.getClientY());
             });
         }
+        if (events.contains(CubaAmchartsSceneState.ROLL_OUT_GRAPH_EVENT)) {
+            amchartsEvents.setRollOutGraphHandler(event -> {
+                rpc.onRollOutGraph(event.getGraphId());
+            });
+        }
+        if (events.contains(CubaAmchartsSceneState.ROLL_OUT_GRAPH_ITEM_EVENT)) {
+            amchartsEvents.setRollOutGraphItemHandler(event -> {
+                rpc.onRollOutGraphItem(event.getGraphId(), event.getIndex(), event.getItemKey());
+            });
+        }
+        if (events.contains(CubaAmchartsSceneState.ROLL_OVER_GRAPH_EVENT)) {
+            amchartsEvents.setRollOverGraphHandler(event -> {
+                rpc.onRollOverGraph(event.getGraphId());
+            });
+        }
+        if (events.contains(CubaAmchartsSceneState.ROLL_OVER_GRAPH_ITEM_EVENT)) {
+            amchartsEvents.setRollOverGraphItemHandler(event -> {
+                rpc.onRollOverGraphItem(event.getGraphId(), event.getIndex(), event.getItemKey());
+            });
+        }
     }
 }

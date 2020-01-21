@@ -83,6 +83,34 @@ public interface CoordinateChart<T extends CoordinateChart> extends Chart<T>, Co
     void removeAxisZoomListener(Consumer<AxisZoomEvent> listener);
 
     /**
+     * Adds a listener for graph. Called when user rolls-out of a graph.
+     *
+     * @param listener a listener to add
+     */
+    Subscription addRollOutGraphListener(Consumer<RollOutGraphEvent> listener);
+
+    /**
+     * Adds a listener for graph item. Called when user rolls-out of the data item.
+     *
+     * @param listener a listener to add
+     */
+    Subscription addRollOutGraphItemListener(Consumer<RollOutGraphItemEvent> listener);
+
+    /**
+     * Adds a listener for graph. Called when user rolls-over a graph.
+     *
+     * @param listener a listener to add
+     */
+    Subscription addRollOverGraphListener(Consumer<RollOverGraphEvent> listener);
+
+    /**
+     * Adds a listener for graph item. Called when user rolls-over data item.
+     *
+     * @param listener a listener to add
+     */
+    Subscription addRollOverGraphItemListener(Consumer<RollOverGraphItemEvent> listener);
+
+    /**
      * Zooms out value axes, value axes shows all available data.
      */
     void zoomOutValueAxes();

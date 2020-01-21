@@ -137,6 +137,18 @@ public class CubaAmchartsSceneWidget extends Widget {
         if (amchartsEvents.getCategoryItemClickHandler() != null) {
             jsOverlay.addCategoryItemClickHandler(amchartsEvents.getCategoryItemClickHandler());
         }
+        if (amchartsEvents.getRollOutGraphHandler() != null) {
+            jsOverlay.addRollOutGraphHandler(amchartsEvents.getRollOutGraphHandler());
+        }
+        if (amchartsEvents.getRollOutGraphItemHandler() != null) {
+            jsOverlay.addRollOutGraphItemHandler(amchartsEvents.getRollOutGraphItemHandler());
+        }
+        if (amchartsEvents.getRollOverGraphHandler() != null) {
+            jsOverlay.addRollOverGraphHandler(amchartsEvents.getRollOverGraphHandler());
+        }
+        if (amchartsEvents.getRollOverGraphItemHandler() != null) {
+            jsOverlay.addRollOverGraphItemHandler(amchartsEvents.getRollOverGraphItemHandler());
+        }
 
         // do animation once for pie or funnel charts, because every call chart.invalidateSize()
         // breaks animation in these charts

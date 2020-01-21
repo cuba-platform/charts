@@ -46,6 +46,11 @@ public class AmchartsEvents {
 
     private Consumer<JsCategoryItemClickEvent> categoryItemClickHandler;
 
+    private Consumer<JsRollOutGraphEvent> rollOutGraphHandler;
+    private Consumer<JsRollOutGraphItemEvent> rollOutGraphItemHandler;
+    private Consumer<JsRollOverGraphEvent> rollOverGraphHandler;
+    private Consumer<JsRollOverGraphItemEvent> rollOverGraphItemHandler;
+
     public Consumer<JsChartClickEvent> getChartClickHandler() {
         return chartClickHandler;
     }
@@ -188,5 +193,37 @@ public class AmchartsEvents {
 
     public Consumer<JsCategoryItemClickEvent> getCategoryItemClickHandler() {
         return categoryItemClickHandler;
+    }
+
+    public Consumer<JsRollOutGraphEvent> getRollOutGraphHandler() {
+        return rollOutGraphHandler;
+    }
+
+    public void setRollOutGraphHandler(Consumer<JsRollOutGraphEvent> rollOutGraphHandler) {
+        this.rollOutGraphHandler = rollOutGraphHandler;
+    }
+
+    public Consumer<JsRollOutGraphItemEvent> getRollOutGraphItemHandler() {
+        return rollOutGraphItemHandler;
+    }
+
+    public void setRollOutGraphItemHandler(Consumer<JsRollOutGraphItemEvent> rollOutGraphItemHandler) {
+        this.rollOutGraphItemHandler = rollOutGraphItemHandler;
+    }
+
+    public Consumer<JsRollOverGraphEvent> getRollOverGraphHandler() {
+        return rollOverGraphHandler;
+    }
+
+    public void setRollOverGraphHandler(Consumer<JsRollOverGraphEvent> rollOverGraphHandler) {
+        this.rollOverGraphHandler = rollOverGraphHandler;
+    }
+
+    public Consumer<JsRollOverGraphItemEvent> getRollOverGraphItemHandler() {
+        return rollOverGraphItemHandler;
+    }
+
+    public void setRollOverGraphItemHandler(Consumer<JsRollOverGraphItemEvent> rollOverGraphItemHandler) {
+        this.rollOverGraphItemHandler = rollOverGraphItemHandler;
     }
 }
