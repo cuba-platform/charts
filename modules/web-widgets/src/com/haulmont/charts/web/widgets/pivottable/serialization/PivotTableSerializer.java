@@ -25,6 +25,8 @@ public interface PivotTableSerializer {
 
     String serialize(PivotTableModel pivotTable);
 
+    String serialize(PivotTableModel pivotTable, Consumer<PivotTableSerializationContext> postSerializationHandler);
+
     @Nullable
     String serializeData(PivotTableModel pivotTable);
 
