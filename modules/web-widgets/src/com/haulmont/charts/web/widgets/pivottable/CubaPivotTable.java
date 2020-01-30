@@ -184,7 +184,13 @@ public class CubaPivotTable extends AbstractComponent {
                 log.trace("pivotTable data JSON:\n{}", dataJsonString);
                 getState().data = dataJsonString;
 
-                String optionsJsonString = pivotTableSerializer.serialize(pivotTable);
+                String optionsJsonString;
+                if (isCellClickListenerPresent()) {
+                    optionsJsonString = pivotTableSerializer.serialize(pivotTable, this::afterPivotModelSerialized);
+                } else {
+                    optionsJsonString = pivotTableSerializer.serialize(pivotTable);
+                }
+
                 log.trace("pivotTable options JSON:\n{}", optionsJsonString);
                 getState().options = optionsJsonString;
             }
@@ -202,6 +208,16 @@ public class CubaPivotTable extends AbstractComponent {
         String dataItemKey = dataItemMapper.key(context.getDataItem());
         JsonElement serializedKey = context.getSerializationContext().serialize(dataItemKey);
         jsonObject.add(DATA_ITEM_KEY, serializedKey);
+    }
+
+    protected void afterPivotModelSerialized(PivotTableSerializationContext context) {
+        JsonObject jsonObject = context.getJsonObject();
+        JsonArray hiddenProperties = jsonObject.getAsJsonArray("hiddenProperties");
+        if (hiddenProperties == null) {
+            hiddenProperties = new JsonArray();
+        }
+        hiddenProperties.add(DATA_ITEM_KEY);
+        jsonObject.add("hiddenProperties", hiddenProperties);
     }
 
     protected void forceStateChange() {

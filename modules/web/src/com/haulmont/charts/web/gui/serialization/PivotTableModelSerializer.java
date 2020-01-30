@@ -19,17 +19,28 @@ package com.haulmont.charts.web.gui.serialization;
 import com.google.gson.*;
 import com.haulmont.charts.gui.pivottable.model.PivotTableModel;
 import com.haulmont.charts.web.widgets.pivottable.serialization.PivotJsonSerializationContext;
+import com.haulmont.charts.web.widgets.pivottable.serialization.PivotTableSerializationContext;
 import org.springframework.beans.factory.config.BeanDefinition;
 import org.springframework.context.annotation.Scope;
 import org.springframework.stereotype.Component;
 
 import java.util.Map;
+import java.util.function.Consumer;
 
 @Component(PivotTableModelSerializer.NAME)
 @Scope(BeanDefinition.SCOPE_PROTOTYPE)
 public class PivotTableModelSerializer {
 
     public static final String NAME = "charts_PivotTableModelSerializer";
+
+    public JsonElement serialize(PivotTableModel src, JsonSerializationContext context, Consumer<PivotTableSerializationContext> postSerializationHandler) {
+        JsonObject jsonObject = (JsonObject) serialize(src, context);
+        if (postSerializationHandler != null) {
+            postSerializationHandler.accept(new PivotTableSerializationContext(null, jsonObject, context));
+        }
+
+        return jsonObject;
+    }
 
     public JsonElement serialize(PivotTableModel src, JsonSerializationContext context) {
         JsonObject pivotJson = context.serialize(src).getAsJsonObject();
