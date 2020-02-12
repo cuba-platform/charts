@@ -18,16 +18,23 @@ package com.haulmont.charts.web.widgets.amcharts.events;
 
 import com.haulmont.charts.gui.data.DataItem;
 import com.haulmont.charts.web.widgets.amcharts.CubaAmchartsScene;
+import com.vaadin.ui.Component;
 
-public class RollOverGraphItemEvent extends RollOverGraphEvent {
+public class RollOverGraphItemEvent extends Component.Event {
 
+    private final String graphId;
     private final int itemIndex;
     private final DataItem dataItem;
 
     public RollOverGraphItemEvent(CubaAmchartsScene scene, String graphId, int itemIndex, DataItem dataItem) {
-        super(scene, graphId);
+        super(scene);
+        this.graphId = graphId;
         this.itemIndex = itemIndex;
         this.dataItem = dataItem;
+    }
+
+    public String getGraphId() {
+        return graphId;
     }
 
     public int getItemIndex() {
