@@ -28,17 +28,7 @@ If you would like to use charts without this link, or you appreciate the softwar
             </license>
         </item>
 
-        <item name="GoogleMaps Vaadin Addon" web="http://vaadin.com/addon/googlemaps-add-on" license="apache-2.0"
-              fork="true">
-            <jar>googlemaps-.*</jar>
-        </item>
-
-        <item name="Google API Libraries for GWT" web="https://code.google.com/p/gwt-google-apis" license="apache-2.0">
-            <jar>gwt-maps-api-.*</jar>
-            <jar>gwt-ajaxloader-.*</jar>
-        </item>
-
-        <item name="Gson" web="https://code.google.com/p/google-gson" license="apache-2.0"/>
+        <item name="jQuery UI Touch Punch" web="http://touchpunch.furf.com/" license="mit"/>
 
         <item name="PivotTable.js" web="https://github.com/nicolaskruchten/pivottable" license="mit"/>
     </items>
