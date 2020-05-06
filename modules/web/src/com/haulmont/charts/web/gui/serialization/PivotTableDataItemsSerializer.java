@@ -23,6 +23,7 @@ import com.haulmont.charts.gui.data.DataItem;
 import com.haulmont.charts.gui.data.EntityDataItem;
 import com.haulmont.charts.web.widgets.pivottable.serialization.PivotJsonSerializationContext;
 import com.haulmont.charts.web.widgets.pivottable.serialization.PivotTableSerializationContext;
+import com.haulmont.chile.core.datatypes.Datatype;
 import com.haulmont.chile.core.datatypes.Datatypes;
 import com.haulmont.chile.core.datatypes.impl.EnumClass;
 import com.haulmont.chile.core.model.Instance;
@@ -148,7 +149,8 @@ public class PivotTableDataItemsSerializer {
     }
 
     protected String getDateTimeFormattedValue(Object value, Locale locale) {
-        return Datatypes.getNN(Date.class).format(value, locale);
+        Datatype<?> datatype = Datatypes.getNN(value.getClass());
+        return datatype.format(value, locale);
     }
 
     protected Locale getUserLocale() {
