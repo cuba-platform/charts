@@ -21,6 +21,7 @@ import com.google.gson.JsonArray;
 import com.google.gson.JsonElement;
 import com.google.gson.JsonObject;
 import com.haulmont.charts.gui.data.DataItem;
+import com.haulmont.charts.gui.data.MapDataItem;
 import com.haulmont.charts.gui.pivottable.model.Aggregation;
 import com.haulmont.charts.gui.pivottable.model.AggregationMode;
 import com.haulmont.charts.gui.pivottable.model.PivotTableModel;
@@ -28,6 +29,7 @@ import com.haulmont.charts.model.amcharts.charts.container.ChartsTestContainer;
 import com.haulmont.charts.web.gui.serialization.PivotTableDataItemsSerializer;
 import com.haulmont.charts.web.widgets.pivottable.serialization.PivotJsonSerializationContext;
 import com.haulmont.cuba.web.testsupport.TestUiEnvironment;
+import org.apache.groovy.util.Maps;
 import org.junit.Before;
 import org.junit.ClassRule;
 import org.junit.Test;
@@ -57,18 +59,21 @@ public class PivotTableSerializerTest {
                     //we don't have windows, we don't have client cache
                 }
             }
-            .withLocale(Locale.ENGLISH)
-            .withUserLogin("admin");
+                    .withLocale(Locale.ENGLISH)
+                    .withUserLogin("admin");
 
     @Before
     public void setupTest() {
         dataItems = new ArrayList<>();
         LocalDateTime localDateTime = LocalDateTime.of(2010, Month.APRIL, 10, 14, 11, 59);
         Date date = Date.from(localDateTime.toInstant(ZoneOffset.UTC));
-        dataItems.add(new PivotDataItem(1L,
-                "one",
-                localDateTime,
-                localDateTime.toLocalDate(), date));
+        dataItems.add(new MapDataItem(
+                Maps.of("id", 1L,
+                        "name", "one",
+                        "localDateTime", localDateTime,
+                        "localDate", localDateTime.toLocalDate(),
+                        "date", date)
+        ));
     }
 
     @Test
@@ -113,56 +118,6 @@ public class PivotTableSerializerTest {
         model.addAggregationProperties("id");
         model.setAggregation(aggregation);
         return model;
-    }
-
-    static class PivotDataItem implements DataItem {
-        private final Long id;
-        private final String name;
-        private final LocalDateTime localDateTime;
-        private final LocalDate localDate;
-        private final Date date;
-
-        public PivotDataItem(Long id, String name, LocalDateTime localDateTime, LocalDate localDate, Date date) {
-            this.id = id;
-            this.name = name;
-            this.localDateTime = localDateTime;
-            this.localDate = localDate;
-            this.date = date;
-        }
-
-        public Long getId() {
-            return id;
-        }
-
-        public String getName() {
-            return name;
-        }
-
-        public LocalDateTime getLocalDateTime() {
-            return localDateTime;
-        }
-
-        public Date getDate() {
-            return date;
-        }
-
-        @Override
-        public Object getValue(String property) {
-            switch (property) {
-                case "id":
-                    return id;
-                case "name":
-                    return name;
-                case "localDateTime":
-                    return localDateTime;
-                case "localDate":
-                    return localDate;
-                case "date":
-                    return date;
-                default:
-                    return null;
-            }
-        }
     }
 
 }
