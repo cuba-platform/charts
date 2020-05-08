@@ -333,6 +333,7 @@ configure(chartsWebModule) {
         compile(cubaWeb)
 
         compileOnly(bom['javax.servlet:javax.servlet-api'])
+        testCompile(group: 'com.haulmont.cuba', name: 'cuba-web-tests', version: baseVersion)
     }
 }
 
