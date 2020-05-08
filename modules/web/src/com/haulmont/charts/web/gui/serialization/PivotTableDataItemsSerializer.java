@@ -23,6 +23,7 @@ import com.haulmont.charts.gui.data.DataItem;
 import com.haulmont.charts.gui.data.EntityDataItem;
 import com.haulmont.charts.web.widgets.pivottable.serialization.PivotJsonSerializationContext;
 import com.haulmont.charts.web.widgets.pivottable.serialization.PivotTableSerializationContext;
+import com.haulmont.chile.core.datatypes.Datatype;
 import com.haulmont.chile.core.datatypes.Datatypes;
 import com.haulmont.chile.core.datatypes.impl.EnumClass;
 import com.haulmont.chile.core.model.Instance;
@@ -41,6 +42,7 @@ import org.springframework.context.annotation.Scope;
 import org.springframework.stereotype.Component;
 
 import javax.inject.Inject;
+import java.time.temporal.Temporal;
 import java.util.Collection;
 import java.util.Date;
 import java.util.List;
@@ -109,7 +111,7 @@ public class PivotTableDataItemsSerializer {
             formattedValue = metadata.getTools().getInstanceName((Instance) value);
         } else if (value instanceof EnumClass) {
             formattedValue = messages.getMessage((Enum) value);
-        } else if (value instanceof Date) {
+        } else if (value instanceof Date || value instanceof Temporal) {
             if (item instanceof EntityDataItem) {
                 EntityDataItem entityItem = (EntityDataItem) item;
                 MetaClass metaClass = metadata.getClassNN(entityItem.getItem().getClass());
@@ -122,7 +124,6 @@ public class PivotTableDataItemsSerializer {
             } else {
                 formattedValue = getDateTimeFormattedValue(value, getUserLocale());
             }
-
         } else if (value instanceof Boolean) {
             formattedValue = BooleanUtils.isTrue((Boolean) value)
                     ? messages.getMainMessage("boolean.yes")
@@ -148,7 +149,8 @@ public class PivotTableDataItemsSerializer {
     }
 
     protected String getDateTimeFormattedValue(Object value, Locale locale) {
-        return Datatypes.getNN(Date.class).format(value, locale);
+        Datatype<?> datatype = Datatypes.getNN(value.getClass());
+        return datatype.format(value, locale);
     }
 
     protected Locale getUserLocale() {
