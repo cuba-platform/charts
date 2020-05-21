@@ -1359,7 +1359,7 @@ public abstract class ChartModelLoader<C extends Component> extends AbstractComp
             axis.setSynchronizeWith(synchronizeWith);
         }
 
-        String totalText = valueAxisElement.elementText("totalText");
+        String totalText = valueAxisElement.attributeValue("totalText");
         if (StringUtils.isNotEmpty(totalText)) {
             axis.setTotalText(loadResourceString(totalText));
         }
