@@ -23,8 +23,7 @@ import com.haulmont.charts.gui.data.DataItem;
 import com.haulmont.charts.gui.data.DataProvider;
 import com.haulmont.charts.gui.data.ListDataProvider;
 import com.haulmont.charts.gui.data.MapDataItem;
-import com.haulmont.charts.web.gui.serialization.ChartDataItemsSerializer;
-import com.haulmont.charts.web.gui.serialization.CubaChartSerializer;
+import com.haulmont.charts.model.amcharts.charts.support.TestChartSerializer;
 import com.haulmont.charts.web.widgets.amcharts.serialization.ChartSerializer;
 import org.apache.commons.lang3.StringUtils;
 import org.junit.Test;
@@ -344,16 +343,5 @@ public class ChartsSerializationTest {
             segment.put("task", task);
         }
         return new MapDataItem(segment);
-    }
-
-    private static class TestChartSerializer extends CubaChartSerializer {
-        public TestChartSerializer() {
-            setDataItemKeyMapper(dataItem -> String.valueOf(dataItem.getValue("id")));
-        }
-
-        @Override
-        protected ChartDataItemsSerializer createDataItemsSerializer() {
-            return new ChartDataItemsSerializer();
-        }
     }
 }

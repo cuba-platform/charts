@@ -28,7 +28,7 @@ import java.util.Date;
 public class ConfigDateSerializer implements JsonSerializer<Date> {
 
     protected static final FastDateFormat DATE_FORMATTER
-            = FastDateFormat.getInstance(ChartJsonSerializationContext.DEFAULT_DATE_FORMAT);
+            = FastDateFormat.getInstance(ChartJsonSerializationContext.DEFAULT_DATE_TIME_FORMAT);
 
     @Override
     public JsonElement serialize(Date src, Type typeOfSrc, JsonSerializationContext context) {
