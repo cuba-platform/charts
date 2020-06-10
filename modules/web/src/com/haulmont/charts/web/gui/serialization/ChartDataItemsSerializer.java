@@ -36,6 +36,9 @@ import org.springframework.stereotype.Component;
 
 import javax.annotation.Nullable;
 import javax.inject.Inject;
+import java.time.LocalDate;
+import java.time.LocalDateTime;
+import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
 import java.util.Collection;
 import java.util.Date;
@@ -50,7 +53,13 @@ public class ChartDataItemsSerializer {
 
     protected static final String ITEM_KEY_PROPERTY_NAME = "$k";
     protected static final FastDateFormat DATE_FORMATTER
-            = FastDateFormat.getInstance(ChartJsonSerializationContext.DEFAULT_DATE_FORMAT);
+            = FastDateFormat.getInstance(ChartJsonSerializationContext.DEFAULT_DATE_TIME_FORMAT);
+
+    protected static final DateTimeFormatter TEMPORAL_DATE_FORMATTER
+            = DateTimeFormatter.ofPattern(ChartJsonSerializationContext.DEFAULT_DATE_FORMAT);
+
+    protected static final DateTimeFormatter TEMPORAL_DATE_TIME_FORMATTER
+            = DateTimeFormatter.ofPattern(ChartJsonSerializationContext.DEFAULT_DATE_TIME_FORMAT);
 
     protected Messages messages;
     protected Metadata metadata;
@@ -151,6 +160,10 @@ public class ChartDataItemsSerializer {
             formattedValue = messages.getMessage((Enum) value);
         } else if (value instanceof Date) {
             formattedValue = DATE_FORMATTER.format((Date) value);
+        } else if (value instanceof LocalDateTime) {
+            formattedValue = TEMPORAL_DATE_TIME_FORMATTER.format((LocalDateTime) value);
+        } else if (value instanceof LocalDate) {
+            formattedValue = TEMPORAL_DATE_FORMATTER.format((LocalDate) value);
         } else {
             formattedValue = value;
         }
