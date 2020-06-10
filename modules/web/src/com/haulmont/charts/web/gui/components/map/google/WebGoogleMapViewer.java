@@ -96,6 +96,7 @@ public class WebGoogleMapViewer extends WebAbstractComponent<GoogleMap> implemen
 
         component = new GoogleMap(new LatLon(mapConfig.getDefLatitude(), mapConfig.getDefLongitude()),
                 mapConfig.getDefZoom().intValue(), key, clientId, lang, mapInitHandler, mapConfig.getMapsApiVersion());
+        component.setJsapiLoadingEnabled(mapConfig.getJsapiLoadingEnabled());
 
         String deleteMessage = AppBeans.get(Messages.class).getMainMessage("actions.Remove");
         component.setRemoveMessage(deleteMessage);
