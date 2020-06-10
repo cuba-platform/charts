@@ -209,15 +209,19 @@ public class GoogleMapConnector extends AbstractComponentContainerConnector impl
             params = "key=" + getState().apiKey;
         }
 
-        if (getState().apiUrl != null) {
-            AjaxLoader.init(getState().apiKey, getState().apiUrl);
-        }
+        if (getState().jsapiLoadingEnabled) {
+            if (getState().apiUrl != null) {
+                AjaxLoader.init(getState().apiKey, getState().apiUrl);
+            }
 
-        load(onLoad, loadLibraries, language, getState().mapsApiVersion, params);
+            jsapiLoad(onLoad, loadLibraries, language, getState().mapsApiVersion, params);
+        } else {
+            load(onLoad, loadLibraries, language);
+        }
     }
 
-    private static void load(Runnable onLoad, ArrayList<LoadApi.LoadLibrary> loadLibraries, LoadApi.Language language,
-                             String mapsApiVersion, String otherParams) {
+    private static void jsapiLoad(Runnable onLoad, ArrayList<LoadApi.LoadLibrary> loadLibraries, LoadApi.Language language,
+                                  String mapsApiVersion, String otherParams) {
         String op = "";
         if (otherParams != null) {
             op = op + "&" + otherParams;
@@ -234,6 +238,25 @@ public class GoogleMapConnector extends AbstractComponentContainerConnector impl
         AjaxLoader.AjaxLoaderOptions settings = AjaxLoader.AjaxLoaderOptions.newInstance();
         settings.setOtherParms(op);
         AjaxLoader.loadApi("maps", mapsApiVersion, onLoad, settings);
+    }
+
+    private void load(Runnable onLoad, ArrayList<LoadApi.LoadLibrary> libraries, LoadApi.Language language) {
+        Map<String, String> paramsMap = new HashMap<>();
+        if (getState().clientId != null) {
+            paramsMap.put("client", getState().clientId);
+        } else if (getState().apiKey != null) {
+            paramsMap.put("key", getState().apiKey);
+        }
+
+        if (libraries != null) {
+            paramsMap.put("libraries", CubaMapJsLoader.getLibrariesList(libraries));
+        }
+
+        if (language != null) {
+            paramsMap.put("language", language.getValue());
+        }
+
+        CubaMapJsLoader.load(getState().apiUrl, getState().mapsApiVersion, onLoad, paramsMap);
     }
 
     private static String getLibraries(ArrayList<LoadApi.LoadLibrary> loadLibraries) {

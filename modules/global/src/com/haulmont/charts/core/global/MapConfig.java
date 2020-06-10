@@ -20,6 +20,7 @@ import com.haulmont.cuba.core.config.Config;
 import com.haulmont.cuba.core.config.Property;
 import com.haulmont.cuba.core.config.Source;
 import com.haulmont.cuba.core.config.SourceType;
+import com.haulmont.cuba.core.config.defaults.DefaultBoolean;
 import com.haulmont.cuba.core.config.defaults.DefaultDouble;
 import com.haulmont.cuba.core.config.defaults.DefaultString;
 
@@ -75,4 +76,15 @@ public interface MapConfig extends Config {
     @Property("charts.map.apiVersion")
     String getMapsApiVersion();
     void setMapsApiVersion(String apiVersion);
+
+    /**
+     * Since loading API via {@code jsapi.js} is deprecated GoogleMap loads API directly from
+     * {@code maps.googleapis.com}. Set to true in order to use {@code jsapi.js} loading.
+     *
+     * @return true if API is loaded by {@code jsapi.js}
+     */
+    @DefaultBoolean(false)
+    @Property("charts.map.jsapiLoadingEnabled")
+    Boolean getJsapiLoadingEnabled();
+    void setJsapiLoadingEnabled(Boolean enabled);
 }

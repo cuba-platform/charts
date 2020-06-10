@@ -622,6 +622,22 @@ public class GoogleMap extends AbstractComponentContainer {
     }
 
     /**
+     * @return true if API is loaded by {@code jsapi.js}
+     */
+    public boolean isJsapiLoadingEnabled() {
+        return getState(false).jsapiLoadingEnabled;
+    }
+
+    /**
+     * Enables loading API via {@code jsapi.js}.
+     *
+     * @param jsapiLoadingEnabled whether to enable jsapi loading or not
+     */
+    public void setJsapiLoadingEnabled(boolean jsapiLoadingEnabled) {
+        getState().jsapiLoadingEnabled = jsapiLoadingEnabled;
+    }
+
+    /**
      * Adds a new marker to the map.
      *
      * @param caption   Caption of the marker shown when the marker is hovered.

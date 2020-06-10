@@ -96,4 +96,6 @@ public class GoogleMapState extends AbstractComponentContainerState {
     public String mapsApiVersion = "3.38";
 
     public Map<Long, String> infoWindowContentIdentifiers = new HashMap<>();
+
+    public boolean jsapiLoadingEnabled = false;
 }
