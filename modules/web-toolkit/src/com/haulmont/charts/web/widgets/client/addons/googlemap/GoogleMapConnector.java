@@ -88,6 +88,7 @@ public class GoogleMapConnector extends AbstractComponentContainerConnector impl
 
     public static boolean loadingApi = false;
     protected static boolean apiLoaded = false;
+    protected static final List<Runnable> mapInitQueue = new ArrayList<>();
 
     private final List<GoogleMapInitListener> initListeners = new ArrayList<GoogleMapInitListener>();
 
@@ -178,9 +179,12 @@ public class GoogleMapConnector extends AbstractComponentContainerConnector impl
 
     protected void loadMapApi() {
         if (loadingApi) {
+            addInitCallbackToQueue();
             return;
         }
         loadingApi = true;
+        addInitCallbackToQueue();
+
         ArrayList<LoadApi.LoadLibrary> loadLibraries = new ArrayList<LoadApi.LoadLibrary>();
         loadLibraries.add(LoadApi.LoadLibrary.DRAWING);
         loadLibraries.add(LoadApi.LoadLibrary.VISUALIZATION);
@@ -193,7 +197,11 @@ public class GoogleMapConnector extends AbstractComponentContainerConnector impl
                 for (GoogleMapInitListener listener : initListeners) {
                     listener.mapsApiLoaded();
                 }
-                initMap();
+
+                for (Runnable initCallback : mapInitQueue) {
+                    initCallback.run();
+                }
+                mapInitQueue.clear();
             }
         };
 
@@ -257,6 +265,15 @@ public class GoogleMapConnector extends AbstractComponentContainerConnector impl
         }
 
         CubaMapJsLoader.load(getState().apiUrl, getState().mapsApiVersion, onLoad, paramsMap);
+    }
+
+    private void addInitCallbackToQueue() {
+        mapInitQueue.add(new Runnable() {
+            @Override
+            public void run() {
+                initMap();
+            }
+        });
     }
 
     private static String getLibraries(ArrayList<LoadApi.LoadLibrary> loadLibraries) {
