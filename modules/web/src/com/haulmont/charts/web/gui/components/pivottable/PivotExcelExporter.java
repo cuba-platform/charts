@@ -90,7 +90,6 @@ public class PivotExcelExporter {
 
     protected Messages messages;
     protected ExportDisplay display;
-    protected UserSessionSource userSessionSource;
 
     protected String dateTimeParseFormat;
     protected String dateParseFormat;
@@ -103,11 +102,6 @@ public class PivotExcelExporter {
                 ((HasMetaClass) pivotTable.getDataProvider()).getMetaClass() : null;
 
         initNotifications(pivotTable);
-    }
-
-    @Inject
-    protected void setUserSessionSource(UserSessionSource userSessionSource) {
-        this.userSessionSource = userSessionSource;
     }
 
     @Inject

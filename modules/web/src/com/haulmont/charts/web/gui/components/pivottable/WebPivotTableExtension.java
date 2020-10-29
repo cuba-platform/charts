@@ -26,14 +26,15 @@ import com.haulmont.charts.web.widgets.pivottable.CubaPivotTableExtension;
 import com.haulmont.cuba.core.global.AppBeans;
 import com.haulmont.cuba.gui.export.ExportDisplay;
 
+import java.util.Collections;
 import java.util.Set;
 
 import static com.haulmont.charts.gui.pivottable.model.Renderer.*;
 
 public class WebPivotTableExtension implements PivotTableExtension {
 
-    public static final Set<Renderer> supportedRenderers = Sets.newHashSet(
-            TABLE, TABLE_BAR_CHART, HEATMAP, ROW_HEATMAP, COL_HEATMAP);
+    public static final Set<Renderer> supportedRenderers = Collections.unmodifiableSet(Sets.newHashSet(
+            TABLE, TABLE_BAR_CHART, HEATMAP, ROW_HEATMAP, COL_HEATMAP));
 
     protected CubaPivotTableExtension pivotTableExtension;
 
