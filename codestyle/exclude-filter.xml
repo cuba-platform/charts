@@ -15,4 +15,10 @@
     <Match>
         <Bug pattern="NM_SAME_SIMPLE_NAME_AS_SUPERCLASS "/>
     </Match>
+
+    <Match>
+        <Bug pattern="UWF_UNWRITTEN_PUBLIC_OR_PROTECTED_FIELD"/>
+        <Class name="~com\.haulmont\.charts\.web\.ui\.PivotTableController\$.*"/>
+    </Match>
+
 </FindBugsFilter>
