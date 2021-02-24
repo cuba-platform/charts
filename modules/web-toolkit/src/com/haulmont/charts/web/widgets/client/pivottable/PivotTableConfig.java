@@ -153,6 +153,8 @@ public class PivotTableConfig extends JavaScriptObject {
                     var aggregator = allAggregators[localeMapping[config.aggregation.mode]];
                     if (config.aggregation.properties) {
                         aggregator = aggregator(config.aggregation.properties);
+                    } else {
+                        aggregator = aggregator();
                     }
                     config.aggregator = aggregator;
                 }
@@ -164,6 +166,9 @@ public class PivotTableConfig extends JavaScriptObject {
                 }
 
                 delete config.aggregation;
+            } else {
+                // Explicitly set default aggregator in order to use localized version
+                config.aggregator = allAggregators[localeMapping["count"]]();
             }
         }
     }-*/;
