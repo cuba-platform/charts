@@ -1322,7 +1322,6 @@ public class GoogleMapWidget extends FlowPanel implements RequiresResize {
     }
 
     public void setInfoWindows(Collection<GoogleMapInfoWindow> infoWindows) {
-
         for(GoogleMapInfoWindow gmWindow : infoWindows) {
             InfoWindowOptions options = createInfoWindowOptions(gmWindow);
 
@@ -1365,7 +1364,14 @@ public class GoogleMapWidget extends FlowPanel implements RequiresResize {
                     setInfoWindowClass();
                 }
             });
+        }
 
+        // Close infoWindows if they are not in the list of opened windows
+        for (GoogleMapInfoWindow gmWindow : gmInfoWindowMap.keySet()) {
+            if (!infoWindows.contains(gmWindow)) {
+                CustomInfoWindow window = gmInfoWindowMap.get(gmWindow);
+                window.close();
+            }
         }
     }
 
