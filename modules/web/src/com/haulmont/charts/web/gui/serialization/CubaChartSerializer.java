@@ -92,9 +92,9 @@ public class CubaChartSerializer implements ChartSerializer {
     public String serialize(AbstractChart chart) {
         JsonElement jsonTree = chartGson.toJsonTree(chart);
 
+        ChartJsonSerializationContext context = createChartJsonSerializationContext(chart);
         DataProvider dataProvider = chart.getDataProvider();
         if (dataProvider != null) {
-            ChartJsonSerializationContext context = createChartJsonSerializationContext(chart);
 
             JsonArray dataProviderElement = itemsSerializer.serialize(dataProvider.getItems(), context);
 
@@ -106,7 +106,22 @@ public class CubaChartSerializer implements ChartSerializer {
             jsonTree.getAsJsonObject().add("dataProvider", dataProviderElement);
         }
 
+        beforeConvertToJson(jsonTree, context);
+
         return chartGson.toJson(jsonTree);
+    }
+
+    protected void beforeConvertToJson(JsonElement jsonTree, ChartJsonSerializationContext context) {
+        // By default, export plugin exports all data fields.
+        // We need to exclude service fields like '$k'.
+        if (jsonTree.getAsJsonObject().has("export")) {
+            JsonObject export = jsonTree.getAsJsonObject().getAsJsonObject("export");
+            JsonArray exportFields = new JsonArray();
+            for (String property : context.getProperties()) {
+                exportFields.add(property);
+            }
+            export.add("exportFields", exportFields);
+        }
     }
 
     @Override
