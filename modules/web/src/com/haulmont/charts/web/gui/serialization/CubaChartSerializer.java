@@ -18,6 +18,7 @@ package com.haulmont.charts.web.gui.serialization;
 
 import com.google.gson.*;
 import com.google.gson.annotations.Expose;
+import com.haulmont.charts.gui.amcharts.model.charts.GanttChart;
 import com.haulmont.charts.gui.model.JsFunction;
 import com.haulmont.charts.gui.model.JsonEnum;
 import com.haulmont.charts.gui.amcharts.model.Color;
@@ -113,13 +114,21 @@ public class CubaChartSerializer implements ChartSerializer {
 
     protected void beforeConvertToJson(JsonElement jsonTree, ChartJsonSerializationContext context) {
         // By default, export plugin exports all data fields.
-        // We need to exclude service fields like '$k'.
+        // We need to exclude service fields like '$k' and '$i'.
         if (jsonTree.getAsJsonObject().has("export")) {
             JsonObject export = jsonTree.getAsJsonObject().getAsJsonObject("export");
             JsonArray exportFields = new JsonArray();
+
             for (String property : context.getProperties()) {
                 exportFields.add(property);
             }
+
+            if (context.getChartModel() instanceof GanttChart) {
+                for (String field : context.getSegmentFields()) {
+                    exportFields.add(field);
+                }
+            }
+
             export.add("exportFields", exportFields);
         }
     }
