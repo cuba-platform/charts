@@ -20,10 +20,15 @@ import com.google.gson.Gson;
 import com.google.gson.JsonElement;
 import com.google.gson.JsonSerializationContext;
 import com.haulmont.charts.gui.amcharts.model.charts.ChartModelImpl;
+import com.haulmont.charts.gui.amcharts.model.charts.GanttChart;
 import com.haulmont.charts.gui.data.DataItem;
+import org.apache.commons.collections4.CollectionUtils;
+import org.apache.commons.lang3.StringUtils;
 
+import javax.annotation.Nullable;
 import java.lang.reflect.Type;
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.List;
 import java.util.function.Function;
 
@@ -71,5 +76,40 @@ public class ChartJsonSerializationContext implements JsonSerializationContext {
             }
         }
         return properties;
+    }
+
+    public List<String> getSegmentFields() {
+        if (!(chartModel instanceof GanttChart)) {
+            return Collections.emptyList();
+        }
+
+        GanttChart chart = (GanttChart) chartModel;
+
+        List<String> fields = new ArrayList<>();
+
+        addField(fields, chart.getStartField());
+        addField(fields, chart.getDurationField());
+        addField(fields, chart.getColorField());
+        addField(fields, chart.getEndField());
+        addField(fields, chart.getColumnWidthField());
+        addField(fields, chart.getStartDateField());
+        addField(fields, chart.getEndDateField());
+        if (chart.getGraph() != null) {
+            addField(fields, chart.getGraph().getAlphaField());
+        }
+
+        if (CollectionUtils.isNotEmpty(chart.getAdditionalSegmentFields())) {
+            for (String field : chart.getAdditionalSegmentFields()) {
+                addField(fields, field);
+            }
+        }
+
+        return fields;
+    }
+
+    protected void addField(List<String> fields, @Nullable String field) {
+        if (StringUtils.isNotEmpty(field) && !fields.contains(field)) {
+            fields.add(field);
+        }
     }
 }

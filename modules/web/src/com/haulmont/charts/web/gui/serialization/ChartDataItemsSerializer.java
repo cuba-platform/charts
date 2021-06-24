@@ -27,19 +27,15 @@ import com.haulmont.chile.core.model.Instance;
 import com.haulmont.cuba.core.entity.Entity;
 import com.haulmont.cuba.core.global.Messages;
 import com.haulmont.cuba.core.global.Metadata;
-import org.apache.commons.collections4.CollectionUtils;
-import org.apache.commons.lang3.StringUtils;
 import org.apache.commons.lang3.time.FastDateFormat;
 import org.springframework.beans.factory.config.BeanDefinition;
 import org.springframework.context.annotation.Scope;
 import org.springframework.stereotype.Component;
 
-import javax.annotation.Nullable;
 import javax.inject.Inject;
 import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
-import java.util.ArrayList;
 import java.util.Collection;
 import java.util.Date;
 import java.util.List;
@@ -103,25 +99,6 @@ public class ChartDataItemsSerializer {
                     throw new RuntimeException("Gantt chart segments field must be a collection");
                 }
 
-                List<String> fields = new ArrayList<>();
-
-                addField(fields, chart.getStartField());
-                addField(fields, chart.getDurationField());
-                addField(fields, chart.getColorField());
-                addField(fields, chart.getEndField());
-                addField(fields, chart.getColumnWidthField());
-                addField(fields, chart.getStartDateField());
-                addField(fields, chart.getEndDateField());
-                if (chart.getGraph() != null) {
-                    addField(fields, chart.getGraph().getAlphaField());
-                }
-
-                if (CollectionUtils.isNotEmpty(chart.getAdditionalSegmentFields())) {
-                    for (String field : chart.getAdditionalSegmentFields()) {
-                        addField(fields, field);
-                    }
-                }
-
                 JsonArray segments = new JsonArray();
 
                 if (value != null) {
@@ -131,7 +108,7 @@ public class ChartDataItemsSerializer {
                         JsonObject segment = new JsonObject();
                         segment.add("$i", context.serialize(segmentIndex));
 
-                        for (String field : fields) {
+                        for (String field : context.getSegmentFields()) {
                             Object propertyValue = dataItem.getValue(field);
 
                             if (propertyValue != null) {
@@ -168,11 +145,5 @@ public class ChartDataItemsSerializer {
             formattedValue = value;
         }
         jsonObject.add(property, context.serialize(formattedValue));
-    }
-
-    protected void addField(List<String> fields, @Nullable String field) {
-        if (StringUtils.isNotEmpty(field) && !fields.contains(field)) {
-            fields.add(field);
-        }
     }
 }
