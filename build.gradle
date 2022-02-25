@@ -34,9 +34,9 @@ buildscript {
                 url System.getenv('HAULMONT_REPOSITORY_URL')
             }
         } else {
-            jcenter()
+            mavenCentral()
             maven { url "https://plugins.gradle.org/m2/" }
-            maven { url "https://dl.bintray.com/cuba-platform/main" }
+            maven { url "https://repo.cuba-platform.com/content/groups/work" }
         }
     }
     dependencies {
