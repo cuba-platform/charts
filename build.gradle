@@ -149,7 +149,7 @@ configure([chartsGlobalModule, chartsGuiModule, chartsWebModule]) {
     }
 
     spotbugs {
-        toolVersion = "4.1.4"
+        toolVersion = "4.8.6"
         ignoreFailures = false
         omitVisitors = ['FindDoubleCheck']
         excludeFilter = rootProject.file("codestyle/exclude-filter.xml")
